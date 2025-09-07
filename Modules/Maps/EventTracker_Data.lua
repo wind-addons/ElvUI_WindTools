@@ -35,7 +35,7 @@ local function worldMapIDSetter(idOrFunc)
 	end
 end
 
-local env = {
+ET.Meta = {
 	fishingNetPosition = {
 		-- Waking Shores
 		[1] = { map = 2022, x = 0.63585, y = 0.75349 },
@@ -77,7 +77,7 @@ local env = {
 }
 
 ---@type table<string, RGBA[]>
-local colorPalette = {
+ET.ColorPalette = {
 	blue = {
 		{ r = 0.32941, g = 0.52157, b = 0.93333, a = 1 },
 		{ r = 0.25882, g = 0.84314, b = 0.86667, a = 1 },
@@ -164,7 +164,7 @@ ET.EventData = {
 					if prof then
 						local name, iconID = GetProfessionInfo(prof)
 						tinsert(quests, {
-							questID = env.ProfessionsWeeklyTWW[iconID],
+							questID = ET.Meta.ProfessionsWeeklyTWW[iconID],
 							label = F.GetIconString(iconID, 14, 14) .. " " .. name,
 						})
 					end
@@ -298,9 +298,9 @@ ET.EventData = {
 			hasWeeklyReward = true,
 			duration = 15 * 60,
 			interval = 60 * 60,
-			barColor = colorPalette.blue,
+			barColor = ET.ColorPalette.blue,
 			flash = true,
-			runningBarColor = colorPalette.purple,
+			runningBarColor = ET.ColorPalette.purple,
 			eventName = L["Nightfall"],
 			location = C_Map_GetMapInfo(2215).name,
 			label = L["Nightfall"],
@@ -338,9 +338,9 @@ ET.EventData = {
 			hasWeeklyReward = true,
 			duration = 15 * 60,
 			interval = 60 * 60,
-			barColor = colorPalette.bronze,
+			barColor = ET.ColorPalette.bronze,
 			flash = true,
-			runningBarColor = colorPalette.green,
+			runningBarColor = ET.ColorPalette.green,
 			eventName = L["Theater Troupe"],
 			location = C_Map_GetMapInfo(2248).name,
 			label = L["Theater Troupe"],
@@ -430,7 +430,7 @@ ET.EventData = {
 					label = function()
 						return format(
 							L["Daily Quest at %s"],
-							C.StringByTemplate(env.radiantEchoesZoneRotation[1].name, "sky-400")
+							C.StringByTemplate(ET.Meta.radiantEchoesZoneRotation[1].name, "sky-400")
 						)
 					end,
 				},
@@ -440,7 +440,7 @@ ET.EventData = {
 					label = function()
 						return format(
 							L["Daily Quest at %s"],
-							C.StringByTemplate(env.radiantEchoesZoneRotation[2].name, "sky-400")
+							C.StringByTemplate(ET.Meta.radiantEchoesZoneRotation[2].name, "sky-400")
 						)
 					end,
 				},
@@ -450,7 +450,7 @@ ET.EventData = {
 					label = function()
 						return format(
 							L["Daily Quest at %s"],
-							C.StringByTemplate(env.radiantEchoesZoneRotation[3].name, "sky-400")
+							C.StringByTemplate(ET.Meta.radiantEchoesZoneRotation[3].name, "sky-400")
 						)
 					end,
 				},
@@ -459,23 +459,23 @@ ET.EventData = {
 			hasWeeklyReward = false,
 			duration = 60 * 60, -- always on
 			interval = 60 * 60,
-			barColor = colorPalette.blue,
+			barColor = ET.ColorPalette.blue,
 			flash = false,
-			runningBarColor = colorPalette.radiantEchoes,
+			runningBarColor = ET.ColorPalette.radiantEchoes,
 			eventName = L["Radiant Echoes"],
 			currentMapIndex = function(args)
 				return floor((GetServerTime() - args.startTimestamp) / args.interval) % 3 + 1
 			end,
 			currentLocation = function(args)
-				return env.radiantEchoesZoneRotation[args:currentMapIndex()].name
+				return ET.Meta.radiantEchoesZoneRotation[args:currentMapIndex()].name
 			end,
 			nextLocation = function(args)
-				return env.radiantEchoesZoneRotation[args:currentMapIndex() % 3 + 1].name
+				return ET.Meta.radiantEchoesZoneRotation[args:currentMapIndex() % 3 + 1].name
 			end,
 			label = L["Echoes"],
 			runningText = L["In Progress"],
 			runningTextUpdater = function(args)
-				local map = env.radiantEchoesZoneRotation[args:currentMapIndex()]
+				local map = ET.Meta.radiantEchoesZoneRotation[args:currentMapIndex()]
 				local isCompleted = false
 				for _, data in pairs(args.questProgress) do
 					if data.mapID == map.mapID then
@@ -518,7 +518,7 @@ ET.EventData = {
 				return timestampTable[region]
 			end)(),
 			onClick = worldMapIDSetter(function(args)
-				return env.radiantEchoesZoneRotation[args:currentMapIndex()].mapID
+				return ET.Meta.radiantEchoesZoneRotation[args:currentMapIndex()].mapID
 			end),
 			onClickHelpText = L["Click to show location"],
 		},
@@ -532,7 +532,7 @@ ET.EventData = {
 			hasWeeklyReward = true,
 			duration = 16 * 60,
 			interval = 1.5 * 60 * 60,
-			barColor = colorPalette.blue,
+			barColor = ET.ColorPalette.blue,
 			flash = true,
 			eventName = L["Community Feast"],
 			location = C_Map_GetMapInfo(2024).name,
@@ -577,7 +577,7 @@ ET.EventData = {
 			eventName = L["Siege On Dragonbane Keep"],
 			label = L["Dragonbane Keep"],
 			location = C_Map_GetMapInfo(2022).name,
-			barColor = colorPalette.red,
+			barColor = ET.ColorPalette.red,
 			flash = true,
 			runningText = L["In Progress"],
 			filter = function(args)
@@ -620,7 +620,7 @@ ET.EventData = {
 			eventName = L["Researchers Under Fire"],
 			label = L["Researchers"],
 			location = C_Map_GetMapInfo(2133).name,
-			barColor = colorPalette.green,
+			barColor = ET.ColorPalette.green,
 			flash = true,
 			runningText = L["In Progress"],
 			filter = function(args)
@@ -662,7 +662,7 @@ ET.EventData = {
 			eventName = L["Time Rift Thaldraszus"],
 			label = L["Time Rift"],
 			location = C_Map_GetMapInfo(2025).name,
-			barColor = colorPalette.bronze,
+			barColor = ET.ColorPalette.bronze,
 			flash = true,
 			runningText = L["In Progress"],
 			filter = function(args)
@@ -704,7 +704,7 @@ ET.EventData = {
 			eventName = L["Superbloom Emerald Dream"],
 			label = L["Superbloom"],
 			location = C_Map_GetMapInfo(2200).name,
-			barColor = colorPalette.green,
+			barColor = ET.ColorPalette.green,
 			flash = true,
 			runningText = L["In Progress"],
 			filter = function(args)
@@ -746,7 +746,7 @@ ET.EventData = {
 			eventName = L["The Big Dig"],
 			label = L["Big Dig"],
 			location = C_Map_GetMapInfo(2024).name,
-			barColor = colorPalette.purple,
+			barColor = ET.ColorPalette.purple,
 			flash = true,
 			runningText = L["In Progress"],
 			filter = function(args)
@@ -785,7 +785,7 @@ ET.EventData = {
 			filter = function()
 				return C_QuestLog_IsQuestFlaggedCompleted(70871)
 			end,
-			barColor = colorPalette.purple,
+			barColor = ET.ColorPalette.purple,
 			flash = true,
 			eventName = L["Iskaaran Fishing Net"],
 			label = L["Fishing Net"],
@@ -810,7 +810,7 @@ ET.EventData = {
 
 						local lengthMap = {}
 
-						for i, netPos in ipairs(env.fishingNetPosition) do
+						for i, netPos in ipairs(ET.Meta.fishingNetPosition) do
 							if map == netPos.map then
 								local length = math_pow(position.x - netPos.x, 2) + math_pow(position.y - netPos.y, 2)
 								lengthMap[i] = length
@@ -850,8 +850,8 @@ ET.EventData = {
 											if container.timerWidgets then
 												for id, widget in pairs(container.timerWidgets) do
 													if
-														env.fishingNetWidgetIDToIndex[id]
-														and env.fishingNetWidgetIDToIndex[id] == netIndex
+														ET.Meta.fishingNetWidgetIDToIndex[id]
+														and ET.Meta.fishingNetWidgetIDToIndex[id] == netIndex
 													then
 														if widget.Bar and widget.Bar.value and widget.Bar.range then
 															db[netIndex] = {

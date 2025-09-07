@@ -18,22 +18,6 @@ local C_AddOns_GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 ---@class WindTools : AceAddon, AceConsole-3.0, AceEvent-3.0, AceTimer-3.0, AceHook-3.0
 local W = AceAddon:NewAddon(addonName, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 
----@class ElvUI
----@field db ElvUIProfileDB
----@field private ElvUIPrivateDB
----@field global ElvUIGlobalDB
----@field TexCoords number[]
-
----@class ElvUIProfileDB
----@field WT ProfileDB
----@field general {font: string}
-
----@class ElvUIPrivateDB
----@field WT PrivateDB
-
----@class ElvUIGlobalDB
----@field WT GlobalDB
-
 V.WT = {} ---@class ProfileDB
 P.WT = {} ---@class PrivateDB
 G.WT = {} ---@class GlobalDB

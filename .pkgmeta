@@ -10,6 +10,7 @@ ignore:
   - .github/*
   - .gitignore
   - .luacheckrc
+  - .luals/*
   - .styluaignore
   - .vscode/*
   - Core/Changelog/_template.lua

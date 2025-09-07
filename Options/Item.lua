@@ -31,32 +31,10 @@ local function desc(code, helpText)
 	return C.StringByTemplate(code, "teal-400") .. " = " .. helpText
 end
 
-local slotNames = {
-	[1] = HEADSLOT,
-	[2] = NECKSLOT,
-	[3] = SHOULDERSLOT,
-	[4] = SHIRTSLOT,
-	[5] = CHESTSLOT,
-	[6] = WAISTSLOT,
-	[7] = LEGSSLOT,
-	[8] = FEETSLOT,
-	[9] = WRISTSLOT,
-	[10] = HANDSSLOT,
-	[11] = FINGER0SLOT_UNIQUE,
-	[12] = FINGER1SLOT_UNIQUE,
-	[13] = TRINKET0SLOT_UNIQUE,
-	[14] = TRINKET1SLOT_UNIQUE,
-	[15] = BACKSLOT,
-	[16] = MAINHANDSLOT,
-	[17] = SECONDARYHANDSLOT,
-	[18] = RANGEDSLOT,
-	[19] = TABARDSLOT,
-}
-
 -- Generate slot ID descriptions
 local function generateSlotDesc()
 	local slots = {}
-	for id, name in ipairs(slotNames) do
+	for id, name in ipairs(W.EquipmentSlots) do
 		tinsert(slots, format("|cff71d5ff%d|r=%s", id, name))
 	end
 

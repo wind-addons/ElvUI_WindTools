@@ -123,6 +123,28 @@ end)()
 W.CurrentRealmID = GetRealmID()
 W.CurrentRealmName = GetRealmName()
 
+W.EquipmentSlots = {
+	HEADSLOT,
+	NECKSLOT,
+	SHOULDERSLOT,
+	SHIRTSLOT,
+	CHESTSLOT,
+	WAISTSLOT,
+	LEGSSLOT,
+	FEETSLOT,
+	WRISTSLOT,
+	HANDSSLOT,
+	FINGER0SLOT_UNIQUE,
+	FINGER1SLOT_UNIQUE,
+	TRINKET0SLOT_UNIQUE,
+	TRINKET1SLOT_UNIQUE,
+	BACKSLOT,
+	MAINHANDSLOT,
+	SECONDARYHANDSLOT,
+	RANGEDSLOT,
+	TABARDSLOT,
+}
+
 function W:InitializeMetadata()
 	for id in pairs(W.MythicPlusMapData) do
 		local name, _, timeLimit, tex = C_ChallengeMode_GetMapUIInfo(id)

@@ -70,8 +70,8 @@ function F.SetFontOutline(text, font, size)
 	end
 	local fontName, fontHeight = text:GetFont()
 
-	if size and type(size) == "string" then
-		size = fontHeight + tonumber(size)
+	if type(size) == "string" then
+		size = fontHeight + (tonumber(size) or 0)
 	end
 
 	if font and not strfind(font, "%.ttf") and not strfind(font, "%.otf") then

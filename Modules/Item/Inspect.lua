@@ -27,8 +27,6 @@ local CreateFrame = CreateFrame
 local GetInspectSpecialization = GetInspectSpecialization
 local GetInventoryItemLink = GetInventoryItemLink
 local GetRealmName = GetRealmName
-local GetSpecialization = GetSpecialization
-local GetSpecializationInfo = GetSpecializationInfo
 local GetSpecializationInfoByID = GetSpecializationInfoByID
 local GetTime = GetTime
 local SetPortraitTexture = SetPortraitTexture
@@ -47,6 +45,10 @@ local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Item_GetItemInfo = C_Item.GetItemInfo
 local C_Item_GetItemQualityColor = C_Item.GetItemQualityColor
 local C_Item_IsCorruptedItem = C_Item.IsCorruptedItem
+local C_SpecializationInfo_GetSpecialization = C_SpecializationInfo.GetSpecialization
+local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo
+
+local Enum_ItemQuality_Common = Enum.ItemQuality.Common
 
 local guids, inspecting = {}, false
 
@@ -97,7 +99,7 @@ end
 
 local function GetUnitSpecializationInfo(unit)
 	if unit == "player" then
-		local _, name, _, icon = GetSpecializationInfo(GetSpecialization())
+		local _, name, _, icon = C_SpecializationInfo_GetSpecializationInfo(C_SpecializationInfo_GetSpecialization())
 		return { icon = icon, name = name }
 	end
 
@@ -162,8 +164,8 @@ end
 local function GetInspectSpec(unit)
 	local specID, specName
 	if unit == "player" then
-		specID = GetSpecialization()
-		specName = select(2, GetSpecializationInfo(specID))
+		specID = C_SpecializationInfo_GetSpecialization()
+		specName = select(2, C_SpecializationInfo_GetSpecializationInfo(specID))
 	else
 		specID = GetInspectSpecialization(unit)
 		if specID and specID > 0 then
@@ -384,7 +386,7 @@ function I:BuildInspectItemListFrame(parent)
 	frame.PlayerItemLevel:Point("TOPLEFT", frame, "TOPLEFT", 75, -42)
 
 	frame.SpecIcon = frame:CreateTexture(nil, "ARTWORK")
-	frame.SpecIcon:Size(36, 36)
+	frame.SpecIcon:Size(38, 38)
 	frame.SpecIcon:Point("TOPRIGHT", frame, "TOPRIGHT", -28, -17)
 	frame.SpecIcon:SetTexCoord(unpack(E.TexCoords))
 	frame.SpecIcon:SetShown(false)
@@ -452,6 +454,12 @@ function I:BuildInspectItemListFrame(parent)
 		line.ItemTexture:SetTexCoord(E:CropRatio(frame.iconWidth, frame.iconHeight))
 		line.ItemTexture:CreateBackdrop()
 
+		line.TierSetIndicator = line:CreateFontString(nil, "OVERLAY")
+		F.SetFontOutline(line.TierSetIndicator, F.GetCompatibleFont("Chivo Mono"), 20)
+		line.TierSetIndicator:Point("CENTER", line.ItemTexture, "TOPRIGHT", 1, -1)
+		line.TierSetIndicator:SetTextColor(C.ExtractRGBFromTemplate("pink-500"))
+		line.TierSetIndicator:SetText("*")
+
 		-- Item Name
 		line.ItemName = line:CreateFontString(nil, "ARTWORK")
 		F.SetFontWithDB(line.ItemName, self.db.equipText)
@@ -490,7 +498,7 @@ function I:BuildInspectItemListFrame(parent)
 	return frame
 end
 
-function I:ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
+function I:ShowInspectItemListFrame(unit, parent, ilevel)
 	if not parent:IsShown() or not self.db or not self.db.enable then
 		return
 	end
@@ -542,7 +550,7 @@ function I:ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
 			line.ItemLevel:SetText(format("%d", itemInfo.level))
 			line.ItemName:SetText(itemInfo.noBracketsLink or itemInfo.link or itemInfo.name)
 
-			local r, g, b = C_Item_GetItemQualityColor(itemInfo.quality or 1)
+			local r, g, b = C_Item_GetItemQualityColor(itemInfo.quality or Enum_ItemQuality_Common)
 			line.ItemTexture:SetTexture(itemInfo.texture)
 			line.ItemTexture.backdrop:SetBackdropBorderColor(r, g, b)
 			line.ItemTexture:Show()
@@ -550,6 +558,12 @@ function I:ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
 			line.ItemLevel:SetText("")
 			line.ItemName:SetText(L["Not Equipped"])
 			line.ItemTexture:Hide()
+		end
+
+		if itemInfo and itemInfo.set and itemInfo.set > 0 then
+			line.TierSetIndicator:Show()
+		else
+			line.TierSetIndicator:Hide()
 		end
 
 		-- Update colors for some expansion special items

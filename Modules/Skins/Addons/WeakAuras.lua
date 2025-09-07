@@ -53,12 +53,22 @@ local function HandleComplexTexCoords(icon)
 			cLeft, cRight, cTop, cDown = ULx, ULy, LLx, LLy
 		end
 
+		local left, right, top, down = unpack(E.TexCoords)
 		if cLeft == 0 or cRight == 0 or cTop == 0 or cDown == 0 then
 			local width, height = cRight - cLeft, cDown - cTop
 			if width == height then
-				F.CallMethod(self, "SetTexCoord", unpack(E.TexCoords))
+				F.CallMethod(self, "SetTexCoord", left, right, top, down)
+			elseif width > height then
+				F.CallMethod(
+					self,
+					"SetTexCoord",
+					left,
+					right,
+					top + cTop * (right - left),
+					top + cDown * (right - left)
+				)
 			else
-				F.CallMethod(self, "SetTexCoord", E:CropRatio(width, height))
+				F.CallMethod(self, "SetTexCoord", left + cLeft * (down - top), left + cRight * (down - top), top, down)
 			end
 		else
 			F.CallMethod(self, "SetTexCoord", cLeft, cRight, cTop, cDown)

@@ -44,7 +44,7 @@ local function addObjectiveProgress(tt, data)
 			for i = 1, tt:NumLines() do
 				local text = _G["GameTooltipTextLeft" .. i]
 				if text and text:GetText() == info.title then
-					text:SetText(text:GetText() .. format(" + %s%%", F.Round(npcWeight, accuracy)))
+					text:SetText(text:GetText() .. format(" + %s%%", E:Round(npcWeight, accuracy)))
 				end
 			end
 		end
@@ -61,7 +61,7 @@ local function addObjectiveProgress(tt, data)
 
 		if count and max and count > 0 and max > 0 then
 			local left = format("%s |cff00d1b2%s|r |cffffffff-|r |cffffdd57%s|r", icon1, count, max)
-			local right = format("%s |cff209cee%s|r|cffffffff%%|r", icon2, F.Round(100 * count / max, accuracy))
+			local right = format("%s |cff209cee%s|r|cffffffff%%|r", icon2, E:Round(100 * count / max, accuracy))
 
 			tt:AddDoubleLine(left, right)
 			tt:Show()

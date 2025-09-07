@@ -182,14 +182,6 @@ function F.DelayUnhookAll(module)
 	end
 end
 
----Round a number to specified decimal places
----@param number number The number to round
----@param decimals number Number of decimal places
----@return string roundedNumber The rounded number as string
-function F.Round(number, decimals)
-	return format(format("%%.%df", decimals), number)
-end
-
 ---Set callback with retry mechanism
 ---@param callback function The callback function to execute with results
 ---@param target function The target function to call

@@ -144,16 +144,12 @@ local function ReInspect(unit)
 		data = data,
 		unit = unit,
 		onExecute = function(self)
-			local count, ilevel, _, weaponLevel, isArtifact, maxLevel = LibItemInfo:GetUnitItemLevel(self.unit)
-			if ilevel <= 0 then
+			local itemLevel = E:GetUnitItemLevel("player")
+			if itemLevel <= 0 then
 				return true
 			end
-			if count == 0 and ilevel > 0 then
-				self.data.timer = time()
-				self.data.ilevel = ilevel
-				self.data.maxLevel = maxLevel
-				self.data.weaponLevel = weaponLevel
-				self.data.isArtifact = isArtifact
+			if itemLevel > 0 then
+				self.data.itemLevel = itemLevel
 				LibEvent:trigger("UNIT_REINSPECT_READY", self.data)
 				return true
 			end
@@ -665,21 +661,17 @@ function I:Inspect()
 				inspecting = false
 			end,
 			onExecute = function(self)
-				local count, ilevel, _, weaponLevel, isArtifact, maxLevel = LibItemInfo:GetUnitItemLevel(self.data.unit)
+				local ilevel = E:GetUnitItemLevel(self.data.unit)
 				if ilevel <= 0 then
 					return true
 				end
-				if count == 0 and ilevel > 0 then
-					--if (UnitIsVisible(self.data.unit) or self.data.ilevel == ilevel) then
+				if  ilevel > 0 then
 					self.data.timer = time()
 					self.data.name = UnitName(self.data.unit)
 					self.data.class = select(2, UnitClass(self.data.unit))
 					self.data.ilevel = ilevel
-					self.data.maxLevel = maxLevel
 					self.data.spec = GetInspectSpec(self.data.unit)
 					self.data.hp = UnitHealthMax(self.data.unit)
-					self.data.weaponLevel = weaponLevel
-					self.data.isArtifact = isArtifact
 					LibEvent:trigger("UNIT_INSPECT_READY", self.data)
 					inspecting = false
 					return true
@@ -705,25 +697,9 @@ function I:Inspect()
 			return
 		end
 		if _G.InspectFrame and _G.InspectFrame.unit and UnitGUID(_G.InspectFrame.unit) == data.guid then
-			local frame =
-				self:ShowInspectItemListFrame(_G.InspectFrame.unit, _G.InspectFrame, data.ilevel, data.maxLevel)
+			local frame = self:ShowInspectItemListFrame(_G.InspectFrame.unit, _G.InspectFrame, data.ilevel)
 			LibEvent:trigger("INSPECT_FRAME_COMPARE", frame)
 		end
-	end)
-
-	--高亮橙裝和武器
-	LibEvent:attachTrigger("INSPECT_ITEMFRAME_UPDATED", function(self, itemframe)
-		local r, g, b = 0, 0.9, 0.9
-		if itemframe.quality and itemframe.quality > 4 then
-			r, g, b = C_Item_GetItemQualityColor(itemframe.quality)
-		elseif itemframe.name and not itemframe.link then
-			r, g, b = 0.9, 0.8, 0.4
-		elseif not itemframe.link then
-			r, g, b = 0.5, 0.5, 0.5
-		end
-		itemframe.Label:SetBackdropBorderColor(r, g, b, 0.2)
-		itemframe.Label:SetBackdropColor(r, g, b, 0.2)
-		itemframe.Label.text:SetTextColor(r, g, b)
 	end)
 
 	--自己裝備列表
@@ -732,8 +708,8 @@ function I:Inspect()
 			return
 		end
 		if self.db and self.db.playerOnInspect then
-			local _, ilevel, _, _, _, maxLevel = LibItemInfo:GetUnitItemLevel("player")
-			local playerFrame = self:ShowInspectItemListFrame("player", frame, ilevel, maxLevel)
+			local ilevel = E:GetUnitItemLevel("player")
+			local playerFrame = self:ShowInspectItemListFrame("player", frame, ilevel)
 			if frame.statsFrame then
 				frame.statsFrame:SetParent(playerFrame)
 			end

@@ -4,6 +4,7 @@ local C = W.Utilities.Color
 local MF = W.Modules.MoveFrames
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 
 local function HandleGameMenuButton(button)
 	local text = button:GetFontString()

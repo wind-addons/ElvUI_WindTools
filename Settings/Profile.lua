@@ -652,22 +652,22 @@ P.item = {
 		playerOnInspect = true,
 		slotText = {
 			name = E.db.general.font,
-			size = W.CompatibleFont and 12 or 9,
+			size = W.CompatibleFont and 12 or 10,
 			style = "OUTLINE",
 		},
 		levelText = {
-			name = F.GetCompatibleFont("Montserrat"),
-			size = 13,
+			name = F.GetCompatibleFont("Chivo Mono"),
+			size = 14,
 			style = "OUTLINE",
 		},
 		equipText = {
 			name = E.db.general.font,
-			size = 13,
+			size = 14,
 			style = "OUTLINE",
 		},
 		statsText = {
 			name = E.db.general.font,
-			size = 13,
+			size = 14,
 			style = "OUTLINE",
 		},
 	},

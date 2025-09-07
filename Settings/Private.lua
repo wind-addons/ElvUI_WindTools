@@ -568,6 +568,7 @@ V.skins = {
 		expansionLandingPage = true,
 		flightMap = true,
 		friends = true,
+		gameMenu = true,
 		garrison = true,
 		genericTraits = true,
 		gossip = true,

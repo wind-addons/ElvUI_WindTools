@@ -695,6 +695,11 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Friend List"],
 		},
+		gameMenu = {
+			order = 10,
+			type = "toggle",
+			name = L["Game Menu"],
+		},
 		garrison = {
 			order = 10,
 			type = "toggle",

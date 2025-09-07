@@ -262,16 +262,16 @@ function W:CheckCompatibility()
 	CheckMerathilisUI(
 		format("%s-%s", L["Tooltip"], L["Add Icon"]),
 		format("%s-%s", L["Tooltip"], L["Tooltip Icons"]),
-		"private.WT.tooltips.icon",
-		"db.mui.tooltip.icon"
+		"private.WT.tooltips.titleIcon.enable",
+		"db.mui.tooltip.titleIcon.enable"
 	)
 
-	CheckMerathilisUI(
-		L["Group Info"],
-		L["LFG Info"],
-		"db.WT.tooltips.groupInfo.enable",
-		"db.mui.tooltip.groupInfo.enable"
-	)
+	-- CheckMerathilisUI(
+	-- 	L["Group Info"],
+	-- 	L["LFG Info"],
+	-- 	"db.WT.tooltips.groupInfo.enable",
+	-- 	"db.mui.tooltip.groupInfo.enable"
+	-- )
 
 	CheckMerathilisUI(
 		L["Role Icon"],
@@ -393,14 +393,14 @@ function W:CheckCompatibility()
 		format("%s-%s-%s", L["Skins"], L["Addons"], L["WeakAuras"]),
 		L["WeakAuras"],
 		"private.WT.skins.addons.weakAuras",
-		"private.mui.skins.addonSkins.wa"
+		"private.mui.skins.addonSkins.weakAuras"
 	)
 
 	CheckMerathilisUI(
 		format("%s-%s-%s", L["Skins"], L["Addons"], L["WeakAuras Options"]),
 		L["WeakAuras Options"],
 		"private.WT.skins.addons.weakAurasOptions",
-		"private.mui.skins.addonSkins.waOptions"
+		"private.mui.skins.addonSkins.weakAurasOptions"
 	)
 
 	CheckMerathilisUI(L["Announcement"], L["Announcement"], "db.WT.announcement.enable", "db.mui.announcement.enable")

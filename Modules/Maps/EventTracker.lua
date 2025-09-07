@@ -314,7 +314,7 @@ local functionFactory = {
 					self.statusBar:SetMinMaxValues(0, self.args.duration)
 					self.statusBar:SetValue(self.timeOver)
 					local tex = self.statusBar:GetStatusBarTexture()
-					local platte = self.args.runningBarColor or self.ColorPlatte.running
+					local platte = self.args.runningBarColor or ET.ColorPalette.running
 					tex:SetGradient("HORIZONTAL", C.CreateColorFromTable(platte[1]), C.CreateColorFromTable(platte[2]))
 					if self.args.runningTextUpdater then
 						self.runningTip:SetText(self.args:runningTextUpdater())
@@ -551,7 +551,7 @@ local functionFactory = {
 
 				self.netTable = {}
 				local now = GetServerTime()
-				for netIndex = 1, #self.Env.fishingNetPosition do
+				for netIndex = 1, #ET.Meta.fishingNetPosition do
 					-- update db from old version
 					if type(db[netIndex]) ~= "table" then
 						db[netIndex] = nil
@@ -590,14 +590,14 @@ local functionFactory = {
 
 				local tip = ""
 
-				if #done == #self.Env.fishingNetPosition then
+				if #done == #ET.Meta.fishingNetPosition then
 					tip = C.StringByTemplate(L["All nets can be collected"], "green-500")
 					self.timerText:SetText("")
 
 					self.statusBar:GetStatusBarTexture():SetGradient(
 						"HORIZONTAL",
-						C.CreateColorFromTable(self.ColorPlatte.running[1]),
-						C.CreateColorFromTable(self.ColorPlatte.running[2])
+						C.CreateColorFromTable(ET.ColorPalette.running[1]),
+						C.CreateColorFromTable(ET.ColorPalette.running[2])
 					)
 					self.statusBar:SetMinMaxValues(0, 1)
 					self.statusBar:SetValue(1)
@@ -643,8 +643,8 @@ local functionFactory = {
 					self.timerText:SetText("")
 					self.statusBar:GetStatusBarTexture():SetGradient(
 						"HORIZONTAL",
-						C.CreateColorFromTable(self.ColorPlatte.running[1]),
-						C.CreateColorFromTable(self.ColorPlatte.running[2])
+						C.CreateColorFromTable(ET.ColorPalette.running[1]),
+						C.CreateColorFromTable(ET.ColorPalette.running[2])
 					)
 					self.statusBar:SetMinMaxValues(0, 1)
 

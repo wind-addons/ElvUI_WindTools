@@ -5,12 +5,12 @@ local _G = _G
 
 local max = max
 local select = select
+local time = time
 
 local UnitClass = UnitClass
 local UnitName = UnitName
 local InCombatLockdown = InCombatLockdown
 
-local time = time()
 local hideTimes = 0
 function WC:TryFadeOut()
 	-- 保证最后一个点击可维持完整时间
@@ -23,6 +23,7 @@ function WC:TryFadeOut()
 	end
 	hideTimes = max(hideTimes - 1, 0)
 end
+
 do
 	local temp = {}
 	function WC:MINIMAP_PING(_, unit, x, y)
@@ -30,20 +31,16 @@ do
 			return
 		end
 
+		local timestamp = time()
 		if temp then
 			if temp.unit == unit and temp.x == x and temp.y == y then
-				if time < 3 + temp.time then
+				if timestamp < 3 + temp.timestamp then
 					return
 				end
 			end
 		end
 
-		temp = {
-			unit = unit,
-			x = x,
-			y = y,
-			time = time,
-		}
+		temp = { unit = unit, x = x, y = y, timestamp = timestamp }
 
 		local englishClass = select(2, UnitClass(unit))
 		local name, realm = UnitName(unit)

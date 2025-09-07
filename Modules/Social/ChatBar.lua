@@ -406,7 +406,7 @@ function CB:UpdateBar()
 						_G.WTCustomEmoteFrame:Show()
 					end
 				else
-					CB:Log("warning", L["Please enable Emote module in WindTools Social category."])
+					F.Print(L["Please enable Emote module in WindTools Social category."])
 				end
 			end
 		end

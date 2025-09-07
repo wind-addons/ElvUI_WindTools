@@ -333,7 +333,13 @@ function S:HandleAceGUIWidget(lib, name, constructor)
 		self.aceWidgetWaitingList[name] = {}
 		lib.WidgetRegistry[name] = function()
 			local widget = config.constructor()
-			tinsert(self.aceWidgetWaitingList[name], widget)
+			if self.db then
+				if self.db.enable and config.checker(self.db) then
+					config.handler(widget)
+				end
+			else
+				tinsert(self.aceWidgetWaitingList[name], widget)
+			end
 			return widget
 		end
 	end

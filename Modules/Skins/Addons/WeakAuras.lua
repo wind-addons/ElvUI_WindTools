@@ -122,11 +122,11 @@ local function SkinWeakAuras(frame, regionType)
 		return
 	end
 
-	CreateBackdropAndShadow(frame)
-
 	if regionType == "icon" then
+		CreateBackdropAndShadow(frame)
 		SkinIconRegion(frame)
 	elseif regionType == "aurabar" then
+		CreateBackdropAndShadow(frame)
 		SkinAurabarRegion(frame)
 	end
 

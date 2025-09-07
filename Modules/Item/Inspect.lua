@@ -95,6 +95,16 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 	}
 end
 
+local function GetUnitSpecializationInfo(unit)
+	if unit == "player" then
+		local _, name, _, icon = GetSpecializationInfo(GetSpecialization())
+		return { icon = icon, name = name }
+	end
+
+	local _, name, _, icon = GetSpecializationInfoByID(GetInspectSpecialization(unit))
+	return { icon = icon, name = name }
+end
+
 local EnchantParts = {
 	{ false, "HEADSLOT" },
 	{ false, "NECKSLOT" },
@@ -351,8 +361,8 @@ function I:BuildInspectItemListFrame(parent)
 	-- Portrait
 	frame.PortraitFrame = CreateFrame("Frame", nil, frame, "GarrisonFollowerPortraitTemplate") --[[@as GarrisonFollowerPortraitMixin]]
 	frame.PortraitFrame:StripTextures()
-	frame.PortraitFrame:Point("TOPLEFT", frame, "TOPLEFT", 16, -10)
-	frame.PortraitFrame:SetScale(0.8)
+	frame.PortraitFrame:Point("TOPLEFT", frame, "TOPLEFT", 16, -12)
+	frame.PortraitFrame:SetScale(0.9)
 
 	F.SetFontOutline(frame.PortraitFrame.Level, F.GetCompatibleFont("Chivo Mono"), 18)
 	frame.PortraitFrame.Level:ClearAllPoints()
@@ -361,17 +371,36 @@ function I:BuildInspectItemListFrame(parent)
 
 	frame.PortraitBorder = frame:CreateTexture(nil, "BORDER")
 	frame.PortraitBorder:SetTexture(W.Media.Textures.round)
-	frame.PortraitBorder:Size(43, 43)
+	frame.PortraitBorder:Size(49)
 	frame.PortraitBorder:Point("CENTER", frame.PortraitFrame.Portrait)
 
 	-- Player Information
 	frame.PlayerName = frame:CreateFontString(nil, "ARTWORK")
 	frame.PlayerItemLevel = frame:CreateFontString(nil, "ARTWORK")
-	F.SetFontOutline(frame.PlayerName, E.db.general.font, 16)
+	F.SetFontOutline(frame.PlayerName, E.db.general.font, 18)
 	F.SetFontOutline(frame.PlayerItemLevel, E.db.general.font, 14)
 	frame.PlayerItemLevel:SetTextColor(C.ExtractRGBFromTemplate("amber-400"))
-	frame.PlayerName:Point("TOPLEFT", frame, "TOPLEFT", 66, -14)
-	frame.PlayerItemLevel:Point("TOPLEFT", frame, "TOPLEFT", 66, -38)
+	frame.PlayerName:Point("TOPLEFT", frame, "TOPLEFT", 75, -17)
+	frame.PlayerItemLevel:Point("TOPLEFT", frame, "TOPLEFT", 75, -42)
+
+	frame.SpecIcon = frame:CreateTexture(nil, "ARTWORK")
+	frame.SpecIcon:Size(36, 36)
+	frame.SpecIcon:Point("TOPRIGHT", frame, "TOPRIGHT", -28, -17)
+	frame.SpecIcon:SetTexCoord(unpack(E.TexCoords))
+	frame.SpecIcon:SetShown(false)
+	frame.SpecIcon:CreateBackdrop()
+
+	frame.SpecIcon:SetScript("OnEnter", function()
+		if frame.specName and frame.specName ~= "" then
+			_G.GameTooltip:SetOwner(frame, "ANCHOR_CURSOR", 0, 0)
+			_G.GameTooltip:SetText(frame.specName, 1, 1, 1)
+			_G.GameTooltip:Show()
+		end
+	end)
+
+	frame.SpecIcon:SetScript("OnLeave", function()
+		_G.GameTooltip:Hide()
+	end)
 
 	-- Lines
 	frame.Lines = {}
@@ -434,7 +463,7 @@ function I:BuildInspectItemListFrame(parent)
 		line:SetScript("OnEnter", function(self)
 			self.Label:SetBackdropColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 0.7)
 			if self.link or (self.level and self.level > 0) then
-				_G.GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+				_G.GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 15, 30)
 				_G.GameTooltip:SetInventoryItem(self:GetParent().unit, self.index)
 				_G.GameTooltip:Show()
 			end
@@ -481,6 +510,16 @@ function I:ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
 	frame.PlayerName:SetText(UnitName(unit))
 	frame.PlayerName:SetTextColor(classColor.r, classColor.g, classColor.b)
 	frame.PlayerItemLevel:SetText(format("%s %0d", L["Item Level"], ilevel))
+
+	local specInfo = GetUnitSpecializationInfo(unit)
+	frame.specName = specInfo and specInfo.name
+	if specInfo and specInfo.icon then
+		frame.SpecIcon.backdrop:SetBackdropBorderColor(classColor.r, classColor.g, classColor.b)
+		frame.SpecIcon:SetTexture(specInfo.icon)
+		frame.SpecIcon:SetShown(true)
+	else
+		frame.SpecIcon:SetShown(false)
+	end
 
 	for displayIndex, slotInfo in ipairs(DISPLAY_SLOTS) do
 		local line = frame.Lines[displayIndex]

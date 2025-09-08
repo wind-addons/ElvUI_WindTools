@@ -207,11 +207,8 @@ function W:ChangelogReadAlert()
 			E:StaticPopup_Show("WINDTOOLS_OPEN_CHANGELOG")
 		else
 			F.Print(
-				format(
-					"%s %s",
-					format(L["Welcome to version %s!"], C.StringByTemplate(W.Version, "teal-400")),
-					C.StringByTemplate(format("|Hwtlink:changelog::|h[%s]|h", L["Open Changelog"]), "sky-400")
-				)
+				format(L["Welcome to version %s!"], C.StringByTemplate(W.Version, "teal-400")),
+				C.StringByTemplate(format("|Hwtlink:changelog::|h[%s]|h", L["Open Changelog"]), "sky-400")
 			)
 		end
 	end

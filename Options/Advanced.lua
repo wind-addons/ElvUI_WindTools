@@ -991,9 +991,9 @@ do
 
 	E.PopupDialogs.WINDTOOLS_IMPORT_STRING = {
 		text = format(
-			"%s\n|cffff3860%s|r",
+			"%s\n%s",
 			L["Are you sure you want to import this string?"],
-			format(L["It will override your %s setting."], W.Title)
+			C.StringByTemplate(format(L["It will override your %s setting."], W.Title), "rose-500")
 		),
 		button1 = _G.ACCEPT,
 		button2 = _G.CANCEL,

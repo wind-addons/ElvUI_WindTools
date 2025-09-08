@@ -1,5 +1,6 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table, PrivateDB, ProfileDB, GlobalDB
 local M = W.Modules.Misc ---@class Misc
+local C = W.Utilities.Color
 
 local _G = _G
 local format = format
@@ -89,7 +90,8 @@ function M:MovieCinematicStarted(movieType, movieID)
 	else
 		setForceSkipMovie(true)
 		_G.MovieFrame_StopMovie(_G.MovieFrame)
-		F.Print(format("%s |cff71d5ff|Hwtlink:cutscene:%s|h[%s]|h|r", L["Skipped the cutscene."], movieID, L["Replay"]))
+		local link = format("|Hwtlink:cutscene:%s|h[%s]|h", movieID, L["Replay"])
+		F.Print(L["Skipped the cutscene."], C.StringByTemplate(link, "sky-400"))
 	end
 end
 

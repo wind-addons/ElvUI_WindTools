@@ -717,10 +717,8 @@ options.alreadyKnown = {
 					type = "description",
 					name = function()
 						if AK.StopRunning then
-							return format(
-								"|cffff3860" .. L["Because of %s, this module will not be loaded."] .. "|r",
-								AK.StopRunning
-							)
+							local errorMsg = format(L["Because of %s, this module will not be loaded."], AK.StopRunning)
+							return C.StringByTemplate(errorMsg, "rose-500")
 						else
 							return L["Puts a overlay on already known learnable items on vendors and AH."]
 						end
@@ -1100,10 +1098,8 @@ options.inspect = {
 					type = "description",
 					name = function()
 						if IS.StopRunning then
-							return format(
-								"|cffff3860" .. L["Because of %s, this module will not be loaded."] .. "|r",
-								IS.StopRunning
-							)
+							local errorMsg = format(L["Because of %s, this module will not be loaded."], IS.StopRunning)
+							return C.StringByTemplate(errorMsg, "rose-500")
 						else
 							return format(
 								"%s\n%s",
@@ -1733,7 +1729,7 @@ options.extendMerchantPages = {
 	end,
 	args = {
 		desc = {
-			order = 0,
+			order = 1,
 			type = "group",
 			inline = true,
 			name = L["Description"],
@@ -1743,10 +1739,9 @@ options.extendMerchantPages = {
 					type = "description",
 					name = function()
 						if EMP.StopRunning then
-							return format(
-								"|cffff3860" .. L["Because of %s, this module will not be loaded."] .. "|r",
-								EMP.StopRunning
-							)
+							local errorMsg =
+								format(L["Because of %s, this module will not be loaded."], EMP.StopRunning)
+							return C.StringByTemplate(errorMsg, "rose-500")
 						else
 							return L["Extends the merchant page to show more items."]
 						end
@@ -1756,7 +1751,7 @@ options.extendMerchantPages = {
 			},
 		},
 		enable = {
-			order = 1,
+			order = 2,
 			type = "toggle",
 			name = L["Enable"],
 			width = "full",
@@ -1765,7 +1760,7 @@ options.extendMerchantPages = {
 			end,
 		},
 		numberOfPages = {
-			order = 2,
+			order = 3,
 			type = "range",
 			name = L["Number of Pages"],
 			desc = L["The number of pages shown in the merchant frame."],

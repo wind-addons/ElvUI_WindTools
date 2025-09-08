@@ -88,9 +88,9 @@ options.general = {
 			name = format(L["Use %s Skins"], L["MerathilisUI"]),
 			width = 1.2,
 			desc = format(
-				"%s\n|cffff3860%s|r: %s",
+				"%s\n%s: %s",
 				format(L["Add skins for all modules inside %s with %s functions."], W.Title, L["MerathilisUI"]),
-				L["Notice"],
+				C.StringByTemplate(L["Notice"], "rose-500"),
 				format(L["It doesn't mean that the %s Skins will not be applied."], W.Title)
 			),
 			hidden = function()
@@ -1143,7 +1143,6 @@ for key, value in pairs(options.elvui.args) do
 	end
 end
 
--- If the skin is in development, add this: .." |cffff3860["..L["Test"].."]|r"
 options.addons = {
 	order = 6,
 	type = "group",
@@ -1190,11 +1189,9 @@ options.addons = {
 				desc = {
 					order = 1,
 					type = "description",
-					name = format(
-						"|cffff3860%s|r %s",
-						L["Notice"],
-						L["Skins only work if you installed and loaded the addon."]
-					),
+					name = C.StringByTemplate(L["Notice"], "rose-500")
+						.. " "
+						.. L["Skins only work if you installed and loaded the addon."],
 					width = "full",
 					fontSize = "medium",
 				},
@@ -1358,7 +1355,7 @@ options.addons = {
 		rematch = {
 			order = 10,
 			type = "toggle",
-			name = L["Rematch"] .. " |cffff3860(" .. L["WIP"] .. ")|r",
+			name = L["Rematch"] .. " " .. C.StringByTemplate(L["WIP"], "rose-500"),
 			addonName = "Rematch",
 			addonskinsKey = "Rematch",
 		},
@@ -2512,9 +2509,10 @@ options.widgets = {
 				desc = {
 					order = 2,
 					type = "description",
-					name = "|cffff3860"
-						.. L["To enable this feature, you need to enable the check box skin in ElvUI Skins first."]
-						.. "|r",
+					name = C.StringByTemplate(
+						L["To enable this feature, you need to enable the check box skin in ElvUI Skins first."],
+						"rose-500"
+					),
 					hidden = function(info)
 						return E.private.skins.checkBoxSkin
 					end,

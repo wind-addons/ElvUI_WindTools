@@ -90,7 +90,7 @@ function S:TomCats()
 		self:RawHook(header, "SetNormalAtlas", "TomCats_HeaderCollapseButton_SetNormalAtlas", true)
 		self:RawHook(header, "SetPushedAtlas", "TomCats_HeaderCollapseButton_SetPushedAtlas", true)
 		header:SetHighlightTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
-		header.SetHighlightTexture = E.noop
+		F.InternalizeMethod(header, "SetHighlightTexture", true)
 		header:SetSize(16, 16)
 		header.topPadding = 16
 		F.SetFontOutline(header.text)

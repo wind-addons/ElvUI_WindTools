@@ -105,6 +105,7 @@ local function setTooltipIcon(tt, data, type)
 	local icon = iconFunctions[type] and iconFunctions[type](data)
 	local title = data.lines and data.lines[1] and data.lines[1].leftText
 	local iconDB = E.private.WT.tooltips.titleIcon
+	F.Developer.LogDebug("Tooltip Icon", "setTooltipIcon", "type", type, "title", title, "icon", icon)
 	local iconString = icon and F.GetIconString(icon, iconDB.height, iconDB.width, true)
 
 	if not title or not iconString then

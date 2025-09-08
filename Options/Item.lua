@@ -1180,8 +1180,45 @@ options.inspect = {
 				},
 			},
 		},
-		slotText = {
+		icon = {
 			order = 4,
+			type = "group",
+			inline = true,
+			name = L["Icon"],
+			get = function(info)
+				return E.db.WT.item.inspect.icon[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.item.inspect.icon[info[#info]] = value
+			end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Show Icon"],
+				},
+				qualityBorder = {
+					order = 2,
+					type = "toggle",
+					name = L["Quality Border"],
+					desc = L["Show the quality border on the icon."],
+					hidden = function()
+						return not E.db.WT.item.inspect.qualityBorder
+					end,
+				},
+				tierSetIndicator = {
+					order = 3,
+					type = "toggle",
+					name = L["Tier Set Indicator"],
+					desc = L["Show the tier set indicator on the icon."],
+					hidden = function()
+						return not E.db.WT.item.inspect.icon
+					end,
+				},
+			},
+		},
+		slotText = {
+			order = 5,
 			type = "group",
 			inline = true,
 			name = L["Slot"],
@@ -1226,7 +1263,7 @@ options.inspect = {
 			},
 		},
 		levelText = {
-			order = 4,
+			order = 6,
 			type = "group",
 			inline = true,
 			name = L["Item Level"],
@@ -1271,7 +1308,7 @@ options.inspect = {
 			},
 		},
 		equipText = {
-			order = 5,
+			order = 7,
 			type = "group",
 			inline = true,
 			name = L["Item Name"],
@@ -1316,7 +1353,7 @@ options.inspect = {
 			},
 		},
 		statsText = {
-			order = 5,
+			order = 8,
 			type = "group",
 			inline = true,
 			name = L["Statistics"],

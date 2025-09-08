@@ -653,6 +653,11 @@ P.item = {
 		inspect = true,
 		stats = true,
 		playerOnInspect = true,
+		icon = {
+			enable = true,
+			qualityBorder = true,
+			tierSetIndicator = true,
+		},
 		slotText = {
 			name = E.db.general.font,
 			size = W.CompatibleFont and 12 or 10,

@@ -422,7 +422,7 @@ function I:BuildInspectItemListFrame(parent)
 		line.Label:Size(38, 18)
 		line.Label:Point("LEFT")
 		line.Label:SetTemplate()
-		line.Label:SetBackdropBorderColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 0.8)
+		line.Label:SetBackdropBorderColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 0.5)
 		line.Label:SetBackdropColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 0.2)
 
 		line.Label.Text = line.Label:CreateFontString(nil, "ARTWORK")
@@ -442,46 +442,52 @@ function I:BuildInspectItemListFrame(parent)
 		line.ItemLevel:SetJustifyH("RIGHT")
 
 		-- Item Texture
-		line.ItemTexture = line:CreateTexture(nil, "ARTWORK")
-		frame.iconHeight = frame.lineHeight - 6
+		line.ItemTextureFrame = CreateFrame("Frame", nil, line, "BackdropTemplate")
+		line.ItemTextureFrame.Texture = line.ItemTextureFrame:CreateTexture(nil, "ARTWORK")
+		frame.iconHeight = frame.lineHeight - 5
 		frame.iconWidth = floor((frame.iconHeight / 0.8) + 0.5)
-		line.ItemTexture:Size(frame.iconWidth, frame.iconHeight)
-		line.ItemTexture:Point("LEFT", line.ItemLevel, "RIGHT", 4, 0)
-		line.ItemTexture:SetTexCoord(E:CropRatio(frame.iconWidth, frame.iconHeight))
-		line.ItemTexture:CreateBackdrop()
+		line.ItemTextureFrame:Size(frame.iconWidth, frame.iconHeight)
+		line.ItemTextureFrame:Point("LEFT", line.ItemLevel, "RIGHT", 4, 0)
+		line.ItemTextureFrame.Texture:SetInside(line.ItemTextureFrame)
+		line.ItemTextureFrame.Texture:SetTexCoord(
+			E:CropRatio(line.ItemTextureFrame.Texture:GetWidth(), line.ItemTextureFrame.Texture:GetHeight())
+		)
+		line.ItemTextureFrame:SetTemplate()
 
-		line.TierSetIndicator = line:CreateFontString(nil, "OVERLAY")
-		F.SetFontOutline(line.TierSetIndicator, F.GetCompatibleFont("Chivo Mono"), 20)
-		line.TierSetIndicator:Point("CENTER", line.ItemTexture, "TOPRIGHT", 1, -1)
-		line.TierSetIndicator:SetTextColor(C.ExtractRGBFromTemplate("pink-500"))
-		line.TierSetIndicator:SetText("*")
+		line.ItemTextureFrame.TierSetIndicator = line.ItemTextureFrame:CreateFontString(nil, "OVERLAY")
+		F.SetFontOutline(line.ItemTextureFrame.TierSetIndicator, F.GetCompatibleFont("Chivo Mono"), 20)
+		line.ItemTextureFrame.TierSetIndicator:Point("CENTER", line.ItemTextureFrame.Texture, "TOPRIGHT", 1, -1)
+		line.ItemTextureFrame.TierSetIndicator:SetTextColor(C.ExtractRGBFromTemplate("pink-500"))
+		line.ItemTextureFrame.TierSetIndicator:SetText("*")
 
 		-- Item Name
 		line.ItemName = line:CreateFontString(nil, "ARTWORK")
 		F.SetFontWithDB(line.ItemName, self.db.equipText)
 		line.ItemName:Height(self.db.equipText.size + 2)
-		line.ItemName:Point("LEFT", line.ItemTexture, "RIGHT", 6, -1)
+		line.ItemName:Point("LEFT", line.ItemTextureFrame, "RIGHT", 6, -1)
 		line.ItemName:SetJustifyH("LEFT")
 
 		-- Tooltips
-		line:SetScript("OnEnter", function(self)
-			self.Label:SetBackdropColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 0.7)
-			if self.link or (self.level and self.level > 0) then
-				_G.GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 15, 30)
-				_G.GameTooltip:SetInventoryItem(self:GetParent().unit, self.index)
+		line:SetScript("OnEnter", function(this)
+			this.Label:SetBackdropColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 0.7)
+			this.Label:SetBackdropBorderColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 1)
+			if this.link or (this.level and this.level > 0) then
+				_G.GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT", 15, 30)
+				_G.GameTooltip:SetInventoryItem(this:GetParent().unit, this.index)
 				_G.GameTooltip:Show()
 			end
 		end)
 
-		line:SetScript("OnLeave", function(self)
-			self.Label:SetBackdropColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 0.2)
+		line:SetScript("OnLeave", function(this)
+			this.Label:SetBackdropColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 0.2)
+			this.Label:SetBackdropBorderColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 0.5)
 			_G.GameTooltip:Hide()
 		end)
 
-		line:SetScript("OnDoubleClick", function(self)
-			if self.link then
+		line:SetScript("OnDoubleClick", function(this)
+			if this.link then
 				_G.ChatEdit_ActivateChat(_G.ChatEdit_ChooseBoxForSend())
-				_G.ChatEdit_InsertLink(self.link)
+				_G.ChatEdit_InsertLink(this.link)
 			end
 		end)
 	end
@@ -545,21 +551,34 @@ function I:ShowInspectItemListFrame(unit, parent, ilevel)
 		if itemInfo and itemInfo.level > 0 then
 			line.ItemLevel:SetText(format("%d", itemInfo.level))
 			line.ItemName:SetText(itemInfo.noBracketsLink or itemInfo.link or itemInfo.name)
-
-			local r, g, b = C_Item_GetItemQualityColor(itemInfo.quality or Enum_ItemQuality_Common)
-			line.ItemTexture:SetTexture(itemInfo.texture)
-			line.ItemTexture.backdrop:SetBackdropBorderColor(r, g, b)
-			line.ItemTexture:Show()
 		else
 			line.ItemLevel:SetText("")
 			line.ItemName:SetText(L["Not Equipped"])
-			line.ItemTexture:Hide()
 		end
 
-		if itemInfo and itemInfo.set and itemInfo.set > 0 then
-			line.TierSetIndicator:Show()
+		line.ItemTextureFrame:ClearAllPoints()
+		if self.db.icon.enable then
+			line.ItemTextureFrame:Point("LEFT", line.ItemLevel, "RIGHT", 4, 0)
+			if itemInfo and itemInfo.level > 0 then
+				local r, g, b = E.db.general.bordercolor.r, E.db.general.bordercolor.g, E.db.general.bordercolor.b
+				if self.db.icon.qualityBorder then
+					r, g, b = C_Item_GetItemQualityColor(itemInfo.quality or Enum_ItemQuality_Common)
+					line.ItemTextureFrame.Texture:SetTexture(itemInfo.texture)
+				end
+				line.ItemTextureFrame:SetBackdropBorderColor(r, g, b)
+				line.ItemTextureFrame:Show()
+			else
+				line.ItemTextureFrame:Hide()
+			end
 		else
-			line.TierSetIndicator:Hide()
+			line.ItemTextureFrame:Point("RIGHT", line.ItemLevel, "RIGHT", -2, 0)
+			line.ItemTextureFrame:Hide()
+		end
+
+		if self.db.icon.enable and self.db.icon.tierSetIndicator and itemInfo and itemInfo.set and itemInfo.set > 0 then
+			line.ItemTextureFrame.TierSetIndicator:Show()
+		else
+			line.ItemTextureFrame.TierSetIndicator:Hide()
 		end
 
 		-- Update colors for some expansion special items
@@ -665,7 +684,7 @@ function I:Inspect()
 				if ilevel <= 0 then
 					return true
 				end
-				if  ilevel > 0 then
+				if ilevel > 0 then
 					self.data.timer = time()
 					self.data.name = UnitName(self.data.unit)
 					self.data.class = select(2, UnitClass(self.data.unit))

@@ -11,6 +11,8 @@ body:
       options:
         - label: If the feature request is a addon skin, the addon must be widely used and support Chinese.
           required: true
+        - label: I have not read any of these steps, please close my issue when you see it.
+          required: false
         - label: This feature is NOT a duplicate of an existing feature request.
           required: true
   - type: textarea

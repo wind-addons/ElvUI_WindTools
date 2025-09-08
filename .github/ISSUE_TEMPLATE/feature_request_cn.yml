@@ -11,6 +11,8 @@ body:
       options:
         - label: 如果功能请求是一个插件皮肤，那么该插件必须已经被广泛使用，并且支持中文
           required: true
+        - label: 我根本没看这些确认事项，请直接关闭我的请求
+          required: false
         - label: 此功能不和现在已经存在的其他功能请求重复
           required: true
   - type: textarea

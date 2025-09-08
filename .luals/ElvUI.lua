@@ -1372,9 +1372,9 @@ function E:GetCurrencyIDFromLink(link) end
 function E:GetDateTime(localTime, unix) end
 
 ---Gets class color information
----@param class string Class name
+---@param class ClassFile Class name
 ---@param usePriestColor? boolean If true, use priest color for priests
----@return ClassColor|nil color Class color table or nil
+---@return ClassColor color Class color table or nil
 function E:ClassColor(class, usePriestColor) end
 
 ---Gets quality color information
@@ -1390,7 +1390,7 @@ function E:GetQualityColor(quality) end
 function E:GetItemQualityColor(quality) end
 
 ---Gets inverse class color
----@param class string Class name
+---@param class ClassFile Class name
 ---@param usePriestColor? boolean If true, use priest color for priests
 ---@param forceCap? boolean If true, force color capping
 ---@return ClassColor color Inverse class color table
@@ -1407,7 +1407,7 @@ function E:GetClassInfo(value) end
 function E:UnlocalizedClassName(className) end
 
 ---Gets localized class name
----@param className string Class file name
+---@param className ClassFile Class file name
 ---@param unit? string|number Unit or gender number
 ---@return string localizedName Localized class name
 function E:LocalizedClassName(className, unit) end

@@ -403,11 +403,11 @@ end
 ---Provides texture coordinates for LFG role icons
 do
 	---Get texture coordinates for role icons
-	---@param role string The role name ("TANK", "DPS", "DAMAGER", "HEALER", "LEADER", "READY", "PENDING", "REFUSE")
-	---@return number? left Left texture coordinate
-	---@return number? right Right texture coordinate
-	---@return number? top Top texture coordinate
-	---@return number? bottom Bottom texture coordinate
+	---@param role "TANK"|"HEALER"|"DPS"|"DAMAGER"|"LEADER"|"READY"|"PENDING"|"REFUSE" The role identifier
+	---@return number left Left texture coordinate
+	---@return number right Right texture coordinate
+	---@return number top Top texture coordinate
+	---@return number bottom Bottom texture coordinate
 	function F.GetRoleTexCoord(role)
 		if role == "TANK" then
 			return 0.32 / 9.03, 2.04 / 9.03, 2.65 / 9.03, 4.3 / 9.03
@@ -424,7 +424,7 @@ do
 		elseif role == "REFUSE" then
 			return 2.68 / 9.03, 4.4 / 9.03, 5.02 / 9.03, 6.7 / 9.03
 		end
-		return nil, nil, nil, nil
+		return 0, 1, 0, 1
 	end
 
 	AddMedia("ROLES", "UI-LFG-ICON-ROLES.blp", "Textures")

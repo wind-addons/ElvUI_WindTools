@@ -208,10 +208,18 @@ function LL:MemberDisplay_SetActivity(memberDisplay, activity)
 	memberDisplay.resultID = activity and activity.GetID and activity:GetID() or nil
 end
 
+
+---Reskins and customizes role icons in LFG (Looking for Group) lists with various visual enhancements.
+---When role is nil, the icon and its elements are hidden by setting alpha to 0.
+---@param parent Frame? The parent frame that contains the icon. Required for leader indicator and class line features.
+---@param icon Texture The texture object representing the role icon to be reskinned.
+---@param role "TANK" | "HEALER" | "DAMAGER" | nil The player's role. If nil, the icon will be hidden.
+---@param data [ClassFile, string, boolean]? Optional cached data containing [class, specialization, isLeader] information.
 function LL:ReskinIcon(parent, icon, role, data)
-	local class = data and data[1]
-	local spec = data and data[2]
-	local isLeader = data and data[3]
+	local class, spec, isLeader
+	if data then
+		class, spec, isLeader = data[1], data[2], data[3]
+	end
 
 	if role then
 		if self.db.icon.reskin then
@@ -297,6 +305,7 @@ function LL:UpdateEnumerate(Enumerate)
 		return
 	end
 
+	---@type table<string, [ClassFile, string, boolean][]>
 	local cache = { TANK = {}, HEALER = {}, DAMAGER = {} }
 
 	for i = 1, result.numMembers do

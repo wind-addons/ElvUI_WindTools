@@ -154,14 +154,9 @@ function F.PrintGradientLine()
 end
 
 ---Print message with WindTools title prefix
----@param text string? The text to print
-function F.Print(text)
-	if not text then
-		return
-	end
-
-	local message = format("%s: %s", W.Title, text)
-	print(message)
+---@param ... string|number Message parts to print
+function F.Print(...)
+	print(format("%s: %s", W.Title, strjoin(" ", ...)))
 end
 
 ---Delay unhook all hooks from a module

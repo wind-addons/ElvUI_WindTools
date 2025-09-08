@@ -1202,11 +1202,11 @@ options.inspect = {
 						return not E.db.WT.item.inspect.icon
 					end,
 				},
-				tierSetIndicator = {
+				specialIndicator = {
 					order = 3,
 					type = "toggle",
-					name = L["Tier Set Indicator"],
-					desc = L["Show the tier set indicator on the icon."],
+					name = L["Special Indicator"],
+					desc = L["Show the special mark on the icon to indicate the crafting quality, tier set, etc."],
 					hidden = function()
 						return not E.db.WT.item.inspect.icon
 					end,

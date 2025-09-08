@@ -652,7 +652,7 @@ P.item = {
 		icon = {
 			enable = true,
 			qualityBorder = false,
-			tierSetIndicator = true,
+			specialIndicator = true,
 		},
 		slotText = {
 			name = E.db.general.font,

@@ -36,6 +36,7 @@ local UnitGUID = UnitGUID
 local UnitHealthMax = UnitHealthMax
 local UnitLevel = UnitLevel
 local UnitName = UnitName
+local GetServerExpansionLevel = GetServerExpansionLevel
 
 local HEALTH = HEALTH
 local LEVEL = LEVEL
@@ -53,6 +54,7 @@ local Enum_ItemQuality_Common = Enum.ItemQuality.Common
 local guids, inspecting = {}, false
 
 local LABEL_COLOR = C.GetRGBFromTemplate("cyan-300")
+local CURRENT_EXPANSION_ID = GetServerExpansionLevel()
 
 local DISPLAY_SLOTS = {}
 for slotIndex, slotName in ipairs(W.EquipmentSlots) do
@@ -82,12 +84,25 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 		return
 	end
 
-	local name, _, quality, level, _, type, subType, _, itemEquipLoc, tex, _, _, _, _, _, set = C_Item_GetItemInfo(link)
+	local name, _, quality, level, _, type, subType, _, itemEquipLoc, tex, _, _, _, _, expansionID, set, isCraftingReagent =
+		C_Item_GetItemInfo(link)
+
+	local craftingAtlas
+	local cleanLink = gsub(link, "|h%[(.+)%]|h", function(raw)
+		local name = gsub(raw, "(%s*)(|A:.-|a)", function(_, atlasString)
+			craftingAtlas = gsub(atlasString, "|A:(.-):%d+:%d+::%d+|a", "%1")
+			return ""
+		end)
+		return "|h" .. name .. "|h"
+	end)
 
 	return {
+		cleanLink = cleanLink,
+		craftingAtlas = craftingAtlas,
+		expansionID = expansionID,
+		isCraftingReagent = isCraftingReagent,
 		level = level,
 		link = link,
-		noBracketsLink = gsub(link, "h%[(.+)%]|h", "h%1|h"),
 		name = name,
 		quality = quality,
 		set = set,
@@ -454,11 +469,9 @@ function I:BuildInspectItemListFrame(parent)
 		)
 		line.ItemTextureFrame:SetTemplate()
 
-		line.ItemTextureFrame.TierSetIndicator = line.ItemTextureFrame:CreateFontString(nil, "OVERLAY")
-		F.SetFontOutline(line.ItemTextureFrame.TierSetIndicator, F.GetCompatibleFont("Chivo Mono"), 20)
-		line.ItemTextureFrame.TierSetIndicator:Point("CENTER", line.ItemTextureFrame.Texture, "TOPRIGHT", 1, -1)
-		line.ItemTextureFrame.TierSetIndicator:SetTextColor(C.ExtractRGBFromTemplate("pink-500"))
-		line.ItemTextureFrame.TierSetIndicator:SetText("*")
+		line.ItemTextureFrame.SpecialIndicator = line.ItemTextureFrame:CreateFontString(nil, "OVERLAY")
+		F.SetFontOutline(line.ItemTextureFrame.SpecialIndicator, F.GetCompatibleFont("Chivo Mono"), 20)
+		line.ItemTextureFrame.SpecialIndicator:Point("CENTER", line.ItemTextureFrame.Texture, "TOPRIGHT", 1, -2)
 
 		-- Item Name
 		line.ItemName = line:CreateFontString(nil, "ARTWORK")
@@ -550,7 +563,7 @@ function I:ShowInspectItemListFrame(unit, parent, ilevel)
 
 		if itemInfo and itemInfo.level > 0 then
 			line.ItemLevel:SetText(format("%d", itemInfo.level))
-			line.ItemName:SetText(itemInfo.noBracketsLink or itemInfo.link or itemInfo.name)
+			line.ItemName:SetText(itemInfo.cleanLink or itemInfo.link or itemInfo.name)
 		else
 			line.ItemLevel:SetText("")
 			line.ItemName:SetText(L["Not Equipped"])
@@ -575,10 +588,23 @@ function I:ShowInspectItemListFrame(unit, parent, ilevel)
 			line.ItemTextureFrame:Hide()
 		end
 
-		if self.db.icon.enable and self.db.icon.tierSetIndicator and itemInfo and itemInfo.set and itemInfo.set > 0 then
-			line.ItemTextureFrame.TierSetIndicator:Show()
+		if self.db.icon.enable and self.db.icon.specialIndicator and itemInfo then
+			if itemInfo.set and itemInfo.set > 0 then
+				if itemInfo.expansionID >= CURRENT_EXPANSION_ID then
+					line.ItemTextureFrame.SpecialIndicator:SetTextColor(C.ExtractRGBFromTemplate("pink-500"))
+				else
+					line.ItemTextureFrame.SpecialIndicator:SetTextColor(C.ExtractRGBFromTemplate("gray-400"))
+				end
+				line.ItemTextureFrame.SpecialIndicator:SetText("*")
+				line.ItemTextureFrame.SpecialIndicator:Show()
+			elseif itemInfo.craftingAtlas then
+				line.ItemTextureFrame.SpecialIndicator:SetText("|A:" .. itemInfo.craftingAtlas .. ":8:8|a")
+				line.ItemTextureFrame.SpecialIndicator:Show()
+			else
+				line.ItemTextureFrame.SpecialIndicator:Hide()
+			end
 		else
-			line.ItemTextureFrame.TierSetIndicator:Hide()
+			line.ItemTextureFrame.SpecialIndicator:Hide()
 		end
 
 		-- Update colors for some expansion special items

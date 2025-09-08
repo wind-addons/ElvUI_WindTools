@@ -13,6 +13,8 @@ body:
           required: true
         - label: 我已在提交此问题前将 `ElvUI_WindTools` 更新至最新版本
           required: true
+        - label: 我根本没看这些确认步骤，请直接关闭我的问题
+          required: false
         - label: 我已在此前使用 `/wtdebug on` 测试过该问题
           required: true
   - type: input

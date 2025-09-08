@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
-local A = W:GetModule("Announcement")
+local A = W:GetModule("Announcement") ---@class Announcement
 
 function A:Goodbye()
 	local config = self.db.goodbye

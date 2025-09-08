@@ -655,7 +655,7 @@ P.item = {
 		playerOnInspect = true,
 		icon = {
 			enable = true,
-			qualityBorder = true,
+			qualityBorder = false,
 			tierSetIndicator = true,
 		},
 		slotText = {

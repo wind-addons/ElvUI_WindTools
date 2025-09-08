@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
-local A = W:GetModule("Announcement")
+local A = W:GetModule("Announcement") ---@class Announcement
 
 local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 local UnitName = UnitName
@@ -76,7 +76,6 @@ function A:LFG_COMPLETION_REWARD()
 end
 
 function A:PLAYER_ENTERING_WORLD(event, ...)
-	self.playerEnteredWorld = true
 	self:Quest()
 	E:Delay(2, self.Keystone, self, event)
 	E:Delay(4, self.ResetAuthority, self)
@@ -91,10 +90,7 @@ end
 -- TODO: SCENARIO_COMPLETED 场景完成事件
 
 function A:QUEST_LOG_UPDATE()
-	if not self.playerEnteredWorld then
-		return
-	end
-	self:Quest()
+	F.TaskManager:AfterLogin(self.Quest, self)
 end
 
 -- 权限认证部分

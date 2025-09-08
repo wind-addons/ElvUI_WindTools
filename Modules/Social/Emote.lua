@@ -231,7 +231,7 @@ end
 function CE:ParseChatBubbles()
 	for _, frame in pairs(C_ChatBubbles_GetAllChatBubbles()) do
 		local holder = frame:GetChildren()
-        ---@cast holder ChatBubbleTemplate
+		---@cast holder ChatBubbleTemplate
 		if holder and not holder:IsForbidden() then
 			local str = holder and holder.String
 			if str then

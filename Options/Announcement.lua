@@ -190,7 +190,7 @@ options.quest = {
 					get = function(info)
 						local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
 						local default = P.announcement.quest[info[#info - 1]].color
-						return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+						return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
 					end,
 					set = function(info, r, g, b, a)
 						E.db.WT.announcement.quest[info[#info - 1]].color = {
@@ -228,7 +228,7 @@ options.quest = {
 					get = function(info)
 						local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
 						local default = P.announcement.quest[info[#info - 1]].color
-						return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+						return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
 					end,
 					set = function(info, r, g, b, a)
 						E.db.WT.announcement.quest[info[#info - 1]].color = {
@@ -266,7 +266,7 @@ options.quest = {
 					get = function(info)
 						local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
 						local default = P.announcement.quest[info[#info - 1]].color
-						return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+						return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
 					end,
 					set = function(info, r, g, b, a)
 						E.db.WT.announcement.quest[info[#info - 1]].color = {
@@ -310,7 +310,7 @@ options.quest = {
 					get = function(info)
 						local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
 						local default = P.announcement.quest[info[#info - 1]].color
-						return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+						return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
 					end,
 					set = function(info, r, g, b, a)
 						E.db.WT.announcement.quest[info[#info - 1]].color = {
@@ -348,7 +348,7 @@ options.quest = {
 					get = function(info)
 						local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
 						local default = P.announcement.quest[info[#info - 1]].color
-						return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+						return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
 					end,
 					set = function(info, r, g, b, a)
 						E.db.WT.announcement.quest[info[#info - 1]].color = {

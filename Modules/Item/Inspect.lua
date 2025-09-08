@@ -560,10 +560,10 @@ function I:ShowInspectItemListFrame(unit, parent, ilevel)
 		if self.db.icon.enable then
 			line.ItemTextureFrame:Point("LEFT", line.ItemLevel, "RIGHT", 4, 0)
 			if itemInfo and itemInfo.level > 0 then
+				line.ItemTextureFrame.Texture:SetTexture(itemInfo.texture)
 				local r, g, b = E.db.general.bordercolor.r, E.db.general.bordercolor.g, E.db.general.bordercolor.b
 				if self.db.icon.qualityBorder then
 					r, g, b = C_Item_GetItemQualityColor(itemInfo.quality or Enum_ItemQuality_Common)
-					line.ItemTextureFrame.Texture:SetTexture(itemInfo.texture)
 				end
 				line.ItemTextureFrame:SetBackdropBorderColor(r, g, b)
 				line.ItemTextureFrame:Show()

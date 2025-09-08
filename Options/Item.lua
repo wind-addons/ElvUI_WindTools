@@ -1203,7 +1203,7 @@ options.inspect = {
 					name = L["Quality Border"],
 					desc = L["Show the quality border on the icon."],
 					hidden = function()
-						return not E.db.WT.item.inspect.qualityBorder
+						return not E.db.WT.item.inspect.icon
 					end,
 				},
 				tierSetIndicator = {

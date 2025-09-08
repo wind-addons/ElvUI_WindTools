@@ -45,9 +45,9 @@ jobs:
               const isChinese = trapPhrasesChinese.includes(trapPhrase);
               let comment;
               if (isChinese) {
-                comment = `⚠️ **此问题可能会被关闭，因为您选择了"${trapPhrase}"**\\n\\n此提示表明您在提交 Issue 前未阅读要求。请仔细阅读检查清单并按照指引创建新的 Issue。`;
+                comment = `⚠️ **此问题可能会被关闭，因为您选择了"${trapPhrase}"**\n\n此提示表明您在提交 Issue 前未阅读要求。请仔细阅读检查清单并按照指引创建新的 Issue。`;
               } else {
-                comment = `⚠️ **The issue will probably be closed, because you selected "${trapPhrase}"**\\n\\nThis indicates that you did not read the requirements before submitting the issue. Please read the checklist carefully and create a new issue following the proper guidelines.`;
+                comment = `⚠️ **The issue will probably be closed, because you selected "${trapPhrase}"**\n\nThis indicates that you did not read the requirements before submitting the issue. Please read the checklist carefully and create a new issue following the proper guidelines.`;
               }
 
               await github.rest.issues.createComment({

@@ -56,7 +56,7 @@ function S:Blizzard_GameMenu()
 	GameMenuFrame.Header:Point("BOTTOM", GameMenuFrame, "TOP", 0, 5)
 	F.SetFontOutline(GameMenuFrame.Header.Text, nil, "+2")
 	F.InternalizeMethod(GameMenuFrame.Header.Text, "SetTextColor", true)
-	F.CallMethod(GameMenuFrame.Header.Text, "SetTextColor", C.ExtractRGBFromTemplate("amber-400"))
+	F.CallMethod(GameMenuFrame.Header.Text, "SetTextColor", C.ExtractRGBFromTemplate("amber-200"))
 	GameMenuFrame.Header.Text:ClearAllPoints()
 	GameMenuFrame.Header.Text:Point("CENTER")
 

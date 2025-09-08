@@ -270,13 +270,6 @@ function W:CheckCompatibility()
 		"db.mui.tooltip.titleIcon.enable"
 	)
 
-	-- CheckMerathilisUI(
-	-- 	L["Group Info"],
-	-- 	L["LFG Info"],
-	-- 	"db.WT.tooltips.groupInfo.enable",
-	-- 	"db.mui.tooltip.groupInfo.enable"
-	-- )
-
 	CheckMerathilisUI(
 		L["Role Icon"],
 		L["Role Icon"],

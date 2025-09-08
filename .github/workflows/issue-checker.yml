@@ -1,4 +1,4 @@
-name: Issue Checker
+name: ✅ Issue Checker
 
 on:
   issues:

@@ -330,8 +330,8 @@ P.combat = {
 		text = true,
 		enterText = L["Enter Combat"],
 		leaveText = L["Leave Combat"],
-		enterColor = { r = 0.929, g = 0.11, b = 0.141, a = 1 },
-		leaveColor = { r = 0.227, g = 1, b = 0.6, a = 1 },
+		enterColor = C.GetRGBAFromTemplate("rose-500"),
+		leaveColor = C.GetRGBAFromTemplate("green-500"),
 		font = {
 			name = E.db.general.font,
 			size = 25,
@@ -376,11 +376,7 @@ P.item = {
 	alreadyKnown = {
 		enable = true,
 		mode = "COLOR",
-		color = {
-			r = 0,
-			g = 1,
-			b = 0,
-		},
+		color = { r = 0, g = 1, b = 0 },
 	},
 	fastLoot = {
 		enable = true,
@@ -691,11 +687,7 @@ P.item = {
 				style = "OUTLINE",
 				xOffset = 0,
 				yOffset = 0,
-				color = {
-					r = 1,
-					g = 1,
-					b = 1,
-				},
+				color = { r = 1, g = 1, b = 1 },
 			},
 		},
 		scrappingMachine = {
@@ -708,11 +700,7 @@ P.item = {
 				style = "OUTLINE",
 				xOffset = 0,
 				yOffset = 0,
-				color = {
-					r = 1,
-					g = 1,
-					b = 1,
-				},
+				color = { r = 1, g = 1, b = 1 },
 			},
 		},
 	},

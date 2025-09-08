@@ -203,6 +203,10 @@ local function GetDatabaseRealValue(path)
 	return accessTable, accessKey, accessValue
 end
 
+--- Creates a compatibility check function for a specific target addon
+---@param targetAddonName string The name of the target addon to check compatibility with
+---@param targetAddonLocales string The localized name of the target addon
+---@return fun(myModuleName: string, targetAddonModuleName: string, myDB: string, targetAddonDB: string)
 local function GetCheckCompatibilityFunction(targetAddonName, targetAddonLocales)
 	if not C_AddOns_IsAddOnLoaded(targetAddonName) then
 		return E.noop

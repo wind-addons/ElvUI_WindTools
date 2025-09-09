@@ -85,10 +85,10 @@ end
 
 ---Create colored string from database settings
 ---@param text string The text to colorize
----@param db table Color database containing r, g, b values
+---@param db RGB Color database containing r, g, b values
 ---@return string? coloredText The colored string or nil if parameters are invalid
 function F.CreateColorString(text, db)
-	if not text or not type(text) == "string" then
+	if not text or type(text) ~= "string" then
 		F.Developer.LogDebug("Functions.CreateColorString: text not found")
 		return
 	end
@@ -108,7 +108,7 @@ end
 ---@param classFile ClassFile? The English class name (e.g., "WARRIOR", "MAGE")
 ---@return string? coloredText The class colored string or nil if parameters are invalid
 function F.CreateClassColorString(text, classFile)
-	if not text or not type(text) == "string" then
+	if not text or type(text) ~= "string" then
 		F.Developer.LogDebug("Functions.CreateClassColorString: text not found")
 		return
 	end
@@ -348,6 +348,27 @@ function F.Throttle(duration, key, func, ...)
 		state.isThrottling = false
 		state.timer = nil
 	end)
+end
+
+---Create a throttled version of a function
+---@param duration number Duration in seconds to throttle
+---@param func function The function to throttle
+---@return function throttledFunction The throttled version of the function
+function F.ThrottleFunction(duration, func)
+	return function(...)
+		F.Throttle(duration, func, func, ...)
+	end
+end
+
+---Cancel throttle for a specific key
+---@param key any The throttle key to cancel
+function F.CancelThrottle(key)
+	local state = throttleStates[key]
+	if state and state.timer then
+		state.timer:Cancel()
+		state.timer = nil
+		state.isThrottling = false
+	end
 end
 
 ---Wait for condition to be true, then execute callback

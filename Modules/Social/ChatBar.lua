@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
-local CB = W:NewModule("ChatBar", "AceHook-3.0", "AceEvent-3.0")
+local CB = W:NewModule("ChatBar", "AceHook-3.0", "AceEvent-3.0") ---@class ChatBar : AceModule, AceHook-3.0, AceEvent-3.0
 local S = W.Modules.Skins ---@type Skins
 local LSM = E.Libs.LSM
 
@@ -26,17 +26,17 @@ local IsInGroup = IsInGroup
 local IsInGuild = IsInGuild
 local IsInRaid = IsInRaid
 local JoinPermanentChannel = JoinPermanentChannel
-local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
-local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 local LeaveChannelByName = LeaveChannelByName
 local RandomRoll = RandomRoll
 local UnitIsGroupAssistant = UnitIsGroupAssistant
 local UnitIsGroupLeader = UnitIsGroupLeader
 
-local NORMAL_CHANNELS = { "SAY", "YELL", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "OFFICER", "EMOTE" }
+local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
+local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
-local MOUSE_OVER_HEIGHT_PADDING = 6
 local BUTTON_HOVER_FONT_SIZE_INCREASE = 4
+local MOUSE_OVER_HEIGHT_PADDING = 6
+local NORMAL_CHANNELS = { "SAY", "YELL", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "OFFICER", "EMOTE" }
 
 local checkFunctions = {
 	PARTY = function()
@@ -59,6 +59,9 @@ local checkFunctions = {
 	end,
 }
 
+---Get community channel ID by channel name
+---@param text string The community channel name to search for
+---@return number? channelId The channel ID if found
 local function GetCommunityChannelByName(text)
 	local channelList = { GetChannelList() }
 	for _, v in pairs(channelList) do
@@ -66,12 +69,21 @@ local function GetCommunityChannelByName(text)
 		if clubId then
 			local info = C_Club_GetClubInfo(clubId)
 			if info and info.name == text then
-				return GetChannelName(tostring(v))
+				return select(1, GetChannelName(tostring(v)))
 			end
 		end
 	end
 end
 
+---Calculate the next button position offset
+---@param anchor string The anchor direction ("LEFT" or "TOP")
+---@param offsetX number Current X offset
+---@param offsetY number Current Y offset
+---@param buttonWidth number Width of the button
+---@param buttonHeight number Height of the button
+---@param spacing number Spacing between buttons
+---@return number newOffsetX The new X offset
+---@return number newOffsetY The new Y offset
 local function CalculateNextOffset(anchor, offsetX, offsetY, buttonWidth, buttonHeight, spacing)
 	if anchor == "LEFT" then
 		return offsetX + buttonWidth + spacing, offsetY
@@ -80,6 +92,16 @@ local function CalculateNextOffset(anchor, offsetX, offsetY, buttonWidth, button
 	end
 end
 
+---Calculate the total size of the chat bar
+---@param orientation string Bar orientation ("HORIZONTAL" or "VERTICAL")
+---@param numberOfButtons number Total number of buttons
+---@param spacing number Spacing between buttons
+---@param buttonWidth number Width of each button
+---@param buttonHeight number Height of each button
+---@param hasBackdrop boolean Whether the bar has a backdrop
+---@param backdropSpacing number Spacing for the backdrop
+---@return number width The calculated bar width
+---@return number height The calculated bar height
 local function CalculateBarSize(
 	orientation,
 	numberOfButtons,
@@ -112,6 +134,12 @@ local function CalculateBarSize(
 	return width, height
 end
 
+---Get the initial offset for button positioning
+---@param hasBackdrop boolean Whether the bar has a backdrop
+---@param backdropSpacing number Spacing for the backdrop
+---@param anchor string The anchor direction ("LEFT" or "TOP")
+---@return number offsetX The initial X offset
+---@return number offsetY The initial Y offset
 local function GetInitialOffset(hasBackdrop, backdropSpacing, anchor)
 	local offsetX, offsetY = 0, 0
 
@@ -126,6 +154,9 @@ local function GetInitialOffset(hasBackdrop, backdropSpacing, anchor)
 	return offsetX, offsetY
 end
 
+---Find the best matching world channel configuration
+---@param configTable table Array of channel configurations
+---@return table? config The best matching configuration or nil
 local function GetBestWorldChannelConfig(configTable)
 	local validConfigs = {}
 
@@ -178,12 +209,23 @@ function CB:OnLeaveBar()
 	end
 end
 
+---Update or create a chat button
+---@param name string The button name/identifier
+---@param func function The click handler function
+---@param anchorPoint string The anchor point for positioning
+---@param x number X position offset
+---@param y number Y position offset
+---@param color RGBA? Color configuration for the button
+---@param tex string? Texture name for block style
+---@param tooltip string? Tooltip text
+---@param tips table? Array of tooltip tips
+---@param abbr string Button abbreviation or icon
+---@return Button button The created or updated button
 function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tips, abbr)
 	local ElvUIValueColor = E.db.general.valuecolor
 
 	if not self.bar[name] then
-		-- Button
-		local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate")
+		local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate") --[[@as Button]]
 		button:StripTextures()
 		button:SetBackdropBorderColor(0, 0, 0)
 		button:RegisterForClicks("AnyDown")
@@ -268,7 +310,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
 
 		self.bar[name].text:Hide()
 	else
-		local buttonText = self.db.color and F.CreateColorString(abbr, color) or abbr
+		local buttonText = self.db.color and color and F.CreateColorString(abbr, color) or abbr
 		self.bar[name].text:SetText(buttonText)
 		self.bar[name].defaultFontSize = self.db.font.size
 		F.SetFontWithDB(self.bar[name].text, self.db.font)
@@ -287,6 +329,8 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
 	return self.bar[name]
 end
 
+---Hide/disable a chat button
+---@param name string The button name to disable
 function CB:DisableButton(name)
 	if self.bar[name] then
 		self.bar[name]:Hide()
@@ -299,7 +343,7 @@ function CB:UpdateBar()
 	end
 
 	if InCombatLockdown() then
-		self:RegisterEvent("PLAYER_REGEN_ENABLED")
+		F.TaskManager:AfterCombat(self.UpdateBar, self)
 		return
 	end
 
@@ -505,6 +549,8 @@ function CB:UpdateBar()
 	end
 end
 
+CB.UpdateBar = F.ThrottleFunction(0.1, CB.UpdateBar)
+
 function CB:CreateBar()
 	if self.bar then
 		return
@@ -527,11 +573,6 @@ function CB:CreateBar()
 	self:HookScript(self.bar, "OnLeave", "OnLeaveBar")
 end
 
-function CB:PLAYER_REGEN_ENABLED()
-	self:UpdateBar()
-	self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-end
-
 function CB:Initialize()
 	self.db = E.db.WT.social.chatBar
 	if not self.db.enable then
@@ -546,7 +587,7 @@ function CB:Initialize()
 	end, "WindTools,social,chatBar")
 
 	if self.db.autoHide then
-		self:RegisterEvent("GROUP_ROSTER_UPDATE")
+		self:RegisterEvent("GROUP_ROSTER_UPDATE", "UpdateBar")
 		self:RegisterEvent("PLAYER_GUILD_UPDATE", "UpdateBar")
 	end
 end
@@ -568,7 +609,7 @@ function CB:ProfileUpdate()
 	self.bar:Show()
 
 	if self.db.autoHide then
-		self:RegisterEvent("GROUP_ROSTER_UPDATE")
+		self:RegisterEvent("GROUP_ROSTER_UPDATE", "UpdateBar")
 		self:RegisterEvent("PLAYER_GUILD_UPDATE", "UpdateBar")
 	else
 		self:UnregisterEvent("GROUP_ROSTER_UPDATE")

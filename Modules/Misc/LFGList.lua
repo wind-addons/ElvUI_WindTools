@@ -1536,7 +1536,7 @@ function LL:UpdateAdvancedFilters()
 	C_LFGList_SaveAdvancedFilter(advFilters)
 end
 
-function LL:OnUpdateResultListEnclosure(searchPanel)
+function LL:OnUpdateResultList(searchPanel)
 	local results = CopyTable(searchPanel.results, true)
 	if _G.LFGListFrame.SearchPanel.categoryID ~= 2 then
 		return
@@ -1662,7 +1662,7 @@ function LL:Initialize()
 	self:SecureHook("LFGListFrame_SetActivePanel", "UpdateRightPanel")
 	self:SecureHook("GroupFinderFrame_ShowGroupFrame", "UpdateRightPanel")
 	self:SecureHook("PVEFrame_ShowFrame", "UpdateRightPanel")
-	self:SecureHook("LFGListSearchPanel_UpdateResultList", "OnUpdateResultListEnclosure")
+	self:SecureHook("LFGListSearchPanel_UpdateResultList", "OnUpdateResultList")
 	self:SecureHook("LFGListSearchPanel_DoSearch", function()
 		LL.lastRefreshTimestamp = GetTime()
 	end)

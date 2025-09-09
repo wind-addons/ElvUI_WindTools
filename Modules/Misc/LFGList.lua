@@ -34,8 +34,10 @@ local GroupFinderFrameGroupButton_OnClick = GroupFinderFrameGroupButton_OnClick
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
 local IsShiftKeyDown = IsShiftKeyDown
-local LFGListCategorySelectionButton_OnClick = LFGListCategorySelectionButton_OnClick
-local LFGListCategorySelection_StartFindGroup = LFGListCategorySelection_StartFindGroup
+local LFGListFrame_SetActivePanel = LFGListFrame_SetActivePanel
+local LFGListSearchPanel_Clear = LFGListSearchPanel_Clear
+local LFGListSearchPanel_DoSearch = LFGListSearchPanel_DoSearch
+local LFGListSearchPanel_SetCategory = LFGListSearchPanel_SetCategory
 local PVEFrame_ShowFrame = PVEFrame_ShowFrame
 local UnitClassBase = UnitClassBase
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
@@ -1302,12 +1304,17 @@ function LL:InitializeRightPanel()
 	quickAccessTitle:SetText(F.GetWindStyleText(L["Quick Access"]))
 
 	local quickAccessButtons = {}
+
+	-- Find the categoryID and filters when click the category button
+	-- hooksecurefunc("LFGListSearchPanel_SetCategory", function(searchPanel, categoryID, filters, baseFilters)
+	-- 	print(categoryID, filters, baseFilters)
+	-- end)
 	local buttonData = {
-		{ text = L["Mythic+"], categoryID = 2, filters = 0 },
-		{ text = L["Raids"], categoryID = 3, filters = 1 },
-		{ text = L["Delves"], categoryID = 121, filters = 0 },
-		{ text = L["Quest"], categoryID = 1, filters = 0 },
-		{ text = L["Custom"], categoryID = 6, filters = 0 },
+		{ text = L["Mythic+"], categoryID = 2, filters = 0, baseFilters = 4 },
+		{ text = L["Raids"], categoryID = 3, filters = 1, baseFilters = 4 },
+		{ text = L["Delves"], categoryID = 121, filters = 0, baseFilters = 4 },
+		{ text = L["Quest"], categoryID = 1, filters = 0, baseFilters = 4 },
+		{ text = L["Custom"], categoryID = 6, filters = 0, baseFilters = 4 },
 	}
 
 	for i, data in ipairs(buttonData) do
@@ -1352,14 +1359,17 @@ function LL:InitializeRightPanel()
 				GroupFinderFrameGroupButton_OnClick(PremadeGroupButton)
 			end
 
-			local selection = _G.LFGListFrame.CategorySelection
-			if not selection then
+			local searchPanel, selection = _G.LFGListFrame.SearchPanel, _G.LFGListFrame.CategorySelection
+			if not selection or not searchPanel then
 				return
 			end
+
 			for _, categoryButton in ipairs(selection.CategoryButtons) do
 				if categoryButton.categoryID == data.categoryID and categoryButton.filters == data.filters then
-					LFGListCategorySelectionButton_OnClick(categoryButton)
-					LFGListCategorySelection_StartFindGroup(selection)
+					LFGListSearchPanel_Clear(searchPanel)
+					LFGListSearchPanel_SetCategory(searchPanel, data.categoryID, data.filters, data.baseFilters)
+					LFGListSearchPanel_DoSearch(searchPanel)
+					LFGListFrame_SetActivePanel(_G.LFGListFrame, searchPanel)
 					return
 				end
 			end

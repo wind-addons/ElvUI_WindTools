@@ -7,6 +7,7 @@ local _G = _G
 local format = format
 local next = next
 local select = select
+local strjoin = strjoin
 local strsplit = strsplit
 local tonumber = tonumber
 

@@ -11,9 +11,9 @@ local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
 local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
 
 local _G = _G
-local gsub = gsub
 local floor = floor
 local format = format
+local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
 local max = max
@@ -21,6 +21,7 @@ local pairs = pairs
 local select = select
 local time = time
 local tinsert = tinsert
+local unpack = unpack
 
 local AbbreviateLargeNumbers = AbbreviateLargeNumbers
 local CreateFrame = CreateFrame

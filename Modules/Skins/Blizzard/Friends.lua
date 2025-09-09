@@ -3,6 +3,7 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 local pairs = pairs
+local select = select
 
 local CreateColor = CreateColor
 

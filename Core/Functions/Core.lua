@@ -13,6 +13,7 @@ local pairs = pairs
 local pcall = pcall
 local print = print
 local strfind = strfind
+local strjoin = strjoin
 local strmatch = strmatch
 local tonumber = tonumber
 local tostring = tostring

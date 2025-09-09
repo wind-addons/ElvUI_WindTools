@@ -7,6 +7,7 @@ local _G = _G
 local format = format
 local ipairs = ipairs
 local pairs = pairs
+local select = select
 local sort = sort
 local strmatch = strmatch
 local tinsert = tinsert

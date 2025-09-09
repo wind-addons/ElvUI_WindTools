@@ -61,7 +61,7 @@ local DISPLAY_SLOTS = {}
 for slotIndex, slotName in ipairs(W.EquipmentSlots) do
 	-- Exclude Shirt, Tabard, Ranged
 	if not tContains({ 4, 18, 19 }, slotIndex) then
-		tinsert(DISPLAY_SLOTS, { index = slotIndex, name = slotName })
+		tinsert(DISPLAY_SLOTS, { index = slotIndex, name = gsub(slotName, "%d", "") })
 	end
 end
 

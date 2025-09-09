@@ -1,6 +1,7 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local T = W.Modules.Tooltips
 local OP = E.Libs.ObjectiveProgress
+local C = W.Utilities.Color
 
 local _G = _G
 local format = format
@@ -63,9 +64,19 @@ local function addObjectiveProgress(tt, data)
 		local count, max = _G.MDT:GetEnemyForces(npcID)
 
 		if count and max and count > 0 and max > 0 then
-			local left = format("%s |cff00d1b2%s|r |cffffffff-|r |cffffdd57%s|r", icon1, count, max)
-			local right = format("%s |cff209cee%s|r|cffffffff%%|r", icon2, F.Round(100 * count / max, accuracy))
-
+			local left = strjoin(
+				" ",
+				icon1,
+				C.StringByTemplate(count, "teal-500"),
+				C.StringByTemplate("-", "neutral-50"),
+				C.StringByTemplate(max, "amber-300")
+			)
+			local right = strjoin(
+				" ",
+				icon2,
+				C.StringByTemplate(E:Round(100 * count / max, accuracy), "sky-500"),
+				C.StringByTemplate("%", "neutral-50")
+			)
 			tt:AddDoubleLine(left, right)
 			tt:Show()
 		end

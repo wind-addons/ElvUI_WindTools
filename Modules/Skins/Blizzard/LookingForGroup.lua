@@ -37,9 +37,6 @@ function S:LookingForGroupFrames()
 		F.SetFontOutline(frame.rewardsDescription, E.db.general.font)
 	end
 
-	-- if no party found, the button also need skin
-	S:Proxy("HandleButton", _G.LFGListFrame.SearchPanel.ScrollBox.StartGroupButton)
-
 	_G.LFGListFrame.SearchPanel.FilterButton:SetWidth(93)
 	_G.LFGListFrame.SearchPanel.FilterButton.SetWidth = E.noop
 end

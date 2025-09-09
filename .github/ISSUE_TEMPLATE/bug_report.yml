@@ -13,6 +13,8 @@ body:
           required: true
         - label: I have updated `ElvUI_WindTools` to the latest version before submitting this issue
           required: true
+        - label: I have not read any of these steps, please close my issue when you see it.
+          required: false
         - label: I have tested the issue with `/wtdebug on` before
           required: true
   - type: input

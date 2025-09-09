@@ -554,7 +554,7 @@ function CB:Initialize()
 	end, "WindTools,social,chatBar")
 
 	if self.db.autoHide then
-		self:RegisterEvent("GROUP_ROSTER_UPDATE")
+		self:RegisterEvent("GROUP_ROSTER_UPDATE", "UpdateBar")
 		self:RegisterEvent("PLAYER_GUILD_UPDATE", "UpdateBar")
 	end
 end
@@ -576,7 +576,7 @@ function CB:ProfileUpdate()
 	self.bar:Show()
 
 	if self.db.autoHide then
-		self:RegisterEvent("GROUP_ROSTER_UPDATE")
+		self:RegisterEvent("GROUP_ROSTER_UPDATE", "UpdateBar")
 		self:RegisterEvent("PLAYER_GUILD_UPDATE", "UpdateBar")
 	else
 		self:UnregisterEvent("GROUP_ROSTER_UPDATE")

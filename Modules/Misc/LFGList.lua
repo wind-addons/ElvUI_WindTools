@@ -34,11 +34,9 @@ local GroupFinderFrameGroupButton_OnClick = GroupFinderFrameGroupButton_OnClick
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
 local IsShiftKeyDown = IsShiftKeyDown
-local LFGListFrame_SetActivePanel = LFGListFrame_SetActivePanel
 local LFGListSearchPanel_Clear = LFGListSearchPanel_Clear
 local LFGListSearchPanel_DoSearch = LFGListSearchPanel_DoSearch
 local LFGListSearchPanel_SetCategory = LFGListSearchPanel_SetCategory
-local PVEFrame_ShowFrame = PVEFrame_ShowFrame
 local UnitClassBase = UnitClassBase
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitName = UnitName
@@ -1352,7 +1350,7 @@ function LL:InitializeRightPanel()
 			end
 
 			if _G.PVEFrame.activeTabIndex ~= 1 then
-				PVEFrame_ShowFrame("GroupFinderFrame")
+				_G.PVEFrame_ShowFrame("GroupFinderFrame")
 			end
 
 			if not _G.LFGListFrame.SearchPanel:IsShown() or _G.GroupFinderFrame.selection ~= _G.LFGListPVEStub then
@@ -1378,7 +1376,7 @@ function LL:InitializeRightPanel()
 					LFGListSearchPanel_Clear(searchPanel)
 					LFGListSearchPanel_SetCategory(searchPanel, data.categoryID, data.filters, baseFilters)
 					LFGListSearchPanel_DoSearch(searchPanel)
-					LFGListFrame_SetActivePanel(_G.LFGListFrame, searchPanel)
+					_G.LFGListFrame_SetActivePanel(_G.LFGListFrame, searchPanel)
 					return
 				end
 			end

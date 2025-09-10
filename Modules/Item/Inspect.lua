@@ -65,30 +65,31 @@ end
 
 local guids = {}
 
----@class InspectItemInfo
----@field level number?
----@field link string?
----@field name string?
----@field quality Enum.ItemQuality?
----@field set number?
----@field subType string?
----@field texture string?
----@field type string?
+---@alias InspectItemInfo {
+--- level: number?,
+--- link: string?,
+--- name: string?,
+--- quality: Enum.ItemQuality?,
+--- set: number?,
+--- subType: string?,
+--- texture: string?,
+--- type: string?,
+---}
 
 ---Gets item information for a specific inventory slot of a unit
----@param unit any The unit to inspect
----@param slotIndex any The inventory slot index
----@return InspectItemInfo? The item information, or nil if no item is found
+---@param unit UnitToken The unit to inspect
+---@param slotIndex number The inventory slot index
+---@return InspectItemInfo? itemInfo The item information, or nil if no item is found
 local function GetUnitSlotItemInfo(unit, slotIndex)
 	local link = GetInventoryItemLink(unit, slotIndex)
 	if not link then
 		return
 	end
 
-	local name, _, quality, level, _, type, subType, _, itemEquipLoc, tex, _, _, _, _, expansionID, set, isCraftingReagent =
+	local itemName, _, itemQuality, itemLevel, _, itemType, itemSubType, _, _, itemTexture, _, _, _, _, expansionID, setID, isCraftingReagent =
 		C_Item_GetItemInfo(link)
 
-	local craftingAtlas
+	local craftingAtlas ---@type string
 	local cleanLink = gsub(link, "|h%[(.+)%]|h", function(raw)
 		local name = gsub(raw, "(%s*)(|A:.-|a)", function(_, atlasString)
 			craftingAtlas = gsub(atlasString, "|A:(.-):%d+:%d+::%d+|a", "%1")
@@ -102,14 +103,14 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 		craftingAtlas = craftingAtlas,
 		expansionID = expansionID,
 		isCraftingReagent = isCraftingReagent,
-		level = level,
+		level = itemLevel,
 		link = link,
-		name = name,
-		quality = quality,
-		set = set,
-		subType = subType,
-		texture = tex,
-		type = type,
+		name = itemName,
+		quality = itemQuality,
+		set = setID,
+		subType = itemSubType,
+		texture = itemTexture,
+		type = itemType,
 	}
 end
 

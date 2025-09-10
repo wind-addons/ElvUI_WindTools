@@ -499,7 +499,7 @@ end
 
 function I:ShowPanel(unit, parent, ilevel)
 	if not self:ShouldShowPanel(unit, parent) then
-		if parent.WTInspect then
+		if parent and parent.WTInspect then
 			parent.WTInspect:Hide()
 		end
 		return
@@ -647,44 +647,25 @@ function I:ShowAllPlayerPanels()
 	self:ShowPanel("player", _G.InspectFrame and _G.InspectFrame.WTInspect, E:GetUnitItemLevel("player"))
 end
 
-function I:ShowInspectPanels(unit, guid, itemLevel)
-	F.Developer.LogDebug(
-		GetTime(),
-		"Data ready, show inspect panels.",
-		"unit:",
-		unit,
-		"guid:",
-		guid,
-		"itemLevel:",
-		itemLevel
-	)
+function I:ShowInspectPanels(unit, itemLevel)
 	local frame = self:ShowPanel(unit, _G.InspectFrame, itemLevel)
 	self:ShowPanel("player", frame, E:GetUnitItemLevel("player"))
-
-	self.inspecting[guid] = nil
 end
 
 function I:NotifyInspect(unit)
-	local guid = UnitGUID(unit)
-	F.Developer.LogDebug(GetTime(), "NotifyInspect start.", "unit:", unit, "guid:", guid)
-	if guid then
-		self.inspecting[guid] = {
-			unit = unit,
-			ts = time(),
-		}
+	for k in pairs(self.inspecting) do
+		if self.inspecting[k] == unit then
+			self.inspecting[k] = nil
+		end
+	end
 
-		-- Clear after 3 seconds
-		E:Delay(INSPECT_WAIT_MAX_SECONDS, function()
-			if self.inspecting[guid] and self.inspecting[guid].ts and time() - self.inspecting[guid].ts >= 3 then
-				self.inspecting[guid] = nil
-			end
-		end)
+	local guid = UnitGUID(unit)
+	if guid then
+		self.inspecting[guid] = unit
 	end
 end
 
 function I:INSPECT_READY(_, guid)
-	F.Developer.LogDebug(GetTime(), "INSPECT_READY received.", "guid:", guid)
-
 	if not self.inspecting[guid] then
 		return
 	end
@@ -692,12 +673,11 @@ function I:INSPECT_READY(_, guid)
 	local itemLevelContext = nil ---@type number?
 
 	F.WaitFor(function()
-		F.Developer.LogDebug(GetTime(), "Trying to fetch item level...", "guid:", guid)
 		if self.inspecting[guid] == nil then
 			return "end"
 		end
 
-		local unit = self.inspecting[guid].unit
+		local unit = self.inspecting[guid]
 		if not unit or UnitGUID(unit) ~= guid then
 			return false
 		end
@@ -708,25 +688,21 @@ function I:INSPECT_READY(_, guid)
 		end
 
 		itemLevelContext = itemLevel
-		F.Developer.LogDebug(GetTime(), "Item level fetched.", "itemLevel:", itemLevel)
 		return true
 	end, function()
 		local latestUnit = _G.InspectFrame and _G.InspectFrame.unit
 		local latestGUID = latestUnit and UnitGUID(latestUnit)
 		if itemLevelContext and latestGUID == guid then
-			self:ShowInspectPanels(latestUnit, latestGUID, itemLevelContext)
+			local key = "ShowInspectPanels_" .. latestUnit
+			F.Throttle(0.05, key, self.ShowInspectPanels, self, latestUnit, itemLevelContext)
 		end
 	end, ITEM_LEVEL_CHECK_INTERVAL, INSPECT_WAIT_MAX_ROUNDS)
 end
 
 function I:UNIT_INVENTORY_CHANGED(_, unit)
-	F.Developer.LogDebug(GetTime(), "UNIT_INVENTORY_CHANGED received.", "unit:", unit)
 	if _G.InspectFrame and _G.InspectFrame.unit and _G.InspectFrame.unit == unit then
 		local guid = UnitGUID(unit)
 		if guid then
-			-- Simulate the events fired
-			F.Developer.LogDebug(GetTime(), "Re-inspect simulation start", "unit:", unit)
-			self:NotifyInspect(unit)
 			self:INSPECT_READY(_, guid)
 		end
 	end

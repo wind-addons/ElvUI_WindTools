@@ -52,11 +52,9 @@ local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpeci
 
 local Enum_ItemQuality_Common = Enum.ItemQuality.Common
 
-local guids, inspecting = {}, false
-
 local LABEL_COLOR = C.GetRGBFromTemplate("cyan-300")
 local CURRENT_EXPANSION_ID = GetServerExpansionLevel()
-
+local MINIMUM_INSPECT_PANEL_WIDTH = 250
 local DISPLAY_SLOTS = {}
 for slotIndex, slotName in ipairs(W.EquipmentSlots) do
 	-- Exclude Shirt, Tabard, Ranged
@@ -64,6 +62,8 @@ for slotIndex, slotName in ipairs(W.EquipmentSlots) do
 		tinsert(DISPLAY_SLOTS, { index = slotIndex, name = gsub(slotName, "%d", "") })
 	end
 end
+
+local guids = {}
 
 ---@class InspectItemInfo
 ---@field level number?
@@ -171,20 +171,6 @@ local function ReInspect(unit)
 			end
 		end,
 	})
-end
-
-local function GetInspectSpec(unit)
-	local specID, specName
-	if unit == "player" then
-		specID = C_SpecializationInfo_GetSpecialization()
-		specName = select(2, C_SpecializationInfo_GetSpecializationInfo(specID))
-	else
-		specID = GetInspectSpecialization(unit)
-		if specID and specID > 0 then
-			specName = select(2, GetSpecializationInfoByID(specID))
-		end
-	end
-	return specName or ""
 end
 
 local function GetStateValue(_, _, value, default)
@@ -347,12 +333,40 @@ local function ShowInspectItemStatsFrame(frame, unit)
 	end
 end
 
-function I:BuildInspectItemListFrame(parent)
+function I:ShouldShowPanel(unit, parent)
+	if not self.db or not self.db.enable or not parent or not parent:IsShown() then
+		return false
+	end
+
+	if parent == _G.PaperDollFrame then
+		if not self.db.player then
+			return false
+		end
+	elseif parent == _G.InspectFrame then
+		if not self.db.inspect then
+			return false
+		end
+	elseif unit == "player" and _G.InspectFrame.WTInspect and parent == _G.InspectFrame.WTInspect then
+		if not self.db.playerOnInspect then
+			return false
+		end
+	end
+
+	print(unit, parent:GetDebugName())
+
+	return true
+end
+
+function I:FetchPanel(parent)
+	if parent.WTInspect then
+		return parent.WTInspect
+	end
+
 	local frame = CreateFrame("Frame", nil, parent)
 	local height = parent:GetHeight()
 
 	-- Frame
-	frame:Size(160, height)
+	frame:Size(MINIMUM_INSPECT_PANEL_WIDTH, height)
 	frame:SetFrameLevel(0)
 	frame:Point("LEFT", parent, "RIGHT", 5, 0)
 	frame:SetTemplate("Transparent")
@@ -511,17 +525,20 @@ function I:BuildInspectItemListFrame(parent)
 		line.Label:Width(frame.maxLabelTextWidth + 6)
 	end
 
+	parent.WTInspect = frame
+
 	return frame
 end
 
-function I:ShowInspectItemListFrame(unit, parent, ilevel)
-	if not parent:IsShown() or not self.db or not self.db.enable then
+function I:ShowPanel(unit, parent, ilevel)
+	if not self:ShouldShowPanel(unit, parent) then
+		if parent.WTInspect then
+			parent.WTInspect:Hide()
+		end
 		return
 	end
 
-	parent.WindInspectFrame = parent.WindInspectFrame or self:BuildInspectItemListFrame(parent)
-	local frame = parent.WindInspectFrame
-
+	local frame = self:FetchPanel(parent)
 	frame.unit = unit
 
 	local _, class = UnitClass(unit)
@@ -585,7 +602,7 @@ function I:ShowInspectItemListFrame(unit, parent, ilevel)
 				line.ItemTextureFrame:Hide()
 			end
 		else
-			line.ItemTextureFrame:Point("RIGHT", line.ItemLevel, "RIGHT", -2, 0)
+			line.ItemTextureFrame:Point("RIGHT", line.ItemLevel, "RIGHT", -3, 0)
 			line.ItemTextureFrame:Hide()
 		end
 
@@ -629,12 +646,14 @@ function I:ShowInspectItemListFrame(unit, parent, ilevel)
 		frame.maxItemNameTextWidth = max(frame.maxItemNameTextWidth, line.ItemName:GetStringWidth() + 3)
 	end
 
-	local lineWidth = 15
-		+ frame.maxLabelTextWidth
-		+ 12
-		+ frame.maxItemLevelTextWidth
-		+ frame.iconWidth
-		+ frame.maxItemNameTextWidth
+	local lineWidth = 12 + frame.maxLabelTextWidth + 4 + frame.maxItemLevelTextWidth + 4 + frame.maxItemNameTextWidth
+
+	if self.db.icon.enable then
+		lineWidth = lineWidth + frame.iconWidth + 4
+	end
+
+	lineWidth = max(lineWidth, MINIMUM_INSPECT_PANEL_WIDTH)
+
 	for _, line in ipairs(frame.Lines) do
 		line.Label:Width(frame.maxLabelTextWidth + 6)
 		line.ItemLevel:Width(frame.maxItemLevelTextWidth)
@@ -642,24 +661,25 @@ function I:ShowInspectItemListFrame(unit, parent, ilevel)
 		line:Width(lineWidth)
 	end
 
-	frame:SetWidth(lineWidth + 24)
+	frame:Width(lineWidth + 24)
 	frame:Show()
 
-	-- LibEvent:trigger("INSPECT_FRAME_SHOWN", frame, parent, ilevel)
-	-- Plugin_Spec(unit, parent, ilevel, maxLevel)
-	-- Plugin_GemAndEnchant(unit, parent, ilevel, maxLevel)
-	-- if W.AsianLocale or W.Locale == "enUS" then
-	-- 	Plugin_Stats(unit, parent, ilevel, maxLevel)
+	-- TODO:
+	-- [ ] Gem
+	-- [ ] Enchant
+	-- [ ] Stats
+
+	-- if unit == "player" and not PlayerInspectFrames[frame] then
+	-- 	PlayerInspectFrames[frame] = parent
 	-- end
 
 	return frame
 end
-
+function I:ShowAllPlayerPanels()
+	self:ShowPanel("player", _G.PaperDollFrame, E:GetUnitItemLevel("player"))
+	self:ShowPanel("player", _G.InspectFrame and _G.InspectFrame.WTInspect, E:GetUnitItemLevel("player"))
+end
 function I:Inspect()
-	hooksecurefunc("ClearInspectPlayer", function()
-		inspecting = false
-	end)
-
 	-- @trigger UNIT_INSPECT_STARTED
 	hooksecurefunc("NotifyInspect", function(unit)
 		local guid = UnitGUID(unit)
@@ -688,7 +708,6 @@ function I:Inspect()
 			data.realm = GetRealmName()
 		end
 		data.expired = time() + 3
-		inspecting = data
 		LibEvent:trigger("UNIT_INSPECT_STARTED", data)
 	end)
 
@@ -703,9 +722,7 @@ function I:Inspect()
 			elasped = 0.8,
 			expired = GetTime() + 4,
 			data = guids[guid],
-			onTimeout = function(self)
-				inspecting = false
-			end,
+			onTimeout = function(self) end,
 			onExecute = function(self)
 				local ilevel = E:GetUnitItemLevel(self.data.unit)
 				if not ilevel or ilevel == "tooSoon" or ilevel <= 0 then
@@ -713,18 +730,9 @@ function I:Inspect()
 				end
 				if ilevel > 0 then
 					self.data.timer = time()
-					self.data.name = UnitName(self.data.unit)
-					self.data.class = select(2, UnitClass(self.data.unit))
 					self.data.ilevel = ilevel
-					self.data.spec = GetInspectSpec(self.data.unit)
-					self.data.hp = UnitHealthMax(self.data.unit)
 					LibEvent:trigger("UNIT_INSPECT_READY", self.data)
-					inspecting = false
 					return true
-					--else
-					--    self.data.ilevel = ilevel
-					--    self.data.maxLevel = maxLevel
-					--end
 				end
 			end,
 		})
@@ -743,57 +751,9 @@ function I:Inspect()
 			return
 		end
 		if _G.InspectFrame and _G.InspectFrame.unit and UnitGUID(_G.InspectFrame.unit) == data.guid then
-			local frame = self:ShowInspectItemListFrame(_G.InspectFrame.unit, _G.InspectFrame, data.ilevel)
-			LibEvent:trigger("INSPECT_FRAME_COMPARE", frame)
+			local frame = self:ShowPanel(_G.InspectFrame.unit, _G.InspectFrame, data.ilevel)
+			self:ShowPanel("player", frame, E:GetUnitItemLevel("player"))
 		end
-	end)
-
-	--自己裝備列表
-	LibEvent:attachTrigger("INSPECT_FRAME_COMPARE", function(_, frame)
-		if not frame then
-			return
-		end
-		if self.db and self.db.playerOnInspect then
-			local ilevel = E:GetUnitItemLevel("player")
-			local playerFrame = self:ShowInspectItemListFrame("player", frame, ilevel)
-			if frame.statsFrame then
-				frame.statsFrame:SetParent(playerFrame)
-			end
-		elseif frame.statsFrame then
-			frame.statsFrame:SetParent(frame)
-		end
-		if frame.statsFrame then
-			frame.statsFrame:Point("TOPLEFT", frame.statsFrame:GetParent(), "TOPRIGHT", 5, 0)
-		end
-	end)
-end
-
-function I:Player()
-	self:HookScript(_G.PaperDollFrame, "OnShow", function(frame)
-		if not self.db or not self.db.player then
-			return
-		end
-		self:ShowInspectItemListFrame("player", frame, E:GetUnitItemLevel("player"))
-	end)
-
-	self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED", function()
-		if not self.db or not self.db.player or not _G.CharacterFrame:IsShown() then
-			return
-		end
-
-		F.Throttle(0.1, "InspectPlayerUpdate", function()
-			self:ShowInspectItemListFrame("player", _G.PaperDollFrame, E:GetUnitItemLevel("player"))
-		end)
-	end)
-
-	self:RegisterEvent("PLAYER_AVG_ITEM_LEVEL_UPDATE", function(_, unit)
-		if not self.db or not self.db.player or not _G.CharacterFrame:IsShown() then
-			return
-		end
-
-		F.Throttle(0.1, "InspectPlayerUpdate", function()
-			self:ShowInspectItemListFrame("player", _G.PaperDollFrame, E:GetUnitItemLevel("player"))
-		end)
 	end)
 end
 
@@ -809,7 +769,13 @@ function I:Initialize()
 		return
 	end
 
-	self:Player()
+	self:HookScript(_G.PaperDollFrame, "OnShow", function()
+		self:ShowPanel("player", _G.PaperDollFrame, E:GetUnitItemLevel("player"))
+	end)
+
+	self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED", "ShowAllPlayerPanels")
+	self:RegisterEvent("PLAYER_AVG_ITEM_LEVEL_UPDATE", "ShowAllPlayerPanels")
+
 	self:Inspect()
 
 	self.initialized = true

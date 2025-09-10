@@ -1346,7 +1346,7 @@ function LL:InitializeRightPanel()
 			btn:SetActive(false)
 		end)
 
-		button:SetScript("OnMouseDown", function(btn, mouseButton)
+		button:SetScript("OnMouseDown", function(_, mouseButton)
 			if mouseButton ~= "LeftButton" then
 				return
 			end

@@ -15,7 +15,6 @@ local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
 local max = max
 local pairs = pairs
-local time = time
 local tinsert = tinsert
 local unpack = unpack
 
@@ -24,7 +23,6 @@ local CreateFrame = CreateFrame
 local GetInspectSpecialization = GetInspectSpecialization
 local GetInventoryItemLink = GetInventoryItemLink
 local GetSpecializationInfoByID = GetSpecializationInfoByID
-local GetTime = GetTime
 local SetPortraitTexture = SetPortraitTexture
 local ToggleFrame = ToggleFrame
 local UnitClass = UnitClass
@@ -60,8 +58,6 @@ for index, localizedName in ipairs(W.EquipmentSlots) do
 		tinsert(DISPLAY_SLOTS, { index = index, name = gsub(localizedName, "%d", "") })
 	end
 end
-
-local guids = {}
 
 ---@alias InspectItemInfo {
 --- level: number?,

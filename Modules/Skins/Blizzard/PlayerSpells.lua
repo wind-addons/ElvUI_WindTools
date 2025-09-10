@@ -23,9 +23,6 @@ function S:Blizzard_PlayerSpells()
 	local SpellBookFrame = _G.PlayerSpellsFrame.SpellBookFrame
 	if SpellBookFrame then
 		for _, tab in next, { SpellBookFrame.CategoryTabSystem:GetChildren() } do
-			tab.Text:ClearAllPoints()
-			tab.Text:Point("CENTER")
-			F.InternalizeMethod(tab.Text, "SetPoint", true)
 			tab:SetPushedTextOffset(0, 0)
 		end
 	end

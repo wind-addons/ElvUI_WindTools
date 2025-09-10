@@ -161,7 +161,7 @@ local function ReInspect(unit)
 		unit = unit,
 		onExecute = function(self)
 			local itemLevel = E:GetUnitItemLevel("player")
-			if itemLevel <= 0 then
+			if not itemLevel or itemLevel == "tooSoon" or itemLevel <= 0 then
 				return true
 			end
 			if itemLevel > 0 then
@@ -533,7 +533,7 @@ function I:ShowInspectItemListFrame(unit, parent, ilevel)
 
 	frame.PlayerName:SetText(UnitName(unit))
 	frame.PlayerName:SetTextColor(classColor.r, classColor.g, classColor.b)
-	frame.PlayerItemLevel:SetText(format("%s %0d", L["Item Level"], ilevel))
+	frame.PlayerItemLevel:SetText(format("%s %s", L["Item Level"], ilevel == "tooSoon" and "..." or (ilevel or 0)))
 
 	local specInfo = GetUnitSpecializationInfo(unit)
 	frame.specName = specInfo and specInfo.name
@@ -708,7 +708,7 @@ function I:Inspect()
 			end,
 			onExecute = function(self)
 				local ilevel = E:GetUnitItemLevel(self.data.unit)
-				if ilevel <= 0 then
+				if not ilevel or ilevel == "tooSoon" or ilevel <= 0 then
 					return true
 				end
 				if ilevel > 0 then

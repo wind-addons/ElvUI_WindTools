@@ -5,10 +5,7 @@ local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames ---@type MoveFrames
 
 -- Modified from TinyInspect
-
-local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
-local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
 
 local _G = _G
 local floor = floor
@@ -18,7 +15,6 @@ local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
 local max = max
 local pairs = pairs
-local select = select
 local time = time
 local tinsert = tinsert
 local unpack = unpack
@@ -27,7 +23,6 @@ local AbbreviateLargeNumbers = AbbreviateLargeNumbers
 local CreateFrame = CreateFrame
 local GetInspectSpecialization = GetInspectSpecialization
 local GetInventoryItemLink = GetInventoryItemLink
-local GetRealmName = GetRealmName
 local GetSpecializationInfoByID = GetSpecializationInfoByID
 local GetTime = GetTime
 local SetPortraitTexture = SetPortraitTexture
@@ -52,14 +47,17 @@ local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpeci
 
 local Enum_ItemQuality_Common = Enum.ItemQuality.Common
 
-local LABEL_COLOR = C.GetRGBFromTemplate("cyan-300")
 local CURRENT_EXPANSION_ID = GetServerExpansionLevel()
-local MINIMUM_INSPECT_PANEL_WIDTH = 250
+local LABEL_COLOR = C.GetRGBFromTemplate("cyan-300")
+local PANEL_MIN_WIDTH = 250
+local ITEM_LEVEL_CHECK_INTERVAL = 0.08
+local INSPECT_WAIT_MAX_SECONDS = 3
+local INSPECT_WAIT_MAX_ROUNDS = floor(INSPECT_WAIT_MAX_SECONDS / ITEM_LEVEL_CHECK_INTERVAL)
 local DISPLAY_SLOTS = {}
-for slotIndex, slotName in ipairs(W.EquipmentSlots) do
+for index, localizedName in ipairs(W.EquipmentSlots) do
 	-- Exclude Shirt, Tabard, Ranged
-	if not tContains({ 4, 18, 19 }, slotIndex) then
-		tinsert(DISPLAY_SLOTS, { index = slotIndex, name = gsub(slotName, "%d", "") })
+	if not tContains({ 4, 18, 19 }, index) then
+		tinsert(DISPLAY_SLOTS, { index = index, name = gsub(localizedName, "%d", "") })
 	end
 end
 
@@ -142,36 +140,6 @@ local EnchantParts = {
 	{ true, "MAINHANDSLOT" },
 	{ false, "SECONDARYHANDSLOT" },
 }
-
-local function ReInspect(unit)
-	local guid = UnitGUID(unit)
-	if not guid then
-		return
-	end
-	local data = guids[guid]
-	if not data then
-		return
-	end
-	LibSchedule:AddTask({
-		identity = guid,
-		timer = 0.5,
-		elasped = 0.5,
-		expired = GetTime() + 3,
-		data = data,
-		unit = unit,
-		onExecute = function(self)
-			local itemLevel = E:GetUnitItemLevel("player")
-			if not itemLevel or itemLevel == "tooSoon" or itemLevel <= 0 then
-				return true
-			end
-			if itemLevel > 0 then
-				self.data.itemLevel = itemLevel
-				LibEvent:trigger("UNIT_REINSPECT_READY", self.data)
-				return true
-			end
-		end,
-	})
-end
 
 local function GetStateValue(_, _, value, default)
 	return value or default
@@ -352,8 +320,6 @@ function I:ShouldShowPanel(unit, parent)
 		end
 	end
 
-	print(unit, parent:GetDebugName())
-
 	return true
 end
 
@@ -366,7 +332,7 @@ function I:FetchPanel(parent)
 	local height = parent:GetHeight()
 
 	-- Frame
-	frame:Size(MINIMUM_INSPECT_PANEL_WIDTH, height)
+	frame:Size(PANEL_MIN_WIDTH, height)
 	frame:SetFrameLevel(0)
 	frame:Point("LEFT", parent, "RIGHT", 5, 0)
 	frame:SetTemplate("Transparent")
@@ -652,7 +618,7 @@ function I:ShowPanel(unit, parent, ilevel)
 		lineWidth = lineWidth + frame.iconWidth + 4
 	end
 
-	lineWidth = max(lineWidth, MINIMUM_INSPECT_PANEL_WIDTH)
+	lineWidth = max(lineWidth, PANEL_MIN_WIDTH)
 
 	for _, line in ipairs(frame.Lines) do
 		line.Label:Width(frame.maxLabelTextWidth + 6)
@@ -679,82 +645,90 @@ function I:ShowAllPlayerPanels()
 	self:ShowPanel("player", _G.PaperDollFrame, E:GetUnitItemLevel("player"))
 	self:ShowPanel("player", _G.InspectFrame and _G.InspectFrame.WTInspect, E:GetUnitItemLevel("player"))
 end
-function I:Inspect()
-	-- @trigger UNIT_INSPECT_STARTED
-	hooksecurefunc("NotifyInspect", function(unit)
+
+function I:ShowInspectPanels(unit, guid, itemLevel)
+	F.Developer.LogDebug(
+		GetTime(),
+		"Data ready, show inspect panels.",
+		"unit:",
+		unit,
+		"guid:",
+		guid,
+		"itemLevel:",
+		itemLevel
+	)
+	local frame = self:ShowPanel(unit, _G.InspectFrame, itemLevel)
+	self:ShowPanel("player", frame, E:GetUnitItemLevel("player"))
+
+	self.inspecting[guid] = nil
+end
+
+function I:NotifyInspect(unit)
+	local guid = UnitGUID(unit)
+	F.Developer.LogDebug(GetTime(), "NotifyInspect start.", "unit:", unit, "guid:", guid)
+	if guid then
+		self.inspecting[guid] = {
+			unit = unit,
+			ts = time(),
+		}
+
+		-- Clear after 3 seconds
+		E:Delay(INSPECT_WAIT_MAX_SECONDS, function()
+			if self.inspecting[guid] and self.inspecting[guid].ts and time() - self.inspecting[guid].ts >= 3 then
+				self.inspecting[guid] = nil
+			end
+		end)
+	end
+end
+
+function I:INSPECT_READY(_, guid)
+	F.Developer.LogDebug(GetTime(), "INSPECT_READY received.", "guid:", guid)
+
+	if not self.inspecting[guid] then
+		return
+	end
+
+	local itemLevelContext = nil ---@type number?
+
+	F.WaitFor(function()
+		F.Developer.LogDebug(GetTime(), "Trying to fetch item level...", "guid:", guid)
+		if self.inspecting[guid] == nil then
+			return "end"
+		end
+
+		local unit = self.inspecting[guid].unit
+		if not unit or UnitGUID(unit) ~= guid then
+			return false
+		end
+
+		local itemLevel = E:GetUnitItemLevel(unit)
+		if type(itemLevel) ~= "number" or itemLevel <= 0 then
+			return false
+		end
+
+		itemLevelContext = itemLevel
+		F.Developer.LogDebug(GetTime(), "Item level fetched.", "itemLevel:", itemLevel)
+		return true
+	end, function()
+		local latestUnit = _G.InspectFrame and _G.InspectFrame.unit
+		local latestGUID = latestUnit and UnitGUID(latestUnit)
+		if itemLevelContext and latestGUID == guid then
+			self:ShowInspectPanels(latestUnit, latestGUID, itemLevelContext)
+		end
+	end, ITEM_LEVEL_CHECK_INTERVAL, INSPECT_WAIT_MAX_ROUNDS)
+end
+
+function I:UNIT_INVENTORY_CHANGED(_, unit)
+	F.Developer.LogDebug(GetTime(), "UNIT_INVENTORY_CHANGED received.", "unit:", unit)
+	if _G.InspectFrame and _G.InspectFrame.unit and _G.InspectFrame.unit == unit then
 		local guid = UnitGUID(unit)
-		if not guid then
-			return
+		if guid then
+			-- Simulate the events fired
+			F.Developer.LogDebug(GetTime(), "Re-inspect simulation start", "unit:", unit)
+			self:NotifyInspect(unit)
+			self:INSPECT_READY(_, guid)
 		end
-		local data = guids[guid]
-		if data then
-			data.unit = unit
-			data.name, data.realm = UnitName(unit)
-		else
-			data = {
-				unit = unit,
-				guid = guid,
-				class = select(2, UnitClass(unit)),
-				level = UnitLevel(unit),
-				ilevel = -1,
-				spec = nil,
-				hp = UnitHealthMax(unit),
-				timer = time(),
-			}
-			data.name, data.realm = UnitName(unit)
-			guids[guid] = data
-		end
-		if not data.realm then
-			data.realm = GetRealmName()
-		end
-		data.expired = time() + 3
-		LibEvent:trigger("UNIT_INSPECT_STARTED", data)
-	end)
-
-	-- @trigger UNIT_INSPECT_READY
-	LibEvent:attachEvent("INSPECT_READY", function(this, guid)
-		if not guids[guid] then
-			return
-		end
-		LibSchedule:AddTask({
-			identity = guid,
-			timer = 0.5,
-			elasped = 0.8,
-			expired = GetTime() + 4,
-			data = guids[guid],
-			onTimeout = function(self) end,
-			onExecute = function(self)
-				local ilevel = E:GetUnitItemLevel(self.data.unit)
-				if not ilevel or ilevel == "tooSoon" or ilevel <= 0 then
-					return true
-				end
-				if ilevel > 0 then
-					self.data.timer = time()
-					self.data.ilevel = ilevel
-					LibEvent:trigger("UNIT_INSPECT_READY", self.data)
-					return true
-				end
-			end,
-		})
-	end)
-
-	--裝備變更時
-	LibEvent:attachEvent("UNIT_INVENTORY_CHANGED", function(_, unit)
-		if _G.InspectFrame and _G.InspectFrame.unit and _G.InspectFrame.unit == unit then
-			ReInspect(unit)
-		end
-	end)
-
-	--@see InspectCore.lua
-	LibEvent:attachTrigger("UNIT_INSPECT_READY, UNIT_REINSPECT_READY", function(_, data)
-		if not self.db or not self.db.inspect then
-			return
-		end
-		if _G.InspectFrame and _G.InspectFrame.unit and UnitGUID(_G.InspectFrame.unit) == data.guid then
-			local frame = self:ShowPanel(_G.InspectFrame.unit, _G.InspectFrame, data.ilevel)
-			self:ShowPanel("player", frame, E:GetUnitItemLevel("player"))
-		end
-	end)
+	end
 end
 
 function I:Initialize()
@@ -769,6 +743,7 @@ function I:Initialize()
 		return
 	end
 
+	-- Player
 	self:HookScript(_G.PaperDollFrame, "OnShow", function()
 		self:ShowPanel("player", _G.PaperDollFrame, E:GetUnitItemLevel("player"))
 	end)
@@ -776,7 +751,11 @@ function I:Initialize()
 	self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED", "ShowAllPlayerPanels")
 	self:RegisterEvent("PLAYER_AVG_ITEM_LEVEL_UPDATE", "ShowAllPlayerPanels")
 
-	self:Inspect()
+	-- Inspect
+	self.inspecting = {}
+	self:SecureHook("NotifyInspect")
+	self:RegisterEvent("INSPECT_READY")
+	self:RegisterEvent("UNIT_INVENTORY_CHANGED")
 
 	self.initialized = true
 end

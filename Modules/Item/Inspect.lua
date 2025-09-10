@@ -781,7 +781,19 @@ function I:Player()
 			return
 		end
 
-		self:ShowInspectItemListFrame("player", _G.PaperDollFrame, E:GetUnitItemLevel("player"))
+		F.Throttle(0.1, "InspectPlayerUpdate", function()
+			self:ShowInspectItemListFrame("player", _G.PaperDollFrame, E:GetUnitItemLevel("player"))
+		end)
+	end)
+
+	self:RegisterEvent("PLAYER_AVG_ITEM_LEVEL_UPDATE", function(_, unit)
+		if not self.db or not self.db.player or not _G.CharacterFrame:IsShown() then
+			return
+		end
+
+		F.Throttle(0.1, "InspectPlayerUpdate", function()
+			self:ShowInspectItemListFrame("player", _G.PaperDollFrame, E:GetUnitItemLevel("player"))
+		end)
 	end)
 end
 

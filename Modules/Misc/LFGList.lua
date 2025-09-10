@@ -34,15 +34,16 @@ local GroupFinderFrameGroupButton_OnClick = GroupFinderFrameGroupButton_OnClick
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
 local IsShiftKeyDown = IsShiftKeyDown
-local LFGListCategorySelectionButton_OnClick = LFGListCategorySelectionButton_OnClick
-local LFGListCategorySelection_StartFindGroup = LFGListCategorySelection_StartFindGroup
+local LFGListFrame_SetActivePanel = LFGListFrame_SetActivePanel
+local LFGListSearchPanel_Clear = LFGListSearchPanel_Clear
+local LFGListSearchPanel_DoSearch = LFGListSearchPanel_DoSearch
+local LFGListSearchPanel_SetCategory = LFGListSearchPanel_SetCategory
 local PVEFrame_ShowFrame = PVEFrame_ShowFrame
 local UnitClassBase = UnitClassBase
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitName = UnitName
 local WeeklyRewards_ShowUI = WeeklyRewards_ShowUI
 
-local C_Timer_After = C_Timer.After
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_AddOns_LoadAddOn = C_AddOns.LoadAddOn
 local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
@@ -60,9 +61,11 @@ local C_MythicPlus_GetRewardLevelForDifficultyLevel = C_MythicPlus.GetRewardLeve
 local C_MythicPlus_GetRunHistory = C_MythicPlus.GetRunHistory
 local C_SpecializationInfo_GetSpecialization = C_SpecializationInfo.GetSpecialization
 local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo
+local C_Timer_After = C_Timer.After
 local Enum_LFGListFilter = Enum.LFGListFilter
 
 local GROUP_FINDER_CATEGORY_ID_DUNGEONS = GROUP_FINDER_CATEGORY_ID_DUNGEONS
+local GROUP_FINDER_CUSTOM_CATEGORY = GROUP_FINDER_CUSTOM_CATEGORY
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
 local seasonGroups = C_LFGList_GetAvailableActivityGroups(
@@ -942,20 +945,21 @@ function LL:InitializeRightPanel()
 	addSetActive(roleAvailable)
 
 	roleAvailable:SetScript("OnMouseDown", function(btn, button)
-		if button == "LeftButton" then
-			local dfDB = self:GetPlayerDB("dungeonFilter")
-			btn:SetActive(not btn.active)
-			if not self.db.rightPanel.disableSafeFilters and btn.active then
-				needTank:SetActive(false)
-				needHealer:SetActive(false)
-				dfDB.needTankEnable = false
-				dfDB.needHealerEnable = false
-			end
-
-			dfDB.roleAvailableEnable = btn.active
-			self:UpdateAdvancedFilters()
-			LL:RefreshSearch()
+		if button ~= "LeftButton" then
+			return
 		end
+		local dfDB = self:GetPlayerDB("dungeonFilter")
+		btn:SetActive(not btn.active)
+		if not self.db.rightPanel.disableSafeFilters and btn.active then
+			needTank:SetActive(false)
+			needHealer:SetActive(false)
+			dfDB.needTankEnable = false
+			dfDB.needHealerEnable = false
+		end
+
+		dfDB.roleAvailableEnable = btn.active
+		self:UpdateAdvancedFilters()
+		self:RefreshSearch()
 	end)
 
 	filters.roleAvailable = roleAvailable
@@ -1302,12 +1306,17 @@ function LL:InitializeRightPanel()
 	quickAccessTitle:SetText(F.GetWindStyleText(L["Quick Access"]))
 
 	local quickAccessButtons = {}
+
+	-- Find the categoryID and filters when click the category button
+	-- hooksecurefunc("LFGListSearchPanel_SetCategory", function(searchPanel, categoryID, filters, baseFilters)
+	-- 	print(categoryID, filters, baseFilters)
+	-- end)
 	local buttonData = {
-		{ text = L["Mythic+"], categoryID = 2, filters = 0 },
+		{ text = L["Mythic+"], categoryID = GROUP_FINDER_CATEGORY_ID_DUNGEONS, filters = 0 },
 		{ text = L["Raids"], categoryID = 3, filters = 1 },
 		{ text = L["Delves"], categoryID = 121, filters = 0 },
 		{ text = L["Quest"], categoryID = 1, filters = 0 },
-		{ text = L["Custom"], categoryID = 6, filters = 0 },
+		{ text = L["Custom"], categoryID = GROUP_FINDER_CUSTOM_CATEGORY, filters = 0 },
 	}
 
 	for i, data in ipairs(buttonData) do
@@ -1352,17 +1361,37 @@ function LL:InitializeRightPanel()
 				GroupFinderFrameGroupButton_OnClick(PremadeGroupButton)
 			end
 
-			local selection = _G.LFGListFrame.CategorySelection
-			if not selection then
+			local searchPanel, selection = _G.LFGListFrame.SearchPanel, _G.LFGListFrame.CategorySelection
+			if not selection or not searchPanel then
 				return
 			end
+
 			for _, categoryButton in ipairs(selection.CategoryButtons) do
 				if categoryButton.categoryID == data.categoryID and categoryButton.filters == data.filters then
-					LFGListCategorySelectionButton_OnClick(categoryButton)
-					LFGListCategorySelection_StartFindGroup(selection)
+					local baseFilters = _G.LFGListFrame.baseFilters
+
+					-- Set the selectedCategory and selectedFilters to a not nil value will cause taint, needs cleanup later
+					self.needTaintCleanup = true
+					selection.selectedCategory = data.categoryID
+					selection.selectedFilters = data.filters
+
+					LFGListSearchPanel_Clear(searchPanel)
+					LFGListSearchPanel_SetCategory(searchPanel, data.categoryID, data.filters, baseFilters)
+					LFGListSearchPanel_DoSearch(searchPanel)
+					LFGListFrame_SetActivePanel(_G.LFGListFrame, searchPanel)
 					return
 				end
 			end
+		end)
+
+		-- Prehook the back button to clear the selectedCategory and selectedFilters to avoid taint
+		local backButtonOnClick = _G.LFGListFrame.SearchPanel.BackButton:GetScript("OnClick")
+		_G.LFGListFrame.SearchPanel.BackButton:SetScript("OnClick", function(...)
+			if self.needTaintCleanup then
+				_G.LFGListFrame.CategorySelection.selectedCategory = nil
+				_G.LFGListFrame.CategorySelection.selectedFilters = nil
+			end
+			backButtonOnClick(...)
 		end)
 
 		button:SetActive(false)

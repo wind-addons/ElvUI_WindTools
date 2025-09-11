@@ -91,9 +91,11 @@ function W.Utilities.Async.WithItemLink(itemLink, callback)
 	return W.Utilities.Async.WithItemID(itemID, callback)
 end
 
+---@alias SpellCallback fun(spellInstance:SpellMixin)
+
 ---Load spell data asynchronously and execute callback
 ---@param spellID number The spell ID to load
----@param callback function? Callback function to execute when spell is loaded
+---@param callback SpellCallback? Callback function to execute when spell is loaded
 ---@return any? spell Cached spell data if available
 function W.Utilities.Async.WithSpellID(spellID, callback)
 	if type(spellID) ~= "number" then
@@ -133,7 +135,7 @@ end
 ---Load multiple items asynchronously from a table
 ---@param itemIDTable table Table containing item IDs
 ---@param tType string? Type of table processing
----@param callback function? Callback for individual items
+---@param callback ItemCallback? Callback for individual items
 ---@param tableCallback function? Callback for completed table
 function W.Utilities.Async.WithItemIDTable(itemIDTable, tType, callback, tableCallback)
 	if type(itemIDTable) ~= "table" then
@@ -229,7 +231,7 @@ end
 ---Load multiple spells asynchronously from a table
 ---@param spellIDTable table Table containing spell IDs
 ---@param tType string? Type of table processing
----@param callback function? Callback for individual spells
+---@param callback SpellCallback? Callback for individual spells
 ---@param tableCallback function? Callback for completed table
 function W.Utilities.Async.WithSpellIDTable(spellIDTable, tType, callback, tableCallback)
 	if type(spellIDTable) ~= "table" then

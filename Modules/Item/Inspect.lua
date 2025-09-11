@@ -203,7 +203,7 @@ function circleIconPrototype:AsEnchant(data)
 				return self:Reset()
 			end
 
-			local tex = spell:GetSpellIcon()
+			local tex = spell:GetSpellTexture()
 			if not tex then
 				return self:Reset()
 			end

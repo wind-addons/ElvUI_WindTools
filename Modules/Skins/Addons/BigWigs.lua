@@ -367,14 +367,16 @@ function S:BigWigs_Keystone()
 		self:CreateShadow(frame)
 		self:Proxy("HandleCloseButton", frame.CloseButton)
 
-		for _, tab in next, frame.Tabs do
-			self:Proxy("HandleTab", tab)
-			self:ReskinTab(tab)
-			tab:SetHeight(32)
+		if frame.Tabs then
+			for _, tab in next, frame.Tabs do
+				self:Proxy("HandleTab", tab)
+				self:ReskinTab(tab)
+				tab:SetHeight(32)
 
-			if tab:GetPoint(1) == "BOTTOMLEFT" then
-				tab:ClearAllPoints()
-				tab:SetPoint("BOTTOMLEFT", 10, -31)
+				if tab:GetPoint(1) == "BOTTOMLEFT" then
+					tab:ClearAllPoints()
+					tab:SetPoint("BOTTOMLEFT", 10, -31)
+				end
 			end
 		end
 	end)

@@ -1,9 +1,6 @@
-
--------------------------------------
--- 物品附魔信息庫 Author: M
--------------------------------------
-
-local MAJOR, MINOR = "LibItemEnchant.7000", 4
+--- Author: loudsoul (TinyInspect), Witness (NDui_Plus)
+--- Modifed for avoiding conflict with TinyInspect
+local MAJOR, MINOR = "LibItemEnchant-WT", 1
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
 
 if not lib then return end

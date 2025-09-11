@@ -92,6 +92,7 @@ E:AddLib("OpenRaid", "LibOpenRaid-1.0")
 E:AddLib("ObjectiveProgress", "LibObjectiveProgress-1.0")
 E:AddLib("RangeCheck", "LibRangeCheck-3.0")
 E:AddLib("Keystone", "LibKeystone")
+E:AddLib("ItemEnchant", "LibItemEnchant-WT")
 
 _G.WindTools_OnAddonCompartmentClick = function()
 	E:ToggleOptions("WindTools")

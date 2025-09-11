@@ -509,9 +509,9 @@ function I:CreatePanel(parent)
 		)
 		line.ItemTextureFrame:SetTemplate()
 
-		line.ItemTextureFrame.SpecialIndicator = line.ItemTextureFrame:CreateFontString(nil, "OVERLAY")
-		F.SetFontOutline(line.ItemTextureFrame.SpecialIndicator, F.GetCompatibleFont("Chivo Mono"), 20)
-		line.ItemTextureFrame.SpecialIndicator:Point("CENTER", line.ItemTextureFrame.Texture, "TOPRIGHT", 1, -2)
+		line.ItemTextureFrame.Indicator = line.ItemTextureFrame:CreateFontString(nil, "OVERLAY")
+		F.SetFontOutline(line.ItemTextureFrame.Indicator, F.GetCompatibleFont("Chivo Mono"), 20)
+		line.ItemTextureFrame.Indicator:Point("CENTER", line.ItemTextureFrame.Texture, "TOPRIGHT", 1, -2)
 
 		-- Item Name
 		line.ItemName = line:CreateFontString(nil, "ARTWORK")
@@ -630,21 +630,23 @@ function I:ShowPanel(unit, parent, ilevel)
 
 		if self.db.itemIcon.enable and self.db.itemIcon.indicator and itemInfo then
 			if itemInfo.set and itemInfo.set > 0 then
-				if itemInfo.expansionID >= CURRENT_EXPANSION_ID then
-					line.ItemTextureFrame.SpecialIndicator:SetTextColor(C.ExtractRGBFromTemplate("pink-500"))
+				if W.CurrentTierSetTable[itemInfo.set] then
+					line.ItemTextureFrame.Indicator:SetTextColor(C.ExtractRGBFromTemplate("pink-500"))
+				elseif itemInfo.expansionID >= CURRENT_EXPANSION_ID then
+					line.ItemTextureFrame.Indicator:SetTextColor(C.ExtractRGBFromTemplate("sky-600"))
 				else
-					line.ItemTextureFrame.SpecialIndicator:SetTextColor(C.ExtractRGBFromTemplate("gray-400"))
+					line.ItemTextureFrame.Indicator:SetTextColor(C.ExtractRGBFromTemplate("gray-400"))
 				end
-				line.ItemTextureFrame.SpecialIndicator:SetText("*")
-				line.ItemTextureFrame.SpecialIndicator:Show()
+				line.ItemTextureFrame.Indicator:SetText("*")
+				line.ItemTextureFrame.Indicator:Show()
 			elseif itemInfo.craftingAtlas then
-				line.ItemTextureFrame.SpecialIndicator:SetText("|A:" .. itemInfo.craftingAtlas .. ":8:8|a")
-				line.ItemTextureFrame.SpecialIndicator:Show()
+				line.ItemTextureFrame.Indicator:SetText("|A:" .. itemInfo.craftingAtlas .. ":8:8|a")
+				line.ItemTextureFrame.Indicator:Show()
 			else
-				line.ItemTextureFrame.SpecialIndicator:Hide()
+				line.ItemTextureFrame.Indicator:Hide()
 			end
 		else
-			line.ItemTextureFrame.SpecialIndicator:Hide()
+			line.ItemTextureFrame.Indicator:Hide()
 		end
 
 		-- Update colors for some expansion special items

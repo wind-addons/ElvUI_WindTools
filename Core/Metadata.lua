@@ -17,6 +17,7 @@ local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
+local C_LootJournal_GetItemSetItems = C_LootJournal.GetItemSetItems
 
 E.myClassColor = E.myClassColor or E:ClassColor(E.myclass, true)
 
@@ -144,6 +145,35 @@ W.EquipmentSlots = {
 	RANGEDSLOT,
 	TABARDSLOT,
 }
+
+-- Tier Sets
+-- wowhead: https://www.wowhead.com/guide/raids/manaforge-omega/tier-set-overview
+-- dbc: https://wago.tools/db2/ItemSet
+---@type table<number, true>
+W.CurrentTierSetTable = {
+	[1919] = true,
+	[1920] = true,
+	[1921] = true,
+	[1922] = true,
+	[1923] = true,
+	[1924] = true,
+	[1925] = true,
+	[1926] = true,
+	[1927] = true,
+	[1928] = true,
+	[1929] = true,
+	[1930] = true,
+	[1931] = true,
+}
+
+---@type table<number, true>
+W.CurrentTierSetItemIDTable = {}
+
+for id in pairs(W.CurrentTierSetTable) do
+	for _, itemInfo in pairs(C_LootJournal_GetItemSetItems(id)) do
+		W.CurrentTierSetItemIDTable[itemInfo.itemID] = true
+	end
+end
 
 function W:InitializeMetadata()
 	for id in pairs(W.MythicPlusMapData) do

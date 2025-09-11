@@ -341,6 +341,10 @@ function S:BigWigs_Keystone()
 	local BigWigsL = _G.BigWigsAPI and _G.BigWigsAPI:GetLocale("BigWigs")
 	local titleText = BigWigsL and BigWigsL.keystoneTitle
 
+	if not titleText then
+		return
+	end
+
 	local finder = OF:New()
 	finder:Find("Frame", function(frame)
 		-- Because the function is run on any type objects, need to ensure the safety

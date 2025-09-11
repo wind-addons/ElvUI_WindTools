@@ -1176,11 +1176,11 @@ options.inspect = {
 				},
 			},
 		},
-		icon = {
+		itemIcon = {
 			order = 4,
 			type = "group",
 			inline = true,
-			name = L["Icon"],
+			name = L["Item Icon"],
 			get = function(info)
 				return E.db.WT.item.inspect.itemIcon[info[#info]]
 			end,
@@ -1202,7 +1202,7 @@ options.inspect = {
 						return not E.db.WT.item.inspect.itemIcon
 					end,
 				},
-				specialIndicator = {
+				indicator = {
 					order = 3,
 					type = "toggle",
 					name = L["Special Indicator"],
@@ -1211,10 +1211,80 @@ options.inspect = {
 						return not E.db.WT.item.inspect.itemIcon
 					end,
 				},
+				width = {
+					order = 4,
+					name = L["Width"],
+					type = "range",
+					min = 5,
+					max = 40,
+					step = 1,
+				},
+				height = {
+					order = 5,
+					name = L["Height"],
+					type = "range",
+					min = 5,
+					max = 40,
+					step = 1,
+				},
+			},
+		},
+		gemIcon = {
+			order = 5,
+			type = "group",
+			inline = true,
+			name = L["Gem Icon"],
+			get = function(info)
+				return E.db.WT.item.inspect.gemIcon[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.item.inspect.gemIcon[info[#info]] = value
+			end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Show Icon"],
+				},
+				size = {
+					order = 2,
+					name = L["Size"],
+					type = "range",
+					min = 5,
+					max = 30,
+					step = 1,
+				},
+			},
+		},
+		enchantIcon = {
+			order = 6,
+			type = "group",
+			inline = true,
+			name = L["Enchant Icon"],
+			get = function(info)
+				return E.db.WT.item.inspect.enchantIcon[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.item.inspect.enchantIcon[info[#info]] = value
+			end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Show Icon"],
+				},
+				size = {
+					order = 2,
+					name = L["Size"],
+					type = "range",
+					min = 5,
+					max = 30,
+					step = 1,
+				},
 			},
 		},
 		slotText = {
-			order = 5,
+			order = 6,
 			type = "group",
 			inline = true,
 			name = L["Slot"],

@@ -651,8 +651,10 @@ P.item = {
 		playerOnInspect = true,
 		itemIcon = {
 			enable = true,
-			qualityBorder = false,
+			qualityBorder = true,
 			indicator = true,
+			width = 20,
+			height = 16,
 		},
 		gemIcon = {
 			enable = true,

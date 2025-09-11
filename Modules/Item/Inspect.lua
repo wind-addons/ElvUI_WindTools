@@ -499,14 +499,10 @@ function I:CreatePanel(parent)
 		-- Item Texture
 		line.ItemTextureFrame = CreateFrame("Frame", nil, line, "BackdropTemplate")
 		line.ItemTextureFrame.Texture = line.ItemTextureFrame:CreateTexture(nil, "ARTWORK")
-		frame.iconHeight = frame.lineHeight - 5
-		frame.iconWidth = floor((frame.iconHeight / 0.8) + 0.5)
-		line.ItemTextureFrame:Size(frame.iconWidth, frame.iconHeight)
+		line.ItemTextureFrame:Size(self.db.itemIcon.width, self.db.itemIcon.height)
 		line.ItemTextureFrame:Point("LEFT", line.ItemLevel, "RIGHT", PANEL_COMPONENT_SPACING, 0)
 		line.ItemTextureFrame.Texture:SetInside(line.ItemTextureFrame)
-		line.ItemTextureFrame.Texture:SetTexCoord(
-			E:CropRatio(line.ItemTextureFrame.Texture:GetWidth(), line.ItemTextureFrame.Texture:GetHeight())
-		)
+		line.ItemTextureFrame.Texture:SetTexCoord(E:CropRatio(self.db.itemIcon.width, self.db.itemIcon.height))
 		line.ItemTextureFrame:SetTemplate()
 
 		line.ItemTextureFrame.Indicator = line.ItemTextureFrame:CreateFontString(nil, "OVERLAY")
@@ -582,7 +578,7 @@ function I:ShowPanel(unit, parent, ilevel)
 		frame.SpecIcon:SetShown(false)
 	end
 
-	frame.maxLabelTextWidth, frame.maxItemLevelTextWidth, frame.maxItemNameTextWidth = 30, 0, 0
+	local maxLabelTextWidth, maxItemLevelTextWidth, maxItemNameTextWidth = 30, 0, 0
 
 	for displayIndex, slotInfo in ipairs(DISPLAY_SLOTS) do
 		local line = frame.Lines[displayIndex]
@@ -611,6 +607,8 @@ function I:ShowPanel(unit, parent, ilevel)
 
 		line.ItemTextureFrame:ClearAllPoints()
 		if self.db.itemIcon.enable then
+			line.ItemTextureFrame:Size(self.db.itemIcon.width, self.db.itemIcon.height)
+			line.ItemTextureFrame.Texture:SetTexCoord(E:CropRatio(self.db.itemIcon.width, self.db.itemIcon.height))
 			line.ItemTextureFrame:Point("LEFT", line.ItemLevel, "RIGHT", 4, 0)
 			if itemInfo and itemInfo.level > 0 then
 				line.ItemTextureFrame.Texture:SetTexture(itemInfo.texture)
@@ -630,14 +628,14 @@ function I:ShowPanel(unit, parent, ilevel)
 
 		if self.db.itemIcon.enable and self.db.itemIcon.indicator and itemInfo then
 			if itemInfo.set and itemInfo.set > 0 then
-				if W.CurrentTierSetTable[itemInfo.set] then
-					line.ItemTextureFrame.Indicator:SetTextColor(C.ExtractRGBFromTemplate("pink-500"))
-				elseif itemInfo.expansionID >= CURRENT_EXPANSION_ID then
-					line.ItemTextureFrame.Indicator:SetTextColor(C.ExtractRGBFromTemplate("sky-600"))
-				else
-					line.ItemTextureFrame.Indicator:SetTextColor(C.ExtractRGBFromTemplate("gray-400"))
-				end
 				line.ItemTextureFrame.Indicator:SetText("*")
+				local colorTemplate = "gray-400"
+				if W.CurrentTierSetTable[itemInfo.set] then
+					colorTemplate = "pink-500"
+				elseif itemInfo.expansionID >= CURRENT_EXPANSION_ID then
+					colorTemplate = "sky-600"
+				end
+				line.ItemTextureFrame.Indicator:SetTextColor(C.ExtractRGBFromTemplate(colorTemplate))
 				line.ItemTextureFrame.Indicator:Show()
 			elseif itemInfo.craftingAtlas then
 				line.ItemTextureFrame.Indicator:SetText("|A:" .. itemInfo.craftingAtlas .. ":8:8|a")
@@ -699,36 +697,33 @@ function I:ShowPanel(unit, parent, ilevel)
 		end
 
 		-- Width adjustment for dynamic font size
-		-- GetStringWidth + 3 is actually looks better than just GetStringWidth
-		local BETTER_GETSTRING_WIDTH = 3
-		local labelTextWidth = line.Label.Text:GetStringWidth() + BETTER_GETSTRING_WIDTH
-		frame.maxLabelTextWidth = max(frame.maxLabelTextWidth, labelTextWidth)
-		line.Label.Text:Width(labelTextWidth)
-		frame.maxItemLevelTextWidth =
-			max(frame.maxItemLevelTextWidth, line.ItemLevel:GetStringWidth() + BETTER_GETSTRING_WIDTH)
+
+		local BETTER_GETSTRING_WIDTH = 1
+		maxLabelTextWidth = max(maxLabelTextWidth, line.Label.Text:GetStringWidth())
+		maxItemLevelTextWidth = max(maxItemLevelTextWidth, line.ItemLevel:GetStringWidth() + BETTER_GETSTRING_WIDTH)
 		local itemNameTextWidth = line.ItemName:GetStringWidth() + BETTER_GETSTRING_WIDTH
 		if #line.circleIcons > 0 then
 			itemNameTextWidth = itemNameTextWidth + circleIconsWidth + PANEL_COMPONENT_SPACING
 		end
-		frame.maxItemNameTextWidth = max(frame.maxItemNameTextWidth, itemNameTextWidth)
+		maxItemNameTextWidth = max(maxItemNameTextWidth, itemNameTextWidth)
 	end
 
-	local lineWidth = (frame.maxLabelTextWidth + 3 * 2) -- padding is 3
+	local lineWidth = (maxLabelTextWidth + 3 * 2) -- padding is 3
 		+ PANEL_COMPONENT_SPACING
-		+ frame.maxItemLevelTextWidth
+		+ maxItemLevelTextWidth
 		+ PANEL_COMPONENT_SPACING
-		+ frame.maxItemNameTextWidth
+		+ maxItemNameTextWidth
 
 	if self.db.itemIcon.enable then
-		lineWidth = lineWidth + frame.iconWidth + PANEL_COMPONENT_SPACING
+		lineWidth = lineWidth + self.db.itemIcon.width + 2 + PANEL_COMPONENT_SPACING
 	end
 
 	lineWidth = max(lineWidth, PANEL_MIN_WIDTH)
 
 	for _, line in ipairs(frame.Lines) do
-		line.Label.Text:Width(frame.maxLabelTextWidth)
-		line.Label:Width(frame.maxLabelTextWidth + 3 * 2)
-		line.ItemLevel:Width(frame.maxItemLevelTextWidth)
+		line.Label.Text:Width(maxLabelTextWidth + 3 * 2)
+		line.Label:Width(maxLabelTextWidth + 3 * 2)
+		line.ItemLevel:Width(maxItemLevelTextWidth)
 		line:Width(lineWidth)
 	end
 

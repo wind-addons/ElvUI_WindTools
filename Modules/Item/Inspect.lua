@@ -4,11 +4,10 @@ local C = W.Utilities.Color
 local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames ---@type MoveFrames
 local async = W.Utilities.Async
-local LibItemEnchant = E.Libs.ItemEnchant ---@type LibItemEnchant
+local EnchantLib = E.Libs.WTItemEnchant ---@type LibItemEnchantWT
 
 -- Core logic, utility functions are modified from TinyInspect.
--- Credits: loudsoul, Witnesscm
-
+-- Credits & Copyright: loudsoul, Witnesscm
 local _G = _G
 local floor = floor
 local format = format
@@ -23,6 +22,7 @@ local strmatch = strmatch
 local tAppendAll = tAppendAll
 local tinsert = tinsert
 local tonumber = tonumber
+local tostring = tostring
 local tremove = tremove
 local type = type
 local unpack = unpack
@@ -50,6 +50,8 @@ local C_Item_IsCorruptedItem = C_Item.IsCorruptedItem
 local C_SpecializationInfo_GetSpecialization = C_SpecializationInfo.GetSpecialization
 local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo
 local C_TooltipInfo_GetHyperlink = C_TooltipInfo.GetHyperlink
+local C_TradeSkillUI_GetItemCraftedQualityByItemInfo = C_TradeSkillUI.GetItemCraftedQualityByItemInfo
+local C_TradeSkillUI_GetItemReagentQualityByItemInfo = C_TradeSkillUI.GetItemReagentQualityByItemInfo
 
 local EMPTY = EMPTY
 local Enum_ItemQuality_Common = Enum.ItemQuality.Common
@@ -125,13 +127,21 @@ function circleIconPrototype:UpdateSize(size)
 	self.Border:Size(size + 4)
 end
 
+---Updates the crafting level style of the circle icon
+---@param config { name: string, size: number, style: string, xOffset: number, yOffset: number }
+function circleIconPrototype:UpdateCraftingTierStyle(config)
+	F.SetFontWithDB(self.CraftingTierText, config)
+	self.CraftingTierText:ClearAllPoints()
+	self.CraftingTierText:Point("CENTER", self.Texture, "BOTTOM", config.xOffset, config.yOffset)
+end
+
 ---Sets the data for the circle icon
 ---@param data SocketGemInfo The item link to display
 function circleIconPrototype:AsGemSocket(data)
 	self.name, self.itemLink, self.itemID = data.name, data.link, data.socketItemID
 
 	if not data.link then
-		self:ApplyItemData(MISSING_ICON, nil, data.socketItemID and "stone-500" or "red-800")
+		self:UpdateStyle(MISSING_ICON, nil, data.socketItemID and "stone-500" or "red-800")
 		return
 	end
 
@@ -145,15 +155,72 @@ function circleIconPrototype:AsGemSocket(data)
 			return self:Reset()
 		end
 
-		self:ApplyItemData(tex, quality or Enum_ItemQuality_Common)
+		local level = C_TradeSkillUI_GetItemReagentQualityByItemInfo(data.link)
+			or C_TradeSkillUI_GetItemCraftedQualityByItemInfo(data.link)
+
+		local db = I.db.gemIcon.craftingTier
+		if level and (level > db.maxTierToShow or level < db.minTierToShow) then
+			level = nil
+		end
+
+		self:UpdateStyle(tex, quality or Enum_ItemQuality_Common, nil, level)
 	end)
+end
+
+---Sets the data for the circle icon
+---@param data EnchantInfo The enchantment information to display
+function circleIconPrototype:AsEnchant(data)
+	self.name, self.itemID, self.spellID = nil, data.itemID, data.spellID
+
+	if not data.enchantID then
+		return self:Reset()
+	end
+
+	if data.itemID then
+		async.WithItemID(data.itemID, function(item)
+			if not item or item:IsItemEmpty() then
+				return self:Reset()
+			end
+
+			local tex, quality = item:GetItemIcon(), item:GetItemQuality()
+			if not tex then
+				return self:Reset()
+			end
+
+			local level = C_TradeSkillUI_GetItemReagentQualityByItemInfo(data.itemID)
+				or C_TradeSkillUI_GetItemCraftedQualityByItemInfo(data.itemID)
+
+			local db = I.db.enchantIcon.craftingTier
+			if level and (level > db.maxTierToShow or level < db.minTierToShow) then
+				level = nil
+			end
+
+			self:UpdateStyle(tex, quality or Enum_ItemQuality_Common, nil, level)
+		end)
+	elseif data.spellID then
+		async.WithSpellID(data.spellID, function(spell)
+			if not spell or spell:IsSpellEmpty() then
+				return self:Reset()
+			end
+
+			local tex = spell:GetSpellIcon()
+			if not tex then
+				return self:Reset()
+			end
+
+			self:UpdateStyle(tex, Enum_ItemQuality_Common)
+		end)
+	else
+		self:Reset()
+	end
 end
 
 ---Applies the texture and border color to the circle icon
 ---@param texture string|number The texture path or texture ID
 ---@param quality Enum.ItemQuality? The item quality for the border color
 ---@param colorTemplate ColorTemplate? The color template for the border
-function circleIconPrototype:ApplyItemData(texture, quality, colorTemplate)
+---@param craftingTier number? The crafting quality level for the overlay
+function circleIconPrototype:UpdateStyle(texture, quality, colorTemplate, craftingTier)
 	self.Texture:SetTexture(texture)
 	self.Texture:SetMask(CIRCLE_MASK)
 
@@ -172,6 +239,19 @@ function circleIconPrototype:ApplyItemData(texture, quality, colorTemplate)
 		r, g, b = C.ExtractRGBFromTemplate(colorTemplate or "red-800")
 		a = 0.7
 	end
+
+	if craftingTier then
+		self.CraftingTierText:SetText(tostring(craftingTier))
+		local colorTemplate = "amber-300" ---@type ColorTemplate
+		if craftingTier < 3 then
+			colorTemplate = "yellow-600"
+		end
+		self.CraftingTierText:SetTextColor(C.ExtractRGBFromTemplate(colorTemplate))
+		self.CraftingTierText:Show()
+	else
+		self.CraftingTierText:Hide()
+	end
+
 	self.Border:SetVertexColor(r, g, b, a)
 	self.Texture:Show()
 	self.Border:Show()
@@ -188,6 +268,12 @@ function circleIconPool:CreateIcon()
 	frame.Texture = frame:CreateTexture(nil, "ARTWORK")
 	frame.Texture:SetPoint("CENTER")
 	frame.Texture:SetMask(CIRCLE_MASK)
+
+	frame.CraftingTierText = frame:CreateFontString(nil, "OVERLAY")
+	frame.CraftingTierText:Point("CENTER", frame.Texture, "BOTTOM")
+	F.SetFontOutline(frame.CraftingTierText, F.GetCompatibleFont("Chivo Mono"), 8)
+	frame.CraftingTierText:SetJustifyH("CENTER")
+	frame.CraftingTierText:SetJustifyV("MIDDLE")
 
 	frame.Border = frame:CreateTexture(nil, "BORDER")
 	frame.Border:SetTexture(W.Media.Textures.inspectGemBG)
@@ -301,6 +387,21 @@ local function GetItemAddableSockets(itemLink, slotIndex, itemLevel)
 	end
 
 	return data
+end
+
+---@alias EnchantInfo { enchantID: string?, itemID: number?, spellID: number? }
+
+---Gets enchantment information from an item link
+---@param itemLink string The item link to analyze
+---@return EnchantInfo? enchantInfo The enchantment information, or nil if not found
+local function GetItemEnchantInfo(itemLink)
+	local enchantID = tonumber(strmatch(itemLink, "item:%d+:(%d+):"))
+	return enchantID
+		and {
+			enchantID = enchantID,
+			itemID = EnchantLib:GetEnchantItemID(enchantID),
+			spellID = EnchantLib:GetEnchantSpellID(enchantID),
+		}
 end
 
 ---@alias InspectItemInfo {
@@ -511,8 +612,8 @@ function I:CreatePanel(parent)
 
 		-- Item Name
 		line.ItemName = line:CreateFontString(nil, "ARTWORK")
-		F.SetFontWithDB(line.ItemName, self.db.equipText)
-		line.ItemName:Height(self.db.equipText.size + 2)
+		F.SetFontWithDB(line.ItemName, self.db.itemNameText)
+		line.ItemName:Height(self.db.itemNameText.size + 2)
 		line.ItemName:Point("LEFT", line.ItemTextureFrame, "RIGHT", PANEL_COMPONENT_SPACING + 2, -1)
 		line.ItemName:SetJustifyH("LEFT")
 
@@ -594,8 +695,8 @@ function I:ShowPanel(unit, parent, ilevel)
 		line.Label.Text:Height(self.db.slotText.size + 2)
 		F.SetFontWithDB(line.ItemLevel, self.db.levelText)
 		line.ItemLevel:Height(self.db.levelText.size + 2)
-		F.SetFontWithDB(line.ItemName, self.db.equipText)
-		line.ItemName:Height(self.db.equipText.size + 2)
+		F.SetFontWithDB(line.ItemName, self.db.itemNameText)
+		line.ItemName:Height(self.db.itemNameText.size + 2)
 
 		if itemInfo and itemInfo.level > 0 then
 			line.ItemLevel:SetText(format("%d", itemInfo.level))
@@ -649,11 +750,8 @@ function I:ShowPanel(unit, parent, ilevel)
 
 		-- Update colors for some expansion special items
 		if itemInfo and itemInfo.link then
-			if C_Item_IsCorruptedItem(itemInfo.link) then
-				line.ItemLevel:SetTextColor(C.ExtractRGBFromTemplate("indigo-400"))
-			else
-				line.ItemLevel:SetTextColor(C.ExtractRGBFromTemplate("neutral-100"))
-			end
+			local colorTemplate = C_Item_IsCorruptedItem(itemInfo.link) and "indigo-400" or "neutral-100"
+			line.ItemLevel:SetTextColor(C.ExtractRGBFromTemplate(colorTemplate))
 		end
 
 		if slotInfo.index == 16 or slotInfo.index == 17 then
@@ -672,6 +770,29 @@ function I:ShowPanel(unit, parent, ilevel)
 
 		local circleIconsWidth = 0
 
+		local function UpdateCircleIconPosition(icon)
+			if #line.circleIcons == 0 then
+				icon:Point("LEFT", line.ItemName, "RIGHT", PANEL_COMPONENT_SPACING, 0)
+				circleIconsWidth = circleIconsWidth + self.db.gemIcon.size
+			else
+				icon:Point("LEFT", line.circleIcons[#line.circleIcons], "RIGHT", 3, 0)
+				circleIconsWidth = circleIconsWidth + self.db.gemIcon.size + 3
+			end
+		end
+
+		if self.db.enchantIcon.enable then
+			local enchantInfo = itemInfo and itemInfo.link and GetItemEnchantInfo(itemInfo.link)
+			if enchantInfo and enchantInfo.enchantID then
+				local icon = circleIconPool:Acquire()
+				icon:SetParent(line)
+				icon:AsEnchant(enchantInfo)
+				icon:UpdateSize(self.db.enchantIcon.size)
+				icon:UpdateCraftingTierStyle(self.db.enchantIcon.craftingTier)
+				UpdateCircleIconPosition(icon)
+				tinsert(line.circleIcons, icon)
+			end
+		end
+
 		if self.db.gemIcon.enable then
 			local gemSocketInfo = itemInfo and itemInfo.link and GetItemGemInfo(itemInfo.link) or {}
 			local addableSockets = self.db.gemIcon.showAddableSockets
@@ -686,19 +807,13 @@ function I:ShowPanel(unit, parent, ilevel)
 				icon:SetParent(line)
 				icon:AsGemSocket(data)
 				icon:UpdateSize(self.db.gemIcon.size)
-				if #line.circleIcons == 0 then
-					icon:Point("LEFT", line.ItemName, "RIGHT", PANEL_COMPONENT_SPACING, 0)
-					circleIconsWidth = circleIconsWidth + self.db.gemIcon.size
-				else
-					icon:Point("LEFT", line.circleIcons[#line.circleIcons], "RIGHT", 3, 0)
-					circleIconsWidth = circleIconsWidth + self.db.gemIcon.size + 3
-				end
+				icon:UpdateCraftingTierStyle(self.db.gemIcon.craftingTier)
+				UpdateCircleIconPosition(icon)
 				tinsert(line.circleIcons, icon)
 			end
 		end
 
 		-- Width adjustment for dynamic font size
-
 		local BETTER_GETSTRING_WIDTH = 1
 		maxLabelTextWidth = max(maxLabelTextWidth, line.Label.Text:GetStringWidth())
 		maxItemLevelTextWidth = max(maxItemLevelTextWidth, line.ItemLevel:GetStringWidth() + BETTER_GETSTRING_WIDTH)
@@ -732,7 +847,6 @@ function I:ShowPanel(unit, parent, ilevel)
 	frame:Show()
 
 	-- TODO:
-	-- [ ] Enchant
 	-- [ ] Stats
 
 	return frame

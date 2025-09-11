@@ -137,7 +137,7 @@ options.extraItemsBar = {
 					end,
 					set = function(_, value)
 						local itemID = tonumber(value)
-						if async.WithItemID(itemID) then
+						if itemID and async.WithItemID(itemID) then
 							tinsert(E.db.WT.item.extraItemsBar.customList, itemID)
 							EB:UpdateBars()
 						else
@@ -200,7 +200,7 @@ options.extraItemsBar = {
 					end,
 					set = function(_, value)
 						local itemID = tonumber(value)
-						if async.WithItemID(itemID) then
+						if itemID and async.WithItemID(itemID) then
 							E.db.WT.item.extraItemsBar.blackList[itemID] = true
 							EB:UpdateBars()
 						else
@@ -1176,8 +1176,98 @@ options.inspect = {
 				},
 			},
 		},
-		itemIcon = {
+		slotText = {
 			order = 4,
+			type = "group",
+			inline = true,
+			name = L["Slot"],
+			get = function(info)
+				return E.db.WT.item.inspect.slotText[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.item.inspect.slotText[info[#info]] = value
+			end,
+			args = {
+				name = {
+					order = 1,
+					type = "select",
+					dialogControl = "LSM30_Font",
+					name = L["Font"],
+					values = LSM:HashTable("font"),
+				},
+				style = {
+					order = 2,
+					type = "select",
+					name = L["Outline"],
+					values = {
+						NONE = L["None"],
+						OUTLINE = L["Outline"],
+						THICKOUTLINE = L["Thick"],
+						SHADOW = L["|cff888888Shadow|r"],
+						SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+						SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+						MONOCHROME = L["|cFFAAAAAAMono|r"],
+						MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+						MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+					},
+				},
+				size = {
+					order = 3,
+					name = L["Size"],
+					type = "range",
+					min = 5,
+					max = 60,
+					step = 1,
+				},
+			},
+		},
+		levelText = {
+			order = 5,
+			type = "group",
+			inline = true,
+			name = L["Item Level"],
+			get = function(info)
+				return E.db.WT.item.inspect.levelText[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.item.inspect.levelText[info[#info]] = value
+			end,
+			args = {
+				name = {
+					order = 1,
+					type = "select",
+					dialogControl = "LSM30_Font",
+					name = L["Font"],
+					values = LSM:HashTable("font"),
+				},
+				style = {
+					order = 2,
+					type = "select",
+					name = L["Outline"],
+					values = {
+						NONE = L["None"],
+						OUTLINE = L["Outline"],
+						THICKOUTLINE = L["Thick"],
+						SHADOW = L["|cff888888Shadow|r"],
+						SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+						SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+						MONOCHROME = L["|cFFAAAAAAMono|r"],
+						MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+						MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+					},
+				},
+				size = {
+					order = 3,
+					name = L["Size"],
+					type = "range",
+					min = 5,
+					max = 60,
+					step = 1,
+				},
+			},
+		},
+		itemIcon = {
+			order = 6,
 			type = "group",
 			inline = true,
 			name = L["Item Icon"],
@@ -1229,41 +1319,53 @@ options.inspect = {
 				},
 			},
 		},
-		gemIcon = {
-			order = 5,
+		itemNameText = {
+			order = 7,
 			type = "group",
 			inline = true,
-			name = L["Gem Icon"],
+			name = L["Item Name"],
 			get = function(info)
-				return E.db.WT.item.inspect.gemIcon[info[#info]]
+				return E.db.WT.item.inspect.itemNameText[info[#info]]
 			end,
 			set = function(info, value)
-				E.db.WT.item.inspect.gemIcon[info[#info]] = value
+				E.db.WT.item.inspect.itemNameText[info[#info]] = value
 			end,
 			args = {
-				enable = {
+				name = {
 					order = 1,
-					type = "toggle",
-					name = L["Show Icon"],
+					type = "select",
+					dialogControl = "LSM30_Font",
+					name = L["Font"],
+					values = LSM:HashTable("font"),
+				},
+				style = {
+					order = 2,
+					type = "select",
+					name = L["Outline"],
+					values = {
+						NONE = L["None"],
+						OUTLINE = L["Outline"],
+						THICKOUTLINE = L["Thick"],
+						SHADOW = L["|cff888888Shadow|r"],
+						SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+						SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+						MONOCHROME = L["|cFFAAAAAAMono|r"],
+						MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+						MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+					},
 				},
 				size = {
-					order = 2,
+					order = 3,
 					name = L["Size"],
 					type = "range",
 					min = 5,
-					max = 30,
+					max = 60,
 					step = 1,
-				},
-				showAddableSockets = {
-					order = 3,
-					type = "toggle",
-					name = L["Show Addable Sockets"],
-					desc = L["Show the icon of addable sockets if the item has empty sockets."],
 				},
 			},
 		},
 		enchantIcon = {
-			order = 6,
+			order = 8,
 			type = "group",
 			inline = true,
 			name = L["Enchant Icon"],
@@ -1287,145 +1389,201 @@ options.inspect = {
 					max = 30,
 					step = 1,
 				},
+				craftingTier = {
+					order = 4,
+					type = "group",
+					inline = true,
+					name = L["Crafting Quality Tier"],
+					get = function(info)
+						return E.db.WT.item.inspect.enchantIcon.craftingTier[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.item.inspect.enchantIcon.craftingTier[info[#info]] = value
+					end,
+					args = {
+						minTierToShow = {
+							order = 1,
+							type = "range",
+							name = L["Min Tier to Show"],
+							desc = L["Only show the tier text if the item's crafting quality is over the set tier."],
+							min = 0,
+							max = 10,
+							step = 1,
+						},
+						maxTierToShow = {
+							order = 2,
+							type = "range",
+							name = L["Max Tier to Show"],
+							desc = L["Only show the tier text if the item's crafting quality is under the set tier."],
+							min = 0,
+							max = 10,
+							step = 1,
+						},
+						name = {
+							order = 3,
+							type = "select",
+							dialogControl = "LSM30_Font",
+							name = L["Font"],
+							values = LSM:HashTable("font"),
+						},
+						style = {
+							order = 4,
+							type = "select",
+							name = L["Outline"],
+							values = {
+								NONE = L["None"],
+								OUTLINE = L["Outline"],
+								THICKOUTLINE = L["Thick"],
+								SHADOW = L["|cff888888Shadow|r"],
+								SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+								SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+								MONOCHROME = L["|cFFAAAAAAMono|r"],
+								MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+								MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+							},
+						},
+						size = {
+							order = 5,
+							name = L["Size"],
+							type = "range",
+							min = 5,
+							max = 60,
+							step = 1,
+						},
+						xOffset = {
+							order = 6,
+							name = L["X-Offset"],
+							type = "range",
+							min = -50,
+							max = 50,
+							step = 1,
+						},
+						yOffset = {
+							order = 7,
+							name = L["Y-Offset"],
+							type = "range",
+							min = -50,
+							max = 50,
+							step = 1,
+						},
+					},
+				},
 			},
 		},
-		slotText = {
-			order = 6,
+		gemIcon = {
+			order = 9,
 			type = "group",
 			inline = true,
-			name = L["Slot"],
+			name = L["Gem Icon"],
 			get = function(info)
-				return E.db.WT.item.inspect.slotText[info[#info]]
+				return E.db.WT.item.inspect.gemIcon[info[#info]]
 			end,
 			set = function(info, value)
-				E.db.WT.item.inspect.slotText[info[#info]] = value
+				E.db.WT.item.inspect.gemIcon[info[#info]] = value
 			end,
 			args = {
-				name = {
+				enable = {
 					order = 1,
-					type = "select",
-					dialogControl = "LSM30_Font",
-					name = L["Font"],
-					values = LSM:HashTable("font"),
+					type = "toggle",
+					name = L["Show Icon"],
 				},
-				style = {
+				showAddableSockets = {
 					order = 2,
-					type = "select",
-					name = L["Outline"],
-					values = {
-						NONE = L["None"],
-						OUTLINE = L["Outline"],
-						THICKOUTLINE = L["Thick"],
-						SHADOW = L["|cff888888Shadow|r"],
-						SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
-						SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
-						MONOCHROME = L["|cFFAAAAAAMono|r"],
-						MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
-						MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
-					},
+					type = "toggle",
+					name = L["Show Addable Sockets"],
+					desc = L["Show the icon of addable sockets if the item has empty sockets."],
 				},
 				size = {
 					order = 3,
 					name = L["Size"],
 					type = "range",
 					min = 5,
-					max = 60,
+					max = 30,
 					step = 1,
 				},
-			},
-		},
-		levelText = {
-			order = 6,
-			type = "group",
-			inline = true,
-			name = L["Item Level"],
-			get = function(info)
-				return E.db.WT.item.inspect.levelText[info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.item.inspect.levelText[info[#info]] = value
-			end,
-			args = {
-				name = {
-					order = 1,
-					type = "select",
-					dialogControl = "LSM30_Font",
-					name = L["Font"],
-					values = LSM:HashTable("font"),
-				},
-				style = {
-					order = 2,
-					type = "select",
-					name = L["Outline"],
-					values = {
-						NONE = L["None"],
-						OUTLINE = L["Outline"],
-						THICKOUTLINE = L["Thick"],
-						SHADOW = L["|cff888888Shadow|r"],
-						SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
-						SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
-						MONOCHROME = L["|cFFAAAAAAMono|r"],
-						MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
-						MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+				craftingTier = {
+					order = 4,
+					type = "group",
+					inline = true,
+					name = L["Crafting Quality Tier"],
+					get = function(info)
+						return E.db.WT.item.inspect.gemIcon.craftingTier[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.item.inspect.gemIcon.craftingTier[info[#info]] = value
+					end,
+					args = {
+						minTierToShow = {
+							order = 1,
+							type = "range",
+							name = L["Min Tier to Show"],
+							desc = L["Only show the tier text if the item's crafting quality is over the set tier."],
+							min = 0,
+							max = 10,
+							step = 1,
+						},
+						maxTierToShow = {
+							order = 2,
+							type = "range",
+							name = L["Max Tier to Show"],
+							desc = L["Only show the tier text if the item's crafting quality is under the set tier."],
+							min = 0,
+							max = 10,
+							step = 1,
+						},
+						name = {
+							order = 3,
+							type = "select",
+							dialogControl = "LSM30_Font",
+							name = L["Font"],
+							values = LSM:HashTable("font"),
+						},
+						style = {
+							order = 4,
+							type = "select",
+							name = L["Outline"],
+							values = {
+								NONE = L["None"],
+								OUTLINE = L["Outline"],
+								THICKOUTLINE = L["Thick"],
+								SHADOW = L["|cff888888Shadow|r"],
+								SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+								SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+								MONOCHROME = L["|cFFAAAAAAMono|r"],
+								MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+								MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+							},
+						},
+						size = {
+							order = 5,
+							name = L["Size"],
+							type = "range",
+							min = 5,
+							max = 60,
+							step = 1,
+						},
+						xOffset = {
+							order = 6,
+							name = L["X-Offset"],
+							type = "range",
+							min = -50,
+							max = 50,
+							step = 1,
+						},
+						yOffset = {
+							order = 7,
+							name = L["Y-Offset"],
+							type = "range",
+							min = -50,
+							max = 50,
+							step = 1,
+						},
 					},
-				},
-				size = {
-					order = 3,
-					name = L["Size"],
-					type = "range",
-					min = 5,
-					max = 60,
-					step = 1,
-				},
-			},
-		},
-		equipText = {
-			order = 7,
-			type = "group",
-			inline = true,
-			name = L["Item Name"],
-			get = function(info)
-				return E.db.WT.item.inspect.equipText[info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.item.inspect.equipText[info[#info]] = value
-			end,
-			args = {
-				name = {
-					order = 1,
-					type = "select",
-					dialogControl = "LSM30_Font",
-					name = L["Font"],
-					values = LSM:HashTable("font"),
-				},
-				style = {
-					order = 2,
-					type = "select",
-					name = L["Outline"],
-					values = {
-						NONE = L["None"],
-						OUTLINE = L["Outline"],
-						THICKOUTLINE = L["Thick"],
-						SHADOW = L["|cff888888Shadow|r"],
-						SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
-						SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
-						MONOCHROME = L["|cFFAAAAAAMono|r"],
-						MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
-						MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
-					},
-				},
-				size = {
-					order = 3,
-					name = L["Size"],
-					type = "range",
-					min = 5,
-					max = 60,
-					step = 1,
 				},
 			},
 		},
 		statsText = {
-			order = 8,
+			order = 10,
 			type = "group",
 			inline = true,
 			name = L["Statistics"],

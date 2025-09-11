@@ -1,7 +1,7 @@
 --- Author: loudsoul (TinyInspect), Witness (NDui_Plus)
 --- Modifed for avoiding conflict with TinyInspect
 local MAJOR, MINOR = "LibItemEnchant-WT", 1
-local lib = LibStub:NewLibrary(MAJOR, MINOR)
+local lib = LibStub:NewLibrary(MAJOR, MINOR) ---@class LibItemEnchantWT : table
 
 if not lib then return end
 
@@ -2243,18 +2243,16 @@ local EnchantSpellDB = {
     [7933] = 1227311, -- 强效虚空仪式符文
 }
 
-function lib:GetEnchantSpellID(ItemLink)
-    local enchant = tonumber(string.match(ItemLink, "item:%d+:(%d+):"))
-    if (enchant and EnchantSpellDB[enchant]) then
-        return EnchantSpellDB[enchant], enchant
-    end
-    return nil, enchant
+---Gets enchantment spell ID from item link
+---@param enchantID number Enchantment ID
+---@return number|nil enchantSpellID Enchantment spell ID, or nil if not found
+function lib:GetEnchantSpellID(enchantID)
+    return enchantID and EnchantSpellDB[enchantID]
 end
 
-function lib:GetEnchantItemID(ItemLink)
-    local enchant = tonumber(string.match(ItemLink, "item:%d+:(%d+):"))
-    if (enchant and EnchantItemDB[enchant]) then
-        return EnchantItemDB[enchant], enchant
-    end
-    return nil, enchant
+---Gets enchantment item ID from item link
+---@param enchantID number Enchantment ID
+---@return number|nil enchantItemID Enchantment item ID, or nil if not found
+function lib:GetEnchantItemID(enchantID)
+    return enchantID and EnchantItemDB[enchantID]
 end

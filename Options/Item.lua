@@ -1182,10 +1182,10 @@ options.inspect = {
 			inline = true,
 			name = L["Icon"],
 			get = function(info)
-				return E.db.WT.item.inspect.icon[info[#info]]
+				return E.db.WT.item.inspect.itemIcon[info[#info]]
 			end,
 			set = function(info, value)
-				E.db.WT.item.inspect.icon[info[#info]] = value
+				E.db.WT.item.inspect.itemIcon[info[#info]] = value
 			end,
 			args = {
 				enable = {
@@ -1199,7 +1199,7 @@ options.inspect = {
 					name = L["Quality Border"],
 					desc = L["Show the quality border on the icon."],
 					hidden = function()
-						return not E.db.WT.item.inspect.icon
+						return not E.db.WT.item.inspect.itemIcon
 					end,
 				},
 				specialIndicator = {
@@ -1208,7 +1208,7 @@ options.inspect = {
 					name = L["Special Indicator"],
 					desc = L["Show the special mark on the icon to indicate the crafting quality, tier set, etc."],
 					hidden = function()
-						return not E.db.WT.item.inspect.icon
+						return not E.db.WT.item.inspect.itemIcon
 					end,
 				},
 			},

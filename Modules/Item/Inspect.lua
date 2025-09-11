@@ -3,9 +3,11 @@ local I = W:NewModule("Inspect", "AceEvent-3.0", "AceHook-3.0") ---@class Inspec
 local C = W.Utilities.Color
 local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames ---@type MoveFrames
+local async = W.Utilities.Async
+local LibItemEnchant = E.Libs.ItemEnchant ---@type LibItemEnchant
 
--- Modified from TinyInspect
-local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
+-- Core logic, utility functions are modified from TinyInspect.
+-- Credits: loudsoul, Witnesscm
 
 local _G = _G
 local floor = floor
@@ -17,46 +19,279 @@ local max = max
 local pairs = pairs
 local tinsert = tinsert
 local unpack = unpack
+local math_pi = math.pi
 
-local AbbreviateLargeNumbers = AbbreviateLargeNumbers
 local CreateFrame = CreateFrame
 local GetInspectSpecialization = GetInspectSpecialization
 local GetInventoryItemLink = GetInventoryItemLink
 local GetSpecializationInfoByID = GetSpecializationInfoByID
 local SetPortraitTexture = SetPortraitTexture
-local ToggleFrame = ToggleFrame
 local UnitClass = UnitClass
 local UnitGUID = UnitGUID
-local UnitHealthMax = UnitHealthMax
 local UnitLevel = UnitLevel
 local UnitName = UnitName
 local GetServerExpansionLevel = GetServerExpansionLevel
 
-local HEALTH = HEALTH
-local LEVEL = LEVEL
-local STAT_AVERAGE_ITEM_LEVEL = STAT_AVERAGE_ITEM_LEVEL
-
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+local C_Item_GetItemGem = C_Item.GetItemGem
 local C_Item_GetItemInfo = C_Item.GetItemInfo
 local C_Item_GetItemQualityColor = C_Item.GetItemQualityColor
+local C_Item_GetItemStats = C_Item.GetItemStats
 local C_Item_IsCorruptedItem = C_Item.IsCorruptedItem
 local C_SpecializationInfo_GetSpecialization = C_SpecializationInfo.GetSpecialization
 local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo
+local C_TooltipInfo_GetHyperlink = C_TooltipInfo.GetHyperlink
+local C_Item_GetItemNumSockets = C_Item.GetItemNumSockets
 
+local EMPTY = EMPTY
 local Enum_ItemQuality_Common = Enum.ItemQuality.Common
 
+local MISSING_ICON = "Interface\\Cursor\\Quest"
+local CIRCLE_MASK = "Interface\\FriendsFrame\\Battlenet-Portrait"
 local CURRENT_EXPANSION_ID = GetServerExpansionLevel()
 local LABEL_COLOR = C.GetRGBFromTemplate("cyan-300")
 local PANEL_MIN_WIDTH = 250
 local ITEM_LEVEL_CHECK_INTERVAL = 0.08
 local INSPECT_WAIT_MAX_SECONDS = 3
 local INSPECT_WAIT_MAX_ROUNDS = floor(INSPECT_WAIT_MAX_SECONDS / ITEM_LEVEL_CHECK_INTERVAL)
+local PVP_ITEM_LEVEL_PATTERN = gsub(_G.PVP_ITEM_LEVEL_TOOLTIP, "%%d", "(%%d+)")
+local INVSLOT_SOCKET_ITEMS = {
+	[INVSLOT_NECK] = { 213777, 213777 },
+	[INVSLOT_FINGER1] = { 213777, 213777 },
+	[INVSLOT_FINGER2] = { 213777, 213777 },
+}
+
 local DISPLAY_SLOTS = {}
 for index, localizedName in ipairs(W.EquipmentSlots) do
-	-- Exclude Shirt, Tabard, Ranged
-	if not tContains({ 4, 18, 19 }, index) then
+	if not tContains({ INVSLOT_BODY, INVSLOT_RANGED, INVSLOT_TABARD }, index) then
 		tinsert(DISPLAY_SLOTS, { index = index, name = gsub(localizedName, "%d", "") })
 	end
+end
+
+---@type { released: InspectCircleIcon[] }
+local circleIconPool = {
+	nextID = 1,
+	released = {},
+}
+
+---@class InspectCircleIcon
+local circleIconPrototype = {}
+
+function circleIconPrototype:OnEnter()
+	if not self.itemLink and not self.itemID and not self.name then
+		return
+	end
+
+	_G.GameTooltip:SetOwner(self, "ANCHOR_CURSOR", 0, 10)
+	_G.GameTooltip:ClearLines()
+
+	if self.itemLink then
+		_G.GameTooltip:SetHyperlink(self.itemLink)
+	elseif self.itemID then
+		_G.GameTooltip:SetItemByID(self.itemID)
+	elseif self.name and self.name ~= "" then
+		_G.GameTooltip:AddLine(self.name, 1, 1, 1)
+	end
+
+	_G.GameTooltip:Show()
+end
+
+function circleIconPrototype:OnLeave()
+	_G.GameTooltip:Hide()
+end
+
+function circleIconPrototype:Reset()
+	self.link = nil
+	self.Texture:SetTexture(nil)
+	self.Border:SetVertexColor(1, 1, 1, 1)
+	self:Hide()
+end
+
+---Updates the size of the circle icon
+---@param size number? The size of the icon (default: 32)
+function circleIconPrototype:UpdateSize(size)
+	size = size or 17
+	self:Size(size)
+	self.Texture:Size(size - 2)
+	self.Border:Size(size + 4)
+end
+
+---Sets the data for the circle icon
+---@param data SocketGemInfo The item link to display
+function circleIconPrototype:AsGemSocket(data)
+	self.name, self.itemLink, self.itemID = data.name, data.link, data.socketItemID
+
+	if not data.link then
+		self:ApplyItemData(MISSING_ICON, nil, data.socketItemID and "stone-500" or "red-800")
+		return
+	end
+
+	async.WithItemLink(data.link, function(item)
+		if not item or item:IsItemEmpty() then
+			return self:Reset()
+		end
+
+		local tex, quality = item:GetItemIcon(), item:GetItemQuality()
+		if not tex then
+			return self:Reset()
+		end
+
+		self:ApplyItemData(tex, quality or Enum_ItemQuality_Common)
+	end)
+end
+
+---Applies the texture and border color to the circle icon
+---@param texture string|number The texture path or texture ID
+---@param quality Enum.ItemQuality? The item quality for the border color
+---@param colorTemplate ColorTemplate? The color template for the border
+function circleIconPrototype:ApplyItemData(texture, quality, colorTemplate)
+	self.Texture:SetTexture(texture)
+	self.Texture:SetMask(CIRCLE_MASK)
+
+	if texture == MISSING_ICON then
+		self.Texture:SetRotation(-math_pi / 18)
+		self.Texture:SetScale(0.92)
+	else
+		self.Texture:SetRotation(0)
+	end
+
+	local r, g, b, a
+	if quality then
+		r, g, b = C_Item_GetItemQualityColor(quality)
+		a = 1
+	else
+		r, g, b = C.ExtractRGBFromTemplate(colorTemplate or "red-800")
+		a = 0.7
+	end
+	self.Border:SetVertexColor(r, g, b, a)
+	self.Texture:Show()
+	self.Border:Show()
+	self:Show()
+end
+
+---Creates a new circle icon
+---@return InspectCircleIcon
+function circleIconPool:CreateIcon()
+	---@class InspectCircleIcon : Frame, BackdropTemplateMixin
+	local frame = CreateFrame("Frame", "WTInspectCircleIcon" .. self.nextID, E.UIParent)
+	Mixin(frame, circleIconPrototype)
+
+	frame.Texture = frame:CreateTexture(nil, "ARTWORK")
+	frame.Texture:SetPoint("CENTER")
+	frame.Texture:SetMask(CIRCLE_MASK)
+
+	frame.Border = frame:CreateTexture(nil, "BORDER")
+	frame.Border:SetTexture(W.Media.Textures.inspectGemBG)
+	frame.Border:SetPoint("CENTER", frame.Texture, "CENTER")
+
+	frame:SetScript("OnEnter", frame.OnEnter)
+	frame:SetScript("OnLeave", frame.OnLeave)
+
+	self.nextID = self.nextID + 1
+
+	return frame
+end
+
+---Acquires a circle icon from the pool
+---@return InspectCircleIcon icon The acquired circle icon
+function circleIconPool:Acquire()
+	return tremove(self.released) or self:CreateIcon()
+end
+
+---Releases a circle icon back to the pool
+---@param icon InspectCircleIcon The circle icon to release
+function circleIconPool:Release(icon)
+	if not icon then
+		return
+	end
+
+	icon:Reset()
+	icon:SetParent(E.UIParent)
+	icon:ClearAllPoints()
+	tinsert(self.released, icon)
+end
+
+---@alias SocketGemInfo { name: string?, link: string?, socketItemID: number? }
+
+---Gets gem information for an item including empty sockets
+---Modified from TinyInspect
+---@param itemLink string The item link to analyze
+---@return SocketGemInfo[]? gemInfo Array of gem information including empty sockets
+local function GetItemGemInfo(itemLink)
+	local info = {} ---@type SocketGemInfo[]
+	local stats = C_Item_GetItemStats(itemLink)
+	for key, num in pairs(stats) do
+		if strfind(key, "EMPTY_SOCKET_", 1, true) then
+			for _ = 1, num do
+				tinsert(info, { name = _G[key] or EMPTY })
+			end
+		end
+	end
+	for i = 1, 4 do
+		local name, link = C_Item_GetItemGem(itemLink, i)
+		if link then
+			if info[i] then
+				info[i].name, info[i].link = name, link
+			else
+				tinsert(info, { name = name, link = link })
+			end
+		end
+	end
+
+	return info
+end
+
+---Gets the PvP item level from an item's tooltip
+---Modified from TinyInspect
+---@param itemLink string The item link to check
+---@return number? pvpItemLevel The PvP item level if found, nil otherwise
+local function GetPvPItemLevel(itemLink)
+	local tooltipData = C_TooltipInfo_GetHyperlink(itemLink, nil, nil, true)
+	if not tooltipData then
+		return
+	end
+
+	local text, level
+	for _, lineData in ipairs(tooltipData.lines) do
+		text = lineData.leftText
+		level = text and strmatch(text, PVP_ITEM_LEVEL_PATTERN)
+		if level then
+			break
+		end
+	end
+
+	return tonumber(level)
+end
+
+---Gets additional socket items that can be added to an item
+---Checks if the item is eligible for socket additions based on item level and PvP status
+---Modified from TinyInspect
+---@param itemLink string The item link to check
+---@param slotIndex number The inventory slot index (must be neck, finger1, or finger2)
+---@param itemLevel number The item's current item level
+---@return SocketGemInfo[]? socketItems Array of item IDs that can be socketed, nil if not eligible
+local function GetItemAddableSockets(itemLink, slotIndex, itemLevel)
+	local socketItems = INVSLOT_SOCKET_ITEMS[slotIndex]
+	if not socketItems then
+		return
+	end
+
+	if itemLevel < 584 then
+		return
+	end
+
+	local pvpItemLevel = GetPvPItemLevel(itemLink)
+	if pvpItemLevel and pvpItemLevel > 0 then
+		return
+	end
+
+	local data = {}
+	local numSockets = C_Item_GetItemNumSockets(itemLink)
+	for i = numSockets + 1, #socketItems do
+		tinsert(data, { socketItemID = socketItems[i] })
+	end
+
+	return data
 end
 
 ---@alias InspectItemInfo {
@@ -118,186 +353,6 @@ local function GetUnitSpecializationInfo(unit)
 	return { icon = icon, name = name }
 end
 
-local EnchantParts = {
-	{ false, "HEADSLOT" },
-	{ false, "NECKSLOT" },
-	{ false, "SHOULDERSLOT" },
-	false,
-	{ true, "CHESTSLOT" },
-	{ false, "WAISTSLOT" },
-	{ false, "LEGSSLOT" },
-	{ true, "FEETSLOT" },
-	{ false, "WRISTSLOT" },
-	{ false, "HANDSSLOT" },
-	{ true, "FINGER0SLOT" },
-	{ true, "FINGER1SLOT" },
-	{ false, "TRINKET0SLOT" },
-	{ false, "TRINKET1SLOT" },
-	{ true, "BACKSLOT" },
-	{ true, "MAINHANDSLOT" },
-	{ false, "SECONDARYHANDSLOT" },
-}
-
-local function GetStateValue(_, _, value, default)
-	return value or default
-end
-local function ShowInspectItemStatsFrame(frame, unit)
-	if not frame.expandButton then
-		local expandButton = CreateFrame("Button", nil, frame)
-		expandButton:Size(12, 12)
-		expandButton:Point("TOPRIGHT", frame, "TOPRIGHT", -5, -5)
-		expandButton:SetNormalTexture("Interface\\Cursor\\Item")
-		expandButton:GetNormalTexture():SetTexCoord(12 / 32, 0, 0, 12 / 32)
-		expandButton:SetScript("OnClick", function(self)
-			local parent = self:GetParent()
-			ToggleFrame(parent.statsFrame)
-			if parent.statsFrame:IsShown() then
-				ShowInspectItemStatsFrame(parent, parent.unit)
-			end
-		end)
-		frame.expandButton = expandButton
-	end
-	if not frame.statsFrame then
-		local statsFrame = CreateFrame("Frame", nil, frame)
-		statsFrame:SetTemplate("Transparent")
-		S:CreateShadowModule(statsFrame)
-		S:MerathilisUISkin(statsFrame)
-		statsFrame:Size(197, 157)
-		statsFrame:Point("TOPLEFT", frame, "TOPRIGHT", 5, 0)
-		for i = 1, 30 do
-			statsFrame["stat" .. i] = CreateFrame("FRAME", nil, statsFrame, "CharacterStatFrameTemplate")
-			statsFrame["stat" .. i]:EnableMouse(false)
-			statsFrame["stat" .. i]:SetWidth(197)
-			statsFrame["stat" .. i]:Point("TOPLEFT", 0, -17 * i + 13)
-			statsFrame["stat" .. i].Background:SetVertexColor(0, 0, 0)
-			statsFrame["stat" .. i].Value:Point("RIGHT", -64, 0)
-			statsFrame["stat" .. i].PlayerValue =
-				statsFrame["stat" .. i]:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-			statsFrame["stat" .. i].PlayerValue:Point("LEFT", statsFrame["stat" .. i], "RIGHT", -54, 0)
-			F.SetFontWithDB(statsFrame["stat" .. i].Label, I.db.statsText)
-			F.SetFontWithDB(statsFrame["stat" .. i].Value, I.db.statsText)
-			F.SetFontWithDB(statsFrame["stat" .. i].PlayerValue, I.db.statsText)
-		end
-		local mask = statsFrame:CreateTexture()
-		mask:SetTexture("Interface\\Buttons\\WHITE8X8")
-		mask:Point("TOPLEFT", statsFrame, "TOPRIGHT", -60, 0)
-		mask:Point("BOTTOMRIGHT", statsFrame, "BOTTOMRIGHT", 0, 0)
-		mask:SetBlendMode("ADD")
-		mask:SetVertexColor(1, 1, 1)
-		mask:SetAlpha(0.2)
-
-		MF:InternalHandle(statsFrame, frame.MoveFrame or frame)
-
-		frame.statsFrame = statsFrame
-	elseif I.db and I.db.levelText and I.db.equipText then
-		for i = 1, 30 do
-			F.SetFontWithDB(frame.statsFrame["stat" .. i].Label, I.db.statsText)
-			F.SetFontWithDB(frame.statsFrame["stat" .. i].Value, I.db.statsText)
-			F.SetFontWithDB(frame.statsFrame["stat" .. i].PlayerValue, I.db.statsText)
-		end
-	end
-
-	if not frame.statsFrame:IsShown() then
-		return
-	end
-	local inspectStats, playerStats = {}, {}
-	local _, inspectItemLevel = LibItemInfo:GetUnitItemLevel(unit, inspectStats)
-	local _, playerItemLevel = LibItemInfo:GetUnitItemLevel("player", playerStats)
-	local baseInfo = {}
-	tinsert(baseInfo, { label = LEVEL, iv = UnitLevel(unit), pv = UnitLevel("player") })
-	tinsert(baseInfo, {
-		label = HEALTH,
-		iv = AbbreviateLargeNumbers(UnitHealthMax(unit)),
-		pv = AbbreviateLargeNumbers(UnitHealthMax("player")),
-	})
-	tinsert(
-		baseInfo,
-		{ label = STAT_AVERAGE_ITEM_LEVEL, iv = format("%.1f", inspectItemLevel), pv = format("%.1f", playerItemLevel) }
-	)
-	local index = 1
-	for _, v in pairs(baseInfo) do
-		frame.statsFrame["stat" .. index].Label:SetText(v.label)
-		frame.statsFrame["stat" .. index].Label:SetTextColor(0.2, 1, 1)
-		frame.statsFrame["stat" .. index].Value:SetText(v.iv)
-		frame.statsFrame["stat" .. index].Value:SetTextColor(0, 0.7, 0.9)
-		frame.statsFrame["stat" .. index].PlayerValue:SetText(v.pv)
-		frame.statsFrame["stat" .. index].PlayerValue:SetTextColor(0, 0.7, 0.9)
-		frame.statsFrame["stat" .. index].Background:SetShown(index % 2 ~= 0)
-		frame.statsFrame["stat" .. index]:Show()
-		index = index + 1
-	end
-	for k, v in pairs(inspectStats) do
-		if v.r + v.g + v.b < 1.2 then
-			frame.statsFrame["stat" .. index].Label:SetText(k)
-			frame.statsFrame["stat" .. index].Label:SetTextColor(v.r, v.g, v.b)
-			frame.statsFrame["stat" .. index].Value:SetText(GetStateValue(unit, k, v.value))
-			frame.statsFrame["stat" .. index].Value:SetTextColor(v.r, v.g, v.b)
-			frame.statsFrame["stat" .. index].PlayerValue:SetText(
-				GetStateValue("player", k, playerStats[k] and playerStats[k].value, "-")
-			)
-			frame.statsFrame["stat" .. index].PlayerValue:SetTextColor(v.r, v.g, v.b)
-			frame.statsFrame["stat" .. index].Background:SetShown(index % 2 ~= 0)
-			frame.statsFrame["stat" .. index]:Show()
-			index = index + 1
-		end
-	end
-	for k, v in pairs(playerStats) do
-		if not inspectStats[k] and v.r + v.g + v.b < 1.2 then
-			frame.statsFrame["stat" .. index].Label:SetText(k)
-			frame.statsFrame["stat" .. index].Label:SetTextColor(v.r, v.g, v.b)
-			frame.statsFrame["stat" .. index].Value:SetText("-")
-			frame.statsFrame["stat" .. index].Value:SetTextColor(v.r, v.g, v.b)
-			frame.statsFrame["stat" .. index].PlayerValue:SetText(GetStateValue("player", k, v.value))
-			frame.statsFrame["stat" .. index].PlayerValue:SetTextColor(v.r, v.g, v.b)
-			frame.statsFrame["stat" .. index].Background:SetShown(index % 2 ~= 0)
-			frame.statsFrame["stat" .. index]:Show()
-			index = index + 1
-		end
-	end
-	for k, v in pairs(inspectStats) do
-		if v.r + v.g + v.b > 1.2 then
-			frame.statsFrame["stat" .. index].Label:SetText(k)
-			frame.statsFrame["stat" .. index].Label:SetTextColor(1, 0.82, 0)
-			frame.statsFrame["stat" .. index].Value:SetText(v.value)
-			frame.statsFrame["stat" .. index].Value:SetTextColor(v.r, v.g, v.b)
-			if playerStats[k] then
-				frame.statsFrame["stat" .. index].PlayerValue:SetText(playerStats[k].value)
-				frame.statsFrame["stat" .. index].PlayerValue:SetTextColor(
-					playerStats[k].r,
-					playerStats[k].g,
-					playerStats[k].b
-				)
-			else
-				frame.statsFrame["stat" .. index].PlayerValue:SetText("-")
-			end
-			frame.statsFrame["stat" .. index].Background:SetShown(index % 2 ~= 0)
-			frame.statsFrame["stat" .. index]:Show()
-			index = index + 1
-		end
-	end
-	for k, v in pairs(playerStats) do
-		if not inspectStats[k] and v.r + v.g + v.b > 1.2 then
-			local f = frame.statsFrame["stat" .. index]
-			if f then
-				f.Label:SetText(k)
-				f.Label:SetTextColor(1, 0.82, 0)
-				f.Value:SetText("-")
-				f.Value:SetTextColor(v.r, v.g, v.b)
-				f.PlayerValue:SetText(v.value)
-				f.PlayerValue:SetTextColor(v.r, v.g, v.b)
-				f.Background:SetShown(index % 2 ~= 0)
-				f:Show()
-			end
-			index = index + 1
-		end
-	end
-	frame.statsFrame:SetHeight(index * 17 - 10)
-	while frame.statsFrame["stat" .. index] do
-		frame.statsFrame["stat" .. index]:Hide()
-		index = index + 1
-	end
-end
-
 function I:ShouldShowPanel(unit, parent)
 	if not self.db or not self.db.enable or not parent or not parent:IsShown() then
 		return false
@@ -320,7 +375,7 @@ function I:ShouldShowPanel(unit, parent)
 	return true
 end
 
-function I:FetchPanel(parent)
+function I:CreatePanel(parent)
 	if parent.WTInspect then
 		return parent.WTInspect
 	end
@@ -396,7 +451,8 @@ function I:FetchPanel(parent)
 	-- Lines
 	frame.Lines = {}
 	frame.lineHeight = (height - 82) / #DISPLAY_SLOTS
-	frame.maxLabelTextWidth, frame.maxItemLevelTextWidth, frame.maxItemNameTextWidth = 30, 0, 0
+	frame.maxLabelTextWidth, frame.maxItemLevelTextWidth, frame.maxItemNameTextWidth, frame.maxCircleIconsWidth =
+		30, 0, 0, 0
 
 	for displayIndex, slotInfo in ipairs(DISPLAY_SLOTS) do
 		-- Line
@@ -501,7 +557,7 @@ function I:ShowPanel(unit, parent, ilevel)
 		return
 	end
 
-	local frame = self:FetchPanel(parent)
+	local frame = self:CreatePanel(parent)
 	frame.unit = unit
 
 	local _, class = UnitClass(unit)
@@ -551,12 +607,12 @@ function I:ShowPanel(unit, parent, ilevel)
 		end
 
 		line.ItemTextureFrame:ClearAllPoints()
-		if self.db.icon.enable then
+		if self.db.itemIcon.enable then
 			line.ItemTextureFrame:Point("LEFT", line.ItemLevel, "RIGHT", 4, 0)
 			if itemInfo and itemInfo.level > 0 then
 				line.ItemTextureFrame.Texture:SetTexture(itemInfo.texture)
 				local r, g, b = E.db.general.bordercolor.r, E.db.general.bordercolor.g, E.db.general.bordercolor.b
-				if self.db.icon.qualityBorder then
+				if self.db.itemIcon.qualityBorder then
 					r, g, b = C_Item_GetItemQualityColor(itemInfo.quality or Enum_ItemQuality_Common)
 				end
 				line.ItemTextureFrame:SetBackdropBorderColor(r, g, b)
@@ -569,7 +625,7 @@ function I:ShowPanel(unit, parent, ilevel)
 			line.ItemTextureFrame:Hide()
 		end
 
-		if self.db.icon.enable and self.db.icon.specialIndicator and itemInfo then
+		if self.db.itemIcon.enable and self.db.itemIcon.indicator and itemInfo then
 			if itemInfo.set and itemInfo.set > 0 then
 				if itemInfo.expansionID >= CURRENT_EXPANSION_ID then
 					line.ItemTextureFrame.SpecialIndicator:SetTextColor(C.ExtractRGBFromTemplate("pink-500"))
@@ -601,17 +657,61 @@ function I:ShowPanel(unit, parent, ilevel)
 			line:SetAlpha(itemInfo and itemInfo.level > 0 and 1 or 0.4)
 		end
 
+		-- Icons
+		if line.circleIcons then
+			for _, icon in ipairs(line.circleIcons) do
+				circleIconPool:Release(icon)
+			end
+			wipe(line.circleIcons)
+		else
+			line.circleIcons = {}
+		end
+
+		line.circleIconsWidth = 0
+
+		if self.db.gemIcon.enable then
+			local gemSocketInfo = itemInfo and itemInfo.link and GetItemGemInfo(itemInfo.link) or {}
+			local addableSockets = itemInfo
+					and itemInfo.link
+					and GetItemAddableSockets(itemInfo.link, slotInfo.index, itemInfo.level)
+				or {}
+
+			tAppendAll(gemSocketInfo, addableSockets)
+			for _, data in ipairs(gemSocketInfo) do
+				local icon = circleIconPool:Acquire()
+				icon:SetParent(line)
+				icon:AsGemSocket(data)
+				icon:UpdateSize(self.db.gemIcon.size)
+				if #line.circleIcons == 0 then
+					icon:Point("LEFT", line.ItemName, "RIGHT", 4, 0)
+				else
+					icon:Point("LEFT", line.circleIcons[#line.circleIcons], "RIGHT", 2, 0)
+				end
+				tinsert(line.circleIcons, icon)
+				line.circleIconsWidth = line.circleIconsWidth + self.db.gemIcon.size + 2
+			end
+		end
+
 		-- Width adjustment for dynamic font size
+		-- GetStringWidth + 3 is actually looks better than just GetStringWidth
 		local labelTextWidth = line.Label.Text:GetStringWidth() + 3
 		frame.maxLabelTextWidth = max(frame.maxLabelTextWidth, labelTextWidth)
 		line.Label.Text:Width(labelTextWidth)
-		frame.maxItemLevelTextWidth = max(frame.maxItemLevelTextWidth, line.ItemLevel:GetStringWidth() + 3)
-		frame.maxItemNameTextWidth = max(frame.maxItemNameTextWidth, line.ItemName:GetStringWidth() + 3)
+		frame.maxItemLevelTextWidth = max(frame.maxItemLevelTextWidth, line.ItemLevel:GetStringWidth() + 3 + 4)
+		local itemNameTextWidth = line.ItemName:GetStringWidth() + 3 + 4
+		if #line.circleIcons > 0 then
+			itemNameTextWidth = itemNameTextWidth + line.circleIconsWidth + 4
+		end
+		frame.maxItemNameTextWidth = max(frame.maxItemNameTextWidth, itemNameTextWidth)
 	end
 
-	local lineWidth = 12 + frame.maxLabelTextWidth + 4 + frame.maxItemLevelTextWidth + 4 + frame.maxItemNameTextWidth
+	local lineWidth = 12
+		+ frame.maxLabelTextWidth
+		+ frame.maxItemLevelTextWidth
+		+ frame.maxItemNameTextWidth
+		+ frame.maxCircleIconsWidth
 
-	if self.db.icon.enable then
+	if self.db.itemIcon.enable then
 		lineWidth = lineWidth + frame.iconWidth + 4
 	end
 
@@ -620,7 +720,6 @@ function I:ShowPanel(unit, parent, ilevel)
 	for _, line in ipairs(frame.Lines) do
 		line.Label:Width(frame.maxLabelTextWidth + 6)
 		line.ItemLevel:Width(frame.maxItemLevelTextWidth)
-		line.ItemName:Width(frame.maxItemNameTextWidth)
 		line:Width(lineWidth)
 	end
 
@@ -628,7 +727,6 @@ function I:ShowPanel(unit, parent, ilevel)
 	frame:Show()
 
 	-- TODO:
-	-- [ ] Gem
 	-- [ ] Enchant
 	-- [ ] Stats
 
@@ -638,6 +736,7 @@ function I:ShowPanel(unit, parent, ilevel)
 
 	return frame
 end
+
 function I:ShowAllPlayerPanels()
 	self:ShowPanel("player", _G.PaperDollFrame, E:GetUnitItemLevel("player"))
 	self:ShowPanel("player", _G.InspectFrame and _G.InspectFrame.WTInspect, E:GetUnitItemLevel("player"))

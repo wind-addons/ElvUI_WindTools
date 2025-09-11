@@ -649,10 +649,18 @@ P.item = {
 		inspect = true,
 		stats = true,
 		playerOnInspect = true,
-		icon = {
+		itemIcon = {
 			enable = true,
 			qualityBorder = false,
-			specialIndicator = true,
+			indicator = true,
+		},
+		gemIcon = {
+			enable = true,
+			size = 17,
+		},
+		enchantIcon = {
+			enable = true,
+			size = 17,
 		},
 		slotText = {
 			name = E.db.general.font,

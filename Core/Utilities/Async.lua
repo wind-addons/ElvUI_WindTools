@@ -10,6 +10,8 @@ local GetAchievementInfo = GetAchievementInfo
 local Item = Item
 local Spell = Spell
 
+local C_Item_GetItemInfoInstant = C_Item.GetItemInfoInstant
+
 ---@cast F Functions
 
 ---@class AsyncUtility Asynchronous operation utilities
@@ -23,9 +25,12 @@ local cache = {
 	spell = {},
 }
 
----Load item data asynchronously and execute callback
+
+---@alias ItemCallback fun(itemInstance:ItemMixin)
+
+---Load item data asynchronously and execute callback by item ID
 ---@param itemID number The item ID to load
----@param callback function? Callback function to execute when item is loaded
+---@param callback ItemCallback? Callback function to execute when item is loaded
 ---@return any? item Cached item data if available
 function W.Utilities.Async.WithItemID(itemID, callback)
 	if type(itemID) ~= "number" then
@@ -58,6 +63,32 @@ function W.Utilities.Async.WithItemID(itemID, callback)
 	cache.item[itemID] = itemInstance
 
 	return itemInstance
+end
+
+---Load item data asynchronously and execute callback by item link
+---@param itemLink string The item link to load
+---@param callback ItemCallback? Callback function to execute when item is loaded
+---@return any
+function W.Utilities.Async.WithItemLink(itemLink, callback)
+	if type(itemLink) ~= "string" then
+		return
+	end
+
+	if not callback then
+		callback = function(...) end
+	end
+
+	if type(callback) ~= "function" then
+		return
+	end
+
+	local itemID = C_Item_GetItemInfoInstant(itemLink)
+	if not itemID then
+		F.Developer.LogDebug("Failed to get itemID for itemLink: " .. itemLink)
+		return
+	end
+
+	return W.Utilities.Async.WithItemID(itemID, callback)
 end
 
 ---Load spell data asynchronously and execute callback

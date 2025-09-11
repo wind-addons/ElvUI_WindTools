@@ -583,6 +583,7 @@ AddMedia("buttonGoEnd", "Button/GoEnd.png", "Icons")
 AddMedia("buttonDiscord", "Button/Discord.png", "Icons")
 
 AddMedia("round", "round.png", "Textures")
+AddMedia("inspectGemBG", "InspectGemBG.blp", "Textures")
 AddMedia("exchange", "Exchange.tga", "Textures")
 AddMedia("illMurloc1", "Illustration/Murloc1.tga", "Textures")
 

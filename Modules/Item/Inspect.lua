@@ -51,6 +51,7 @@ local CIRCLE_MASK = "Interface\\FriendsFrame\\Battlenet-Portrait"
 local CURRENT_EXPANSION_ID = GetServerExpansionLevel()
 local LABEL_COLOR = C.GetRGBFromTemplate("cyan-300")
 local PANEL_MIN_WIDTH = 250
+local PANEL_COMPONENT_SPACING = 4
 local ITEM_LEVEL_CHECK_INTERVAL = 0.08
 local INSPECT_WAIT_MAX_SECONDS = 3
 local INSPECT_WAIT_MAX_ROUNDS = floor(INSPECT_WAIT_MAX_SECONDS / ITEM_LEVEL_CHECK_INTERVAL)
@@ -487,7 +488,7 @@ function I:CreatePanel(parent)
 		-- Item Level
 		line.ItemLevel = line:CreateFontString(nil, "ARTWORK")
 		F.SetFontWithDB(line.ItemLevel, self.db.levelText)
-		line.ItemLevel:Point("LEFT", line.Label, "RIGHT", 4, 0)
+		line.ItemLevel:Point("LEFT", line.Label, "RIGHT", PANEL_COMPONENT_SPACING, 0)
 		line.ItemLevel:SetJustifyH("RIGHT")
 
 		-- Item Texture
@@ -496,7 +497,7 @@ function I:CreatePanel(parent)
 		frame.iconHeight = frame.lineHeight - 5
 		frame.iconWidth = floor((frame.iconHeight / 0.8) + 0.5)
 		line.ItemTextureFrame:Size(frame.iconWidth, frame.iconHeight)
-		line.ItemTextureFrame:Point("LEFT", line.ItemLevel, "RIGHT", 4, 0)
+		line.ItemTextureFrame:Point("LEFT", line.ItemLevel, "RIGHT", PANEL_COMPONENT_SPACING, 0)
 		line.ItemTextureFrame.Texture:SetInside(line.ItemTextureFrame)
 		line.ItemTextureFrame.Texture:SetTexCoord(
 			E:CropRatio(line.ItemTextureFrame.Texture:GetWidth(), line.ItemTextureFrame.Texture:GetHeight())
@@ -511,7 +512,7 @@ function I:CreatePanel(parent)
 		line.ItemName = line:CreateFontString(nil, "ARTWORK")
 		F.SetFontWithDB(line.ItemName, self.db.equipText)
 		line.ItemName:Height(self.db.equipText.size + 2)
-		line.ItemName:Point("LEFT", line.ItemTextureFrame, "RIGHT", 6, -1)
+		line.ItemName:Point("LEFT", line.ItemTextureFrame, "RIGHT", PANEL_COMPONENT_SPACING + 2, -1)
 		line.ItemName:SetJustifyH("LEFT")
 
 		-- Tooltips
@@ -683,9 +684,9 @@ function I:ShowPanel(unit, parent, ilevel)
 				icon:AsGemSocket(data)
 				icon:UpdateSize(self.db.gemIcon.size)
 				if #line.circleIcons == 0 then
-					icon:Point("LEFT", line.ItemName, "RIGHT", 4, 0)
+					icon:Point("LEFT", line.ItemName, "RIGHT", PANEL_COMPONENT_SPACING, 0)
 				else
-					icon:Point("LEFT", line.circleIcons[#line.circleIcons], "RIGHT", 2, 0)
+					icon:Point("LEFT", line.circleIcons[#line.circleIcons], "RIGHT", PANEL_COMPONENT_SPACING / 2, 0)
 				end
 				tinsert(line.circleIcons, icon)
 				line.circleIconsWidth = line.circleIconsWidth + self.db.gemIcon.size + 2
@@ -694,13 +695,17 @@ function I:ShowPanel(unit, parent, ilevel)
 
 		-- Width adjustment for dynamic font size
 		-- GetStringWidth + 3 is actually looks better than just GetStringWidth
-		local labelTextWidth = line.Label.Text:GetStringWidth() + 3
+		local BETTER_GETSTRING_WIDTH = 3
+		local labelTextWidth = line.Label.Text:GetStringWidth() + BETTER_GETSTRING_WIDTH
 		frame.maxLabelTextWidth = max(frame.maxLabelTextWidth, labelTextWidth)
 		line.Label.Text:Width(labelTextWidth)
-		frame.maxItemLevelTextWidth = max(frame.maxItemLevelTextWidth, line.ItemLevel:GetStringWidth() + 3 + 4)
-		local itemNameTextWidth = line.ItemName:GetStringWidth() + 3 + 4
+		frame.maxItemLevelTextWidth = max(
+			frame.maxItemLevelTextWidth,
+			line.ItemLevel:GetStringWidth() + BETTER_GETSTRING_WIDTH + PANEL_COMPONENT_SPACING
+		)
+		local itemNameTextWidth = line.ItemName:GetStringWidth() + BETTER_GETSTRING_WIDTH + PANEL_COMPONENT_SPACING
 		if #line.circleIcons > 0 then
-			itemNameTextWidth = itemNameTextWidth + line.circleIconsWidth + 4
+			itemNameTextWidth = itemNameTextWidth + line.circleIconsWidth + PANEL_COMPONENT_SPACING
 		end
 		frame.maxItemNameTextWidth = max(frame.maxItemNameTextWidth, itemNameTextWidth)
 	end
@@ -729,10 +734,6 @@ function I:ShowPanel(unit, parent, ilevel)
 	-- TODO:
 	-- [ ] Enchant
 	-- [ ] Stats
-
-	-- if unit == "player" and not PlayerInspectFrames[frame] then
-	-- 	PlayerInspectFrames[frame] = parent
-	-- end
 
 	return frame
 end

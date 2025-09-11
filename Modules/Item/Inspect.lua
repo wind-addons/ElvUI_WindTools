@@ -460,8 +460,6 @@ function I:CreatePanel(parent)
 	-- Lines
 	frame.Lines = {}
 	frame.lineHeight = (height - 82) / #DISPLAY_SLOTS
-	frame.maxLabelTextWidth, frame.maxItemLevelTextWidth, frame.maxItemNameTextWidth, frame.maxCircleIconsWidth =
-		30, 0, 0, 0
 
 	for displayIndex, slotInfo in ipairs(DISPLAY_SLOTS) do
 		-- Line
@@ -489,7 +487,6 @@ function I:CreatePanel(parent)
 		line.Label.Text:SetText(slotInfo.name)
 		line.Label.Text:Height(self.db.slotText.size + 2)
 		local textWidth = line.Label.Text:GetStringWidth() + 4
-		frame.maxLabelTextWidth = max(frame.maxLabelTextWidth, textWidth)
 		line.Label.Text:Width(textWidth)
 		line.Label.Text:SetTextColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 0.8)
 
@@ -548,11 +545,6 @@ function I:CreatePanel(parent)
 		end)
 	end
 
-	-- Adjust label width to same
-	for _, line in ipairs(frame.Lines) do
-		line.Label:Width(frame.maxLabelTextWidth + 6)
-	end
-
 	parent.WTInspect = frame
 
 	return frame
@@ -589,6 +581,8 @@ function I:ShowPanel(unit, parent, ilevel)
 	else
 		frame.SpecIcon:SetShown(false)
 	end
+
+	frame.maxLabelTextWidth, frame.maxItemLevelTextWidth, frame.maxItemNameTextWidth = 30, 0, 0
 
 	for displayIndex, slotInfo in ipairs(DISPLAY_SLOTS) do
 		local line = frame.Lines[displayIndex]
@@ -676,7 +670,7 @@ function I:ShowPanel(unit, parent, ilevel)
 			line.circleIcons = {}
 		end
 
-		line.circleIconsWidth = 0
+		local circleIconsWidth = 0
 
 		if self.db.gemIcon.enable then
 			local gemSocketInfo = itemInfo and itemInfo.link and GetItemGemInfo(itemInfo.link) or {}
@@ -693,11 +687,12 @@ function I:ShowPanel(unit, parent, ilevel)
 				icon:UpdateSize(self.db.gemIcon.size)
 				if #line.circleIcons == 0 then
 					icon:Point("LEFT", line.ItemName, "RIGHT", PANEL_COMPONENT_SPACING, 0)
+					circleIconsWidth = circleIconsWidth + self.db.gemIcon.size
 				else
-					icon:Point("LEFT", line.circleIcons[#line.circleIcons], "RIGHT", PANEL_COMPONENT_SPACING / 2, 0)
+					icon:Point("LEFT", line.circleIcons[#line.circleIcons], "RIGHT", 3, 0)
+					circleIconsWidth = circleIconsWidth + self.db.gemIcon.size + 3
 				end
 				tinsert(line.circleIcons, icon)
-				line.circleIconsWidth = line.circleIconsWidth + self.db.gemIcon.size + 2
 			end
 		end
 
@@ -711,18 +706,16 @@ function I:ShowPanel(unit, parent, ilevel)
 			max(frame.maxItemLevelTextWidth, line.ItemLevel:GetStringWidth() + BETTER_GETSTRING_WIDTH)
 		local itemNameTextWidth = line.ItemName:GetStringWidth() + BETTER_GETSTRING_WIDTH
 		if #line.circleIcons > 0 then
-			itemNameTextWidth = itemNameTextWidth + line.circleIconsWidth + PANEL_COMPONENT_SPACING
+			itemNameTextWidth = itemNameTextWidth + circleIconsWidth + PANEL_COMPONENT_SPACING
 		end
 		frame.maxItemNameTextWidth = max(frame.maxItemNameTextWidth, itemNameTextWidth)
 	end
 
-	local lineWidth = 12
-		+ frame.maxLabelTextWidth
+	local lineWidth = (frame.maxLabelTextWidth + 3 * 2) -- padding is 3
 		+ PANEL_COMPONENT_SPACING
 		+ frame.maxItemLevelTextWidth
 		+ PANEL_COMPONENT_SPACING
 		+ frame.maxItemNameTextWidth
-		+ frame.maxCircleIconsWidth
 
 	if self.db.itemIcon.enable then
 		lineWidth = lineWidth + frame.iconWidth + PANEL_COMPONENT_SPACING
@@ -731,12 +724,13 @@ function I:ShowPanel(unit, parent, ilevel)
 	lineWidth = max(lineWidth, PANEL_MIN_WIDTH)
 
 	for _, line in ipairs(frame.Lines) do
-		line.Label:Width(frame.maxLabelTextWidth + 6)
+		line.Label.Text:Width(frame.maxLabelTextWidth)
+		line.Label:Width(frame.maxLabelTextWidth + 3 * 2)
 		line.ItemLevel:Width(frame.maxItemLevelTextWidth)
 		line:Width(lineWidth)
 	end
 
-	frame:Width(lineWidth + 24)
+	frame:Width(lineWidth + 15 * 2)
 	frame:Show()
 
 	-- TODO:

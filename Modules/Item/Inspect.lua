@@ -707,11 +707,9 @@ function I:ShowPanel(unit, parent, ilevel)
 		local labelTextWidth = line.Label.Text:GetStringWidth() + BETTER_GETSTRING_WIDTH
 		frame.maxLabelTextWidth = max(frame.maxLabelTextWidth, labelTextWidth)
 		line.Label.Text:Width(labelTextWidth)
-		frame.maxItemLevelTextWidth = max(
-			frame.maxItemLevelTextWidth,
-			line.ItemLevel:GetStringWidth() + BETTER_GETSTRING_WIDTH + PANEL_COMPONENT_SPACING
-		)
-		local itemNameTextWidth = line.ItemName:GetStringWidth() + BETTER_GETSTRING_WIDTH + PANEL_COMPONENT_SPACING
+		frame.maxItemLevelTextWidth =
+			max(frame.maxItemLevelTextWidth, line.ItemLevel:GetStringWidth() + BETTER_GETSTRING_WIDTH)
+		local itemNameTextWidth = line.ItemName:GetStringWidth() + BETTER_GETSTRING_WIDTH
 		if #line.circleIcons > 0 then
 			itemNameTextWidth = itemNameTextWidth + line.circleIconsWidth + PANEL_COMPONENT_SPACING
 		end
@@ -720,12 +718,14 @@ function I:ShowPanel(unit, parent, ilevel)
 
 	local lineWidth = 12
 		+ frame.maxLabelTextWidth
+		+ PANEL_COMPONENT_SPACING
 		+ frame.maxItemLevelTextWidth
+		+ PANEL_COMPONENT_SPACING
 		+ frame.maxItemNameTextWidth
 		+ frame.maxCircleIconsWidth
 
 	if self.db.itemIcon.enable then
-		lineWidth = lineWidth + frame.iconWidth + 4
+		lineWidth = lineWidth + frame.iconWidth + PANEL_COMPONENT_SPACING
 	end
 
 	lineWidth = max(lineWidth, PANEL_MIN_WIDTH)

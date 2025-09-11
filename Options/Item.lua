@@ -1205,7 +1205,7 @@ options.inspect = {
 				indicator = {
 					order = 3,
 					type = "toggle",
-					name = L["Special Indicator"],
+					name = L["Indicator"],
 					desc = L["Show the special mark on the icon to indicate the crafting quality, tier set, etc."],
 					hidden = function()
 						return not E.db.WT.item.inspect.itemIcon
@@ -1253,6 +1253,12 @@ options.inspect = {
 					min = 5,
 					max = 30,
 					step = 1,
+				},
+				showAddableSockets = {
+					order = 3,
+					type = "toggle",
+					name = L["Show Addable Sockets"],
+					desc = L["Show the icon of addable sockets if the item has empty sockets."],
 				},
 			},
 		},

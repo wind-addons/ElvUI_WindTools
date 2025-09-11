@@ -674,7 +674,8 @@ function I:ShowPanel(unit, parent, ilevel)
 
 		if self.db.gemIcon.enable then
 			local gemSocketInfo = itemInfo and itemInfo.link and GetItemGemInfo(itemInfo.link) or {}
-			local addableSockets = itemInfo
+			local addableSockets = self.db.gemIcon.showAddableSockets
+					and itemInfo
 					and itemInfo.link
 					and GetItemAddableSockets(itemInfo.link, slotInfo.index, itemInfo.level)
 				or {}

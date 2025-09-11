@@ -659,6 +659,7 @@ P.item = {
 		gemIcon = {
 			enable = true,
 			size = 17,
+			showAddableSockets = true,
 		},
 		enchantIcon = {
 			enable = true,

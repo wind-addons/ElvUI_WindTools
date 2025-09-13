@@ -20,6 +20,7 @@ local pairs = pairs
 local strfind = strfind
 local strmatch = strmatch
 local tAppendAll = tAppendAll
+local tContains = tContains
 local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
@@ -54,7 +55,11 @@ local C_TradeSkillUI_GetItemCraftedQualityByItemInfo = C_TradeSkillUI.GetItemCra
 local C_TradeSkillUI_GetItemReagentQualityByItemInfo = C_TradeSkillUI.GetItemReagentQualityByItemInfo
 
 local EMPTY = EMPTY
-local Enum_ItemQuality_Common = Enum.ItemQuality.Common
+local Enum_ItemClass = Enum.ItemClass
+local Enum_ItemQuality = Enum.ItemQuality
+local INVSLOT_MAINHAND = INVSLOT_MAINHAND
+local INVSLOT_NECK = INVSLOT_NECK
+local INVSLOT_OFFHAND = INVSLOT_OFFHAND
 
 local MISSING_ICON = "Interface\\Cursor\\Quest"
 local CIRCLE_MASK = "Interface\\FriendsFrame\\Battlenet-Portrait"
@@ -66,17 +71,53 @@ local ITEM_LEVEL_CHECK_INTERVAL = 0.08
 local INSPECT_WAIT_MAX_SECONDS = 3
 local INSPECT_WAIT_MAX_ROUNDS = floor(INSPECT_WAIT_MAX_SECONDS / ITEM_LEVEL_CHECK_INTERVAL)
 local PVP_ITEM_LEVEL_PATTERN = gsub(_G.PVP_ITEM_LEVEL_TOOLTIP, "%%d", "(%%d+)")
-local INVSLOT_SOCKET_ITEMS = {
-	[INVSLOT_NECK] = { 213777, 213777 },
-	[INVSLOT_FINGER1] = { 213777, 213777 },
-	[INVSLOT_FINGER2] = { 213777, 213777 },
-}
 
 local DISPLAY_SLOTS = {}
 for index, localizedName in ipairs(W.EquipmentSlots) do
 	if not tContains({ INVSLOT_BODY, INVSLOT_RANGED, INVSLOT_TABARD }, index) then
 		tinsert(DISPLAY_SLOTS, { index = index, name = gsub(localizedName, "%d", "") })
 	end
+end
+
+local INVSLOT_SOCKET_ITEMS = {
+	[INVSLOT_NECK] = { 213777, 213777 },
+	[INVSLOT_FINGER1] = { 213777, 213777 },
+	[INVSLOT_FINGER2] = { 213777, 213777 },
+}
+
+local INVSLOT_ENCHANT = {
+	[INVSLOT_CHEST] = true,
+	[INVSLOT_LEGS] = true,
+	[INVSLOT_FEET] = true,
+	[INVSLOT_WRIST] = true,
+	[INVSLOT_FINGER1] = true,
+	[INVSLOT_FINGER2] = true,
+	[INVSLOT_BACK] = true,
+	[INVSLOT_MAINHAND] = true,
+	[INVSLOT_OFFHAND] = true,
+}
+
+---Checks if an enchantment can be applied to a specific slot based on quality and class
+---@param slotIndex number The inventory slot index
+---@param itemQuality Enum.ItemQuality The quality of the enchantment
+---@param itemClass Enum.ItemClass The class ID of the enchantment
+local function CheckEnchantmentSlot(slotIndex, itemQuality, itemClass)
+	if not INVSLOT_ENCHANT[slotIndex] then
+		return false
+	end
+
+	if
+		itemQuality == Enum_ItemQuality.Artifact
+		and tContains({ INVSLOT_NECK, INVSLOT_MAINHAND, INVSLOT_OFFHAND }, slotIndex)
+	then
+		return false
+	end
+
+	if slotIndex == INVSLOT_OFFHAND and itemClass ~= Enum_ItemClass.Weapon then
+		return false
+	end
+
+	return true
 end
 
 ---@type { released: InspectCircleIcon[] }
@@ -163,17 +204,18 @@ function circleIconPrototype:AsGemSocket(data)
 			level = nil
 		end
 
-		self:UpdateStyle(tex, quality or Enum_ItemQuality_Common, nil, level)
+		self:UpdateStyle(tex, quality or Enum_ItemQuality.Common, nil, level)
 	end)
 end
 
 ---Sets the data for the circle icon
 ---@param data EnchantInfo The enchantment information to display
 function circleIconPrototype:AsEnchant(data)
-	self.name, self.itemID, self.spellID = nil, data.itemID, data.spellID
+	self.name, self.itemID, self.spellID = data.name, data.itemID, data.spellID
 
 	if not data.enchantID then
-		return self:Reset()
+		self:UpdateStyle(MISSING_ICON, nil, "indigo-800")
+		return
 	end
 
 	if data.itemID then
@@ -195,7 +237,7 @@ function circleIconPrototype:AsEnchant(data)
 				level = nil
 			end
 
-			self:UpdateStyle(tex, quality or Enum_ItemQuality_Common, nil, level)
+			self:UpdateStyle(tex, quality or Enum_ItemQuality.Common, nil, level)
 		end)
 	elseif data.spellID then
 		async.WithSpellID(data.spellID, function(spell)
@@ -208,7 +250,7 @@ function circleIconPrototype:AsEnchant(data)
 				return self:Reset()
 			end
 
-			self:UpdateStyle(tex, Enum_ItemQuality_Common)
+			self:UpdateStyle(tex, Enum_ItemQuality.Common)
 		end)
 	else
 		self:Reset()
@@ -392,27 +434,38 @@ end
 ---@alias EnchantInfo { enchantID: string?, itemID: number?, spellID: number? }
 
 ---Gets enchantment information from an item link
----@param itemLink string The item link to analyze
+---@param itemInfo InspectItemInfo The item information to analyze
 ---@return EnchantInfo? enchantInfo The enchantment information, or nil if not found
-local function GetItemEnchantInfo(itemLink)
-	local enchantID = tonumber(strmatch(itemLink, "item:%d+:(%d+):"))
-	return enchantID
-		and {
-			enchantID = enchantID,
-			itemID = EnchantLib:GetEnchantItemID(enchantID),
-			spellID = EnchantLib:GetEnchantSpellID(enchantID),
-		}
+local function GetItemEnchantInfo(itemInfo)
+	local enchantID = tonumber(strmatch(itemInfo.link, "item:%d+:(%d+):"))
+
+	if not enchantID then
+		local isMissing = CheckEnchantmentSlot(itemInfo.slotIndex, itemInfo.quality, itemInfo.classID)
+		return isMissing and { name = L["Enchant Missing"] } or nil
+	end
+
+	return {
+		enchantID = enchantID,
+		itemID = EnchantLib:GetEnchantItemID(enchantID),
+		spellID = EnchantLib:GetEnchantSpellID(enchantID),
+	}
 end
 
 ---@alias InspectItemInfo {
---- level: number?,
---- link: string?,
---- name: string?,
---- quality: Enum.ItemQuality?,
+--- classID: Enum.ItemClass,
+--- cleanLink: string,
+--- craftingAtlas: string?,
+--- expansionID: number,
+--- isCraftingReagent: boolean,
+--- level: number,
+--- link: string,
+--- name: string,
+--- quality: Enum.ItemQuality,
 --- set: number?,
---- subType: string?,
---- texture: string?,
---- type: string?,
+--- slotIndex: number,
+--- subType: string,
+--- texture: string,
+--- type: string,
 ---}
 
 ---Gets item information for a specific inventory slot of a unit
@@ -425,10 +478,10 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 		return
 	end
 
-	local itemName, _, itemQuality, itemLevel, _, itemType, itemSubType, _, _, itemTexture, _, _, _, _, expansionID, setID, isCraftingReagent =
+	local itemName, _, itemQuality, itemLevel, _, itemType, itemSubType, _, _, itemTexture, _, itemClassID, _, _, expansionID, setID, isCraftingReagent =
 		C_Item_GetItemInfo(link)
 
-	local craftingAtlas ---@type string
+	local craftingAtlas ---@type string?
 	local cleanLink = gsub(link, "|h%[(.+)%]|h", function(raw)
 		local name = gsub(raw, "(%s*)(|A:.-|a)", function(_, atlasString)
 			craftingAtlas = gsub(atlasString, "|A:(.-):%d+:%d+::%d+|a", "%1")
@@ -438,6 +491,7 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 	end)
 
 	return {
+		classID = itemClassID,
 		cleanLink = cleanLink,
 		craftingAtlas = craftingAtlas,
 		expansionID = expansionID,
@@ -447,6 +501,7 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 		name = itemName,
 		quality = itemQuality,
 		set = setID,
+		slotIndex = slotIndex,
 		subType = itemSubType,
 		texture = itemTexture,
 		type = itemType,
@@ -715,7 +770,7 @@ function I:ShowPanel(unit, parent, ilevel)
 				line.ItemTextureFrame.Texture:SetTexture(itemInfo.texture)
 				local r, g, b = E.db.general.bordercolor.r, E.db.general.bordercolor.g, E.db.general.bordercolor.b
 				if self.db.itemIcon.qualityBorder then
-					r, g, b = C_Item_GetItemQualityColor(itemInfo.quality or Enum_ItemQuality_Common)
+					r, g, b = C_Item_GetItemQualityColor(itemInfo.quality or Enum_ItemQuality.Common)
 				end
 				line.ItemTextureFrame:SetBackdropBorderColor(r, g, b)
 				line.ItemTextureFrame:Show()
@@ -781,8 +836,8 @@ function I:ShowPanel(unit, parent, ilevel)
 		end
 
 		if self.db.enchantIcon.enable then
-			local enchantInfo = itemInfo and itemInfo.link and GetItemEnchantInfo(itemInfo.link)
-			if enchantInfo and enchantInfo.enchantID then
+			local enchantInfo = itemInfo and GetItemEnchantInfo(itemInfo)
+			if enchantInfo and (enchantInfo.enchantID or enchantInfo.name) then
 				local icon = circleIconPool:Acquire()
 				icon:SetParent(line)
 				icon:AsEnchant(enchantInfo)
@@ -794,7 +849,7 @@ function I:ShowPanel(unit, parent, ilevel)
 		end
 
 		if self.db.gemIcon.enable then
-			local gemSocketInfo = itemInfo and itemInfo.link and GetItemGemInfo(itemInfo.link) or {}
+			local gemSocketInfo = itemInfo and GetItemGemInfo(itemInfo.link) or {}
 			local addableSockets = self.db.gemIcon.showAddableSockets
 					and itemInfo
 					and itemInfo.link

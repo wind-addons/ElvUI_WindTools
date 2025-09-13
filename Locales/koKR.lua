@@ -550,6 +550,7 @@ L["Enable to use the command to set the waypoint."] = "명령을 사용하여 �
 L["Enable/Disable the spell activation alert frame."] = "주문 경고 프레임을 표시/숨김처리 합니다."
 L["Enabled"] = "|cff00ff00사용|r"
 L["Enchant Icon"] = true
+L["Enchant Missing"] = true
 L["Encounter Journal"] = "모험 안내서"
 L["Enhance ElvUI Mythic Plus info with more details."] = "ElvUI 쐐기 정보를 더 자세한 내용으로 강화했습니다."
 L["Enhance the message when a guild member comes online or goes offline."] = "길드원이 온/오프라인 될때 메세지를 강화 합니다."

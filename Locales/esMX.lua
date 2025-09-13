@@ -550,6 +550,7 @@ L["Enable to use the command to set the waypoint."] = "Activar para usar el coma
 L["Enable/Disable the spell activation alert frame."] = "Activar/Desactivar el marco de alerta de activación de hechizos"
 L["Enabled"] = "Habilitar"
 L["Enchant Icon"] = true
+L["Enchant Missing"] = true
 L["Encounter Journal"] = "Diario de encuentros"
 L["Enhance ElvUI Mythic Plus info with more details."] = "Mejorar la información de ElvUI de Plus en la mazmorra con más detalles."
 L["Enhance the message when a guild member comes online or goes offline."] = "Mejorar el mensaje cuando un miembro de hermandad se conecta o se desconecta."

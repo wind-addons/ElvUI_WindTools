@@ -550,6 +550,7 @@ L["Enable to use the command to set the waypoint."] = "啟用使用指令設定�
 L["Enable/Disable the spell activation alert frame."] = "啟用/停用法術激活提示框架."
 L["Enabled"] = "|cff00ff00啟用|r"
 L["Enchant Icon"] = "附魔圖示"
+L["Enchant Missing"] = "缺少附魔"
 L["Encounter Journal"] = "地城導覽手冊"
 L["Enhance ElvUI Mythic Plus info with more details."] = "向 ElvUI M+ 訊息添加更多細節."
 L["Enhance the message when a guild member comes online or goes offline."] = "改善公會成員上線或離線時的訊息."

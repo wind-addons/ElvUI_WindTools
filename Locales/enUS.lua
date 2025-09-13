@@ -550,6 +550,7 @@ L["Enable to use the command to set the waypoint."] = true
 L["Enable/Disable the spell activation alert frame."] = true
 L["Enabled"] = "|cff00ff00Enabled|r"
 L["Enchant Icon"] = true
+L["Enchant Missing"] = true
 L["Encounter Journal"] = true
 L["Enhance ElvUI Mythic Plus info with more details."] = true
 L["Enhance the message when a guild member comes online or goes offline."] = true

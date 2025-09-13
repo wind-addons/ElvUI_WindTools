@@ -550,6 +550,7 @@ L["Enable to use the command to set the waypoint."] = "Aktiviert diese Option, u
 L["Enable/Disable the spell activation alert frame."] = "Aktiviert/Deaktiviert das Alarmfenster für die Zauberaktivierung."
 L["Enabled"] = "|cff00ff00Aktiviert|r"
 L["Enchant Icon"] = true
+L["Enchant Missing"] = true
 L["Encounter Journal"] = "Abenteuerführer"
 L["Enhance ElvUI Mythic Plus info with more details."] = "Erweitert die ElvUI Mythic+ Informationen mit weiteren Details."
 L["Enhance the message when a guild member comes online or goes offline."] = "Verbessert die Nachricht, wenn ein Gildenmitglied online oder offline geht."

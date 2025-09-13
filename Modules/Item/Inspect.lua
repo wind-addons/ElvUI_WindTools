@@ -214,7 +214,7 @@ function circleIconPrototype:AsEnchant(data)
 	self.name, self.itemID, self.spellID = data.name, data.itemID, data.spellID
 
 	if not data.enchantID then
-		self:UpdateStyle(MISSING_ICON, nil, "indigo-800")
+		self:UpdateStyle(MISSING_ICON, nil, "indigo-400")
 		return
 	end
 

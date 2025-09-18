@@ -82,7 +82,7 @@ function S:Blizzard_Communities()
 				child.IsSkinned = true
 			end
 
-			if not child.__windSkin then
+			if not child.__windSkin and W.AsianLocale then
 				child.backdrop:ClearAllPoints()
 				child.backdrop:Point("TOPLEFT", child.Icon.backdrop, -7, 5)
 				child.backdrop:Point("BOTTOMLEFT", child.Icon.backdrop, -7, -5)

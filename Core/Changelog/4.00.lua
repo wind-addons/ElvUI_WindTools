@@ -22,18 +22,23 @@ W.Changelog[400] = {
 	NEW = {
 		["zhCN"] = {
 			"[美化外观] 新增了暴雪游戏选项 (Esc键菜单) 的皮肤.",
+			"[美化外观] 新增了 Advanced Interface Options 的皮肤.",
 		},
 		["zhTW"] = {
 			"[美化外觀] 新增了暴雪遊戲選項 (Esc鍵選單) 的皮膚.",
+			"[美化外觀] 新增了 Advanced Interface Options 的皮膚.",
 		},
 		["enUS"] = {
 			"[Skins] Added skin for the Blizzard Game Menu (Esc key menu).",
+			"[Skins] Added skin for Advanced Interface Options.",
 		},
 		["koKR"] = {
 			"[스킨] 블리자드 게임 메뉴(ESC 키 메뉴)에 스킨이 추가되었습니다.",
+			"[스킨] 고급 인터페이스 옵션에 스킨이 추가되었습니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Добавлен скин для игрового меню Blizzard (меню клавиши Esc).",
+			"[Скины] Добавлен скин для Advanced Interface Options.",
 		},
 	},
 	IMPROVEMENT = {

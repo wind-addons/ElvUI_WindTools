@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file='AdvancedInterfaceOptions.lua'/>
 	<Script file='Auctionator.lua'/>
 	<Script file='AngryKeystone.lua'/>
 	<Script file='BigWigs.lua'/>

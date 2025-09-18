@@ -490,6 +490,7 @@ V.skins = {
 		},
 	},
 	addons = {
+		advancedInterfaceOptions = true,
 		angryKeystones = true,
 		auctionator = true,
 		bigWigs = true,

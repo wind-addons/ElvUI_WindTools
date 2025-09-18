@@ -677,7 +677,7 @@ function I:CreatePanel(parent)
 			this.Label:SetBackdropColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 0.7)
 			this.Label:SetBackdropBorderColor(LABEL_COLOR.r, LABEL_COLOR.g, LABEL_COLOR.b, 1)
 			if this.link or (this.level and this.level > 0) then
-				_G.GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT", 15, 30)
+				_G.GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT", 18, 30)
 				_G.GameTooltip:SetInventoryItem(this:GetParent().unit, this.index)
 				_G.GameTooltip:Show()
 			end

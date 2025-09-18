@@ -3,13 +3,12 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local next = next
 local pairs = pairs
 local select = select
 
 local GetClassInfo = GetClassInfo
 
----Update class icon for member list row
----@param row Frame The member list row frame
 local function updateClassIcon(row)
 	if not row or not row.expanded then
 		return
@@ -24,39 +23,12 @@ local function updateClassIcon(row)
 	end
 end
 
----Handle styling for individual reward button
----@param skinModule Skins The skin module instance
----@param child Frame The reward button frame
-local function handleRewardButton(skinModule, child)
-	if not child.IsSkinned then
-		skinModule:Proxy("HandleIcon", child.Icon, true)
-		child:StripTextures()
-		child:CreateBackdrop("Transparent")
-		child.backdrop:ClearAllPoints()
-		child.backdrop:Point("TOPLEFT", child.Icon.backdrop)
-		child.backdrop:Point("BOTTOMLEFT", child.Icon.backdrop)
-		child.backdrop:SetWidth(child:GetWidth() - 5)
-		child.IsSkinned = true
-	end
-end
-
----Handle styling for all reward buttons in container
----@param skinModule Skins The skin module instance
----@param frame Frame The container frame with reward buttons
-local function handleRewardButtons(skinModule, frame)
-	---@param child Frame
-	frame:ForEachFrame(function(child)
-		handleRewardButton(skinModule, child)
-	end)
-end
-
----Skin the Blizzard Communities frame and related elements
 function S:Blizzard_Communities()
 	if not self:CheckDB("communities") then
 		return
 	end
 
-	local CommunitiesFrame = _G.CommunitiesFrame ---@type Frame
+	local CommunitiesFrame = _G.CommunitiesFrame
 	if not CommunitiesFrame then
 		return
 	end
@@ -72,14 +44,13 @@ function S:Blizzard_Communities()
 	self:CreateShadow(_G.CommunitiesGuildLogFrame)
 	self:CreateShadow(_G.CommunitiesSettingsDialog)
 
-	local ClubFinderFrame = _G.ClubFinderCommunityAndGuildFinderFrame ---@type Frame?
+	local ClubFinderFrame = _G.ClubFinderCommunityAndGuildFinderFrame
 	if ClubFinderFrame then
 		self:CreateShadow(ClubFinderFrame.ClubFinderPendingTab)
 		self:CreateShadow(ClubFinderFrame.ClubFinderSearchTab)
 		self:CreateShadow(ClubFinderFrame.RequestToJoinFrame)
 	end
 
-	---@param memberList Frame
 	hooksecurefunc(CommunitiesFrame.MemberList, "RefreshListDisplay", function(memberList)
 		local target = memberList.ScrollBox:GetScrollTarget()
 		if not target or not target.GetChildren then
@@ -94,13 +65,31 @@ function S:Blizzard_Communities()
 		end
 	end)
 
-	local BossModel = _G.CommunitiesFrameGuildDetailsFrameNews.BossModel ---@type Frame
+	local BossModel = _G.CommunitiesFrameGuildDetailsFrameNews.BossModel
 	self:CreateShadow(BossModel)
 	self:CreateShadow(BossModel.TextFrame)
 
-	---@param frame Frame
-	hooksecurefunc(CommunitiesFrame.GuildBenefitsFrame.Rewards.ScrollBox, "Update", function(frame)
-		handleRewardButtons(self, frame)
+	hooksecurefunc(CommunitiesFrame.GuildBenefitsFrame.Rewards.ScrollBox, "Update", function(scrollBox)
+		for _, child in next, { scrollBox.ScrollTarget:GetChildren() } do
+			if not child.IsSkinned then
+				self:Proxy("HandleIcon", child.Icon, true)
+				child:StripTextures()
+				child:CreateBackdrop("Transparent")
+				child.backdrop:ClearAllPoints()
+				child.backdrop:Point("TOPLEFT", child.Icon.backdrop)
+				child.backdrop:Point("BOTTOMLEFT", child.Icon.backdrop)
+				child.backdrop:SetWidth(child:GetWidth() - 5)
+				child.IsSkinned = true
+			end
+
+			if not child.__windSkin then
+				child.backdrop:ClearAllPoints()
+				child.backdrop:Point("TOPLEFT", child.Icon.backdrop, -7, 5)
+				child.backdrop:Point("BOTTOMLEFT", child.Icon.backdrop, -7, -5)
+				child.backdrop:SetWidth(child:GetWidth() + 9)
+				child.__windSkin = true
+			end
+		end
 	end)
 end
 

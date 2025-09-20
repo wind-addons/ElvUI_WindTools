@@ -1,5 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local A = W:GetModule("Announcement") ---@class Announcement
+local C = W.Utilities.Color
 
 local _G = _G
 local format = format
@@ -131,29 +132,29 @@ function A:Quest()
 
 		if questCache.frequency == 1 and config.daily.enable then -- 每日
 			extraInfo = extraInfo .. "[" .. _G.DAILY .. "]"
-			extraInfoColored = extraInfoColored .. F.CreateColorString("[" .. _G.DAILY .. "]", config.daily.color)
+			extraInfoColored = extraInfoColored .. C.StringWithRGB("[" .. _G.DAILY .. "]", config.daily.color)
 		elseif questCache.frequency == 2 and config.weekly.enable then -- 每周
 			extraInfo = extraInfo .. "[" .. _G.WEEKLY .. "]"
-			extraInfoColored = extraInfoColored .. F.CreateColorString("[" .. _G.WEEKLY .. "]", config.weekly.color)
+			extraInfoColored = extraInfoColored .. C.StringWithRGB("[" .. _G.WEEKLY .. "]", config.weekly.color)
 		end
 
 		if questCache.suggestedGroup > 1 and config.suggestedGroup.enable then -- 多人
 			extraInfo = extraInfo .. "[" .. questCache.suggestedGroup .. "]"
 			extraInfoColored = extraInfoColored
-				.. F.CreateColorString("[" .. questCache.suggestedGroup .. "]", config.suggestedGroup.color)
+				.. C.StringWithRGB("[" .. questCache.suggestedGroup .. "]", config.suggestedGroup.color)
 		end
 
 		if questCache.level and config.level.enable then -- 等级
 			if not config.level.hideOnMax or questCache.level ~= W.MaxLevelForPlayerExpansion then
 				extraInfo = extraInfo .. "[" .. questCache.level .. "]"
 				extraInfoColored = extraInfoColored
-					.. F.CreateColorString("[" .. questCache.level .. "]", config.level.color)
+					.. C.StringWithRGB("[" .. questCache.level .. "]", config.level.color)
 			end
 		end
 
 		if questCache.tag and config.tag then -- 任务分类
 			extraInfo = extraInfo .. "[" .. questCache.tag .. "]"
-			extraInfoColored = extraInfoColored .. F.CreateColorString("[" .. questCache.tag .. "]", config.tag.color)
+			extraInfoColored = extraInfoColored .. C.StringWithRGB("[" .. questCache.tag .. "]", config.tag.color)
 		end
 
 		local questCacheOld = lastList[questID]
@@ -161,12 +162,10 @@ function A:Quest()
 		if questCacheOld then
 			if not questCacheOld.isComplete then -- 之前未完成
 				if questCache.isComplete then
-					mainInfo = questCache.title
-						.. " "
-						.. F.CreateColorString(L["Completed"], { r = 0.5, g = 1, b = 0.5 })
+					mainInfo = questCache.title .. " " .. C.StringWithRGB(L["Completed"], { r = 0.5, g = 1, b = 0.5 })
 					mainInfoColored = questCache.link
 						.. " "
-						.. F.CreateColorString(L["Completed"], { r = 0.5, g = 1, b = 0.5 })
+						.. C.StringWithRGB(L["Completed"], { r = 0.5, g = 1, b = 0.5 })
 					needAnnounce = true
 				elseif #questCacheOld > 0 and #questCache > 0 then -- 循环记录的任务完成条件
 					for queryIndex = 1, #questCache do
@@ -199,8 +198,7 @@ function A:Quest()
 								mainInfoColored = questCache.link .. " " .. questCache[queryIndex].item .. " "
 
 								mainInfo = mainInfo .. progressInfo
-								mainInfoColored = mainInfoColored
-									.. F.CreateColorString(progressInfoColored, progressColor)
+								mainInfoColored = mainInfoColored .. C.StringWithRGB(progressInfoColored, progressColor)
 								needAnnounce = true
 							end
 						end
@@ -212,7 +210,7 @@ function A:Quest()
 				mainInfo = questCache.link .. " " .. L["Accepted"]
 				mainInfoColored = questCache.link
 					.. " "
-					.. F.CreateColorString(L["Accepted"], { r = 1, g = 1, b = 1 })
+					.. C.StringWithRGB(L["Accepted"], { r = 1, g = 1, b = 1 })
 					.. format(" |T%s:0|t", W.Media.Icons.accept)
 				needAnnounce = true
 			end

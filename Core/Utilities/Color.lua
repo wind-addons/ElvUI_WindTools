@@ -1,6 +1,6 @@
 local W ---@class WindTools
-local F ---@type Functions
-W, F = unpack((select(2, ...)))
+local F, E ---@type Functions ElvUI
+W, F, E = unpack((select(2, ...)))
 
 local format = format
 local math = math
@@ -650,6 +650,30 @@ function W.Utilities.Color.StringByTemplate(text, template)
 	return W.Utilities.Color.StringWithHex(text, color)
 end
 
+---Create class colored string
+---@param text string The text to colorize
+---@param classFile ClassFile? The English class name (e.g., "WARRIOR", "MAGE")
+---@return string? coloredText The class colored string or nil if parameters are invalid
+function W.Utilities.Color.StringWithClassColor(text, classFile)
+	if not text or type(text) ~= "string" then
+		F.Developer.LogDebug("Color.StringWithClassColor: text parameter invalid")
+		return
+	end
+
+	if not classFile or type(classFile) ~= "string" then
+		F.Developer.LogDebug("Color.StringWithClassColor: class not found")
+		return
+	end
+
+	local color = E:ClassColor(classFile, true)
+	if not color then
+		F.Developer.LogDebug("Color.StringWithClassColor: invalid class " .. tostring(classFile))
+		return
+	end
+
+	return W.Utilities.Color.StringWithRGB(text, color.r, color.g, color.b)
+end
+
 ---Create colored string with RGB values
 ---@param text any The text to colorize (will be converted to string)
 ---@param r number|table Red component (0-1) or color table with r,g,b fields
@@ -661,6 +685,7 @@ function W.Utilities.Color.StringWithRGB(text, r, g, b)
 		F.Developer.LogDebug("Text parameter cannot be nil")
 		return ""
 	end
+
 	if type(text) ~= "string" then
 		text = tostring(text)
 	end
@@ -669,9 +694,7 @@ function W.Utilities.Color.StringWithRGB(text, r, g, b)
 		if type(r.r) ~= "number" or type(r.g) ~= "number" or type(r.b) ~= "number" then
 			F.Developer.LogDebug("Color table must contain r, g, b numeric values")
 		end
-		g = r.g
-		b = r.b
-		r = r.r
+		r, g, b = r.r, r.g, r.b
 	else
 		if type(r) ~= "number" or type(g) ~= "number" or type(b) ~= "number" then
 			F.Developer.LogDebug("RGB values must be numbers when not using a color table")

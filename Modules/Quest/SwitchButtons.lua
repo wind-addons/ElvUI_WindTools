@@ -1,6 +1,7 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local S = W.Modules.Skins ---@type Skins
 local SB = W:NewModule("SwitchButtons", "AceHook-3.0", "AceEvent-3.0")
+local C = W.Utilities.Color
 
 local _G = _G
 
@@ -19,7 +20,7 @@ function SB:CreateButton(text, tooltipText)
 	button.originalText = text
 	button.text = button:CreateFontString()
 	F.SetFontWithDB(button.text, self.db.font)
-	button.text:SetText(F.CreateColorString(button.originalText, self.db.font.color))
+	button.text:SetText(C.StringWithRGB(button.originalText, self.db.font.color))
 	button.text:SetJustifyV("MIDDLE")
 	button.text:SetJustifyH("LEFT")
 	button.text:SetPoint("LEFT", button, "RIGHT")
@@ -66,7 +67,7 @@ function SB:UpdateButton(button, enable)
 			button.buttonSize = self.db.font.size + 12
 		end
 
-		button.text:SetText(F.CreateColorString(button.originalText, self.db.font.color))
+		button.text:SetText(C.StringWithRGB(button.originalText, self.db.font.color))
 		local checkedTexture = button:GetCheckedTexture()
 		checkedTexture:SetVertexColor(self.db.font.color.r, self.db.font.color.g, self.db.font.color.b)
 		button.buttonSize = button.buttonSize + button.text:GetStringWidth()

@@ -1,5 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local FL = W:NewModule("FriendList", "AceHook-3.0")
+local C = W.Utilities.Color
 
 local pairs = pairs
 local strsplit = strsplit
@@ -309,18 +310,18 @@ function FL:UpdateFriendButton(button)
 
 		-- real ID
 		local clientColor = self.db.useClientColor and clientData[gameName] and clientData[gameName].color
-		local realIDString = realID and clientColor and F.CreateColorString(realID, clientColor) or realID
+		local realIDString = realID and clientColor and C.StringWithRGB(realID, clientColor) or realID
 
 		-- name
 		local classColor = self.db.useClassColor and GetClassColor(class)
-		local nameString = name and classColor and F.CreateColorString(name, classColor) or name
+		local nameString = name and classColor and C.StringWithRGB(name, classColor) or name
 		if timerunningSeasonID ~= "" and nameString ~= nil then
 			nameString = TimerunningUtil_AddSmallIcon(nameString) or nameString -- add timerunning tag
 		end
 
 		if self.db.level and wowID and expansionData[wowID] and level and level ~= 0 then
 			if level ~= expansionData[wowID].maxLevel or not self.db.hideMaxLevel then
-				nameString = nameString .. F.CreateColorString(": " .. level, GetQuestDifficultyColor(level))
+				nameString = nameString .. C.StringWithRGB(": " .. level, GetQuestDifficultyColor(level))
 			end
 		end
 
@@ -342,9 +343,9 @@ function FL:UpdateFriendButton(button)
 			end
 
 			if area and area ~= "" and server and server ~= "" and server ~= E.myrealm then
-				buttonText = F.CreateColorString(area .. " - " .. server, self.db.areaColor)
+				buttonText = C.StringWithRGB(area .. " - " .. server, self.db.areaColor)
 			elseif area and area ~= "" then
-				buttonText = F.CreateColorString(area, self.db.areaColor)
+				buttonText = C.StringWithRGB(area, self.db.areaColor)
 			else
 				buttonText = server or ""
 			end

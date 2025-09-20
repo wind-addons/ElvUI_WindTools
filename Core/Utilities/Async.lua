@@ -25,7 +25,6 @@ local cache = {
 	spell = {},
 }
 
-
 ---@alias ItemCallback fun(itemInstance:ItemMixin)
 
 ---Load item data asynchronously and execute callback by item ID

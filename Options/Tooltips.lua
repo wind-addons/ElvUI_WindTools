@@ -127,7 +127,7 @@ options.general = {
 			desc = format(
 				"%s\n%s",
 				L["Show the number of tier set equipments."],
-				F.CreateColorString(L["You need hold SHIFT to inspect someone."], E.db.general.valuecolor)
+				C.StringWithRGB(L["You need hold SHIFT to inspect someone."], E.db.general.valuecolor)
 			),
 		},
 	},

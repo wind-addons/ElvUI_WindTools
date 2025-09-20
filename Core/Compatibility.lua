@@ -2,6 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local MF = W.Modules.MoveFrames
 local S = W.Modules.Skins
 local ES = E.Skins
+local C = W.Utilities.Color
 
 local _G = _G
 local format = format
@@ -66,9 +67,9 @@ function W:ConstructCompatibilityFrame()
 	largeTip:SetText(
 		format(
 			"%s %s %s",
-			F.CreateColorString("[", E.db.general.valuecolor),
+			C.StringWithRGB("[", E.db.general.valuecolor),
 			L["Choose the module you would like to |cff00d1b2use|r"],
-			F.CreateColorString("]", E.db.general.valuecolor)
+			C.StringWithRGB("]", E.db.general.valuecolor)
 		)
 	)
 	largeTip:SetPoint("TOPLEFT", desc, "BOTTOMLEFT", 0, -10)

@@ -72,7 +72,7 @@ local function Tex_SetVertexColor(tex, ...)
 
 	if isDefaultColor then
 		local color = E.private.WT.skins.widgets.checkBox.classColor and E.myClassColor
-		or E.private.WT.skins.widgets.checkBox.color
+			or E.private.WT.skins.widgets.checkBox.color
 		return F.CallMethod(tex, "SetVertexColor", color.r, color.g, color.b, color.a)
 	end
 

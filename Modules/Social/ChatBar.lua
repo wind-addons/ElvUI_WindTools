@@ -2,6 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local CB = W:NewModule("ChatBar", "AceHook-3.0", "AceEvent-3.0") ---@class ChatBar : AceModule, AceHook-3.0, AceEvent-3.0
 local S = W.Modules.Skins ---@type Skins
 local LSM = E.Libs.LSM
+local C = W.Utilities.Color
 
 local _G = _G
 local format = format
@@ -311,7 +312,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
 
 		self.bar[name].text:Hide()
 	else
-		local buttonText = self.db.color and color and F.CreateColorString(abbr, color) or abbr
+		local buttonText = self.db.color and color and C.StringWithRGB(abbr, color) or abbr
 		self.bar[name].text:SetText(buttonText)
 		self.bar[name].defaultFontSize = self.db.font.size
 		F.SetFontWithDB(self.bar[name].text, self.db.font)

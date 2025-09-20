@@ -1,6 +1,7 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local ET = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips
+local C = W.Utilities.Color
 
 local format = format
 local strrep = strrep
@@ -110,8 +111,7 @@ function T:AddMythicInfo(mod, tt, unit)
 					bestRunLevelText = strrep("+", run.upgrades) .. bestRunLevelText
 				end
 
-				local right =
-					format("%s %s", F.CreateColorString(mapData.abbr, E.db.general.valuecolor), bestRunLevelText)
+				local right = format("%s %s", C.StringWithRGB(mapData.abbr, E.db.general.valuecolor), bestRunLevelText)
 
 				if db.icon.enable then
 					local iconString = F.GetIconString(mapData.tex, db.icon.height, db.icon.width, true)

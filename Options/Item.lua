@@ -948,7 +948,7 @@ do
 					for realm, factions in pairs(E.global.WT.item.contacts.alts) do
 						for _, characters in pairs(factions) do
 							for name, class in pairs(characters) do
-								result[name .. "-" .. realm] = F.CreateClassColorString(name .. "-" .. realm, class)
+								result[name .. "-" .. realm] = C.StringWithClassColor(name .. "-" .. realm, class)
 							end
 						end
 					end

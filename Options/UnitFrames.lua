@@ -1,6 +1,7 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table, PrivateDB, ProfileDB, GlobalDB
 local options = W.options.unitFrames.args
 local LSM = E.Libs.LSM
+local C = W.Utilities.Color
 
 local A = W:GetModule("Absorb")
 local CT = W:GetModule("ChatText")
@@ -201,8 +202,8 @@ options.absorb = {
 						"%s\n%s",
 						format(
 							L["The absorb style %s and %s is highly recommended with %s tweaks."],
-							F.CreateColorString(L["Overflow"], E.db.general.valuecolor),
-							F.CreateColorString(L["Auto Height"], E.db.general.valuecolor),
+							C.StringWithRGB(L["Overflow"], E.db.general.valuecolor),
+							C.StringWithRGB(L["Auto Height"], E.db.general.valuecolor),
 							W.Title
 						),
 						L["Here are some buttons for helping you change the setting of all absorb bars by one-click."]
@@ -213,7 +214,7 @@ options.absorb = {
 					type = "execute",
 					name = format(
 						L["Set All Absorb Style to %s"],
-						F.CreateColorString(L["Overflow"], E.db.general.valuecolor)
+						C.StringWithRGB(L["Overflow"], E.db.general.valuecolor)
 					),
 					func = function(info)
 						A:ChangeDB(function(db)
@@ -227,7 +228,7 @@ options.absorb = {
 					type = "execute",
 					name = format(
 						L["Set All Absorb Style to %s"],
-						F.CreateColorString(L["Auto Height"], E.db.general.valuecolor)
+						C.StringWithRGB(L["Auto Height"], E.db.general.valuecolor)
 					),
 					func = function(info)
 						A:ChangeDB(function(db)
@@ -252,8 +253,8 @@ options.absorb = {
 					type = "execute",
 					name = format(
 						L["Set %s to %s"],
-						F.CreateColorString(L["Max Overflow"], E.db.general.valuecolor),
-						F.CreateColorString("0", E.db.general.valuecolor)
+						C.StringWithRGB(L["Max Overflow"], E.db.general.valuecolor),
+						C.StringWithRGB("0", E.db.general.valuecolor)
 					),
 					func = function(info)
 						E.db.unitframe.colors.healPrediction.maxOverflow = 0

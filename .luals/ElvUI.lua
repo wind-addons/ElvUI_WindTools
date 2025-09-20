@@ -1309,10 +1309,7 @@ local E = {}
 -- ELVUI CORE API FUNCTIONS
 -- ============================================================================
 
----@class ClassColor
----@field r number Red component (0-1)
----@field g number Green component (0-1)
----@field b number Blue component (0-1)
+---@class ClassColor : RGB
 ---@field colorStr string Hex color string
 
 ---@class SpecInfo

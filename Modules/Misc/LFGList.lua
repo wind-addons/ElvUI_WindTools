@@ -514,7 +514,7 @@ function LL:UpdatePartyKeystoneFrame()
 			tinsert(cache, {
 				level = data.level,
 				name = mapData.abbr,
-				player = F.CreateClassColorString(UnitName(unit), UnitClassBase(unit)),
+				player = C.StringWithClassColor(UnitName(unit), UnitClassBase(unit)),
 				icon = mapData.tex,
 			})
 

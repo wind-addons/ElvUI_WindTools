@@ -1,6 +1,7 @@
 local W ---@class WindTools
 local F, E, L ---@type Functions, ElvUI, table
 W, F, E, L = unpack((select(2, ...)))
+local C = W.Utilities.Color
 
 local format = format
 local gsub = gsub
@@ -315,7 +316,7 @@ function W.Utilities.LFGPlayerInfo:Conduct(template, role, class, spec, amount)
 			return ""
 		end
 
-		return F.CreateClassColorString(sub, class)
+		return C.StringWithClassColor(sub, class)
 	end)
 
 	-- {{amountStart}} ... {{amountEnd}}
@@ -347,7 +348,7 @@ function W.Utilities.LFGPlayerInfo:Conduct(template, role, class, spec, amount)
 			self:Log("warning", "className not found, class is not given.")
 			return ""
 		end
-		return F.CreateClassColorString(sub, class)
+		return C.StringWithClassColor(sub, class)
 	end)
 
 	return result

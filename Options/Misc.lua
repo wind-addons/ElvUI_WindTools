@@ -133,7 +133,7 @@ options.general = {
 			desc = format(
 				"%s\n%s",
 				L["Show keybinds above the ElvUI cooldown and glow effect on the action buttons."],
-				F.CreateColorString(L["Only works with ElvUI action bar and ElvUI cooldowns."], E.db.general.valuecolor)
+				C.StringWithRGB(L["Only works with ElvUI action bar and ElvUI cooldowns."], E.db.general.valuecolor)
 			),
 		},
 		guildNewsItemLevel = {
@@ -669,14 +669,18 @@ do
 		},
 	}
 
-	for name, data in pairs(itemList) do
+	for _, data in pairs(itemList) do
 		async.WithItemID(data.id, function(item)
 			local icon = item:GetItemIcon()
 			local itemName = item:GetItemName()
 			local color = item:GetItemQualityColor()
 
+			if not itemName then
+				return
+			end
+
 			local iconString = F.GetIconString(icon)
-			local nameString = F.CreateColorString(itemName, color)
+			local nameString = C.StringWithRGB(itemName, color or { 1, 1, 1 })
 
 			options.mute.args.other.args[itemName] = {
 				order = data.id,

@@ -76,7 +76,7 @@ E.PopupDialogs.WINDTOOLS_BUTTON_FIX_RELOAD = {
 _G.BINDING_CATEGORY_ELVUI_WINDTOOLS = W.Title
 for i = 1, 5 do
 	_G["BINDING_HEADER_WTEXTRAITEMSBAR" .. i] =
-		F.CreateColorString(L["Extra Items Bar"] .. " " .. i, E.db.general.valuecolor)
+		C.StringWithRGB(L["Extra Items Bar"] .. " " .. i, E.db.general.valuecolor)
 	for j = 1, 12 do
 		_G[format("BINDING_NAME_CLICK WTExtraItemsBar%dButton%d:LeftButton", i, j)] = L["Button"] .. " " .. j
 	end

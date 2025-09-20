@@ -2,6 +2,7 @@ local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functio
 local options = W.options.announcement.args
 local A = W:GetModule("Announcement")
 local SB = W:GetModule("SwitchButtons")
+local C = W.Utilities.Color
 
 local format = format
 local gsub = gsub
@@ -12,7 +13,7 @@ local C_Spell_GetSpellLink = C_Spell.GetSpellLink
 local C_Spell_GetSpellName = C_Spell.GetSpellName
 
 local function ImportantColorString(string)
-	return F.CreateColorString(string, { r = 0.204, g = 0.596, b = 0.859 })
+	return C.StringWithRGB(string, 0.204, 0.596, 0.859)
 end
 
 local function FormatDesc(code, helpText)

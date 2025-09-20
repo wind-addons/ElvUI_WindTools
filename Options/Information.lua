@@ -112,11 +112,11 @@ options.help = {
 							L["NGA.cn"]
 						),
 						format(
-							"|cffe74c3c%s|r",
-							format(
+							C.StringByTemplate(
 								L["Before you submit a bug, please enable debug mode with %s and test it one more time."],
-								"|cff00d1b2/wtdebug on|r"
-							)
+								"rose-500"
+							),
+							C.StringByTemplate("/wtdebug on", "teal-500")
 						)
 					),
 				},
@@ -186,7 +186,7 @@ options.help = {
 					name = format(
 						"%s | %s",
 						"fang2hou",
-						F.CreateClassColorString("Tabimonk @ " .. L["Shadowmoon"] .. "(TW)", "MONK")
+						C.StringWithClassColor("Tabimonk @ " .. L["Shadowmoon"] .. "(TW)", "MONK")
 					),
 				},
 				["mcc1"] = {
@@ -195,7 +195,7 @@ options.help = {
 					name = format(
 						"%s: %s",
 						"mcc1",
-						F.CreateClassColorString("青楓殘月 @ " .. L["Lights Hope"] .. " (TW)", "MAGE")
+						C.StringWithClassColor("青楓殘月 @ " .. L["Lights Hope"] .. " (TW)", "MAGE")
 					),
 				},
 				["DakJaniels"] = {
@@ -215,7 +215,7 @@ options.help = {
 						"%s: %s | %s",
 						"keludechu",
 						E.InfoColor .. "水稻" .. "|r",
-						F.CreateClassColorString("Surtr @ " .. L["Blanchard"] .. " (CN)", "WARLOCK")
+						C.StringWithClassColor("Surtr @ " .. L["Blanchard"] .. " (CN)", "WARLOCK")
 					),
 				},
 				["LiangYuxuan"] = {
@@ -230,7 +230,7 @@ options.help = {
 						"%s: %s | %s",
 						"asdf12303116",
 						E.InfoColor .. "Chen" .. "|r",
-						F.CreateClassColorString("一发径直入魂 @ " .. L["Burning Blade"] .. " (CN)", "HUNTER")
+						C.StringWithClassColor("一发径直入魂 @ " .. L["Burning Blade"] .. " (CN)", "HUNTER")
 					),
 				},
 				["KurtzPT"] = {
@@ -275,7 +275,7 @@ options.help = {
 						"%s: %s | %s",
 						"ylt",
 						E.InfoColor .. "Joe" .. "|r",
-						F.CreateClassColorString("Shaype @ " .. "Draenor" .. " (EU)", "DRUID")
+						C.StringWithClassColor("Shaype @ " .. "Draenor" .. " (EU)", "DRUID")
 					),
 				},
 				["AngelosNaoumis"] = {
@@ -289,7 +289,7 @@ options.help = {
 					name = format(
 						"%s: %s",
 						"LvWind",
-						F.CreateClassColorString("Stellagosa @ " .. L["Bleeding Hollow"] .. " (CN)", "HUNTER")
+						C.StringWithClassColor("Stellagosa @ " .. L["Bleeding Hollow"] .. " (CN)", "HUNTER")
 					),
 				},
 				["DaguDuiyuan"] = {
@@ -410,16 +410,13 @@ end
 do -- 本地化
 	local localizationList = {
 		["한국어 (koKR)"] = {
-			F.CreateClassColorString(
+			C.StringWithClassColor(
 				"헬리오스의방패<주부월드> @ " .. L["Burning Legion"] .. "(KR)",
 				"WARRIOR"
 			),
-			F.CreateClassColorString("불광불급옹<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "HUNTER"),
-			F.CreateClassColorString(
-				"다크어쌔신<주부월드> @ " .. L["Burning Legion"] .. "(KR)",
-				"DEMONHUNTER"
-			),
-			F.CreateClassColorString("크림슨프릴<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "MAGE"),
+			C.StringWithClassColor("불광불급옹<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "HUNTER"),
+			C.StringWithClassColor("다크어쌔신<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "DEMONHUNTER"),
+			C.StringWithClassColor("크림슨프릴<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "MAGE"),
 			"Sang Jeon @ GitHub",
 			"Reim @ Discord",
 			"와우하는아저씨 @ Discord",

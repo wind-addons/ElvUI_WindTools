@@ -3,6 +3,7 @@ local S = W.Modules.Skins ---@type Skins
 local GB = W:NewModule("GameBar", "AceEvent-3.0", "AceHook-3.0")
 local DT = E:GetModule("DataTexts")
 local async = W.Utilities.Async
+local C = W.Utilities.Color
 
 local _G = _G
 local collectgarbage = collectgarbage
@@ -1016,7 +1017,7 @@ function GB:UpdateTime()
 		minute = format("%02d", minute)
 	end
 
-	panel.colon:SetText(F.CreateColorString(":", self.mouseOverRGB))
+	panel.colon:SetText(C.StringWithRGB(":", self.mouseOverRGB))
 	panel.hour:SetText(hour)
 	panel.minutes:SetText(minute)
 	panel.colon:ClearAllPoints()
@@ -1219,7 +1220,7 @@ function GB:UpdateButton(button, buttonType)
 		button.additionalTextTimer:Cancel()
 	end
 
-	button.additionalTextFormat = F.CreateColorString("%s", self.mouseOverRGB)
+	button.additionalTextFormat = C.StringWithRGB("%s", self.mouseOverRGB)
 
 	if config.additionalText and self.db.additionalText.enable then
 		button.additionalText:SetFormattedText(
@@ -1594,6 +1595,10 @@ function GB:UpdateHearthStoneTable()
 
 	async.WithItemIDTable(hearthstoneAndToyIDList, "value", function(item)
 		local id = item:GetItemID()
+		if not id then
+			return
+		end
+
 		if hearthstonesTable[id] then
 			if C_Item_GetItemCount(id) >= 1 or PlayerHasToy(id) and C_ToyBox_IsToyUsable(id) then
 				tinsert(availableHearthstones, id)

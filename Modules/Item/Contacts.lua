@@ -3,6 +3,7 @@ local CT = W:NewModule("Contacts", "AceHook-3.0")
 local S = W.Modules.Skins ---@type Skins
 local ES = E.Skins
 local MF = W.Modules.MoveFrames ---@type MoveFrames
+local C = W.Utilities.Color
 
 local _G = _G
 local floor = floor
@@ -453,7 +454,7 @@ function CT:UpdatePage(pageIndex)
 					button.faction = temp.faction
 					button.BNName = temp.BNName
 				end
-				button:SetText(button.class and F.CreateClassColorString(button.name, button.class) or button.name)
+				button:SetText(button.class and C.StringWithClassColor(button.name, button.class) or button.name)
 				button:Show()
 			else
 				button.dType = nil

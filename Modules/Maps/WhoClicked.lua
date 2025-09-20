@@ -1,5 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local WC = W:NewModule("WhoClicked", "AceEvent-3.0")
+local C = W.Utilities.Color
 
 local _G = _G
 
@@ -13,7 +14,7 @@ local InCombatLockdown = InCombatLockdown
 
 local hideTimes = 0
 function WC:TryFadeOut()
-	-- 保证最后一个点击可维持完整时间
+	-- Ensure that multiple pings don't interfere with each other
 	if hideTimes == 1 then
 		if self.db.fadeOutTime == 0 then
 			self.text:Hide()
@@ -50,9 +51,9 @@ do
 		end
 
 		if self.db.classColor then
-			name = F.CreateClassColorString(name, englishClass)
+			name = C.StringWithClassColor(name, englishClass) --[[@as string]]
 		else
-			name = F.CreateColorString(name, self.db.customColor)
+			name = C.StringWithRGB(name, self.db.customColor)
 		end
 
 		self.text:SetText(name)

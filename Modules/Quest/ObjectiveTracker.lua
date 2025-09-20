@@ -197,7 +197,7 @@ function OT:ColorfulProgression(text)
 	local progressText = current .. "/" .. required ---@type string
 	if self.db.colorfulProgress then
 		local progressColor = F.GetProgressColor(progress)
-		progressText = F.CreateColorString(progressText, progressColor) --[[@as string]]
+		progressText = C.StringWithRGB(progressText, progressColor) --[[@as string]]
 	end
 
 	---@cast details string
@@ -207,7 +207,7 @@ function OT:ColorfulProgression(text)
 		local percentage = format(" [%.f%%]", progress * 100)
 		if self.db.colorfulPercentage then
 			local progressColor = F.GetProgressColor(progress)
-			percentage = F.CreateColorString(percentage, progressColor) --[[@as string]]
+			percentage = C.StringWithRGB(percentage, progressColor) --[[@as string]]
 		end
 		result = result .. percentage
 	end

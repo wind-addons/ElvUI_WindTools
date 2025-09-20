@@ -855,7 +855,7 @@ function CT.ShortChannel(channelLink)
 						abbr = CT.db.customAbbreviation[communityInfo.name]
 					end
 					abbr = abbr or communityInfo.shortName or strupper(utf8sub(communityInfo.name, 1, 2))
-					abbr = F.CreateColorString(abbr, { r = 0.902, g = 0.494, b = 0.133 })
+					abbr = C.StringWithRGB(abbr, 0.902, 0.494, 0.133)
 				end
 			else
 				if CT.db and CT.db.customAbbreviation then
@@ -2144,7 +2144,7 @@ function CT:ElvUIChat_AchievementMessageHandler(event, frame, achievementMessage
 	end
 
 	local displayName = self.db.removeRealm and playerInfo.name or playerInfo.nameWithRealm
-	local coloredName = F.CreateClassColorString(displayName, playerInfo.englishClass)
+	local coloredName = C.StringWithClassColor(displayName, playerInfo.englishClass)
 	local classIcon = self.db.classIcon
 		and F.GetClassIconStringWithStyle(playerInfo.englishClass, self.db.classIconStyle, 16, 16)
 
@@ -2187,7 +2187,7 @@ function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
 	if class then
 		local displayName = CT.db.removeRealm and Ambiguate(name, "short") or name
 		local coloredName =
-			F.CreateClassColorString(displayName, link and guildPlayerCache[link] or guildPlayerCache[name])
+			C.StringWithClassColor(displayName, link and guildPlayerCache[link] or guildPlayerCache[name])
 
 		coloredName = addSpaceForAsian(self:MayHaveBrackets(coloredName))
 		local classIcon = self.db.classIcon and F.GetClassIconStringWithStyle(class, CT.db.classIconStyle, 16, 16)
@@ -2353,7 +2353,7 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture, noRetry)
 			local classIcon = self.db.classIcon
 				and F.GetClassIconStringWithStyle(characterData.data.class, CT.db.classIconStyle, 16, 16)
 			classIcon = classIcon and classIcon .. " " or ""
-			local coloredName = F.CreateClassColorString(character, characterData.data.class)
+			local coloredName = C.StringWithClassColor(character, characterData.data.class)
 
 			local playerName = coloredName
 				and format("|Hplayer:%s|h%s%s|h", fullName, classIcon, self:MayHaveBrackets(coloredName))

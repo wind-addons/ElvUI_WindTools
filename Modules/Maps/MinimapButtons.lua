@@ -2,6 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local MB = W:NewModule("MinimapButtons", "AceEvent-3.0", "AceHook-3.0") ---@class MinimapButtons : AceModule, AceEvent-3.0, AceHook-3.0
 local S = W.Modules.Skins ---@type Skins
 local EM = E:GetModule("Minimap")
+local C = W.Utilities.Color
 
 local _G = _G
 local ceil = ceil
@@ -198,7 +199,7 @@ function MB:HandleExpansionButton(...)
 			button.AlertText:Kill()
 			button.AlertText.SetText = function(_, text)
 				if text then
-					local event = F.CreateColorString(button.title or L["Garrison"], E.db.general.valuecolor)
+					local event = C.StringWithRGB(button.title or L["Garrison"], E.db.general.valuecolor)
 					F.Print(event .. " " .. text)
 				end
 			end

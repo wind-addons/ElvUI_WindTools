@@ -221,7 +221,7 @@ function T:AddPetID(tt, unit, guid)
 	end
 
 	local speciesID = UnitBattlePetSpeciesID(unit)
-	local speciesIDString = speciesID and F.CreateColorString(tostring(speciesID), E.db.general.valuecolor)
+	local speciesIDString = speciesID and C.StringWithRGB(tostring(speciesID), E.db.general.valuecolor)
 	if speciesIDString then
 		tt:AddDoubleLine(L["Pet ID"] .. ": ", speciesIDString or C.StringByTemplate(L["Unknown"], "gray-400"))
 	end

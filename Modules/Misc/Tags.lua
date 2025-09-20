@@ -32,6 +32,7 @@ local function GetHealthPercent(unit, formatString)
 	if healthMax == 0 then
 		return ""
 	end
+
 	return format(formatString, UnitHealth(unit) / healthMax * 100)
 end
 
@@ -40,6 +41,7 @@ local function GetAbsorbPercent(unit, formatString)
 	if healthMax == 0 then
 		return ""
 	end
+
 	local absorb = UnitGetTotalAbsorbs(unit) or 0
 	if absorb ~= 0 then
 		return format(formatString, absorb / healthMax * 100)
@@ -119,7 +121,7 @@ function M:Tags()
 		end
 	end)
 
-	-- 职业颜色
+	-- Class Color Tags
 	E:AddTag("classcolor:player", 1e10, function()
 		return GetClassColorString(E.myclass)
 	end)
@@ -132,7 +134,7 @@ function M:Tags()
 		end)
 	end
 
-	-- 血量百分比 去除百分号
+	-- ElvUI health tags without %
 	E:AddTag("health:percent-nosign", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 		local originalString = E.oUF.Tags.Methods["health:percent"](unit)
 		local length = strlen(originalString)
@@ -143,7 +145,6 @@ function M:Tags()
 		end
 	end)
 
-	-- 无状态血量百分比 去除百分号
 	E:AddTag("health:percent-nostatus-nosign", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 		local originalString = E.oUF.Tags.Methods["health:percent-nostatus"](unit)
 		local length = strlen(originalString)
@@ -187,7 +188,6 @@ function M:Tags()
 		return GetHealthPercent(unit, "%.3f")
 	end)
 
-	-- 能量百分比 去除百分号
 	E:AddTag("power:percent-nosign", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER", function(unit)
 		local originalString = E.oUF.Tags.Methods["power:percent"](unit)
 		if originalString then
@@ -233,16 +233,17 @@ function M:Tags()
 	end)
 
 	-- Class Icons
-	for index, style in pairs(F.GetClassIconStyleList()) do
+	for _, style in pairs(F.GetClassIconStyleList()) do
 		E:AddTag("classicon-" .. style, "UNIT_NAME_UPDATE", function(unit)
 			local englishClass = select(2, UnitClass(unit))
-			return englishClass and F.GetClassIconStringWithStyle(englishClass, style)
+			return englishClass and F.GetClassIconStringWithStyle(englishClass, style) or ""
 		end)
+
 		for i = 1, GetNumClasses() do
 			local englishClass = select(2, GetClassInfo(i))
 			if englishClass then
 				E:AddTag("classicon-" .. style .. ":" .. strlower(englishClass), "UNIT_NAME_UPDATE", function()
-					return F.GetClassIconStringWithStyle(englishClass, style)
+					return F.GetClassIconStringWithStyle(englishClass, style) or ""
 				end)
 			end
 		end

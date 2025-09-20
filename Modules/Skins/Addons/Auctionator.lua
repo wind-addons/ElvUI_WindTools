@@ -388,20 +388,6 @@ local function listImportFrame(frame)
 	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
 end
 
-local function splashFrame(frame)
-	frame:StripTextures()
-	frame:SetTemplate("Transparent")
-	S:CreateShadow(frame)
-
-	S:Proxy("HandleCloseButton", frame.Close)
-	S:Proxy("HandleCheckBox", frame.HideCheckbox.CheckBox)
-	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
-
-	if E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning then
-		W.Modules.MoveFrames:HandleFrame(frame)
-	end
-end
-
 local function itemHistoryFrame(frame)
 	frame:StripTextures()
 	frame:SetTemplate("Transparent")
@@ -518,7 +504,6 @@ function S:Auctionator()
 	S:TryPostHook("AuctionatorCraftingInfoObjectiveTrackerFrameMixin", "OnLoad", craftingInfoObjectiveTrackerFrame)
 	S:TryPostHook("AuctionatorCraftingInfoProfessionsFrameMixin", "OnLoad", craftingInfoProfessionsFrame)
 	S:TryPostHook("AuctionatorShoppingItemMixin", "OnLoad", shoppingItem)
-	S:TryPostHook("AuctionatorSplashScreenMixin", "OnLoad", splashFrame)
 	S:TryPostHook("AuctionatorBuyCommodityFrameTemplateMixin", "OnLoad", buyItem)
 	S:TryPostHook("AuctionatorBuyItemFrameTemplateMixin", "OnLoad", buyItem)
 	S:TryPostHook("AuctionatorBuyCommodityFinalConfirmationDialogMixin", "SetDetails", reskinDialog)

@@ -539,7 +539,7 @@ options.moveFrames = {
 					type = "description",
 					name = C.StringByTemplate(L["Notice"], "rose-500") .. " " .. format(
 						L["%s may cause some frames to get messed, but you can use %s button to reset frames."],
-						L["Remember Positions"],
+						C.StringByTemplate(L["Remember Positions"], "amber-400"),
 						C.StringByTemplate(L["Clear History"], "sky-500")
 					),
 					fontSize = "medium",

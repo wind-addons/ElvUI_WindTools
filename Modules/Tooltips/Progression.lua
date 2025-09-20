@@ -397,7 +397,11 @@ function T:InitializeProgression()
 	if not C_AddOns_IsAddOnLoaded("Blizzard_AchievementUI") then
 		AchievementFrame_LoadUI()
 		if select(2, C_AddOns_IsAddOnLoaded("Blizzard_AchievementUI")) then
-			self:RawHook("AchievementFrameComparison_UpdateStatusBars", true)
+			self:RawHook(
+				"AchievementFrameComparison_UpdateStatusBars",
+				"AchievementFrameComparison_UpdateStatusBars",
+				true
+			)
 		end
 	end
 

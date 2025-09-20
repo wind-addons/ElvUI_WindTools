@@ -70,6 +70,7 @@ function Frame:Height(height, ...) end
 ---@param xOfs? number X offset (will be scaled)
 ---@param yOfs? number Y offset (will be scaled)
 ---@param ... any Additional arguments passed to SetPoint
+---@overload fun(self: Frame, point: AnchorPoint|string, xOfs: number, yOfs: number, ...: any)
 function Frame:Point(point, relativeTo, relativePoint, xOfs, yOfs, ...) end
 
 ---Gets point information, handling both numeric and string point values

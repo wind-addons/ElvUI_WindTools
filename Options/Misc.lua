@@ -681,7 +681,6 @@ do
 
 			local iconString = F.GetIconString(icon)
 			local nameString = C.StringWithRGB(itemName, color or { 1, 1, 1 })
-
 			options.mute.args.other.args[itemName] = {
 				order = data.id,
 				type = "toggle",

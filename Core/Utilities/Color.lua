@@ -675,22 +675,21 @@ function W.Utilities.Color.StringWithClassColor(text, classFile)
 end
 
 ---Create colored string with RGB values
----@param text any The text to colorize (will be converted to string)
----@param r number|table Red component (0-1) or color table with r,g,b fields
----@param g number? Green component (0-1, required if r is number)
----@param b number? Blue component (0-1, required if r is number)
+---@param text string|number The text or number to colorize
+---@param r number Red component (0-1)
+---@param g number Green component (0-1)
+---@param b number Blue component (0-1)
 ---@return string coloredText The colored string
+---@overload fun(text: string|number, color: table): string
 function W.Utilities.Color.StringWithRGB(text, r, g, b)
 	if text == nil then
 		F.Developer.LogDebug("Text parameter cannot be nil")
 		return ""
 	end
 
-	if type(text) ~= "string" then
-		text = tostring(text)
-	end
+	text = tostring(text)
 
-	if type(r) == "table" then
+	if type(r) == "table" then -- Color table provided
 		if type(r.r) ~= "number" or type(r.g) ~= "number" or type(r.b) ~= "number" then
 			F.Developer.LogDebug("Color table must contain r, g, b numeric values")
 		end

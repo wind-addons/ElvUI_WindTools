@@ -253,7 +253,7 @@ function RM:CreateButtons()
 	for i = 1, 11 do
 		local button = self.bar.buttons[i]
 		if not button then
-			button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate")
+			button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate") --[[@as Button]]
 			button:CreateBackdrop("Transparent")
 		end
 		button:SetSize(self.db.buttonSize, self.db.buttonSize)

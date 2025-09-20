@@ -131,7 +131,7 @@ do
 end
 
 function EB:CreateButton(name, barDB)
-	local button = CreateFrame("Button", name, E.UIParent, "SecureActionButtonTemplate, BackdropTemplate")
+	local button = CreateFrame("Button", name, E.UIParent, "SecureActionButtonTemplate, BackdropTemplate") --[[@as Button]]
 	button:SetSize(barDB.buttonWidth, barDB.buttonHeight)
 	button:SetTemplate("Default")
 	button:SetClampedToScreen(true)

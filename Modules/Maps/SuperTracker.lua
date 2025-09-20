@@ -188,7 +188,12 @@ function ST.commandHandler(msg, isPreview)
 			waypointString = waypointString .. ", " .. numbers[3]
 		end
 
-		local mapData = C_Map_GetMapInfo(mapID) or C_Map_GetMapInfo(C_Map_GetBestMapForUnit("player"))
+		local mapData = mapID and C_Map_GetMapInfo(mapID) ---@type UiMapDetails?
+		if not mapData then
+			local uiMapID = C_Map_GetBestMapForUnit("player")
+			mapData = uiMapID and C_Map_GetMapInfo(uiMapID) --[[@as UiMapDetails]]
+		end
+
 		return true, mapData.name .. " (" .. waypointString .. ")"
 	else
 		ST:SetWaypoint(mapID, unpack(numbers))
@@ -199,10 +204,10 @@ function ST:SetWaypoint(mapID, x, y, z)
 	mapID = mapID or _G.WorldMapFrame:IsShown() and _G.WorldMapFrame:GetMapID() or C_Map_GetBestMapForUnit("player")
 
 	-- colored waypoint string
-	local mapData = C_Map_GetMapInfo(mapID)
+	local mapData = C_Map_GetMapInfo(mapID) ---@type UiMapDetails?
 	if not mapData then
 		mapID = C_Map_GetBestMapForUnit("player")
-		mapData = C_Map_GetMapInfo(mapID)
+		mapData = mapID and C_Map_GetMapInfo(mapID) --[[@as UiMapDetails]]
 	end
 	local mapName = mapData.name
 	local location = format("%s, %s", x, y)
@@ -257,7 +262,7 @@ function ST:WaypointParse()
 	local editBox = F.Widgets.New("Input", _G.WorldMapFrame, 200, 20, function(eb)
 		self.commandHandler(eb:GetText(), false)
 		eb:ClearFocus()
-	end)
+	end) --[[@as EditBox]]
 
 	ST.WorldMapInput = editBox
 
@@ -297,7 +302,7 @@ function ST:WaypointParse()
 		end
 
 		local success, preview = self.commandHandler(inputText, true)
-		statusText:SetText(C.StringByTemplate(preview, success and "green-400" or "rose-500"))
+		statusText:SetText(C.StringByTemplate(preview or "", success and "green-400" or "rose-500"))
 	end)
 
 	F.Widgets.AddTooltip(

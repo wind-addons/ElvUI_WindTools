@@ -1,9 +1,22 @@
 {
-  "[lua]": {
-    "editor.defaultFormatter": "JohnnyMorganz.stylua"
-  },
-  "Lua.runtime.version": "Lua 5.1",
-  "Lua.runtime.builtin": {
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "workspace.library": [
+    "~/.vscode/extensions/ketho.wow-api-0.21.0/Annotations/Core",
+    "~/.vscode/extensions/ketho.wow-api-0.21.0/Annotations/FrameXML"
+  ],
+  "workspace.ignoreDir": [
+    ".vscode",
+    "Core/Changelog/*",
+    "Locales/*",
+    "Libraries/LibKeystone/*",
+    "Libraries/LibObjectiveProgress-1.0/*",
+    "Libraries/LibOpenRaid/*",
+    "Libraries/LibRangeCheck-3.0/*",
+    "Libraries/TinyLibs/*"
+  ],
+  "workspace.preloadFileSize": 5000,
+  "runtime.version": "Lua 5.1",
+  "runtime.builtin": {
     "basic": "disable",
     "debug": "disable",
     "io": "disable",
@@ -14,23 +27,8 @@
     "table": "disable",
     "utf8": "disable"
   },
-  "Lua.workspace.library": [
-    "~\\.vscode\\extensions\\ketho.wow-api-0.21.0\\Annotations\\Core",
-    "~\\.vscode\\extensions\\ketho.wow-api-0.21.0\\Annotations\\FrameXML"
-  ],
-  "wowAPI.luals.frameXML": true,
-  "Lua.workspace.ignoreDir": [
-    ".vscode",
-    "Core/Changelog/*",
-    "Locales/*",
-    "Libraries/LibKeystone/*",
-    "Libraries/LibObjectiveProgress-1.0/*",
-    "Libraries/LibOpenRaid/*",
-    "Libraries/LibRangeCheck-3.0/*",
-    "Libraries/TinyLibs/*"
-  ],
-  "Lua.diagnostics.enable": true,
-  "Lua.diagnostics.globals": [
+  "diagnostics.enable": true,
+  "diagnostics.globals": [
     "BACKSLOT",
     "BNET_FRIEND_TOOLTIP_WOW_CLASSIC",
     "CHESTSLOT",
@@ -88,20 +86,11 @@
     "WAISTSLOT",
     "WRISTSLOT"
   ],
-  "Lua.diagnostics.disable": [
+  "diagnostics.disable": [
     "inject-field",
     "undefined-field"
   ],
-  "Lua.diagnostics.ignoredFiles": "Disable",
-  "cSpell.ignorePaths": [
-    ".git/**",
-    ".vscode",
-    "Locales/**",
-    "Libraries/**",
-    "!Modules/Skins/Libraries/**",
-    "ChatText.lua"
-  ],
-  "cSpell.diagnosticLevel": "Hint",
-  "Lua.format.enable": false,
-  "Lua.workspace.preloadFileSize": 5000,
+  "diagnostics.ignoredFiles": "Disable",
+  "diagnostics.libraryFiles": "Disable",
+  "format.enable": false
 }

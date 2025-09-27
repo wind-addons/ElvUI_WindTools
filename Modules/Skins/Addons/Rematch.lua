@@ -885,8 +885,25 @@ local function ReskinPetsPanel(frame)
 end
 
 local function ReskinTooltips()
-	TT:SetStyle(_G.RematchTooltip)
-	TT:SetStyle(_G.FloatingPetBattleAbilityTooltip)
+	_G.RematchTooltip:StripTextures()
+	_G.RematchTooltip:CreateBackdrop("Transparent")
+	S:CreateBackdropShadow(_G.RematchTooltip)
+
+	_G.FloatingPetBattleAbilityTooltip:StripTextures()
+	_G.FloatingPetBattleAbilityTooltip:CreateBackdrop("Transparent")
+	S:CreateBackdropShadow(_G.FloatingPetBattleAbilityTooltip)
+end
+
+local function ReskinMenus()
+	S:TryPostHook("RematchMenuFrameMixin", "OnUpdate", function(self)
+		if not self.__windSkin then
+			self.Title:StripTextures()
+			self:StripTextures()
+			self:CreateBackdrop("Transparent")
+			S:CreateBackdropShadow(self)
+			self.__windSkin = true
+		end
+	end)
 end
 
 local function ReskinBottomBar(frame)
@@ -1048,6 +1065,7 @@ function S:Rematch()
 	end)
 
 	ReskinTooltips()
+	ReskinMenus()
 	ReskinMainFrame(frame)
 	ReskinTitleBar(frame.TitleBar)
 	ReskinToolBar(frame.ToolBar)

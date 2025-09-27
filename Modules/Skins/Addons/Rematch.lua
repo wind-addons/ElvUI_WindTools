@@ -840,6 +840,20 @@ local function ReskinPetsPanel(frame)
 
 	frame.Top.TypeBar.TabbedBorder:SetAlpha(0)
 
+	if frame.Top.TypeBar.Tabs then
+		for i = 1, #frame.Top.TypeBar.Tabs do
+			local tab = frame.Top.TypeBar.Tabs[i]
+			tab:Height(25)
+			S:Proxy("HandleTab", tab)
+			F.InternalizeMethod(tab.Text, "SetPoint")
+			hooksecurefunc(tab.Text, "SetPoint", function(t)
+				F.Move(t, 0, 2)
+			end)
+			F.Move(tab.Text, 0, 2)
+			F.Move(tab, 0, 1)
+		end
+	end
+
 	if frame.Top.TypeBar.Buttons then
 		for i = 1, #frame.Top.TypeBar.Buttons do
 			ReskinIconButton(frame.Top.TypeBar.Buttons[i])
@@ -855,17 +869,6 @@ local function ReskinPetsPanel(frame)
 				F.CallMethod(t, "SetVertexColor", r, g, b, (a or 0.4) / 3)
 			end
 			texture:SetVertexColor(texture:GetVertexColor())
-		end
-	end
-
-	if frame.Top.TypeBar.Tabs then
-		for i = 1, #frame.Top.TypeBar.Tabs do
-			local tab = frame.Top.TypeBar.Tabs[i]
-			S:Proxy("HandleTab", tab)
-			F.InternalizeMethod(tab.Text, "SetPoint")
-			hooksecurefunc(tab.Text, "SetPoint", function(t)
-				F.Move(t, 0, 2)
-			end)
 		end
 	end
 
@@ -1035,6 +1038,42 @@ local function ReskinLoadoutPanel(frame)
 	for _, loadout in pairs(frame.Loadouts) do
 		ReskinLoadout(loadout)
 	end
+
+	local AbilityFlyout = frame.AbilityFlyout
+	if AbilityFlyout then
+		AbilityFlyout:CreateBackdrop()
+		AbilityFlyout.backdrop:SetInside(AbilityFlyout, 1, 1)
+		AbilityFlyout.backdrop:SetFrameLevel(AbilityFlyout:GetFrameLevel())
+		S:CreateBackdropShadow(AbilityFlyout)
+		AbilityFlyout.Border:Kill()
+
+		for _, button in pairs({ AbilityFlyout:GetChildren() }) do
+			if button ~= AbilityFlyout.Border and button ~= AbilityFlyout.anchoredTo then
+				ReskinIconButton(button)
+			end
+		end
+
+		AbilityFlyout.AbilitySelecteds[1]:SetTexture(E.media.blankTex)
+		AbilityFlyout.AbilitySelecteds[1]:SetVertexColor(C.ExtractRGBAFromTemplate("yellow-300"))
+		AbilityFlyout.AbilitySelecteds[1]:SetAlpha(0.4)
+		AbilityFlyout.AbilitySelecteds[2]:SetTexture(E.media.blankTex)
+		AbilityFlyout.AbilitySelecteds[2]:SetVertexColor(C.ExtractRGBAFromTemplate("green-300"))
+		AbilityFlyout.AbilitySelecteds[2]:SetAlpha(0.4)
+	end
+end
+
+function S:RematchButton()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then
+		return
+	end
+
+	if not _G.Rematch or not _G.Rematch.journal then
+		return
+	end
+
+	RunNextFrame(function()
+		self:Proxy("HandleCheckBox", _G.Rematch.journal.UseRematchCheckButton)
+	end)
 end
 
 function S:Rematch()
@@ -1049,6 +1088,7 @@ function S:Rematch()
 
 	self:SecureHook(frame, "Show", function()
 		self:Unhook(frame, "Show")
+		self:Proxy("HandleCheckBox", _G.Rematch.journal.UseRematchCheckButton)
 		MF:InternalHandle(frame, "CollectionsJournal")
 		MF:InternalHandle(frame.ToolBar, "CollectionsJournal")
 		self:SecureHook(frame, "Show", function()
@@ -1091,3 +1131,4 @@ function S:Rematch()
 end
 
 S:AddCallbackForAddon("Rematch")
+S:AddCallbackForAddon("Blizzard_Collections", "RematchButton")

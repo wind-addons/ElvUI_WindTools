@@ -799,7 +799,9 @@ local function ReskinPetsPanel(frame)
 	frame.Top:StripTextures()
 	frame.Top:CreateBackdrop("Transparent")
 	S:Reposition(frame.Top.backdrop, frame.Top, 0, 0, 1, 0, 0)
+	local toggleIconTex = frame.Top.ToggleButton.Icon:GetTexture()
 	frame.Top.ToggleButton:StripTextures()
+	frame.Top.ToggleButton.Icon:SetTexture(toggleIconTex)
 	S:Proxy("HandleButton", frame.Top.ToggleButton)
 	S:Proxy("HandleEditBox", frame.Top.SearchBox)
 	for _, tex in pairs(frame.Top.SearchBox.Back) do
@@ -852,6 +854,7 @@ local function ReskinPetsPanel(frame)
 			texture.SetVertexColor = function(t, r, g, b, a)
 				F.CallMethod(t, "SetVertexColor", r, g, b, (a or 0.4) / 3)
 			end
+			texture:SetVertexColor(texture:GetVertexColor())
 		end
 	end
 
@@ -884,7 +887,7 @@ local function ReskinPetsPanel(frame)
 	frame.List.ScrollBox:ForEachFrame(ReskinPetListButton)
 end
 
-local function ReskinTooltips()
+local function ReskinTooltipsAndMenus()
 	_G.RematchTooltip:StripTextures()
 	_G.RematchTooltip:CreateBackdrop("Transparent")
 	S:CreateBackdropShadow(_G.RematchTooltip)
@@ -892,9 +895,7 @@ local function ReskinTooltips()
 	_G.FloatingPetBattleAbilityTooltip:StripTextures()
 	_G.FloatingPetBattleAbilityTooltip:CreateBackdrop("Transparent")
 	S:CreateBackdropShadow(_G.FloatingPetBattleAbilityTooltip)
-end
 
-local function ReskinMenus()
 	S:TryPostHook("RematchMenuFrameMixin", "OnUpdate", function(self)
 		if not self.__windSkin then
 			self.Title:StripTextures()
@@ -1059,13 +1060,12 @@ function S:Rematch()
 	end)
 
 	F.InternalizeMethod(frame, "SetPoint")
-	F.Move(frame, 1, 0)
 	hooksecurefunc(frame, "SetPoint", function()
 		F.Move(frame, 1, 0)
 	end)
+	F.Move(frame, 1, 0)
 
-	ReskinTooltips()
-	ReskinMenus()
+	ReskinTooltipsAndMenus()
 	ReskinMainFrame(frame)
 	ReskinTitleBar(frame.TitleBar)
 	ReskinToolBar(frame.ToolBar)

@@ -4,6 +4,7 @@ local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames
 local ES = E:GetModule("Skins")
 local TT = E:GetModule("Tooltip")
+local C = W.Utilities.Color
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -297,25 +298,6 @@ local function ReskinFlyout(frame)
 		end
 	end)
 	frame.__windSkin = true
-end
-
-local function reskinPetList(list)
-	list:ForEachFrame(function(button)
-		if button.__windSkin then
-			return
-		end
-
-		if button.Back then
-			button.Back:SetAlpha(0)
-		end
-
-		-- local highlightTexture = button:GetHighlightTexture()
-		-- highlightTexture:SetTexture(E.media.blankTex)
-		-- highlightTexture:SetVertexColor(1, 1, 1, 0.25)
-
-		S:Proxy("HandleIcon", button.Icon)
-		button.__windSkin = true
-	end)
 end
 
 function S:Rematch_LeftBottom()
@@ -671,13 +653,44 @@ function S:Rematch_SkinLoad()
 	_G.RematchJournal.skinLoaded = true
 end
 
-local function reskinScroll(frame)
-	frame:StripTextures()
-	S:Proxy("HandleFrame", frame)
-	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
-	S:ReskinIconButton(frame.ScrollToTopButton, W.Media.Icons.buttonGoEnd, 21, 1.571)
-	F.Move(frame.ScrollToTopButton, -1, -1)
-	S:ReskinIconButton(frame.ScrollToBottomButton, W.Media.Icons.buttonGoEnd, 21, -1.571)
+local function ReskinCardStatusBar(parent, key)
+	if not parent or not key or not parent[key] or parent[key].__windSkin then
+		return
+	end
+
+	parent[key]:SetTexture(E.media.normTex)
+	parent[key .. "Frame"] = CreateFrame("Frame", nil, parent)
+	parent[key .. "Frame"]:SetTemplate("Transparent")
+	parent[key .. "Frame"]:SetAllPoints(parent[key .. "Back"])
+	parent[key .. "Back"]:SetAlpha(0)
+	parent[key .. "Border"]:SetAlpha(0)
+	parent[key]:SetParent(parent[key .. "Frame"])
+
+	parent[key].__windSkin = true
+end
+
+local function ReskinPet(frame)
+	if not frame or frame.__windSkin then
+		return
+	end
+
+	frame.Border:SetAlpha(0)
+	frame.windIconBorder = CreateFrame("Frame", nil, frame)
+	frame.windIconBorder:SetOutside(frame.Icon)
+	frame.windIconBorder:SetTemplate()
+	hooksecurefunc(frame.Border, "SetVertexColor", function(self, r, g, b)
+		frame.windIconBorder:SetBackdropBorderColor(r, g, b)
+	end)
+	frame.Border:SetVertexColor(frame.Border:GetVertexColor())
+	frame.windIconBorder:SetFrameLevel(max(0, frame:GetFrameLevel() - 1))
+
+	frame.LevelBubble:Kill()
+	F.SetFontOutline(frame.LevelText, E.db.general.font)
+	frame.LevelText:SetJustifyH("RIGHT")
+	frame.LevelText:ClearAllPoints()
+	frame.LevelText:Point("BOTTOMRIGHT", frame.Icon, "BOTTOMRIGHT", 2, 0)
+
+	frame.__windSkin = true
 end
 
 local function ReskinMainFrame(frame)
@@ -733,6 +746,48 @@ local function ReskinToolBar(frame)
 	ReskinIconButton(frame.SafariHatButton)
 	ReskinIconButton(frame.SaveAsButton)
 	ReskinIconButton(frame.SummonPetButton)
+end
+
+local function ReskinPetListButton(frame)
+	if not frame then
+		return
+	end
+
+	for _, child in pairs({ frame:GetChildren() }) do
+		if not child.__windSkin and child.data and child.parentKey and child.Top then
+			child:CreateBackdrop()
+			child.backdrop:SetInside(child, 1, 1)
+			child.backdrop.Center:Kill()
+			hooksecurefunc(child.Top, "SetVertexColor", function(t, r, g, b, a)
+				child.backdrop:SetBackdropBorderColor(r, g, b)
+			end)
+			child.Top:SetVertexColor(child.Top:GetVertexColor())
+
+			S:Proxy("HandleBlizzardRegions", child)
+			child.Top:Kill()
+			child.Bottom:Kill()
+
+			child.__windSkin = true
+		end
+	end
+
+	if frame.__windSkin then
+		return
+	end
+
+	ReskinPet(frame)
+	frame.Back:Kill()
+	frame.windHighlight = frame:CreateTexture(nil, "OVERLAY")
+	frame.windHighlight:SetTexture(E.media.normTex)
+	frame.windHighlight:SetAllPoints(frame.Back)
+	frame.windHighlight:SetVertexColor(1, 1, 1, 0.25)
+	frame.windHighlight:Hide()
+	frame:HookScript("OnEnter", function()
+		frame.windHighlight:Show()
+	end)
+	frame:HookScript("OnLeave", function()
+		frame.windHighlight:Hide()
+	end)
 end
 
 local function ReskinPetsPanel(frame)
@@ -815,9 +870,18 @@ local function ReskinPetsPanel(frame)
 	frame.ResultsBar:CreateBackdrop("Transparent")
 	frame.ResultsBar.backdrop:SetInside(frame.ResultsBar)
 
-	reskinScroll(frame.List)
+	frame.List:StripTextures()
+	S:Proxy("HandleFrame", frame.List)
+	S:Proxy("HandleTrimScrollBar", frame.List.ScrollBar)
+	S:ReskinIconButton(frame.List.ScrollToTopButton, W.Media.Icons.buttonGoEnd, 21, 1.571)
+	F.Move(frame.List.ScrollToTopButton, -1, -1)
+	S:ReskinIconButton(frame.List.ScrollToBottomButton, W.Media.Icons.buttonGoEnd, 21, -1.571)
 
-	hooksecurefunc(frame.List.ScrollBox, "Update", reskinPetList)
+	hooksecurefunc(frame.List, "Refresh", function()
+		frame.List.ScrollBox:ForEachFrame(ReskinPetListButton)
+	end)
+
+	frame.List.ScrollBox:ForEachFrame(ReskinPetListButton)
 end
 
 local function ReskinTooltips()
@@ -860,32 +924,28 @@ local function ReskinPanelTabs(frame)
 	frame.__windSkin = true
 end
 
-local function ReskinLoadedTargetPanel(frame)
+local function ReskinLoadedTargetPanel(frame, petsPanel, targetsPanel)
 	if not frame then
 		return
 	end
 
 	frame:StripTextures()
-	frame:CreateBackdrop("Transparent")
-	frame.backdrop:ClearAllPoints()
-	frame.backdrop:Point("TOPLEFT", frame, "TOPLEFT", 1, 0)
-	frame.backdrop:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -1, 0)
-
+	frame:SetTemplate("Transparent")
+	frame:ClearAllPoints()
+	frame:Point("TOPLEFT", petsPanel, "TOPRIGHT", 3, -1)
+	frame:Point("BOTTOMRIGHT", targetsPanel, "BOTTOMLEFT", -3, -75)
 	ReskinButton(frame.BigLoadSaveButton)
 
-	frame.backdrop.title = CreateFrame("Frame", nil, frame.backdrop, "BackdropTemplate")
-	frame.backdrop.title:SetTemplate("Default")
-	frame.backdrop.title:Point("TOPLEFT", frame.backdrop, "TOPLEFT")
-	frame.backdrop.title:Point("BOTTOMRIGHT", frame.backdrop, "TOPRIGHT", 0, -26)
+	frame.titleBackdrop = frame:CreateTexture(nil, "ARTWORK")
+	frame.titleBackdrop:Point("TOPLEFT", frame, "TOPLEFT", 1, -1)
+	frame.titleBackdrop:Point("BOTTOMRIGHT", frame, "TOPRIGHT", -1, -25)
+	frame.titleBackdrop:SetTexture(E.media.blankTex)
+	frame.titleBackdrop:SetVertexColor(C.ExtractRGBAFromTemplate("gray-400"))
+	frame.titleBackdrop:SetAlpha(0.1)
 
 	local EnemyTeam = frame.EnemyTeam
 	if EnemyTeam then
 		EnemyTeam.Border:Kill()
-		for _, child in pairs({ EnemyTeam:GetChildren() }) do
-			if child ~= EnemyTeam.Border then
-				print(child:GetObjectType())
-			end
-		end
 	end
 
 	ReskinIconButton(frame.SmallRandomButton)
@@ -896,6 +956,67 @@ local function ReskinLoadedTargetPanel(frame)
 	F.Move(frame.SmallRandomButton, 1, 2)
 	ReskinIconButton(frame.SmallSaveButton)
 	ReskinIconButton(frame.SmallTeamsButton)
+end
+
+local function ReskinLoadedTeamPanel(frame)
+	if not frame then
+		return
+	end
+
+	frame:StripTextures()
+	frame.NotesFrame:StripTextures()
+	ReskinIconButton(frame.NotesFrame.NotesButton)
+	frame.PreferencesFrame:StripTextures()
+	ReskinIconButton(frame.PreferencesFrame.PreferencesButton)
+	frame.TeamButton:StripTextures()
+	ReskinButton(frame.TeamButton)
+end
+
+local function ReskinLoadout(frame)
+	if not frame or frame.__windSkin then
+		return
+	end
+
+	S:Proxy("HandleBlizzardRegions", frame)
+	frame.Top:Kill()
+	frame.Bottom:Kill()
+	frame.Back:Kill()
+	frame.Highlight:SetTexture(E.media.blankTex)
+	frame.Highlight:SetVertexColor(1, 1, 1, 0.1)
+	frame:SetTemplate()
+
+	ReskinPet(frame.Pet)
+
+	local AbilityBar = frame.AbilityBar
+	if AbilityBar then
+		AbilityBar.AbilitiesBorder:Kill()
+		for _, child in pairs({ AbilityBar:GetChildren() }) do
+			if child ~= AbilityBar.AbilitiesBorder then
+				child:CreateBackdrop()
+			end
+		end
+	end
+
+	ReskinCardStatusBar(frame, "HpBar")
+	ReskinCardStatusBar(frame, "XpBar")
+
+	frame.__windSkin = true
+end
+
+local function ReskinLoadoutPanel(frame)
+	if not frame then
+		return
+	end
+
+	hooksecurefunc(frame, "Update", function()
+		for _, loadout in pairs(frame.Loadouts) do
+			ReskinLoadout(loadout)
+		end
+	end)
+
+	for _, loadout in pairs(frame.Loadouts) do
+		ReskinLoadout(loadout)
+	end
 end
 
 function S:Rematch()
@@ -915,7 +1036,9 @@ function S:Rematch()
 		self:SecureHook(frame, "Show", function()
 			frame:EnableMouse(true)
 		end)
+		ReskinPetsPanel(frame.PetsPanel)
 		ReskinPanelTabs(frame.PanelTabs)
+		ReskinLoadoutPanel(frame.LoadoutPanel)
 	end)
 
 	F.InternalizeMethod(frame, "SetPoint")
@@ -928,9 +1051,9 @@ function S:Rematch()
 	ReskinMainFrame(frame)
 	ReskinTitleBar(frame.TitleBar)
 	ReskinToolBar(frame.ToolBar)
-	ReskinPetsPanel(frame.PetsPanel)
 	ReskinBottomBar(frame.BottomBar)
-	ReskinLoadedTargetPanel(frame.LoadedTargetPanel)
+	ReskinLoadedTargetPanel(frame.LoadedTargetPanel, frame.PetsPanel, frame.TargetsPanel)
+	ReskinLoadedTeamPanel(frame.LoadedTeamPanel)
 
 	-- -- Main
 	-- self:Rematch_LeftTop()

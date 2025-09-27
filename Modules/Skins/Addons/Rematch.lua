@@ -15,43 +15,48 @@ local unpack = unpack
 local CollectionsJournal_LoadUI = CollectionsJournal_LoadUI
 local CreateFrame = CreateFrame
 
-local function reskinIconButton(button)
-	if button and not button.__windSkin then
-		button:StyleButton(nil, true)
-
-		if button.Border then
-			button.Border:SetAlpha(0)
-		end
-
-		if button.Status then
-			button.Status:SetTexture(E.media.blankTex)
-			button.Status:SetVertexColor(1, 0, 0, 0.3)
-		end
-
-		if button.Texture then
-			button.Texture:SetTexCoord(unpack(E.TexCoords))
-		end
-
-		if button.Icon then
-			button.Icon:CreateBackdrop()
-		end
-
-		if button.IconBorder then
-			button.IconBorder:Hide()
-		end
-
-		if button.Selected then
-			button.Selected:SetTexture(E.media.blankTex)
-			button.Selected:SetVertexColor(1, 1, 1, 0.3)
-		end
-
-		if button.hover and button.Icon then
-			button.hover:ClearAllPoints()
-			button.hover:SetAllPoints(button.Icon)
-		end
-
-		button.__windSkin = true
+local function ReskinIconButton(button)
+	if not button or button.__windSkin then
+		return
 	end
+	button:StyleButton(nil, true)
+
+	if button.Back then
+		button.Back:Kill()
+	end
+
+	if button.Border then
+		button.Border:SetAlpha(0)
+	end
+
+	if button.Status then
+		button.Status:SetTexture(E.media.blankTex)
+		button.Status:SetVertexColor(1, 0, 0, 0.3)
+	end
+
+	if button.Texture then
+		button.Texture:SetTexCoord(unpack(E.TexCoords))
+	end
+
+	if button.Icon then
+		button.Icon:CreateBackdrop()
+	end
+
+	if button.IconBorder then
+		button.IconBorder:Hide()
+	end
+
+	if button.Selected then
+		button.Selected:SetTexture(E.media.blankTex)
+		button.Selected:SetVertexColor(1, 1, 1, 0.3)
+	end
+
+	if button.hover and button.Icon then
+		button.hover:ClearAllPoints()
+		button.hover:SetAllPoints(button.Icon)
+	end
+
+	button.__windSkin = true
 end
 
 local function ReskinCloseButton(button)
@@ -85,7 +90,26 @@ end
 ---Reskin the Rematch button
 ---@param button Button
 local function ReskinButton(button)
-	button:StripTextures()
+	if button.Back then
+		if button.Back.IsObjectType and button.Back:IsObjectType("Texture") then
+			button.Back:Kill()
+		elseif type(button.Back) == "table" then
+			for _, tex in pairs(button.Back) do
+				tex:Kill()
+			end
+		end
+	end
+
+	if button.Highlight then
+		if button.Highlight.IsObjectType and button.Highlight:IsObjectType("Texture") then
+			button.Highlight:Kill()
+		elseif type(button.Highlight) == "table" then
+			for _, tex in pairs(button.Highlight) do
+				tex:Kill()
+			end
+		end
+	end
+
 	S:Proxy("HandleButton", button)
 end
 
@@ -234,7 +258,7 @@ local function ReskinTeamList(panel)
 				loadout:StripTextures()
 				ES:HandleButton(loadout)
 				loadout.backdrop:SetInside(loadout, 2, 2)
-				reskinIconButton(loadout.Pet.Pet)
+				ReskinIconButton(loadout.Pet.Pet)
 				if loadout.Pet.Pet.Level then
 					loadout.Pet.Pet.Level.Text:SetTextColor(1, 1, 1)
 					loadout.Pet.Pet.Level.Text:FontTemplate()
@@ -245,7 +269,7 @@ local function ReskinTeamList(panel)
 				loadout.XP:SetSize(255, 7)
 				loadout.HP.MiniHP:SetText("HP")
 				for j = 1, 3 do
-					reskinIconButton(loadout.Abilities[j])
+					ReskinIconButton(loadout.Abilities[j])
 				end
 
 				loadout.__windSkin = true
@@ -268,7 +292,7 @@ local function ReskinFlyout(frame)
 		if abilities then
 			for i = 1, #abilities do
 				local ability = abilities[i]
-				reskinIconButton(ability)
+				ReskinIconButton(ability)
 			end
 		end
 	end)
@@ -325,7 +349,7 @@ function S:Rematch_Middle() -- Modified from NDui
 			local button = panel["Pet" .. i]
 			if button then
 				button:StripTextures()
-				reskinIconButton(button)
+				ReskinIconButton(button)
 			end
 		end
 	end
@@ -386,7 +410,7 @@ function S:Rematch_Right() -- Modified from NDui
 		panel.Top:StripTextures()
 		ReskinEditBox(panel.Top.SearchBox)
 		for i = 1, 4 do
-			reskinIconButton(panel.Growth.Corners[i])
+			ReskinIconButton(panel.Growth.Corners[i])
 		end
 		panel.List.Background:Kill()
 		panel.List:CreateBackdrop()
@@ -439,7 +463,7 @@ function S:Rematch_Dialog() -- Modified from NDui
 	ReskinButton(dialog.Cancel)
 
 	-- Icon selector
-	reskinIconButton(dialog.Slot)
+	ReskinIconButton(dialog.Slot)
 	ReskinEditBox(dialog.EditBox)
 	dialog.TeamTabIconPicker:StripTextures()
 	dialog.TeamTabIconPicker:CreateBackdrop()
@@ -454,7 +478,7 @@ function S:Rematch_Dialog() -- Modified from NDui
 				if button and not button.__windSkin then
 					button:Size(26, 26)
 					button.Icon = button.Texture
-					reskinIconButton(button)
+					ReskinIconButton(button)
 					button.__windSkin = true
 				end
 			end
@@ -472,12 +496,12 @@ function S:Rematch_Dialog() -- Modified from NDui
 	hooksecurefunc(_G.Rematch, "UpdateSaveAsDialog", function()
 		for i = 1, 3 do
 			local button = _G.RematchDialog.SaveAs.Team.Pets[i]
-			reskinIconButton(button)
+			ReskinIconButton(button)
 			button.Icon.backdrop:SetBackdropBorderColor(button.IconBorder:GetVertexColor())
 			local abilities = button.Abilities
 			if abilities then
 				for j = 1, #abilities do
-					reskinIconButton(abilities[j])
+					ReskinIconButton(abilities[j])
 				end
 			end
 		end
@@ -546,7 +570,7 @@ function S:Rematch_PetCard()
 		local button = card.Front.Bottom.Abilities[i]
 		button.IconBorder:Kill()
 		select(8, button:GetRegions()):SetTexture(nil)
-		reskinIconButton(button.Icon)
+		ReskinIconButton(button.Icon)
 	end
 end
 
@@ -555,7 +579,7 @@ function S:Rematch_RightTabs()
 		for _, tab in next, tabs.Tabs do
 			if tab and not tab.__windSkin then
 				tab.Background:Kill()
-				reskinIconButton(tab)
+				ReskinIconButton(tab)
 				self:CreateBackdropShadow(tab.Icon)
 				tab:Size(40, 40)
 				tab.__windSkin = true
@@ -598,12 +622,12 @@ function S:Rematch_Standalone()
 			local pets = panel.Pets
 			for i = 1, 3 do
 				local button = panel.Pets[i]
-				reskinIconButton(button)
+				ReskinIconButton(button)
 				button.Icon.backdrop:SetBackdropBorderColor(button.IconBorder:GetVertexColor())
 				local abilities = button.Abilities
 				if abilities then
 					for j = 1, #abilities do
-						reskinIconButton(abilities[j])
+						ReskinIconButton(abilities[j])
 					end
 				end
 				ReskinXPBar(button.HP)
@@ -637,7 +661,7 @@ function S:Rematch_SkinLoad()
 		for i = 1, 3 do
 			local button = panel.Pets[i]
 			if button then
-				reskinIconButton(button)
+				ReskinIconButton(button)
 			end
 		end
 	end
@@ -695,20 +719,20 @@ local function ReskinToolBar(frame)
 		frame.TotalsButton.backdrop:Point("TOPLEFT", 0, 0)
 	end
 
-	reskinIconButton(frame.BandageButton)
-	reskinIconButton(frame.ExportTeamButton)
-	reskinIconButton(frame.FindBattleButton)
-	reskinIconButton(frame.HealButton)
-	reskinIconButton(frame.ImportTeamButton)
-	reskinIconButton(frame.LesserPetTreatButton)
-	reskinIconButton(frame.LevelingStoneButton)
-	reskinIconButton(frame.PetSatchelButton)
-	reskinIconButton(frame.PetTreatButton)
-	reskinIconButton(frame.RandomTeamButton)
-	reskinIconButton(frame.RarityStoneButton)
-	reskinIconButton(frame.SafariHatButton)
-	reskinIconButton(frame.SaveAsButton)
-	reskinIconButton(frame.SummonPetButton)
+	ReskinIconButton(frame.BandageButton)
+	ReskinIconButton(frame.ExportTeamButton)
+	ReskinIconButton(frame.FindBattleButton)
+	ReskinIconButton(frame.HealButton)
+	ReskinIconButton(frame.ImportTeamButton)
+	ReskinIconButton(frame.LesserPetTreatButton)
+	ReskinIconButton(frame.LevelingStoneButton)
+	ReskinIconButton(frame.PetSatchelButton)
+	ReskinIconButton(frame.PetTreatButton)
+	ReskinIconButton(frame.RandomTeamButton)
+	ReskinIconButton(frame.RarityStoneButton)
+	ReskinIconButton(frame.SafariHatButton)
+	ReskinIconButton(frame.SaveAsButton)
+	ReskinIconButton(frame.SummonPetButton)
 end
 
 local function ReskinPetsPanel(frame)
@@ -718,7 +742,7 @@ local function ReskinPetsPanel(frame)
 
 	-- Top Filter
 	frame.Top:StripTextures()
-	frame.Top:CreateBackdrop()
+	frame.Top:CreateBackdrop("Transparent")
 	S:Reposition(frame.Top.backdrop, frame.Top, 0, 0, 1, 0, 0)
 	frame.Top.ToggleButton:StripTextures()
 	S:Proxy("HandleButton", frame.Top.ToggleButton)
@@ -733,7 +757,8 @@ local function ReskinPetsPanel(frame)
 	S:Proxy("HandleButton", frame.Top.FilterButton, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, "right")
 
 	-- Top Type Bar
-	frame.Top.TypeBar:CreateBackdrop("Transparent")
+	F.Move(frame.Top.TypeBar, 0, -4)
+	frame.Top.TypeBar:CreateBackdrop()
 	S:Reposition(frame.Top.TypeBar.backdrop, frame.Top.TypeBar, 2, -25, -4, -4, -4)
 	frame.Top.TypeBar.Level25Button:StripTextures()
 	frame.Top.TypeBar.Level25Button:CreateBackdrop()
@@ -760,7 +785,7 @@ local function ReskinPetsPanel(frame)
 
 	if frame.Top.TypeBar.Buttons then
 		for i = 1, #frame.Top.TypeBar.Buttons do
-			reskinIconButton(frame.Top.TypeBar.Buttons[i])
+			ReskinIconButton(frame.Top.TypeBar.Buttons[i])
 		end
 	end
 
@@ -822,11 +847,7 @@ local function ReskinPanelTabs(frame)
 	for _, tab in pairs({ frame:GetChildren() }) do
 		S:Proxy("HandleTab", tab)
 		S:ReskinTab(tab)
-		F.InternalizeMethod(tab.Text, "SetPoint")
-		hooksecurefunc(tab.Text, "SetPoint", function(t)
-			tab.Text:ClearAllPoints()
-			F.CallMethod(t, "SetPoint", "CENTER", 0, 0)
-		end)
+		F.InternalizeMethod(tab.Text, "SetPoint", true)
 		F.CallMethod(tab.Text, "SetPoint", "CENTER", 0, 0)
 	end
 
@@ -837,6 +858,44 @@ local function ReskinPanelTabs(frame)
 	F.Move(frame, 7, -2)
 
 	frame.__windSkin = true
+end
+
+local function ReskinLoadedTargetPanel(frame)
+	if not frame then
+		return
+	end
+
+	frame:StripTextures()
+	frame:CreateBackdrop("Transparent")
+	frame.backdrop:ClearAllPoints()
+	frame.backdrop:Point("TOPLEFT", frame, "TOPLEFT", 1, 0)
+	frame.backdrop:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -1, 0)
+
+	ReskinButton(frame.BigLoadSaveButton)
+
+	frame.backdrop.title = CreateFrame("Frame", nil, frame.backdrop, "BackdropTemplate")
+	frame.backdrop.title:SetTemplate("Default")
+	frame.backdrop.title:Point("TOPLEFT", frame.backdrop, "TOPLEFT")
+	frame.backdrop.title:Point("BOTTOMRIGHT", frame.backdrop, "TOPRIGHT", 0, -26)
+
+	local EnemyTeam = frame.EnemyTeam
+	if EnemyTeam then
+		EnemyTeam.Border:Kill()
+		for _, child in pairs({ EnemyTeam:GetChildren() }) do
+			if child ~= EnemyTeam.Border then
+				print(child:GetObjectType())
+			end
+		end
+	end
+
+	ReskinIconButton(frame.SmallRandomButton)
+	F.InternalizeMethod(frame.SmallRandomButton, "SetPoint")
+	hooksecurefunc(frame.SmallRandomButton, "SetPoint", function()
+		F.Move(frame.SmallRandomButton, 1, 2)
+	end)
+	F.Move(frame.SmallRandomButton, 1, 2)
+	ReskinIconButton(frame.SmallSaveButton)
+	ReskinIconButton(frame.SmallTeamsButton)
 end
 
 function S:Rematch()
@@ -871,6 +930,7 @@ function S:Rematch()
 	ReskinToolBar(frame.ToolBar)
 	ReskinPetsPanel(frame.PetsPanel)
 	ReskinBottomBar(frame.BottomBar)
+	ReskinLoadedTargetPanel(frame.LoadedTargetPanel)
 
 	-- -- Main
 	-- self:Rematch_LeftTop()

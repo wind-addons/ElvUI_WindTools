@@ -82,15 +82,11 @@ local function ClearTextureButton(button, icon)
 	button.Icon:SetTexture(icon)
 end
 
+---Reskin the Rematch button
+---@param button Button
 local function ReskinButton(button)
-	for _, region in pairs({ button:GetRegions() }) do
-		if region:GetObjectType() == "Texture" then
-			region:SetTexture(nil)
-			region.OldSetTexture = region.SetTexture
-			region.SetTexture = E.noop
-		end
-	end
-	ES:HandleButton(button, true)
+	button:StripTextures()
+	S:Proxy("HandleButton", button)
 end
 
 local function ReskinFilterButton(button)
@@ -660,7 +656,7 @@ local function reskinScroll(frame)
 	S:ReskinIconButton(frame.ScrollToBottomButton, W.Media.Icons.buttonGoEnd, 21, -1.571)
 end
 
-local function reskinMainFrame(frame)
+local function ReskinMainFrame(frame)
 	frame:StripTextures()
 	frame:SetTemplate()
 	S:CreateShadow(frame)
@@ -680,7 +676,7 @@ local function reskinMainFrame(frame)
 	end)
 end
 
-local function reskinTitleBar(frame)
+local function ReskinTitleBar(frame)
 	if not frame then
 		return
 	end
@@ -690,7 +686,7 @@ local function reskinTitleBar(frame)
 	S:Proxy("HandleCloseButton", frame.CloseButton)
 end
 
-local function reskinToolBar(frame)
+local function ReskinToolBar(frame)
 	frame:StripTextures()
 
 	if frame.TotalsButton then
@@ -715,7 +711,7 @@ local function reskinToolBar(frame)
 	reskinIconButton(frame.SummonPetButton)
 end
 
-local function reskinPetsPanel(frame)
+local function ReskinPetsPanel(frame)
 	if not frame then
 		return
 	end
@@ -799,9 +795,48 @@ local function reskinPetsPanel(frame)
 	hooksecurefunc(frame.List.ScrollBox, "Update", reskinPetList)
 end
 
-local function reskinTooltips()
+local function ReskinTooltips()
 	TT:SetStyle(_G.RematchTooltip)
 	TT:SetStyle(_G.FloatingPetBattleAbilityTooltip)
+end
+
+local function ReskinBottomBar(frame)
+	if not frame then
+		return
+	end
+
+	ReskinButton(frame.SummonButton)
+	S:Proxy("HandleCheckBox", frame.UseRematchCheckButton)
+	ReskinButton(frame.SaveButton)
+	F.Move(frame.SaveButton, -2, 0)
+	ReskinButton(frame.SaveAsButton)
+	F.Move(frame.SaveAsButton, -2, 0)
+	ReskinButton(frame.FindBattleButton)
+end
+
+local function ReskinPanelTabs(frame)
+	if not frame or frame.__windSkin then
+		return
+	end
+
+	for _, tab in pairs({ frame:GetChildren() }) do
+		S:Proxy("HandleTab", tab)
+		S:ReskinTab(tab)
+		F.InternalizeMethod(tab.Text, "SetPoint")
+		hooksecurefunc(tab.Text, "SetPoint", function(t)
+			tab.Text:ClearAllPoints()
+			F.CallMethod(t, "SetPoint", "CENTER", 0, 0)
+		end)
+		F.CallMethod(tab.Text, "SetPoint", "CENTER", 0, 0)
+	end
+
+	F.InternalizeMethod(frame, "SetPoint")
+	hooksecurefunc(frame, "SetPoint", function()
+		F.Move(frame, 7, -2)
+	end)
+	F.Move(frame, 7, -2)
+
+	frame.__windSkin = true
 end
 
 function S:Rematch()
@@ -821,6 +856,7 @@ function S:Rematch()
 		self:SecureHook(frame, "Show", function()
 			frame:EnableMouse(true)
 		end)
+		ReskinPanelTabs(frame.PanelTabs)
 	end)
 
 	F.InternalizeMethod(frame, "SetPoint")
@@ -829,11 +865,12 @@ function S:Rematch()
 		F.Move(frame, 1, 0)
 	end)
 
-	reskinTooltips()
-	reskinMainFrame(frame)
-	reskinTitleBar(frame.TitleBar)
-	reskinToolBar(frame.ToolBar)
-	reskinPetsPanel(frame.PetsPanel)
+	ReskinTooltips()
+	ReskinMainFrame(frame)
+	ReskinTitleBar(frame.TitleBar)
+	ReskinToolBar(frame.ToolBar)
+	ReskinPetsPanel(frame.PetsPanel)
+	ReskinBottomBar(frame.BottomBar)
 
 	-- -- Main
 	-- self:Rematch_LeftTop()

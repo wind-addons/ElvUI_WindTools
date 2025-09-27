@@ -1053,12 +1053,18 @@ local function ReskinLoadoutPanel(frame)
 			end
 		end
 
-		AbilityFlyout.AbilitySelecteds[1]:SetTexture(E.media.blankTex)
-		AbilityFlyout.AbilitySelecteds[1]:SetVertexColor(C.ExtractRGBAFromTemplate("yellow-300"))
-		AbilityFlyout.AbilitySelecteds[1]:SetAlpha(0.4)
-		AbilityFlyout.AbilitySelecteds[2]:SetTexture(E.media.blankTex)
-		AbilityFlyout.AbilitySelecteds[2]:SetVertexColor(C.ExtractRGBAFromTemplate("green-300"))
-		AbilityFlyout.AbilitySelecteds[2]:SetAlpha(0.4)
+		hooksecurefunc(AbilityFlyout, "FillAbilityFlyout", function(self)
+			if self.__windSkin then
+				return
+			end
+			AbilityFlyout.AbilitySelecteds[1]:SetTexture(E.media.blankTex)
+			AbilityFlyout.AbilitySelecteds[1]:SetVertexColor(C.ExtractRGBAFromTemplate("yellow-300"))
+			AbilityFlyout.AbilitySelecteds[1]:SetAlpha(0.4)
+			AbilityFlyout.AbilitySelecteds[2]:SetTexture(E.media.blankTex)
+			AbilityFlyout.AbilitySelecteds[2]:SetVertexColor(C.ExtractRGBAFromTemplate("green-300"))
+			AbilityFlyout.AbilitySelecteds[2]:SetAlpha(0.4)
+			self.__windSkin = true
+		end)
 	end
 end
 

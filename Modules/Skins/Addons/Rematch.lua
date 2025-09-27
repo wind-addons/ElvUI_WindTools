@@ -114,6 +114,27 @@ local function ReskinButton(button)
 	S:Proxy("HandleButton", button)
 end
 
+local function ReskinToggleButton(button)
+	if not button or button.__windSkin then
+		return
+	end
+
+	ReskinButton(button)
+	F.InternalizeMethod(button.Text, "SetPoint", true)
+	button.windExpandIcon = button:CreateTexture(nil, "OVERLAY")
+	button.windExpandIcon:Point("LEFT", button, "LEFT", 7, 0)
+	button.windExpandIcon:Size(12, 12)
+	hooksecurefunc(button.Back, "SetTexCoord", function(_, ...)
+		if F.IsAlmost({ 0, 1, 0, 0.1875 }, { ... }) then
+			button.windExpandIcon:SetTexture(W.Media.Icons.buttonPlus)
+		elseif F.IsAlmost({ 0, 1, 0.375, 0.5625 }, { ... }) then
+			button.windExpandIcon:SetTexture(W.Media.Icons.buttonMinus)
+		end
+	end)
+
+	button.__windSkin = true
+end
+
 local function ReskinFilterButton(button)
 	if not button then
 		return
@@ -220,18 +241,6 @@ local function ReskinCard(card) -- modified from NDui
 	if card.Bottom.BottomBG then
 		card.Bottom.BottomBG:Hide()
 	end
-end
-
-local function ReskinTooltip(tooltip)
-	if not tooltip then
-		return
-	end
-
-	tooltip:StripTextures()
-	tooltip:CreateBackdrop("Transparent")
-	S:CreateBackdropShadow(tooltip)
-
-	TT:SetStyle(tooltip)
 end
 
 local function ReskinOptions(list)
@@ -693,6 +702,23 @@ local function ReskinPet(frame)
 	frame.__windSkin = true
 end
 
+local function ReskinList(frame)
+	if not frame then
+		return
+	end
+
+	frame:StripTextures()
+	S:Proxy("HandleFrame", frame)
+	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
+	frame.ScrollBar:ClearAllPoints()
+	frame.ScrollBar:Point("TOPRIGHT", frame, "TOPRIGHT", -7, -18)
+	frame.ScrollBar:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -7, 18)
+	S:ReskinIconButton(frame.ScrollToTopButton, W.Media.Icons.buttonGoEnd, 20, 1.571)
+	F.Move(frame.ScrollToTopButton, -3, -1)
+	S:ReskinIconButton(frame.ScrollToBottomButton, W.Media.Icons.buttonGoEnd, 20, -1.571)
+	F.Move(frame.ScrollToBottomButton, -2, 4)
+end
+
 local function ReskinMainFrame(frame)
 	frame:StripTextures()
 	frame:SetTemplate()
@@ -732,20 +758,29 @@ local function ReskinToolBar(frame)
 		frame.TotalsButton.backdrop:Point("TOPLEFT", 0, 0)
 	end
 
-	ReskinIconButton(frame.BandageButton)
-	ReskinIconButton(frame.ExportTeamButton)
-	ReskinIconButton(frame.FindBattleButton)
-	ReskinIconButton(frame.HealButton)
-	ReskinIconButton(frame.ImportTeamButton)
-	ReskinIconButton(frame.LesserPetTreatButton)
-	ReskinIconButton(frame.LevelingStoneButton)
-	ReskinIconButton(frame.PetSatchelButton)
-	ReskinIconButton(frame.PetTreatButton)
-	ReskinIconButton(frame.RandomTeamButton)
-	ReskinIconButton(frame.RarityStoneButton)
-	ReskinIconButton(frame.SafariHatButton)
-	ReskinIconButton(frame.SaveAsButton)
-	ReskinIconButton(frame.SummonPetButton)
+	for _, button in pairs({
+		frame.BandageButton,
+		frame.ExportTeamButton,
+		frame.FindBattleButton,
+		frame.HealButton,
+		frame.ImportTeamButton,
+		frame.LesserPetTreatButton,
+		frame.LevelingStoneButton,
+		frame.PetSatchelButton,
+		frame.PetTreatButton,
+		frame.RandomTeamButton,
+		frame.RarityStoneButton,
+		frame.SafariHatButton,
+		frame.SaveAsButton,
+		frame.SummonPetButton,
+	}) do
+		ReskinIconButton(button)
+		F.InternalizeMethod(button, "SetPoint")
+		hooksecurefunc(button, "SetPoint", function()
+			F.Move(button, 2, 0)
+		end)
+		F.Move(button, 2, 0)
+	end
 end
 
 local function ReskinPetListButton(frame)
@@ -876,17 +911,10 @@ local function ReskinPetsPanel(frame)
 	frame.ResultsBar:CreateBackdrop("Transparent")
 	frame.ResultsBar.backdrop:SetInside(frame.ResultsBar)
 
-	frame.List:StripTextures()
-	S:Proxy("HandleFrame", frame.List)
-	S:Proxy("HandleTrimScrollBar", frame.List.ScrollBar)
-	S:ReskinIconButton(frame.List.ScrollToTopButton, W.Media.Icons.buttonGoEnd, 21, 1.571)
-	F.Move(frame.List.ScrollToTopButton, -1, -1)
-	S:ReskinIconButton(frame.List.ScrollToBottomButton, W.Media.Icons.buttonGoEnd, 21, -1.571)
-
+	ReskinList(frame.List)
 	hooksecurefunc(frame.List, "Refresh", function()
 		frame.List.ScrollBox:ForEachFrame(ReskinPetListButton)
 	end)
-
 	frame.List.ScrollBox:ForEachFrame(ReskinPetListButton)
 end
 
@@ -1068,6 +1096,100 @@ local function ReskinLoadoutPanel(frame)
 	end
 end
 
+local function ReskinTeamsPanel(frame)
+	if not frame then
+		return
+	end
+
+	-- Top
+	frame.Top:StripTextures()
+	frame.Top:CreateBackdrop("Transparent")
+	S:Reposition(frame.Top.backdrop, frame.Top, 0, 0, 1, 0, 0)
+
+	ReskinToggleButton(frame.Top.AllButton)
+	S:Proxy("HandleEditBox", frame.Top.SearchBox)
+	for _, tex in pairs(frame.Top.SearchBox.Back) do
+		tex:Kill()
+	end
+	frame.Top.SearchBox:ClearAllPoints()
+	frame.Top.SearchBox:Point("TOPLEFT", frame.Top.AllButton, "TOPRIGHT", 5, 0)
+	frame.Top.SearchBox:Point("BOTTOMRIGHT", frame.Top.TeamsButton, "BOTTOMLEFT", -5, 0)
+	frame.Top.TeamsButton:StripTextures()
+	S:Proxy("HandleButton", frame.Top.TeamsButton, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, "right")
+
+	-- List
+	ReskinList(frame.List)
+end
+
+local function ReskinTargetsPanel(frame)
+	if not frame then
+		return
+	end
+
+	-- Top
+	frame.Top:StripTextures()
+	frame.Top:CreateBackdrop("Transparent")
+	S:Reposition(frame.Top.backdrop, frame.Top, 0, 0, 1, 0, 0)
+	ReskinToggleButton(frame.Top.AllButton)
+	S:Proxy("HandleEditBox", frame.Top.SearchBox)
+	for _, tex in pairs(frame.Top.SearchBox.Back) do
+		tex:Kill()
+	end
+	frame.Top.SearchBox:ClearAllPoints()
+	frame.Top.SearchBox:Point("TOPLEFT", frame.Top.AllButton, "TOPRIGHT", 5, 0)
+	frame.Top.SearchBox:Point("BOTTOMRIGHT", frame.Top, "BOTTOMRIGHT", -7, 2)
+
+	-- List
+	ReskinList(frame.List)
+end
+
+local function ReskinQueuePanel(frame)
+	if not frame then
+		return
+	end
+
+	-- Top
+	frame.PreferencesFrame:StripTextures()
+	local PreferencesButton = frame.PreferencesFrame.PreferencesButton
+	ReskinIconButton(PreferencesButton)
+	PreferencesButton.Icon.backdrop:SetTemplate("Transparent")
+	PreferencesButton.Icon.backdrop:SetOutside(PreferencesButton, 3, 3)
+	F.Move(PreferencesButton, 0, -1)
+	PreferencesButton.hover:ClearAllPoints()
+	PreferencesButton.hover:SetOutside(PreferencesButton, 2, 2)
+
+	frame.Top:StripTextures()
+	frame.Top:CreateBackdrop("Transparent")
+	S:Reposition(frame.Top.backdrop, frame.Top, 0, 0, 1, 0, 0)
+	frame.Top.QueueButton:StripTextures()
+	S:Proxy("HandleButton", frame.Top.QueueButton, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, "right")
+
+	-- List
+	ReskinList(frame.List)
+end
+
+local function ReskinOptionsPanel(frame)
+	if not frame then
+		return
+	end
+
+	-- Top
+	frame.Top:StripTextures()
+	frame.Top:CreateBackdrop("Transparent")
+	S:Reposition(frame.Top.backdrop, frame.Top, 0, 0, 1, 0, 0)
+	ReskinToggleButton(frame.Top.AllButton)
+	S:Proxy("HandleEditBox", frame.Top.SearchBox)
+	for _, tex in pairs(frame.Top.SearchBox.Back) do
+		tex:Kill()
+	end
+	frame.Top.SearchBox:ClearAllPoints()
+	frame.Top.SearchBox:Point("TOPLEFT", frame.Top.AllButton, "TOPRIGHT", 5, 0)
+	frame.Top.SearchBox:Point("BOTTOMRIGHT", frame.Top, "BOTTOMRIGHT", -7, 2)
+
+	-- List
+	ReskinList(frame.List)
+end
+
 function S:RematchButton()
 	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then
 		return
@@ -1118,6 +1240,10 @@ function S:Rematch()
 	ReskinBottomBar(frame.BottomBar)
 	ReskinLoadedTargetPanel(frame.LoadedTargetPanel, frame.PetsPanel, frame.TargetsPanel)
 	ReskinLoadedTeamPanel(frame.LoadedTeamPanel)
+	ReskinTeamsPanel(frame.TeamsPanel)
+	ReskinTargetsPanel(frame.TargetsPanel)
+	ReskinQueuePanel(frame.QueuePanel)
+	ReskinOptionsPanel(frame.OptionsPanel)
 
 	-- -- Main
 	-- self:Rematch_LeftTop()

@@ -3,7 +3,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames
 local ES = E:GetModule("Skins")
-local TT = E:GetModule("Tooltip")
+local LSM = E.Libs.LSM
 local C = W.Utilities.Color
 
 local _G = _G
@@ -55,6 +55,10 @@ local function ReskinIconButton(button)
 	if button.hover and button.Icon then
 		button.hover:ClearAllPoints()
 		button.hover:SetAllPoints(button.Icon)
+	end
+
+	if button.Cooldown then
+		E:RegisterCooldown(button.Cooldown)
 	end
 
 	button.__windSkin = true
@@ -1096,6 +1100,94 @@ local function ReskinLoadoutPanel(frame)
 	end
 end
 
+local function ReskinListElement(frame)
+	if not frame then
+		return
+	end
+
+	if frame.ExpandIcon and not frame.ExpandIcon.__windSkin then
+		ReskinButton(frame)
+		if frame.Border then
+			frame.Border:Kill()
+		end
+
+		frame.ExpandIcon:Size(12, 12)
+		F.Move(frame.ExpandIcon, 6, 0)
+		F.InternalizeMethod(frame.ExpandIcon, "SetTexCoord")
+		F.CallMethod(frame.ExpandIcon, "SetTexCoord", 0, 1, 0, 1)
+		frame.ExpandIcon.SetTexCoord = function(_, ...)
+			local isPlus = F.IsAlmost({ 0.75, 0.80078125, 0, 0.40625 }, { ... })
+			frame.ExpandIcon:SetTexture(isPlus and W.Media.Icons.buttonPlus or W.Media.Icons.buttonMinus)
+		end
+		local ULx, ULy, _, _, _, _, LRx, LRy = frame.ExpandIcon:GetTexCoord()
+		frame.ExpandIcon:SetTexCoord(ULx, LRx, ULy, LRy)
+
+		frame.ExpandIcon.__windSkin = true
+	end
+
+	local function ReskinCheck(frame)
+		if not frame.Check or frame.Check.__windSkin then
+			return
+		end
+
+		frame.CheckFrame = CreateFrame("Frame", nil, frame)
+		frame.CheckFrame:SetTemplate()
+		frame.CheckFrame:Size(14, 14)
+		frame.CheckFrame:Point("LEFT", frame.Check, "LEFT", 6, 0)
+		frame.CheckFrame:SetShown(frame.Check:IsShown())
+		frame.CheckFrame.Checked = frame.CheckFrame:CreateTexture(nil, "OVERLAY")
+		frame.CheckFrame.Checked:SetInside(frame.CheckFrame)
+		if E.private.WT.skins.widgets.checkBox.enable then
+			local db = E.private.WT.skins.widgets.checkBox
+			frame.CheckFrame.Checked:SetTexture(LSM:Fetch("statusbar", db.texture) or E.media.normTex)
+			F.SetVertexColorWithDB(frame.CheckFrame.Checked, db.classColor and E.myClassColor or db.color)
+		else
+			frame.CheckFrame.Checked:SetTexture(E.Media.Textures.Melli)
+			frame.CheckFrame.Checked:SetVertexColor(1, 0.82, 0, 0.8)
+		end
+
+		hooksecurefunc(frame.Check, "SetTexCoord", function(_, ...)
+			local hidden = F.IsAlmost({ 0, 0.25, 0.5, 0.75 }, { ... })
+			frame.CheckFrame.Checked:SetShown(not hidden)
+		end)
+		local ULx, ULy, _, _, _, _, LRx, LRy = frame.Check:GetTexCoord()
+		frame.Check:SetTexCoord(ULx, LRx, ULy, LRy)
+
+		frame.Check:Kill()
+		hooksecurefunc(frame.Check, "Show", function()
+			frame.CheckFrame:SetShown(true)
+		end)
+		hooksecurefunc(frame.Check, "Hide", function()
+			frame.CheckFrame:SetShown(false)
+		end)
+		hooksecurefunc(frame.Check, "SetShown", function(_, shown)
+			frame.CheckFrame:SetShown(shown)
+		end)
+
+		frame.Check.__windSkin = true
+	end
+
+	ReskinCheck(frame)
+
+	if frame.widget then
+		for _, child in pairs({ frame.widget:GetChildren() }) do
+			if child:IsObjectType("Button") and not child.__windSkin then
+				ReskinButton(child)
+				if child.DropDownButton then
+					child.DropDownTex = child:CreateTexture(nil, "OVERLAY")
+					child.DropDownTex:SetInside(child.DropDownButton, 1, 1)
+					child.DropDownTex:SetTexture(E.Media.Textures.ArrowUp)
+					child.DropDownTex:SetRotation(ES.ArrowRotation.down)
+					child.DropDownButton:Kill()
+				end
+				child.__windSkin = true
+			end
+		end
+
+		ReskinCheck(frame.widget)
+	end
+end
+
 local function ReskinTeamsPanel(frame)
 	if not frame then
 		return
@@ -1119,6 +1211,10 @@ local function ReskinTeamsPanel(frame)
 
 	-- List
 	ReskinList(frame.List)
+	hooksecurefunc(frame.List.ScrollBox, "Update", function()
+		frame.List.ScrollBox:ForEachFrame(ReskinListElement)
+	end)
+	frame.List.ScrollBox:ForEachFrame(ReskinListElement)
 end
 
 local function ReskinTargetsPanel(frame)
@@ -1141,6 +1237,10 @@ local function ReskinTargetsPanel(frame)
 
 	-- List
 	ReskinList(frame.List)
+	hooksecurefunc(frame.List.ScrollBox, "Update", function()
+		frame.List.ScrollBox:ForEachFrame(ReskinListElement)
+	end)
+	frame.List.ScrollBox:ForEachFrame(ReskinListElement)
 end
 
 local function ReskinQueuePanel(frame)
@@ -1166,6 +1266,10 @@ local function ReskinQueuePanel(frame)
 
 	-- List
 	ReskinList(frame.List)
+	hooksecurefunc(frame.List.ScrollBox, "Update", function()
+		frame.List.ScrollBox:ForEachFrame(ReskinListElement)
+	end)
+	frame.List.ScrollBox:ForEachFrame(ReskinListElement)
 end
 
 local function ReskinOptionsPanel(frame)
@@ -1188,6 +1292,10 @@ local function ReskinOptionsPanel(frame)
 
 	-- List
 	ReskinList(frame.List)
+	hooksecurefunc(frame.List.ScrollBox, "Update", function()
+		frame.List.ScrollBox:ForEachFrame(ReskinListElement)
+	end)
+	frame.List.ScrollBox:ForEachFrame(ReskinListElement)
 end
 
 function S:RematchButton()
@@ -1225,6 +1333,10 @@ function S:Rematch()
 		ReskinPetsPanel(frame.PetsPanel)
 		ReskinPanelTabs(frame.PanelTabs)
 		ReskinLoadoutPanel(frame.LoadoutPanel)
+		ReskinTeamsPanel(frame.TeamsPanel)
+		ReskinTargetsPanel(frame.TargetsPanel)
+		ReskinQueuePanel(frame.QueuePanel)
+		ReskinOptionsPanel(frame.OptionsPanel)
 	end)
 
 	F.InternalizeMethod(frame, "SetPoint")
@@ -1240,10 +1352,6 @@ function S:Rematch()
 	ReskinBottomBar(frame.BottomBar)
 	ReskinLoadedTargetPanel(frame.LoadedTargetPanel, frame.PetsPanel, frame.TargetsPanel)
 	ReskinLoadedTeamPanel(frame.LoadedTeamPanel)
-	ReskinTeamsPanel(frame.TeamsPanel)
-	ReskinTargetsPanel(frame.TargetsPanel)
-	ReskinQueuePanel(frame.QueuePanel)
-	ReskinOptionsPanel(frame.OptionsPanel)
 
 	-- -- Main
 	-- self:Rematch_LeftTop()

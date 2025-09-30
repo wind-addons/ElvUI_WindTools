@@ -169,6 +169,12 @@ options.general = {
 			name = L["Reshii Wraps Upgrade"],
 			desc = L["Middle click the character back slot to open the Reshii Wraps upgrade menu."],
 		},
+		achievements = {
+			order = 16,
+			type = "toggle",
+			name = L["Achievement Tracker"],
+			desc = L["Show an enhanced achievement tracker with filtering and detailed progress information."],
+		},
 	},
 }
 

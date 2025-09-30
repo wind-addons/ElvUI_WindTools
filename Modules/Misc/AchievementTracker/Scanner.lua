@@ -1,5 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
-local A = W:GetModule("Achievements") ---@class WindTools_Achievements
+local A = W:GetModule("AchievementTracker") ---@class AchievementTracker
+local async = W.Utilities.Async
 
 local _G = _G
 local C_Timer_After = C_Timer.After
@@ -19,8 +20,6 @@ local GetCategoryInfo = GetCategoryInfo
 local C_AchievementInfo_IsValidAchievement = C_AchievementInfo.IsValidAchievement
 local C_AchievementInfo_GetRewardItemID = C_AchievementInfo.GetRewardItemID
 local C_AchievementInfo_IsGuildAchievement = C_AchievementInfo.IsGuildAchievement
-
-local W_Utilities_Async_WithAchievementID = W.Utilities.Async.WithAchievementID
 
 ---@class AchievementCriteria
 ---@field text string
@@ -145,7 +144,7 @@ local function ScanAchievements(callback, updateProgress, applyFiltersFunc)
 					and C_AchievementInfo_IsValidAchievement(achievementID)
 					and not C_AchievementInfo_IsGuildAchievement(achievementID)
 				then
-					W_Utilities_Async_WithAchievementID(achievementID, function(achievementData)
+					async.WithAchievementID(achievementID, function(achievementData)
 						local _, name, _, completed, month, day, year, description, flags, icon, rewardText, _, wasEarnedByMe, earnedBy, isStatistic =
 							unpack(achievementData)
 
@@ -237,7 +236,7 @@ function A:ApplyFiltersAndSort()
 		end
 	end)
 
-	local panel = _G.WindToolsAchievementTracker --[[@as WindToolsAchievementTracker]]
+	local panel = _G.WTAchievementTracker --[[@as WTAchievementTracker]]
 	if panel and panel.UpdateDropdowns then
 		panel:UpdateDropdowns()
 	end
@@ -246,17 +245,17 @@ end
 ---Start the achievement scan
 ---@return nil
 function A:StartAchievementScan()
-	if not _G.WindToolsAchievementTracker then
+	if not _G.WTAchievementTracker then
 		return
 	end
 
 	-- Don't start scan if events aren't registered (UI not shown)
 	-- We'll check if the tracker panel is visible instead
-	if not _G.WindToolsAchievementTracker or not _G.WindToolsAchievementTracker:IsVisible() then
+	if not _G.WTAchievementTracker or not _G.WTAchievementTracker:IsVisible() then
 		return
 	end
 
-	local panel = _G.WindToolsAchievementTracker --[[@as WindToolsAchievementTracker]]
+	local panel = _G.WTAchievementTracker --[[@as WTAchievementTracker]]
 	if panel.progressContainer then
 		panel.progressContainer:Show()
 		panel.progressBar:SetValue(0)

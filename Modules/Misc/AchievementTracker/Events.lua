@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
-local A = W:GetModule("Achievements") ---@class WindTools_Achievements
+local A = W:GetModule("AchievementTracker") ---@class AchievementTracker
 
 local _G = _G
 local C_Timer_After = C_Timer.After
@@ -14,7 +14,7 @@ local eventsRegistered = false
 ---@param alreadyEarned boolean
 ---@return nil
 function A:ACHIEVEMENT_EARNED(achievementID, alreadyEarned)
-	if _G.WindToolsAchievementTracker and not alreadyEarned then
+	if _G.WTAchievementTracker and not alreadyEarned then
 		local scanState = A:GetScanState()
 		for i, achievement in ipairs(scanState.results) do
 			if achievement.id == achievementID then
@@ -30,9 +30,9 @@ end
 ---Handle CRITERIA_UPDATE event
 ---@return nil
 function A:CRITERIA_UPDATE()
-	if _G.WindToolsAchievementTracker and A:GetScanState().scannedSinceInit then
+	if _G.WTAchievementTracker and A:GetScanState().scannedSinceInit then
 		C_Timer_After(0.5, function()
-			if _G.WindToolsAchievementTracker then
+			if _G.WTAchievementTracker then
 				A:UpdateAchievementList()
 			end
 		end)
@@ -62,9 +62,9 @@ end
 ---Hide and cleanup the tracker panel
 ---@return nil
 local function HideTrackerPanel()
-	if _G.WindToolsAchievementTracker then
+	if _G.WTAchievementTracker then
 		-- Don't destroy the panel, just hide it to avoid recreation overhead.
-		_G.WindToolsAchievementTracker:Hide()
+		_G.WTAchievementTracker:Hide()
 	end
 
 	-- Stop any ongoing scans when hiding
@@ -85,8 +85,8 @@ function A:HookAchievementFrame()
 
 			C_Timer_After(0.1, function()
 				A:CreateAchievementTrackerPanel()
-				if _G.WindToolsAchievementTracker then
-					_G.WindToolsAchievementTracker:Show()
+				if _G.WTAchievementTracker then
+					_G.WTAchievementTracker:Show()
 				end
 
 				if not A:GetScanState().scannedSinceInit then

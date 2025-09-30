@@ -1,11 +1,8 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
-local A = W:NewModule("Achievements", "AceEvent-3.0") ---@class WindTools_Achievements : AceModule, AceEvent-3.0
+local A = W:NewModule("AchievementTracker", "AceEvent-3.0") ---@class AchievementTracker : AceModule, AceEvent-3.0
 
 local _G = _G
 local UIParentLoadAddOn = UIParentLoadAddOn
-
-local E_initialized = E.initialized
-local E_private = E.private
 
 ---@class AchievementConfig
 ---@field PANEL_WIDTH number
@@ -54,11 +51,11 @@ A.scanState = {
 ---Initialize the achievements module
 ---@return nil
 function A:Initialize()
-	if not E_initialized or not E_private or not E_private.WT or not E_private.WT.misc then
+	if not E.initialized or not E.private or not E.private.WT or not E.private.WT.misc then
 		return
 	end
 
-	if not E_private.WT.misc.achievements or self.initialized then
+	if not E.private.WT.misc.achievementTracker or self.initialized then
 		return
 	end
 
@@ -72,7 +69,7 @@ function A:ProfileUpdate()
 	self.initialized = false
 	self:Initialize()
 
-	if not E_private.WT.misc.achievements then
+	if not E.private.WT.misc.achievements then
 		A:UnregisterEvent("ADDON_LOADED")
 		A:UnregisterEvent("PLAYER_ENTERING_WORLD")
 		A:UnregisterEvent("ACHIEVEMENT_EARNED")
@@ -98,13 +95,13 @@ function A:PLAYER_ENTERING_WORLD()
 	self:HookAchievementFrame()
 end
 
-SLASH_WINDTOOLSACHIEVEMENTTRACKER1 = "/wtat"
-SLASH_WINDTOOLSACHIEVEMENTTRACKER2 = "/wtachievements"
-SlashCmdList["WINDTOOLSACHIEVEMENTTRACKER"] = function()
-	if not _G.WindToolsAchievementTracker then
+SLASH_WTAchievementTracker1 = "/wtat"
+SLASH_WTAchievementTracker2 = "/wtachievements"
+SlashCmdList["WTAchievementTracker"] = function()
+	if not _G.WTAchievementTracker then
 		A:CreateAchievementTrackerPanel()
 	end
-	_G.WindToolsAchievementTracker:Show()
+	_G.WTAchievementTracker:Show()
 	A:StartAchievementScan()
 end
 

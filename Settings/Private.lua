@@ -535,7 +535,7 @@ V.skins = {
 	},
 	blizzard = {
 		enable = true,
-		achievements = true,
+		achievementTracker = true,
 		addonManager = true,
 		adventureMap = true,
 		alerts = true,

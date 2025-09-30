@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
-local A = W:GetModule("Achievements") ---@class WindTools_Achievements
+local A = W:GetModule("AchievementTracker") ---@class AchievementTracker
 local C = W.Utilities.Color
 local S = W.Modules.Skins ---@type Skins
 
@@ -10,9 +10,6 @@ local max = max
 local floor = floor
 local format = format
 
-local E_media_normFont = E.media.normFont
-local E_media_normTex = E.media.normTex
-local W_Media_Textures_arrowDown = W.Media.Textures.arrowDown
 local CreateFrame = CreateFrame
 
 ---@class AchievementTrackerPanel
@@ -30,12 +27,12 @@ local CreateFrame = CreateFrame
 
 ---@return nil
 function A:CreateAchievementTrackerPanel()
-	if _G.WindToolsAchievementTracker then
+	if _G.WTAchievementTracker then
 		return
 	end
 
-	---@class WindToolsAchievementTracker : Frame,BackdropTemplate
-	local panel = CreateFrame("Frame", "WindToolsAchievementTracker", _G.AchievementFrame, "BackdropTemplate")
+	---@class WTAchievementTracker : Frame, BackdropTemplate
+	local panel = CreateFrame("Frame", "WTAchievementTracker", _G.AchievementFrame, "BackdropTemplate")
 	panel:SetSize(A.Config.PANEL_WIDTH, A.Config.PANEL_HEIGHT)
 	panel:SetPoint("TOPLEFT", _G.AchievementFrame, "TOPRIGHT", 10, 0)
 	panel:SetTemplate("Transparent")
@@ -81,7 +78,7 @@ function A:CreateAchievementTrackerPanel()
 	local function CalculateDropdownWidth(options)
 		local maxWidth = 0
 		local tempFont = sortDropdown:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		tempFont:SetFont(E_media_normFont, 12, "OUTLINE")
+		tempFont:SetFont(E.media.normFont, 12, "OUTLINE")
 
 		for _, option in ipairs(options) do
 			tempFont:SetText(option.text)
@@ -129,7 +126,7 @@ function A:CreateAchievementTrackerPanel()
 	sortOrderButton.arrow = sortOrderButton:CreateTexture(nil, "OVERLAY")
 	sortOrderButton.arrow:SetSize(16, 16)
 	sortOrderButton.arrow:SetPoint("CENTER")
-	sortOrderButton.arrow:SetTexture(W_Media_Textures_arrowDown)
+	sortOrderButton.arrow:SetTexture(W.Media.Textures.arrowDown)
 	sortOrderButton.arrow:SetVertexColor(1, 1, 1)
 
 	---@return nil
@@ -179,7 +176,7 @@ function A:CreateAchievementTrackerPanel()
 	local progressBar = CreateFrame("StatusBar", nil, progressContainer)
 	progressBar:SetSize(A.Config.PANEL_WIDTH - 40, 15)
 	progressBar:SetPoint("CENTER", progressContainer, "CENTER", 0, 0)
-	progressBar:SetStatusBarTexture(E_media_normTex)
+	progressBar:SetStatusBarTexture(E.media.normTex)
 	progressBar:SetMinMaxValues(0, 100)
 	progressBar:SetValue(0)
 	progressBar:SetStatusBarColor(0.22, 0.72, 0.0)
@@ -214,11 +211,11 @@ end
 ---Update the achievement list display
 ---@return nil
 function A:UpdateAchievementList()
-	if not _G.WindToolsAchievementTracker then
+	if not _G.WTAchievementTracker then
 		return
 	end
 
-	local panel = _G.WindToolsAchievementTracker --[[@as WindToolsAchievementTracker]]
+	local panel = _G.WTAchievementTracker --[[@as WTAchievementTracker]]
 	local content = panel.content
 	local scanState = A:GetScanState()
 
@@ -249,7 +246,7 @@ function A:UpdateAchievementList()
 		local progressBar = CreateFrame("StatusBar", nil, button)
 		progressBar:SetSize(A.Config.PROGRESS_BAR_WIDTH, 12)
 		progressBar:SetPoint("RIGHT", button, "RIGHT", -10, 0)
-		progressBar:SetStatusBarTexture(E_media_normTex)
+		progressBar:SetStatusBarTexture(E.media.normTex)
 		progressBar:SetMinMaxValues(0, 100)
 		progressBar:SetValue(achievement.percent)
 

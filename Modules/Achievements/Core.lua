@@ -75,6 +75,8 @@ function A:ProfileUpdate()
 	if not E_private.WT.misc.achievements then
 		A:UnregisterEvent("ADDON_LOADED")
 		A:UnregisterEvent("PLAYER_ENTERING_WORLD")
+		A:UnregisterEvent("ACHIEVEMENT_EARNED")
+		A:UnregisterEvent("CRITERIA_UPDATE")
 		self.initialized = false
 	end
 end

@@ -250,6 +250,12 @@ function A:StartAchievementScan()
 		return
 	end
 
+	-- Don't start scan if events aren't registered (UI not shown)
+	-- We'll check if the tracker panel is visible instead
+	if not _G.WindToolsAchievementTracker or not _G.WindToolsAchievementTracker:IsVisible() then
+		return
+	end
+
 	local panel = _G.WindToolsAchievementTracker --[[@as WindToolsAchievementTracker]]
 	if panel.progressContainer then
 		panel.progressContainer:Show()

@@ -71,13 +71,12 @@ function A:CreateAchievementTrackerPanel()
 	---@field text string
 	---@field value string
 
-	--- TODO: See why this doesn't work like I want it to...
 	---Calculate dynamic width based on text length.
 	---@param options SortOption[]
 	---@return number
 	local function CalculateDropdownWidth(options)
 		local maxWidth = 0
-		local tempFont = sortDropdown:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+		local tempFont = CreateFrame("Frame"):CreateFontString(nil, "ARTWORK", "GameFontNormal")
 		tempFont:SetFont(E.media.normFont, 12, "OUTLINE")
 
 		for _, option in ipairs(options) do
@@ -89,7 +88,7 @@ function A:CreateAchievementTrackerPanel()
 		tempFont:SetParent(nil)
 		tempFont:Hide()
 
-		return max(60, maxWidth + 30)
+		return max(80, maxWidth + 40)
 	end
 
 	local sortOptions = {

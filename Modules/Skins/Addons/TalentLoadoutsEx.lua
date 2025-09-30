@@ -143,7 +143,9 @@ function S:TalentLoadoutsEx()
 	local presetPopup = frame.PresetPopupFrame and frame.PresetPopupFrame.Main
 	if presetPopup then
 		ReskinPopupFrame(frame.PresetPopupFrame)
-		self:Proxy("HandleDropDownBox", presetPopup.AddonDropDownMenu)
+		if presetPopup.AddonDropDownMenu then
+			self:Proxy("HandleDropDownBox", presetPopup.AddonDropDownMenu)
+		end
 
 		local configFrame = presetPopup.AddonConfigFrame1
 		if configFrame then

@@ -95,9 +95,9 @@ function A:PLAYER_ENTERING_WORLD()
 	self:HookAchievementFrame()
 end
 
-SLASH_WTAchievementTracker1 = "/wtat"
-SLASH_WTAchievementTracker2 = "/wtachievements"
-SlashCmdList["WTAchievementTracker"] = function()
+SLASH_WINDTOOLSACHIEVEMENTTRACKER1 = "/wtat"
+SLASH_WINDTOOLSACHIEVEMENTTRACKER2 = "/wtachievements"
+SlashCmdList["WINDTOOLSACHIEVEMENTTRACKER"] = function()
 	if not _G.WTAchievementTracker then
 		A:CreateAchievementTrackerPanel()
 	end

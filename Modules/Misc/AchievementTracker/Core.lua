@@ -95,15 +95,13 @@ function A:PLAYER_ENTERING_WORLD()
 	self:HookAchievementFrame()
 end
 
-SLASH_WTAchievementTracker1 = "/wtat"
-SLASH_WTAchievementTracker2 = "/wtachievements"
-SlashCmdList["WTAchievementTracker"] = function()
+W:AddCommand("AchievementTracker", { "/wtat", "/wtachievements" }, function()
 	if not _G.WTAchievementTracker then
 		A:CreateAchievementTrackerPanel()
 	end
 	_G.WTAchievementTracker:Show()
 	A:StartAchievementScan()
-end
+end)
 
 A:RegisterEvent("ADDON_LOADED")
 A:RegisterEvent("PLAYER_ENTERING_WORLD")

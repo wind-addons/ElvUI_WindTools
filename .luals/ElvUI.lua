@@ -90,12 +90,12 @@ local E = {}
 ---@field general ElvUIGeneralProfile
 ---@field databars ElvUIDataBarsProfile
 ---@field bags ElvUIBagsProfile
----@field nameplates ElvUINamePlatesProfile
----@field auras ElvUIAurasProfile
----@field chat ElvUIChatProfile
----@field datatexts ElvUIDataTextsProfile
----@field tooltip ElvUITooltipProfile
----@field unitframe ElvUIUnitFrameProfile
+---@field nameplates table -- TODO: ElvUINamePlatesProfile
+---@field auras table -- TODO: ElvUIAurasProfile
+---@field chat table -- TODO: ElvUIChatProfile
+---@field datatexts table -- TODO: ElvUIDataTextsProfile
+---@field tooltip table -- TODO: ElvUITooltipProfile
+---@field unitframe table -- TODO: ElvUIUnitFrameProfile
 ---@field cooldown ElvUICooldownProfile
 ---@field actionbar ElvUIActionBarProfile
 ---@field cdmanager ElvUICDManagerProfile
@@ -130,7 +130,7 @@ local E = {}
 
 ---@class ElvUIModule
 ---@field db table Module database
----@field private table Module private data
+---@field private table AceModule private data
 
 ---@class ActionBarsModule : ElvUIModule
 ---@field db table Action bars database

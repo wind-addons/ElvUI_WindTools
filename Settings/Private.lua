@@ -156,6 +156,7 @@ V.misc = {
 	autoToggleChatBubble = false,
 	antiOverride = GetLocale() == "zhCN",
 	reshiiWrapsUpgrade = true,
+	achievements = true,
 	moveFrames = {
 		enable = true,
 		elvUIBags = true,

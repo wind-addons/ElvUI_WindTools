@@ -66,6 +66,13 @@ local MountSE = {
 		3745520, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_16_168902.ogg
 		3745566, -- sound/creature/talethi's_target/mon_talethi's_target_fidget02_01_168903.ogg
 	},
+	[40192] = {
+		-- 奥的灰烬
+		558168,
+		558173,
+		558170,
+		558174,
+	},
 }
 
 local OtherSE = {
@@ -287,6 +294,8 @@ local OtherSE = {
 	},
 	["Jewelcrafting"] = {
 		569325,
+		567574,
+		--568291,
 	},
 }
 

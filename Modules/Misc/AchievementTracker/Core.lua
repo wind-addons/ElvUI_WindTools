@@ -71,6 +71,22 @@ function A:Initialize()
 	self.initialized = true
 end
 
+---Stop scan due to combat and cleanup UI
+---@return boolean # If scan was stopped due to combat
+function A:StopScanDueToCombat()
+	local panel = _G.WTAchievementTracker --[[@as WTAchievementTracker]]
+	if InCombatLockdown() then
+		A.scanState.isScanning = false
+		if panel then
+			if panel.progressContainer then
+				panel.progressContainer:Hide()
+			end
+		end
+		return true
+	end
+	return false
+end
+
 ---Handle profile updates
 ---@return nil
 function A:ProfileUpdate()

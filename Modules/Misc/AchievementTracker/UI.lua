@@ -9,6 +9,8 @@ local ipairs = ipairs
 local max = max
 local floor = floor
 local format = format
+local InCombatLockdown = InCombatLockdown
+local C_Timer_After = C_Timer.After
 
 local C_ContentTracking_GetTrackedIDs = C_ContentTracking.GetTrackedIDs
 local C_ContentTracking_IsTracking = C_ContentTracking.IsTracking
@@ -351,6 +353,10 @@ end
 ---@return nil
 function A:UpdateAchievementList()
 	if not _G.WTAchievementTracker then
+		return
+	end
+
+	if InCombatLockdown() then
 		return
 	end
 

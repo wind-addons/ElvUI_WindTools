@@ -5,6 +5,7 @@ local _G = _G
 local C_Timer_After = C_Timer.After
 local ipairs = ipairs
 local tremove = tremove
+local InCombatLockdown = InCombatLockdown
 
 -- Track event registration state.
 local eventsRegistered = false
@@ -32,10 +33,32 @@ end
 function A:CRITERIA_UPDATE()
 	if _G.WTAchievementTracker and A:GetScanState().scannedSinceInit then
 		C_Timer_After(0.5, function()
-			if _G.WTAchievementTracker then
+			if _G.WTAchievementTracker and not InCombatLockdown() then
 				A:UpdateAchievementList()
 			end
 		end)
+	end
+end
+
+---Handle PLAYER_REGEN_ENABLED event (leaving combat)
+---@return nil
+function A:PLAYER_REGEN_ENABLED()
+	-- Resume scan if we were scanning before combat
+	if _G.WTAchievementTracker and _G.WTAchievementTracker:IsVisible() and not A:GetScanState().isScanning then
+		C_Timer_After(1.0, function()
+			if _G.WTAchievementTracker and _G.WTAchievementTracker:IsVisible() and not InCombatLockdown() then
+				A:StartAchievementScan()
+			end
+		end)
+	end
+end
+
+---Handle PLAYER_REGEN_DISABLED event (entering combat)
+---@return nil
+function A:PLAYER_REGEN_DISABLED()
+	-- Stop any ongoing scan when entering combat
+	if A:GetScanState().isScanning then
+		A:StopScanDueToCombat()
 	end
 end
 
@@ -45,6 +68,8 @@ local function RegisterAchievementEvents()
 	if not eventsRegistered then
 		A:RegisterEvent("ACHIEVEMENT_EARNED")
 		A:RegisterEvent("CRITERIA_UPDATE")
+		A:RegisterEvent("PLAYER_REGEN_ENABLED")
+		A:RegisterEvent("PLAYER_REGEN_DISABLED")
 		eventsRegistered = true
 	end
 end
@@ -55,6 +80,8 @@ local function UnregisterAchievementEvents()
 	if eventsRegistered then
 		A:UnregisterEvent("ACHIEVEMENT_EARNED")
 		A:UnregisterEvent("CRITERIA_UPDATE")
+		A:UnregisterEvent("PLAYER_REGEN_ENABLED")
+		A:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		eventsRegistered = false
 	end
 end

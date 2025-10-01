@@ -10,6 +10,7 @@ local unpack = unpack
 local tinsert = tinsert
 local sort = sort
 local format = format
+local InCombatLockdown = InCombatLockdown
 
 local GetAchievementInfo = GetAchievementInfo
 local GetAchievementNumCriteria = GetAchievementNumCriteria
@@ -131,6 +132,10 @@ local function ScanAchievements(callback, updateProgress, applyFiltersFunc)
 	end
 
 	local function scanStep()
+		if A:StopScanDueToCombat() then
+			return
+		end
+
 		local scanned = 0
 
 		while currentCategory <= #categories and scanned < A.Config.BATCH_SIZE do
@@ -206,6 +211,9 @@ local function ScanAchievements(callback, updateProgress, applyFiltersFunc)
 			A.scanState.isScanning = false
 			callback(A.scanState.filteredResults)
 		else
+			if A:StopScanDueToCombat() then
+				return
+			end
 			C_Timer_After(A.Config.SCAN_DELAY, scanStep)
 		end
 	end
@@ -287,6 +295,10 @@ function A:StartAchievementScan()
 	-- Don't start scan if events aren't registered (UI not shown)
 	-- We'll check if the tracker panel is visible instead
 	if not _G.WTAchievementTracker or not _G.WTAchievementTracker:IsVisible() then
+		return
+	end
+
+	if InCombatLockdown() then
 		return
 	end
 

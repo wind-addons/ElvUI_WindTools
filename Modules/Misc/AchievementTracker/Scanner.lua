@@ -216,7 +216,42 @@ end
 ---Apply filters and sorting to results
 ---@return nil
 function A:ApplyFiltersAndSort()
-	A.scanState.filteredResults = A.scanState.results
+	-- Start with all results
+	local filtered = {}
+
+	for _, achievement in ipairs(A.scanState.results) do
+		local includeAchievement = true
+
+		-- Apply search filter
+		if A.scanState.searchTerm and A.scanState.searchTerm ~= "" then
+			local searchLower = A.scanState.searchTerm:lower()
+			local nameLower = achievement.name:lower()
+			local descLower = (achievement.description or ""):lower()
+			if not (nameLower:find(searchLower, 1, true) or descLower:find(searchLower, 1, true)) then
+				includeAchievement = false
+			end
+		end
+
+		-- Apply category filter
+		if includeAchievement and A.scanState.selectedCategory then
+			if achievement.categoryName ~= A.scanState.selectedCategory then
+				includeAchievement = false
+			end
+		end
+
+		-- Apply rewards filter
+		if includeAchievement and A.scanState.showOnlyRewards then
+			if not achievement.rewardItemID then
+				includeAchievement = false
+			end
+		end
+
+		if includeAchievement then
+			tinsert(filtered, achievement)
+		end
+	end
+
+	A.scanState.filteredResults = filtered
 
 	sort(A.scanState.filteredResults, function(a, b)
 		local aVal, bVal
@@ -277,6 +312,23 @@ function A:StartAchievementScan()
 	end, function()
 		A:ApplyFiltersAndSort()
 	end)
+end
+
+---Get unique categories from current results
+---@return table<string>
+function A:GetUniqueCategories()
+	local categories = {}
+	local seen = {}
+
+	for _, achievement in ipairs(A.scanState.results) do
+		if achievement.categoryName and not seen[achievement.categoryName] then
+			tinsert(categories, achievement.categoryName)
+			seen[achievement.categoryName] = true
+		end
+	end
+
+	sort(categories)
+	return categories
 end
 
 ---Get scan state for external access

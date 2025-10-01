@@ -38,6 +38,10 @@ A.Config = {
 ---@field filteredResults table
 ---@field sortBy "percent"|"name"|"category"
 ---@field sortOrder "asc"|"desc"
+---@field searchTerm string
+---@field selectedCategory string|nil
+---@field showOnlyRewards boolean
+---@field expandedAchievements table<number, boolean>
 A.scanState = {
 	isScanning = false,
 	scannedSinceInit = false,
@@ -46,6 +50,10 @@ A.scanState = {
 	filteredResults = {},
 	sortBy = "percent",
 	sortOrder = "desc",
+	searchTerm = "",
+	selectedCategory = nil,
+	showOnlyRewards = false,
+	expandedAchievements = {},
 }
 
 ---Initialize the achievements module

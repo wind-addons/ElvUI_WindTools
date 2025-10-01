@@ -10,7 +10,18 @@ local max = max
 local floor = floor
 local format = format
 
+local C_ContentTracking_GetTrackedIDs = C_ContentTracking.GetTrackedIDs
+local C_ContentTracking_IsTracking = C_ContentTracking.IsTracking
+local C_ContentTracking_StartTracking = C_ContentTracking.StartTracking
+local C_ContentTracking_StopTracking = C_ContentTracking.StopTracking
+local Constants_ContentTrackingConsts = Constants.ContentTrackingConsts
 local CreateFrame = CreateFrame
+local Enum_ContentTrackingStopType = Enum.ContentTrackingStopType
+local Enum_ContentTrackingType = Enum.ContentTrackingType
+local GameTooltip = _G.GameTooltip
+local PlaySound = PlaySound
+local SOUNDKIT = SOUNDKIT
+local UIErrorsFrame = _G.UIErrorsFrame
 
 ---@class AchievementTrackerPanel
 ---@field controlFrame Frame
@@ -44,7 +55,6 @@ function A:CreateAchievementTrackerPanel()
 	panel:SetTemplate("Transparent")
 	S:CreateShadow(panel)
 
-	-- Search bar at the very top
 	local searchBox = CreateFrame("EditBox", nil, panel, "SearchBoxTemplate")
 	searchBox:SetSize(A.Config.PANEL_WIDTH - 30, 24)
 	searchBox:SetPoint("TOP", panel, "TOP", 0, -10)
@@ -63,7 +73,6 @@ function A:CreateAchievementTrackerPanel()
 		editBox:ClearFocus()
 	end)
 
-	-- First control frame for threshold and sorting
 	local controlFrame = CreateFrame("Frame", nil, panel, "BackdropTemplate")
 	controlFrame:SetSize(A.Config.PANEL_WIDTH - 20, 40)
 	controlFrame:SetPoint("TOP", searchBox, "BOTTOM", 0, -5)
@@ -97,7 +106,6 @@ function A:CreateAchievementTrackerPanel()
 	---@field text string
 	---@field value string
 
-	---Calculate dynamic width based on text length.
 	---@param options SortOption[]
 	---@return number
 	local function CalculateDropdownWidth(options)
@@ -181,13 +189,11 @@ function A:CreateAchievementTrackerPanel()
 		A:StartAchievementScan()
 	end)
 
-	-- Second control frame for category filter and quick presets
 	local controlFrame2 = CreateFrame("Frame", nil, panel, "BackdropTemplate")
 	controlFrame2:SetSize(A.Config.PANEL_WIDTH - 20, 32)
 	controlFrame2:SetPoint("TOP", controlFrame, "BOTTOM", 0, -5)
 	controlFrame2:SetTemplate("Transparent")
 
-	-- Category filter dropdown
 	local categoryDropdown = CreateFrame("DropdownButton", nil, controlFrame2, "WowStyle1DropdownTemplate")
 	categoryDropdown:SetPoint("LEFT", controlFrame2, "LEFT", 10, 0)
 	S:Proxy("HandleDropDownBox", categoryDropdown, 150)
@@ -196,7 +202,6 @@ function A:CreateAchievementTrackerPanel()
 	---@param rootDescription any
 	---@return nil
 	local function CategoryGenerator(dropdown, rootDescription)
-		-- All Categories option
 		rootDescription:CreateRadio(L["All Categories"] or "All Categories", function()
 			return A:GetScanState().selectedCategory == nil
 		end, function()
@@ -207,7 +212,6 @@ function A:CreateAchievementTrackerPanel()
 
 		rootDescription:CreateDivider()
 
-		-- Individual categories
 		local categories = A:GetUniqueCategories()
 		for _, categoryName in ipairs(categories) do
 			rootDescription:CreateRadio(categoryName, function()
@@ -222,7 +226,6 @@ function A:CreateAchievementTrackerPanel()
 
 	categoryDropdown:SetupMenu(CategoryGenerator)
 
-	-- Quick preset buttons
 	local nearlyCompleteButton = CreateFrame("Button", nil, controlFrame2, "UIPanelButtonTemplate")
 	nearlyCompleteButton:SetSize(90, 22)
 	nearlyCompleteButton:SetPoint("LEFT", categoryDropdown, "RIGHT", 8, 0)
@@ -273,7 +276,6 @@ function A:CreateAchievementTrackerPanel()
 	S:Proxy("HandleButton", showAllButton)
 
 	showAllButton:SetScript("OnClick", function()
-		-- Reset all filters
 		A:SetScanState("searchTerm", "")
 		A:SetScanState("selectedCategory", nil)
 		A:SetScanState("showOnlyRewards", false)
@@ -366,10 +368,9 @@ function A:UpdateAchievementList()
 		local isExpanded = scanState.expandedAchievements[achievement.id] or false
 		local buttonHeight = A.Config.BUTTON_HEIGHT
 
-		-- Calculate height if expanded
 		if isExpanded and achievement.criteria then
 			local criteriaCount = #achievement.criteria
-			buttonHeight = A.Config.BUTTON_HEIGHT + (criteriaCount * 16) + 8
+			buttonHeight = A.Config.BUTTON_HEIGHT + (criteriaCount * 18) + 12
 		end
 
 		local button = CreateFrame("Button", nil, content, "UIPanelButtonTemplate")
@@ -378,23 +379,16 @@ function A:UpdateAchievementList()
 
 		S:Proxy("HandleButton", button)
 
-		-- Expand/Collapse arrow indicator
 		local expandArrow = button:CreateTexture(nil, "OVERLAY")
 		expandArrow:SetSize(12, 12)
 		expandArrow:SetPoint("LEFT", button, "LEFT", 4, 0)
 		expandArrow:SetTexture(W.Media.Textures.arrowDown)
 		expandArrow:SetVertexColor(0.8, 0.8, 0.8)
-		expandArrow:SetRotation(isExpanded and 0 or -1.57) -- 0 = down, -1.57 = right (90° counterclockwise)
+		expandArrow:SetRotation(isExpanded and 0 or -1.57)
 
 		local iconFrame = CreateFrame("Frame", nil, button)
 		iconFrame:SetSize(A.Config.ICON_SIZE, A.Config.ICON_SIZE)
-		iconFrame:SetPoint(
-			"LEFT",
-			button,
-			"LEFT",
-			20,
-			isExpanded and (buttonHeight / 2 - A.Config.ICON_SIZE / 2 - 5) or 0
-		)
+		iconFrame:SetPoint("TOPLEFT", button, "TOPLEFT", 20, -10)
 		iconFrame:SetTemplate("Transparent")
 
 		local icon = iconFrame:CreateTexture(nil, "ARTWORK")
@@ -405,7 +399,7 @@ function A:UpdateAchievementList()
 
 		local progressBar = CreateFrame("StatusBar", nil, button)
 		progressBar:SetSize(A.Config.PROGRESS_BAR_WIDTH, 12)
-		progressBar:SetPoint("RIGHT", button, "RIGHT", -10, isExpanded and (buttonHeight / 2 - 10) or 0)
+		progressBar:SetPoint("TOPRIGHT", button, "TOPRIGHT", -10, -18)
 		progressBar:SetStatusBarTexture(E.media.normTex)
 		progressBar:SetMinMaxValues(0, 100)
 		progressBar:SetValue(achievement.percent)
@@ -453,32 +447,100 @@ function A:UpdateAchievementList()
 		criteriaText:SetJustifyH("LEFT")
 		F.SetFontOutline(criteriaText)
 
+		local rewardIcon
 		if achievement.rewardItemID then
-			local rewardIcon = button:CreateTexture(nil, "OVERLAY")
+			rewardIcon = button:CreateTexture(nil, "OVERLAY")
 			rewardIcon:SetSize(16, 16)
 			rewardIcon:SetPoint("RIGHT", progressBar, "LEFT", -5, 0)
 			rewardIcon:SetTexture("Interface\\Icons\\INV_Misc_Gift_01")
 			rewardIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 		end
 
-		-- Show criteria details if expanded
+		local trackButton = CreateFrame("CheckButton", nil, button, "UICheckButtonTemplate")
+		trackButton:SetSize(20, 20)
+		if rewardIcon then
+			trackButton:SetPoint("TOPRIGHT", rewardIcon, "TOPLEFT", -4, 2)
+		else
+			trackButton:SetPoint("TOPRIGHT", progressBar, "TOPLEFT", -8, 2)
+		end
+		trackButton:SetFrameLevel(button:GetFrameLevel() + 2)
+		S:Proxy("HandleCheckBox", trackButton)
+
+		local isTracked = C_ContentTracking_IsTracking(Enum_ContentTrackingType.Achievement, achievement.id)
+		trackButton:SetChecked(isTracked)
+
+		if achievement.percent < 100 then
+			trackButton:Show()
+		else
+			trackButton:Hide()
+		end
+
+		trackButton:SetScript("OnClick", function(btn)
+			local checked = btn:GetChecked()
+
+			if checked then
+				local trackedCount = #C_ContentTracking_GetTrackedIDs(Enum_ContentTrackingType.Achievement)
+				if trackedCount >= Constants_ContentTrackingConsts.MaxTrackedAchievements then
+					UIErrorsFrame:AddMessage(
+						format(
+							L["Cannot track more than %d achievements"],
+							Constants_ContentTrackingConsts.MaxTrackedAchievements
+						),
+						1.0,
+						0.1,
+						0.1,
+						1.0
+					)
+					btn:SetChecked(false)
+					return
+				end
+
+				local trackingError =
+					C_ContentTracking_StartTracking(Enum_ContentTrackingType.Achievement, achievement.id)
+				if trackingError then
+					btn:SetChecked(false)
+				else
+					PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
+				end
+			else
+				C_ContentTracking_StopTracking(
+					Enum_ContentTrackingType.Achievement,
+					achievement.id,
+					Enum_ContentTrackingStopType.Manual
+				)
+				PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF)
+			end
+		end)
+
+		trackButton:SetScript("OnEnter", function(btn)
+			GameTooltip:SetOwner(btn, "ANCHOR_RIGHT")
+			if btn:GetChecked() then
+				GameTooltip:SetText(L["Untrack Achievement"] or "Untrack Achievement", nil, nil, nil, nil, true)
+			else
+				GameTooltip:SetText(L["Track Achievement"] or "Track Achievement", nil, nil, nil, nil, true)
+			end
+			GameTooltip:Show()
+		end)
+
+		trackButton:SetScript("OnLeave", function()
+			GameTooltip:Hide()
+		end)
+
 		if isExpanded and achievement.criteria then
-			local criteriaYOffset = -30
+			local criteriaYOffset = -50
 			for i, criteria in ipairs(achievement.criteria) do
-				-- Status icon (checkmark texture)
 				local statusIcon = button:CreateTexture(nil, "OVERLAY")
 				statusIcon:SetSize(14, 14)
-				statusIcon:SetPoint("TOPLEFT", iconFrame, "BOTTOMLEFT", 0, criteriaYOffset + 1)
+				statusIcon:SetPoint("TOPLEFT", button, "TOPLEFT", 20, criteriaYOffset)
 
 				if criteria.done then
 					statusIcon:SetTexture("Interface/AchievementFrame/UI-Achievement-Criteria-Check")
-					statusIcon:SetVertexColor(0, 1, 0) -- Green for completed
+					statusIcon:SetVertexColor(0, 1, 0)
 				else
 					statusIcon:SetTexture("Interface/Buttons/UI-CheckBox-Check-Disabled")
-					statusIcon:SetVertexColor(0.5, 0.5, 0.5) -- Gray for incomplete
+					statusIcon:SetVertexColor(0.5, 0.5, 0.5)
 				end
 
-				-- Criteria text
 				local criteriaLine = button:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 				criteriaLine:SetPoint("LEFT", statusIcon, "RIGHT", 4, 0)
 				criteriaLine:SetPoint("RIGHT", button, "RIGHT", -15, 0)
@@ -497,20 +559,16 @@ function A:UpdateAchievementList()
 				)
 				F.SetFontOutline(criteriaLine)
 
-				criteriaYOffset = criteriaYOffset - 16
+				criteriaYOffset = criteriaYOffset - 18
 			end
 		end
 
-		-- Left click: Open achievement in frame
-		-- Right click: Toggle expand/collapse
 		button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 		button:SetScript("OnClick", function(_, mouseButton)
 			if mouseButton == "RightButton" then
-				-- Toggle expand/collapse
 				scanState.expandedAchievements[achievement.id] = not isExpanded
 				A:UpdateAchievementList()
 			else
-				-- Open in achievement frame
 				if _G.AchievementFrame then
 					_G.AchievementFrame_SelectAchievement(achievement.id)
 					if not _G.AchievementFrame:IsShown() then
@@ -523,7 +581,6 @@ function A:UpdateAchievementList()
 		yOffset = yOffset - (buttonHeight + A.Config.BUTTON_SPACING)
 	end
 
-	-- Calculate total height based on actual button heights
 	local totalHeight = -yOffset + A.Config.BUTTON_SPACING
 	content:SetHeight(max(100, totalHeight))
 end

@@ -52,15 +52,15 @@ function A:CreateAchievementTrackerPanel()
 	searchBox:SetMaxLetters(50)
 	S:Proxy("HandleEditBox", searchBox)
 
-	searchBox:SetScript("OnTextChanged", function(self)
-		local text = self:GetText()
+	searchBox:SetScript("OnTextChanged", function(editBox)
+		local text = editBox:GetText()
 		A:SetScanState("searchTerm", text)
 		A:ApplyFiltersAndSort()
 		A:UpdateAchievementList()
 	end)
 
-	searchBox:SetScript("OnEscapePressed", function(self)
-		self:ClearFocus()
+	searchBox:SetScript("OnEscapePressed", function(editBox)
+		editBox:ClearFocus()
 	end)
 
 	-- First control frame for threshold and sorting
@@ -231,7 +231,7 @@ function A:CreateAchievementTrackerPanel()
 	F.SetFontOutline(nearlyCompleteButton.Text)
 	S:Proxy("HandleButton", nearlyCompleteButton)
 
-	nearlyCompleteButton:SetScript("OnClick", function(self)
+	nearlyCompleteButton:SetScript("OnClick", function()
 		A:SetScanState("currentThreshold", 95)
 		thresholdSlider:SetValue(95)
 		A:StartAchievementScan()
@@ -254,7 +254,7 @@ function A:CreateAchievementTrackerPanel()
 		end
 	end
 
-	rewardsFilterButton:SetScript("OnClick", function(self)
+	rewardsFilterButton:SetScript("OnClick", function()
 		local newState = not A:GetScanState().showOnlyRewards
 		A:SetScanState("showOnlyRewards", newState)
 		UpdateRewardsButtonState()
@@ -272,7 +272,7 @@ function A:CreateAchievementTrackerPanel()
 	F.SetFontOutline(showAllButton.Text)
 	S:Proxy("HandleButton", showAllButton)
 
-	showAllButton:SetScript("OnClick", function(self)
+	showAllButton:SetScript("OnClick", function()
 		-- Reset all filters
 		A:SetScanState("searchTerm", "")
 		A:SetScanState("selectedCategory", nil)
@@ -504,7 +504,7 @@ function A:UpdateAchievementList()
 		-- Left click: Open achievement in frame
 		-- Right click: Toggle expand/collapse
 		button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
-		button:SetScript("OnClick", function(self, mouseButton)
+		button:SetScript("OnClick", function(_, mouseButton)
 			if mouseButton == "RightButton" then
 				-- Toggle expand/collapse
 				scanState.expandedAchievements[achievement.id] = not isExpanded

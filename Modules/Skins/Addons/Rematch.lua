@@ -1,4 +1,3 @@
----@diagnostic disable: undefined-field
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames
@@ -8,10 +7,16 @@ local C = W.Utilities.Color
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local ipairs = ipairs
+local max = math.max
 local pairs = pairs
+local select = select
+local strfind = strfind
+local type = type
 local unpack = unpack
 
 local CreateFrame = CreateFrame
+local RunNextFrame = RunNextFrame
 
 local function ReskinIconButton(button)
 	if not button or button.__windSkin then

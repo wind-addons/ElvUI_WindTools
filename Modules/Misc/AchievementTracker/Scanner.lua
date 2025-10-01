@@ -303,23 +303,23 @@ function A:StartAchievementScan()
 	end
 
 	local panel = _G.WTAchievementTracker --[[@as WTAchievementTracker]]
-	if panel.progressContainer then
-		panel.progressContainer:Show()
-		panel.progressBar:SetValue(0)
-		panel.progressText:SetText(L["Starting scan..."])
-		panel.progressText:SetTextColor(0.7, 0.7, 0.7)
+	if panel.ProgressContainer then
+		panel.ProgressContainer:Show()
+		panel.ProgressBar:SetValue(0)
+		panel.ProgressText:SetText(L["Starting scan..."])
+		panel.ProgressText:SetTextColor(0.7, 0.7, 0.7)
 	end
 
 	ScanAchievements(function(results)
-		if panel.progressContainer then
-			panel.progressContainer:Hide()
+		if panel.ProgressContainer then
+			panel.ProgressContainer:Hide()
 		end
 		A:UpdateAchievementList()
 	end, function(categoryIndex, achievementIndex, progress, scanned, total)
-		if panel.progressBar and panel.progressText then
-			panel.progressBar:SetValue(progress)
-			panel.progressText:SetText(format(L["Scanning... %d/%d (%.0f%%)"], scanned, total, progress))
-			panel.progressText:SetTextColor(0.7, 0.7, 0.7)
+		if panel.ProgressBar and panel.ProgressText then
+			panel.ProgressBar:SetValue(progress)
+			panel.ProgressText:SetText(format(L["Scanning... %d/%d (%.0f%%)"], scanned, total, progress))
+			panel.ProgressText:SetTextColor(0.7, 0.7, 0.7)
 		end
 	end, function()
 		A:ApplyFiltersAndSort()

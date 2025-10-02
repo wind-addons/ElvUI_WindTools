@@ -859,11 +859,17 @@ local texList = {
 	flip = { W.Media.Icons.buttonUndo, 0 },
 }
 
+---@param frame Button?
+---@param size number?
 local function ReskinTitlebarButton(frame, size)
 	if not frame or frame.__windSkin then
 		return
 	end
 
+	---@param tex Texture
+	---@param r number?
+	---@param g number?
+	---@param b number?
 	local function UpdateTexture(tex, r, g, b)
 		if not frame.icon or not texList[frame.icon] then
 			return
@@ -875,6 +881,7 @@ local function ReskinTitlebarButton(frame, size)
 		tex:Size(size or 12, size or 12)
 		tex:SetVertexColor(r or 1, g or 1, b or 1)
 		tex:SetAlpha(1)
+		tex:SetBlendMode("DISABLE")
 	end
 
 	local hoverColor = E.media.rgbvaluecolor

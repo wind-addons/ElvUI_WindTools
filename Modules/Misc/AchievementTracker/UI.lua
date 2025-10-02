@@ -11,7 +11,6 @@ local max = max
 local floor = floor
 local format = format
 local InCombatLockdown = InCombatLockdown
-local C_Timer_After = C_Timer.After
 
 local C_ContentTracking_GetTrackedIDs = C_ContentTracking.GetTrackedIDs
 local C_ContentTracking_IsTracking = C_ContentTracking.IsTracking
@@ -26,124 +25,91 @@ local PlaySound = PlaySound
 local SOUNDKIT = SOUNDKIT
 local UIErrorsFrame = _G.UIErrorsFrame
 
----@class AchievementTrackerPanel
----@field controlFrame Frame
----@field controlFrame2 Frame
----@field searchBox EditBox
----@field thresholdSlider Slider
----@field sortDropdown DropdownButton
----@field categoryDropdown DropdownButton
----@field sortOrderButton Button
----@field refreshButton Button
----@field nearlyCompleteButton Button
----@field rewardsFilterButton Button
----@field showAllButton Button
----@field scrollFrame ScrollFrame
----@field content Frame
----@field progressBar StatusBar
----@field progressText FontString
----@field progressContainer Frame
----@field UpdateDropdowns fun()
-
----@return nil
 function A:CreateAchievementTrackerPanel()
-	if _G.WTAchievementTracker then
+	if self.MainFrame then
 		return
 	end
 
 	local PREFIX = "WTAchievementTracker"
 
 	---@class WTAchievementTracker : Frame, BackdropTemplate
-	local Panel = CreateFrame("Frame", PREFIX, _G.AchievementFrame, "BackdropTemplate")
-	Panel:Size(A.Config.PANEL_WIDTH, A.Config.PANEL_HEIGHT)
-	Panel:Point("TOPLEFT", _G.AchievementFrame, "TOPRIGHT", 10, 0)
-	Panel:SetTemplate("Transparent")
-	S:CreateShadow(Panel)
-	MF:InternalHandle(Panel, _G.AchievementFrame)
+	local MainFrame = CreateFrame("Frame", PREFIX, _G.AchievementFrame, "BackdropTemplate")
+	MainFrame:Size(self.db.panel.width, self.db.panel.height)
+	MainFrame:Point("TOPLEFT", _G.AchievementFrame, "TOPRIGHT", 10, 0)
+	MainFrame:SetTemplate("Transparent")
+	S:CreateShadow(MainFrame)
+	MF:InternalHandle(MainFrame, _G.AchievementFrame)
+	self.MainFrame = MainFrame
 
-	local SearchBox = CreateFrame("EditBox", PREFIX .. "SearchBox", Panel, "SearchBoxTemplate")
-	SearchBox:Size(A.Config.PANEL_WIDTH - 28, 24)
-	SearchBox:Point("TOP", Panel, "TOP", 0, -10)
+	local SearchBox = CreateFrame("EditBox", PREFIX .. "SearchBox", MainFrame, "SearchBoxTemplate")
+	SearchBox:Size(self.db.panel.width - 28, 24)
+	SearchBox:Point("TOP", MainFrame, "TOP", 0, -10)
 	SearchBox:SetAutoFocus(false)
 	SearchBox:SetMaxLetters(50)
 	S:Proxy("HandleEditBox", SearchBox)
-
 	SearchBox:SetScript("OnTextChanged", function(editBox)
-		local text = editBox:GetText()
-		A:SetScanState("searchTerm", text)
+		A.States.searchTerm = editBox:GetText()
 		A:ApplyFiltersAndSort()
 		A:UpdateAchievementList()
 	end)
-
 	SearchBox:SetScript("OnEscapePressed", function(editBox)
 		editBox:ClearFocus()
 	end)
+	MainFrame.SearchBox = SearchBox
 
-	local ControlFrame = CreateFrame("Frame", PREFIX .. "ControlFrame", Panel, "BackdropTemplate")
-	ControlFrame:Size(A.Config.PANEL_WIDTH - 20, 40)
-	ControlFrame:Point("TOP", SearchBox, "BOTTOM", 0, -5)
-	ControlFrame:SetTemplate("Transparent")
+	local ControlFrame1 = CreateFrame("Frame", PREFIX .. "ControlFrame", MainFrame, "BackdropTemplate")
+	ControlFrame1:Size(self.db.panel.width - 20, 40)
+	ControlFrame1:Point("TOP", SearchBox, "BOTTOM", 0, -5)
+	ControlFrame1:SetTemplate("Transparent")
+	MainFrame.ControlFrame1 = ControlFrame1
 
-	local ThresholdSlider = CreateFrame("Slider", PREFIX .. "ThresholdSlider", ControlFrame, "OptionsSliderTemplate")
+	local ThresholdSlider = CreateFrame("Slider", PREFIX .. "ThresholdSlider", ControlFrame1, "OptionsSliderTemplate")
 	ThresholdSlider:SetOrientation("HORIZONTAL")
 	ThresholdSlider:Size(120, 14)
-	ThresholdSlider:Point("LEFT", ControlFrame, "LEFT", 15, 0)
-	ThresholdSlider:SetMinMaxValues(A.Config.MIN_THRESHOLD, A.Config.MAX_THRESHOLD)
+	ThresholdSlider:Point("LEFT", ControlFrame1, "LEFT", 15, 0)
+	ThresholdSlider:SetMinMaxValues(self.db.threshold.min, self.db.threshold.max)
 	ThresholdSlider:SetValueStep(1)
 	ThresholdSlider:SetObeyStepOnDrag(true)
-	ThresholdSlider:SetValue(A:GetScanState().currentThreshold)
-
+	ThresholdSlider:SetValue(A.States.currentThreshold)
 	ThresholdSlider.Text:Point("BOTTOM", ThresholdSlider, "TOP", 0, 2)
-	ThresholdSlider.Text:SetText(L["Threshold"] .. ": " .. A:GetScanState().currentThreshold .. "%")
+	ThresholdSlider.Text:SetText(L["Threshold"] .. ": " .. A.States.currentThreshold .. "%")
 	ThresholdSlider.Text:SetTextColor(0.9, 0.9, 0.9)
 	F.SetFontOutline(ThresholdSlider.Text)
-
-	ThresholdSlider:SetScript("OnValueChanged", function(slider, value)
-		A:SetScanState("currentThreshold", floor(value))
-		slider.Text:SetText(L["Threshold"] .. ": " .. A:GetScanState().currentThreshold .. "%")
-	end)
-
 	S:Proxy("HandleSliderFrame", ThresholdSlider)
+	ThresholdSlider:SetScript("OnValueChanged", function(slider, value)
+		A.States.currentThreshold = floor(value)
+		slider.Text:SetText(L["Threshold"] .. ": " .. A.States.currentThreshold .. "%")
+	end)
+	ControlFrame1.ThresholdSlider = ThresholdSlider
 
 	local SortDropdown =
-		CreateFrame("DropdownButton", PREFIX .. "SortDropdown", ControlFrame, "WowStyle1DropdownTemplate")
+		CreateFrame("DropdownButton", PREFIX .. "SortDropdown", ControlFrame1, "WowStyle1DropdownTemplate")
 	SortDropdown:Point("LEFT", ThresholdSlider, "RIGHT", 15, 0)
-
-	---@class SortOption
-	---@field text string
-	---@field value string
 
 	local sortOptions = {
 		{ text = L["Percentage"], value = "percent" },
 		{ text = L["Name"], value = "name" },
 		{ text = L["Category"], value = "category" },
 	}
-
 	local sortTexts = {}
 	for _, option in ipairs(sortOptions) do
 		sortTexts[#sortTexts + 1] = option.text
 	end
 	local dropdownWidth = 40 + max(40, F.GetAdaptiveTextWidth(E.media.normFont, 12, "OUTLINE", sortTexts))
 	S:Proxy("HandleDropDownBox", SortDropdown, dropdownWidth)
-
-	---@param dropdown DropdownButton
-	---@param rootDescription any
-	---@return nil
-	local function SortGenerator(dropdown, rootDescription)
+	SortDropdown:SetupMenu(function(_, rootDescription)
 		for _, option in ipairs(sortOptions) do
 			rootDescription:CreateRadio(option.text, function()
-				return A:GetScanState().sortBy == option.value
+				return self.States.sortBy == option.value
 			end, function()
-				A:SetScanState("sortBy", option.value)
-				A:ApplyFiltersAndSort()
-				A:UpdateAchievementList()
+				self.States.sortBy = option.value
+				self:ApplyFiltersAndSort()
+				self:UpdateAchievementList()
 			end, option.value)
 		end
-	end
+	end)
 
-	SortDropdown:SetupMenu(SortGenerator)
-
-	local SortOrderButton = CreateFrame("Button", nil, ControlFrame, "UIPanelButtonTemplate")
+	local SortOrderButton = CreateFrame("Button", nil, ControlFrame1, "UIPanelButtonTemplate")
 	SortOrderButton:Size(30, 22)
 	SortOrderButton:Point("LEFT", SortDropdown, "RIGHT", 8, 0)
 	S:Proxy("HandleButton", SortOrderButton)
@@ -156,34 +122,34 @@ function A:CreateAchievementTrackerPanel()
 
 	---@return nil
 	local function UpdateArrow()
-		SortOrderButton.arrow:SetRotation(A:GetScanState().sortOrder == "desc" and 0 or 3.14)
+		SortOrderButton.arrow:SetRotation(self.States.sortOrder == "desc" and 0 or 3.14)
 	end
 
 	UpdateArrow()
 
 	SortOrderButton:SetScript("OnClick", function()
-		local newOrder = A:GetScanState().sortOrder == "desc" and "asc" or "desc"
-		A:SetScanState("sortOrder", newOrder)
+		local newOrder = self.States.sortOrder == "desc" and "asc" or "desc"
+		self.States.sortOrder = newOrder
 		UpdateArrow()
-		A:ApplyFiltersAndSort()
-		A:UpdateAchievementList()
+		self:ApplyFiltersAndSort()
+		self:UpdateAchievementList()
 	end)
 
-	local RefreshButton = CreateFrame("Button", nil, ControlFrame, "UIPanelButtonTemplate")
+	local RefreshButton = CreateFrame("Button", nil, ControlFrame1, "UIPanelButtonTemplate")
 	RefreshButton:Size(60, 22)
-	RefreshButton:Point("RIGHT", ControlFrame, "RIGHT", -15, 0)
+	RefreshButton:Point("RIGHT", ControlFrame1, "RIGHT", -15, 0)
 	RefreshButton:SetText(L["Refresh"])
 	RefreshButton.Text:SetTextColor(1, 0.8, 0)
 	F.SetFontOutline(RefreshButton.Text)
 	S:Proxy("HandleButton", RefreshButton)
 
 	RefreshButton:SetScript("OnClick", function()
-		A:StartAchievementScan()
+		self:StartAchievementScan()
 	end)
 
-	local ControlFrame2 = CreateFrame("Frame", nil, Panel, "BackdropTemplate")
-	ControlFrame2:Size(A.Config.PANEL_WIDTH - 20, 32)
-	ControlFrame2:Point("TOP", ControlFrame, "BOTTOM", 0, -5)
+	local ControlFrame2 = CreateFrame("Frame", nil, MainFrame, "BackdropTemplate")
+	ControlFrame2:Size(self.db.panel.width - 20, 32)
+	ControlFrame2:Point("TOP", ControlFrame1, "BOTTOM", 0, -5)
 	ControlFrame2:SetTemplate("Transparent")
 
 	local categoryDropdown = CreateFrame("DropdownButton", nil, ControlFrame2, "WowStyle1DropdownTemplate")
@@ -195,23 +161,23 @@ function A:CreateAchievementTrackerPanel()
 	---@return nil
 	local function CategoryGenerator(dropdown, rootDescription)
 		rootDescription:CreateRadio(L["All Categories"] or "All Categories", function()
-			return A:GetScanState().selectedCategory == nil
+			return self.States.selectedCategory == nil
 		end, function()
-			A:SetScanState("selectedCategory", nil)
-			A:ApplyFiltersAndSort()
-			A:UpdateAchievementList()
+			self.States.selectedCategory = nil
+			self:ApplyFiltersAndSort()
+			self:UpdateAchievementList()
 		end)
 
 		rootDescription:CreateDivider()
 
-		local categories = A:GetUniqueCategories()
+		local categories = self:GetUniqueCategories()
 		for _, categoryName in ipairs(categories) do
 			rootDescription:CreateRadio(categoryName, function()
-				return A:GetScanState().selectedCategory == categoryName
+				return self.States.selectedCategory == categoryName
 			end, function()
-				A:SetScanState("selectedCategory", categoryName)
-				A:ApplyFiltersAndSort()
-				A:UpdateAchievementList()
+				self.States.selectedCategory = categoryName
+				self:ApplyFiltersAndSort()
+				self:UpdateAchievementList()
 			end)
 		end
 	end
@@ -227,9 +193,9 @@ function A:CreateAchievementTrackerPanel()
 	S:Proxy("HandleButton", NearlyCompleteButton)
 
 	NearlyCompleteButton:SetScript("OnClick", function()
-		A:SetScanState("currentThreshold", 95)
+		self.States.currentThreshold = 95
 		ThresholdSlider:SetValue(95)
-		A:StartAchievementScan()
+		self:StartAchievementScan()
 	end)
 
 	local RewardsFilterButton = CreateFrame("Button", nil, ControlFrame2, "UIPanelButtonTemplate")
@@ -240,9 +206,8 @@ function A:CreateAchievementTrackerPanel()
 	F.SetFontOutline(RewardsFilterButton.Text)
 	S:Proxy("HandleButton", RewardsFilterButton)
 
-	---@return nil
 	local function UpdateRewardsButtonState()
-		if A:GetScanState().showOnlyRewards then
+		if self.States.showOnlyRewards then
 			RewardsFilterButton:SetBackdropBorderColor(0, 1, 0, 1)
 		else
 			RewardsFilterButton:SetBackdropBorderColor(0, 0, 0, 1)
@@ -250,11 +215,11 @@ function A:CreateAchievementTrackerPanel()
 	end
 
 	RewardsFilterButton:SetScript("OnClick", function()
-		local newState = not A:GetScanState().showOnlyRewards
-		A:SetScanState("showOnlyRewards", newState)
+		local newState = not self.States.showOnlyRewards
+		self.States.showOnlyRewards = newState
 		UpdateRewardsButtonState()
-		A:ApplyFiltersAndSort()
-		A:UpdateAchievementList()
+		self:ApplyFiltersAndSort()
+		self:UpdateAchievementList()
 	end)
 
 	UpdateRewardsButtonState()
@@ -268,66 +233,65 @@ function A:CreateAchievementTrackerPanel()
 	S:Proxy("HandleButton", ShowAllButton)
 
 	ShowAllButton:SetScript("OnClick", function()
-		A:SetScanState("searchTerm", "")
-		A:SetScanState("selectedCategory", nil)
-		A:SetScanState("showOnlyRewards", false)
-		A:SetScanState("currentThreshold", A.Config.MIN_THRESHOLD)
-		ThresholdSlider:SetValue(A.Config.MIN_THRESHOLD)
+		self.States.searchTerm = ""
+		self.States.selectedCategory = nil
+		self.States.showOnlyRewards = false
+		self.States.currentThreshold = self.db.threshold.min
+		ThresholdSlider:SetValue(self.db.threshold.min)
 		SearchBox:SetText("")
 		UpdateRewardsButtonState()
-		A:StartAchievementScan()
+		self:StartAchievementScan()
 	end)
 
-	local ScrollFrame = CreateFrame("ScrollFrame", nil, Panel, "UIPanelScrollFrameTemplate")
-	ScrollFrame:Size(A.Config.PANEL_WIDTH - 20, A.Config.PANEL_HEIGHT - 140)
+	local ScrollFrame = CreateFrame("ScrollFrame", nil, MainFrame, "UIPanelScrollFrameTemplate")
+	ScrollFrame:Size(self.db.panel.width - 20, self.db.panel.height - 140)
 	ScrollFrame:Point("TOP", ControlFrame2, "BOTTOM", 0, -5)
-
-	local content = CreateFrame("Frame", nil, ScrollFrame)
-	content:Size(A.Config.PANEL_WIDTH - 20, 100)
-	ScrollFrame:SetScrollChild(content)
-
 	ScrollFrame.ScrollBar:Point("TOPRIGHT", ScrollFrame, "TOPRIGHT", -2, -2)
 	ScrollFrame.ScrollBar:Point("BOTTOMRIGHT", ScrollFrame, "BOTTOMRIGHT", -2, 2)
 	S:Proxy("HandleScrollBar", ScrollFrame.ScrollBar)
+	MainFrame.ScrollFrame = ScrollFrame
 
-	local ProgressContainer = CreateFrame("Frame", nil, Panel, "BackdropTemplate")
-	ProgressContainer:Size(A.Config.PANEL_WIDTH - 20, 25)
-	ProgressContainer:Point("BOTTOM", Panel, "BOTTOM", 0, -25)
-	ProgressContainer:SetTemplate("Transparent")
+	local ScrollContent = CreateFrame("Frame", nil, ScrollFrame)
+	ScrollContent:Size(self.db.panel.width - 20, 100)
+	ScrollFrame:SetScrollChild(ScrollContent)
+	ScrollFrame.Content = ScrollContent
 
-	local ProgressBar = CreateFrame("StatusBar", nil, ProgressContainer)
-	ProgressBar:Size(A.Config.PANEL_WIDTH - 40, 15)
-	ProgressBar:Point("CENTER", ProgressContainer, "CENTER", 0, 0)
+	local ProgressFrame = CreateFrame("Frame", nil, MainFrame, "BackdropTemplate")
+	ProgressFrame:Size(self.db.panel.width - 20, 25)
+	ProgressFrame:Point("BOTTOM", MainFrame, "BOTTOM", 0, -25)
+	ProgressFrame:SetTemplate("Transparent")
+	MainFrame.ProgressFrame = ProgressFrame
+
+	local ProgressBar = CreateFrame("StatusBar", nil, ProgressFrame)
+	ProgressBar:Size(self.db.panel.width - 40, 15)
+	ProgressBar:Point("CENTER", ProgressFrame, "CENTER", 0, 0)
 	ProgressBar:SetStatusBarTexture(E.media.normTex)
 	ProgressBar:SetMinMaxValues(0, 100)
 	ProgressBar:SetValue(0)
 	ProgressBar:SetStatusBarColor(0.22, 0.72, 0.0)
 	ProgressBar:CreateBackdrop("Transparent")
+	ProgressFrame.Bar = ProgressBar
 
-	local ProgressText = ProgressBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	ProgressText:Point("CENTER", ProgressBar, "CENTER", 0, 0)
-	ProgressText:SetText(L["Ready to scan"])
-	ProgressText:SetTextColor(0.7, 0.7, 0.7)
-	F.SetFontOutline(ProgressText)
+	local ProgressBarText = ProgressBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	ProgressBarText:Point("CENTER", ProgressBar, "CENTER", 0, 0)
+	ProgressBarText:SetText(L["Ready to scan"])
+	ProgressBarText:SetTextColor(0.7, 0.7, 0.7)
+	F.SetFontOutline(ProgressBarText)
+	ProgressBar.Text = ProgressBarText
 
-	Panel.ControlFrame = ControlFrame
-	Panel.ControlFrame2 = ControlFrame2
-	Panel.SearchBox = SearchBox
-	Panel.ThresholdSlider = ThresholdSlider
-	Panel.SortDropdown = SortDropdown
-	Panel.CategoryDropdown = categoryDropdown
-	Panel.SortOrderButton = SortOrderButton
-	Panel.RefreshButton = RefreshButton
-	Panel.NearlyCompleteButton = NearlyCompleteButton
-	Panel.RewardsFilterButton = RewardsFilterButton
-	Panel.ShowAllButton = ShowAllButton
-	Panel.ScrollFrame = ScrollFrame
-	Panel.Content = content
-	Panel.ProgressBar = ProgressBar
-	Panel.ProgressText = ProgressText
-	Panel.ProgressContainer = ProgressContainer
+	MainFrame.ControlFrame = ControlFrame1
+	MainFrame.ControlFrame2 = ControlFrame2
+	MainFrame.SearchBox = SearchBox
+	MainFrame.ThresholdSlider = ThresholdSlider
+	MainFrame.SortDropdown = SortDropdown
+	MainFrame.CategoryDropdown = categoryDropdown
+	MainFrame.SortOrderButton = SortOrderButton
+	MainFrame.RefreshButton = RefreshButton
+	MainFrame.NearlyCompleteButton = NearlyCompleteButton
+	MainFrame.RewardsFilterButton = RewardsFilterButton
+	MainFrame.ShowAllButton = ShowAllButton
 
-	Panel.UpdateDropdowns = function()
+	MainFrame.UpdateDropdowns = function()
 		if SortDropdown and SortDropdown.GenerateMenu then
 			SortDropdown:GenerateMenu()
 		end
@@ -336,23 +300,17 @@ function A:CreateAchievementTrackerPanel()
 		end
 	end
 
-	Panel.ProgressContainer:Hide()
+	MainFrame.ProgressFrame:Hide()
 end
 
 ---Update the achievement list display
 ---@return nil
 function A:UpdateAchievementList()
-	if not _G.WTAchievementTracker then
+	if not self.MainFrame or InCombatLockdown() then
 		return
 	end
 
-	if InCombatLockdown() then
-		return
-	end
-
-	local Panel = _G.WTAchievementTracker --[[@as WTAchievementTracker]]
-	local Content = Panel.Content
-	local scanState = A:GetScanState()
+	local Content = self.MainFrame.ScrollFrame.Content
 
 	for _, child in pairs({ Content:GetChildren() }) do
 		child:Hide()
@@ -360,17 +318,17 @@ function A:UpdateAchievementList()
 	end
 
 	local yOffset = -8
-	for _, achievement in ipairs(scanState.filteredResults) do
-		local isExpanded = scanState.expandedAchievements[achievement.id] or false
-		local buttonHeight = A.Config.BUTTON_HEIGHT
+	for _, achievement in ipairs(self.States.filteredResults) do
+		local isExpanded = self.States.expandedAchievements[achievement.id] or false
+		local buttonHeight = self.db.button.height
 
 		if isExpanded and achievement.criteria then
 			local criteriaCount = #achievement.criteria
-			buttonHeight = A.Config.BUTTON_HEIGHT + (criteriaCount * 18) + 12
+			buttonHeight = buttonHeight + (criteriaCount * 18) + 12
 		end
 
 		local Button = CreateFrame("Button", nil, Content, "UIPanelButtonTemplate")
-		Button:Size(A.Config.PANEL_WIDTH - 40, buttonHeight)
+		Button:Size(self.db.panel.width - 40, buttonHeight)
 		Button:Point("TOPLEFT", Content, "TOPLEFT", 10, yOffset)
 
 		S:Proxy("HandleButton", Button)
@@ -394,7 +352,7 @@ function A:UpdateAchievementList()
 		Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
 		local ProgressBar = CreateFrame("StatusBar", nil, Button)
-		ProgressBar:Size(A.Config.PROGRESS_BAR_WIDTH, 12)
+		ProgressBar:Size(self.db.button.progressWidth, 12)
 		ProgressBar:Point("TOPRIGHT", Button, "TOPRIGHT", -10, -18)
 		ProgressBar:SetStatusBarTexture(E.media.normTex)
 		ProgressBar:SetMinMaxValues(0, 100)
@@ -556,7 +514,7 @@ function A:UpdateAchievementList()
 		Button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 		Button:SetScript("OnClick", function(_, mouseButton)
 			if mouseButton == "RightButton" then
-				scanState.expandedAchievements[achievement.id] = not isExpanded
+				self.States.expandedAchievements[achievement.id] = not isExpanded
 				A:UpdateAchievementList()
 			else
 				if _G.AchievementFrame then
@@ -568,9 +526,9 @@ function A:UpdateAchievementList()
 			end
 		end)
 
-		yOffset = yOffset - (buttonHeight + A.Config.BUTTON_SPACING)
+		yOffset = yOffset - (buttonHeight + self.db.button.spacing)
 	end
 
-	local totalHeight = -yOffset + A.Config.BUTTON_SPACING
+	local totalHeight = -yOffset + self.db.button.spacing
 	Content:SetHeight(max(100, totalHeight))
 end

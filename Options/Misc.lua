@@ -10,6 +10,7 @@ local GB = W:GetModule("GameBar")
 local AM = W:GetModule("Automation")
 local SA = W:GetModule("SpellActivationAlert")
 local LL = W:GetModule("LFGList")
+local AT = W:GetModule("AchievementTracker")
 
 ---@cast SA SpellActivationAlert
 
@@ -168,12 +169,6 @@ options.general = {
 			type = "toggle",
 			name = L["Reshii Wraps Upgrade"],
 			desc = L["Middle click the character back slot to open the Reshii Wraps upgrade menu."],
-		},
-		achievements = {
-			order = 16,
-			type = "toggle",
-			name = L["Achievement Tracker"],
-			desc = L["Show an enhanced achievement tracker with filtering and detailed progress information."],
 		},
 	},
 }
@@ -2406,6 +2401,40 @@ options.exitPhaseDiving = {
 			disabled = function()
 				return not E.db.WT.misc.exitPhaseDiving.enable
 			end,
+		},
+	},
+}
+
+options.achievementTracker = {
+	order = 13,
+	type = "group",
+	name = L["Achievement Tracker"],
+	get = function(info)
+		return E.db.WT.misc.achievementTracker[info[#info]]
+	end,
+	set = function(info, value)
+		E.db.WT.misc.achievementTracker[info[#info]] = value
+		AT:ProfileUpdate()
+	end,
+	args = {
+		desc = {
+			order = 1,
+			type = "group",
+			inline = true,
+			name = L["Description"],
+			args = {
+				feature = {
+					order = 1,
+					type = "description",
+					name = L["Show an enhanced achievement tracker with filtering and detailed progress information."],
+					fontSize = "medium",
+				},
+			},
+		},
+		enable = {
+			order = 2,
+			type = "toggle",
+			name = L["Enable"],
 		},
 	},
 }

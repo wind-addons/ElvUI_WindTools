@@ -114,12 +114,12 @@ end
 ---@param applyFiltersFunc ApplyFiltersCallback|nil
 ---@return nil
 local function ScanAchievements(callback, updateProgress, applyFiltersFunc)
-	if A.scanState.isScanning then
+	if A.States.isScanning then
 		return
 	end
 
-	A.scanState.isScanning = true
-	A.scanState.results = {}
+	A.States.isScanning = true
+	A.States.results = {}
 
 	local categories = GetCategoryList()
 	local currentCategory = 1
@@ -155,11 +155,11 @@ local function ScanAchievements(callback, updateProgress, applyFiltersFunc)
 
 						if not completed then
 							local details = GetAchievementDetails(achievementID)
-							if details.percent >= A.scanState.currentThreshold then
+							if details.percent >= A.States.currentThreshold then
 								local categoryName = GetCategoryInfo(categoryID)
 								local rewardItemID = C_AchievementInfo_GetRewardItemID(achievementID)
 
-								tinsert(A.scanState.results, {
+								tinsert(A.States.results, {
 									id = achievementID,
 									name = name,
 									description = description,
@@ -208,8 +208,8 @@ local function ScanAchievements(callback, updateProgress, applyFiltersFunc)
 			if applyFiltersFunc then
 				applyFiltersFunc()
 			end
-			A.scanState.isScanning = false
-			callback(A.scanState.filteredResults)
+			A.States.isScanning = false
+			callback(A.States.filteredResults)
 		else
 			if A:StopScanDueToCombat() then
 				return
@@ -227,12 +227,12 @@ function A:ApplyFiltersAndSort()
 	-- Start with all results
 	local filtered = {}
 
-	for _, achievement in ipairs(A.scanState.results) do
+	for _, achievement in ipairs(A.States.results) do
 		local includeAchievement = true
 
 		-- Apply search filter
-		if A.scanState.searchTerm and A.scanState.searchTerm ~= "" then
-			local searchLower = A.scanState.searchTerm:lower()
+		if A.States.searchTerm and A.States.searchTerm ~= "" then
+			local searchLower = A.States.searchTerm:lower()
 			local nameLower = achievement.name:lower()
 			local descLower = (achievement.description or ""):lower()
 			if not (nameLower:find(searchLower, 1, true) or descLower:find(searchLower, 1, true)) then
@@ -241,14 +241,14 @@ function A:ApplyFiltersAndSort()
 		end
 
 		-- Apply category filter
-		if includeAchievement and A.scanState.selectedCategory then
-			if achievement.categoryName ~= A.scanState.selectedCategory then
+		if includeAchievement and A.States.selectedCategory then
+			if achievement.categoryName ~= A.States.selectedCategory then
 				includeAchievement = false
 			end
 		end
 
 		-- Apply rewards filter
-		if includeAchievement and A.scanState.showOnlyRewards then
+		if includeAchievement and A.States.showOnlyRewards then
 			if not achievement.rewardItemID then
 				includeAchievement = false
 			end
@@ -259,20 +259,20 @@ function A:ApplyFiltersAndSort()
 		end
 	end
 
-	A.scanState.filteredResults = filtered
+	A.States.filteredResults = filtered
 
-	sort(A.scanState.filteredResults, function(a, b)
+	sort(A.States.filteredResults, function(a, b)
 		local aVal, bVal
 
-		if A.scanState.sortBy == "percent" then
+		if A.States.sortBy == "percent" then
 			aVal, bVal = a.percent, b.percent
-		elseif A.scanState.sortBy == "name" then
+		elseif A.States.sortBy == "name" then
 			aVal, bVal = a.name:lower(), b.name:lower()
-		elseif A.scanState.sortBy == "category" then
+		elseif A.States.sortBy == "category" then
 			aVal, bVal = a.categoryName:lower(), b.categoryName:lower()
 		end
 
-		if A.scanState.sortOrder == "desc" then
+		if A.States.sortOrder == "desc" then
 			return aVal > bVal
 		else
 			return aVal < bVal
@@ -288,13 +288,7 @@ end
 ---Start the achievement scan
 ---@return nil
 function A:StartAchievementScan()
-	if not _G.WTAchievementTracker then
-		return
-	end
-
-	-- Don't start scan if events aren't registered (UI not shown)
-	-- We'll check if the tracker panel is visible instead
-	if not _G.WTAchievementTracker or not _G.WTAchievementTracker:IsVisible() then
+	if not self.MainFrame or not self.MainFrame:IsShown() then
 		return
 	end
 
@@ -302,25 +296,19 @@ function A:StartAchievementScan()
 		return
 	end
 
-	local panel = _G.WTAchievementTracker --[[@as WTAchievementTracker]]
-	if panel.ProgressContainer then
-		panel.ProgressContainer:Show()
-		panel.ProgressBar:SetValue(0)
-		panel.ProgressText:SetText(L["Starting scan..."])
-		panel.ProgressText:SetTextColor(0.7, 0.7, 0.7)
-	end
+	local ProgressFrame = self.MainFrame.ProgressFrame
+	ProgressFrame:Show()
+	ProgressFrame.Bar:SetValue(0)
+	ProgressFrame.Bar.Text:SetText(L["Starting scan..."])
+	ProgressFrame.Bar.Text:SetTextColor(0.7, 0.7, 0.7)
 
 	ScanAchievements(function(results)
-		if panel.ProgressContainer then
-			panel.ProgressContainer:Hide()
-		end
+		ProgressFrame:Hide()
 		A:UpdateAchievementList()
 	end, function(categoryIndex, achievementIndex, progress, scanned, total)
-		if panel.ProgressBar and panel.ProgressText then
-			panel.ProgressBar:SetValue(progress)
-			panel.ProgressText:SetText(format(L["Scanning... %d/%d (%.0f%%)"], scanned, total, progress))
-			panel.ProgressText:SetTextColor(0.7, 0.7, 0.7)
-		end
+		ProgressFrame.Bar:SetValue(progress)
+		ProgressFrame.Bar.Text:SetText(format(L["Scanning... %d/%d (%.0f%%)"], scanned, total, progress))
+		ProgressFrame.Bar.Text:SetTextColor(0.7, 0.7, 0.7)
 	end, function()
 		A:ApplyFiltersAndSort()
 	end)
@@ -332,7 +320,7 @@ function A:GetUniqueCategories()
 	local categories = {}
 	local seen = {}
 
-	for _, achievement in ipairs(A.scanState.results) do
+	for _, achievement in ipairs(A.States.results) do
 		if achievement.categoryName and not seen[achievement.categoryName] then
 			tinsert(categories, achievement.categoryName)
 			seen[achievement.categoryName] = true
@@ -341,18 +329,4 @@ function A:GetUniqueCategories()
 
 	sort(categories)
 	return categories
-end
-
----Get scan state for external access
----@return AchievementScanState
-function A:GetScanState()
-	return A.scanState
-end
-
----Set scan state properties
----@param key string
----@param value any
----@return nil
-function A:SetScanState(key, value)
-	A.scanState[key] = value
 end

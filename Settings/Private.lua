@@ -156,7 +156,6 @@ V.misc = {
 	autoToggleChatBubble = false,
 	antiOverride = GetLocale() == "zhCN",
 	reshiiWrapsUpgrade = true,
-	achievements = true,
 	moveFrames = {
 		enable = true,
 		elvUIBags = true,
@@ -536,7 +535,7 @@ V.skins = {
 	},
 	blizzard = {
 		enable = true,
-		achievementTracker = true,
+		achievements = true,
 		addonManager = true,
 		adventureMap = true,
 		alerts = true,

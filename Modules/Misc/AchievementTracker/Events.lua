@@ -7,21 +7,17 @@ local ipairs = ipairs
 local tremove = tremove
 local InCombatLockdown = InCombatLockdown
 
--- Track event registration state.
-local eventsRegistered = false
-
 ---Handle ACHIEVEMENT_EARNED event
 ---@param achievementID number
 ---@param alreadyEarned boolean
 ---@return nil
 function A:ACHIEVEMENT_EARNED(achievementID, alreadyEarned)
-	if _G.WTAchievementTracker and not alreadyEarned then
-		local scanState = A:GetScanState()
-		for i, achievement in ipairs(scanState.results) do
+	if self.MainFrame and not alreadyEarned then
+		for i, achievement in ipairs(self.States.results) do
 			if achievement.id == achievementID then
-				tremove(scanState.results, i)
-				A:ApplyFiltersAndSort()
-				A:UpdateAchievementList()
+				tremove(self.States.results, i)
+				self:ApplyFiltersAndSort()
+				self:UpdateAchievementList()
 				break
 			end
 		end
@@ -31,10 +27,10 @@ end
 ---Handle CRITERIA_UPDATE event
 ---@return nil
 function A:CRITERIA_UPDATE()
-	if _G.WTAchievementTracker and A:GetScanState().scannedSinceInit then
-		C_Timer_After(0.5, function()
+	if _G.WTAchievementTracker and self.States.scannedSinceInit then
+		E:Delay(0.5, function()
 			if _G.WTAchievementTracker and not InCombatLockdown() then
-				A:UpdateAchievementList()
+				self:UpdateAchievementList()
 			end
 		end)
 	end
@@ -44,10 +40,10 @@ end
 ---@return nil
 function A:PLAYER_REGEN_ENABLED()
 	-- Resume scan if we were scanning before combat
-	if _G.WTAchievementTracker and _G.WTAchievementTracker:IsVisible() and not A:GetScanState().isScanning then
-		C_Timer_After(1.0, function()
+	if _G.WTAchievementTracker and _G.WTAchievementTracker:IsVisible() and not self.States.isScanning then
+		E:Delay(1.0, function()
 			if _G.WTAchievementTracker and _G.WTAchievementTracker:IsVisible() and not InCombatLockdown() then
-				A:StartAchievementScan()
+				self:StartAchievementScan()
 			end
 		end)
 	end
@@ -57,78 +53,39 @@ end
 ---@return nil
 function A:PLAYER_REGEN_DISABLED()
 	-- Stop any ongoing scan when entering combat
-	if A:GetScanState().isScanning then
-		A:StopScanDueToCombat()
-	end
-end
-
----Register events for achievement tracking
----@return nil
-local function RegisterAchievementEvents()
-	if not eventsRegistered then
-		A:RegisterEvent("ACHIEVEMENT_EARNED")
-		A:RegisterEvent("CRITERIA_UPDATE")
-		A:RegisterEvent("PLAYER_REGEN_ENABLED")
-		A:RegisterEvent("PLAYER_REGEN_DISABLED")
-		eventsRegistered = true
-	end
-end
-
----Unregister events for achievement tracking
----@return nil
-local function UnregisterAchievementEvents()
-	if eventsRegistered then
-		A:UnregisterEvent("ACHIEVEMENT_EARNED")
-		A:UnregisterEvent("CRITERIA_UPDATE")
-		A:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		A:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		eventsRegistered = false
-	end
-end
-
----Hide and cleanup the tracker panel
----@return nil
-local function HideTrackerPanel()
-	if _G.WTAchievementTracker then
-		-- Don't destroy the panel, just hide it to avoid recreation overhead.
-		_G.WTAchievementTracker:Hide()
-	end
-
-	-- Stop any ongoing scans when hiding
-	if A:GetScanState().isScanning then
-		A:SetScanState("isScanning", false)
+	if self.States.isScanning then
+		self:StopScanDueToCombat()
 	end
 end
 
 ---Hook into Achievement frame events
 ---@return nil
 function A:HookAchievementFrame()
-	if _G.AchievementFrame and not _G.AchievementFrame._windToolsHooked then
-		_G.AchievementFrame._windToolsHooked = true
+	if not self:IsHooked(_G.AchievementFrame, "OnShow") then
+		self:SecureHookScript(_G.AchievementFrame, "OnShow", function()
+			self:RegisterEvent("ACHIEVEMENT_EARNED")
+			self:RegisterEvent("CRITERIA_UPDATE")
+			self:RegisterEvent("PLAYER_REGEN_ENABLED")
+			self:RegisterEvent("PLAYER_REGEN_DISABLED")
 
-		_G.AchievementFrame:HookScript("OnShow", function()
-			-- Register events when UI is shown
-			RegisterAchievementEvents()
+			self:CreateAchievementTrackerPanel()
+			self.MainFrame:Show()
 
-			C_Timer_After(0.1, function()
-				A:CreateAchievementTrackerPanel()
-				if _G.WTAchievementTracker then
-					_G.WTAchievementTracker:Show()
-				end
-
-				if not A:GetScanState().scannedSinceInit then
-					A:SetScanState("scannedSinceInit", true)
-					C_Timer_After(0.4, function()
-						A:StartAchievementScan()
-					end)
-				end
-			end)
+			if not self.States.scannedSinceInit then
+				self.States.scannedSinceInit = true
+				E:Delay(0.4, self.StartAchievementScan, self)
+			end
 		end)
+	end
 
-		_G.AchievementFrame:HookScript("OnHide", function()
-			-- Unregister events and hide tracker when UI is hidden
-			UnregisterAchievementEvents()
-			HideTrackerPanel()
+	if not self:IsHooked(_G.AchievementFrame, "OnHide") then
+		self:SecureHookScript(_G.AchievementFrame, "OnHide", function()
+			self:UnregisterEvent("ACHIEVEMENT_EARNED")
+			self:UnregisterEvent("CRITERIA_UPDATE")
+			self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+			_G.WTAchievementTracker:Hide()
+			self.States.isScanning = false
 		end)
 	end
 end

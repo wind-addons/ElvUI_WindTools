@@ -1,6 +1,6 @@
 local W ---@class WindTools
-local F ---@type Functions
-W, F = unpack((select(2, ...)))
+local F, E ---@type Functions, ElvUI
+W, F, E = unpack((select(2, ...)))
 
 local ipairs = ipairs
 local pairs = pairs
@@ -16,8 +16,6 @@ local C_Item_GetItemInfoInstant = C_Item.GetItemInfoInstant
 
 ---@class AsyncUtility Asynchronous operation utilities
 W.Utilities.Async = {}
-
-local C_Timer_After = C_Timer.After
 
 ---@type table<string, table> Cache for loaded items and spells
 local cache = {
@@ -269,7 +267,7 @@ function W.Utilities.Async.WithSpellIDTable(spellIDTable, tType, callback, table
 			totalItems = totalItems + 1
 		end
 	elseif tType == "key" then
-		for spellID, value in pairs(spellIDTable) do
+		for _, value in pairs(spellIDTable) do
 			if value then
 				totalItems = totalItems + 1
 			end
@@ -359,9 +357,7 @@ local function onAchievementInfoFetched(achievementID, callback, attempt)
 
 	local result = { GetAchievementInfo(achievementID) }
 	if not result or not result[1] or not result[2] or result[2] == "" or not result[10] then
-		C_Timer_After(0.1, function()
-			onAchievementInfoFetched(callback, attempt + 1)
-		end)
+		E:Delay(0.1, onAchievementInfoFetched, achievementID, callback, attempt + 1)
 		return
 	end
 

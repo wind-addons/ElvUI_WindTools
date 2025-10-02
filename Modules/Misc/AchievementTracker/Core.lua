@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
-local A = W:NewModule("AchievementTracker", "AceEvent-3.0") ---@class AchievementTracker : AceModule, AceEvent-3.0
+local A = W:NewModule("AchievementTracker", "AceEvent-3.0", "AceHook-3.0") ---@class AchievementTracker : AceModule, AceEvent-3.0, AceHook-3.0
 
 local _G = _G
 local UIParentLoadAddOn = UIParentLoadAddOn
@@ -42,7 +42,7 @@ A.Config = {
 ---@field selectedCategory string|nil
 ---@field showOnlyRewards boolean
 ---@field expandedAchievements table<number, boolean>
-A.scanState = {
+A.States = {
 	isScanning = false,
 	scannedSinceInit = false,
 	currentThreshold = A.Config.DEFAULT_THRESHOLD,
@@ -59,13 +59,11 @@ A.scanState = {
 ---Initialize the achievements module
 ---@return nil
 function A:Initialize()
-	if not E.initialized or not E.private or not E.private.WT or not E.private.WT.misc then
+	if not E.db or not E.db.WT or not E.db.WT.misc.achievementTracker then
 		return
 	end
 
-	if not E.private.WT.misc.achievementTracker or self.initialized then
-		return
-	end
+	self.db = E.db.WT.misc.achievementTracker
 
 	UIParentLoadAddOn("Blizzard_AchievementUI")
 	self.initialized = true
@@ -74,13 +72,10 @@ end
 ---Stop scan due to combat and cleanup UI
 ---@return boolean # If scan was stopped due to combat
 function A:StopScanDueToCombat()
-	local panel = _G.WTAchievementTracker --[[@as WTAchievementTracker]]
 	if InCombatLockdown() then
-		A.scanState.isScanning = false
-		if panel then
-			if panel.progressContainer then
-				panel.progressContainer:Hide()
-			end
+		A.States.isScanning = false
+		if self.MainFrame.ProgressFrame then
+			self.MainFrame.ProgressFrame:Hide()
 		end
 		return true
 	end
@@ -90,8 +85,9 @@ end
 ---Handle profile updates
 ---@return nil
 function A:ProfileUpdate()
-	self.initialized = false
-	self:Initialize()
+	if not self.initialized then
+		self:Initialize()
+	end
 
 	if not E.private.WT.misc.achievements then
 		A:UnregisterEvent("ADDON_LOADED")

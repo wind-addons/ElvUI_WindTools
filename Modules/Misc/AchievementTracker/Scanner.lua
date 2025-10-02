@@ -259,30 +259,27 @@ function A:ApplyFiltersAndSort()
 		end
 	end
 
-	A.States.filteredResults = filtered
+	self.States.filteredResults = filtered
 
-	sort(A.States.filteredResults, function(a, b)
+	sort(self.States.filteredResults, function(a, b)
 		local aVal, bVal
 
-		if A.States.sortBy == "percent" then
+		if self.States.sortBy == "percent" then
 			aVal, bVal = a.percent, b.percent
-		elseif A.States.sortBy == "name" then
+		elseif self.States.sortBy == "name" then
 			aVal, bVal = a.name:lower(), b.name:lower()
-		elseif A.States.sortBy == "category" then
+		elseif self.States.sortBy == "category" then
 			aVal, bVal = a.categoryName:lower(), b.categoryName:lower()
 		end
 
-		if A.States.sortOrder == "desc" then
+		if self.States.sortOrder == "desc" then
 			return aVal > bVal
 		else
 			return aVal < bVal
 		end
 	end)
 
-	local panel = _G.WTAchievementTracker --[[@as WTAchievementTracker]]
-	if panel and panel.UpdateDropdowns then
-		panel:UpdateDropdowns()
-	end
+	self.MainFrame:UpdateDropdowns()
 end
 
 ---Start the achievement scan
@@ -297,21 +294,20 @@ function A:StartAchievementScan()
 	end
 
 	local ProgressFrame = self.MainFrame.ProgressFrame
-	ProgressFrame:Show()
 	ProgressFrame.Bar:SetValue(0)
-	ProgressFrame.Bar.Text:SetText(L["Starting scan..."])
-	ProgressFrame.Bar.Text:SetTextColor(0.7, 0.7, 0.7)
+	ProgressFrame.Bar.ProgressText:SetText("")
 
-	ScanAchievements(function(results)
+	ScanAchievements(function(_)
 		ProgressFrame:Hide()
-		A:UpdateAchievementList()
-	end, function(categoryIndex, achievementIndex, progress, scanned, total)
+		self:UpdateAchievementList()
+	end, function(_, _, progress, scanned, total)
 		ProgressFrame.Bar:SetValue(progress)
-		ProgressFrame.Bar.Text:SetText(format(L["Scanning... %d/%d (%.0f%%)"], scanned, total, progress))
-		ProgressFrame.Bar.Text:SetTextColor(0.7, 0.7, 0.7)
+		ProgressFrame.Bar.ProgressText:SetText(format("%d / %d  -  %.0f %%", scanned, total, progress))
 	end, function()
-		A:ApplyFiltersAndSort()
+		self:ApplyFiltersAndSort()
 	end)
+
+	ProgressFrame:Show()
 end
 
 ---Get unique categories from current results
@@ -320,7 +316,7 @@ function A:GetUniqueCategories()
 	local categories = {}
 	local seen = {}
 
-	for _, achievement in ipairs(A.States.results) do
+	for _, achievement in ipairs(self.States.results) do
 		if achievement.categoryName and not seen[achievement.categoryName] then
 			tinsert(categories, achievement.categoryName)
 			seen[achievement.categoryName] = true

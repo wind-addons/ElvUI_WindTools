@@ -30,10 +30,8 @@ function A:CreateAchievementTrackerPanel()
 		return
 	end
 
-	local PREFIX = "WTAchievementTracker"
-
 	---@class WTAchievementTracker : Frame, BackdropTemplate
-	local MainFrame = CreateFrame("Frame", PREFIX, _G.AchievementFrame, "BackdropTemplate")
+	local MainFrame = CreateFrame("Frame", "WTAchievementTracker", _G.AchievementFrame, "BackdropTemplate")
 	MainFrame:Size(self.db.panel.width, self.db.panel.height)
 	MainFrame:Point("TOPLEFT", _G.AchievementFrame, "TOPRIGHT", 10, 0)
 	MainFrame:SetTemplate("Transparent")
@@ -41,7 +39,7 @@ function A:CreateAchievementTrackerPanel()
 	MF:InternalHandle(MainFrame, _G.AchievementFrame)
 	self.MainFrame = MainFrame
 
-	local SearchBox = CreateFrame("EditBox", PREFIX .. "SearchBox", MainFrame, "SearchBoxTemplate")
+	local SearchBox = CreateFrame("EditBox", nil, MainFrame, "SearchBoxTemplate")
 	SearchBox:Size(self.db.panel.width - 28, 24)
 	SearchBox:Point("TOP", MainFrame, "TOP", 0, -10)
 	SearchBox:SetAutoFocus(false)
@@ -57,13 +55,13 @@ function A:CreateAchievementTrackerPanel()
 	end)
 	MainFrame.SearchBox = SearchBox
 
-	local ControlFrame1 = CreateFrame("Frame", PREFIX .. "ControlFrame", MainFrame, "BackdropTemplate")
+	local ControlFrame1 = CreateFrame("Frame", nil, MainFrame, "BackdropTemplate")
 	ControlFrame1:Size(self.db.panel.width - 20, 40)
 	ControlFrame1:Point("TOP", SearchBox, "BOTTOM", 0, -5)
 	ControlFrame1:SetTemplate("Transparent")
 	MainFrame.ControlFrame1 = ControlFrame1
 
-	local ThresholdSlider = CreateFrame("Slider", PREFIX .. "ThresholdSlider", ControlFrame1, "OptionsSliderTemplate")
+	local ThresholdSlider = CreateFrame("Slider", nil, ControlFrame1, "OptionsSliderTemplate")
 	ThresholdSlider:SetOrientation("HORIZONTAL")
 	ThresholdSlider:Size(120, 14)
 	ThresholdSlider:Point("LEFT", ControlFrame1, "LEFT", 15, 0)
@@ -82,8 +80,7 @@ function A:CreateAchievementTrackerPanel()
 	end)
 	ControlFrame1.ThresholdSlider = ThresholdSlider
 
-	local SortDropdown =
-		CreateFrame("DropdownButton", PREFIX .. "SortDropdown", ControlFrame1, "WowStyle1DropdownTemplate")
+	local SortDropdown = CreateFrame("DropdownButton", nil, ControlFrame1, "WowStyle1DropdownTemplate")
 	SortDropdown:Point("LEFT", ThresholdSlider, "RIGHT", 15, 0)
 
 	local sortOptions = {
@@ -142,24 +139,21 @@ function A:CreateAchievementTrackerPanel()
 	RefreshButton.Text:SetTextColor(1, 0.8, 0)
 	F.SetFontOutline(RefreshButton.Text)
 	S:Proxy("HandleButton", RefreshButton)
-
 	RefreshButton:SetScript("OnClick", function()
 		self:StartAchievementScan()
 	end)
+	ControlFrame1.RefreshButton = RefreshButton
 
 	local ControlFrame2 = CreateFrame("Frame", nil, MainFrame, "BackdropTemplate")
 	ControlFrame2:Size(self.db.panel.width - 20, 32)
 	ControlFrame2:Point("TOP", ControlFrame1, "BOTTOM", 0, -5)
 	ControlFrame2:SetTemplate("Transparent")
+	MainFrame.ControlFrame2 = ControlFrame2
 
-	local categoryDropdown = CreateFrame("DropdownButton", nil, ControlFrame2, "WowStyle1DropdownTemplate")
-	categoryDropdown:Point("LEFT", ControlFrame2, "LEFT", 10, 0)
-	S:Proxy("HandleDropDownBox", categoryDropdown, 150)
-
-	---@param dropdown DropdownButton
-	---@param rootDescription any
-	---@return nil
-	local function CategoryGenerator(dropdown, rootDescription)
+	local CategoryDropdown = CreateFrame("DropdownButton", nil, ControlFrame2, "WowStyle1DropdownTemplate")
+	CategoryDropdown:Point("LEFT", ControlFrame2, "LEFT", 10, 0)
+	S:Proxy("HandleDropDownBox", CategoryDropdown, 150)
+	CategoryDropdown:SetupMenu(function(_, rootDescription)
 		rootDescription:CreateRadio(L["All Categories"] or "All Categories", function()
 			return self.States.selectedCategory == nil
 		end, function()
@@ -180,23 +174,22 @@ function A:CreateAchievementTrackerPanel()
 				self:UpdateAchievementList()
 			end)
 		end
-	end
-
-	categoryDropdown:SetupMenu(CategoryGenerator)
+	end)
+	ControlFrame2.CategoryDropdown = CategoryDropdown
 
 	local NearlyCompleteButton = CreateFrame("Button", nil, ControlFrame2, "UIPanelButtonTemplate")
 	NearlyCompleteButton:Size(90, 22)
-	NearlyCompleteButton:Point("LEFT", categoryDropdown, "RIGHT", 8, 0)
+	NearlyCompleteButton:Point("LEFT", CategoryDropdown, "RIGHT", 8, 0)
 	NearlyCompleteButton:SetText("95%+")
 	NearlyCompleteButton.Text:SetTextColor(1, 1, 1)
 	F.SetFontOutline(NearlyCompleteButton.Text)
 	S:Proxy("HandleButton", NearlyCompleteButton)
-
 	NearlyCompleteButton:SetScript("OnClick", function()
 		self.States.currentThreshold = 95
 		ThresholdSlider:SetValue(95)
 		self:StartAchievementScan()
 	end)
+	ControlFrame2.NearlyCompleteButton = NearlyCompleteButton
 
 	local RewardsFilterButton = CreateFrame("Button", nil, ControlFrame2, "UIPanelButtonTemplate")
 	RewardsFilterButton:Size(70, 22)
@@ -205,7 +198,6 @@ function A:CreateAchievementTrackerPanel()
 	RewardsFilterButton.Text:SetTextColor(1, 1, 1)
 	F.SetFontOutline(RewardsFilterButton.Text)
 	S:Proxy("HandleButton", RewardsFilterButton)
-
 	local function UpdateRewardsButtonState()
 		if self.States.showOnlyRewards then
 			RewardsFilterButton:SetBackdropBorderColor(0, 1, 0, 1)
@@ -213,7 +205,6 @@ function A:CreateAchievementTrackerPanel()
 			RewardsFilterButton:SetBackdropBorderColor(0, 0, 0, 1)
 		end
 	end
-
 	RewardsFilterButton:SetScript("OnClick", function()
 		local newState = not self.States.showOnlyRewards
 		self.States.showOnlyRewards = newState
@@ -221,8 +212,8 @@ function A:CreateAchievementTrackerPanel()
 		self:ApplyFiltersAndSort()
 		self:UpdateAchievementList()
 	end)
-
 	UpdateRewardsButtonState()
+	ControlFrame2.RewardsFilterButton = RewardsFilterButton
 
 	local ShowAllButton = CreateFrame("Button", nil, ControlFrame2, "UIPanelButtonTemplate")
 	ShowAllButton:Size(60, 22)
@@ -231,7 +222,6 @@ function A:CreateAchievementTrackerPanel()
 	ShowAllButton.Text:SetTextColor(1, 0.8, 0)
 	F.SetFontOutline(ShowAllButton.Text)
 	S:Proxy("HandleButton", ShowAllButton)
-
 	ShowAllButton:SetScript("OnClick", function()
 		self.States.searchTerm = ""
 		self.States.selectedCategory = nil
@@ -242,6 +232,7 @@ function A:CreateAchievementTrackerPanel()
 		UpdateRewardsButtonState()
 		self:StartAchievementScan()
 	end)
+	ControlFrame2.ShowAllButton = ShowAllButton
 
 	local ScrollFrame = CreateFrame("ScrollFrame", nil, MainFrame, "UIPanelScrollFrameTemplate")
 	ScrollFrame:Size(self.db.panel.width - 20, self.db.panel.height - 140)
@@ -256,48 +247,55 @@ function A:CreateAchievementTrackerPanel()
 	ScrollFrame:SetScrollChild(ScrollContent)
 	ScrollFrame.Content = ScrollContent
 
-	local ProgressFrame = CreateFrame("Frame", nil, MainFrame, "BackdropTemplate")
-	ProgressFrame:Size(self.db.panel.width - 20, 25)
-	ProgressFrame:Point("BOTTOM", MainFrame, "BOTTOM", 0, -25)
-	ProgressFrame:SetTemplate("Transparent")
+	local ProgressFrame = CreateFrame("Frame", nil, MainFrame)
+	ProgressFrame:SetFrameStrata("DIALOG")
+	ProgressFrame:SetAllPoints(MainFrame)
 	MainFrame.ProgressFrame = ProgressFrame
 
 	local ProgressBar = CreateFrame("StatusBar", nil, ProgressFrame)
-	ProgressBar:Size(self.db.panel.width - 40, 15)
-	ProgressBar:Point("CENTER", ProgressFrame, "CENTER", 0, 0)
+	ProgressBar:Size(self.db.panel.width - 50, 26)
+	ProgressBar:Point("CENTER", ProgressFrame, "CENTER")
 	ProgressBar:SetStatusBarTexture(E.media.normTex)
 	ProgressBar:SetMinMaxValues(0, 100)
 	ProgressBar:SetValue(0)
-	ProgressBar:SetStatusBarColor(0.22, 0.72, 0.0)
+	ProgressBar:GetStatusBarTexture():SetVertexColor(1, 1, 1)
+	ProgressBar:GetStatusBarTexture():SetGradient(
+		"HORIZONTAL",
+		C.CreateColorFromTable({ r = 0.32941, g = 0.52157, b = 0.93333, a = 1 }),
+		C.CreateColorFromTable({ r = 0.25882, g = 0.84314, b = 0.86667, a = 1 })
+	)
 	ProgressBar:CreateBackdrop("Transparent")
 	ProgressFrame.Bar = ProgressBar
 
-	local ProgressBarText = ProgressBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	ProgressBarText:Point("CENTER", ProgressBar, "CENTER", 0, 0)
-	ProgressBarText:SetText(L["Ready to scan"])
-	ProgressBarText:SetTextColor(0.7, 0.7, 0.7)
-	F.SetFontOutline(ProgressBarText)
-	ProgressBar.Text = ProgressBarText
+	local ProgressLabel = ProgressFrame:CreateFontString(nil, "OVERLAY")
+	F.SetFontOutline(ProgressLabel, E.db.general.font, E.db.general.fontSize + 12)
+	ProgressLabel:Point("BOTTOM", ProgressBar, "TOP", 0, 20)
+	ProgressLabel:SetText(L["Scanning"])
+	ProgressLabel:SetTextColor(C.ExtractRGBAFromTemplate("amber-400"))
+	ProgressFrame.Label = ProgressLabel
 
-	MainFrame.ControlFrame = ControlFrame1
-	MainFrame.ControlFrame2 = ControlFrame2
-	MainFrame.SearchBox = SearchBox
-	MainFrame.ThresholdSlider = ThresholdSlider
-	MainFrame.SortDropdown = SortDropdown
-	MainFrame.CategoryDropdown = categoryDropdown
-	MainFrame.SortOrderButton = SortOrderButton
-	MainFrame.RefreshButton = RefreshButton
-	MainFrame.NearlyCompleteButton = NearlyCompleteButton
-	MainFrame.RewardsFilterButton = RewardsFilterButton
-	MainFrame.ShowAllButton = ShowAllButton
+	local ProgressBarProgressText = ProgressBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	F.SetFontOutline(ProgressBarProgressText, F.GetCompatibleFont("Chivo Mono"), 14)
+	ProgressBarProgressText:SetTextColor(C.ExtractRGBAFromTemplate("neutral-50"))
+	ProgressBarProgressText:Point("CENTER", ProgressBar, "CENTER", 0, -1)
+	ProgressBar.ProgressText = ProgressBarProgressText
+	self:Hook(ProgressFrame, "Show", function()
+		SearchBox:ClearFocus()
+		SearchBox:Hide()
+		ControlFrame1:Hide()
+		ControlFrame2:Hide()
+		ScrollFrame:Hide()
+	end, true)
+	self:SecureHook(ProgressFrame, "Hide", function()
+		SearchBox:Show()
+		ControlFrame1:Show()
+		ControlFrame2:Show()
+		ScrollFrame:Show()
+	end)
 
 	MainFrame.UpdateDropdowns = function()
-		if SortDropdown and SortDropdown.GenerateMenu then
-			SortDropdown:GenerateMenu()
-		end
-		if categoryDropdown and categoryDropdown.GenerateMenu then
-			categoryDropdown:GenerateMenu()
-		end
+		SortDropdown:GenerateMenu()
+		CategoryDropdown:GenerateMenu()
 	end
 
 	MainFrame.ProgressFrame:Hide()

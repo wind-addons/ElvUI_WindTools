@@ -73,7 +73,7 @@ function A:HookAchievementFrame()
 
 			if not self.States.scannedSinceInit then
 				self.States.scannedSinceInit = true
-				E:Delay(0.4, self.StartAchievementScan, self)
+				self:StartAchievementScan()
 			end
 		end)
 	end

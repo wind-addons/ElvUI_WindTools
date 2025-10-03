@@ -123,8 +123,8 @@ do
 		self:CreateShadow(statsFrameHolder, 5)
 
 		local OldExpandButtonOnClick = frame.expandButton:GetScript("OnClick")
-		frame.expandButton:SetScript("OnClick", function(self)
-			OldExpandButtonOnClick(self)
+		frame.expandButton:SetScript("OnClick", function(_)
+			OldExpandButtonOnClick(frame.expandButton)
 			if statsFrame:IsShown() then
 				statsFrameHolder:Show()
 			else
@@ -132,7 +132,7 @@ do
 			end
 		end)
 
-		statsFrame:SetScript("OnHide", function(self)
+		statsFrame:SetScript("OnHide", function(_)
 			statsFrameHolder:Hide()
 		end)
 

@@ -6,9 +6,9 @@ local GetUnitName = GetUnitName
 local SendChatMessage = SendChatMessage
 
 function T:CreateThanksButton()
-	self.thanksButton = F.Widgets.New("Button", _G.TradeFrame, L["Thanks"], 80, 20, function(self)
-		if self.targetName then
-			SendChatMessage(T.db.thanksText, "WHISPER", nil, self.targetName)
+	self.thanksButton = F.Widgets.New("Button", _G.TradeFrame, L["Thanks"], 80, 20, function(_)
+		if self.thanksButton.targetName then
+			SendChatMessage(T.db.thanksText, "WHISPER", nil, self.thanksButton.targetName)
 		end
 	end)
 

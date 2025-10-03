@@ -23,9 +23,9 @@ function S:ElvUI_UnitFrames_Configure_Threat(_, f)
 	if not threat then
 		return
 	end
-	threat.PostUpdate = function(self, unit, status, r, g, b)
-		UF.UpdateThreat(self, unit, status, r, g, b)
-		local parent = self:GetParent()
+	threat.PostUpdate = function(_, unit, status, r, g, b)
+		UF.UpdateThreat(threat, unit, status, r, g, b)
+		local parent = threat:GetParent()
 		if not unit or parent.unit ~= unit then
 			return
 		end

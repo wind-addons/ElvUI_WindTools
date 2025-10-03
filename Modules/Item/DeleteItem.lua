@@ -46,14 +46,14 @@ function DI:AddKeySupport(dialog)
 	end
 
 	-- 按键删除
-	targetFrame:SetScript("OnKeyDown", function(self, key)
+	targetFrame:SetScript("OnKeyDown", function(_, key)
 		if key == "DELETE" then
 			dialog:GetButton1():Enable()
 		end
 	end)
 
-	targetFrame:HookScript("OnHide", function(self)
-		self:SetScript("OnKeyDown", nil)
+	targetFrame:HookScript("OnHide", function(_)
+		targetFrame:SetScript("OnKeyDown", nil)
 	end)
 end
 
@@ -79,9 +79,9 @@ function DI:ShowFillInButton(dialog)
 
 	-- 点击后填入 Delete
 	self.fillInButton:SetText(C.StringByTemplate(L["Click to confirm"], "rose-500"))
-	self.fillInButton:SetScript("OnClick", function(self)
+	self.fillInButton:SetScript("OnClick", function(_)
 		yesButton:Enable()
-		self:SetText("|cff2ecc71" .. L["Confirmed"] .. "|r")
+		self.fillInButton:SetText("|cff2ecc71" .. L["Confirmed"] .. "|r")
 	end)
 	self.fillInButton:Show()
 end

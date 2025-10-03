@@ -175,16 +175,16 @@ function EB:CreateButton(name, barDB)
 	button.bind = bind
 	button.cooldown = cooldown
 
-	button.SetTier = function(self, itemIDOrLink)
+	button.SetTier = function(_, itemIDOrLink)
 		local level = C_TradeSkillUI_GetItemReagentQualityByItemInfo(itemIDOrLink)
 			or C_TradeSkillUI_GetItemCraftedQualityByItemInfo(itemIDOrLink)
 
 		if not level or level == 0 then
-			self.qualityTier:SetText("")
-			self.qualityTier:Hide()
+			button.qualityTier:SetText("")
+			button.qualityTier:Hide()
 		else
-			self.qualityTier:SetText(CreateAtlasMarkup(format("Professions-Icon-Quality-Tier%d-Small", level)))
-			self.qualityTier:Show()
+			button.qualityTier:SetText(CreateAtlasMarkup(format("Professions-Icon-Quality-Tier%d-Small", level)))
+			button.qualityTier:Show()
 		end
 	end
 
@@ -252,33 +252,33 @@ function EB:SetUpButton(button, itemData, slotID, waitGroup)
 	-- OnUpdate
 	local OnUpdateFunction
 	if button.itemID then
-		OnUpdateFunction = function(self)
+		OnUpdateFunction = function(_)
 			local start, duration, enable
-			if self.questLogIndex and self.questLogIndex > 0 then
-				start, duration, enable = GetQuestLogSpecialItemCooldown(self.questLogIndex)
+			if button.questLogIndex and button.questLogIndex > 0 then
+				start, duration, enable = GetQuestLogSpecialItemCooldown(button.questLogIndex)
 			else
-				start, duration, enable = C_Item_GetItemCooldown(self.itemID)
+				start, duration, enable = C_Item_GetItemCooldown(button.itemID)
 			end
-			CooldownFrame_Set(self.cooldown, start, duration, enable)
+			CooldownFrame_Set(button.cooldown, start, duration, enable)
 			if duration and duration > 0 and enable and enable == 0 then
-				self.tex:SetVertexColor(0.4, 0.4, 0.4)
-			elseif not InCombatLockdown() and C_Item_IsItemInRange(self.itemID, "target") == false then
-				self.tex:SetVertexColor(1, 0, 0)
+				button.tex:SetVertexColor(0.4, 0.4, 0.4)
+			elseif not InCombatLockdown() and C_Item_IsItemInRange(button.itemID, "target") == false then
+				button.tex:SetVertexColor(1, 0, 0)
 			else
-				self.tex:SetVertexColor(1, 1, 1)
+				button.tex:SetVertexColor(1, 1, 1)
 			end
 		end
 	elseif button.slotID then
-		OnUpdateFunction = function(self)
-			local start, duration, enable = GetInventoryItemCooldown("player", self.slotID)
-			CooldownFrame_Set(self.cooldown, start, duration, enable)
+		OnUpdateFunction = function(_)
+			local start, duration, enable = GetInventoryItemCooldown("player", button.slotID)
+			CooldownFrame_Set(button.cooldown, start, duration, enable)
 		end
 	end
 	button:SetScript("OnUpdate", OnUpdateFunction)
 
 	-- Tooltips
-	button:SetScript("OnEnter", function(self)
-		local bar = self:GetParent()
+	button:SetScript("OnEnter", function(_)
+		local bar = button:GetParent()
 		local barDB = EB.db["bar" .. bar.id]
 		if not bar or not barDB then
 			return
@@ -299,21 +299,21 @@ function EB:SetUpButton(button, itemData, slotID, waitGroup)
 		end
 
 		if barDB.tooltip then
-			GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, -2)
+			GameTooltip:SetOwner(button, "ANCHOR_BOTTOMRIGHT", 0, -2)
 			GameTooltip:ClearLines()
 
-			if self.slotID then
-				GameTooltip:SetInventoryItem("player", self.slotID)
+			if button.slotID then
+				GameTooltip:SetInventoryItem("player", button.slotID)
 			else
-				GameTooltip:SetItemByID(self.itemID)
+				GameTooltip:SetItemByID(button.itemID)
 			end
 
 			GameTooltip:Show()
 		end
 	end)
 
-	button:SetScript("OnLeave", function(self)
-		local bar = self:GetParent()
+	button:SetScript("OnLeave", function(_)
+		local bar = button:GetParent()
 		local barDB = EB.db["bar" .. bar.id]
 		if not bar or not barDB then
 			return
@@ -445,7 +445,7 @@ function EB:CreateBar(id)
 		end
 	end
 
-	bar:SetScript("OnEnter", function(self)
+	bar:SetScript("OnEnter", function(_)
 		if not barDB then
 			return
 		end
@@ -461,7 +461,7 @@ function EB:CreateBar(id)
 		end
 	end)
 
-	bar:SetScript("OnLeave", function(self)
+	bar:SetScript("OnLeave", function(_)
 		if not barDB then
 			return
 		end

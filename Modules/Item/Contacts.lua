@@ -288,27 +288,27 @@ function CT:ConstructNameButtons()
 		button:RegisterForClicks("LeftButtonDown", "RightButtonDown")
 		F.SetFontOutline(button.Text)
 
-		button:SetScript("OnClick", function(self, mouseButton)
+		button:SetScript("OnClick", function(_, mouseButton)
 			if mouseButton == "LeftButton" then
 				if _G.SendMailNameEditBox then
-					local playerName = self.name
+					local playerName = button.name
 					if playerName then
-						if self.realm and self.realm ~= E.myrealm then
-							playerName = playerName .. "-" .. self.realm
+						if button.realm and button.realm ~= E.myrealm then
+							playerName = playerName .. "-" .. button.realm
 						end
 						_G.SendMailNameEditBox:SetText(playerName)
 					end
 				end
 			elseif mouseButton == "RightButton" then
-				CT:ShowContextText(self)
+				CT:ShowContextText(button)
 			end
 		end)
 
-		button:SetScript("OnEnter", function(self)
-			CT:SetButtonTooltip(self)
+		button:SetScript("OnEnter", function(_)
+			CT:SetButtonTooltip(button)
 		end)
 
-		button:SetScript("OnLeave", function(self)
+		button:SetScript("OnLeave", function(_)
 			GameTooltip:Hide()
 		end)
 

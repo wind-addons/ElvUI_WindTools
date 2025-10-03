@@ -1310,7 +1310,7 @@ local E = {}
 -- ============================================================================
 
 ---@class ClassColor : RGB
----@field colorStr string Hex color string
+---@field colorStr? string Hex color string
 
 ---@class SpecInfo
 ---@field id number Specialization ID

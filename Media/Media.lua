@@ -580,7 +580,7 @@ AddMedia("buttonDelete", "Button/Delete.png", "Icons")
 AddMedia("buttonSetting", "Button/Setting.png", "Icons")
 AddMedia("buttonGoStart", "Button/GoStart.png", "Icons")
 AddMedia("buttonGoEnd", "Button/GoEnd.png", "Icons")
-AddMedia("buttonUndo", "Button/Undo.png", "Icons")
+AddMedia("buttonUndo", "Button/Undo.tga", "Icons")
 AddMedia("buttonPin", "Button/Pin.png", "Icons")
 AddMedia("buttonDiscord", "Button/Discord.png", "Icons")
 

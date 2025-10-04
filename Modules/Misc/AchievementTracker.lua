@@ -977,4 +977,6 @@ function AT:Initialize()
 	self.initialized = true
 end
 
+AT.ProfileUpdate = AT.Initialize
+
 W:RegisterModule(AT:GetName())

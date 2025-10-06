@@ -99,7 +99,7 @@ AT.states = {
 		categoryID = nil, ---@type string|nil
 		hasRewards = false, ---@type boolean
 		minPercent = 0, ---@type number
-		searchTerm = "", ---@type string
+		pattern = "", ---@type string
 	},
 	sort = {
 		by = "percent", ---@type "percent"|"name"|"category"
@@ -275,14 +275,14 @@ end
 
 --- Set the element data for the achievement tracker
 function AT:UpdateView()
+	local filters = self.states.filters
 	local results = tFilter(self.states.results, function(data)
 		---@cast data AchievementData
-		local filters = self.states.filters
-		if filters.categoryID and data.categoryID ~= filters.categoryID then
+		if filters.hasRewards and not data.rewardItemID then
 			return false
 		end
 
-		if filters.hasRewards and not data.rewardItemID then
+		if filters.categoryID and data.categoryID ~= filters.categoryID then
 			return false
 		end
 
@@ -290,19 +290,21 @@ function AT:UpdateView()
 			return false
 		end
 
-		if filters.searchTerm and filters.searchTerm ~= "" then
-			local searchLower = strlower(filters.searchTerm)
+		if filters.pattern and strtrim(filters.pattern) ~= "" then
+			local patternLower = strlower(filters.pattern)
 			local nameLower = strlower(data.name)
 			local descLower = strlower(data.description or "")
-			if not (nameLower:find(searchLower, 1, true) or descLower:find(searchLower, 1, true)) then
+			if not strfind(nameLower, patternLower, 1, true) and not strfind(descLower, patternLower, 1, true) then
 				return false
 			end
 		end
 
 		return true
-	end)
+	end, true)
 
 	sort(results, function(a, b)
+		---@cast a AchievementData
+		---@cast b AchievementData
 		local aVal, bVal
 
 		if self.states.sort.by == "percent" then
@@ -310,7 +312,7 @@ function AT:UpdateView()
 		elseif self.states.sort.by == "name" then
 			aVal, bVal = a.name:lower(), b.name:lower()
 		elseif self.states.sort.by == "category" then
-			aVal, bVal = a.categoryName:lower(), b.categoryName:lower()
+			aVal, bVal = a.categoryID, b.categoryID
 		end
 
 		if self.states.sort.order == "desc" then
@@ -320,7 +322,9 @@ function AT:UpdateView()
 		end
 	end)
 
-	results[#results].isLastElement = true
+	if #results > 0 then
+		results[#results].isLastElement = true
+	end
 
 	local dataProvider = CreateDataProvider()
 	dataProvider:InsertTable(results)
@@ -598,7 +602,7 @@ function AT:Construct()
 	SearchBox:SetMaxLetters(50)
 	SearchBox:HookScript("OnTextChanged", function(editBox)
 		F.Throttle(1, "AchievementTrackerSearch", function()
-			self.states.filters.searchTerm = editBox:GetText()
+			self.states.filters.pattern = editBox:GetText()
 			self:UpdateView()
 		end)
 	end)
@@ -642,9 +646,9 @@ function AT:Construct()
 	F.SetFontOutline(ShowAllButton.Text, E.db.general.font)
 	S:Proxy("HandleButton", ShowAllButton)
 	ShowAllButton:SetScript("OnClick", function()
-		self.states.searchTerm = ""
-		self.states.filterCategoryID = nil
-		self.states.showOnlyRewards = false
+		self.states.filters.pattern = ""
+		self.states.filters.categoryID = nil
+		self.states.filters.hasRewards = false
 		self.states.currentThreshold = self.db.threshold.min
 		ThresholdSlider:SetValue(self.db.threshold.min)
 		SearchBox:SetText("")

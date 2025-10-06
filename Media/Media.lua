@@ -582,6 +582,7 @@ AddMedia("buttonGoStart", "Button/GoStart.png", "Icons")
 AddMedia("buttonGoEnd", "Button/GoEnd.png", "Icons")
 AddMedia("buttonUndo", "Button/Undo.tga", "Icons")
 AddMedia("buttonPin", "Button/Pin.png", "Icons")
+AddMedia("buttonCheck", "Button/Check.png", "Icons")
 AddMedia("buttonDiscord", "Button/Discord.png", "Icons")
 
 AddMedia("round", "round.png", "Textures")

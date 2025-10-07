@@ -37,7 +37,6 @@ local GetCategoryInfo = GetCategoryInfo
 local GetCategoryList = GetCategoryList
 local GetCategoryNumAchievements = GetCategoryNumAchievements
 local GetKeysArray = GetKeysArray
-local InCombatLockdown = InCombatLockdown
 local PlaySound = PlaySound
 
 local C_AchievementInfo_GetRewardItemID = C_AchievementInfo.GetRewardItemID

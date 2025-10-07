@@ -596,6 +596,7 @@ do
 		local region = LSM["LOCALE_BIT_" .. locale]
 		LSM:Register("font", "Accidental Presidency (en)", MediaPath .. "Fonts/AccidentalPresidency.ttf", region)
 		LSM:Register("font", "Chivo Mono (en)", MediaPath .. "Fonts/ChivoMono.ttf", region)
+		LSM:Register("font", "LINE Seed (en)", MediaPath .. "Fonts/LineSeed.otf", region)
 		LSM:Register("font", "Montserrat (en)", MediaPath .. "Fonts/Montserrat.ttf", region)
 		LSM:Register("font", "Roadway (en)", MediaPath .. "Fonts/Roadway.ttf", region)
 		LSM:Register("font", "Homespun (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/Homespun.ttf", region)
@@ -617,6 +618,7 @@ do
 			LSM.LOCALE_BIT_western
 		)
 		LSM:Register("font", "Chivo Mono", MediaPath .. "Fonts/ChivoMono.ttf", LSM.LOCALE_BIT_western)
+		LSM:Register("font", "LINE Seed", MediaPath .. "Fonts/LineSeed.otf", LSM.LOCALE_BIT_western)
 		LSM:Register("font", "Montserrat", MediaPath .. "Fonts/Montserrat.ttf", LSM.LOCALE_BIT_western)
 		LSM:Register("font", "Roadway", MediaPath .. "Fonts/Roadway.ttf", LSM.LOCALE_BIT_western)
 		W.CompatibleFont = false

@@ -1317,27 +1317,18 @@ P.misc = {
 	},
 	achievementTracker = {
 		enable = true,
-		automation = {
-			expanded = true,
-			scan = true,
-		},
-		button = {
-			height = 45,
-			spacing = 4,
-			progressWidth = 100,
-		},
-		panel = {
-			width = 450,
-			height = 500,
-		},
-		threshold = {
-			min = 50,
-			max = 99,
-			default = 80,
-		},
+		show = true,
+		width = 500,
+		height = 500,
+		threshold = 75,
 		scan = {
-			batchSize = 30,
-			delay = 0.01,
+			batchSize = 20,
+			batchInterval = 0.01,
+			automation = {
+				enable = true,
+				onShow = true,
+				onLogin = false,
+			},
 		},
 	},
 }

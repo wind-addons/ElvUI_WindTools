@@ -2436,5 +2436,115 @@ options.achievementTracker = {
 			type = "toggle",
 			name = L["Enable"],
 		},
+		size = {
+			order = 3,
+			type = "group",
+			name = L["Size"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.misc.achievementTracker.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					min = 400,
+					max = 1200,
+					step = 1,
+				},
+				height = {
+					order = 2,
+					type = "range",
+					name = L["Height"],
+					min = 300,
+					max = 1200,
+					step = 1,
+				},
+			},
+		},
+		scan = {
+			order = 4,
+			type = "group",
+			name = L["Scan"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.misc.achievementTracker.enable
+			end,
+			get = function(info)
+				return E.db.WT.misc.achievementTracker.scan[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.misc.achievementTracker.scan[info[#info]] = value
+			end,
+			args = {
+				batchSize = {
+					order = 1,
+					type = "range",
+					name = L["Batch Size"],
+					desc = L["Number of achievements to scan per frame."],
+					min = 1,
+					max = 2000,
+					step = 1,
+				},
+				batchInterval = {
+					order = 2,
+					type = "range",
+					name = L["Batch Interval"],
+					desc = L["Interval between each batch scan in seconds."],
+					min = 0.01,
+					max = 1,
+					step = 0.01,
+				},
+				betterAlign = {
+					order = 3,
+					type = "description",
+					width = "full",
+					name = " ",
+				},
+				automation = {
+					order = 4,
+					type = "toggle",
+					name = L["Automation"],
+					desc = L["Automatically scan achievements when certain events occur."],
+					get = function()
+						return E.db.WT.misc.achievementTracker.scan.automation.enable
+					end,
+					set = function(info, value)
+						E.db.WT.misc.achievementTracker.scan.automation.enable = value
+					end,
+				},
+				automationOnShow = {
+					order = 5,
+					type = "toggle",
+					name = L["Auto Scan on Show"],
+					desc = L["Scan achievements automatically when the tracker is shown."],
+					get = function()
+						return E.db.WT.misc.achievementTracker.scan.automation.onShow
+					end,
+					set = function(info, value)
+						E.db.WT.misc.achievementTracker.scan.automation.onShow = value
+					end,
+					disabled = function()
+						return not E.db.WT.misc.achievementTracker.scan.automation.enable
+					end,
+				},
+				automationOnLogin = {
+					order = 6,
+					type = "toggle",
+					name = L["Auto Scan on Login"],
+					desc = L["Scan achievements automatically when you log in."],
+					get = function()
+						return E.db.WT.misc.achievementTracker.scan.automation.onLogin
+					end,
+					set = function(info, value)
+						E.db.WT.misc.achievementTracker.scan.automation.onLogin = value
+					end,
+					disabled = function()
+						return not E.db.WT.misc.achievementTracker.scan.automation.enable
+					end,
+				},
+			},
+		},
 	},
 }

@@ -49,7 +49,7 @@ Português, Italiano
 
 ### Archivos Multimedia
 
-3 fuentes, 6 texturas y 2 tonos de llamada.
+5 fuentes, 6 texturas y 2 tonos de llamada.
 
 ### Objetos
 

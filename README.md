@@ -52,7 +52,7 @@ Português, Italiano
 
 ### Media Files
 
-3 fonts, 6 textures and 2 ringtones.
+5 fonts, 6 textures and 2 ringtones.
 
 ### Item
 

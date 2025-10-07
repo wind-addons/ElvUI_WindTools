@@ -974,7 +974,7 @@ L["Notice that if you are using some unblock addons in CN, you region are may ch
 L["Notification"] = "Notification"
 L["Number of Pages"] = "Nombre de pages"
 L["Number of Players"] = "Nombre de joueurs"
-L["Number of achievements to scan per frame."] = true
+L["Number of achievements to scan per batch."] = true
 L["Numerical Quality Tier"] = "Niveau de qualité numérique"
 L["O"] = "O"
 L["OMG, wealthy %player% puts %spell%!"] = "Waouh, %player% lance %spell% !"

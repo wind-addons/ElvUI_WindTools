@@ -974,7 +974,7 @@ L["Notice that if you are using some unblock addons in CN, you region are may ch
 L["Notification"] = "通知"
 L["Number of Pages"] = "页数"
 L["Number of Players"] = "玩家数量"
-L["Number of achievements to scan per frame."] = "每帧扫描的成就数量."
+L["Number of achievements to scan per batch."] = "每个批量扫描的成就数量."
 L["Numerical Quality Tier"] = "数字化品质等级"
 L["O"] = "官员"
 L["OMG, wealthy %player% puts %spell%!"] = "天啊, 土豪 %player% 竟然摆出了 %spell%!"

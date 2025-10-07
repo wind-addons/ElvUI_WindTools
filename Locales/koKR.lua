@@ -974,7 +974,7 @@ L["Notice that if you are using some unblock addons in CN, you region are may ch
 L["Notification"] = "알림 표시"
 L["Number of Pages"] = "페이지 수"
 L["Number of Players"] = "플레이어 수"
-L["Number of achievements to scan per frame."] = true
+L["Number of achievements to scan per batch."] = true
 L["Numerical Quality Tier"] = "숫자 품질 등급"
 L["O"] = "관리자"
 L["OMG, wealthy %player% puts %spell%!"] = "부유한 %player%님이 %spell% 시전!!"

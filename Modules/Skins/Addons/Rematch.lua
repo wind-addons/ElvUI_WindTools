@@ -637,14 +637,16 @@ local function ReskinListElement(frame)
 		frame.ExpandIcon:Size(12, 12)
 		F.Move(frame.ExpandIcon, 6, 0)
 		F.InternalizeMethod(frame.ExpandIcon, "SetTexCoord")
+		local ULx, ULy, _, _, _, _, LRx, LRy = frame.ExpandIcon:GetTexCoord()
 		F.CallMethod(frame.ExpandIcon, "SetTexCoord", 0, 1, 0, 1)
 		frame.ExpandIcon.SetTexCoord = function(_, ...)
-			local isPlus = F.IsAlmost({ 0.75, 0.80078125, 0, 0.40625 }, { ... })
-			frame.ExpandIcon:SetTexture(isPlus and W.Media.Icons.buttonPlus or W.Media.Icons.buttonMinus)
+			if F.IsAlmost({ 0.75, 0.80078125, 0, 0.40625 }, { ... }) then
+				frame.ExpandIcon:SetTexture(W.Media.Icons.buttonPlus)
+			elseif F.IsAlmost({ 0.80078125, 0.8515625, 0, 0.40625 }, { ... }) then
+				frame.ExpandIcon:SetTexture(W.Media.Icons.buttonMinus)
+			end
 		end
-		local ULx, ULy, _, _, _, _, LRx, LRy = frame.ExpandIcon:GetTexCoord()
 		frame.ExpandIcon:SetTexCoord(ULx, LRx, ULy, LRy)
-
 		frame.ExpandIcon.__windSkin = true
 	end
 

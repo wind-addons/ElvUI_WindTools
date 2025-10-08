@@ -59,7 +59,6 @@ local C_MythicPlus_GetRewardLevelForDifficultyLevel = C_MythicPlus.GetRewardLeve
 local C_MythicPlus_GetRunHistory = C_MythicPlus.GetRunHistory
 local C_SpecializationInfo_GetSpecialization = C_SpecializationInfo.GetSpecialization
 local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo
-local C_Timer_After = C_Timer.After
 local Enum_LFGListFilter = Enum.LFGListFilter
 
 local GROUP_FINDER_CATEGORY_ID_DUNGEONS = GROUP_FINDER_CATEGORY_ID_DUNGEONS
@@ -642,11 +641,7 @@ function LL:InitializeRightPanel()
 		end
 
 		entry:HookScript("OnClick", function(f, button)
-			if button == "LeftButton" then
-				C_Timer_After(0.01, function()
-					HandleAutoJoin(LL, f.resultID, button)
-				end)
-			end
+			HandleAutoJoin(LL, f.resultID, button)
 		end)
 
 		entry.autoJoinHandled = true

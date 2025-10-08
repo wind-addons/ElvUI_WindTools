@@ -154,7 +154,10 @@ function circleIconPrototype:OnLeave()
 end
 
 function circleIconPrototype:Reset()
-	self.link = nil
+	self.name = nil
+	self.itemLink = nil
+	self.itemID = nil
+	self.spellID = nil
 	self.Texture:SetTexture(nil)
 	self.Border:SetVertexColor(1, 1, 1, 1)
 	self:Hide()

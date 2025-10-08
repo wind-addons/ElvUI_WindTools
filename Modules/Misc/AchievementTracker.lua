@@ -279,7 +279,7 @@ function AT:UpdateView()
 
 	local dataProvider = CreateDataProvider()
 	dataProvider:InsertTable(results)
-	self.MainFrame.ScrollFrame.ScrollView:SetDataProvider(dataProvider)
+	self.MainFrame.ScrollFrame.ScrollBox:SetDataProvider(dataProvider)
 	self.MainFrame:UpdateDropdowns()
 end
 
@@ -380,11 +380,11 @@ function AT:ScrollElementInitializer(frame, data, scrollBox)
 		RewardsIcon:Point("RIGHT", -REWARDS_ICON_OFFSET_X, 0)
 		RewardsIcon:CreateBackdrop()
 		RewardsIcon:SetTexCoord(unpack(E.TexCoords))
-		RewardsIcon:SetScript("OnEnter", function(self)
+		RewardsIcon:SetScript("OnEnter", function(icon)
 			if not frame.data.reward.itemID then
 				return
 			end
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+			GameTooltip:SetOwner(icon, "ANCHOR_RIGHT")
 			GameTooltip:SetItemByID(frame.data.reward.itemID)
 			GameTooltip:Show()
 		end)
@@ -432,28 +432,28 @@ function AT:ScrollElementInitializer(frame, data, scrollBox)
 		frame.DetailFrame.Description = Description
 		frame:EnableMouse(true)
 
-		frame.UpdateHeight = function(self)
-			self.data.height = 2 + self.ProgressBackdrop:GetHeight()
+		frame.UpdateHeight = function(f)
+			f.data.height = 2 + f.ProgressBackdrop:GetHeight()
 
-			if self.data.isExpanded then
-				self.data.height = self.data.height + self.DetailFrame:GetHeight()
+			if f.data.isExpanded then
+				f.data.height = f.data.height + f.DetailFrame:GetHeight()
 			end
 
-			self:Height(self.data.height)
+			f:Height(f.data.height)
 		end
 
-		frame:SetScript("OnMouseDown", function(self, button)
+		frame:SetScript("OnMouseDown", function(f, button)
 			if button == "LeftButton" then
-				self.data.isExpanded = not self.data.isExpanded
-				self.DetailFrame:SetShown(self.data.isExpanded)
-				self:UpdateHeight()
+				f.data.isExpanded = not f.data.isExpanded
+				f.DetailFrame:SetShown(f.data.isExpanded)
+				f:UpdateHeight()
 
 				scrollBox:FullUpdate(ScrollBoxConstants.UpdateImmediately)
-				if self.data.isLastElement then
+				if f.data.isLastElement then
 					scrollBox:ScrollToEnd()
 				end
 			elseif button == "MiddleButton" then
-				if not C_ContentTracking_IsTracking(Enum_ContentTrackingType.Achievement, self.data.id) then
+				if not C_ContentTracking_IsTracking(Enum_ContentTrackingType.Achievement, f.data.id) then
 					local trackedCount = #C_ContentTracking_GetTrackedIDs(Enum_ContentTrackingType.Achievement)
 					if trackedCount >= Constants_ContentTrackingConsts.MaxTrackedAchievements then
 						_G.UIErrorsFrame:AddMessage(
@@ -466,7 +466,7 @@ function AT:ScrollElementInitializer(frame, data, scrollBox)
 						return
 					end
 
-					local err = C_ContentTracking_StartTracking(Enum_ContentTrackingType.Achievement, self.data.id)
+					local err = C_ContentTracking_StartTracking(Enum_ContentTrackingType.Achievement, f.data.id)
 					if not err then
 						PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
 						IndicatorFrame.TrackingText:SetShown(true)
@@ -474,14 +474,14 @@ function AT:ScrollElementInitializer(frame, data, scrollBox)
 				else
 					C_ContentTracking_StopTracking(
 						Enum_ContentTrackingType.Achievement,
-						self.data.id,
+						f.data.id,
 						Enum_ContentTrackingStopType.Manual
 					)
 					PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF)
 					IndicatorFrame.TrackingText:SetShown(false)
 				end
 			elseif button == "RightButton" then
-				_G.AchievementFrame_SelectAchievement(self.data.id)
+				_G.AchievementFrame_SelectAchievement(f.data.id)
 			end
 		end)
 
@@ -707,8 +707,8 @@ function AT:Construct()
 	RefreshButton:SetScript("OnClick", function()
 		self:ScanAchievements()
 	end)
-	RefreshButton:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	RefreshButton:SetScript("OnEnter", function(btn)
+		GameTooltip:SetOwner(btn, "ANCHOR_RIGHT")
 		GameTooltip:SetText(L["Rescan All Achievements"], 1, 1, 1)
 		GameTooltip:Show()
 	end)
@@ -862,13 +862,12 @@ function AT:Construct()
 	ScrollBox:SetClipsChildren(true)
 	ScrollFrame.ScrollBox = ScrollBox
 
-	local ScrollView = CreateScrollBoxListLinearView()
+	local ScrollView = CreateScrollBoxListLinearView() --[[@as ScrollBoxLinearBaseViewMixin]]
 
 	local DataProvider = CreateDataProvider()
 	DataProvider:InsertTable({})
 
-	ScrollView--[[@as ScrollBoxLinearBaseViewMixin]]:SetPadding(8, 8, 8, 8, 8)
-	ScrollView:SetDataProvider(DataProvider)
+	ScrollView:SetPadding(8, 8, 8, 8, 8)
 	ScrollView:SetElementInitializer("BackdropTemplate", function(frame, data)
 		self:ScrollElementInitializer(frame, data, ScrollBox)
 	end)
@@ -879,6 +878,7 @@ function AT:Construct()
 		self:ScrollElementResetter(frame)
 	end)
 	ScrollUtil.InitScrollBoxListWithScrollBar(ScrollBox, ScrollBar, ScrollView)
+	ScrollBox:SetDataProvider(DataProvider)
 	ScrollFrame.ScrollView = ScrollView
 
 	local ProgressFrame = CreateFrame("Frame", nil, MainFrame)

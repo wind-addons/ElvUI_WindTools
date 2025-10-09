@@ -39,8 +39,10 @@ function S:Blizzard_GarrisonUI()
 		_G.GarrisonLandingPage,
 		_G.GarrisonBuildingFrame,
 		_G.GarrisonShipyardFrame,
+	}
+
+	local backdropFrames = {
 		_G.OrderHallMissionFrame,
-		_G.OrderHallCommandBar,
 		_G.BFAMissionFrame,
 		_G.CovenantMissionFrame,
 	}
@@ -68,6 +70,13 @@ function S:Blizzard_GarrisonUI()
 			self:CreateShadow(frame)
 		end
 	end
+
+	for _, frame in pairs(backdropFrames) do
+		if frame then
+			self:CreateBackdropShadow(frame)
+		end
+	end
+
 	for _, tab in pairs(tabs) do
 		self:ReskinTab(tab)
 	end

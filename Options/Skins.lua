@@ -850,6 +850,11 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Quest Frames"],
 		},
+		recentAllies = {
+			order = 10,
+			type = "toggle",
+			name = L["Recent Allies"],
+		},
 		raidInfo = {
 			order = 10,
 			type = "toggle",

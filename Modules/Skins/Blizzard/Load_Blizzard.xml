@@ -69,6 +69,7 @@
 	<Script file='ProfessionsCustomerOrders.lua'/>
 	<Script file='Quest.lua'/>
 	<Script file='RaidInfo.lua'/>
+	<Script file='RecentAllies.lua'/>
 	<Script file='Scenario.lua'/>
 	<Script file='ScrappingMachine.lua'/>
 	<Script file='SettingsPanel.lua'/>

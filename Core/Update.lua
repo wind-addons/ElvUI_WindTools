@@ -10,6 +10,7 @@ local tonumber = tonumber
 local type = type
 
 ---@cast E ElvUI
+---@cast P ProfileDB
 
 local isFirstLine = true
 
@@ -336,6 +337,13 @@ function W:UpdateScripts()
 			E.global.WT.developer.logLevel = E.global.WT.core.logLevel
 			E.global.WT.core.logLevel = nil
 			UpdateMessage(L["Advanced"] .. ": " .. L["Developer"], globalVersion)
+		end
+	end
+
+	if profileVersion < 4.00 then
+		if E.db.WT and E.db.WT.item.inspect then
+			E:CopyTable(E.db.WT.item.inspect, P.item.inspect)
+			UpdateMessage(L["Item"] .. ": " .. L["Database cleanup"], profileVersion)
 		end
 	end
 

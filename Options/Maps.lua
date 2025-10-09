@@ -594,8 +594,14 @@ options.minimapButtons = {
 					name = L["Inverse Direction"],
 					desc = L["Reverse the direction of adding buttons."],
 				},
-				orientation = {
+				reverseOrder = {
 					order = 4,
+					type = "toggle",
+					name = L["Reverse Order"],
+					desc = L["Reverse the sort order of buttons."],
+				},
+				orientation = {
+					order = 5,
 					type = "select",
 					name = L["Orientation"],
 					desc = L["Arrangement direction of the bar."],
@@ -606,12 +612,47 @@ options.minimapButtons = {
 					},
 					set = function(info, value)
 						E.private.WT.maps.minimapButtons[info[#info]] = value
-						-- 如果开启日历美化的话，需要重载来取消掉美化
-						if value == "NOANCHOR" and E.private.WT.maps.minimapButtons.calendar then
-							E:StaticPopup_Show("PRIVATE_RL")
-						else
-							MB:UpdateLayout()
-						end
+						MB:UpdateLayout()
+					end,
+				},
+
+				betterAlign = {
+					order = 6,
+					type = "description",
+					name = " ",
+					width = "full",
+				},
+				sortingPriority = {
+					order = 7,
+					type = "input",
+					multiline = 5,
+					width = "full",
+					name = L["Sorting Priority"],
+					desc = format(
+						"%s\n\n%s\n%s\n%s\n\n%s\n%s",
+						L["Set the sorting priority of minimap buttons by patterns."],
+						L["Enter a comma-separated list of Lua regex patterns."],
+						L["Buttons matching earlier patterns will appear first."],
+						L["Leading and trailing whitespace in each pattern will be automatically trimmed."],
+						L["If you are not familiar with Lua regex, try using AI to help you."],
+						format(
+						L["Use command %s to view all handled buttons and their current sorting priority."],
+							C.StringByTemplate("/wtmmb all", "teal-300")
+						)
+					),
+					set = function(info, value)
+						E.private.WT.maps.minimapButtons[info[#info]] = value
+						MB:UpdateLayout()
+					end,
+				},
+				resetSortingPriority = {
+					order = 8,
+					type = "execute",
+					name = L["Reset"],
+					desc = L["Reset sorting priority to default value."],
+					func = function()
+						E.private.WT.maps.minimapButtons.sortingPriority = V.maps.minimapButtons.sortingPriority
+						MB:UpdateLayout()
 					end,
 				},
 			},
@@ -678,12 +719,6 @@ options.minimapButtons = {
 				E:StaticPopup_Show("PRIVATE_RL")
 			end,
 			args = {
-				-- calendar = {
-				--     order = 1,
-				--     type = "toggle",
-				--     name = L["Calendar"],
-				--     desc = L["Add calendar button to the bar."]
-				-- },
 				expansionLandingPage = {
 					order = 2,
 					type = "toggle",

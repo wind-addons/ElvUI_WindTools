@@ -136,9 +136,10 @@ V.maps = {
 		backdropSpacing = 3,
 		spacing = 2,
 		inverseDirection = false,
+		reverseOrder = false,
 		orientation = "HORIZONTAL",
-		-- calendar = false,
 		expansionLandingPage = false,
+		sortingPriority = "^Expansion, _BugSack, WeakAuras$, _Saved, _Wind"
 	},
 }
 

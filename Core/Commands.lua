@@ -11,6 +11,7 @@ local pairs = pairs
 local print = print
 local strlower = strlower
 local strsub = strsub
+local strupper = strupper
 local type = type
 local wipe = wipe
 
@@ -27,6 +28,7 @@ local C_UI_Reload = C_UI.Reload
 ---@param keys string|table The command key(s) or aliases that will trigger this command
 ---@param func function The callback function to execute when the command is invoked
 function W:AddCommand(name, keys, func)
+	name = strupper(name)
 	if not _G.SlashCmdList["WINDTOOLS_" .. name] then
 		_G.SlashCmdList["WINDTOOLS_" .. name] = func
 

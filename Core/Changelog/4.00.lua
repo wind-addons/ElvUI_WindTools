@@ -26,6 +26,7 @@ W.Changelog[400] = {
 			"[美化外观] 新增了 Advanced Interface Options 的皮肤.",
 			"[美化外观] 新增了 Rematch 的皮肤.",
 			"[其他] 新增了 [成就追踪器] 模组. 作者: Dack",
+			"[好友列表] 现在能够显示军团Remix玩家的图标.",
 		},
 		["zhTW"] = {
 			"新增字型 [LINE Seed (en)].",
@@ -33,6 +34,7 @@ W.Changelog[400] = {
 			"[美化外觀] 新增了 Advanced Interface Options 的皮膚.",
 			"[美化外觀] 新增了 Rematch 的皮膚.",
 			"[其他] 新增了 [成就追蹤器] 模組. 作者: Dack",
+			"[好友列表] 現在能夠顯示軍團Remix玩家的圖示.",
 		},
 		["enUS"] = {
 			"New font [LINE Seed].",
@@ -40,6 +42,7 @@ W.Changelog[400] = {
 			"[Skins] Added skin for Advanced Interface Options.",
 			"[Skins] Added skin for Rematch.",
 			"[Others] Added [Achievement Tracker] module. Made by: Dack",
+			"[Friend List] Now able to display icons for Legion Remix players.",
 		},
 		["koKR"] = {
 			"새 글꼴 [LINE Seed (en)].",
@@ -47,6 +50,7 @@ W.Changelog[400] = {
 			"[스킨] 고급 인터페이스 옵션에 스킨이 추가되었습니다.",
 			"[스킨] Rematch에 스킨이 추가되었습니다.",
 			"[기타] [업적 추적기] 모듈이 추가되었습니다. 제작자: Dack",
+			"[친구 목록] 이제 군단 리믹스 플레이어의 아이콘을 표시할 수 있습니다.",
 		},
 		["ruRU"] = {
 			"Новый шрифт [LINE Seed].",
@@ -54,6 +58,7 @@ W.Changelog[400] = {
 			"[Скины] Добавлен скин для Advanced Interface Options.",
 			"[Скины] Добавлен скин для Rematch.",
 			"[Прочее] Добавлен модуль [Отслеживание достижений]. Автор: Dack",
+			"[Список друзей] Теперь можно отображать значки для игроков Legion Remix.",
 		},
 	},
 	IMPROVEMENT = {

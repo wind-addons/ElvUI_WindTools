@@ -3,6 +3,11 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
+local hooksecurefunc = hooksecurefunc
+local unpack = unpack
+
+local CreateFrame = CreateFrame
+
 function S:Blizzard_AdventureMap()
 	if not self:CheckDB("adventureMap") then
 		return
@@ -19,7 +24,7 @@ function S:Blizzard_AdventureMap()
 
 	if AdventureMapQuestChoiceDialog.Portrait then
 		AdventureMapQuestChoiceDialog
-		.Portrait--[[@as Texture]]
+			.Portrait--[[@as Texture]]
 			:SetDrawLayer("OVERLAY", 3)
 	end
 

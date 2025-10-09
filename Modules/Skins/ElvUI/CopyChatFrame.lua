@@ -12,7 +12,7 @@ function S:ElvUICopyChatFrame()
 	end
 
 	if CH and CH.CopyChatFrameEditBox then
-		F.SetFontOutline(CH.CopyChatFrameEditBox)
+		F.SetFont(CH.CopyChatFrameEditBox)
 	end
 end
 

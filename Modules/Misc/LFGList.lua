@@ -401,7 +401,7 @@ function LL:InitializePartyKeystoneFrame()
 	frame.detailsButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
 	frame.detailsButton:Size(40, self.db.partyKeystone.font.size + 4)
 	F.SetFontWithDB(frame.detailsButton.Text, self.db.partyKeystone.font)
-	F.SetFontOutline(frame.detailsButton.Text, nil, "-2")
+	F.SetFont(frame.detailsButton.Text, nil, "-2")
 	frame.detailsButton:SetText(L["More"])
 	frame.detailsButton:Point("TOPRIGHT", frame, "TOPRIGHT", -8, -8)
 	S:Proxy("HandleButton", frame.detailsButton)
@@ -428,7 +428,7 @@ function LL:InitializePartyKeystoneFrame()
 	frame.sendToPartyChat = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
 	frame.sendToPartyChat:Size(40, self.db.partyKeystone.font.size + 4)
 	F.SetFontWithDB(frame.sendToPartyChat.Text, self.db.partyKeystone.font)
-	F.SetFontOutline(frame.sendToPartyChat.Text, nil, "-2")
+	F.SetFont(frame.sendToPartyChat.Text, nil, "-2")
 	frame.sendToPartyChat:SetText(L["Send"])
 	frame.sendToPartyChat:Point("RIGHT", frame.detailsButton, "LEFT", -5, 0)
 	S:Proxy("HandleButton", frame.sendToPartyChat)
@@ -525,12 +525,12 @@ function LL:UpdatePartyKeystoneFrame()
 
 	frame.detailsButton:Size(floor(40 * scale), self.db.partyKeystone.font.size + 4)
 	F.SetFontWithDB(frame.detailsButton.Text, self.db.partyKeystone.font)
-	F.SetFontOutline(frame.detailsButton.Text, nil, "-2")
+	F.SetFont(frame.detailsButton.Text, nil, "-2")
 
 	frame.sendToPartyChat:SetEnabled(#frame.partyMessages ~= 0)
 	frame.sendToPartyChat:Size(floor(40 * scale), self.db.partyKeystone.font.size + 4)
 	F.SetFontWithDB(frame.sendToPartyChat.Text, self.db.partyKeystone.font)
-	F.SetFontOutline(frame.sendToPartyChat.Text, nil, "-2")
+	F.SetFont(frame.sendToPartyChat.Text, nil, "-2")
 
 	for i = 1, 5 do
 		local yOffset = (heightIncrement + self.db.partyKeystone.font.size) * (i - 1) + 10
@@ -1308,7 +1308,7 @@ function LL:InitializeRightPanel()
 
 	-- Quick Access Title
 	local quickAccessTitle = quickAccessPanel:CreateFontString(nil, "OVERLAY")
-	F.SetFontOutline(quickAccessTitle, nil, 16 + self.db.rightPanel.adjustFontSize)
+	F.SetFont(quickAccessTitle, nil, 16 + self.db.rightPanel.adjustFontSize)
 	quickAccessTitle:Point("TOP", quickAccessPanel, "TOP", 0, 0)
 	quickAccessTitle:SetText(F.GetWindStyleText(L["Quick Access"]))
 

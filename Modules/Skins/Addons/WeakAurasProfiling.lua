@@ -15,15 +15,15 @@ local function SkinProfilingLine(frame)
 
 	if frame.progressBar then
 		frame.progressBar:SetStatusBarTexture(E.media.normTex)
-		F.SetFontOutline(frame.progressBar.name, W.AsianLocale and E.db.general.font or nil)
+		F.SetFont(frame.progressBar.name, W.AsianLocale and E.db.general.font or nil)
 	end
 
 	if frame.time then
-		F.SetFontOutline(frame.time)
+		F.SetFont(frame.time)
 	end
 
 	if frame.spike then
-		F.SetFontOutline(frame.spike)
+		F.SetFont(frame.spike)
 	end
 
 	frame.__windSkin = true
@@ -82,7 +82,7 @@ local function SkinProfilingFrame(frame)
 	end)
 
 	if frame.stats then
-		F.SetFontOutline(frame.stats)
+		F.SetFont(frame.stats)
 	end
 
 	frame.__windSkin = true
@@ -108,7 +108,7 @@ local function SkinProfilingReport(frame)
 	F.Move(scrollFrame.ScrollBar, 13, 0)
 
 	if scrollFrame.messageFrame then
-		F.SetFontOutline(scrollFrame.messageFrame)
+		F.SetFont(scrollFrame.messageFrame)
 	end
 
 	frame.__windSkin = true

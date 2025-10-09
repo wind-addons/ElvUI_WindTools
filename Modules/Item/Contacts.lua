@@ -286,7 +286,7 @@ function CT:ConstructNameButtons()
 
 		button:SetText("")
 		button:RegisterForClicks("LeftButtonDown", "RightButtonDown")
-		F.SetFontOutline(button.Text)
+		F.SetFont(button.Text)
 
 		button:SetScript("OnClick", function(_, mouseButton)
 			if mouseButton == "LeftButton" then
@@ -369,7 +369,7 @@ function CT:ConstructPageController()
 
 	local pageIndicater = slider:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 	pageIndicater:Point("BOTTOM", slider, "TOP", 0, 6)
-	F.SetFontOutline(pageIndicater, F.GetCompatibleFont("Montserrat"))
+	F.SetFont(pageIndicater, F.GetCompatibleFont("Montserrat"))
 	slider.pageIndicater = pageIndicater
 
 	-- Mouse wheel control

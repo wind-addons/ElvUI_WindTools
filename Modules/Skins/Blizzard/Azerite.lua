@@ -10,7 +10,7 @@ function S:Blizzard_AzeriteUI()
 
 	self:CreateBackdropShadow(_G.AzeriteEmpoweredItemUI)
 	if _G.AzeriteEmpoweredItemUITitleText then
-		F.SetFontOutline(_G.AzeriteEmpoweredItemUITitleText)
+		F.SetFont(_G.AzeriteEmpoweredItemUITitleText)
 	end
 end
 

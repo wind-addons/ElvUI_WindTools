@@ -208,7 +208,7 @@ local function ConfigureYellowHeaderFont(fontObject)
 		return
 	end
 
-	F.SetFontOutline(fontObject)
+	F.SetFont(fontObject)
 	fontObject:SetTextColor(1, 0.8, 0) -- Yellow for headers
 	fontObject:SetShadowColor(0, 0, 0, 0)
 	hooksecurefunc(fontObject, "SetTextColor", MaintainYellowTextColor)
@@ -236,7 +236,7 @@ local function ConfigureWhiteContentFont(fontObject)
 		return
 	end
 
-	F.SetFontOutline(fontObject)
+	F.SetFont(fontObject)
 	fontObject:SetTextColor(1, 1, 1) -- White for content
 	fontObject:SetShadowColor(0, 0, 0, 0)
 	hooksecurefunc(fontObject, "SetTextColor", MaintainWhiteTextColor)
@@ -251,7 +251,7 @@ local function QuestInfo_Display()
 	for _, objectiveText in pairs(_G.QuestInfoObjectivesFrame.Objectives) do
 		if objectiveText and not objectiveText.__windSkin then
 			if E.private.skins.parchmentRemoverEnable then
-				F.SetFontOutline(objectiveText)
+				F.SetFont(objectiveText)
 
 				-- Hook text color changes to maintain our styling
 				if not objectiveText.colorHooked then
@@ -422,8 +422,8 @@ function S:BlizzardQuestFrames()
 	end
 
 	-- Apply font outlines to model-related text elements
-	F.SetFontOutline(_G.QuestNPCModelText)
-	F.SetFontOutline(_G.QuestNPCModelNameText)
+	F.SetFont(_G.QuestNPCModelText)
+	F.SetFont(_G.QuestNPCModelNameText)
 
 	-- Only Modify the text colors if parchment is disabled
 	if not E.private.skins.parchmentRemoverEnable then

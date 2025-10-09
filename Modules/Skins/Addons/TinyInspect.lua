@@ -35,13 +35,13 @@ do
 		end
 
 		if frame.spectext then
-			F.SetFontOutline(frame.spectext, E.db.general.font)
+			F.SetFont(frame.spectext, E.db.general.font)
 		end
 
 		for i = 1, 20 do
 			if frame["item" .. i] then
-				F.SetFontOutline(frame["item" .. i].itemString, E.db.general.font)
-				F.SetFontOutline(frame["item" .. i].levelString, "Montserrat")
+				F.SetFont(frame["item" .. i].itemString, E.db.general.font)
+				F.SetFont(frame["item" .. i].levelString, "Montserrat")
 			end
 		end
 
@@ -101,9 +101,9 @@ do
 		end
 
 		for i = 1, 20 do
-			F.SetFontOutline(statsFrame["stat" .. i].Label, E.db.general.font)
-			F.SetFontOutline(statsFrame["stat" .. i].Value, E.db.general.font)
-			F.SetFontOutline(statsFrame["stat" .. i].PlayerValue, E.db.general.font)
+			F.SetFont(statsFrame["stat" .. i].Label, E.db.general.font)
+			F.SetFont(statsFrame["stat" .. i].Value, E.db.general.font)
+			F.SetFont(statsFrame["stat" .. i].PlayerValue, E.db.general.font)
 		end
 
 		for _, region in pairs({ statsFrame:GetRegions() }) do

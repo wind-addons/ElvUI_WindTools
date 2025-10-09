@@ -22,11 +22,11 @@ function S:PetBattle()
 
 	self:CreateBackdropShadow(_G.PetBattleFrame.ActiveAlly.ActualHealthBar)
 	self:CreateBackdropShadow(_G.PetBattleFrame.ActiveAlly.Icon)
-	F.SetFontOutline(_G.PetBattleFrame.ActiveAlly.Name)
+	F.SetFont(_G.PetBattleFrame.ActiveAlly.Name)
 
 	self:CreateBackdropShadow(_G.PetBattleFrame.ActiveEnemy.ActualHealthBar)
 	self:CreateBackdropShadow(_G.PetBattleFrame.ActiveEnemy.Icon)
-	F.SetFontOutline(_G.PetBattleFrame.ActiveEnemy.Name)
+	F.SetFont(_G.PetBattleFrame.ActiveEnemy.Name)
 
 	self:CreateShadow(_G.PetBattleFrame.Ally2)
 	self:CreateShadow(_G.PetBattleFrame.Ally3)

@@ -17,7 +17,7 @@ local function StyleSilverDragonText(fontString, size, color)
 		return
 	end
 
-	F.SetFontOutline(fontString, E.db.general.font, size)
+	F.SetFont(fontString, E.db.general.font, size)
 	fontString:SetTextColor(color and unpack(color) or 1, 1, 1, 1)
 	fontString:SetShadowOffset(1, -1)
 	fontString:SetShadowColor(0, 0, 0, 0.8)

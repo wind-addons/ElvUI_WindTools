@@ -171,7 +171,7 @@ function EMP:Initialize()
 
 	_G.MerchantPrevPageButton:ClearAllPoints()
 	_G.MerchantPrevPageButton:Point("CENTER", _G.MerchantFrame, "BOTTOMLEFT", buttonOffset, 93)
-	F.SetFontOutline(_G.MerchantPageText)
+	F.SetFont(_G.MerchantPageText)
 	_G.MerchantPageText:ClearAllPoints()
 	_G.MerchantPageText:Point("BOTTOM", _G.MerchantFrame, "BOTTOM", 0, 86)
 	_G.MerchantNextPageButton:ClearAllPoints()

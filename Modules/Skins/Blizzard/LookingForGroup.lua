@@ -31,10 +31,10 @@ function S:LookingForGroupFrames()
 
 	if _G.LFDQueueFrameRandomScrollFrameChildFrame then
 		local frame = _G.LFDQueueFrameRandomScrollFrameChildFrame
-		F.SetFontOutline(frame.title, E.db.general.font)
-		F.SetFontOutline(frame.description, E.db.general.font)
-		F.SetFontOutline(frame.rewardsLabel, E.db.general.font)
-		F.SetFontOutline(frame.rewardsDescription, E.db.general.font)
+		F.SetFont(frame.title, E.db.general.font)
+		F.SetFont(frame.description, E.db.general.font)
+		F.SetFont(frame.rewardsLabel, E.db.general.font)
+		F.SetFont(frame.rewardsDescription, E.db.general.font)
 	end
 
 	-- if no party found, the button also need skin

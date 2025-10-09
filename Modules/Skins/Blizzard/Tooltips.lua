@@ -33,7 +33,7 @@ local function StyleTooltipWidgetContainer(tt)
 			if frame.Text then
 				F.InternalizeMethod(frame.Text, "SetText")
 				hooksecurefunc(frame.Text, "SetText", styleIconsInLine)
-				F.SetFontOutline(frame.Text)
+				F.SetFont(frame.Text)
 				frame.Text:SetText(frame.Text:GetText())
 			end
 			frame.__windSkin = true

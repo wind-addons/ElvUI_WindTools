@@ -45,7 +45,7 @@ function S:MerchantFrame()
 			local token = _G["MerchantToken" .. i] --[[@as BackpackTokenTemplate?]]
 			if token and not token.__wind then
 				token:Width(token:GetWidth() + 2)
-				F.SetFontOutline(token.Count)
+				F.SetFont(token.Count)
 				F.Move(token.Count, -2, 0)
 				token.Icon:SetTexCoord(unpack(E.TexCoords))
 				token.__wind = true

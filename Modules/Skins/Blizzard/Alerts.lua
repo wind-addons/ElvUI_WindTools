@@ -28,10 +28,10 @@ function S:SkinAchievementAlert(frame)
 
 	self:CreateBackdropShadow(frame)
 
-	F.SetFontOutline(frame.Unlocked)
-	F.SetFontOutline(frame.Name, nil, "+4")
+	F.SetFont(frame.Unlocked)
+	F.SetFont(frame.Name, nil, "+4")
 	frame.Name.SetFont = E.noop
-	F.SetFontOutline(frame.GuildName)
+	F.SetFont(frame.GuildName)
 
 	if frame.Icon.Texture.b then
 		frame.Icon.Texture.b:Point("TOPLEFT", frame.Icon.Texture, "TOPLEFT", -1, 1)
@@ -70,8 +70,8 @@ function S:SkinCriteriaAlert(frame)
 
 	frame:SetWidth(frame:GetWidth() + 10)
 
-	F.SetFontOutline(frame.Unlocked, nil, "+1")
-	F.SetFontOutline(frame.Name, nil, "+3")
+	F.SetFont(frame.Unlocked, nil, "+1")
+	F.SetFont(frame.Name, nil, "+3")
 
 	if frame.Icon.Texture.b then
 		frame.Icon.Texture.b:Point("TOPLEFT", frame.Icon.Texture, "TOPLEFT", -1, 1)
@@ -91,8 +91,8 @@ function S:SkinMoneyWonAlert(frame)
 	end
 
 	self:CreateBackdropShadow(frame)
-	F.SetFontOutline(frame.Label)
-	F.SetFontOutline(frame.Amount, nil, "+1")
+	F.SetFont(frame.Label)
+	F.SetFont(frame.Amount, nil, "+1")
 
 	frame.Label:ClearAllPoints()
 	frame.Label:Point("TOP", frame.backdrop, "TOP", 24, -5)
@@ -112,8 +112,8 @@ function S:SkinNewRecipeLearnedAlert(frame)
 	end
 
 	self:CreateBackdropShadow(frame)
-	F.SetFontOutline(frame.Name, nil, "+4")
-	F.SetFontOutline(frame.Title)
+	F.SetFont(frame.Name, nil, "+4")
+	F.SetFont(frame.Title)
 
 	if frame.Icon.b then
 		frame.Icon.b:Point("TOPLEFT", frame.Icon, "TOPLEFT", -1, 1)
@@ -157,13 +157,13 @@ function S:SkinInvasionAlert(frame)
 	end
 
 	if frame.Title then
-		F.SetFontOutline(frame.Title)
+		F.SetFont(frame.Title)
 		frame.Title:ClearAllPoints()
 		frame.Title:Point("TOP", frame.backdrop, "TOP", 23, -31)
 		frame.Title:SetJustifyH("CENTER")
 
 		-- 地区
-		F.SetFontOutline(frame.ZoneName, nil, "+2")
+		F.SetFont(frame.ZoneName, nil, "+2")
 		frame.ZoneName:ClearAllPoints()
 		frame.ZoneName:Point("TOP", frame.Title, "BOTTOM", 0, -5)
 		frame.ZoneName:SetJustifyH("CENTER")
@@ -192,8 +192,8 @@ function S:SkinWorldQuestCompleteAlert(frame)
 		end
 	end
 
-	F.SetFontOutline(frame.ToastText, nil, "+2")
-	F.SetFontOutline(frame.QuestName, nil, "+2")
+	F.SetFont(frame.ToastText, nil, "+2")
+	F.SetFont(frame.QuestName, nil, "+2")
 
 	frame.__windSkin = true
 end
@@ -205,7 +205,7 @@ function S:SkinLootUpgradeAlert(frame)
 
 	self:CreateBackdropShadow(frame)
 
-	F.SetFontOutline(frame.TitleText)
+	F.SetFont(frame.TitleText)
 	frame.TitleText:ClearAllPoints()
 	frame.TitleText:Point("TOP", frame.backdrop, 30, -12)
 	frame.TitleText:SetJustifyH("CENTER")
@@ -214,7 +214,7 @@ function S:SkinLootUpgradeAlert(frame)
 	local texts = { frame.BaseQualityItemName, frame.UpgradeQualityItemName, frame.WhiteText, frame.WhiteText2 }
 
 	for _, text in pairs(texts) do
-		F.SetFontOutline(text, nil, "+2")
+		F.SetFont(text, nil, "+2")
 		text:ClearAllPoints()
 		text:Point("BOTTOM", frame.backdrop, 30, 12)
 		text:SetJustifyH("CENTER")
@@ -230,7 +230,7 @@ function S:SkinLootAlert(frame)
 	end
 	self:CreateBackdropShadow(frame)
 
-	F.SetFontOutline(frame.Label)
+	F.SetFont(frame.Label)
 
 	if frame.Label and frame.Label.GetNumPoints and frame.Label:GetNumPoints() == 1 then
 		local point, relativeTo, relativePoint, x, y = frame.Label:GetPoint(1)
@@ -238,8 +238,8 @@ function S:SkinLootAlert(frame)
 		frame.Label:SetPoint(point, relativeTo, relativePoint, x + 1, y - 5)
 	end
 
-	F.SetFontOutline(frame.RollValue)
-	F.SetFontOutline(frame.ItemName)
+	F.SetFont(frame.RollValue)
+	F.SetFont(frame.ItemName)
 
 	frame.__windSkin = true
 end
@@ -253,7 +253,7 @@ function S:SkinLegendaryItemAlert(frame)
 	frame.Icon:ClearAllPoints()
 	frame.Icon:Point("LEFT", frame.backdrop, "LEFT", 16, 0)
 
-	F.SetFontOutline(frame.ItemName, nil, "+1")
+	F.SetFont(frame.ItemName, nil, "+1")
 	frame.ItemName:ClearAllPoints()
 	frame.ItemName:Point("BOTTOM", frame.backdrop, "BOTTOM", 32, 16)
 	frame.ItemName:SetJustifyH("CENTER")
@@ -261,7 +261,7 @@ function S:SkinLegendaryItemAlert(frame)
 
 	for _, region in pairs({ frame:GetRegions() }) do
 		if region:IsObjectType("FontString") and region ~= frame.ItemName then
-			F.SetFontOutline(region)
+			F.SetFont(region)
 			region:ClearAllPoints()
 			region:Point("TOP", frame.backdrop, "TOP", 32, -16)
 			region:SetJustifyH("CENTER")
@@ -279,8 +279,8 @@ function S:SkinDigsiteCompleteAlert(frame)
 	end
 	self:CreateBackdropShadow(frame)
 
-	F.SetFontOutline(frame.Title)
-	F.SetFontOutline(frame.DigsiteType, nil, "+2")
+	F.SetFont(frame.Title)
+	F.SetFont(frame.DigsiteType, nil, "+2")
 
 	frame.__windSkin = true
 end
@@ -292,13 +292,13 @@ function S:SkinRafRewardDeliveredAlert(frame)
 
 	self:CreateBackdropShadow(frame)
 
-	F.SetFontOutline(frame.Title, nil, "+1")
+	F.SetFont(frame.Title, nil, "+1")
 	frame.Title:ClearAllPoints()
 	frame.Title:Point("BOTTOM", frame.backdrop, "BOTTOM", 24, 16)
 	frame.Title:SetJustifyH("CENTER")
 	frame.Title:SetJustifyV("BOTTOM")
 
-	F.SetFontOutline(frame.Description)
+	F.SetFont(frame.Description)
 	frame.Description:ClearAllPoints()
 	frame.Description:Point("TOP", frame.backdrop, "TOP", 24, -16)
 	frame.Description:SetJustifyH("CENTER")
@@ -314,13 +314,13 @@ function S:SkinNewItemAlert(frame)
 
 	self:CreateBackdropShadow(frame)
 
-	F.SetFontOutline(frame.Label)
+	F.SetFont(frame.Label)
 	frame.Label:ClearAllPoints()
 	frame.Label:Point("TOP", frame.backdrop, "TOP", 32, -13)
 	frame.Label:SetJustifyH("CENTER")
 	frame.Label:SetJustifyV("TOP")
 
-	F.SetFontOutline(frame.Name, nil, "+1")
+	F.SetFont(frame.Name, nil, "+1")
 	frame.Name:ClearAllPoints()
 	frame.Name:Point("BOTTOM", frame.backdrop, "BOTTOM", 32, 15)
 	frame.Name:SetJustifyH("CENTER")
@@ -342,13 +342,13 @@ function S:SkinGarrisonTalentAlert(frame)
 
 	self:CreateBackdropShadow(frame)
 
-	F.SetFontOutline(frame.Title, nil, "+5")
+	F.SetFont(frame.Title, nil, "+5")
 	frame.Title:ClearAllPoints()
 	frame.Title:Point("TOP", frame.backdrop, "TOP", 26, -18)
 	frame.Title:SetJustifyH("CENTER")
 	frame.Title:SetJustifyV("TOP")
 
-	F.SetFontOutline(frame.Name)
+	F.SetFont(frame.Name)
 	frame.Name:ClearAllPoints()
 	frame.Name:Point("BOTTOM", frame.backdrop, "BOTTOM", 26, 15)
 	frame.Name:SetJustifyH("CENTER")
@@ -367,13 +367,13 @@ function S:SkinGarrisonBuildingAlert(frame)
 	frame.Icon:ClearAllPoints()
 	frame.Icon:Point("LEFT", frame.backdrop, "LEFT", 12, 0)
 
-	F.SetFontOutline(frame.Title, nil, "+1")
+	F.SetFont(frame.Title, nil, "+1")
 	frame.Title:ClearAllPoints()
 	frame.Title:Point("TOP", frame.backdrop, "TOP", 26, -13)
 	frame.Title:SetJustifyH("CENTER")
 	frame.Title:SetJustifyV("TOP")
 
-	F.SetFontOutline(frame.Name, nil, "+1")
+	F.SetFont(frame.Name, nil, "+1")
 	frame.Name:ClearAllPoints()
 	frame.Name:Point("BOTTOM", frame.backdrop, "BOTTOM", 26, 15)
 	frame.Name:SetJustifyH("CENTER")

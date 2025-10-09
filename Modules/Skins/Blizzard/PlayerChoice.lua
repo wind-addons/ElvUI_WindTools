@@ -81,7 +81,7 @@ local function SetupOptions(frame)
 			if option.WidgetContainer and option.WidgetContainer.widgetFrames then
 				for _, widget in pairs(option.WidgetContainer.widgetFrames) do
 					if widget.Text then
-						F.SetFontOutline(widget.Text)
+						F.SetFont(widget.Text)
 					end
 					if widget.Item then
 						handleItemButton(widget.Item)

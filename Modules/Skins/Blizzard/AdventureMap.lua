@@ -20,11 +20,11 @@ function S:Blizzard_AdventureMap()
 		end
 	end
 
-	F.SetFontOutline(childFrame.TitleHeader)
-	F.SetFontOutline(childFrame.DescriptionText)
-	F.SetFontOutline(childFrame.ObjectivesHeader)
-	F.SetFontOutline(childFrame.ObjectivesText)
-	F.SetFontOutline(AdventureMapQuestChoiceDialog.RewardsHeader)
+	F.SetFont(childFrame.TitleHeader)
+	F.SetFont(childFrame.DescriptionText)
+	F.SetFont(childFrame.ObjectivesHeader)
+	F.SetFont(childFrame.ObjectivesText)
+	F.SetFont(AdventureMapQuestChoiceDialog.RewardsHeader)
 end
 
 S:AddCallbackForAddon("Blizzard_AdventureMap")

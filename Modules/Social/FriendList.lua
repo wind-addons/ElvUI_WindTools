@@ -401,10 +401,10 @@ function FL:UpdateFriendButton(button)
 		}
 	end
 
-	F.SetFontOutline(button.name)
+	F.SetFont(button.name)
 	F.SetFontWithDB(button.name, self.db.nameFont)
 
-	F.SetFontOutline(button.info)
+	F.SetFont(button.info)
 	F.SetFontWithDB(button.info, self.db.infoFont)
 
 	-- favorite icon

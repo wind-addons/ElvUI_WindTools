@@ -12,7 +12,7 @@ local function HandleGameMenuButton(button)
 		return
 	end
 
-	F.SetFontOutline(text)
+	F.SetFont(text)
 	text:SetTextColor(C.ExtractRGBFromTemplate("neutral-100"))
 end
 
@@ -54,7 +54,7 @@ function S:Blizzard_GameMenu()
 	GameMenuFrame.Header:Width(GameMenuFrame:GetWidth() - 2)
 	GameMenuFrame.Header:ClearAllPoints()
 	GameMenuFrame.Header:Point("BOTTOM", GameMenuFrame, "TOP", 0, 5)
-	F.SetFontOutline(GameMenuFrame.Header.Text, nil, "+2")
+	F.SetFont(GameMenuFrame.Header.Text, nil, "+2")
 	F.InternalizeMethod(GameMenuFrame.Header.Text, "SetTextColor", true)
 	F.CallMethod(GameMenuFrame.Header.Text, "SetTextColor", C.ExtractRGBFromTemplate("amber-200"))
 	GameMenuFrame.Header.Text:ClearAllPoints()

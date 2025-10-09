@@ -23,7 +23,7 @@ function S:Blizzard_CharacterCustomize()
 					self:CreateBackdropShadow(popout.Button)
 					self:CreateShadow(popout.Button.Popout)
 					if popout.Label then
-						F.SetFontOutline(popout.Label)
+						F.SetFont(popout.Label)
 					end
 					popout.__windSkin = true
 				end
@@ -36,7 +36,7 @@ function S:Blizzard_CharacterCustomize()
 				if not button.__windSkin then
 					self:CreateBackdropShadow(button.Button)
 					if button.Label then
-						F.SetFontOutline(button.Label)
+						F.SetFont(button.Label)
 					end
 					button.__windSkin = true
 				end

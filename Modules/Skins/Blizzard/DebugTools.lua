@@ -33,7 +33,7 @@ function S:Blizzard_DebugTools()
 			if child.ValueButton and not child.ValueButton.__wind then
 				child.ValueButton:Size(310 + diffWidth, 16)
 				child.ValueButton.Text:Size(310 + diffWidth, 16)
-				F.SetFontOutline(child.ValueButton.Text)
+				F.SetFont(child.ValueButton.Text)
 				child.ValueButton.__wind = true
 			end
 		end

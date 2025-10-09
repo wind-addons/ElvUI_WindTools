@@ -93,7 +93,7 @@ function S:TomCats()
 		F.InternalizeMethod(header, "SetHighlightTexture", true)
 		header:SetSize(16, 16)
 		header.topPadding = 16
-		F.SetFontOutline(header.text)
+		F.SetFont(header.text)
 	end
 
 	E:Delay(1, function()
@@ -114,7 +114,7 @@ function S:TomCats()
 
 				frame.headerBar:SetAlpha(0)
 				frame.footerBar:SetAlpha(0)
-				F.SetFontOutline(frame.title)
+				F.SetFont(frame.title)
 
 				frame:SetTemplate("Transparent")
 				self:CreateShadow(frame)

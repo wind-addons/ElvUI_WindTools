@@ -34,7 +34,7 @@ function S:Blizzard_PerksProgram()
 				button.shadow:SetAllPoints()
 			end
 
-			F.SetFontOutline(button.Text)
+			F.SetFont(button.Text)
 		end
 
 		self:CreateBackdropShadow(footer.RotateButtonContainer.RotateLeftButton)

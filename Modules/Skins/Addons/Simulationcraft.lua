@@ -17,9 +17,9 @@ function S:Simulationcraft_SkinMainFrame()
 	self:Proxy("HandleCheckBox", _G.SimcFrame.CheckButton)
 	self:Proxy("HandleScrollBar", _G.SimcScrollFrameScrollBar)
 
-	F.SetFontOutline(_G.SimcFrameButton:GetNormalFontObject())
-	F.SetFontOutline(_G.SimcEditBox)
-	F.SetFontOutline(_G.SimcFrame.CheckButton.Text)
+	F.SetFont(_G.SimcFrameButton:GetNormalFontObject())
+	F.SetFont(_G.SimcEditBox)
+	F.SetFont(_G.SimcFrame.CheckButton.Text)
 	F.Move(_G.SimcFrame.CheckButton.Text, 0, -3)
 end
 

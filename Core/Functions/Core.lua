@@ -62,9 +62,10 @@ end
 ---@param text FontString The FontString object to modify
 ---@param font string? Font path or name (optional)
 ---@param size number|string? Font size or size change amount as string (optional)
-function F.SetFontOutline(text, font, size)
+---@param style string? Font outline style. (optional, default is "OUTLINE")
+function F.SetFont(text, font, size, style)
 	if not text or not text.GetFont then
-		F.Developer.LogDebug("Functions.SetFontOutline: text not found")
+		F.Developer.LogDebug("Functions.SetFont: text not found")
 		return
 	end
 	local fontName, fontHeight = text:GetFont()
@@ -77,7 +78,7 @@ function F.SetFontOutline(text, font, size)
 		font = LSM:Fetch("font", font)
 	end
 
-	text:FontTemplate(font or fontName, size or fontHeight, "OUTLINE")
+	text:FontTemplate(font or fontName, size or fontHeight, style or "OUTLINE")
 	text:SetShadowColor(0, 0, 0, 0)
 	text.SetShadowColor = E.noop
 end
@@ -93,7 +94,7 @@ function F.SetFrameFontOutline(frame, font, size)
 	end
 	for _, region in pairs({ frame:GetRegions() }) do
 		if region:IsObjectType("FontString") then
-			F.SetFontOutline(region --[[@as FontString]], font, size)
+			F.SetFont(region --[[@as FontString]], font, size)
 		end
 	end
 end

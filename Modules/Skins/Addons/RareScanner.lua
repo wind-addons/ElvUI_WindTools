@@ -53,11 +53,11 @@ function S:RareScanner()
 	end
 
 	if scannerButton.Title then
-		F.SetFontOutline(scannerButton.Title)
+		F.SetFont(scannerButton.Title)
 	end
 
 	if scannerButton.Description_text then
-		F.SetFontOutline(scannerButton.Description_text)
+		F.SetFont(scannerButton.Description_text)
 	end
 
 	scannerButton:SetTemplate("Transparent")

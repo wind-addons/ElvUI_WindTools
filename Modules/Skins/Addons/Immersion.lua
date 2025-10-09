@@ -18,7 +18,7 @@ function S:Immersion_ReskinTitleButton(frame)
 			button.Hilite:StripTextures()
 			button.Overlay:StripTextures()
 			button:SetBackdrop(nil)
-			F.SetFontOutline(button.Label)
+			F.SetFont(button.Label)
 			button.__windSkin = true
 		end
 	end
@@ -86,7 +86,7 @@ do -- If there is no speech progress text in first time, the skin will not be ap
 		end
 		local talkBox = _G.ImmersionFrame and _G.ImmersionFrame.TalkBox
 		if talkBox and talkBox.TextFrame and talkBox.TextFrame.SpeechProgress then
-			F.SetFontOutline(talkBox.TextFrame.SpeechProgress, F.GetCompatibleFont("Montserrat"), 13)
+			F.SetFont(talkBox.TextFrame.SpeechProgress, F.GetCompatibleFont("Montserrat"), 13)
 			reskin = true
 		end
 	end
@@ -142,8 +142,8 @@ function S:Immersion()
 	talkBox.MainFrame.Overlay:StripTextures()
 
 	-- Text
-	F.SetFontOutline(talkBox.NameFrame.Name)
-	F.SetFontOutline(talkBox.TextFrame.Text, nil, 15)
+	F.SetFont(talkBox.NameFrame.Name)
+	F.SetFont(talkBox.TextFrame.Text, nil, 15)
 
 	-- Close Button
 	self:Proxy("HandleCloseButton", talkBox.MainFrame.CloseButton)
@@ -170,23 +170,23 @@ function S:Immersion()
 	elements.backdrop:ClearAllPoints()
 	elements.backdrop:SetPoint("TOPLEFT", elements, "TOPLEFT", 10, -5)
 	elements.backdrop:SetPoint("BOTTOMRIGHT", elements, "BOTTOMRIGHT", -10, 5)
-	F.SetFontOutline(elements.Progress.ReqText)
+	F.SetFont(elements.Progress.ReqText)
 	S:CreateBackdropShadow(elements)
 	S:MerathilisUISkin(elements.backdrop)
 
 	-- Details
 	local content = elements.Content
-	F.SetFontOutline(content.ObjectivesHeader)
-	F.SetFontOutline(content.ObjectivesText)
-	F.SetFontOutline(content.RewardText)
-	F.SetFontOutline(content.RewardsFrame.Header)
-	F.SetFontOutline(content.RewardsFrame.TitleFrame.Name)
-	F.SetFontOutline(content.RewardsFrame.XPFrame.ReceiveText)
-	F.SetFontOutline(content.RewardsFrame.XPFrame.ValueText)
-	F.SetFontOutline(content.RewardsFrame.ItemReceiveText)
-	F.SetFontOutline(content.RewardsFrame.ItemChooseText)
-	F.SetFontOutline(content.RewardsFrame.PlayerTitleText)
-	F.SetFontOutline(content.RewardsFrame.SkillPointFrame.ValueText)
+	F.SetFont(content.ObjectivesHeader)
+	F.SetFont(content.ObjectivesText)
+	F.SetFont(content.RewardText)
+	F.SetFont(content.RewardsFrame.Header)
+	F.SetFont(content.RewardsFrame.TitleFrame.Name)
+	F.SetFont(content.RewardsFrame.XPFrame.ReceiveText)
+	F.SetFont(content.RewardsFrame.XPFrame.ValueText)
+	F.SetFont(content.RewardsFrame.ItemReceiveText)
+	F.SetFont(content.RewardsFrame.ItemChooseText)
+	F.SetFont(content.RewardsFrame.PlayerTitleText)
+	F.SetFont(content.RewardsFrame.SkillPointFrame.ValueText)
 
 	-- Buttons
 	self:SecureHookScript(frame, "OnEvent", "Immersion_ReskinTitleButton")

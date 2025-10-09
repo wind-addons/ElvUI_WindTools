@@ -210,7 +210,7 @@ local function ReskinPet(frame)
 	frame.windIconBorder:SetFrameLevel(max(0, frame:GetFrameLevel() - 1))
 
 	frame.LevelBubble:Kill()
-	F.SetFontOutline(frame.LevelText, E.db.general.font)
+	F.SetFont(frame.LevelText, E.db.general.font)
 	frame.LevelText:SetJustifyH("RIGHT")
 	frame.LevelText:ClearAllPoints()
 	frame.LevelText:Point("BOTTOMRIGHT", frame.Icon, "BOTTOMRIGHT", 2, 0)
@@ -336,7 +336,7 @@ local function ReskinTitleBar(frame)
 	end
 
 	frame.Portrait:Kill()
-	F.SetFontOutline(frame.Title)
+	F.SetFont(frame.Title)
 
 	ReskinTitlebarButton(frame.CloseButton)
 	F.Move(frame.CloseButton, -4, -4)

@@ -8,9 +8,9 @@ function S:Blizzard_AddonList_Update()
 	local targets = _G.AddonList.ScrollBox.ScrollTarget
 	for _, target in pairs({ targets:GetChildren() }) do
 		if not target.__windSkin and target.Title and target.Status and target.Reload then
-			F.SetFontOutline(target.Title)
-			F.SetFontOutline(target.Status)
-			F.SetFontOutline(target.Reload)
+			F.SetFont(target.Title)
+			F.SetFont(target.Status)
+			F.SetFont(target.Reload)
 			target.__windSkin = true
 		end
 	end

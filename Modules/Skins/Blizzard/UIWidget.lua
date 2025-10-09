@@ -9,13 +9,13 @@ local strlower = strlower
 
 local function ReskinText(text)
 	if text then
-		F.SetFontOutline(text)
+		F.SetFont(text)
 	end
 end
 
 local function ReskinLabel(label)
 	if label then
-		F.SetFontOutline(label)
+		F.SetFont(label)
 	end
 end
 

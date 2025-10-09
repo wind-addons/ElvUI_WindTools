@@ -71,7 +71,7 @@ function S:BugSack_OpenSack()
 		if numRegions == 1 then
 			local text = child:GetRegions()
 			if text and text:GetObjectType() == "FontString" then
-				F.SetFontOutline(text)
+				F.SetFont(text)
 			end
 		elseif numRegions == 4 then
 			self:Proxy("HandleCloseButton", child)
@@ -82,7 +82,7 @@ function S:BugSack_OpenSack()
 
 	for _, region in pairs({ _G.BugSackScrollText:GetRegions() }) do
 		if region and region:GetObjectType() == "FontString" then
-			F.SetFontOutline(region)
+			F.SetFont(region)
 		end
 	end
 

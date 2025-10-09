@@ -11,7 +11,7 @@ local function ReskinScrollFrameItems(frame, template)
 	if template == "SimpleAddonManagerAddonItem" or template == "SimpleAddonManagerCategoryItem" then
 		for _, btn in pairs(frame.buttons) do
 			if not btn.__windSkin then
-				F.SetFontOutline(btn.Name)
+				F.SetFont(btn.Name)
 				S:Proxy("HandleCheckBox", btn.EnabledButton)
 				local btnCheckTex = btn.EnabledButton.CheckedTexture
 				if btnCheckTex then

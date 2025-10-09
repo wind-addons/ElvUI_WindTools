@@ -9,8 +9,8 @@ function S:Blizzard_ChromieTimeUI()
 	end
 
 	self:CreateShadow(_G.ChromieTimeFrame)
-	F.SetFontOutline(_G.ChromieTimeFrame.Title.Text)
-	F.SetFontOutline(_G.ChromieTimeFrame.SelectButton.Text)
+	F.SetFont(_G.ChromieTimeFrame.Title.Text)
+	F.SetFont(_G.ChromieTimeFrame.SelectButton.Text)
 end
 
 S:AddCallbackForAddon("Blizzard_ChromieTimeUI")

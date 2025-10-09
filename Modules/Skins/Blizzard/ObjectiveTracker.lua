@@ -26,7 +26,7 @@ function S:ReskinObjectiveTrackerHeader(header)
 		return
 	end
 
-	F.SetFontOutline(header.Text)
+	F.SetFont(header.Text)
 end
 
 -- Copied from ElvUI ObjectiveTracker skin
@@ -102,13 +102,13 @@ function S:SkinProgressBar(tracker, key)
 	if progressBar.Bar.Label then
 		progressBar.Bar.Label:ClearAllPoints()
 		progressBar.Bar.Label:Point("CENTER", progressBar.Bar, 0, 0)
-		F.SetFontOutline(progressBar.Bar.Label)
+		F.SetFont(progressBar.Bar.Label)
 	end
 
 	-- change font style of header
 	if not E.private.WT.quest.objectiveTracker.menuTitle.enable then
 		if _G.ObjectiveTrackerFrame and _G.ObjectiveTrackerFrame.HeaderMenu then
-			F.SetFontOutline(_G.ObjectiveTrackerFrame.HeaderMenu.Title)
+			F.SetFont(_G.ObjectiveTrackerFrame.HeaderMenu.Title)
 		end
 	end
 

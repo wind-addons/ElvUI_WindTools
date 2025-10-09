@@ -18,9 +18,9 @@ function S:DressUpFrame()
 			if frame.__windSkin then
 				return
 			end
-			F.SetFontOutline(frame.ItemName)
+			F.SetFont(frame.ItemName)
 			local width = frame.ItemSlot:GetWidth()
-			F.SetFontOutline(frame.ItemSlot)
+			F.SetFont(frame.ItemSlot)
 			frame.ItemSlot:SetWidth(width + 4)
 
 			frame.__windSkin = true

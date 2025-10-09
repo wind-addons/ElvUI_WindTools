@@ -16,7 +16,7 @@ function S:Blizzard_AdventureMap()
 	if AdventureMapQuestChoiceDialog.shadow then
 		AdventureMapQuestChoiceDialog.shadow:SetFrameStrata("LOW")
 		if AdventureMapQuestChoiceDialog.TopEdge then
-			AdventureMapQuestChoiceDialog.TopEdge:SetParent(AdventureMapQuestChoiceDialog.shadow)
+			AdventureMapQuestChoiceDialog.TopEdge--[[@as Texture]]:SetDrawLayer("BACKGROUND", 0)
 		end
 	end
 

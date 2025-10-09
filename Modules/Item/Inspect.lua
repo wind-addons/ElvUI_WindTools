@@ -42,6 +42,7 @@ local UnitLevel = UnitLevel
 local UnitName = UnitName
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+local C_Item_GetDetailedItemLevelInfo = C_Item.GetDetailedItemLevelInfo
 local C_Item_GetItemGem = C_Item.GetItemGem
 local C_Item_GetItemInfo = C_Item.GetItemInfo
 local C_Item_GetItemNumSockets = C_Item.GetItemNumSockets
@@ -482,8 +483,10 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 		return
 	end
 
-	local itemName, _, itemQuality, itemLevel, _, itemType, itemSubType, _, _, itemTexture, _, itemClassID, _, _, expansionID, setID, isCraftingReagent =
+	local itemName, _, itemQuality, _, _, itemType, itemSubType, _, _, itemTexture, _, itemClassID, _, _, expansionID, setID, isCraftingReagent =
 		C_Item_GetItemInfo(link)
+
+	local actualItemLevel = C_Item_GetDetailedItemLevelInfo(link)
 
 	local craftingAtlas ---@type string?
 	local cleanLink = gsub(link, "|h%[(.+)%]|h", function(raw)
@@ -500,7 +503,7 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 		craftingAtlas = craftingAtlas,
 		expansionID = expansionID,
 		isCraftingReagent = isCraftingReagent,
-		level = itemLevel,
+		level = actualItemLevel,
 		link = link,
 		name = itemName,
 		quality = itemQuality,

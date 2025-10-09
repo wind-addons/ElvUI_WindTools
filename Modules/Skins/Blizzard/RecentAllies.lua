@@ -15,13 +15,37 @@ local function SkinRecentAllyEntry(button)
 
 		S:Proxy("HandleButton", partyButton)
 
-		local icon = partyButton:CreateTexture(nil, "ARTWORK")
-		icon:SetTexture("Interface\\FriendsFrame\\TravelPass-Invite")
-		icon:SetTexCoord(0.01562500, 0.39062500, 0.27343750, 0.52343750)
-		icon:SetAllPoints(partyButton)
-		icon:SetVertexColor(1, 1, 1, 1)
+		local normalTexture = partyButton:GetNormalTexture()
+		if normalTexture then
+			normalTexture:SetTexture("Interface\\FriendsFrame\\TravelPass-Invite")
+			normalTexture:SetTexCoord(0.01562500, 0.26562500, 0.27343750, 0.52343750)
+			normalTexture:SetAllPoints(partyButton)
+			normalTexture:SetVertexColor(1, 1, 1, 1)
+		end
 
-		partyButton.inviteIcon = icon
+		local pushedTexture = partyButton:GetPushedTexture()
+		if pushedTexture then
+			pushedTexture:SetTexture("Interface\\FriendsFrame\\TravelPass-Invite")
+			pushedTexture:SetTexCoord(0.42187500, 0.67187500, 0.27343750, 0.52343750)
+			pushedTexture:SetAllPoints(partyButton)
+			pushedTexture:SetVertexColor(1, 1, 1, 1)
+		end
+
+		local highlightTexture = partyButton:GetHighlightTexture()
+		if highlightTexture then
+			highlightTexture:SetTexture("Interface\\FriendsFrame\\TravelPass-Invite")
+			highlightTexture:SetTexCoord(0.42187500, 0.67187500, 0.00781250, 0.25781250)
+			highlightTexture:SetAllPoints(partyButton)
+			highlightTexture:SetVertexColor(1, 1, 1, 0.5)
+		end
+
+		local disabledTexture = partyButton:GetDisabledTexture()
+		if disabledTexture then
+			disabledTexture:SetTexture("Interface\\FriendsFrame\\TravelPass-Invite")
+			disabledTexture:SetTexCoord(0.01562500, 0.26562500, 0.00781250, 0.25781250)
+			disabledTexture:SetAllPoints(partyButton)
+			disabledTexture:SetVertexColor(0.5, 0.5, 0.5, 1)
+		end
 	end
 
 	button.__windSkinned = true

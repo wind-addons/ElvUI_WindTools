@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
-local S = W.Modules.Skins ---@type Skins
+local S = W.Modules.Skins ---@class Skins
 
 local format = format
 local gsub = gsub

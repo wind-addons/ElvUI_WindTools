@@ -1098,11 +1098,15 @@ function LL:InitializeRightPanel()
 		for i = 1, 8 do
 			if btn.cache[i] then
 				local level = btn.cache[i].level
+				local iconString = F.GetIconString(W.MythicPlusMapData[btn.cache[i].mapID].tex, 14, 16, true)
+				if iconString == nil then
+					iconString = ""
+				end
 				_G.GameTooltip:AddDoubleLine(
 					format(
 						"%s %s %s",
 						C.StringWithKeystoneLevel(tostring(level), level),
-						F.GetIconString(W.MythicPlusMapData[btn.cache[i].mapID].tex, 14, 16, true),
+						iconString,
 						W.MythicPlusMapData[btn.cache[i].mapID].name
 					),
 					vaultItemLevel[min(level, #vaultItemLevel)],

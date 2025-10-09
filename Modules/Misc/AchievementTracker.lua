@@ -279,7 +279,11 @@ function AT:UpdateView()
 
 	local dataProvider = CreateDataProvider()
 	dataProvider:InsertTable(results)
-	self.MainFrame.ScrollFrame.ScrollBox--[[@as ScrollBoxListMixin]]:SetDataProvider(dataProvider)
+	self
+		.MainFrame
+		.ScrollFrame
+		.ScrollBox--[[@as ScrollBoxListMixin]]
+		:SetDataProvider(dataProvider)
 	self.MainFrame:UpdateDropdowns()
 end
 
@@ -933,6 +937,10 @@ function AT:Construct()
 	end
 
 	MainFrame:SetScript("OnShow", function()
+		if not MainFrame:IsVisible() or not MainFrame.positionUpdated then
+			return
+		end
+
 		if self.states.isScanning then
 			MainFrame.ProgressFrame:Show()
 			return
@@ -956,7 +964,7 @@ end
 ---@param id number
 ---@param alreadyEarned boolean
 function AT:ACHIEVEMENT_EARNED(id, alreadyEarned)
-	if alreadyEarned then
+	if alreadyEarned and #self.states.results > 0 then
 		return
 	end
 
@@ -1000,6 +1008,7 @@ function AT:UpdatePosition()
 	self.MainFrame:ClearAllPoints()
 	self.MainFrame:Point("TOPLEFT", _G.AchievementFrame, "TOPRIGHT", 4, 0)
 	self.MainFrame:SetParent(_G.AchievementFrame)
+	self.MainFrame.positionUpdated = true
 	MF:InternalHandle(self.MainFrame, _G.AchievementFrame)
 
 	self.ToggleButton = CreateFrame("Button", nil, _G.AchievementFrame, "UIPanelButtonTemplate")

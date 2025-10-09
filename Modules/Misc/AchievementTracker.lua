@@ -279,7 +279,7 @@ function AT:UpdateView()
 
 	local dataProvider = CreateDataProvider()
 	dataProvider:InsertTable(results)
-	self.MainFrame.ScrollFrame.ScrollBox:SetDataProvider(dataProvider)
+	self.MainFrame.ScrollFrame.ScrollBox--[[@as ScrollBoxListMixin]]:SetDataProvider(dataProvider)
 	self.MainFrame:UpdateDropdowns()
 end
 
@@ -421,7 +421,7 @@ function AT:ScrollElementInitializer(frame, data, scrollBox)
 		frame.DetailFrame.Criteria = {}
 
 		local Description = DetailFrame:CreateFontString(nil, "OVERLAY")
-		F.SetFont(Description, E.db.general.font, 12)
+		F.SetFont(Description, E.db.general.font, 13, "NONE")
 		Description:Point("TOP", DetailFrame, "TOP", 0, -ELEMENT_PADDING)
 		Description:Width(frame:GetWidth() - 4 * ELEMENT_PADDING)
 		Description:SetJustifyH("CENTER")
@@ -878,7 +878,7 @@ function AT:Construct()
 		self:ScrollElementResetter(frame)
 	end)
 	ScrollUtil.InitScrollBoxListWithScrollBar(ScrollBox, ScrollBar, ScrollView)
-	ScrollBox:SetDataProvider(DataProvider)
+	ScrollBox--[[@as ScrollBoxListMixin]]:SetDataProvider(DataProvider)
 	ScrollFrame.ScrollView = ScrollView
 
 	local ProgressFrame = CreateFrame("Frame", nil, MainFrame)

@@ -189,19 +189,19 @@ options.help = {
 						C.StringWithClassColor("Tabimonk @ " .. L["Shadowmoon"] .. "(TW)", "MONK")
 					),
 				},
-				["mcc1"] = {
+				["DakJaniels"] = {
 					order = 2,
+					type = "description",
+					name = "DakJaniels",
+				},
+				["mcc1"] = {
+					order = 3,
 					type = "description",
 					name = format(
 						"%s: %s",
 						"mcc1",
 						C.StringWithClassColor("青楓殘月 @ " .. L["Lights Hope"] .. " (TW)", "MAGE")
 					),
-				},
-				["DakJaniels"] = {
-					order = 3,
-					type = "description",
-					name = "DakJaniels",
 				},
 				["someblu"] = {
 					order = 4,
@@ -370,7 +370,7 @@ options.credits = {
 	},
 }
 
-do -- 特别感谢
+do -- Special Thanks
 	local nameList = {
 		"|cffa2c446Siweia|r (|cff68a2daN|r|cffd25348D|rui)",
 		"Witness (NDui_Plus)",
@@ -388,7 +388,7 @@ do -- 特别感谢
 	}
 end
 
-do -- 网站
+do -- Websites
 	local siteList = {
 		"https://www.wowhead.com/",
 		"https://www.townlong-yak.com/",
@@ -407,7 +407,7 @@ do -- 网站
 	end
 end
 
-do -- 本地化
+do -- Localization
 	local localizationList = {
 		["한국어 (koKR)"] = {
 			C.StringWithClassColor(
@@ -466,7 +466,7 @@ do -- 本地化
 	end
 end
 
-do -- 插件代码
+do -- Code References
 	local codesCreditList = {
 		[L["Announcement"]] = {
 			"Venomisto (InstanceResetAnnouncer)",
@@ -568,7 +568,7 @@ do -- 插件代码
 	end
 end
 
-do -- 媒体文件
+do -- Media Files
 	local mediaFilesCreditList = {
 		["ToxiUI Team"] = {
 			"Media/Texture/ToxiUI",

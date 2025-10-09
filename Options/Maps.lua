@@ -615,7 +615,6 @@ options.minimapButtons = {
 						MB:UpdateLayout()
 					end,
 				},
-
 				betterAlign = {
 					order = 6,
 					type = "description",

@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...))) ---@type WindTools
 
 W.Changelog[400] = {
-	RELEASE_DATE = "TBD",
+	RELEASE_DATE = "2025/10/09",
 	IMPORTANT = {
 		["zhCN"] = {
 			"[装备观察] 完全重写了模块, 由于配置项目进行了改动, 该模块相关的配置将被重置.",

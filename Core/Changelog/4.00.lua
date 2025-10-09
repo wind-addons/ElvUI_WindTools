@@ -32,6 +32,7 @@ W.Changelog[400] = {
 	NEW = {
 		["zhCN"] = {
 			"新增字体 [LINE Seed (en)].",
+			"新增字体 [Chivo Mono (en)].",
 			"[美化外观] 新增了暴雪游戏选项 (Esc键菜单) 的皮肤.",
 			"[美化外观] 新增了 Advanced Interface Options 的皮肤.",
 			"[美化外观] 新增了 Rematch 的皮肤.",
@@ -40,6 +41,7 @@ W.Changelog[400] = {
 		},
 		["zhTW"] = {
 			"新增字型 [LINE Seed (en)].",
+			"新增字型 [Chivo Mono (en)].",
 			"[美化外觀] 新增了暴雪遊戲選項 (Esc鍵選單) 的皮膚.",
 			"[美化外觀] 新增了 Advanced Interface Options 的皮膚.",
 			"[美化外觀] 新增了 Rematch 的皮膚.",
@@ -48,6 +50,7 @@ W.Changelog[400] = {
 		},
 		["enUS"] = {
 			"New font [LINE Seed].",
+			"New font [Chivo Mono].",
 			"[Skins] Added skin for the Blizzard Game Menu (Esc key menu).",
 			"[Skins] Added skin for Advanced Interface Options.",
 			"[Skins] Added skin for Rematch.",
@@ -56,6 +59,7 @@ W.Changelog[400] = {
 		},
 		["koKR"] = {
 			"새 글꼴 [LINE Seed (en)].",
+			"새 글꼴 [Chivo Mono (en)].",
 			"[스킨] 블리자드 게임 메뉴(ESC 키 메뉴)에 스킨이 추가되었습니다.",
 			"[스킨] 고급 인터페이스 옵션에 스킨이 추가되었습니다.",
 			"[스킨] Rematch에 스킨이 추가되었습니다.",
@@ -64,6 +68,7 @@ W.Changelog[400] = {
 		},
 		["ruRU"] = {
 			"Новый шрифт [LINE Seed].",
+			"Новый шрифт [Chivo Mono].",
 			"[Скины] Добавлен скин для игрового меню Blizzard (меню клавиши Esc).",
 			"[Скины] Добавлен скин для Advanced Interface Options.",
 			"[Скины] Добавлен скин для Rematch.",

@@ -55,6 +55,10 @@ local TEXT_MODE_A_STRING_RESULT_CRITICAL = TEXT_MODE_A_STRING_RESULT_CRITICAL
 
 local function getRetailCharacterNamesFromGameAccountInfo(gameAccountInfo)
 	if gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.wowProjectID == 1 then
+		local name = gameAccountInfo.characterName
+		if gameAccountInfo.realmName == "" or gameAccountInfo.realmName == nil then
+			return name
+		end
 		return gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName
 	end
 end

@@ -575,7 +575,7 @@ function MB:PrintAllButtonNames()
 	for i, pattern in pairs(self:GetSortPriorityPatterns()) do
 		F.Print(i, C.StringByTemplate(gsub(pattern, "\124", "\124\124"), "amber-300"))
 	end
-	F.Print(L["All handled minimap buttons:"])
+	F.Print(L["All handled minimap buttons"] .. ":")
 	for i, button in pairs(handledButtons) do
 		local name = button.name or button.debugName
 		name = name and gsub(name, "\124", "\124\124") or format('"" (%s)', C.StringByTemplate(L["no name"], "red-300"))

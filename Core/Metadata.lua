@@ -14,6 +14,7 @@ local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 local GetRealmID = GetRealmID
 local GetRealmName = GetRealmName
 local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
+local PlayerIsTimerunning = PlayerIsTimerunning
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
@@ -47,6 +48,30 @@ W.MythicPlusMapData = {
 	[505] = { abbr = L["[ABBR] The Dawnbreaker"], activityID = 326, timers = { 1116, 1488, 1860 } },
 	[525] = { abbr = L["[ABBR] Operation: Floodgate"], activityID = 371, timers = { 1188, 1584, 1980 } },
 	[542] = { abbr = L["[ABBR] Eco-Dome Al'dani"], activityID = 381, timers = { 1116, 1488, 1860 } },
+}
+
+-- Legion Remix dungeons
+W.LegionRemixMapData = {
+	-- p1: Broken Isles
+	[197] = { abbr = L["[ABBR] Eye of Azshara"], activityID = 112, timers = { 2100, 1680, 1260 } },
+	[198] = { abbr = L["[ABBR] Darkheart Thicket"], activityID = 113, timers = { 1800, 1440, 1080 } },
+	[199] = { abbr = L["[ABBR] Black Rook Hold"], activityID = 118, timers = { 2160, 1728, 1296 } },
+	[200] = { abbr = L["[ABBR] Halls of Valor"], activityID = 114, timers = { 2280, 1824, 1368 } },
+	[206] = { abbr = L["[ABBR] Neltharion's Lair"], activityID = 115, timers = { 1980, 1584, 1188 } },
+	[207] = { abbr = L["[ABBR] Vault of the Wardens"], activityID = 117, timers = { 1980, 1584, 1188 } },
+	[208] = { abbr = L["[ABBR] Maw of Souls"], activityID = 119, timers = { 1440, 1152, 864 } },
+	
+	-- p2: Suramar
+	[209] = { abbr = L["[ABBR] The Arcway"], activityID = 121, timers = { 2700, 2160, 1620 } },
+	[210] = { abbr = L["[ABBR] Court of Stars"], activityID = 120, timers = { 1800, 1440, 1080 } },
+	-- [227] = { abbr = L["[ABBR] Return to Karazhan: Lower"], activityID = 127, timers = { 2520, 2016, 1512 } },
+	-- [234] = { abbr = L["[ABBR] Return to Karazhan: Upper"], activityID = 128, timers = { 2100, 1680, 1260 } },
+	
+	-- p3: Broken Shore
+	-- [233] = { abbr = L["[ABBR] Cathedral of Eternal Night"], activityID = 129, timers = { 2100, 1680, 1260 } },
+	
+	-- p4: Argus
+	-- [239] = { abbr = L["[ABBR] Seat of the Triumvirate"], activityID = 133, timers = { 2100, 1680, 1260 } },
 }
 
 -- Histories (for localization)
@@ -176,6 +201,12 @@ for id in pairs(W.CurrentTierSetTable) do
 end
 
 function W:InitializeMetadata()
+	if PlayerIsTimerunning() then
+		for id, data in pairs(W.LegionRemixMapData) do
+			W.MythicPlusMapData[id] = data
+		end
+	end
+
 	for id in pairs(W.MythicPlusMapData) do
 		local name, _, timeLimit, tex = C_ChallengeMode_GetMapUIInfo(id)
 		W.MythicPlusMapData[id].name = name

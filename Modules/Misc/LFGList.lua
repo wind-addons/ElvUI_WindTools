@@ -28,6 +28,7 @@ local wipe = wipe
 
 local CopyTable = CopyTable
 local CreateFrame = CreateFrame
+local PlayerIsTimerunning = PlayerIsTimerunning
 local GetNumGroupMembers = GetNumGroupMembers
 local GetTime = GetTime
 local GroupFinderFrameGroupButton_OnClick = GroupFinderFrameGroupButton_OnClick
@@ -72,6 +73,10 @@ local seasonGroups = C_LFGList_GetAvailableActivityGroups(
 local expansionGroups = C_LFGList_GetAvailableActivityGroups(
 	GROUP_FINDER_CATEGORY_ID_DUNGEONS,
 	bit.bor(Enum_LFGListFilter.CurrentExpansion, Enum_LFGListFilter.NotCurrentSeason, Enum_LFGListFilter.PvE)
+)
+local timerunningGroups = C_LFGList_GetAvailableActivityGroups(
+	GROUP_FINDER_CATEGORY_ID_DUNGEONS,
+	bit.bor(Enum.LFGListFilter.Timerunning, Enum_LFGListFilter.PvE)
 )
 
 local RoleIconTextures = {
@@ -725,8 +730,22 @@ function LL:InitializeRightPanel()
 	end
 
 	local mapIDs = {}
-	for key in pairs(W.MythicPlusMapData) do
-		tinsert(mapIDs, key)
+	if PlayerIsTimerunning() then
+		-- Timerunning mode: only show Timerunning dungeons (Legion)
+		for key in pairs(W.MythicPlusMapData) do
+			-- Check if this is a Legion dungeon (mapIDs 197-239)
+			if key >= 197 and key <= 239 then
+				tinsert(mapIDs, key)
+			end
+		end
+	else
+		-- Normal mode: show all dungeons except Timerunning
+		for key in pairs(W.MythicPlusMapData) do
+			-- Exclude Timerunning dungeons in normal mode
+			if not (key >= 197 and key <= 239) then
+				tinsert(mapIDs, key)
+			end
+		end
 	end
 
 	sort(mapIDs, function(a, b)
@@ -1544,8 +1563,12 @@ function LL:UpdateAdvancedFilters()
 	end
 
 	if numActiveMaps == 0 then
-		tAppendAll(activities, seasonGroups)
-		tAppendAll(activities, expansionGroups)
+		if PlayerIsTimerunning() then
+			tAppendAll(activities, timerunningGroups)
+		else
+			tAppendAll(activities, seasonGroups)
+			tAppendAll(activities, expansionGroups)
+		end
 	end
 
 	advFilters.activities = activities

@@ -425,6 +425,109 @@ function FL:UpdateFriendButton(button)
 	end
 end
 
+function FL:UpdateRecentAllyButton(button)
+	local data = button.elementData
+	if not self.db.enable or not data then
+		return
+	end
+
+	-- Status Icon
+	local status
+	local stateData = data.stateData
+	if stateData.isOnline then
+		if stateData.isAFK then
+			status = "AFK"
+		elseif stateData.isDND then
+			status = "DND"
+		else
+			status = "Online"
+		end
+	else
+		status = "Offline"
+	end
+
+	if status then
+		local pack = self.db.textures.status
+		if statusIcons[pack] then
+			button.OnlineStatusIcon:SetTexture(statusIcons[pack][status])
+		end
+	end
+
+	-- Title
+	local CharacterData = button.CharacterData
+	if not CharacterData then
+		return
+	end
+
+	for _, key in pairs({ "NameDivider", "Level", "LevelDivider", "Class" }) do
+		if CharacterData[key] then
+			CharacterData[key]:Hide()
+		end
+	end
+
+	local characterData = data.characterData
+	local classFile = characterData and characterData.classID and select(2, GetClassInfo(characterData.classID))
+	local nameString = stateData.isOnline
+			and (characterData.name and self.db.useClassColor and C.StringWithClassColor(characterData.name, classFile) or characterData.name)
+		or C.StringByTemplate(characterData.name, "gray-400")
+
+	local level = characterData.level
+	if level then
+		if level ~= expansionData[WOW_PROJECT_MAINLINE].maxLevel or not self.db.hideMaxLevel then
+			nameString = nameString .. C.StringWithRGB(": " .. level, GetQuestDifficultyColor(level))
+		end
+	end
+
+	if nameString then
+		CharacterData.Name:SetText(nameString)
+	end
+
+	F.SetFont(CharacterData.Name)
+	F.SetFontWithDB(CharacterData.Name, self.db.nameFont)
+	CharacterData.Name.maxWidth = button:GetWidth() - 60
+	CharacterData.Name:Width(CharacterData.Name.maxWidth)
+
+	-- Most Recent Interaction
+	F.SetFont(CharacterData.MostRecentInteraction)
+	F.SetFontWithDB(CharacterData.MostRecentInteraction, self.db.infoFont)
+
+	-- Info
+	if stateData.currentLocation then
+		local realmName = characterData.realmName or ""
+		if self.db.hideRealm then
+			realmName = ""
+		end
+
+		local locationText, color
+		if
+			stateData.currentLocation
+			and stateData.currentLocation ~= ""
+			and realmName
+			and realmName ~= ""
+			and realmName ~= E.myrealm
+		then
+			locationText = stateData.currentLocation .. " - " .. realmName
+			color = self.db.areaColor
+		elseif stateData.currentLocation and stateData.currentLocation ~= "" then
+			locationText = stateData.currentLocation
+			color = self.db.areaColor
+		else
+			locationText = realmName or ""
+		end
+
+		if not stateData.isOnline then
+			locationText = C.StringByTemplate(locationText, "gray-400")
+		elseif color then
+			locationText = C.StringWithRGB(locationText, color)
+		end
+
+		CharacterData.Location:SetText(locationText)
+	end
+
+	F.SetFont(CharacterData.Location)
+	F.SetFontWithDB(CharacterData.Location, self.db.infoFont)
+end
+
 function FL:Initialize()
 	if not E.db.WT.social.friendList.enable then
 		return
@@ -433,6 +536,14 @@ function FL:Initialize()
 	self.db = E.db.WT.social.friendList
 
 	self:SecureHook("FriendsFrame_UpdateFriendButton", "UpdateFriendButton")
+	if _G.RecentAlliesFrame and _G.RecentAlliesFrame.List and _G.RecentAlliesFrame.List.ScrollBox then
+		self:SecureHook(_G.RecentAlliesFrame.List.ScrollBox, "Update", function(scrollBox)
+			scrollBox:ForEachFrame(function(button)
+				self:UpdateRecentAllyButton(button)
+			end)
+		end)
+	end
+
 	self.initialized = true
 end
 
@@ -440,10 +551,13 @@ function FL:ProfileUpdate()
 	self.db = E.db.WT.social.friendList
 
 	if self.db and self.db.enable and not self.initialized then
-		self:SecureHook("FriendsFrame_UpdateFriendButton", "UpdateFriendButton")
+		self:Initialize()
 	end
 
 	FriendsFrame_Update()
+	_G.RecentAlliesFrame.List.ScrollBox:ForEachFrame(function(button)
+		self:UpdateRecentAllyButton(button)
+	end)
 end
 
 W:RegisterModule(FL:GetName())

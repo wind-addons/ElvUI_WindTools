@@ -1062,7 +1062,7 @@ P.social = {
 		},
 		infoFont = {
 			name = E.db.general.font,
-			size = 12,
+			size = 11,
 			style = "OUTLINE",
 		},
 	},

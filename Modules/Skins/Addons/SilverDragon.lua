@@ -1,6 +1,7 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local S = W.Modules.Skins ---@type Skins
 local TT = E:GetModule("Tooltip")
+local OF = W.Utilities.ObjectFinder
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -394,6 +395,22 @@ local function SetupSilverDragonHistory(silverDragon)
 	end
 end
 
+local function StyleMountCountButton()
+	local finder = OF:New(_G.MountJournal.MountCount)
+
+	finder:Find("Button", function(frame)
+		local texture = frame and frame.texture
+		if texture and S:IsTexturePathEqual(texture, [[Interface\Icons\INV_Misc_Head_Dragon_01]]) then
+			return true
+		end
+		return false
+	end, function(frame)
+		S:Proxy("HandleIcon", frame.texture, true)
+	end)
+
+	finder:Start()
+end
+
 function S:SilverDragon()
 	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.silverDragon then
 		return
@@ -411,6 +428,8 @@ function S:SilverDragon()
 	SetupSilverDragonHistory(SilverDragon)
 	SetupSilverDragonOverlay(SilverDragon)
 	StyleWorldNavFrame()
+
+	self:AddCallbackForAddon("Blizzard_Collections", StyleMountCountButton)
 end
 
 S:AddCallbackForAddon("SilverDragon")

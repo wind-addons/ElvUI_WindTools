@@ -37,9 +37,14 @@ local function ReskinFriendButton(button)
 end
 
 local function ReskinPartyButton(button)
+	if button.__windSkin then
+		return
+	end
+
 	button:Width(button:GetWidth() - 4)
 
 	S:Proxy("HandleButton", button)
+
 	local normal = button:GetNormalTexture()
 	normal:SetTexture(W.Media.Icons.buttonPlus)
 	normal:SetTexCoord(0, 1, 0, 1)
@@ -47,31 +52,22 @@ local function ReskinPartyButton(button)
 	normal:ClearAllPoints()
 	normal:Point("CENTER")
 	normal:SetVertexColor(1, 1, 1, 1)
-	normal:Show()
 
-	local highlight = button:GetHighlightTexture()
-	highlight:SetTexture(E.media.blankTex)
-	highlight:SetColorTexture(1, 1, 1, 0.2)
-	highlight:SetInside(button)
-	highlight:SetDrawLayer("OVERLAY")
-	highlight:Hide()
-
-	button:HookScript("OnEnter", function()
-		highlight:Show()
-	end)
-
-	button:HookScript("OnLeave", function()
-		highlight:Hide()
-	end)
+	local disabled = button:GetDisabledTexture()
+	disabled:SetTexture(W.Media.Icons.buttonPlus)
+	disabled:SetTexCoord(0, 1, 0, 1)
+	disabled:Size(14)
+	disabled:ClearAllPoints()
+	disabled:Point("CENTER")
+	disabled:SetVertexColor(0.4, 0.4, 0.4, 1)
+	disabled:SetDesaturated(true)
 
 	F.Move(button, -3, 0)
+
+	button.__windSkin = true
 end
 
 local function ReskinRecentAllyButton(button)
-	if not button or button.__windSkin then
-		return
-	end
-
 	local normal = button:GetNormalTexture()
 	normal:SetTexture(E.media.blankTex)
 	normal:Width(button:GetWidth() / 2)
@@ -79,22 +75,27 @@ local function ReskinRecentAllyButton(button)
 	normal:Point("LEFT", button, "CENTER", 0)
 	normal:SetGradient("HORIZONTAL", CreateColor(0.243, 0.57, 1, 0), CreateColor(0.243, 0.57, 1, 0.25))
 
-	local highlight = button:GetHighlightTexture()
-	highlight:SetTexture(E.media.blankTex)
-	highlight:SetVertexColor(0.243, 0.57, 1, 0.2)
-	highlight:SetInside(button)
+	if not button.__windSkin then
+		local highlight = button:GetHighlightTexture()
+		highlight:SetTexture(E.media.blankTex)
+		highlight:SetVertexColor(0.243, 0.57, 1, 0.2)
+		highlight:SetInside(button)
 
-	button:HookScript("OnEnter", function()
-		highlight:Show()
-	end)
+		F.InternalizeMethod(highlight, "SetTexture", true)
+		F.InternalizeMethod(highlight, "SetVertexColor", true)
 
-	button:HookScript("OnLeave", function()
-		highlight:Hide()
-	end)
+		button:HookScript("OnEnter", function()
+			highlight:Show()
+		end)
+
+		button:HookScript("OnLeave", function()
+			highlight:Hide()
+		end)
+
+		button.__windSkin = true
+	end
 
 	ReskinPartyButton(button.PartyButton)
-
-	button.__windSkin = true
 end
 
 local function UpdateRewards()

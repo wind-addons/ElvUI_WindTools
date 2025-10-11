@@ -166,6 +166,7 @@ do
 			end
 		end
 
+		self:HookUIError()
 		self:GameFixing()
 
 		E:Delay(1, collectgarbage, "collect")

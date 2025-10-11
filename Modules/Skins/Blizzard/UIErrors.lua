@@ -20,34 +20,29 @@ function S:UIErrors()
 		return
 	end
 
-	if not _G.UIErrorsFrame then
-		return
-	end
-
-	self:RawHook(_G.UIErrorsFrame, "AddMessage", function(frame, message, r, g, b, a)
-		if r == nil or g == nil or b == nil then
+	W:RegisterUIErrorHandler(function(params)
+		if params.r == nil or params.g == nil or params.b == nil then
 			local db = E.private.WT.skins.uiErrors
 			if db.normalTextClassColor then
-				r, g, b = E.myClassColor:GetRGBA()
-				a = 1
+				params.r, params.g, params.b = E.myClassColor:GetRGBA()
+				params.a = 1
 			else
-				r, g, b, a = db.normalTextColor.r, db.normalTextColor.g, db.normalTextColor.b, db.normalTextColor.a
+				params.r, params.g, params.b, params.a =
+					db.normalTextColor.r, db.normalTextColor.g, db.normalTextColor.b, db.normalTextColor.a
 			end
 		else
-			local color = { r = r, g = g, b = b }
+			local color = { r = params.r, g = params.g, b = params.b }
 			for _, targetColor in pairs(BlizzardColors) do
 				if C.IsRGBEqual(color, targetColor) then
 					local colorConfig = E.private.WT.skins.uiErrors[targetColor[1] .. "TextColor"]
 					if colorConfig then
-						r, g, b = colorConfig.r, colorConfig.g, colorConfig.b
+						params.r, params.g, params.b = colorConfig.r, colorConfig.g, colorConfig.b
 					end
 					break
 				end
 			end
 		end
-
-		self.hooks[_G.UIErrorsFrame]["AddMessage"](frame, message, r, g, b, a)
-	end, true)
+	end)
 end
 
 S:AddCallback("UIErrors")

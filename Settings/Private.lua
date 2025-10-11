@@ -605,7 +605,6 @@ V.skins = {
 		professionBook = true,
 		professionsCustomerOrders = true,
 		quest = true,
-		recentAllies = true,
 		raidInfo = true,
 		scenario = true,
 		scrappingMachine = true,

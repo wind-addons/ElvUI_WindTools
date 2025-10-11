@@ -49,6 +49,7 @@ W.Changelog[401] = {
 		},
 		["zhTW"] = {
 			"[美化外觀] 優化了 Auctionator 的皮膚.",
+			"[美化外觀] 優化了 SilverDragon 的皮膚.",
 			"[美化外觀] 優化了冒險地圖皮膚.",
 			"[美化外觀] 優化了好友介面中近期往來的皮膚.",
 			"[戰鬥提示] 重構了模組，提升效能.",
@@ -58,6 +59,7 @@ W.Changelog[401] = {
 		},
 		["enUS"] = {
 			"[Skins] Update Auctionator skin.",
+			"[Skins] Update SilverDragon skin.",
 			"[Skins] Update Adventure Map skin.",
 			"[Skins] Update Friend List skin, especially Recent Allies section.",
 			"[Combat Alert] Refactor the module for better performance.",
@@ -67,6 +69,7 @@ W.Changelog[401] = {
 		},
 		["koKR"] = {
 			"[스킨] Auctionator 스킨이 업데이트되었습니다.",
+			"[스킨] SilverDragon 스킨이 업데이트되었습니다.",
 			"[스킨] 어드벤처 맵 스킨이 업데이트되었습니다.",
 			"[스킨] 친구 목록 스킨, 특히 최근 동맹 섹션이 업데이트되었습니다.",
 			"[전투 알림] 더 나은 성능을 위해 모듈이 리팩토링되었습니다.",
@@ -76,6 +79,7 @@ W.Changelog[401] = {
 		},
 		["ruRU"] = {
 			"[Скины] Обновлен скин Auctionator.",
+			"[Скины] Обновлен скин SilverDragon.",
 			"[Скины] Обновлен скин карты приключений.",
 			"[Скины] Обновлен скин списка друзей, особенно раздел 'Недавние союзники'.",
 			"[Боевые оповещения] Модуль переработан для повышения производительности.",

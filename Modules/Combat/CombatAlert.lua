@@ -1,228 +1,501 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
-local C = W:NewModule("CombatAlert", "AceEvent-3.0")
-local A = F.Animation
+local C = W:NewModule("CombatAlert", "AceEvent-3.0") ---@class CombatAlert: AceModule
 
-local unpack, tinsert, tremove, max = unpack, tinsert, tremove, max
+
+local _G = _G
+local assert = assert
+local ipairs = ipairs
+local max = max
+local tinsert = tinsert
+local tremove = tremove
+
+local CreateAnimationGroup = _G.CreateAnimationGroup
 local CreateFrame = CreateFrame
 
+-- Module state
 local isPlaying = false
 local alertQueue = {}
 
--- 动画
+-- Animation timing constants (in seconds)
+local ANIMATION_TIMINGS = {
+	-- Shield animations
+	SHIELD_ENTER_MOVE_FADE = 0.2,
+	SHIELD_ENTER_SLEEP = 0.5,
+	SHIELD_ENTER_FADEOUT = 0.3,
+	SHIELD_LEAVE_FADEIN = 0.3,
+	SHIELD_LEAVE_SLEEP = 0.5,
+	SHIELD_LEAVE_MOVE_SCALE_FADEOUT = 0.6,
+
+	-- Sword animations
+	SWORD_ENTER_MOVE_FADE = 0.4,
+	SWORD_ENTER_SLEEP = 0.9,
+	SWORD_ENTER_FADEOUT = 0.3,
+	SWORD_LEAVE_FADEIN = 0.3,
+	SWORD_LEAVE_SLEEP = 0.5,
+	SWORD_LEAVE_MOVE = 0.35,
+	SWORD_LEAVE_FADEOUT = 0.3,
+
+	-- Text animations
+	TEXT_ENTER_MOVE_UP = 0.4,
+	TEXT_ENTER_FADEIN = 0.5,
+	TEXT_ENTER_MOVE_DOWN = 0.1,
+	TEXT_ENTER_SLEEP = 0.4,
+	TEXT_ENTER_FADEOUT = 0.3,
+	TEXT_LEAVE_FADEIN = 0.3,
+	TEXT_LEAVE_SLEEP = 0.6,
+	TEXT_LEAVE_MOVE_FADEOUT = 0.6,
+}
+
+---Create a fade-in animation for an animation group
+---@param animGroup LibAnimAnimationGroup Animation group to add to
+---@param duration number Animation duration in seconds
+---@param order number Animation order
+---@return LibAnimAnimation fadeIn Created fade-in animation
+local function createFadeIn(animGroup, duration, order)
+	local fadeIn = animGroup:CreateAnimation("fade")
+	assert(fadeIn, "Failed to create fade-in animation")
+	fadeIn:SetDuration(duration)
+	fadeIn:SetChange(1)
+	fadeIn:SetOrder(order)
+	return fadeIn
+end
+
+---Create a fade-out animation for an animation group
+---@param animGroup LibAnimAnimationGroup Animation group to add to
+---@param duration number Animation duration in seconds
+---@param order number Animation order
+---@return LibAnimAnimation fadeOut Created fade-out animation
+local function createFadeOut(animGroup, duration, order)
+	local fadeOut = animGroup:CreateAnimation("fade")
+	assert(fadeOut, "Failed to create fade-out animation")
+	fadeOut:SetDuration(duration)
+	fadeOut:SetChange(0)
+	fadeOut:SetOrder(order)
+	return fadeOut
+end
+
+---Create a move animation for an animation group
+---@param animGroup LibAnimAnimationGroup Animation group to add to
+---@param duration number Animation duration in seconds
+---@param order number Animation order
+---@return LibAnimAnimation move Created move animation
+local function createMove(animGroup, duration, order)
+	local move = animGroup:CreateAnimation("move")
+	assert(move, "Failed to create move animation")
+	move:SetDuration(duration)
+	move:SetOrder(order)
+	return move
+end
+
+---Create a sleep (delay) animation for an animation group
+---@param animGroup LibAnimAnimationGroup Animation group to add to
+---@param duration number Animation duration in seconds
+---@param order number Animation order
+---@return LibAnimAnimation sleep Created sleep animation
+local function createSleep(animGroup, duration, order)
+	local sleep = animGroup:CreateAnimation("sleep")
+	assert(sleep, "Failed to create sleep animation")
+	sleep:SetDuration(duration)
+	sleep:SetOrder(order)
+	return sleep
+end
+
+---Create shield frame with enter/leave animations
+---@param parent Frame Parent frame to attach to
+---@return Frame ShieldFrame Shield frame with animations
+function C:CreateShieldFrame(parent)
+	local ShieldFrame = CreateFrame("Frame", nil, parent)
+	ShieldFrame:SetFrameStrata("HIGH")
+	ShieldFrame:SetFrameLevel(3)
+	ShieldFrame:SetAlpha(0)
+	ShieldFrame:Hide()
+
+	local texture = ShieldFrame:CreateTexture()
+	texture:SetTexture(W.Media.Textures.shield)
+	texture:SetAllPoints()
+	ShieldFrame.texture = texture
+
+	-- Enter combat animation: Move to center + fade in -> delay -> fade out
+	local enterGroup = CreateAnimationGroup(ShieldFrame)
+	ShieldFrame.enter = enterGroup
+
+	-- Order 1: Move upward and fade in simultaneously
+	ShieldFrame.enter.moveToCenter = createMove(enterGroup, ANIMATION_TIMINGS.SHIELD_ENTER_MOVE_FADE, 1)
+	ShieldFrame.enter.fadeIn = createFadeIn(enterGroup, ANIMATION_TIMINGS.SHIELD_ENTER_MOVE_FADE, 1)
+
+	-- Order 2: Delay
+	createSleep(enterGroup, ANIMATION_TIMINGS.SHIELD_ENTER_SLEEP, 2)
+
+	-- Order 3: Fade out
+	ShieldFrame.enter.fadeOut = createFadeOut(enterGroup, ANIMATION_TIMINGS.SHIELD_ENTER_FADEOUT, 3)
+
+	enterGroup:SetScript("OnFinished", function()
+		ShieldFrame:Hide()
+		self:LoadNextAlert()
+	end)
+
+	-- Leave combat animation: Fade in -> delay -> move up + scale down + fade out
+	local leaveGroup = CreateAnimationGroup(ShieldFrame)
+	ShieldFrame.leave = leaveGroup
+
+	-- Order 1: Fade in
+	ShieldFrame.leave.fadeIn = createFadeIn(leaveGroup, ANIMATION_TIMINGS.SHIELD_LEAVE_FADEIN, 1)
+
+	-- Order 2: Delay
+	createSleep(leaveGroup, ANIMATION_TIMINGS.SHIELD_LEAVE_SLEEP, 2)
+
+	-- Order 3: Move upward, scale down, and fade out simultaneously
+	ShieldFrame.leave.moveUp = createMove(leaveGroup, ANIMATION_TIMINGS.SHIELD_LEAVE_MOVE_SCALE_FADEOUT, 3)
+
+	local scaleWidth = leaveGroup:CreateAnimation("width")
+	assert(scaleWidth, "Failed to create width animation")
+	scaleWidth:SetDuration(ANIMATION_TIMINGS.SHIELD_LEAVE_MOVE_SCALE_FADEOUT)
+	scaleWidth:SetOrder(3)
+	ShieldFrame.leave.scaleWidth = scaleWidth
+
+	local scaleHeight = leaveGroup:CreateAnimation("height")
+	assert(scaleHeight, "Failed to create height animation")
+	scaleHeight:SetDuration(ANIMATION_TIMINGS.SHIELD_LEAVE_MOVE_SCALE_FADEOUT)
+	scaleHeight:SetOrder(3)
+	ShieldFrame.leave.scaleHeight = scaleHeight
+
+	ShieldFrame.leave.fadeOut = createFadeOut(leaveGroup, ANIMATION_TIMINGS.SHIELD_LEAVE_MOVE_SCALE_FADEOUT, 3)
+
+	leaveGroup:SetScript("OnFinished", function()
+		ShieldFrame:Hide()
+		self:LoadNextAlert()
+	end)
+
+	return ShieldFrame
+end
+
+---Create sword frame with enter/leave animations
+---@param parent Frame Parent frame to attach to
+---@param flipHorizontal boolean Whether to flip the sword texture horizontally
+---@return Frame SwordFrame Sword frame with animations
+function C:CreateSwordFrame(parent, flipHorizontal)
+	local SwordFrame = CreateFrame("Frame", nil, parent)
+	SwordFrame:SetFrameStrata("HIGH")
+	SwordFrame:SetFrameLevel(2)
+	SwordFrame:SetAlpha(0)
+	SwordFrame:Hide()
+
+	local texture = SwordFrame:CreateTexture()
+	texture:SetTexture(W.Media.Textures.sword)
+
+	if flipHorizontal then
+		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord()
+		texture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy)
+	end
+
+	texture:SetAllPoints()
+	SwordFrame.texture = texture
+
+	-- Enter combat animation: Move to center + fade in -> delay -> fade out
+	local enterGroup = CreateAnimationGroup(SwordFrame)
+	SwordFrame.enter = enterGroup
+
+	-- Step 1: Move toward center and fade in simultaneously
+	SwordFrame.enter.moveToCenter = createMove(enterGroup, ANIMATION_TIMINGS.SWORD_ENTER_MOVE_FADE, 1)
+	SwordFrame.enter.fadeIn = createFadeIn(enterGroup, ANIMATION_TIMINGS.SWORD_ENTER_MOVE_FADE, 1)
+
+	-- Trigger shield animation when first sword finishes fading in
+	if not flipHorizontal then
+		SwordFrame.enter.fadeIn:SetScript("OnFinished", function()
+			self.AnimationContainerFrame.ShieldFrame:Show()
+			self.AnimationContainerFrame.ShieldFrame.enter:Play()
+		end)
+	end
+
+	-- Step 2: Delay
+	createSleep(enterGroup, ANIMATION_TIMINGS.SWORD_ENTER_SLEEP, 2)
+
+	-- Step 3: Fade out
+	SwordFrame.enter.fadeOut = createFadeOut(enterGroup, ANIMATION_TIMINGS.SWORD_ENTER_FADEOUT, 3)
+
+	enterGroup:SetScript("OnFinished", function()
+		SwordFrame:Hide()
+	end)
+
+	-- Leave combat animation: Fade in -> delay -> move to corner + fade out
+	local leaveGroup = CreateAnimationGroup(SwordFrame)
+	SwordFrame.leave = leaveGroup
+
+	-- Step 1: Fade in
+	SwordFrame.leave.fadeIn = createFadeIn(leaveGroup, ANIMATION_TIMINGS.SWORD_LEAVE_FADEIN, 1)
+
+	-- Step 2: Delay
+	createSleep(leaveGroup, ANIMATION_TIMINGS.SWORD_LEAVE_SLEEP, 2)
+
+	-- Step 3: Move to corner and fade out (note: move is slightly longer than fade)
+	SwordFrame.leave.moveToCorner = createMove(leaveGroup, ANIMATION_TIMINGS.SWORD_LEAVE_MOVE, 3)
+	SwordFrame.leave.fadeOut = createFadeOut(leaveGroup, ANIMATION_TIMINGS.SWORD_LEAVE_FADEOUT, 3)
+
+	leaveGroup:SetScript("OnFinished", function()
+		SwordFrame:Hide()
+	end)
+
+	return SwordFrame
+end
+
 function C:CreateAnimationFrame()
-	if self.animationFrame then
+	if self.AnimationContainerFrame then
 		return
 	end
 
-	local frame, anime
-	frame = CreateFrame("Frame", nil, self.alert)
-	frame:SetPoint("TOP", 0, 0)
-	self.animationFrame = frame
+	-- Main container for all animation elements
+	local ContainerFrame = CreateFrame("Frame", nil, self.AlertFrame)
+	ContainerFrame:Point("TOP", 0, 0)
+	self.AnimationContainerFrame = ContainerFrame
 
-	-- 盾
-	frame = A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 3, true, W.Media.Textures.shield)
-	anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
-	A.AddTranslation(anime, "moveToCenter")
-	A.AddFadeIn(anime, "fadeIn")
-	A.AddFadeOut(anime, "fadeOut")
-	A.CloseAnimationOnHide(frame, anime, C.LoadNextAlert)
-	anime.moveToCenter:SetDuration(0.2)
-	anime.moveToCenter:SetStartDelay(0)
-	anime.fadeIn:SetDuration(0.2)
-	anime.fadeIn:SetStartDelay(0)
-	anime.fadeOut:SetDuration(0.3)
-	anime.fadeOut:SetStartDelay(0.5)
-	anime = A.CreateAnimationGroup(frame, "leave") -- 离开战斗
-	A.AddScale(anime, "scale", { 1, 1 }, { 0.1, 0.1 })
-	A.AddFadeIn(anime, "fadeIn")
-	A.AddFadeOut(anime, "fadeOut")
-	anime.fadeIn:SetDuration(0.3)
-	anime.fadeIn:SetStartDelay(0)
-	anime.scale:SetDuration(0.6)
-	anime.scale:SetStartDelay(0.6)
-	anime.fadeOut:SetDuration(0.6)
-	anime.fadeOut:SetStartDelay(0.6)
-	A.CloseAnimationOnHide(frame, anime, C.LoadNextAlert)
-	self.animationFrame.shield = frame
+	-- Create shield (center element)
+	ContainerFrame.ShieldFrame = self:CreateShieldFrame(ContainerFrame)
 
-	-- 剑 ↗
-	frame = A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 2, true, W.Media.Textures.sword)
-	anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
-	A.AddTranslation(anime, "moveToCenter")
-	A.AddFadeIn(anime, "fadeIn")
-	A.AddFadeOut(anime, "fadeOut")
-	A.CloseAnimationOnHide(frame, anime)
-	anime.moveToCenter:SetDuration(0.4)
-	anime.moveToCenter:SetStartDelay(0)
-	anime.fadeIn:SetDuration(0.4)
-	anime.fadeIn:SetStartDelay(0)
-	anime.fadeOut:SetDuration(0.3)
-	anime.fadeOut:SetStartDelay(0.9)
-	anime.fadeIn:SetScript("OnFinished", function()
-		self.animationFrame.shield:Show()
-		self.animationFrame.shield.enter:Play()
-	end)
-	anime = A.CreateAnimationGroup(frame, "leave") -- 离开战斗
-	A.AddTranslation(anime, "moveToCorner")
-	A.AddFadeIn(anime, "fadeIn")
-	A.AddFadeOut(anime, "fadeOut")
-	anime.fadeIn:SetDuration(0.3)
-	anime.fadeIn:SetStartDelay(0)
-	anime.moveToCorner:SetDuration(0.6)
-	anime.moveToCorner:SetStartDelay(0.6)
-	anime.fadeOut:SetDuration(0.6)
-	anime.fadeOut:SetStartDelay(0.6)
-	A.CloseAnimationOnHide(frame, anime)
-	self.animationFrame.swordLeftToRight = frame
+	-- Create left-to-right sword (from bottom-left corner)
+	ContainerFrame.SwordLeftToRight = self:CreateSwordFrame(ContainerFrame, false)
 
-	-- 剑 ↖
-	frame = A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 2, true, W.Media.Textures.sword, true)
-	anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
-	A.AddTranslation(anime, "moveToCenter")
-	A.AddFadeIn(anime, "fadeIn")
-	A.AddFadeOut(anime, "fadeOut")
-	A.CloseAnimationOnHide(frame, anime)
-	anime.moveToCenter:SetDuration(0.4)
-	anime.moveToCenter:SetStartDelay(0)
-	anime.fadeIn:SetDuration(0.4)
-	anime.fadeIn:SetStartDelay(0)
-	anime.fadeOut:SetDuration(0.3)
-	anime.fadeOut:SetStartDelay(0.9)
-	anime = A.CreateAnimationGroup(frame, "leave") -- 离开战斗
-	A.AddTranslation(anime, "moveToCorner")
-	A.AddFadeIn(anime, "fadeIn")
-	A.AddFadeOut(anime, "fadeOut")
-	anime.fadeIn:SetDuration(0.3)
-	anime.fadeIn:SetStartDelay(0)
-	anime.moveToCorner:SetDuration(0.6)
-	anime.moveToCorner:SetStartDelay(0.6)
-	anime.fadeOut:SetDuration(0.6)
-	anime.fadeOut:SetStartDelay(0.6)
-	A.CloseAnimationOnHide(frame, anime)
-	self.animationFrame.swordRightToLeft = frame
+	-- Create right-to-left sword (from bottom-right corner, flipped)
+	ContainerFrame.SwordRightToLeft = self:CreateSwordFrame(ContainerFrame, true)
 end
 
 function C:UpdateAnimationFrame()
-	if not self.animationFrame then
+	if not self.AnimationContainerFrame then
 		return
 	end
 
-	local animationFrameSize = { 240 * self.db.animationSize, 220 * self.db.animationSize }
-	local textureSize = 200 * self.db.animationSize
-	local swordAnimationRange = 130 * self.db.animationSize
-	local shieldAnimationRange = 65 * self.db.animationSize
+	local animationSize = self.db.animationSize
+	local speedMultiplier = 1 / self.db.speed
 
-	local f = self.animationFrame
+	-- Calculate sizes and offsets based on animation scale
+	local containerWidth = 240 * animationSize
+	local containerHeight = 220 * animationSize
+	local textureSize = 200 * animationSize
+	local swordMovementRange = 130 * animationSize
+	local shieldMovementRange = 65 * animationSize
 
-	-- 动画尺寸
-	f:SetSize(unpack(animationFrameSize))
+	local container = self.AnimationContainerFrame
 
-	f.shield:Hide()
-	f.shield:SetSize(0.8 * textureSize, 0.8 * textureSize)
-	f.shield.enter.moveToCenter:SetOffset(0, -shieldAnimationRange)
+	container:Size(containerWidth, containerHeight)
 
-	f.swordLeftToRight:Hide()
-	f.swordLeftToRight:SetSize(textureSize, textureSize)
-	f.swordLeftToRight.enter.moveToCenter:SetOffset(swordAnimationRange, swordAnimationRange)
-	f.swordLeftToRight.leave.moveToCorner:SetOffset(swordAnimationRange, swordAnimationRange)
+	local shield = container.ShieldFrame
+	shield:Hide()
+	shield:Size(0.8 * textureSize)
 
-	f.swordRightToLeft:Hide()
-	f.swordRightToLeft:SetSize(textureSize, textureSize)
-	f.swordRightToLeft.enter.moveToCenter:SetOffset(-swordAnimationRange, swordAnimationRange)
-	f.swordRightToLeft.leave.moveToCorner:SetOffset(-swordAnimationRange, swordAnimationRange)
+	shield.enter.moveToCenter:SetOffset(0, -shieldMovementRange)
+	shield.leave.moveUp:SetOffset(0, shieldMovementRange)
 
-	-- 动画时间更新
-	A.SpeedAnimationGroup(f.shield.enter, self.db.speed)
-	A.SpeedAnimationGroup(f.swordLeftToRight.enter, self.db.speed)
-	A.SpeedAnimationGroup(f.swordRightToLeft.enter, self.db.speed)
-	A.SpeedAnimationGroup(f.shield.leave, self.db.speed)
-	A.SpeedAnimationGroup(f.swordLeftToRight.leave, self.db.speed)
-	A.SpeedAnimationGroup(f.swordRightToLeft.leave, self.db.speed)
+	local initialSize = 0.8 * textureSize
+	shield.leave.scaleWidth:SetChange(initialSize * 0.1)
+	shield.leave.scaleHeight:SetChange(initialSize * 0.1)
+
+	for _, anim in ipairs(shield.enter.Animations) do
+		if anim.Type == "move" or (anim.Type == "fade" and anim.Order == 1) then
+			anim:SetDuration(ANIMATION_TIMINGS.SHIELD_ENTER_MOVE_FADE * speedMultiplier)
+		elseif anim.Type == "sleep" then
+			anim:SetDuration(ANIMATION_TIMINGS.SHIELD_ENTER_SLEEP * speedMultiplier)
+		elseif anim.Type == "fade" and anim.Order == 3 then
+			anim:SetDuration(ANIMATION_TIMINGS.SHIELD_ENTER_FADEOUT * speedMultiplier)
+		end
+	end
+
+	for _, anim in ipairs(shield.leave.Animations) do
+		if anim.Type == "fade" and anim.Order == 1 then
+			anim:SetDuration(ANIMATION_TIMINGS.SHIELD_LEAVE_FADEIN * speedMultiplier)
+		elseif anim.Type == "sleep" then
+			anim:SetDuration(ANIMATION_TIMINGS.SHIELD_LEAVE_SLEEP * speedMultiplier)
+		elseif anim.Type == "move" or anim.Type == "width" or anim.Type == "height" then
+			anim:SetDuration(ANIMATION_TIMINGS.SHIELD_LEAVE_MOVE_SCALE_FADEOUT * speedMultiplier)
+		elseif anim.Type == "fade" and anim.Order == 3 then
+			anim:SetDuration(ANIMATION_TIMINGS.SHIELD_LEAVE_MOVE_SCALE_FADEOUT * speedMultiplier)
+		end
+	end
+
+	-- Update left-to-right sword
+	local swordLTR = container.SwordLeftToRight
+	swordLTR:Hide()
+	swordLTR:Size(textureSize)
+	swordLTR.enter.moveToCenter:SetOffset(swordMovementRange, swordMovementRange)
+	swordLTR.leave.moveToCorner:SetOffset(swordMovementRange, swordMovementRange)
+
+	-- Update sword animation timings (left-to-right)
+	for _, anim in ipairs(swordLTR.enter.Animations) do
+		if anim.Type == "move" or (anim.Type == "fade" and anim.Order == 1) then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_ENTER_MOVE_FADE * speedMultiplier)
+		elseif anim.Type == "sleep" then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_ENTER_SLEEP * speedMultiplier)
+		elseif anim.Type == "fade" and anim.Order == 3 then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_ENTER_FADEOUT * speedMultiplier)
+		end
+	end
+
+	for _, anim in ipairs(swordLTR.leave.Animations) do
+		if anim.Type == "fade" and anim.Order == 1 then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_LEAVE_FADEIN * speedMultiplier)
+		elseif anim.Type == "sleep" then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_LEAVE_SLEEP * speedMultiplier)
+		elseif anim.Type == "move" then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_LEAVE_MOVE * speedMultiplier)
+		elseif anim.Type == "fade" and anim.Order == 3 then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_LEAVE_FADEOUT * speedMultiplier)
+		end
+	end
+
+	-- Update right-to-left sword
+	local swordRTL = container.SwordRightToLeft
+	swordRTL:Hide()
+	swordRTL:Size(textureSize)
+	swordRTL.enter.moveToCenter:SetOffset(-swordMovementRange, swordMovementRange)
+	swordRTL.leave.moveToCorner:SetOffset(-swordMovementRange, swordMovementRange)
+
+	-- Update sword animation timings (right-to-left)
+	for _, anim in ipairs(swordRTL.enter.Animations) do
+		if anim.Type == "move" or (anim.Type == "fade" and anim.Order == 1) then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_ENTER_MOVE_FADE * speedMultiplier)
+		elseif anim.Type == "sleep" then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_ENTER_SLEEP * speedMultiplier)
+		elseif anim.Type == "fade" and anim.Order == 3 then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_ENTER_FADEOUT * speedMultiplier)
+		end
+	end
+
+	for _, anim in ipairs(swordRTL.leave.Animations) do
+		if anim.Type == "fade" and anim.Order == 1 then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_LEAVE_FADEIN * speedMultiplier)
+		elseif anim.Type == "sleep" then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_LEAVE_SLEEP * speedMultiplier)
+		elseif anim.Type == "move" then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_LEAVE_MOVE * speedMultiplier)
+		elseif anim.Type == "fade" and anim.Order == 3 then
+			anim:SetDuration(ANIMATION_TIMINGS.SWORD_LEAVE_FADEOUT * speedMultiplier)
+		end
+	end
 end
 
--- 文字
+---Create text frame with enter/leave animations
 function C:CreateTextFrame()
-	if self.textFrame then
+	if self.TextFrame then
 		return
 	end
 
-	local frame = A.CreateAnimationFrame(nil, self.alert, "HIGH", 4, true)
-	frame.text = frame:CreateFontString()
-	frame.text:SetPoint("CENTER", 0, 0)
-	frame.text:SetJustifyV("MIDDLE")
-	frame.text:SetJustifyH("CENTER")
+	local TextFrame = CreateFrame("Frame", nil, self.AlertFrame)
+	TextFrame:SetFrameStrata("HIGH")
+	TextFrame:SetFrameLevel(4)
+	TextFrame:SetAlpha(0)
+	TextFrame:Hide()
 
-	local anime = A.CreateAnimationGroup(frame, "enter")
-	A.AddTranslation(anime, "moveUp")
-	A.AddTranslation(anime, "moveDown")
-	A.AddFadeIn(anime, "fadeIn")
-	A.AddFadeOut(anime, "fadeOut")
-	anime.moveUp:SetDuration(0.4)
-	anime.moveUp:SetStartDelay(0)
-	anime.moveDown:SetDuration(0.1)
-	anime.moveDown:SetStartDelay(0.4)
-	anime.fadeIn:SetDuration(0.5)
-	anime.fadeIn:SetStartDelay(0)
-	anime.fadeOut:SetDuration(0.3)
-	anime.fadeOut:SetStartDelay(0.9)
-	anime = A.CreateAnimationGroup(frame, "leave")
-	A.AddFadeIn(anime, "fadeIn")
-	A.AddFadeOut(anime, "fadeOut")
-	A.AddTranslation(anime, "moveUp")
-	anime.fadeIn:SetDuration(0.3)
-	anime.fadeIn:SetStartDelay(0)
-	anime.fadeOut:SetDuration(0.6)
-	anime.fadeOut:SetStartDelay(0.6)
-	anime.moveUp:SetDuration(0.6)
-	anime.moveUp:SetStartDelay(0.6)
+	TextFrame.text = TextFrame:CreateFontString()
+	TextFrame.text:Point("CENTER", 0, 0)
+	TextFrame.text:SetJustifyV("MIDDLE")
+	TextFrame.text:SetJustifyH("CENTER")
 
-	self.textFrame = frame
+	-- Enter combat animation: Move up + fade in -> move down slightly -> delay -> fade out
+	local enterGroup = CreateAnimationGroup(TextFrame)
+	TextFrame.enter = enterGroup
+
+	-- Step 1: Move upward and fade in simultaneously
+	TextFrame.enter.moveUp = createMove(enterGroup, ANIMATION_TIMINGS.TEXT_ENTER_MOVE_UP, 1)
+	TextFrame.enter.fadeIn = createFadeIn(enterGroup, ANIMATION_TIMINGS.TEXT_ENTER_FADEIN, 1)
+
+	-- Step 2: Move down slightly (bounce effect)
+	TextFrame.enter.moveDown = createMove(enterGroup, ANIMATION_TIMINGS.TEXT_ENTER_MOVE_DOWN, 2)
+
+	-- Step 3: Delay
+	createSleep(enterGroup, ANIMATION_TIMINGS.TEXT_ENTER_SLEEP, 3)
+
+	-- Step 4: Fade out
+	TextFrame.enter.fadeOut = createFadeOut(enterGroup, ANIMATION_TIMINGS.TEXT_ENTER_FADEOUT, 4)
+
+	-- Leave combat animation: Fade in -> delay -> move up + fade out
+	local leaveGroup = CreateAnimationGroup(TextFrame)
+	TextFrame.leave = leaveGroup
+
+	-- Step 1: Fade in
+	TextFrame.leave.fadeIn = createFadeIn(leaveGroup, ANIMATION_TIMINGS.TEXT_LEAVE_FADEIN, 1)
+
+	-- Step 2: Delay
+	createSleep(leaveGroup, ANIMATION_TIMINGS.TEXT_LEAVE_SLEEP, 2)
+
+	-- Step 3: Move upward and fade out simultaneously
+	TextFrame.leave.moveUp = createMove(leaveGroup, ANIMATION_TIMINGS.TEXT_LEAVE_MOVE_FADEOUT, 3)
+	TextFrame.leave.fadeOut = createFadeOut(leaveGroup, ANIMATION_TIMINGS.TEXT_LEAVE_MOVE_FADEOUT, 3)
+
+	self.TextFrame = TextFrame
 end
 
 function C:UpdateTextFrame()
-	if not self.textFrame then
+	if not self.TextFrame then
 		return
 	end
 
-	local moveUpOffset = 160 * self.db.animationSize
-	local moveDownOffset = -40 * self.db.animationSize
+	local animationSize = self.db.animationSize
+	local speedMultiplier = 1 / self.db.speed
 
-	local f = self.textFrame
+	-- Calculate movement offsets based on animation scale
+	local moveUpOffset = 160 * animationSize
+	local moveDownOffset = -40 * animationSize
 
-	f:Hide()
-	F.SetFontWithDB(f.text, self.db.font)
-	f.text:SetText(self.db.enterText)
-	f:SetSize(f.text:GetStringWidth(), f.text:GetStringHeight())
+	local textFrame = self.TextFrame
 
-	-- 动画尺寸更新
-	f.enter.moveUp:SetOffset(0, moveUpOffset)
-	f.enter.moveDown:SetOffset(0, moveDownOffset)
-	f.leave.moveUp:SetOffset(0, -moveDownOffset)
+	textFrame:Hide()
+	F.SetFontWithDB(textFrame.text, self.db.font)
+	textFrame.text:SetText(self.db.enterText)
+	textFrame:Size(textFrame.text:GetStringWidth(), textFrame.text:GetStringHeight())
 
-	-- 动画时间更新
-	A.SpeedAnimationGroup(f.enter, self.db.speed)
-	A.SpeedAnimationGroup(f.leave, self.db.speed)
+	-- Update animation offsets
+	textFrame.enter.moveUp:SetOffset(0, moveUpOffset)
+	textFrame.enter.moveDown:SetOffset(0, moveDownOffset)
+	textFrame.leave.moveUp:SetOffset(0, -moveDownOffset)
 
-	-- 上方动画窗体如果不存在，确认下个提示的工作就交给文字窗体了
-	if not self.db.animation then
-		A.CloseAnimationOnHide(f, "enter", C.LoadNextAlert)
-		A.CloseAnimationOnHide(f, "leave", C.LoadNextAlert)
-	else
-		A.CloseAnimationOnHide(f, "enter")
-		A.CloseAnimationOnHide(f, "leave")
+	-- Update enter animation timings
+	for _, anim in ipairs(textFrame.enter.Animations) do
+		if anim.Type == "move" and anim.Order == 1 then
+			anim:SetDuration(ANIMATION_TIMINGS.TEXT_ENTER_MOVE_UP * speedMultiplier)
+		elseif anim.Type == "fade" and anim.Order == 1 then
+			anim:SetDuration(ANIMATION_TIMINGS.TEXT_ENTER_FADEIN * speedMultiplier)
+		elseif anim.Type == "move" and anim.Order == 2 then
+			anim:SetDuration(ANIMATION_TIMINGS.TEXT_ENTER_MOVE_DOWN * speedMultiplier)
+		elseif anim.Type == "sleep" then
+			anim:SetDuration(ANIMATION_TIMINGS.TEXT_ENTER_SLEEP * speedMultiplier)
+		elseif anim.Type == "fade" and anim.Order == 4 then
+			anim:SetDuration(ANIMATION_TIMINGS.TEXT_ENTER_FADEOUT * speedMultiplier)
+		end
 	end
+
+	-- Update leave animation timings
+	for _, anim in ipairs(textFrame.leave.Animations) do
+		if anim.Type == "fade" and anim.Order == 1 then
+			anim:SetDuration(ANIMATION_TIMINGS.TEXT_LEAVE_FADEIN * speedMultiplier)
+		elseif anim.Type == "sleep" then
+			anim:SetDuration(ANIMATION_TIMINGS.TEXT_LEAVE_SLEEP * speedMultiplier)
+		elseif anim.Type == "move" or (anim.Type == "fade" and anim.Order == 3) then
+			anim:SetDuration(ANIMATION_TIMINGS.TEXT_LEAVE_MOVE_FADEOUT * speedMultiplier)
+		end
+	end
+
+	-- If animation is disabled, text frame is responsible for loading next alert
+	local OnFinished = function()
+		textFrame:Hide()
+		if not self.db.animation then
+			self:LoadNextAlert()
+		end
+	end
+
+	textFrame.enter.fadeOut:SetScript("OnFinished", OnFinished)
+	textFrame.leave.fadeOut:SetScript("OnFinished", OnFinished)
 end
 
--- 通知控制
+---Display combat alert animation and text
+---@param alertType "ENTER"|"LEAVE" Type of alert to show
 function C:ShowAlert(alertType)
-	if not self.animationFrame then
-		self:Log("debug", "not animation frame")
+	if not self.AnimationContainerFrame then
+		self:Log("debug", "Animation container frame not initialized")
 	end
 
-	if not self.textFrame then
-		self:Log("debug", "not text frame")
+	if not self.TextFrame then
+		self:Log("debug", "Text frame not initialized")
 	end
 
+	-- Queue alert if one is already playing
 	if isPlaying then
 		self:QueueAlert(alertType)
 		return
@@ -230,86 +503,121 @@ function C:ShowAlert(alertType)
 
 	isPlaying = true
 
-	local a = self.animationFrame
-	local t = self.textFrame
-	local swordOffsetEnter = 150 * self.db.animationSize
-	local swordOffsetLeave = 20 * self.db.animationSize
-	local shieldOffsetEnter = 50 * self.db.animationSize
-	local shieldOffsetLeave = -15 * self.db.animationSize
-	local textOffsetEnter = -120 * self.db.animationSize
-	local textOffsetLeave = -20 * self.db.animationSize
+	local container = self.AnimationContainerFrame
+	local textFrame = self.TextFrame
+	local animationSize = self.db.animationSize
 
+	-- Calculate positioning offsets for different animation states
+	local swordOffsetEnter = 150 * animationSize
+	local swordOffsetLeave = 20 * animationSize
+	local shieldOffsetEnter = 50 * animationSize
+	local shieldOffsetLeave = -15 * animationSize
+	local textOffsetEnter = -120 * animationSize
+	local textOffsetLeave = -20 * animationSize
+
+	-- Stop any running animations
 	if self.db.animation then
-		a.shield.enter:Stop()
-		a.swordLeftToRight.enter:Stop()
-		a.swordRightToLeft.enter:Stop()
-		a.shield.leave:Stop()
-		a.swordLeftToRight.leave:Stop()
-		a.swordRightToLeft.leave:Stop()
+		container.ShieldFrame.enter:Stop()
+		container.SwordLeftToRight.enter:Stop()
+		container.SwordRightToLeft.enter:Stop()
+		container.ShieldFrame.leave:Stop()
+		container.SwordLeftToRight.leave:Stop()
+		container.SwordRightToLeft.leave:Stop()
 	end
+
 	if self.db.text then
-		t.enter:Stop()
-		t.leave:Stop()
+		textFrame.enter:Stop()
+		textFrame.leave:Stop()
 	end
 
 	if alertType == "ENTER" then
+		-- Enter combat sequence
 		if self.db.animation then
-			-- 盾牌动画会由左到右的剑自动触发
-			a.shield:SetPoint("CENTER", 0, shieldOffsetEnter)
-			a.swordLeftToRight:SetPoint("CENTER", -swordOffsetEnter, -swordOffsetEnter)
-			a.swordRightToLeft:SetPoint("CENTER", swordOffsetEnter, -swordOffsetEnter)
-			a.swordLeftToRight:Show()
-			a.swordRightToLeft:Show()
-			a.swordLeftToRight.enter:Restart()
-			a.swordRightToLeft.enter:Restart()
+			local textureSize = 200 * animationSize
+			-- Position and show sword frames
+			container.SwordLeftToRight:Size(textureSize)
+			container.SwordLeftToRight:Point("CENTER", -swordOffsetEnter, -swordOffsetEnter)
+			container.SwordLeftToRight:Show()
+
+			container.SwordRightToLeft:Size(textureSize)
+			container.SwordRightToLeft:Point("CENTER", swordOffsetEnter, -swordOffsetEnter)
+			container.SwordRightToLeft:Show()
+
+			-- Position shield frame (will be shown by sword animation callback)
+			container.ShieldFrame:Size(0.8 * textureSize)
+			container.ShieldFrame:Point("CENTER", 0, shieldOffsetEnter)
+
+			-- Start sword animations (shield triggers from sword callback)
+			container.SwordLeftToRight.enter:Play()
+			container.SwordRightToLeft.enter:Play()
 		end
 
 		if self.db.text then
-			t.text:SetText(self.db.enterText)
-			F.SetFontColorWithDB(t.text, self.db.enterColor)
-			t:SetSize(t.text:GetStringWidth(), t.text:GetStringHeight())
-			t:SetPoint("TOP", self.db.animation and self.animationFrame or self.alert, "BOTTOM", 0, textOffsetEnter)
-			t:Show()
-			t.enter:Restart()
+			textFrame.text:SetText(self.db.enterText)
+			F.SetFontColorWithDB(textFrame.text, self.db.enterColor)
+			textFrame:Size(textFrame.text:GetStringWidth(), textFrame.text:GetStringHeight())
+
+			-- Position text below animations or alert frame
+			local anchorFrame = self.db.animation and self.AnimationContainerFrame or self.AlertFrame
+			textFrame:Point("TOP", anchorFrame, "BOTTOM", 0, textOffsetEnter)
+			textFrame:Show()
+			textFrame.enter:Play()
 		end
 	else
+		-- Leave combat sequence
 		if self.db.animation then
-			a.shield:SetPoint("CENTER", 0, shieldOffsetLeave)
-			a.swordLeftToRight:SetPoint("CENTER", -swordOffsetLeave, -swordOffsetLeave)
-			a.swordRightToLeft:SetPoint("CENTER", swordOffsetLeave, -swordOffsetLeave)
-			a.shield:Show()
-			a.swordLeftToRight:Show()
-			a.swordRightToLeft:Show()
-			a.shield.leave:Restart()
-			a.swordLeftToRight.leave:Restart()
-			a.swordRightToLeft.leave:Restart()
+			local textureSize = 200 * animationSize
+
+			-- Position and show all frames (including shield)
+			container.ShieldFrame:Size(0.8 * textureSize)
+			container.ShieldFrame:Point("CENTER", 0, shieldOffsetLeave)
+			container.ShieldFrame:Show()
+
+			container.SwordLeftToRight:Size(textureSize)
+			container.SwordLeftToRight:Point("CENTER", -swordOffsetLeave, -swordOffsetLeave)
+			container.SwordLeftToRight:Show()
+
+			container.SwordRightToLeft:Size(textureSize)
+			container.SwordRightToLeft:Point("CENTER", swordOffsetLeave, -swordOffsetLeave)
+			container.SwordRightToLeft:Show()
+
+			-- Start all leave animations simultaneously
+			container.ShieldFrame.leave:Play()
+			container.SwordLeftToRight.leave:Play()
+			container.SwordRightToLeft.leave:Play()
 		end
 
 		if self.db.text then
-			t.text:SetText(self.db.leaveText)
-			F.SetFontColorWithDB(t.text, self.db.leaveColor)
-			t:SetSize(t.text:GetStringWidth(), t.text:GetStringHeight())
-			t:SetPoint("TOP", self.db.animation and self.animationFrame or self.alert, "BOTTOM", 0, textOffsetLeave)
-			t:Show()
-			t.leave:Restart()
+			textFrame.text:SetText(self.db.leaveText)
+			F.SetFontColorWithDB(textFrame.text, self.db.leaveColor)
+			textFrame:Size(textFrame.text:GetStringWidth(), textFrame.text:GetStringHeight())
+
+			-- Position text below animations or alert frame
+			local anchorFrame = self.db.animation and self.AnimationContainerFrame or self.AlertFrame
+			textFrame:Point("TOP", anchorFrame, "BOTTOM", 0, textOffsetLeave)
+			textFrame:Show()
+			textFrame.leave:Play()
 		end
 	end
 end
 
+---Add an alert to the queue for later playback
+---@param alertType "ENTER"|"LEAVE" Type of alert to queue
 function C:QueueAlert(alertType)
 	tinsert(alertQueue, alertType)
 end
 
-function C.LoadNextAlert()
+---Load and play the next queued alert, if any
+function C:LoadNextAlert()
 	isPlaying = false
 
 	if alertQueue and alertQueue[1] then
-		C:ShowAlert(alertQueue[1])
+		self:ShowAlert(alertQueue[1])
 		tremove(alertQueue, 1)
 	end
 end
 
--- 事件绑定
+---Event handler: Player enters combat
 function C:PLAYER_REGEN_DISABLED()
 	self:ShowAlert("ENTER")
 end
@@ -318,32 +626,31 @@ function C:PLAYER_REGEN_ENABLED()
 	self:ShowAlert("LEAVE")
 end
 
--- 更新配置
 function C:UpdateMover()
-	if not self.alert then
+	if not self.AlertFrame then
 		return
 	end
 
 	local width = 0
 	local height = 0
 
-	if self.db.animation and self.animationFrame then
-		width = width + (self.animationFrame:GetWidth() or 0)
-		height = height + (self.animationFrame:GetHeight() or 0)
+	if self.db.animation and self.AnimationContainerFrame then
+		width = width + (self.AnimationContainerFrame:GetWidth() or 0)
+		height = height + (self.AnimationContainerFrame:GetHeight() or 0)
 	end
 
-	if self.db.text and self.textFrame then
-		width = max(width, self.animationFrame:GetWidth())
-		height = height + self.textFrame:GetHeight()
+	if self.db.text and self.TextFrame then
+		width = max(width, self.AnimationContainerFrame:GetWidth() or 0)
+		height = height + (self.TextFrame:GetHeight() or 0)
 	end
 
 	if width ~= 0 and height ~= 0 then
-		self.alert:SetSize(width, height)
+		self.AlertFrame:Size(width, height)
 	end
 end
 
 function C:UpdateFrames()
-	if not self.alert then
+	if not self.AlertFrame then
 		self:ConstructFrames()
 	else
 		self:UpdateAnimationFrame()
@@ -353,22 +660,44 @@ function C:UpdateFrames()
 end
 
 function C:ConstructFrames()
-	self.alert = CreateFrame("Frame", nil, E.UIParent)
-	self.alert:SetPoint("TOP", 0, -200)
+	self.AlertFrame = CreateFrame("Frame", nil, E.UIParent)
+	self.AlertFrame:Point("TOP", 0, -200)
+
 	self:CreateAnimationFrame()
 	self:CreateTextFrame()
-
 	self:UpdateAnimationFrame()
 	self:UpdateTextFrame()
 	self:UpdateMover()
 
-	E:CreateMover(self.alert, "WTCombatAlertFrameMover", L["Combat Alert"], nil, nil, nil, "ALL,WINDTOOLS", function()
-		return E.db.WT.combat.combatAlert.enable
-	end, "WindTools,combat,combatAlert")
-
+	E:CreateMover(
+		self.AlertFrame,
+		"WTCombatAlertFrameMover",
+		L["Combat Alert"],
+		nil,
+		nil,
+		nil,
+		"ALL,WINDTOOLS",
+		function()
+			return E.db.WT.combat.combatAlert.enable
+		end,
+		"WindTools,combat,combatAlert"
+	)
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+end
+function C:Preview()
+	self:ShowAlert("ENTER")
+	self:QueueAlert("LEAVE")
+end
+
+function C:Initialize()
+	if not E.db.WT.combat.combatAlert.enable then
+		return
+	end
+
+	self.db = E.db.WT.combat.combatAlert
+	self:RegisterEvent("PLAYER_ENTERING_WORLD", "ConstructFrames")
 end
 
 function C:ProfileUpdate()
@@ -381,20 +710,6 @@ function C:ProfileUpdate()
 		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 	end
-end
-
-function C:Preview()
-	self:ShowAlert("ENTER")
-	self:QueueAlert("LEAVE")
-end
-
-function C:Initialize()
-	if not E.db.WT.combat.combatAlert.enable then
-		return
-	end
-	self.db = E.db.WT.combat.combatAlert
-
-	self:RegisterEvent("PLAYER_ENTERING_WORLD", "ConstructFrames")
 end
 
 W:RegisterModule(C:GetName())

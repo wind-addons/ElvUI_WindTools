@@ -25,3 +25,6 @@ test_*.lua
 *.sublime-*
 .kiro/
 .claude/
+
+# Ignore Lua Language Server files
+.luals/

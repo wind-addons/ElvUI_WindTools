@@ -465,10 +465,10 @@ end
 
 ---Call all loaded addon callbacks
 ---@param addonName string The name of the addon
----@param object table The callback functions table
-function S:CallLoadedAddon(addonName, object)
-	for _, func in next, object do
-		if not xpcall(func, F.Developer.ThrowError, self) then
+---@param callbacks table The callback functions table
+function S:CallLoadedAddon(addonName, callbacks)
+	for _, callback in next, callbacks do
+		if not xpcall(callback, F.Developer.ThrowError, self) then
 			self:Log("debug", format("Failed to run addon %s", addonName))
 		end
 	end
@@ -484,9 +484,9 @@ function S:ADDON_LOADED(_, addonName)
 		return
 	end
 
-	local object = self.addonsToLoad[addonName]
-	if object then
-		self:CallLoadedAddon(addonName, object)
+	local callbacks = self.addonsToLoad[addonName]
+	if callbacks then
+		self:CallLoadedAddon(addonName, callbacks)
 	end
 end
 

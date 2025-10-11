@@ -453,79 +453,90 @@ function FL:UpdateRecentAllyButton(button)
 		end
 	end
 
-	-- Title
 	local CharacterData = button.CharacterData
 	if not CharacterData then
 		return
 	end
 
-	for _, key in pairs({ "NameDivider", "Level", "LevelDivider", "Class" }) do
-		if CharacterData[key] then
-			CharacterData[key]:Hide()
-		end
-	end
-
 	local characterData = data.characterData
-	local classFile = characterData and characterData.classID and select(2, GetClassInfo(characterData.classID))
-	local nameString = stateData.isOnline
-			and (characterData.name and self.db.useClassColor and C.StringWithClassColor(characterData.name, classFile) or characterData.name)
-		or C.StringByTemplate(characterData.name, "gray-400")
 
-	local level = characterData.level
-	if level then
-		if level ~= expansionData[WOW_PROJECT_MAINLINE].maxLevel or not self.db.hideMaxLevel then
-			nameString = nameString .. C.StringWithRGB(": " .. level, GetQuestDifficultyColor(level))
+	-- Title
+	if CharacterData.Name then
+		for _, key in pairs({ "NameDivider", "Level", "LevelDivider", "Class" }) do
+			if CharacterData[key] then
+				CharacterData[key]:Hide()
+			end
 		end
-	end
 
-	if nameString then
-		CharacterData.Name:SetText(nameString)
-	end
+		local classFile = characterData and characterData.classID and select(2, GetClassInfo(characterData.classID))
+		local nameString = stateData.isOnline
+				and (characterData.name and self.db.useClassColor and C.StringWithClassColor(
+					characterData.name,
+					classFile
+				) or characterData.name)
+			or C.StringByTemplate(characterData.name, "gray-400")
 
-	F.SetFont(CharacterData.Name)
-	F.SetFontWithDB(CharacterData.Name, self.db.nameFont)
-	CharacterData.Name.maxWidth = button:GetWidth() - 60
-	CharacterData.Name:Width(CharacterData.Name.maxWidth)
+		local level = characterData.level
+		if level then
+			if level ~= expansionData[WOW_PROJECT_MAINLINE].maxLevel or not self.db.hideMaxLevel then
+				nameString = nameString .. C.StringWithRGB(": " .. level, GetQuestDifficultyColor(level))
+			end
+		end
+
+		if nameString then
+			CharacterData.Name:SetText(nameString)
+		end
+
+		F.SetFont(CharacterData.Name)
+		F.SetFontWithDB(CharacterData.Name, self.db.nameFont)
+		CharacterData.Name.maxWidth = button:GetWidth() - 60
+		CharacterData.Name:Width(CharacterData.Name.maxWidth)
+	end
 
 	-- Most Recent Interaction
-	F.SetFont(CharacterData.MostRecentInteraction)
-	F.SetFontWithDB(CharacterData.MostRecentInteraction, self.db.infoFont)
-
-	-- Info
-	if stateData.currentLocation then
-		local realmName = characterData.realmName or ""
-		if self.db.hideRealm then
-			realmName = ""
-		end
-
-		local locationText, color
-		if
-			stateData.currentLocation
-			and stateData.currentLocation ~= ""
-			and realmName
-			and realmName ~= ""
-			and realmName ~= E.myrealm
-		then
-			locationText = stateData.currentLocation .. " - " .. realmName
-			color = self.db.areaColor
-		elseif stateData.currentLocation and stateData.currentLocation ~= "" then
-			locationText = stateData.currentLocation
-			color = self.db.areaColor
-		else
-			locationText = realmName or ""
-		end
-
-		if not stateData.isOnline then
-			locationText = C.StringByTemplate(locationText, "gray-400")
-		elseif color then
-			locationText = C.StringWithRGB(locationText, color)
-		end
-
-		CharacterData.Location:SetText(locationText)
+	if CharacterData.MostRecentInteraction then
+		-- Most Recent Interaction
+		F.SetFont(CharacterData.MostRecentInteraction)
+		F.SetFontWithDB(CharacterData.MostRecentInteraction, self.db.infoFont)
 	end
 
-	F.SetFont(CharacterData.Location)
-	F.SetFontWithDB(CharacterData.Location, self.db.infoFont)
+	-- Info
+	if CharacterData.Location then
+		if stateData.currentLocation then
+			local realmName = characterData.realmName or ""
+			if self.db.hideRealm then
+				realmName = ""
+			end
+
+			local locationText, color
+			if
+				stateData.currentLocation
+				and stateData.currentLocation ~= ""
+				and realmName
+				and realmName ~= ""
+				and realmName ~= E.myrealm
+			then
+				locationText = stateData.currentLocation .. " - " .. realmName
+				color = self.db.areaColor
+			elseif stateData.currentLocation and stateData.currentLocation ~= "" then
+				locationText = stateData.currentLocation
+				color = self.db.areaColor
+			else
+				locationText = realmName or ""
+			end
+
+			if not stateData.isOnline then
+				locationText = C.StringByTemplate(locationText, "gray-400")
+			elseif color then
+				locationText = C.StringWithRGB(locationText, color)
+			end
+
+			CharacterData.Location:SetText(locationText)
+		end
+
+		F.SetFont(CharacterData.Location)
+		F.SetFontWithDB(CharacterData.Location, self.db.infoFont)
+	end
 end
 
 function FL:Initialize()

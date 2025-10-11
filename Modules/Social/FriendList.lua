@@ -368,7 +368,11 @@ function FL:UpdateFriendButton(button)
 
 			if self.db.textures.gameIcon == "PATCH" and wowID and expansionData[wowID] then
 				texOrAtlas = expansionData[wowID].icon
-				if wowID == WOW_PROJECT_MAINLINE and timerunningSeasonID and timerunningSeasonIcon[timerunningSeasonID] then
+				if
+					wowID == WOW_PROJECT_MAINLINE
+					and timerunningSeasonID
+					and timerunningSeasonIcon[timerunningSeasonID]
+				then
 					texOrAtlas = timerunningSeasonIcon[timerunningSeasonID]
 				end
 			end

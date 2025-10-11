@@ -1,7 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local C = W:NewModule("CombatAlert", "AceEvent-3.0") ---@class CombatAlert: AceModule
 
-
 local _G = _G
 local assert = assert
 local ipairs = ipairs

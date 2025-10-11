@@ -635,7 +635,7 @@ options.minimapButtons = {
 						L["Leading and trailing whitespace in each pattern will be automatically trimmed."],
 						L["If you are not familiar with Lua regex, try using AI to help you."],
 						format(
-						L["Use command %s to view all handled buttons and their current sorting priority."],
+							L["Use command %s to view all handled buttons and their current sorting priority."],
 							C.StringByTemplate("/wtmmb all", "teal-300")
 						)
 					),

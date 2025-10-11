@@ -139,7 +139,7 @@ V.maps = {
 		reverseOrder = false,
 		orientation = "HORIZONTAL",
 		expansionLandingPage = false,
-		sortingPriority = "^Expansion, _BugSack, WeakAuras$, _Saved, _Wind"
+		sortingPriority = "^Expansion, _BugSack, WeakAuras$, _Saved, _Wind",
 	},
 }
 

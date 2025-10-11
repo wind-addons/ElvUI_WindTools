@@ -60,16 +60,16 @@ W.LegionRemixMapData = {
 	[206] = { abbr = L["[ABBR] Neltharion's Lair"], activityID = 115, timers = { 1980, 1584, 1188 } },
 	[207] = { abbr = L["[ABBR] Vault of the Wardens"], activityID = 117, timers = { 1980, 1584, 1188 } },
 	[208] = { abbr = L["[ABBR] Maw of Souls"], activityID = 119, timers = { 1440, 1152, 864 } },
-	
+
 	-- p2: Suramar
 	[209] = { abbr = L["[ABBR] The Arcway"], activityID = 121, timers = { 2700, 2160, 1620 } },
 	[210] = { abbr = L["[ABBR] Court of Stars"], activityID = 120, timers = { 1800, 1440, 1080 } },
 	-- [227] = { abbr = L["[ABBR] Return to Karazhan: Lower"], activityID = 127, timers = { 2520, 2016, 1512 } },
 	-- [234] = { abbr = L["[ABBR] Return to Karazhan: Upper"], activityID = 128, timers = { 2100, 1680, 1260 } },
-	
+
 	-- p3: Broken Shore
 	-- [233] = { abbr = L["[ABBR] Cathedral of Eternal Night"], activityID = 129, timers = { 2100, 1680, 1260 } },
-	
+
 	-- p4: Argus
 	-- [239] = { abbr = L["[ABBR] Seat of the Triumvirate"], activityID = 133, timers = { 2100, 1680, 1260 } },
 }

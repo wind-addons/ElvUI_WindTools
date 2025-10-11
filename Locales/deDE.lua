@@ -389,6 +389,7 @@ L["Club channel %s no found, please use the full name of the channel."] = "Club-
 L["Club channel no found, please setup again."] = "Clubkanal nicht gefunden, bitte erneut einrichten."
 L["Codes"] = true
 L["Collect Garbage"] = "Müll sammeln"
+L["Collectionator"] = true
 L["Collections"] = "Sammlungen"
 L["Color"] = "Farbe"
 L["Color Mode"] = "Farbmodus"

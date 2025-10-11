@@ -499,6 +499,7 @@ V.skins = {
 		bigWigsQueueTimer = true,
 		btWQuests = true,
 		bugSack = true,
+		collectionator = true,
 		hekili = true,
 		immersion = true,
 		manuscriptsJournal = true,

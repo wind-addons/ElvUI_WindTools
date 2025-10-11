@@ -1246,6 +1246,12 @@ options.addons = {
 			addonName = "BugSack",
 			addonskinsKey = "BugSack",
 		},
+		collectionator = {
+			order = 10,
+			type = "toggle",
+			name = L["Collectionator"],
+			addonName = "Collectionator",
+		},
 		hekili = {
 			order = 10,
 			type = "toggle",

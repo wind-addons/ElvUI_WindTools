@@ -389,6 +389,7 @@ L["Club channel %s no found, please use the full name of the channel."] = "沒�
 L["Club channel no found, please setup again."] = "沒有找到社群頻道, 請重新設定."
 L["Codes"] = "代碼"
 L["Collect Garbage"] = "回收垃圾"
+L["Collectionator"] = true
 L["Collections"] = "收藏"
 L["Color"] = "顏色"
 L["Color Mode"] = "顏色模式"

@@ -389,6 +389,7 @@ L["Club channel %s no found, please use the full name of the channel."] = "%s �
 L["Club channel no found, please setup again."] = "채널을 찾을 수 없습니다. 다시 설정하십시오."
 L["Codes"] = "암호"
 L["Collect Garbage"] = "리소스 정리"
+L["Collectionator"] = true
 L["Collections"] = "수집품"
 L["Color"] = "색상"
 L["Color Mode"] = "색상 모드"

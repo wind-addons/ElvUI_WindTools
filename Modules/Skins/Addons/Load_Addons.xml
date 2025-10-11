@@ -5,6 +5,7 @@
 	<Script file='BigWigs.lua'/>
 	<Script file='BtWQuests.lua'/>
 	<Script file='BugSack.lua'/>
+	<Script file='Collectionator.lua'/>
 	<Script file='Hekili.lua'/>
 	<Script file='Immersion.lua'/>
 	<Script file='ManuscriptsJournal.lua'/>

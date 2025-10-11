@@ -2,6 +2,9 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
+local pairs = pairs
+
+local hooksecurefunc = hooksecurefunc
 
 local function reskinWarningDialog(frame)
 	frame:StripTextures()
@@ -114,7 +117,7 @@ function S:Collectionator()
 		return
 	end
 
-	local LibAHTab = LibStub("LibAHTab-1-0", true)
+	local LibAHTab = _G.LibStub("LibAHTab-1-0", true)
 	if not LibAHTab then
 		return
 	end

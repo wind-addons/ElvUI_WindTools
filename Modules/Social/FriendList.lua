@@ -2,12 +2,15 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local FL = W:NewModule("FriendList", "AceHook-3.0")
 local C = W.Utilities.Color
 
+local _G = _G
 local pairs = pairs
+local select = select
 local strsplit = strsplit
 local strupper = strupper
 
 local BNConnected = BNConnected
 local FriendsFrame_Update = FriendsFrame_Update
+local GetClassInfo = GetClassInfo
 local GetQuestDifficultyColor = GetQuestDifficultyColor
 local TimerunningUtil_AddSmallIcon = TimerunningUtil.AddSmallIcon
 

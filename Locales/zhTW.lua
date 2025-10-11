@@ -1075,6 +1075,7 @@ L["Please set the channel and abbreviation first."] = "請先進行頻道及縮�
 L["Please set the name and realm first."] = "請先設定名字和伺服器名."
 L["Please upgrade your ElvUI to %2.2f or newer version!"] = "請升級您的 ElvUI 版本至 %2.2f 或更新的版本!"
 L["Please use Blizzard Communities UI add the channel to your main chat frame first."] = "請先使用暴雪社群介面將頻道添加至主聊天視窗."
+L["Plumber"] = true
 L["Portals"] = "傳送門"
 L["Position"] = "位置"
 L["Postal"] = true

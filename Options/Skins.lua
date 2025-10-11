@@ -1330,6 +1330,12 @@ options.addons = {
 			name = L["Paragon Reputation"],
 			addonName = "ParagonReputation",
 		},
+		plumber = {
+			order = 10,
+			type = "toggle",
+			name = L["Plumber"],
+			addonName = "Plumber",
+		},
 		postal = {
 			order = 10,
 			type = "toggle",

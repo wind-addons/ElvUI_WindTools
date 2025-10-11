@@ -14,6 +14,7 @@
 	<Script file='MythicDungeonTools.lua'/>
 	<Script file='OmniCD.lua'/>
 	<Script file='ParagonReputation.lua'/>
+	<Script file='Plumber.lua'/>
 	<Script file='Postal.lua'/>
 	<Script file='PremadeGroupFilter.lua'/>
 	<Script file='RaiderIO.lua'/>

@@ -511,6 +511,7 @@ V.skins = {
 		omniCDIcon = true,
 		omniCDStatusBar = true,
 		paragonReputation = true,
+		plumber = true,
 		postal = true,
 		premadeGroupsFilter = true,
 		raiderIO = true,

@@ -1409,6 +1409,13 @@ options.addons = {
 			name = L["TomCat's Tours"],
 			addonName = "TomCats",
 		},
+		tomTom = {
+			order = 10,
+			type = "toggle",
+			name = L["TomTom"],
+			addonName = "TomTom",
+			addonskinsKey = "TomTom",
+		},
 		warpDeplete = {
 			order = 10,
 			type = "toggle",

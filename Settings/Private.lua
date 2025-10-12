@@ -524,6 +524,7 @@ V.skins = {
 		talentLoadoutsEx = true,
 		tinyInspect = true,
 		tomCats = true,
+		tomTom = true,
 		warpDeplete = true,
 		weakAuras = true,
 		weakAurasOptions = true,

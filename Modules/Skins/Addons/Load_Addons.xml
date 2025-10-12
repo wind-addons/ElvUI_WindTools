@@ -27,6 +27,7 @@
 	<Script file='TalentLoadoutsEx.lua'/>
 	<Script file='TinyInspect.lua'/>
 	<Script file='TomCats.lua'/>
+	<Script file='TomTom.lua'/>
 	<Script file='WarpDeplete.lua'/>
 	<Script file='WeakAuras.lua'/>
 	<Script file='WeakAurasOptions.lua'/>

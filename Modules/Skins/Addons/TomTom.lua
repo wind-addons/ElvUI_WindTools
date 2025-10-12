@@ -14,6 +14,8 @@ function S:TomTom()
 
 	if _G.TomTomBlock then
 		self:Proxy("HandleFrame", _G.TomTomBlock)
+		self:CreateShadow(_G.TomTomBlock)
+		self:BindShadowColorWithBorder(_G.TomTomBlock)
 
 		if _G.TomTomBlock.Text then
 			F.SetFont(_G.TomTomBlock.Text, E.db.general.font)

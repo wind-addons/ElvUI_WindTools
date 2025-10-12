@@ -51,7 +51,7 @@ W.MythicPlusMapData = {
 }
 
 -- Legion Remix dungeons
-W.LegionRemixMapData = {
+W.LegionRemixMythicPlusMapData = {
 	-- Phase 1: Skies of Fire
 	[197] = { abbr = L["[ABBR] Eye of Azshara"], activityID = 112, timers = { 1260, 1680, 2100 } },
 	[198] = { abbr = L["[ABBR] Darkheart Thicket"], activityID = 113, timers = { 1080, 1440, 1800 } },
@@ -202,9 +202,7 @@ end
 
 function W:InitializeMetadata()
 	if PlayerIsTimerunning() then
-		for id, data in pairs(W.LegionRemixMapData) do
-			W.MythicPlusMapData[id] = data
-		end
+		W.MythicPlusMapData = W.LegionRemixMythicPlusMapData
 	end
 
 	for id in pairs(W.MythicPlusMapData) do

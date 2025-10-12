@@ -1,7 +1,6 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table, PrivateDB, ProfileDB, GlobalDB
 local options = W.options.tooltips.args
 local C = W.Utilities.Color
-local T = W.Modules.Tooltips
 local LFGPI = W.Utilities.LFGPlayerInfo
 
 local format = format

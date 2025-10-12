@@ -161,30 +161,6 @@ function F.SetCallback(callback, target, times, ...)
 end
 
 do
-	---@type string Pattern to extract item level from tooltip text
-	local pattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")
-	---Get real item level from item link by scanning tooltip
-	---@param link string The item link
-	---@return string? itemLevel The item level or nil if not found
-	function F.GetRealItemLevelByLink(link)
-		E.ScanTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
-		E.ScanTooltip:ClearLines()
-		E.ScanTooltip:SetHyperlink(link)
-
-		for i = 2, 5 do
-			local leftText = _G[E.ScanTooltip:GetName() .. "TextLeft" .. i]
-			if leftText then
-				local text = leftText:GetText() or ""
-				local level = strmatch(text, pattern)
-				if level then
-					return level
-				end
-			end
-		end
-	end
-end
-
-do
 	---Color configuration for progress bar
 	---@type table
 	local color = {

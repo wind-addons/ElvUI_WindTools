@@ -17,6 +17,7 @@ local GetTalentInfoByID = GetTalentInfoByID
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
+local C_Item_GetDetailedItemLevelInfo = C_Item.GetDetailedItemLevelInfo
 local C_Item_GetItemIconByID = C_Item.GetItemIconByID
 local C_Item_GetItemInfoInstant = C_Item.GetItemInfoInstant
 local C_Item_GetItemNameByID = C_Item.GetItemNameByID
@@ -89,7 +90,7 @@ local function AddItemInfo(link)
 
 	-- item Level
 	if CL.db.level then
-		level = F.GetRealItemLevelByLink(link)
+		level = C_Item_GetDetailedItemLevelInfo(link)
 	end
 
 	-- armor

@@ -7,6 +7,8 @@ local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local strmatch = strmatch
 
+local C_Item_GetDetailedItemLevelInfo = C_Item.GetDetailedItemLevelInfo
+
 local cache = {}
 
 local function ModifyGuildNews(button, _, text, name, link, ...)
@@ -23,7 +25,7 @@ local function ModifyGuildNews(button, _, text, name, link, ...)
 	end
 
 	if not cache[link] then
-		cache[link] = F.GetRealItemLevelByLink(link)
+		cache[link] = C_Item_GetDetailedItemLevelInfo(link)
 	end
 
 	if cache[link] then

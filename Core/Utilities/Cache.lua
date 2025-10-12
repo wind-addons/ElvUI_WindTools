@@ -2,6 +2,7 @@ local W = unpack((select(2, ...))) ---@class WindTools
 
 local assert = assert
 local ipairs = ipairs
+local next = next
 local pairs = pairs
 local time = time
 local type = type
@@ -38,7 +39,6 @@ local C_Timer_NewTicker = C_Timer.NewTicker
 ---@field persistenceTable? table Bound persistence table (if using Persistence binding)
 ---@field count number Current number of entries in cache
 ---@field stats CacheStatsBase Cache statistics
-
 
 ---Copy configuration from source to destination
 ---@param source CacheConfig

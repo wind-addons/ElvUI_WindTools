@@ -1,5 +1,5 @@
 local W ---@class WindTools
-local F, E ---@type Functions, ElvUI
+local F, E
 W, F, E = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 
 local _G = _G
@@ -12,13 +12,13 @@ local DEFAULT_HANDLER_PRIORITY = 1000
 
 ---@class UIErrorHandlerParams
 ---@field frame UIErrorsFrame
----@field msg string
+---@field message string
 ---@field r number
 ---@field g number
 ---@field b number
 ---@field a number
 
----@alias UIErrorHandlerFunc fun(params: UIErrorHandlerParams)
+---@alias UIErrorHandlerFunc fun(params: UIErrorHandlerParams): string?
 
 ---@class UIErrorHandler
 ---@field priority number
@@ -32,14 +32,19 @@ function W:HookUIError()
 	end
 
 	self:RawHook(_G.UIErrorsFrame, "AddMessage", function(frame, message, r, g, b, a)
-		local params = { frame = frame, msg = message, r = r, g = g, b = b, a = a } ---@type UIErrorHandlerParams
+		local params = { frame = frame, message = message, r = r, g = g, b = b, a = a } ---@type UIErrorHandlerParams
 		for _, handlerData in ipairs(self.UIErrorHandlers) do
-			if not xpcall(handlerData.handler, F.Developer.ThrowError, params) then
+			local success, result = xpcall(handlerData.handler, F.Developer.ThrowError, params)
+			if not success then
+				return
+			end
+
+			if type(result) == "string" and result == "skip" then
 				return
 			end
 		end
 
-		self.hooks[_G.UIErrorsFrame].AddMessage(params.frame, params.msg, params.r, params.g, params.b, params.a)
+		self.hooks[_G.UIErrorsFrame].AddMessage(params.frame, params.message, params.r, params.g, params.b, params.a)
 	end, true)
 end
 

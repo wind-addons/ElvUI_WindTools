@@ -1,10 +1,10 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local A = W:GetModule("Announcement") ---@class Announcement
 local C = W.Utilities.Color
+local cache = W.Utilities.Cache
 
 local _G = _G
 local format = format
-local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local strfind = strfind
 
@@ -16,11 +16,13 @@ local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 
-local lastList
+local IGNORE_PATTERN = "WINDTOOLS_IGNORE"
+
+local cachedQuests
 
 local ignoreTagIDs = {
-	[128] = true, -- 特使任務
-	[265] = true, -- 隱藏任務
+	[128] = true, -- Emissary
+	[265] = true, -- Hidden
 }
 
 local function GetQuests()
@@ -30,9 +32,9 @@ local function GetQuests()
 		local questInfo = C_QuestLog_GetInfo(questIndex)
 		if questInfo then
 			local skip = questInfo.isHeader or questInfo.isBounty or questInfo.isHidden
-			-- isHeader: 任务分类(比如, "高嶺-高嶺部族" 任务, "高嶺"要排除掉)
-			-- isBounty: 箱子任务(比如, "夜落精灵" 任务)
-			-- isHidden: 自动接取的每周任务(比如, "征服者的獎勵" 每周 PvP 任务)
+			-- isHeader: Quest category header (e.g., "Highmountain-Highmountain Tribe" quests, "Highmountain" should be excluded)
+			-- isBounty: Bounty quests (e.g., "The Nightfallen" quests)
+			-- isHidden: Auto-accepted weekly quests (e.g., "Conqueror's Reward" weekly PvP quest)
 
 			local tagInfo = C_QuestLog_GetQuestTagInfo(questInfo.questID)
 
@@ -49,7 +51,7 @@ local function GetQuests()
 			end
 
 			if not skip then
-				-- 基础任务信息, 用于后续生成句子使用
+				-- Base quest information, used for generating sentences later
 				quests[questInfo.questID] = {
 					title = questInfo.title,
 					questID = questInfo.questID,
@@ -62,7 +64,7 @@ local function GetQuests()
 					link = GetQuestLink(questInfo.questID),
 				}
 
-				-- 任务进度 (比如 1/2 杀死熊怪)
+				-- Quest progress information (e.g. Kill bears 1/2)
 				for queryIndex = 1, GetNumQuestLeaderBoards(questIndex) do
 					local queryText = GetQuestLogLeaderBoard(queryIndex, questIndex)
 					if queryText then
@@ -95,17 +97,11 @@ do
 			enable = true
 		end
 
-		_G.ERR_QUEST_ADD_ITEM_SII = enable and ERR_QUEST_ADD_ITEM_SII or "    "
-		_G.ERR_QUEST_ADD_FOUND_SII = enable and ERR_QUEST_ADD_FOUND_SII or "    "
-		_G.ERR_QUEST_ADD_KILL_SII = enable and ERR_QUEST_ADD_KILL_SII or "    "
-		_G.ERR_QUEST_UNKNOWN_COMPLETE = enable and ERR_QUEST_UNKNOWN_COMPLETE or "    "
-		_G.ERR_QUEST_OBJECTIVE_COMPLETE_S = enable and ERR_QUEST_OBJECTIVE_COMPLETE_S or "    "
-
-		hooksecurefunc(_G.UIErrorsFrame, "AddMessage", function(frame, text)
-			if text == "   " then
-				frame:Clear()
-			end
-		end)
+		_G.ERR_QUEST_ADD_ITEM_SII = enable and ERR_QUEST_ADD_ITEM_SII or IGNORE_PATTERN
+		_G.ERR_QUEST_ADD_FOUND_SII = enable and ERR_QUEST_ADD_FOUND_SII or IGNORE_PATTERN
+		_G.ERR_QUEST_ADD_KILL_SII = enable and ERR_QUEST_ADD_KILL_SII or IGNORE_PATTERN
+		_G.ERR_QUEST_UNKNOWN_COMPLETE = enable and ERR_QUEST_UNKNOWN_COMPLETE or IGNORE_PATTERN
+		_G.ERR_QUEST_OBJECTIVE_COMPLETE_S = enable and ERR_QUEST_OBJECTIVE_COMPLETE_S or IGNORE_PATTERN
 	end
 end
 
@@ -115,14 +111,14 @@ function A:Quest()
 		return
 	end
 
-	local currentList = GetQuests()
+	local currentQuests = GetQuests()
 
-	if not lastList then
-		lastList = currentList
+	if not cachedQuests then
+		cachedQuests = currentQuests
 		return
 	end
 
-	for questID, questCache in pairs(currentList) do
+	for id, questData in pairs(currentQuests) do
 		local mainInfo = ""
 		local extraInfo = ""
 		local mainInfoColored = ""
@@ -130,85 +126,77 @@ function A:Quest()
 		local needAnnounce = false
 		local isDetailInfo = false
 
-		if questCache.frequency == 1 and config.daily.enable then -- 每日
+		if questData.frequency == 1 and config.daily.enable then -- Daily
 			extraInfo = extraInfo .. "[" .. _G.DAILY .. "]"
 			extraInfoColored = extraInfoColored .. C.StringWithRGB("[" .. _G.DAILY .. "]", config.daily.color)
-		elseif questCache.frequency == 2 and config.weekly.enable then -- 每周
+		elseif questData.frequency == 2 and config.weekly.enable then -- Weekly
 			extraInfo = extraInfo .. "[" .. _G.WEEKLY .. "]"
 			extraInfoColored = extraInfoColored .. C.StringWithRGB("[" .. _G.WEEKLY .. "]", config.weekly.color)
 		end
 
-		if questCache.suggestedGroup > 1 and config.suggestedGroup.enable then -- 多人
-			extraInfo = extraInfo .. "[" .. questCache.suggestedGroup .. "]"
+		if questData.suggestedGroup > 1 and config.suggestedGroup.enable then -- Group
+			extraInfo = extraInfo .. "[" .. questData.suggestedGroup .. "]"
 			extraInfoColored = extraInfoColored
-				.. C.StringWithRGB("[" .. questCache.suggestedGroup .. "]", config.suggestedGroup.color)
+				.. C.StringWithRGB("[" .. questData.suggestedGroup .. "]", config.suggestedGroup.color)
 		end
 
-		if questCache.level and config.level.enable then -- 等级
-			if not config.level.hideOnMax or questCache.level ~= W.MaxLevelForPlayerExpansion then
-				extraInfo = extraInfo .. "[" .. questCache.level .. "]"
+		if questData.level and config.level.enable then -- Level
+			if not config.level.hideOnMax or questData.level ~= W.MaxLevelForPlayerExpansion then
+				extraInfo = extraInfo .. "[" .. questData.level .. "]"
 				extraInfoColored = extraInfoColored
-					.. C.StringWithRGB("[" .. questCache.level .. "]", config.level.color)
+					.. C.StringWithRGB("[" .. questData.level .. "]", config.level.color)
 			end
 		end
 
-		if questCache.tag and config.tag then -- 任务分类
-			extraInfo = extraInfo .. "[" .. questCache.tag .. "]"
-			extraInfoColored = extraInfoColored .. C.StringWithRGB("[" .. questCache.tag .. "]", config.tag.color)
+		if questData.tag and config.tag then -- Tag, usually is "Dungeon", "Profession", etc.
+			extraInfo = extraInfo .. "[" .. questData.tag .. "]"
+			extraInfoColored = extraInfoColored .. C.StringWithRGB("[" .. questData.tag .. "]", config.tag.color)
 		end
 
-		local questCacheOld = lastList[questID]
-
-		if questCacheOld then
-			if not questCacheOld.isComplete then -- 之前未完成
-				if questCache.isComplete then
-					mainInfo = questCache.title .. " " .. C.StringWithRGB(L["Completed"], { r = 0.5, g = 1, b = 0.5 })
-					mainInfoColored = questCache.link
+		local previousQuestData = cachedQuests[id]
+		if previousQuestData then
+			if not previousQuestData.isComplete then -- Not completed before
+				if questData.isComplete then
+					mainInfo = questData.title .. " " .. C.StringWithRGB(L["Completed"], { r = 0.5, g = 1, b = 0.5 })
+					mainInfoColored = questData.link
 						.. " "
 						.. C.StringWithRGB(L["Completed"], { r = 0.5, g = 1, b = 0.5 })
 					needAnnounce = true
-				elseif #questCacheOld > 0 and #questCache > 0 then -- 循环记录的任务完成条件
-					for queryIndex = 1, #questCache do
+				elseif #previousQuestData > 0 and #questData > 0 then
+					for queryIndex = 1, #questData do
+						local previousQueryData, queryData = previousQuestData[queryIndex], questData[queryIndex]
 						if
-							questCache[queryIndex]
-							and questCacheOld[queryIndex]
-							and questCache[queryIndex].numItems
-							and questCacheOld[queryIndex].numItems
-							and questCache[queryIndex].numItems > questCacheOld[queryIndex].numItems
-						then -- 任务有了新的进展
-							local progressColor =
-								F.GetProgressColor(questCache[queryIndex].numItems / questCache[queryIndex].numNeeded)
-
-							local subGoalIsCompleted = questCache[queryIndex].numItems
-								== questCache[queryIndex].numNeeded
-
+							queryData
+							and previousQueryData
+							and queryData.numItems
+							and previousQueryData.numItems
+							and queryData.numItems > previousQueryData.numItems
+						then -- Got new progress on this sub-goal
+							local progressColor = F.GetProgressColor(queryData.numItems / queryData.numNeeded)
+							local subGoalIsCompleted = queryData.numItems == queryData.numNeeded
 							if config.includeDetails or subGoalIsCompleted then
-								local progressInfo = questCache[queryIndex].numItems
-									.. "/"
-									.. questCache[queryIndex].numNeeded
+								local progressInfo = format("%d/%d", queryData.numItems, queryData.numNeeded)
 								local progressInfoColored = progressInfo
 								if subGoalIsCompleted then
-									progressInfoColored = progressInfoColored
-										.. format(" |T%s:0|t", W.Media.Icons.complete)
+									progressInfoColored =
+										format("%s |T%s:0|t", progressInfoColored, W.Media.Icons.complete)
 								else
 									isDetailInfo = true
 								end
 
-								mainInfo = questCache.link .. " " .. questCache[queryIndex].item .. " "
-								mainInfoColored = questCache.link .. " " .. questCache[queryIndex].item .. " "
-
-								mainInfo = mainInfo .. progressInfo
-								mainInfoColored = mainInfoColored .. C.StringWithRGB(progressInfoColored, progressColor)
+								local messagePrefix = format("%s %s ", questData.link, queryData.item)
+								mainInfo = messagePrefix .. progressInfo
+								mainInfoColored = messagePrefix .. C.StringWithRGB(progressInfoColored, progressColor)
 								needAnnounce = true
 							end
 						end
 					end
 				end
 			end
-		else -- 新的任务
-			if not questCache.worldQuestType then -- 屏蔽世界任务的接收, 路过不报告
-				mainInfo = questCache.link .. " " .. L["Accepted"]
-				mainInfoColored = questCache.link
+		else -- New quest
+			if not questData.worldQuestType then -- Ignore world quests for avoid spam
+				mainInfo = questData.link .. " " .. L["Accepted"]
+				mainInfoColored = questData.link
 					.. " "
 					.. C.StringWithRGB(L["Accepted"], { r = 1, g = 1, b = 1 })
 					.. format(" |T%s:0|t", W.Media.Icons.accept)
@@ -229,5 +217,13 @@ function A:Quest()
 		end
 	end
 
-	lastList = currentList
+	cachedQuests = currentQuests
 end
+
+W:RegisterUIErrorHandler(function(params)
+	if A.db and A.db.enable and A.db.quest and A.db.quest.enable and A.db.quest.disableBlizzard then
+		if params.message and params.message == IGNORE_PATTERN then
+			return "skip"
+		end
+	end
+end, 100)

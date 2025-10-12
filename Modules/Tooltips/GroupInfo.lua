@@ -103,6 +103,9 @@ function T:AddGroupInfo(tooltip, resultID)
 	local foundDelisted = false
 	if config.hideBlizzard then
 		foundDelisted = cleanupBlizzardGroupInfo(tooltip)
+		if config.mode == "COMPACT" then
+			tooltip:AddLine(" ")
+		end
 	else
 		tooltip:AddLine(" ")
 	end

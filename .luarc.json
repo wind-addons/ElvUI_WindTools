@@ -85,7 +85,8 @@
     "TRINKET1SLOT_UNIQUE",
     "UNKNOWN",
     "WAISTSLOT",
-    "WRISTSLOT"
+    "WRISTSLOT",
+    "PlayerIsTimerunning"
   ],
   "diagnostics.disable": [
     "inject-field",

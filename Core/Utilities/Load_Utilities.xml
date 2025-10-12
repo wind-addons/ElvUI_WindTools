@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='Async.lua'/>
+	<Script file='Cache.lua'/>
 	<Script file='Color.lua'/>
 	<Script file='LFGPlayerInfo.lua'/>
 	<Script file='ObjectFinder.lua'/>

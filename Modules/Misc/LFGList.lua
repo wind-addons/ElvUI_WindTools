@@ -14,6 +14,7 @@ local format = format
 local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
+local math = math
 local min = min
 local pairs = pairs
 local select = select
@@ -28,7 +29,6 @@ local wipe = wipe
 
 local CopyTable = CopyTable
 local CreateFrame = CreateFrame
-local PlayerIsTimerunning = PlayerIsTimerunning
 local GetNumGroupMembers = GetNumGroupMembers
 local GetTime = GetTime
 local GroupFinderFrameGroupButton_OnClick = GroupFinderFrameGroupButton_OnClick
@@ -38,6 +38,7 @@ local IsShiftKeyDown = IsShiftKeyDown
 local LFGListSearchPanel_Clear = LFGListSearchPanel_Clear
 local LFGListSearchPanel_DoSearch = LFGListSearchPanel_DoSearch
 local LFGListSearchPanel_SetCategory = LFGListSearchPanel_SetCategory
+local PlayerIsTimerunning = PlayerIsTimerunning
 local UnitClassBase = UnitClassBase
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitName = UnitName
@@ -66,6 +67,17 @@ local GROUP_FINDER_CATEGORY_ID_DUNGEONS = GROUP_FINDER_CATEGORY_ID_DUNGEONS
 local GROUP_FINDER_CUSTOM_CATEGORY = GROUP_FINDER_CUSTOM_CATEGORY
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
+local AFFIX_ICON_SIZE = 32
+local AFFIX_ICON_SPACING = 6
+local FILTER_BUTTON_WIDTH = W.AsianLocale and 85 or 100
+local FILTER_BUTTON_HEIGHT = 28
+local FILTER_BUTTON_SPACING = 6
+local FILTER_BUTTONS_PER_COLUMN = 4
+local PANEL_PADDING = 10
+local QUICK_ACCESS_PANEL_WIDTH = 2 * FILTER_BUTTON_WIDTH + FILTER_BUTTON_SPACING + PANEL_PADDING * 2
+
+local isTimerunning = PlayerIsTimerunning()
+
 local seasonGroups = C_LFGList_GetAvailableActivityGroups(
 	GROUP_FINDER_CATEGORY_ID_DUNGEONS,
 	bit.bor(Enum_LFGListFilter.CurrentSeason, Enum_LFGListFilter.PvE)
@@ -76,7 +88,7 @@ local expansionGroups = C_LFGList_GetAvailableActivityGroups(
 )
 local timerunningGroups = C_LFGList_GetAvailableActivityGroups(
 	GROUP_FINDER_CATEGORY_ID_DUNGEONS,
-	bit.bor(Enum.LFGListFilter.Timerunning, Enum_LFGListFilter.PvE)
+	bit.bor(Enum_LFGListFilter.Timerunning, Enum_LFGListFilter.PvE)
 )
 
 local RoleIconTextures = {
@@ -126,6 +138,14 @@ end
 
 local affixAddedAtLevel = { 4, 7, 10, 12 }
 
+local legionRemixAffixes = {
+	{ id = 166 },
+	{ id = 167 },
+	{ id = 168 },
+	{ id = 169 },
+	{ id = 170 },
+}
+
 local availableSortMode = {
 	"DEFAULT",
 	"OVERALL_SCORE",
@@ -137,8 +157,8 @@ local sortMode = {
 		text = L["Dungeon Score"],
 		tooltip = L["Leader's Dungeon Score"],
 		func = function(a, b)
-			local _a = (a and a.dungeonScore or 0)
-			local _b = (b and b.dungeonScore or 0)
+			local _a = (a and a.leaderScore or 0)
+			local _b = (b and b.leaderScore or 0)
 			return _a > _b and 1 or _a < _b and -1 or 0
 		end,
 	},
@@ -146,8 +166,8 @@ local sortMode = {
 		text = L["Overall Score"],
 		tooltip = L["Leader's Overall Score"],
 		func = function(a, b)
-			local _a = (a and a.overallScore or 0)
-			local _b = (b and b.overallScore or 0)
+			local _a = (a and a.leaderOverallScore or 0)
+			local _b = (b and b.leaderOverallScore or 0)
 			return _a > _b and 1 or _a < _b and -1 or 0
 		end,
 	},
@@ -473,13 +493,13 @@ function LL:InitializePartyKeystoneFrame()
 		F.SetFontWithDB(rightText, self.db.partyKeystone.font)
 		rightText:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, yOffset)
 		rightText:SetJustifyH("RIGHT")
-		rightText:SetWidth(90)
+		rightText:Width(90)
 
 		local leftText = frame:CreateFontString(nil, "OVERLAY")
 		F.SetFontWithDB(leftText, self.db.partyKeystone.font)
 		leftText:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -100, yOffset)
 		leftText:SetJustifyH("LEFT")
-		leftText:SetWidth(90)
+		leftText:Width(90)
 
 		frame.lines[i] = { left = leftText, right = rightText }
 	end
@@ -544,12 +564,12 @@ function LL:UpdatePartyKeystoneFrame()
 		frame.lines[i].right:ClearAllPoints()
 		frame.lines[i].right:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, yOffset)
 		frame.lines[i].right:SetJustifyH("RIGHT")
-		frame.lines[i].right:SetWidth(blockWidth)
+		frame.lines[i].right:Width(blockWidth)
 
 		F.SetFontWithDB(frame.lines[i].left, self.db.partyKeystone.font)
 		frame.lines[i].left:ClearAllPoints()
 		frame.lines[i].left:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -blockWidth - 9, yOffset)
-		frame.lines[i].left:SetWidth(blockWidth)
+		frame.lines[i].left:Width(blockWidth)
 
 		if cache[i] then
 			frame.lines[i].right:SetText(cache[i].player)
@@ -612,7 +632,6 @@ function LL:InitializeRightPanel()
 	end
 
 	local frame = CreateFrame("Frame", nil, _G.PVEFrame)
-	frame:SetWidth(W.ChineseLocale and 190 or 220)
 	frame:Point("TOPLEFT", _G.PVEFrame, "TOPRIGHT", 4, 0)
 	frame:Point("BOTTOMLEFT", _G.PVEFrame, "BOTTOMRIGHT", 4, 0)
 	frame:SetTemplate("Transparent")
@@ -662,58 +681,53 @@ function LL:InitializeRightPanel()
 		end
 	end)
 
-	local affixes = C_MythicPlus_GetCurrentAffixes()
-	frame.affix = CreateFrame("Frame", nil, frame)
-	frame.affix:Point("TOPLEFT", frame, "TOPLEFT", 10, -10)
-	frame.affix:Point("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
-	frame.affix:SetHeight(32)
+	local affixes = not isTimerunning and C_MythicPlus_GetCurrentAffixes() or legionRemixAffixes
+	frame.affixes = CreateFrame("Frame", nil, frame)
+	frame.affixes:Height(AFFIX_ICON_SIZE)
+	frame.affixes:Point("TOPLEFT", frame, "TOPLEFT", PANEL_PADDING, -PANEL_PADDING)
+	frame.affixes:Point("TOPRIGHT", frame, "TOPRIGHT", -PANEL_PADDING, -PANEL_PADDING)
+	frame.affixes.alignFrame = CreateFrame("Frame", nil, frame.affixes)
+	frame.affixes.alignFrame:Point("CENTER")
+	frame.affixes.alignFrame:Height(AFFIX_ICON_SIZE)
+	frame.affixes.alignFrame:Width(#affixes * AFFIX_ICON_SIZE + (#affixes - 1) * AFFIX_ICON_SPACING + 4)
 
-	local buttonSize = 32
-
-	local width = frame.affix:GetWidth()
-	local space = (width - 2 * 2 - buttonSize * #affixes) / (#affixes - 1)
 	for i = 1, #affixes do
-		local affix = frame.affix:CreateTexture(nil, "ARTWORK")
+		local affix = frame.affixes:CreateTexture(nil, "ARTWORK")
 		affix:CreateBackdrop()
-		affix:Size(buttonSize, buttonSize)
-		affix:Point("LEFT", frame.affix, "LEFT", 2 + (i - 1) * (buttonSize + space), 0)
-		local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixes[i].id))
-		affix:SetTexture(fileDataID)
+		affix:Size(AFFIX_ICON_SIZE)
+		affix:Point("LEFT", frame.affixes.alignFrame, "LEFT", 2 + (i - 1) * (AFFIX_ICON_SIZE + AFFIX_ICON_SPACING), 0)
+		affix:SetTexture(select(3, C_ChallengeMode_GetAffixInfo(affixes[i].id)))
 		affix:SetTexCoord(unpack(E.TexCoords))
 	end
 
-	frame.affix:SetScript("OnEnter", function()
+	frame.affixes:SetScript("OnEnter", function()
 		_G.GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMRIGHT", 3, frame:GetHeight())
 		_G.GameTooltip:ClearLines()
 		_G.GameTooltip:AddLine(F.GetWindStyleText(L["Affixes"]))
 
 		for i = 1, #affixes do
 			local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixes[i].id)
-			local level = affixAddedAtLevel[i] or 0
 			_G.GameTooltip:AddLine(" ")
-			_G.GameTooltip:AddLine(format("%s (%d) %s", F.GetIconString(fileDataID, 16, 18, true), level, name))
+			if not isTimerunning then
+				local level = affixAddedAtLevel[i] or 0
+				_G.GameTooltip:AddLine(format("%s (%d) %s", F.GetIconString(fileDataID, 16, 18, true), level, name))
+			else
+				_G.GameTooltip:AddLine(format("%s %s", F.GetIconString(fileDataID, 16, 18, true), name))
+			end
 			_G.GameTooltip:AddLine(description, 1, 1, 1, true)
 		end
 		_G.GameTooltip:Show()
 	end)
 
-	frame.affix:SetScript("OnLeave", function()
+	frame.affixes:SetScript("OnLeave", function()
 		_G.GameTooltip:Hide()
 	end)
 
+	-- Filters container
 	local filters = CreateFrame("Frame", nil, frame)
-	if frame.affix then
-		filters:Point("TOPLEFT", frame.affix, "BOTTOMLEFT", 0, -10)
-		filters:Point("TOPRIGHT", frame.affix, "BOTTOMRIGHT", 0, -10)
-	else
-		filters:Point("TOPLEFT", frame, "TOPLEFT", 10, -10)
-		filters:Point("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
-	end
-
-	filters:SetHeight(6 * 8 + 28 * 4 + 32 * 3)
+	filters:Point("TOPLEFT", frame.affixes, "BOTTOMLEFT", 0, -10)
+	filters:Point("TOPRIGHT", frame.affixes, "BOTTOMRIGHT", 0, -10)
 	filters.buttons = {}
-
-	local filterButtonWidth = (filters:GetWidth() - 8) / 2
 
 	local function addSetActive(obj)
 		obj.SetActive = function(f, active)
@@ -730,35 +744,34 @@ function LL:InitializeRightPanel()
 	end
 
 	local mapIDs = {}
-	if PlayerIsTimerunning() then
-		-- Timerunning mode: only show Timerunning dungeons (Legion)
-		for key in pairs(W.MythicPlusMapData) do
-			-- Check if this is a Legion dungeon (mapIDs 197-239)
-			if key >= 197 and key <= 239 then
-				tinsert(mapIDs, key)
-			end
-		end
-	else
-		-- Normal mode: show all dungeons except Timerunning
-		for key in pairs(W.MythicPlusMapData) do
-			-- Exclude Timerunning dungeons in normal mode
-			if not (key >= 197 and key <= 239) then
-				tinsert(mapIDs, key)
-			end
-		end
+	for key in pairs(W.MythicPlusMapData) do
+		tinsert(mapIDs, key)
 	end
 
 	sort(mapIDs, function(a, b)
 		return a < b
 	end)
 
+	local numDungeons = #mapIDs
+	local numColumns = math.ceil(numDungeons / FILTER_BUTTONS_PER_COLUMN)
+	local filtersWidth = numColumns * FILTER_BUTTON_WIDTH + (numColumns - 1) * FILTER_BUTTON_SPACING
+	local frameWidth = filtersWidth + PANEL_PADDING * 2
+	frame.FilterPanelWidth = frameWidth
+	frame:Width(frame.FilterPanelWidth)
+
+	-- Set filters container height based on actual number of rows needed
+	local numRows = math.min(numDungeons, FILTER_BUTTONS_PER_COLUMN)
+	filters:Height(FILTER_BUTTON_HEIGHT * numRows + FILTER_BUTTON_SPACING * (numRows - 1))
+
 	for i, mapID in ipairs(mapIDs) do
 		local filterButton = CreateFrame("Frame", nil, filters)
 		filterButton:SetTemplate()
-		filterButton:Size(filterButtonWidth, 28)
-		local yOffset = -6 * floor((i + 1) / 2) - 28 * floor((i - 1) / 2)
-		local anchorPoint = i % 2 == 1 and "TOPLEFT" or "TOPRIGHT"
-		filterButton:Point(anchorPoint, filters, anchorPoint, 0, yOffset)
+		filterButton:Size(FILTER_BUTTON_WIDTH, FILTER_BUTTON_HEIGHT)
+		local col = floor((i - 1) / FILTER_BUTTONS_PER_COLUMN)
+		local row = (i - 1) % FILTER_BUTTONS_PER_COLUMN
+		local xOffset = col * (FILTER_BUTTON_WIDTH + FILTER_BUTTON_SPACING)
+		local yOffset = -row * (FILTER_BUTTON_HEIGHT + FILTER_BUTTON_SPACING)
+		filterButton:Point("TOPLEFT", filters, "TOPLEFT", xOffset, yOffset)
 
 		filterButton.tex = filterButton:CreateTexture(nil, "ARTWORK")
 		filterButton.tex:Size(20, 20)
@@ -787,8 +800,9 @@ function LL:InitializeRightPanel()
 
 	-- Leader Overall Score
 	local leaderScore = CreateFrame("Frame", nil, filters)
-	leaderScore:Size(filters:GetWidth(), 32)
-	leaderScore:Point("TOP", filters, "TOP", 0, -6 * 5 - 28 * 4)
+	leaderScore:Height(32)
+	leaderScore:Point("TOPLEFT", filters, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
+	leaderScore:Point("TOPRIGHT", filters, "BOTTOMRIGHT", 0, -FILTER_BUTTON_SPACING)
 	leaderScore:SetTemplate()
 
 	leaderScore.text = leaderScore:CreateFontString(nil, "OVERLAY")
@@ -850,8 +864,9 @@ function LL:InitializeRightPanel()
 
 	-- Leader Dungeon Score
 	local leaderDungeonScore = CreateFrame("Frame", nil, filters)
-	leaderDungeonScore:Size(filters:GetWidth(), 32)
-	leaderDungeonScore:Point("TOP", filters, "TOP", 0, -6 * 6 - 28 * 4 - 32)
+	leaderDungeonScore:Height(32)
+	leaderDungeonScore:Point("TOPLEFT", leaderScore, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
+	leaderDungeonScore:Point("TOPRIGHT", leaderScore, "BOTTOMRIGHT", 0, -FILTER_BUTTON_SPACING)
 	leaderDungeonScore:SetTemplate()
 
 	leaderDungeonScore.text = leaderDungeonScore:CreateFontString(nil, "OVERLAY")
@@ -912,8 +927,9 @@ function LL:InitializeRightPanel()
 
 	-- Role Available
 	local roleAvailable = CreateFrame("Frame", nil, filters)
-	roleAvailable:Size(filters:GetWidth(), 32)
-	roleAvailable:Point("TOP", filters, "TOP", 0, -6 * 7 - 28 * 4 - 32 * 2)
+	roleAvailable:Height(32)
+	roleAvailable:Point("TOPLEFT", leaderDungeonScore, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
+	roleAvailable:Point("TOPRIGHT", leaderDungeonScore, "BOTTOMRIGHT", 0, -FILTER_BUTTON_SPACING)
 	roleAvailable:SetTemplate()
 
 	roleAvailable.text = roleAvailable:CreateFontString(nil, "OVERLAY")
@@ -924,8 +940,9 @@ function LL:InitializeRightPanel()
 
 	-- Need Tank
 	local needTank = CreateFrame("Frame", nil, filters)
-	needTank:Size(filters:GetWidth() / 2 - 6, 28)
-	needTank:Point("TOPLEFT", filters, "TOPLEFT", 0, -6 * 8 - 28 * 4 - 32 * 3)
+	needTank:Height(28)
+	needTank:Point("TOPLEFT", roleAvailable, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
+	needTank:Point("RIGHT", roleAvailable, "BOTTOM", -FILTER_BUTTON_SPACING / 2, -FILTER_BUTTON_SPACING - 14)
 	needTank:SetTemplate()
 
 	needTank.text = needTank:CreateFontString(nil, "OVERLAY")
@@ -936,8 +953,9 @@ function LL:InitializeRightPanel()
 
 	-- Need Healer
 	local needHealer = CreateFrame("Frame", nil, filters)
-	needHealer:Size(filters:GetWidth() / 2 - 6, 28)
-	needHealer:Point("TOPRIGHT", filters, "TOPRIGHT", 0, -6 * 8 - 28 * 4 - 32 * 3)
+	needHealer:Height(28)
+	needHealer:Point("LEFT", roleAvailable, "BOTTOM", FILTER_BUTTON_SPACING / 2, -FILTER_BUTTON_SPACING - 14)
+	needHealer:Point("TOPRIGHT", roleAvailable, "BOTTOMRIGHT", 0, -FILTER_BUTTON_SPACING)
 	needHealer:SetTemplate()
 
 	needHealer.text = needHealer:CreateFontString(nil, "OVERLAY")
@@ -1073,7 +1091,7 @@ function LL:InitializeRightPanel()
 	local vaultStatus = CreateFrame("Frame", nil, frame)
 	vaultStatus:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
 	vaultStatus:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, 10)
-	vaultStatus:SetHeight(32)
+	vaultStatus:Height(32)
 	vaultStatus:SetTemplate()
 
 	addSetActive(vaultStatus)
@@ -1099,9 +1117,6 @@ function LL:InitializeRightPanel()
 			if btn.cache[i] then
 				local level = btn.cache[i].level
 				local iconString = F.GetIconString(W.MythicPlusMapData[btn.cache[i].mapID].tex, 14, 16, true)
-				if iconString == nil then
-					iconString = ""
-				end
 				_G.GameTooltip:AddDoubleLine(
 					format(
 						"%s %s %s",
@@ -1191,7 +1206,7 @@ function LL:InitializeRightPanel()
 	local sortPanel = CreateFrame("Frame", nil, frame)
 	sortPanel:Point("BOTTOMLEFT", vaultStatus, "TOPLEFT", 0, 8)
 	sortPanel:Point("BOTTOMRIGHT", vaultStatus, "TOPRIGHT", 0, 8)
-	sortPanel:SetHeight(32)
+	sortPanel:Height(32)
 
 	local sortModeButton = CreateFrame("Frame", nil, sortPanel)
 	sortModeButton:Point("RIGHT", sortPanel, "RIGHT", 0, 0)
@@ -1240,7 +1255,7 @@ function LL:InitializeRightPanel()
 	local sortByButton = CreateFrame("Frame", nil, sortPanel)
 	sortByButton:Point("LEFT", sortPanel, "LEFT", 0, 0)
 	sortByButton:Point("RIGHT", sortModeButton, "LEFT", -6, 0)
-	sortByButton:SetHeight(32)
+	sortByButton:Height(32)
 	sortByButton:SetTemplate()
 
 	addSetActive(sortByButton)
@@ -1320,19 +1335,16 @@ function LL:InitializeRightPanel()
 
 	-- Quick Access Panel
 	local quickAccessPanel = CreateFrame("Frame", nil, frame)
-	if frame.affix then
-		quickAccessPanel:Point("TOPLEFT", frame.affix, "BOTTOMLEFT", 0, -20)
-		quickAccessPanel:Point("TOPRIGHT", frame.affix, "BOTTOMRIGHT", 0, -20)
-	else
-		quickAccessPanel:Point("TOPLEFT", frame, "TOPLEFT", 10, -20)
-		quickAccessPanel:Point("TOPRIGHT", frame, "TOPRIGHT", -10, -20)
-	end
-	quickAccessPanel:SetHeight(32 + 8 + 4 * 32 + 3 * 6) -- title + spacing + 4 buttons + gaps
+	quickAccessPanel:Point("TOPLEFT", frame.affixes, "BOTTOMLEFT", 0, -10)
+	quickAccessPanel:Point("BOTTOMRIGHT", frame.vaultStatus, "TOPRIGHT", 0, 10)
 
 	-- Quick Access Title
 	local quickAccessTitle = quickAccessPanel:CreateFontString(nil, "OVERLAY")
 	F.SetFont(quickAccessTitle, nil, 16 + self.db.rightPanel.adjustFontSize)
-	quickAccessTitle:Point("TOP", quickAccessPanel, "TOP", 0, 0)
+	quickAccessTitle:SetJustifyH("CENTER")
+	quickAccessTitle:SetJustifyV("MIDDLE")
+	quickAccessTitle:Point("TOPLEFT", quickAccessPanel, "TOPLEFT", 0, 0)
+	quickAccessTitle:Point("BOTTOMRIGHT", quickAccessPanel, "TOPRIGHT", 0, -60)
 	quickAccessTitle:SetText(F.GetWindStyleText(L["Quick Access"]))
 
 	local quickAccessButtons = {}
@@ -1351,14 +1363,14 @@ function LL:InitializeRightPanel()
 
 	for i, data in ipairs(buttonData) do
 		local button = CreateFrame("Frame", nil, quickAccessPanel)
-		button:Size(quickAccessPanel:GetWidth(), i == 1 and 64 or 32)
 		if i == 1 then
-			button:Point("TOP", quickAccessTitle, "BOTTOM", 0, -20)
+			button:Point("TOPLEFT", quickAccessTitle, "BOTTOMLEFT")
+			button:Point("BOTTOMRIGHT", quickAccessTitle, "BOTTOMRIGHT", 0, -64)
 		else
-			button:Point("TOP", quickAccessButtons[i - 1], "BOTTOM", 0, -8)
+			button:Point("TOPLEFT", quickAccessButtons[i - 1], "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
+			button:Point("BOTTOMRIGHT", quickAccessButtons[i - 1], "BOTTOMRIGHT", 0, -32 - FILTER_BUTTON_SPACING)
 		end
 		button:SetTemplate()
-
 		addSetActive(button)
 
 		button.text = button:CreateFontString(nil, "OVERLAY")
@@ -1462,6 +1474,7 @@ function LL:UpdateRightPanel()
 	self.rightPanel.filters:SetShown(isDungeonMode)
 	self.rightPanel.sortPanel:SetShown(isDungeonMode)
 	self.rightPanel.quickAccessPanel:SetShown(not isDungeonMode)
+	self.rightPanel:Width(isDungeonMode and self.rightPanel.FilterPanelWidth or QUICK_ACCESS_PANEL_WIDTH)
 
 	local dfDB = self:GetPlayerDB("dungeonFilter")
 	for mapID, btn in pairs(self.rightPanel.filters.buttons) do
@@ -1567,7 +1580,7 @@ function LL:UpdateAdvancedFilters()
 	end
 
 	if numActiveMaps == 0 then
-		if PlayerIsTimerunning() then
+		if isTimerunning then
 			tAppendAll(activities, timerunningGroups)
 		else
 			tAppendAll(activities, seasonGroups)
@@ -1604,23 +1617,23 @@ function LL:OnUpdateResultList(searchPanel)
 			local verified = true
 			local searchResultInfo = C_LFGList_GetSearchResultInfo(resultID)
 
-			local sortCache = { id = resultID, overallScore = 0, dungeonScore = 0 }
+			local sortCache = { id = resultID, leaderOverallScore = 0, leaderScore = 0 }
 
 			if searchResultInfo.leaderOverallDungeonScore then
-				sortCache.overallScore = searchResultInfo.leaderOverallDungeonScore
+				sortCache.leaderOverallScore = searchResultInfo.leaderOverallDungeonScore
 			end
 
-			if searchResultInfo.leaderDungeonScoreInfo and searchResultInfo.leaderDungeonScoreInfo.mapScore then
-				sortCache.dungeonScore = searchResultInfo.leaderDungeonScoreInfo.mapScore
+			if
+				searchResultInfo.leaderDungeonScoreInfo
+				and searchResultInfo.leaderDungeonScoreInfo[1]
+				and searchResultInfo.leaderDungeonScoreInfo[1].mapScore
+			then
+				sortCache.leaderScore = searchResultInfo.leaderDungeonScoreInfo[1].mapScore
 			end
 
 			-- Role available (Party fit) => missing checks on damagers from the 10.2.7 advanced filters
 			if dfDB.roleAvailableEnable then
-				local resultRoles = {
-					TANK = 0,
-					HEALER = 0,
-					DAMAGER = 0,
-				}
+				local resultRoles = { TANK = 0, HEALER = 0, DAMAGER = 0 }
 
 				for i = 1, searchResultInfo.numMembers do
 					local info = C_LFGList_GetSearchResultPlayerInfo(resultID, i)

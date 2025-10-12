@@ -122,12 +122,12 @@ function S:Collectionator()
 		return
 	end
 
-	hooksecurefunc(LibAHTab, "CreateTab", function(self, _, ref, label)
-		if label ~= _G.COLLECTIONATOR_L_TAB_REPLICATE and label ~= _G.COLLECTIONATOR_L_TAB_SUMMARY then
+	hooksecurefunc(LibAHTab, "CreateTab", function(library, tabID, attachedFrame, displayText)
+		if displayText ~= _G.COLLECTIONATOR_L_TAB_REPLICATE and displayText ~= _G.COLLECTIONATOR_L_TAB_SUMMARY then
 			return
 		end
 
-		replicateTabFrame(ref)
+		replicateTabFrame(attachedFrame)
 	end)
 
 	reskinOption(_G.CollectionatorConfigBasicOptionsFrame)

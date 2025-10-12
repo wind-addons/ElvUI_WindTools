@@ -52,26 +52,26 @@ W.MythicPlusMapData = {
 
 -- Legion Remix dungeons
 W.LegionRemixMapData = {
-	-- p1: Broken Isles
-	[197] = { abbr = L["[ABBR] Eye of Azshara"], activityID = 112, timers = { 2100, 1680, 1260 } },
-	[198] = { abbr = L["[ABBR] Darkheart Thicket"], activityID = 113, timers = { 1800, 1440, 1080 } },
-	[199] = { abbr = L["[ABBR] Black Rook Hold"], activityID = 118, timers = { 2160, 1728, 1296 } },
-	[200] = { abbr = L["[ABBR] Halls of Valor"], activityID = 114, timers = { 2280, 1824, 1368 } },
-	[206] = { abbr = L["[ABBR] Neltharion's Lair"], activityID = 115, timers = { 1980, 1584, 1188 } },
-	[207] = { abbr = L["[ABBR] Vault of the Wardens"], activityID = 117, timers = { 1980, 1584, 1188 } },
-	[208] = { abbr = L["[ABBR] Maw of Souls"], activityID = 119, timers = { 1440, 1152, 864 } },
+	-- Phase 1: Skies of Fire
+	[197] = { abbr = L["[ABBR] Eye of Azshara"], activityID = 112, timers = { 1260, 1680, 2100 } },
+	[198] = { abbr = L["[ABBR] Darkheart Thicket"], activityID = 113, timers = { 1080, 1440, 1800 } },
+	[199] = { abbr = L["[ABBR] Black Rook Hold"], activityID = 118, timers = { 1296, 1728, 2160 } },
+	[200] = { abbr = L["[ABBR] Halls of Valor"], activityID = 114, timers = { 1368, 1824, 2280 } },
+	[206] = { abbr = L["[ABBR] Neltharion's Lair"], activityID = 115, timers = { 1188, 1584, 1980 } },
+	[207] = { abbr = L["[ABBR] Vault of the Wardens"], activityID = 117, timers = { 1188, 1584, 1980 } },
+	[208] = { abbr = L["[ABBR] Maw of Souls"], activityID = 119, timers = { 864, 1152, 1440 } },
+	[209] = { abbr = L["[ABBR] The Arcway"], activityID = 121, timers = { 1620, 2160, 2700 } },
+	[210] = { abbr = L["[ABBR] Court of Stars"], activityID = 120, timers = { 1080, 1440, 1800 } },
 
-	-- p2: Suramar
-	[209] = { abbr = L["[ABBR] The Arcway"], activityID = 121, timers = { 2700, 2160, 1620 } },
-	[210] = { abbr = L["[ABBR] Court of Stars"], activityID = 120, timers = { 1800, 1440, 1080 } },
-	-- [227] = { abbr = L["[ABBR] Return to Karazhan: Lower"], activityID = 127, timers = { 2520, 2016, 1512 } },
-	-- [234] = { abbr = L["[ABBR] Return to Karazhan: Upper"], activityID = 128, timers = { 2100, 1680, 1260 } },
+	-- Phase 2: Rise of the Nightfallen
+	-- [227] = { abbr = L["[ABBR] Return to Karazhan: Lower"], activityID = 127, timers = { 1512, 2016, 2520 } },
+	-- [234] = { abbr = L["[ABBR] Return to Karazhan: Upper"], activityID = 128, timers = { 1260, 1680, 2100 } },
 
-	-- p3: Broken Shore
-	-- [233] = { abbr = L["[ABBR] Cathedral of Eternal Night"], activityID = 129, timers = { 2100, 1680, 1260 } },
+	-- Phase 3: Legionfall
+	-- [233] = { abbr = L["[ABBR] Cathedral of Eternal Night"], activityID = 129, timers = { 1260, 1680, 2100 } },
 
-	-- p4: Argus
-	-- [239] = { abbr = L["[ABBR] Seat of the Triumvirate"], activityID = 133, timers = { 2100, 1680, 1260 } },
+	-- Phase 4: Argus Eternal
+	-- [239] = { abbr = L["[ABBR] Seat of the Triumvirate"], activityID = 133, timers = { 1260, 1680, 2100 } },
 }
 
 -- Histories (for localization)

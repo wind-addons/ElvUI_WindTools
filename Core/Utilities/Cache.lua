@@ -75,7 +75,6 @@ local function cleanup(self)
 
 	-- Remove expired entries
 	for _, key in ipairs(keysToRemove) do
-		print("Cache cleanup: removing expired entry:", key)
 		self.data[key] = nil
 		updateCount(self, -1)
 		self.stats.expired = self.stats.expired + 1

@@ -1,17 +1,13 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local S = W.Modules.Skins ---@class Skins
+local cache = W.Utilities.Cache
 
 local format = format
 local gsub = gsub
-local pairs = pairs
 local strfind = strfind
 local strsub = strsub
-local time = time
 local tonumber = tonumber
 local tostring = tostring
-local type = type
-
-local C_Timer_NewTicker = C_Timer.NewTicker
 
 local DEFAULT_SIZE = 64
 local CROP_MARGIN = 5
@@ -21,29 +17,21 @@ local DEFAULT_RIGHT = DEFAULT_SIZE - CROP_MARGIN
 local DEFAULT_TOP = CROP_MARGIN
 local DEFAULT_BOTTOM = DEFAULT_SIZE - CROP_MARGIN
 
-local textureStringHistories = {}
-local CACHE_TIMEOUT = 300
-
-C_Timer_NewTicker(60, function()
-	local currentTime = time()
-	for key, data in pairs(textureStringHistories) do
-		if type(data) == "table" and data.timestamp and (currentTime - data.timestamp) > CACHE_TIMEOUT then
-			textureStringHistories[key] = nil
-		end
-	end
-end)
+---@type Cache
+local textureStringCache = cache.New({
+	defaultTTL = 300, -- 5 minutes
+	maxLength = nil,
+	autoCleanup = true,
+	cleanupInterval = 60,
+})
 
 local function cacheTextureString(iconData, formattedString)
-	local currentTime = time()
 	local result = format("|T%s|t", formattedString)
-	local cacheData = {
-		value = result,
-		timestamp = currentTime,
-	}
 
-	textureStringHistories[iconData] = cacheData
+	-- Cache both the iconData and formattedString keys to the same result
+	textureStringCache:Set(iconData, result)
 	if iconData ~= formattedString then
-		textureStringHistories[formattedString] = cacheData
+		textureStringCache:Set(formattedString, result)
 	end
 
 	return result
@@ -55,9 +43,9 @@ function S:StyleTextureString(text)
 	end
 
 	return gsub(text, "|T([^|]+)|t", function(iconData)
-		local cachedData = textureStringHistories[iconData]
-		if cachedData and cachedData.value then
-			return cachedData.value
+		local cachedValue = textureStringCache:Get(iconData)
+		if cachedValue then
+			return cachedValue
 		end
 
 		-- Skip if the id is not valid or the icon may come from other addons

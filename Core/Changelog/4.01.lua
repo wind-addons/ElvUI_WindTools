@@ -3,11 +3,21 @@ local W = unpack((select(2, ...))) ---@type WindTools
 W.Changelog[401] = {
 	RELEASE_DATE = "TBD",
 	IMPORTANT = {
-		["zhCN"] = {},
-		["zhTW"] = {},
-		["enUS"] = {},
-		["koKR"] = {},
-		["ruRU"] = {},
+		["zhCN"] = {
+			"进行了一些核心代码的重构, 提升了稳定性和性能.",
+		},
+		["zhTW"] = {
+			"進行了一些核心代碼的重構, 提升了穩定性和效能.",
+		},
+		["enUS"] = {
+			"Some core code has been refactored to improve stability and performance.",
+		},
+		["koKR"] = {
+			"안정성과 성능을 향상시키기 위해 일부 핵심 코드가 리팩토링되었습니다.",
+		},
+		["ruRU"] = {
+			"Некоторый основной код был переработан для повышения стабильности и производительности.",
+		},
 	},
 	NEW = {
 		["zhCN"] = {
@@ -46,6 +56,7 @@ W.Changelog[401] = {
 			"[战斗提示] 重构了模组，提升性能.",
 			"[预组建队伍] 新增了军团Remix的史诗钥石支持.",
 			"[好友列表] 支持了好友界面中近期往来界面.",
+			"[通告] - [任务] 移除暴雪选项开启时，现在的暴雪任务进度将会被清除得更加干净（无空行产生）.",
 		},
 		["zhTW"] = {
 			"[美化外觀] 優化了 Auctionator 的皮膚.",
@@ -56,6 +67,7 @@ W.Changelog[401] = {
 			"[小地圖按鈕] 增強了對部分按鈕的支援.",
 			"[預組隊伍] 新增了軍團Remix的史詩鑰石支援.",
 			"[好友列表] 支援了好友介面中近期盟友介面.",
+			"[通告] - [任務] 移除暴雪選項開啟時，現在的暴雪任務進度將會被清除得更加乾淨（無空行產生）.",
 		},
 		["enUS"] = {
 			"[Skins] Update Auctionator skin.",
@@ -66,6 +78,7 @@ W.Changelog[401] = {
 			"[Minimap Buttons] Improve support for some buttons.",
 			"[LFG List] Add support for Legion Remix Mythic+.",
 			"[Friend List] Support Recent Allies section in Friend List.",
+			"[Announcements] - [Quests] When 'Remove Blizzard Options' is enabled, the current Blizzard quest progress will now be cleaned up more thoroughly (no empty lines).",
 		},
 		["koKR"] = {
 			"[스킨] Auctionator 스킨이 업데이트되었습니다.",
@@ -76,6 +89,7 @@ W.Changelog[401] = {
 			"[미니맵 버튼] 일부 버튼에 대한 지원이 개선되었습니다.",
 			"[파티 찾기 목록] 군단 리믹스 신화+ 지원이 추가되었습니다.",
 			"[친구 목록] 친구 목록에서 최근 동맹 섹션을 지원합니다.",
+			"[공지사항] - [퀘스트] '블리자드 옵션 제거'가 활성화되면 현재 블리자드 퀘스트 진행 상황이 더 철저하게 정리됩니다(빈 줄 없음).",
 		},
 		["ruRU"] = {
 			"[Скины] Обновлен скин Auctionator.",
@@ -86,6 +100,7 @@ W.Changelog[401] = {
 			"[Кнопки миникарты] Улучшена поддержка некоторых кнопок.",
 			"[Список поиска групп] Добавлена поддержка Легиона Remix Mythic+.",
 			"[Список друзей] Поддержка раздела 'Недавние союзники' в списке друзей.",
+			"[Объявления] - [Задания] Когда включена опция 'Удалить параметры Blizzard', текущий прогресс заданий Blizzard теперь будет очищаться более тщательно (без пустых строк).",
 		},
 	},
 }

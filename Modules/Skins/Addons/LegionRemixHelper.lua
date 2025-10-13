@@ -218,6 +218,42 @@ local function ReskinCollectionTab(frame)
 	end
 end
 
+local function ReskinContentTabs(frame)
+	if frame.__windSkin then
+		return
+	end
+
+	if frame:GetNumChildren() == 1 and frame:GetNumRegions() == 1 then
+		-- Collections Tab
+		frame:StripTextures()
+		local Content = select(1, frame:GetChildren())
+		if Content and Content:GetNumChildren() == 5 then
+			ReskinCollectionTab(Content)
+		end
+		frame.__windSkin = true
+	elseif frame:GetNumChildren() == 6 and frame:GetNumRegions() == 1 then
+		-- Artifact Tab
+		frame:StripTextures()
+		for _, grandChild in pairs({ frame:GetChildren() }) do
+			if grandChild:IsObjectType("Frame") and not grandChild.obj and grandChild:GetNumChildren() == 5 then
+				grandChild:StripTextures()
+				for _, greatGrandChild in pairs({ grandChild:GetChildren() }) do
+					for _, greatGreatGrandChild in pairs({ greatGrandChild:GetChildren() }) do
+						if greatGreatGrandChild:IsObjectType("Button") then
+							S:Proxy("HandleButton", greatGreatGrandChild, true)
+							greatGreatGrandChild.Center:Show()
+							greatGreatGrandChild.Center:SetAtlas(nil)
+							greatGreatGrandChild.Center:SetTexture(E.media.normTex)
+							F.InternalizeMethod(greatGreatGrandChild.Center, "SetAtlas", true)
+						end
+					end
+				end
+			end
+		end
+		frame.__windSkin = true
+	end
+end
+
 local function ReskinCollectionFrame(frame)
 	frame:StripTextures()
 
@@ -226,6 +262,11 @@ local function ReskinCollectionFrame(frame)
 			-- Tabs
 			for tab in child.tabPool:EnumerateActive() do
 				S:Proxy("HandleTab", tab)
+				tab:HookScript("OnClick", function()
+					for _, sibling in pairs({ frame:GetChildren() }) do
+						ReskinContentTabs(sibling)
+					end
+				end)
 			end
 		elseif child.obj and child.obj.bar then
 			-- Progress Bar (Top Right)
@@ -255,32 +296,8 @@ local function ReskinCollectionFrame(frame)
 					ReskinFlyoutFrame(frame)
 				end)
 			end
-		elseif child:GetNumChildren() == 1 and child:GetNumRegions() == 1 then
-			-- Collections Tab
-			child:StripTextures()
-			local Content = select(1, child:GetChildren())
-			if Content and Content:GetNumChildren() == 5 then
-				ReskinCollectionTab(Content)
-			end
-		elseif child:GetNumChildren() == 6 and child:GetNumRegions() == 1 then
-			-- Artifact Tab
-			child:StripTextures()
-			for _, grandChild in pairs({ child:GetChildren() }) do
-				if grandChild:IsObjectType("Frame") and not grandChild.obj and grandChild:GetNumChildren() == 5 then
-					grandChild:StripTextures()
-					for _, greatGrandChild in pairs({ grandChild:GetChildren() }) do
-						for _, greatGreatGrandChild in pairs({ greatGrandChild:GetChildren() }) do
-							if greatGreatGrandChild:IsObjectType("Button") then
-								S:Proxy("HandleButton", greatGreatGrandChild, true)
-								greatGreatGrandChild.Center:Show()
-								greatGreatGrandChild.Center:SetAtlas(nil)
-								greatGreatGrandChild.Center:SetTexture(E.media.normTex)
-								F.InternalizeMethod(greatGreatGrandChild.Center, "SetAtlas", true)
-							end
-						end
-					end
-				end
-			end
+		else
+			ReskinContentTabs(child)
 		end
 	end
 end

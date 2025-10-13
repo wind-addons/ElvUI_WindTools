@@ -74,6 +74,7 @@ W.Changelog[401] = {
 			"[预组建队伍] 修复了队长地下城分数无法正常排序的问题.",
 			"[好友列表] 支持了好友界面中近期往来界面.",
 			"[通告] - [任务] 移除暴雪选项开启时，现在的暴雪任务进度将会被清除得更加干净（无空行产生）.",
+			"[观察] 优化了军团 Remix 中，副手等级显示为 13 的问题.",
 		},
 		["zhTW"] = {
 			"[美化外觀] 優化了 Auctionator 的皮膚.",
@@ -86,6 +87,7 @@ W.Changelog[401] = {
 			"[預組隊伍] 修復了隊長地下城分數無法正常排序的問題.",
 			"[好友列表] 支援了好友介面中近期盟友介面.",
 			"[通告] - [任務] 移除暴雪選項開啟時，現在的暴雪任務進度將會被清除得更加乾淨（無空行產生）.",
+			"[觀察] 優化了軍團 Remix 中，副手等級顯示為 13 的問題.",
 		},
 		["enUS"] = {
 			"[Skins] Update Auctionator skin.",
@@ -96,7 +98,8 @@ W.Changelog[401] = {
 			"[Minimap Buttons] Improve support for some buttons.",
 			"[LFG List] Add support for Legion Remix Mythic+.",
 			"[Friend List] Support Recent Allies section in Friend List.",
-			"[Announcements] - [Quests] When 'Remove Blizzard' is enabled, the current Blizzard quest progress will now be cleaned up more thoroughly (no empty lines).",
+			"[Announcements] - [Quests] When 'Remove Blizzard' is enabled, the current Blizzard quest progress will now be cleaned up more thoroughly (no empty lines anymore).",
+			"[Inspect] Optimize the issue where off-hand item level shows as 13 in Legion Remix.",
 		},
 		["koKR"] = {
 			"[스킨] Auctionator 스킨이 업데이트되었습니다.",
@@ -109,6 +112,7 @@ W.Changelog[401] = {
 			"[파티 찾기 목록] 수정된 던전 점수가 올바르게 정렬되지 않는 문제를 해결했습니다.",
 			"[친구 목록] 친구 목록에서 최근 동맹 섹션을 지원합니다.",
 			"[공지사항] - [퀘스트] '블리자드 제거'가 활성화되면 현재 블리자드 퀘스트 진행 상황이 더 철저하게 정리됩니다(빈 줄 없음).",
+			"[관찰] 군단 리믹스에서 보조 무기 아이템 레벨이 13으로 표시되는 문제를 최적화했습니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Обновлен скин Auctionator.",
@@ -121,6 +125,7 @@ W.Changelog[401] = {
 			"[Список поиска групп] Исправлена ошибка сортировки очков подземелий для лидеров группы.",
 			"[Список друзей] Поддержка раздела 'Недавние союзники' в списке друзей.",
 			"[Объявления] - [Задания] Когда включена опция 'Удалить Blizzard', текущий прогресс заданий Blizzard теперь будет очищаться более тщательно (без пустых строк).",
+			"[Осмотр] Оптимизирована проблема, когда уровень предмета в правой руке отображается как 13 в Legion Remix.",
 		},
 	},
 }

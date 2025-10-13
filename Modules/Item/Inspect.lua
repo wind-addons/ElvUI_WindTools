@@ -743,9 +743,24 @@ function I:ShowPanel(unit, parent, ilevel)
 
 	local maxLabelTextWidth, maxItemLevelTextWidth, maxItemNameTextWidth = 30, 0, 0
 
+	local artifactMainHandItemLevel ---@type number?
+
 	for displayIndex, slotInfo in ipairs(DISPLAY_SLOTS) do
 		local line = frame.Lines[displayIndex]
 		local itemInfo = GetUnitSlotItemInfo(unit, slotInfo.index)
+
+		-- Legion Remix Temp Fix: Artifact off-hand item level showing wrong value (13)
+		if slotInfo.index == INVSLOT_MAINHAND and itemInfo and itemInfo.quality == Enum_ItemQuality.Artifact then
+			artifactMainHandItemLevel = itemInfo.level
+		elseif
+			slotInfo.index == INVSLOT_OFFHAND
+			and itemInfo
+			and itemInfo.quality == Enum_ItemQuality.Artifact
+			and artifactMainHandItemLevel
+			and itemInfo.level == 13
+		then
+			itemInfo.level = artifactMainHandItemLevel
+		end
 
 		line.name = itemInfo and itemInfo.name
 		line.link = itemInfo and itemInfo.link

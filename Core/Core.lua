@@ -246,6 +246,10 @@ function W:GameFixing()
 			self:RegisterEvent("ADDON_LOADED")
 		end
 	end
+
+	if E.global.WT.core.fixSetPassThroughButtons then
+		_G.BonusObjectivePinMixin.SetPassThroughButtons = E.noop
+	end
 end
 
 function W:ADDON_LOADED(event, addOnName)

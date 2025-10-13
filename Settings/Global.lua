@@ -8,6 +8,7 @@ G.core = {
 	elvUIVersionPopup = true,
 	cvarAlert = false,
 	advancedCLEUEventTrace = false,
+	fixSetPassThroughButtons = true,
 	loginMessage = true,
 }
 

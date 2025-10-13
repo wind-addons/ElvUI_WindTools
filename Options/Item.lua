@@ -1582,48 +1582,122 @@ options.inspect = {
 				},
 			},
 		},
-		statsText = {
+		statistics = {
 			order = 10,
 			type = "group",
 			inline = true,
 			name = L["Statistics"],
-			get = function(info)
-				return E.db.WT.item.inspect.statsText[info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.item.inspect.statsText[info[#info]] = value
-			end,
+
 			args = {
-				name = {
+				enable = {
 					order = 1,
-					type = "select",
-					dialogControl = "LSM30_Font",
-					name = L["Font"],
-					values = LSM:HashTable("font"),
+					type = "toggle",
+					name = L["Enable"],
+					get = function(info)
+						return E.db.WT.item.inspect.statistics.enable
+					end,
+					set = function(info, value)
+						E.db.WT.item.inspect.statistics.enable = value
+					end,
 				},
-				style = {
+				text = {
 					order = 2,
-					type = "select",
-					name = L["Outline"],
-					values = {
-						NONE = L["None"],
-						OUTLINE = L["Outline"],
-						THICKOUTLINE = L["Thick"],
-						SHADOW = L["|cff888888Shadow|r"],
-						SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
-						SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
-						MONOCHROME = L["|cFFAAAAAAMono|r"],
-						MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
-						MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+					type = "group",
+					inline = true,
+					name = L["Text"],
+					disabled = function()
+						return not E.db.WT.item.inspect.statistics.enable
+					end,
+					get = function(info)
+						return E.db.WT.item.inspect.statistics.text[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.item.inspect.statistics.text[info[#info]] = value
+					end,
+					args = {
+						name = {
+							order = 1,
+							type = "select",
+							dialogControl = "LSM30_Font",
+							name = L["Font"],
+							values = LSM:HashTable("font"),
+						},
+						style = {
+							order = 2,
+							type = "select",
+							name = L["Outline"],
+							values = {
+								NONE = L["None"],
+								OUTLINE = L["Outline"],
+								THICKOUTLINE = L["Thick"],
+								SHADOW = L["|cff888888Shadow|r"],
+								SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+								SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+								MONOCHROME = L["|cFFAAAAAAMono|r"],
+								MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+								MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+							},
+						},
+						size = {
+							order = 3,
+							name = L["Size"],
+							type = "range",
+							min = 5,
+							max = 60,
+							step = 1,
+						},
 					},
 				},
-				size = {
+				comparison = {
 					order = 3,
-					name = L["Size"],
-					type = "range",
-					min = 5,
-					max = 60,
-					step = 1,
+					type = "group",
+					inline = true,
+					name = L["Comparison"],
+					get = function(info)
+						return E.db.WT.item.inspect.statistics.comparison[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.item.inspect.statistics.comparison[info[#info]] = value
+					end,
+
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+							desc = L["Compare the stat value with your character."],
+						},
+						higherColor = {
+							order = 2,
+							type = "color",
+							name = L["Higher Color"],
+							hasAlpha = false,
+							get = function(info)
+								local db = E.db.WT.item.inspect.statistics.comparison.higherColor
+								local default = P.item.inspect.statistics.comparison.higherColor
+								return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.item.inspect.statistics.comparison.higherColor
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+						lowerColor = {
+							order = 3,
+							type = "color",
+							name = L["Lower Color"],
+							hasAlpha = false,
+							get = function(info)
+								local db = E.db.WT.item.inspect.statistics.comparison.lowerColor
+								local default = P.item.inspect.statistics.comparison.lowerColor
+								return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.item.inspect.statistics.comparison.lowerColor
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+					},
 				},
 			},
 		},

@@ -647,7 +647,6 @@ P.item = {
 		enable = true,
 		player = true,
 		inspect = true,
-		stats = true,
 		playerOnInspect = true,
 		itemIcon = {
 			enable = true,
@@ -698,10 +697,18 @@ P.item = {
 			size = 14,
 			style = "OUTLINE",
 		},
-		statsText = {
-			name = E.db.general.font,
-			size = 14,
-			style = "OUTLINE",
+		statistics = {
+			enable = true,
+			text = {
+				name = E.db.general.font,
+				size = 13,
+				style = "OUTLINE",
+			},
+			comparison = {
+				enable = true,
+				higherColor = C.GetRGBFromTemplate("green-400"),
+				lowerColor = C.GetRGBFromTemplate("rose-400"),
+			},
 		},
 	},
 	itemLevel = {

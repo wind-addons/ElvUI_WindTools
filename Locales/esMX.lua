@@ -1077,6 +1077,7 @@ L["Please set the channel and abbreviation first."] = "Por favor, establece prim
 L["Please set the name and realm first."] = "Por favor, establece el nombre y el reino primero."
 L["Please upgrade your ElvUI to %2.2f or newer version!"] = "Por favor, actualiza tu ElvUI a la versión %2.2f o más reciente."
 L["Please use Blizzard Communities UI add the channel to your main chat frame first."] = "Por favor, utiliza la interfaz de usuario de Blizzard Communities para añadir el canal a tu marco de chat principal primero."
+L["Plugins"] = true
 L["Plumber"] = true
 L["Portals"] = "Portales"
 L["Position"] = "Posición"

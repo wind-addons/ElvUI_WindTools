@@ -118,8 +118,15 @@ function W:Initialize()
 	self:UpdateScripts()
 	self:InitializeModules()
 
-	-- To avoid the update tips from ElvUI when alpha/beta version is used
+	-- To avoid the update tips from ElvUI when alpha/beta versions are used
 	EP:RegisterPlugin(addonName, W.OptionsCallback, false, xVersionString)
+
+	-- Fix the bug that locale files loaded after option table is created
+	local pluginTitle = L["Plugins"]
+	W:SecureHook(EP, "GetPluginOptions", function()
+		E.Options.args.plugins.name = pluginTitle
+	end)
+
 	self:SecureHook(E, "UpdateAll", "UpdateModules")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end

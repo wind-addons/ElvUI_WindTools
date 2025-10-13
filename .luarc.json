@@ -86,7 +86,11 @@
     "UNKNOWN",
     "WAISTSLOT",
     "WRISTSLOT",
-    "PlayerIsTimerunning"
+    "PlayerIsTimerunning",
+    "LE_UNIT_STAT_AGILITY",
+    "LE_UNIT_STAT_INTELLECT",
+    "LE_UNIT_STAT_STAMINA",
+    "LE_UNIT_STAT_STRENGTH"
   ],
   "diagnostics.disable": [
     "inject-field",

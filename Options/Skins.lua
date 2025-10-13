@@ -1261,6 +1261,12 @@ options.addons = {
 			addonName = "Immersion",
 			addonskinsKey = "Immersion",
 		},
+		legionRemixHelper = {
+			order = 10,
+			type = "toggle",
+			name = L["Legion Remix Helper"],
+			addonName = "LegionRemixHelper",
+		},
 		manuscriptsJournal = {
 			order = 10,
 			type = "toggle",

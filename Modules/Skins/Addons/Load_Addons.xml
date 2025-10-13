@@ -8,6 +8,7 @@
 	<Script file='Collectionator.lua'/>
 	<Script file='Hekili.lua'/>
 	<Script file='Immersion.lua'/>
+	<Script file='LegionRemixHelper.lua'/>
 	<Script file='ManuscriptsJournal.lua'/>
 	<Script file='MountRoutePlanner.lua'/>
 	<Script file='MultiLanguage.lua'/>

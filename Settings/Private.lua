@@ -502,6 +502,7 @@ V.skins = {
 		collectionator = true,
 		hekili = true,
 		immersion = true,
+		legionRemixHelper = true,
 		manuscriptsJournal = true,
 		mountRoutePlanner = true,
 		multiLanguage = true,

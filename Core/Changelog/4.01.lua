@@ -5,22 +5,27 @@ W.Changelog[401] = {
 	IMPORTANT = {
 		["zhCN"] = {
 			"进行了一些核心代码的重构, 提升了稳定性和性能.",
+			"新增一项游戏修复功能, 可以修复某些情况下出现 SetPassThroughButtons Lua 报错的问题. 默认开启",
 			"特别处理了ElvUI设定中的'插件'名称, 现在可以正确显示为本地化字符串.",
 		},
 		["zhTW"] = {
 			"進行了一些核心代碼的重構, 提升了穩定性和效能.",
+			"新增一項遊戲修復功能, 可以修復某些情況下出現 SetPassThroughButtons Lua 報錯的問題. 預設開啟",
 			"特別處理了ElvUI設定中的'插件'名稱, 現在可以正確顯示為本地化字串.",
 		},
 		["enUS"] = {
 			"Some core code has been refactored to improve stability and performance.",
+			"A new game fix option has been added to solve the SetPassThroughButtons Lua error that occurs in some cases. Enabled by default.",
 			"Special handling of the 'Plugins' name in ElvUI settings, which can now be displayed correctly as a localized string.",
 		},
 		["koKR"] = {
 			"안정성과 성능을 향상시키기 위해 일부 핵심 코드가 리팩토링되었습니다.",
+			"일부 경우에 발생하는 SetPassThroughButtons Lua 오류를 해결하기 위해 새로운 게임 수정 옵션이 추가되었습니다. 기본적으로 활성화되어 있습니다.",
 			"ElvUI 설정의 '플러그인' 이름을 특별히 처리하여 이제 현지화된 문자열로 올바르게 표시할 수 있습니다.",
 		},
 		["ruRU"] = {
 			"Некоторый основной код был переработан для повышения стабильности и производительности.",
+			"Добавлена новая опция исправления игры, которая решает проблему с ошибкой SetPassThroughButtons Lua, возникающей в некоторых случаях. По умолчанию включено.",
 			"Особая обработка имени 'Плагины' в настройках ElvUI, которое теперь может отображаться правильно как локализованная строка.",
 		},
 	},

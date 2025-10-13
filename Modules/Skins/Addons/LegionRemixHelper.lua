@@ -82,6 +82,8 @@ local function ReskinScrapPanel(panel)
 
 			hooksecurefunc(grandChild, "Update", ReskinScrollBox)
 			ReskinScrollBox()
+		elseif grandChild.Back and grandChild.Forward and grandChild.Track then
+			S:Proxy("HandleTrimScrollBar", grandChild)
 		end
 	end
 	S:Proxy("HandleFrame", panel)

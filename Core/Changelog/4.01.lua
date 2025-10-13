@@ -5,18 +5,23 @@ W.Changelog[401] = {
 	IMPORTANT = {
 		["zhCN"] = {
 			"进行了一些核心代码的重构, 提升了稳定性和性能.",
+			"特别处理了ElvUI设定中的'插件'名称, 现在可以正确显示为本地化字符串.",
 		},
 		["zhTW"] = {
 			"進行了一些核心代碼的重構, 提升了穩定性和效能.",
+			"特別處理了ElvUI設定中的'插件'名稱, 現在可以正確顯示為本地化字串.",
 		},
 		["enUS"] = {
 			"Some core code has been refactored to improve stability and performance.",
+			"Special handling of the 'Plugins' name in ElvUI settings, which can now be displayed correctly as a localized string.",
 		},
 		["koKR"] = {
 			"안정성과 성능을 향상시키기 위해 일부 핵심 코드가 리팩토링되었습니다.",
+			"ElvUI 설정의 '플러그인' 이름을 특별히 처리하여 이제 현지화된 문자열로 올바르게 표시할 수 있습니다.",
 		},
 		["ruRU"] = {
 			"Некоторый основной код был переработан для повышения стабильности и производительности.",
+			"Особая обработка имени 'Плагины' в настройках ElvUI, которое теперь может отображаться правильно как локализованная строка.",
 		},
 	},
 	NEW = {

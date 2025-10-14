@@ -6,7 +6,7 @@ local MF = W.Modules.MoveFrames
 local S = W.Modules.Skins
 
 local _G = _G
-
+local coroutine = coroutine
 local floor = floor
 local format = format
 local ipairs = ipairs
@@ -65,6 +65,7 @@ local REWARDS_ICON_OFFSET_X = 80
 ---@class AchievementData
 ---@field id number
 ---@field name string
+---@field nameLower? string cached lowercase name for sorting
 ---@field description string
 ---@field icon number
 ---@field category { id: number, name: string }
@@ -99,7 +100,42 @@ AT.states = {
 		by = "percent", ---@type "percent"|"name"|"category"
 		order = "desc", ---@type "asc"|"desc"
 	},
+	cache = {
+		categoryNames = {}, ---@type table<number, string> Cache for category names
+		progressColors = {}, ---@type table<number, {r: number, g: number, b: number}> Cache for progress bar colors
+	},
 }
+
+---Get cached category name or fetch and cache it
+---@param categoryID number
+---@param cache table<number, string>
+---@return string
+local function GetCachedCategoryName(categoryID, cache)
+	if not cache[categoryID] then
+		cache[categoryID] = GetCategoryInfo(categoryID)
+	end
+	return cache[categoryID]
+end
+
+---Get cached progress bar color based on percent
+---@param percent number
+---@param cache table<number, {r: number, g: number, b: number}>
+---@return {r: number, g: number, b: number}
+local function GetCachedProgressColor(percent, cache)
+	local key = floor(percent / 5) * 5 -- Cache by 5% increments
+	if not cache[key] then
+		if percent >= 90 then
+			cache[key] = C.GetRGBFromTemplate("emerald-500")
+		elseif percent >= 75 then
+			cache[key] = C.GetRGBFromTemplate("green-500")
+		elseif percent >= 60 then
+			cache[key] = C.GetRGBFromTemplate("yellow-500")
+		else
+			cache[key] = C.GetRGBFromTemplate("orange-500")
+		end
+	end
+	return cache[key]
+end
 
 ---Calculate completion percentage and get detailed info for an achievement
 ---@param achievementID number
@@ -125,6 +161,36 @@ local function GetCriteriaData(achievementID)
 	return { percent = (completed / total) * 100, total = total, details = details, completed = completed }
 end
 
+local function processNextFrame(self)
+	if not self.states.isScanning or not self.scanCoroutine then
+		return
+	end
+
+	local success, errorMessage = coroutine.resume(self.scanCoroutine)
+	if not success then
+		self.states.isScanning = false
+		self.scanCoroutine = nil
+		F.Developer.ThrowError(errorMessage)
+		if self.MainFrame and self.MainFrame:IsVisible() then
+			self.MainFrame.ProgressFrame:Hide()
+		end
+		return
+	end
+
+	if coroutine.status(self.scanCoroutine) ~= "dead" and self.states.isScanning then
+		E:Delay(self.db.scan.batchInterval, function()
+			processNextFrame(self)
+		end)
+	else
+		self.states.isScanning = false
+		self.scanCoroutine = nil
+		if self.MainFrame and self.MainFrame:IsVisible() then
+			self.MainFrame.ProgressFrame:Hide()
+			self:UpdateView()
+		end
+	end
+end
+
 function AT:ScanAchievements()
 	if self.states.isScanning then
 		return
@@ -139,20 +205,28 @@ function AT:ScanAchievements()
 	self.states.isScanning = true
 	self.states.results = {}
 
-	local current, scanned, total, currentCategory = 1, 0, 0, 1
 	local categories = GetCategoryList()
+
+	local total = 0
 	for _, categoryID in ipairs(categories) do
 		total = total + GetCategoryNumAchievements(categoryID)
 	end
 
-	local function scanStep()
+	self.scanCoroutine = coroutine.create(function()
+		local scanned = 0
 		local stepScanned = 0
-		while currentCategory <= #categories and stepScanned < self.db.scan.batchSize do
-			local categoryID = categories[currentCategory]
-			local numAchievements = GetCategoryNumAchievements(categoryID)
+		local categoryNameCache = self.states.cache.categoryNames
 
-			if current <= numAchievements then
-				local id = select(1, GetAchievementInfo(categoryID, current))
+		for _, categoryID in ipairs(categories) do
+			local numAchievements = GetCategoryNumAchievements(categoryID)
+			local categoryName = GetCachedCategoryName(categoryID, categoryNameCache)
+
+			for i = 1, numAchievements do
+				if not self.states.isScanning then
+					return
+				end
+
+				local id = select(1, GetAchievementInfo(categoryID, i))
 				if id and C_AchievementInfo_IsValidAchievement(id) and not C_AchievementInfo_IsGuildAchievement(id) then
 					async.WithAchievementID(id, function(data)
 						local _, name, _, completed, _, _, _, description, flags, icon, rewardText = unpack(data)
@@ -164,9 +238,10 @@ function AT:ScanAchievements()
 						local result = {
 							id = id,
 							name = name,
+							nameLower = strlower(name), -- Cache lowercase for sorting
 							description = description,
 							icon = icon,
-							category = { id = categoryID, name = GetCategoryInfo(categoryID) },
+							category = { id = categoryID, name = categoryName },
 							criteriaData = GetCriteriaData(id),
 							flags = flags,
 							reward = { itemID = C_AchievementInfo_GetRewardItemID(id), text = rewardText },
@@ -176,31 +251,28 @@ function AT:ScanAchievements()
 					end)
 				end
 
-				current, scanned, stepScanned = current + 1, scanned + 1, stepScanned + 1
+				scanned = scanned + 1
+				stepScanned = stepScanned + 1
+
 				if self.MainFrame and self.MainFrame:IsVisible() then
-					local progress = (scanned / total) * 100
-					self.MainFrame.ProgressFrame.Bar:SetValue(progress)
-					self.MainFrame.ProgressFrame.Bar.ProgressText:SetText(
-						format("%d / %d  -  %.0f %%", scanned, total, progress)
-					)
+					F.Throttle(0.1, "AchievementTrackerScanProgress", function()
+						local progress = (scanned / total) * 100
+						self.MainFrame.ProgressFrame.Bar:SetValue(progress)
+						self.MainFrame.ProgressFrame.Bar.ProgressText:SetText(
+							format("%d / %d  -  %.0f %%", scanned, total, progress)
+						)
+					end)
 				end
-			else
-				current, currentCategory = 1, currentCategory + 1
+
+				if stepScanned >= self.db.scan.batchSize then
+					coroutine.yield()
+					stepScanned = 0
+				end
 			end
 		end
+	end)
 
-		if currentCategory > #categories then
-			self.states.isScanning = false
-			if self.MainFrame and self.MainFrame:IsVisible() then
-				self.MainFrame.ProgressFrame:Hide()
-				self:UpdateView()
-			end
-		else
-			E:Delay(self.db.scan.batchInterval, scanStep)
-		end
-	end
-
-	scanStep()
+	processNextFrame(self)
 end
 
 --- Set the element data for the achievement tracker
@@ -255,7 +327,7 @@ function AT:UpdateView()
 		if self.states.sort.by == "percent" then
 			aVal, bVal = a.criteriaData.percent, b.criteriaData.percent
 		elseif self.states.sort.by == "name" then
-			aVal, bVal = a.name:lower(), b.name:lower()
+			aVal, bVal = a.nameLower or strlower(a.name), b.nameLower or strlower(b.name)
 		elseif self.states.sort.by == "category" then
 			aVal, bVal = a.category.id, b.category.id
 		end
@@ -548,16 +620,7 @@ function AT:ScrollElementInitializer(frame, data, scrollBox)
 		frame.Initialized = true
 	end
 
-	local color
-	if data.criteriaData.percent >= 90 then
-		color = C.GetRGBFromTemplate("emerald-500")
-	elseif data.criteriaData.percent >= 75 then
-		color = C.GetRGBFromTemplate("green-500")
-	elseif data.criteriaData.percent >= 60 then
-		color = C.GetRGBFromTemplate("yellow-500")
-	else
-		color = C.GetRGBFromTemplate("orange-500")
-	end
+	local color = GetCachedProgressColor(data.criteriaData.percent, self.states.cache.progressColors)
 	frame.ProgressBackdrop:SetStatusBarColor(color.r, color.g, color.b)
 	frame.ProgressBackdrop:SetValue(data.criteriaData.percent)
 	frame.IndicatorFrame.TrackingText:SetShown(

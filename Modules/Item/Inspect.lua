@@ -104,29 +104,47 @@ local INVSLOT_ENCHANT = {
 	[INVSLOT_OFFHAND] = true,
 }
 
-local STAT_DEFINITIONS = {
-	-- Header
-	{ key = "header", isSeparator = false, isHeader = true },
-	-- Basic
-	{ key = "separator1", isSeparator = true },
-	{ key = "level", name = L["[ABBR] Level"], colorTemplate = "blue-400" },
-	{ key = "health", name = L["[ABBR] Health"], colorTemplate = "blue-400" },
-	{ key = "itemLevel", name = L["[ABBR] Item Level"], colorTemplate = "blue-400", diffValue = true },
-	-- Primary
-	{ key = "separator3", isSeparator = true },
-	{ key = "stamina", name = L["[ABBR] Stamina"], colorTemplate = "amber-400", diffPercent = true },
-	{ key = "strength", name = L["[ABBR] Strength"], colorTemplate = "amber-400", diffPercent = true },
-	{ key = "agility", name = L["[ABBR] Agility"], colorTemplate = "amber-400", diffPercent = true },
-	{ key = "intellect", name = L["[ABBR] Intellect"], colorTemplate = "amber-400", diffPercent = true },
-	-- Combat
-	{ key = "separator2", isSeparator = true },
-	{ key = "crit", name = L["[ABBR] Critical Strike"], colorTemplate = "green-500", diffPercent = true },
-	{ key = "haste", name = L["[ABBR] Haste"], colorTemplate = "green-500", diffPercent = true },
-	{ key = "mastery", name = L["[ABBR] Mastery"], colorTemplate = "green-500", diffPercent = true },
-	{ key = "versatility", name = L["[ABBR] Versatility"], colorTemplate = "green-500", diffPercent = true },
-	{ key = "leech", name = L["[ABBR] Leech"], colorTemplate = "green-500", diffPercent = true },
-	{ key = "speed", name = L["[ABBR] Speed"], colorTemplate = "green-500", diffPercent = true },
-	{ key = "avoidance", name = L["[ABBR] Avoidance"], colorTemplate = "green-400", diffPercent = true },
+local STATS_CONFIG = {
+	groups = {
+		{
+			type = "header",
+			rows = {
+				{ key = "header", isHeader = true },
+			},
+		},
+		{
+			type = "basic",
+			color = "blue-400",
+			rows = {
+				{ key = "level", name = L["[ABBR] Level"] },
+				{ key = "health", name = L["[ABBR] Health"] },
+				{ key = "itemLevel", name = L["[ABBR] Item Level"], diffType = "value" },
+			},
+		},
+		{
+			type = "primary",
+			color = "amber-400",
+			rows = {
+				{ key = "stamina", name = L["[ABBR] Stamina"], diffType = "percent" },
+				{ key = "strength", name = L["[ABBR] Strength"], diffType = "percent" },
+				{ key = "agility", name = L["[ABBR] Agility"], diffType = "percent" },
+				{ key = "intellect", name = L["[ABBR] Intellect"], diffType = "percent" },
+			},
+		},
+		{
+			type = "combat",
+			color = "green-500",
+			rows = {
+				{ key = "crit", name = L["[ABBR] Critical Strike"], diffType = "percent" },
+				{ key = "haste", name = L["[ABBR] Haste"], diffType = "percent" },
+				{ key = "mastery", name = L["[ABBR] Mastery"], diffType = "percent" },
+				{ key = "versatility", name = L["[ABBR] Versatility"], diffType = "percent" },
+				{ key = "leech", name = L["[ABBR] Leech"], diffType = "percent" },
+				{ key = "speed", name = L["[ABBR] Speed"], diffType = "percent" },
+				{ key = "avoidance", name = L["[ABBR] Avoidance"], diffType = "percent", color = "green-400" },
+			},
+		},
+	},
 }
 
 ---Checks if an enchantment can be applied to a specific slot based on quality and class
@@ -663,8 +681,8 @@ function I:CreatePanel(parent)
 	-- Frame
 	frame:Width(PANEL_MIN_WIDTH)
 	frame:SetFrameLevel(0)
-	frame:Point("TOPLEFT", parent, "TOPRIGHT", 5, 0)
-	frame:Point("BOTTOMLEFT", parent, "BOTTOMRIGHT", 5, 0)
+	frame:Point("TOPLEFT", parent, "TOPRIGHT", 3, 0)
+	frame:Point("BOTTOMLEFT", parent, "BOTTOMRIGHT", 3, 0)
 	frame:SetTemplate("Transparent")
 	S:CreateShadowModule(frame)
 	S:MerathilisUISkin(frame)
@@ -849,23 +867,46 @@ function I:ShowPanel(unit, parent, ilevel)
 
 	local maxLabelTextWidth, maxItemLevelTextWidth, maxItemNameTextWidth = 30, 0, 0
 
+	-- Artifact weapon item levels
 	local artifactMainHandItemLevel ---@type number?
+	local artifactOffHandItemLevel ---@type number?
+
+	for _, slotInfo in ipairs(DISPLAY_SLOTS) do
+		if slotInfo.index == INVSLOT_MAINHAND or slotInfo.index == INVSLOT_OFFHAND then
+			local itemInfo = GetUnitSlotItemInfo(unit, slotInfo.index)
+			if itemInfo and itemInfo.quality == Enum_ItemQuality.Artifact then
+				if slotInfo.index == INVSLOT_MAINHAND then
+					artifactMainHandItemLevel = itemInfo.level
+				else
+					artifactOffHandItemLevel = itemInfo.level
+				end
+			end
+		end
+	end
+
+	-- Determine correct artifact level: use the non-13 value if one exists
+	local correctArtifactLevel ---@type number?
+	if artifactMainHandItemLevel and artifactOffHandItemLevel then
+		if artifactMainHandItemLevel == 13 and artifactOffHandItemLevel ~= 13 then
+			correctArtifactLevel = artifactOffHandItemLevel
+		elseif artifactOffHandItemLevel == 13 and artifactMainHandItemLevel ~= 13 then
+			correctArtifactLevel = artifactMainHandItemLevel
+		end
+	end
 
 	for displayIndex, slotInfo in ipairs(DISPLAY_SLOTS) do
 		local line = frame.Lines[displayIndex]
 		local itemInfo = GetUnitSlotItemInfo(unit, slotInfo.index)
 
-		-- Legion Remix Temp Fix: Artifact off-hand item level showing wrong value (13)
-		if slotInfo.index == INVSLOT_MAINHAND and itemInfo and itemInfo.quality == Enum_ItemQuality.Artifact then
-			artifactMainHandItemLevel = itemInfo.level
-		elseif
-			slotInfo.index == INVSLOT_OFFHAND
+		-- Legion Remix Temp Fix: Artifact weapon item level showing wrong value (13)
+		if
+			correctArtifactLevel
 			and itemInfo
 			and itemInfo.quality == Enum_ItemQuality.Artifact
-			and artifactMainHandItemLevel
 			and itemInfo.level == 13
+			and (slotInfo.index == INVSLOT_MAINHAND or slotInfo.index == INVSLOT_OFFHAND)
 		then
-			itemInfo.level = artifactMainHandItemLevel
+			itemInfo.level = correctArtifactLevel
 		end
 
 		line.name = itemInfo and itemInfo.name
@@ -997,7 +1038,7 @@ function I:ShowPanel(unit, parent, ilevel)
 		end
 
 		-- Width adjustment for dynamic font size
-		local BETTER_GETSTRING_WIDTH = 1
+		local BETTER_GETSTRING_WIDTH = 3
 		maxLabelTextWidth = max(maxLabelTextWidth, line.Label.Text:GetStringWidth())
 		maxItemLevelTextWidth = max(maxItemLevelTextWidth, line.ItemLevel:GetStringWidth() + BETTER_GETSTRING_WIDTH)
 		local itemNameTextWidth = line.ItemName:GetStringWidth() + BETTER_GETSTRING_WIDTH
@@ -1039,88 +1080,62 @@ function I:CreateStatsComparePanel(parent)
 
 	local frame = CreateFrame("Frame", nil, parent)
 	frame:SetFrameLevel(0)
-	frame:Point("TOPLEFT", parent, "TOPRIGHT", 5, 0)
+	frame:Point("TOPLEFT", parent, "TOPRIGHT", 3, 0)
 	frame:SetTemplate("Transparent")
 	S:CreateShadowModule(frame)
 	S:MerathilisUISkin(frame)
 
 	frame.rows = {}
-	local previousRow = nil
+	frame.separators = {}
 
-	local contentHeight = 0
-	for index, def in ipairs(STAT_DEFINITIONS) do
-		if def.isSeparator then
+	for groupIndex, group in ipairs(STATS_CONFIG.groups) do
+		for _, def in ipairs(group.rows) do
+			local row = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+			row:Height(STAT_ROW_HEIGHT)
+			row:SetPassThroughButtons("LeftButton")
+
+			if not def.isHeader then
+				row:SetScript("OnEnter", function(self)
+					self:SetBackdrop({ bgFile = E.media.normTex })
+					self:SetBackdropColor(1, 1, 1, 0.15)
+				end)
+				row:SetScript("OnLeave", function(self)
+					self:SetBackdrop(nil)
+				end)
+			end
+
+			row.label = row:CreateFontString(nil, "OVERLAY")
+			row.label:Point("LEFT", 5, 0)
+			row.label:SetJustifyH("LEFT")
+
+			row.inspectedValue = row:CreateFontString(nil, "OVERLAY")
+			row.inspectedValue:Point("CENTER", 0, 0)
+			row.inspectedValue:SetJustifyH("RIGHT")
+
+			row.playerValue = row:CreateFontString(nil, "OVERLAY")
+			row.playerValue:Point("RIGHT", -5, 0)
+			row.playerValue:SetJustifyH("RIGHT")
+
+			row.def = def
+			row.groupColor = group.color
+			row.groupIndex = groupIndex
+
+			tinsert(frame.rows, row)
+		end
+
+		if groupIndex < #STATS_CONFIG.groups then
 			local separator = frame:CreateTexture(nil, "ARTWORK")
 			separator:SetTexture(E.media.normTex)
 			separator:SetVertexColor(0.5, 0.5, 0.5, 0.5)
 			separator:Height(1)
-			contentHeight = contentHeight + 1
-
-			if previousRow then
-				separator:Point("TOPLEFT", previousRow, "BOTTOMLEFT", 0, -STAT_ROW_SEPARATOR_SPACING)
-				separator:Point("TOPRIGHT", previousRow, "BOTTOMRIGHT", 0, -STAT_ROW_SEPARATOR_SPACING)
-				contentHeight = contentHeight + STAT_ROW_SEPARATOR_SPACING
-			end
-
-			frame.rows[index] = { separator = separator, def = def }
-			previousRow = separator
-		else
-			local row = CreateFrame("Frame", nil, frame, "BackdropTemplate")
-			row:Height(STAT_ROW_HEIGHT)
-			contentHeight = contentHeight + STAT_ROW_HEIGHT
-			row.def = def
-
-			if previousRow then
-				if frame.rows[index - 1] and frame.rows[index - 1].separator then
-					row:Point("TOPLEFT", previousRow, "BOTTOMLEFT", 0, -STAT_ROW_SEPARATOR_SPACING)
-					row:Point("TOPRIGHT", previousRow, "BOTTOMRIGHT", 0, -STAT_ROW_SEPARATOR_SPACING)
-					contentHeight = contentHeight + STAT_ROW_SEPARATOR_SPACING
-				else
-					row:Point("TOPLEFT", previousRow, "BOTTOMLEFT", 0, 0)
-					row:Point("TOPRIGHT", previousRow, "BOTTOMRIGHT", 0, 0)
-				end
-			else
-				row:SetPassThroughButtons("LeftButton") -- Allow moving the parent frame by clicking empty space
-				row:Point("TOPLEFT", frame, "TOPLEFT", STAT_PADDING, -STAT_PADDING)
-				row:Point("TOPRIGHT", frame, "TOPRIGHT", -STAT_PADDING, -STAT_PADDING)
-			end
-
-			row:SetScript("OnEnter", function(rowFrame)
-				if not def.isHeader then
-					rowFrame:SetBackdrop({ bgFile = E.media.normTex })
-					rowFrame:SetBackdropColor(1, 1, 1, 0.15)
-				end
-			end)
-
-			row:SetScript("OnLeave", function(rowFrame)
-				rowFrame:SetBackdrop(nil)
-			end)
-
-			row.label = row:CreateFontString(nil, "OVERLAY")
-			row.label:Point("LEFT", row, "LEFT", 0, 0)
-			row.label:SetJustifyH("LEFT")
-
-			row.inspectedValue = row:CreateFontString(nil, "OVERLAY")
-			row.inspectedValue:Point("CENTER", row, "CENTER", 0, 0)
-			row.inspectedValue:SetJustifyH("RIGHT")
-
-			row.playerValue = row:CreateFontString(nil, "OVERLAY")
-			row.playerValue:Point("RIGHT", row, "RIGHT", 0, 0)
-			row.playerValue:SetJustifyH("RIGHT")
-
-			frame.rows[index] = row
-			previousRow = row
+			tinsert(frame.separators, separator)
 		end
 	end
-
-	frame:Height(contentHeight + 2 * STAT_PADDING)
 
 	hooksecurefunc(parent, "Hide", function()
 		frame:Hide()
 	end)
-
 	MF:InternalHandle(frame, parent.MoveFrame or parent)
-
 	parent.WTInspectStatsCompare = frame
 
 	return frame
@@ -1136,94 +1151,154 @@ function I:UpdateStatsComparePanel(frame, inspectedUnit, inspectedItemLevel)
 
 	local inspectedName = UnitName(inspectedUnit)
 	local playerName = UnitName("player")
-
 	local inspectedClassColor = E:ClassColor(select(2, UnitClass(inspectedUnit)), true)
 	local playerClassColor = E:ClassColor(E.myclass, true)
 
-	local maxLabelWidth, maxInspectedWidth, maxPlayerWidth = 0, 0, 0
+	local maxWidths = { label = 0, inspected = 0, player = 0 }
+	local visibleRows = {}
 
 	for _, row in ipairs(frame.rows) do
-		if row.label then
-			local def = row.def
+		local def = row.def
 
-			F.SetFontWithDB(row.label, self.db.statistics.text)
-			F.SetFontWithDB(row.inspectedValue, self.db.statistics.text)
-			F.SetFontWithDB(row.playerValue, self.db.statistics.text)
+		F.SetFontWithDB(row.label, self.db.statistics.text)
+		F.SetFontWithDB(row.inspectedValue, self.db.statistics.text)
+		F.SetFontWithDB(row.playerValue, self.db.statistics.text)
 
-			if def.isHeader then
-				-- Header row with class colors
-				row.label:Hide()
-				row.inspectedValue:SetText(inspectedName)
-				row.playerValue:SetText(playerName)
-				row.label:SetTextColor(C.ExtractRGBFromTemplate("cyan-300"))
-				row.inspectedValue:SetTextColor(inspectedClassColor.r, inspectedClassColor.g, inspectedClassColor.b)
-				row.playerValue:SetTextColor(playerClassColor.r, playerClassColor.g, playerClassColor.b)
-			else
-				-- Data row
+		local isVisible = false
+		local inspectedWidth, playerWidth = 0, 0
+
+		if def.isHeader then
+			row.label:Hide()
+			row.inspectedValue:SetText(inspectedName)
+			row.playerValue:SetText(playerName)
+			row.label:SetTextColor(C.ExtractRGBFromTemplate("cyan-300"))
+			row.inspectedValue:SetTextColor(inspectedClassColor.r, inspectedClassColor.g, inspectedClassColor.b)
+			row.playerValue:SetTextColor(playerClassColor.r, playerClassColor.g, playerClassColor.b)
+
+			isVisible = true
+			inspectedWidth = row.inspectedValue:GetStringWidth()
+			playerWidth = row.playerValue:GetStringWidth()
+		else
+			local inspectedValue = inspectedStats[def.key] or 0
+			local playerValue = playerStats[def.key] or 0
+
+			isVisible = not (self.db.statistics.comparison.hideIfBothZero and inspectedValue == 0 and playerValue == 0)
+
+			if isVisible then
 				row.label:SetText(def.name)
 
-				local inspectedValue = inspectedStats[def.key] or 0
-				local playerValue = playerStats[def.key] or 0
-
-				local inspectedText = E:ShortValue(inspectedValue, 1)
-				local playerText = E:ShortValue(playerValue, 1)
+				local inspectedText, playerText = E:ShortValue(inspectedValue, 1), E:ShortValue(playerValue, 1)
 
 				if self.db.statistics.comparison.enable and playerValue > 0 and inspectedValue > 0 then
-					local diffText, asPositive = "", false
-					if def.diffValue then
-						local diffValue = inspectedValue - playerValue
-						if diffValue ~= 0 then
-							asPositive = diffValue > 0
-							diffText = (asPositive and "+" or "") .. E:ShortValue(diffValue, 1)
+					local diffText, isPositive = "", false
+
+					if def.diffType == "value" then
+						local diff = inspectedValue - playerValue
+						if diff ~= 0 then
+							isPositive = diff > 0
+							diffText = (isPositive and "+" or "") .. E:ShortValue(diff, 1)
 						end
-					elseif def.diffPercent then
+					elseif def.diffType == "percent" then
 						local diffPercent = ((inspectedValue - playerValue) / playerValue) * 100
 						if abs(diffPercent) >= 0.1 then
-							asPositive = diffPercent > 0
-							diffText = (asPositive and "+" or "") .. format("%.1f%%", diffPercent)
+							isPositive = diffPercent > 0
+							diffText = (isPositive and "+" or "") .. format("%.1f%%", diffPercent)
 						end
 					end
 
-					local rgb = asPositive and self.db.statistics.comparison.higherColor
-						or self.db.statistics.comparison.lowerColor
-					inspectedText = format("%s %s", C.StringWithRGB(diffText, rgb), inspectedText)
+					if diffText ~= "" then
+						local colorConfig = isPositive and self.db.statistics.comparison.higherColor
+							or self.db.statistics.comparison.lowerColor
+						inspectedText = format("%s %s", C.StringWithRGB(diffText, colorConfig), inspectedText)
+					end
 				end
 
 				row.inspectedValue:SetText(inspectedText)
 				row.playerValue:SetText(playerText)
 
-				local r, g, b = C.ExtractRGBFromTemplate(def.colorTemplate)
-				row.label:SetTextColor(r, g, b)
-				row.inspectedValue:SetTextColor(
-					C.ExtractRGBFromTemplate(inspectedValue == 0 and "gray-600" or "neutral-50")
-				)
-				row.playerValue:SetTextColor(C.ExtractRGBFromTemplate(playerValue == 0 and "gray-400" or "neutral-50"))
-			end
+				local colorTemplate = def.color or row.groupColor ---@type ColorTemplate
+				row.label:SetTextColor(C.ExtractRGBFromTemplate(colorTemplate))
+				local inspectedColorTemplate = inspectedValue == 0 and "gray-500" or "neutral-50" ---@type ColorTemplate
+				row.inspectedValue:SetTextColor(C.ExtractRGBFromTemplate(inspectedColorTemplate))
+				local playerColorTemplate = playerValue == 0 and "gray-500" or "neutral-50" ---@type ColorTemplate
+				row.playerValue:SetTextColor(C.ExtractRGBFromTemplate(playerColorTemplate))
 
-			maxLabelWidth = max(maxLabelWidth, row.label:GetStringWidth())
-			maxInspectedWidth = max(maxInspectedWidth, row.inspectedValue:GetStringWidth())
-			maxPlayerWidth = max(maxPlayerWidth, row.playerValue:GetStringWidth())
+				inspectedWidth, playerWidth = row.inspectedValue:GetStringWidth(), row.playerValue:GetStringWidth()
+			end
+		end
+
+		if isVisible then
+			tinsert(visibleRows, { row = row, groupIndex = row.groupIndex })
+
+			maxWidths.label = max(maxWidths.label, row.label:GetStringWidth())
+			maxWidths.inspected = max(maxWidths.inspected, inspectedWidth)
+			maxWidths.player = max(maxWidths.player, playerWidth)
 		end
 	end
 
-	maxLabelWidth = maxLabelWidth + 10
-	maxInspectedWidth = maxInspectedWidth + 10
-	maxPlayerWidth = maxPlayerWidth + 10
+	maxWidths.label = maxWidths.label + 10
+	maxWidths.inspected = maxWidths.inspected + 10
+	maxWidths.player = maxWidths.player + 10
+
+	local yOffset = -STAT_PADDING
+	local separatorIndex = 1
+	local previousGroupIndex = nil
+
+	for _, rowData in ipairs(visibleRows) do
+		local row = rowData.row
+		local currentGroupIndex = rowData.groupIndex
+
+		local needsSeparator = previousGroupIndex and currentGroupIndex ~= previousGroupIndex
+
+		if needsSeparator and frame.separators[separatorIndex] then
+			yOffset = yOffset - STAT_ROW_SEPARATOR_SPACING
+			local separator = frame.separators[separatorIndex]
+			separator:ClearAllPoints()
+			separator:Point("TOPLEFT", frame, "TOPLEFT", STAT_PADDING, yOffset)
+			separator:Point("TOPRIGHT", frame, "TOPRIGHT", -STAT_PADDING, yOffset)
+			separator:Show()
+			separatorIndex = separatorIndex + 1
+			yOffset = yOffset - 1 - STAT_ROW_SEPARATOR_SPACING
+		end
+
+		row:ClearAllPoints()
+		row:Point("TOPLEFT", frame, "TOPLEFT", STAT_PADDING, yOffset)
+		row:Point("TOPRIGHT", frame, "TOPRIGHT", -STAT_PADDING, yOffset)
+
+		row.label:Width(maxWidths.label)
+		row.inspectedValue:Width(maxWidths.inspected)
+		row.playerValue:Width(maxWidths.player)
+
+		row.inspectedValue:ClearAllPoints()
+		row.playerValue:ClearAllPoints()
+		row.inspectedValue:Point("LEFT", row.label, "RIGHT", 5, 0)
+		row.playerValue:Point("LEFT", row.inspectedValue, "RIGHT", 5, 0)
+
+		row:Show()
+		yOffset = yOffset - STAT_ROW_HEIGHT
+		previousGroupIndex = currentGroupIndex
+	end
+
+	for i = separatorIndex, #frame.separators do
+		frame.separators[i]:Hide()
+	end
 
 	for _, row in ipairs(frame.rows) do
-		if row.label then
-			row.label:Width(maxLabelWidth)
-			row.inspectedValue:Width(maxInspectedWidth)
-			row.playerValue:Width(maxPlayerWidth)
-
-			row.inspectedValue:ClearAllPoints()
-			row.playerValue:ClearAllPoints()
-			row.inspectedValue:Point("LEFT", row.label, "RIGHT", 5, 0)
-			row.playerValue:Point("LEFT", row.inspectedValue, "RIGHT", 5, 0)
+		local isVisible = false
+		for _, rowData in ipairs(visibleRows) do
+			if row == rowData.row then
+				isVisible = true
+				break
+			end
+		end
+		if not isVisible then
+			row:Hide()
 		end
 	end
 
-	frame:Width(maxLabelWidth + maxInspectedWidth + maxPlayerWidth + 40)
+	local contentHeight = -yOffset + STAT_PADDING
+	local totalWidth = maxWidths.label + maxWidths.inspected + maxWidths.player + 40
+	frame:Size(totalWidth, contentHeight)
 	frame:Show()
 end
 

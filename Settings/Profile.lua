@@ -706,6 +706,7 @@ P.item = {
 			},
 			comparison = {
 				enable = true,
+				hideIfBothZero = true,
 				higherColor = C.GetRGBFromTemplate("green-400"),
 				lowerColor = C.GetRGBFromTemplate("rose-400"),
 			},

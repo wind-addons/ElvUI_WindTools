@@ -84,7 +84,7 @@ options.gameFix = {
 				E.global.WT.core.cvarAlert = value
 				E:StaticPopup_Show("PRIVATE_RL")
 			end,
-			width = "full",
+			width = 2,
 		},
 		advancedCLEUEventTrace = {
 			order = 2,
@@ -98,7 +98,21 @@ options.gameFix = {
 				E.global.WT.core.advancedCLEUEventTrace = value
 				E:StaticPopup_Show("PRIVATE_RL")
 			end,
-			width = "full",
+			width = 2,
+		},
+		fixSetPassThroughButtons = {
+			order = 3,
+			type = "toggle",
+			name = L["Fix SetPassThroughButtons"],
+			desc = L["Fix the issue that sometimes SetPassThroughButtons got tainted."],
+			get = function(info)
+				return E.global.WT.core.fixSetPassThroughButtons
+			end,
+			set = function(info, value)
+				E.global.WT.core.fixSetPassThroughButtons = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+			width = 2,
 		},
 	},
 }

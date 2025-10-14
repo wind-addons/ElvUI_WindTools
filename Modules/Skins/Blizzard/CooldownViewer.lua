@@ -1,8 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local S = W.Modules.Skins ---@type Skins
+local ES = E:GetModule("Skins")
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local ipairs = ipairs
+local pairs = pairs
 
 function S:Blizzard_CooldownViewer()
 	if not self:CheckDB("cooldownManager", "cooldownViewer") then
@@ -36,6 +39,26 @@ function S:Blizzard_CooldownViewer()
 			F.Move(tab, 0, -2)
 		end
 	end
+
+	self:SecureHook(ES, "CooldownManager_SkinIcon", function(_, _, icon)
+		if icon.__windSkin then
+			return
+		end
+		self:CreateBackdropShadow(icon)
+		icon.__windSkin = true
+	end)
+
+	self:SecureHook(ES, "CooldownManager_SkinBar", function(_, _, bar)
+		if bar.__windSkin then
+			return
+		end
+		for _, region in pairs({ bar:GetRegions() }) do
+			if region:IsObjectType("Texture") and region.backdrop then
+				self:CreateBackdropShadow(region)
+			end
+		end
+		bar.__windSkin = true
+	end)
 end
 
 S:AddCallbackForAddon("Blizzard_CooldownViewer")

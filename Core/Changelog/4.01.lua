@@ -40,6 +40,7 @@ W.Changelog[401] = {
 			"[美化外观] 新增一个选项, 可以允许扩展 UI 错误框架以单行展示较长文本信息.",
 			"[小地图按钮] 新增了根据按钮名称优先度排序功能.",
 			"[装备观察] 新增了玩家属性对比功能.",
+			"[游戏条] 家按钮新增鼠标中键使用军团 Remix 炉石.",
 		},
 		["zhTW"] = {
 			"[美化外觀] 新增了 Collectionator 皮膚.",
@@ -51,6 +52,7 @@ W.Changelog[401] = {
 			"[美化外觀] 新增一個選項, 可以允許擴展 UI 錯誤框架以單行展示較長文本資訊.",
 			"[小地圖按鈕] 新增了根據按鈕名稱優先度排序功能.",
 			"[裝備觀察] 新增了玩家屬性比較功能.",
+			"[遊戲條] 家按鍵新增滑鼠中鍵使用軍團 Remix 爐石.",
 		},
 		["enUS"] = {
 			"[Skins] Add skin for Collectionator.",
@@ -62,6 +64,7 @@ W.Changelog[401] = {
 			"[Skins] Add an option to allow extending the UI error frame to display longer text information in a single line.",
 			"[Minimap Buttons] Add function to sort by button name priority.",
 			"[Inspect] Add player stats comparison feature.",
+			"[Game Bar] Home button adds middle mouse button to use Legion Remix hearthstone.",
 		},
 		["koKR"] = {
 			"[스킨] Collectionator에 스킨이 추가되었습니다.",
@@ -73,6 +76,7 @@ W.Changelog[401] = {
 			"[스킨] UI 오류 프레임을 확장하여 더 긴 텍스트 정보를 한 줄로 표시할 수 있는 옵션이 추가되었습니다.",
 			"[미니맵 버튼] 버튼 이름 우선순위로 정렬하는 기능이 추가되었습니다.",
 			"[관찰] 플레이어 통계 비교 기능이 추가되었습니다.",
+			"[게임 바] 홈 버튼에 중간 마우스 버튼이 추가되어 Legion Remix 하스스톤을 사용할 수 있습니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Добавлен скин для Collectionator.",
@@ -84,6 +88,7 @@ W.Changelog[401] = {
 			"[Скины] Добавлена опция, позволяющая расширить рамку ошибок UI для отображения более длинной текстовой информации в одной строке.",
 			"[Кнопки миникарты] Добавлена функция сортировки по приоритету имени кнопки.",
 			"[Осмотр] Добавлена функция сравнения характеристик игрока.",
+			"[Игровая панель] Кнопка 'Домой' добавляет среднюю кнопку мыши для использования камня возвращения Legion Remix.",
 		},
 	},
 	IMPROVEMENT = {

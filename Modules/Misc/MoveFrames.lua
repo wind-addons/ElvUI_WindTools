@@ -147,6 +147,9 @@ local BlizzardFramesOnDemand = {
 		"CommunitiesGuildNewsFiltersFrame",
 		"CommunitiesGuildTextEditFrame",
 	},
+	["Blizzard_CooldownViewer"] = {
+		"CooldownViewerSettings",
+	},
 	["Blizzard_Contribution"] = {
 		"ContributionCollectionFrame",
 	},

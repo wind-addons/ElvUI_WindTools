@@ -1329,6 +1329,7 @@ P.misc = {
 		width = 500,
 		height = 500,
 		threshold = 75,
+		tooltip = true,
 		scan = {
 			batchSize = 20,
 			batchInterval = 0.01,

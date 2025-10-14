@@ -2436,8 +2436,17 @@ options.achievementTracker = {
 			type = "toggle",
 			name = L["Enable"],
 		},
-		size = {
+		tooltip = {
 			order = 3,
+			type = "toggle",
+			name = L["Tooltip"],
+			desc = L["Show tips when hovering over the achievements."],
+			disabled = function()
+				return not E.db.WT.misc.achievementTracker.enable
+			end,
+		},
+		size = {
+			order = 4,
 			type = "group",
 			name = L["Size"],
 			inline = true,
@@ -2464,7 +2473,7 @@ options.achievementTracker = {
 			},
 		},
 		scan = {
-			order = 4,
+			order = 5,
 			type = "group",
 			name = L["Scan"],
 			inline = true,

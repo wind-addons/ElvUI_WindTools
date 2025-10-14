@@ -55,6 +55,10 @@ local SOUNDKIT = SOUNDKIT
 local ScrollBoxConstants = ScrollBoxConstants
 local ScrollUtil = ScrollUtil
 
+local LEFT_BUTTON_ICON = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:230:307|t"
+local RIGHT_BUTTON_ICON = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:333:410|t"
+local SCROLL_BUTTON_ICON = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:127:204|t"
+local TIP_TOOLTIP_SPACING = 4
 local ELEMENT_ICON_SIZE = 36
 local ELEMENT_PADDING = 8
 local ELEMENT_CRITERIA_LINE_HEIGHT = 12
@@ -382,11 +386,68 @@ function AT:ScrollElementInitializer(frame, data, scrollBox)
 	if not frame.Initialized then
 		frame:SetTemplate()
 		frame:SetBackdropColor(C.ExtractRGBAFromTemplate("neutral-900"))
-		frame:SetScript("OnEnter", function()
-			frame:SetBackdropColor(C.ExtractRGBAFromTemplate("neutral-700"))
+
+		local TooltipFrame = CreateFrame("Frame", nil, self.MainFrame, "BackdropTemplate")
+		TooltipFrame:SetFrameStrata("TOOLTIP")
+		TooltipFrame:SetTemplate("Transparent")
+		TooltipFrame:SetBackdropColor(0, 0, 0, 0.95)
+		TooltipFrame:Hide()
+		S:CreateShadow(TooltipFrame)
+		frame.TooltipFrame = TooltipFrame
+
+		local HintContainer = CreateFrame("Frame", nil, TooltipFrame)
+		TooltipFrame.HintContainer = HintContainer
+
+		local TooltipHint1 = HintContainer:CreateFontString(nil, "OVERLAY")
+		F.SetFont(TooltipHint1, E.db.general.font, 12)
+		TooltipHint1:SetTextColor(C.ExtractRGBAFromTemplate("neutral-50"))
+		TooltipHint1:SetJustifyH("CENTER")
+		TooltipHint1:SetText(LEFT_BUTTON_ICON .. " " .. L["Toggle Details"])
+		HintContainer.Hint1 = TooltipHint1
+
+		local TooltipHint2 = HintContainer:CreateFontString(nil, "OVERLAY")
+		F.SetFont(TooltipHint2, E.db.general.font, 12)
+		TooltipHint2:SetTextColor(C.ExtractRGBAFromTemplate("neutral-50"))
+		TooltipHint2:SetJustifyH("CENTER")
+		TooltipHint2:SetText(SCROLL_BUTTON_ICON .. " " .. L["Track"])
+		HintContainer.Hint2 = TooltipHint2
+
+		local TooltipHint3 = HintContainer:CreateFontString(nil, "OVERLAY")
+		F.SetFont(TooltipHint3, E.db.general.font, 12)
+		TooltipHint3:SetTextColor(C.ExtractRGBAFromTemplate("neutral-50"))
+		TooltipHint3:SetJustifyH("CENTER")
+		TooltipHint3:SetText(RIGHT_BUTTON_ICON .. " " .. L["Open in Achievement"])
+		HintContainer.Hint3 = TooltipHint3
+
+		local hint1Width = TooltipHint1:GetStringWidth()
+		local hint2Width = TooltipHint2:GetStringWidth()
+		local hint3Width = TooltipHint3:GetStringWidth()
+		local totalWidth = hint1Width + hint2Width + hint3Width + 2 * TIP_TOOLTIP_SPACING + 16
+		local hintHeight =
+			max(TooltipHint1:GetStringHeight(), TooltipHint2:GetStringHeight(), TooltipHint3:GetStringHeight())
+
+		TooltipHint1:Point("LEFT", HintContainer, "LEFT", 0, 0)
+		TooltipHint2:Point("LEFT", TooltipHint1, "RIGHT", TIP_TOOLTIP_SPACING, 0)
+		TooltipHint3:Point("LEFT", TooltipHint2, "RIGHT", TIP_TOOLTIP_SPACING, 0)
+
+		HintContainer:Size(totalWidth, hintHeight)
+		HintContainer:Point("CENTER", TooltipFrame, "CENTER", 0, 0)
+
+		TooltipFrame:Size(totalWidth + 16, hintHeight + 16)
+
+		frame:SetScript("OnEnter", function(f)
+			f:SetBackdropColor(C.ExtractRGBAFromTemplate("neutral-700"))
+			if f.TooltipFrame and self.db.tooltip then
+				f.TooltipFrame:ClearAllPoints()
+				f.TooltipFrame:Point("BOTTOM", f, "TOP", 0, 3)
+				f.TooltipFrame:Show()
+			end
 		end)
-		frame:SetScript("OnLeave", function()
-			frame:SetBackdropColor(C.ExtractRGBAFromTemplate("neutral-900"))
+		frame:SetScript("OnLeave", function(f)
+			f:SetBackdropColor(C.ExtractRGBAFromTemplate("neutral-900"))
+			if f.TooltipFrame and self.db.tooltip then
+				f.TooltipFrame:Hide()
+			end
 		end)
 
 		local ProgressBackdrop = CreateFrame("StatusBar", nil, frame)

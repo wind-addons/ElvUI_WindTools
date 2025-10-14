@@ -390,6 +390,7 @@ function AT:ScrollElementInitializer(frame, data, scrollBox)
 		end)
 
 		local ProgressBackdrop = CreateFrame("StatusBar", nil, frame)
+		E:SetSmoothing(ProgressBackdrop, true)
 		ProgressBackdrop:Point("TOPLEFT", frame, "TOPLEFT", 1, -1)
 		ProgressBackdrop:Point("BOTTOMRIGHT", frame, "TOPRIGHT", -1, 1 - (ELEMENT_ICON_SIZE + 2 * ELEMENT_PADDING))
 		ProgressBackdrop:SetStatusBarTexture(E.media.normTex)
@@ -954,6 +955,7 @@ function AT:Construct()
 	MainFrame.ProgressFrame = ProgressFrame
 
 	local ProgressBar = CreateFrame("StatusBar", nil, ProgressFrame)
+	E:SetSmoothing(ProgressBar, true)
 	ProgressBar:Size(self.db.width - 50, 26)
 	ProgressBar:Point("CENTER", ProgressFrame, "CENTER")
 	ProgressBar:SetStatusBarTexture(E.media.normTex)

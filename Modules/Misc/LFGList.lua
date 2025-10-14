@@ -1094,6 +1094,11 @@ function LL:InitializeRightPanel()
 	vaultStatus:Height(32)
 	vaultStatus:SetTemplate()
 
+	-- Hide vault status in Timerunning mode
+	if isTimerunning then
+		vaultStatus:Hide()
+	end
+
 	addSetActive(vaultStatus)
 
 	vaultStatus.text = vaultStatus:CreateFontString(nil, "OVERLAY")
@@ -1115,23 +1120,23 @@ function LL:InitializeRightPanel()
 
 		for i = 1, 8 do
 			if btn.cache[i] then
-				local level = btn.cache[i].level
-				local iconString = F.GetIconString(W.MythicPlusMapData[btn.cache[i].mapID].tex, 14, 16, true)
-				_G.GameTooltip:AddDoubleLine(
-					format(
-						"%s %s %s",
-						C.StringWithKeystoneLevel(tostring(level), level),
-						iconString,
-						W.MythicPlusMapData[btn.cache[i].mapID].name
-					),
-					vaultItemLevel[min(level, #vaultItemLevel)],
-					1,
-					1,
-					1,
-					(i == 1 or i == 4 or i == 8) and 0 or 1,
-					1,
-					(i == 1 or i == 4 or i == 8) and 0 or 1
-				)
+				local mapID = btn.cache[i].mapID
+				local mapData = W.MythicPlusMapData[mapID]
+
+				if mapData then
+					local level = btn.cache[i].level
+					local iconString = F.GetIconString(mapData.tex, 14, 16, true)
+					_G.GameTooltip:AddDoubleLine(
+						format("%s %s %s", C.StringWithKeystoneLevel(tostring(level), level), iconString, mapData.name),
+						vaultItemLevel[min(level, #vaultItemLevel)],
+						1,
+						1,
+						1,
+						(i == 1 or i == 4 or i == 8) and 0 or 1,
+						1,
+						(i == 1 or i == 4 or i == 8) and 0 or 1
+					)
+				end
 			else
 				break
 			end
@@ -1204,8 +1209,14 @@ function LL:InitializeRightPanel()
 	frame.vaultStatus = vaultStatus
 
 	local sortPanel = CreateFrame("Frame", nil, frame)
-	sortPanel:Point("BOTTOMLEFT", vaultStatus, "TOPLEFT", 0, 8)
-	sortPanel:Point("BOTTOMRIGHT", vaultStatus, "TOPRIGHT", 0, 8)
+	-- In Timerunning mode, anchor to frame bottom instead of vaultStatus
+	if isTimerunning then
+		sortPanel:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
+		sortPanel:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, 10)
+	else
+		sortPanel:Point("BOTTOMLEFT", vaultStatus, "TOPLEFT", 0, 8)
+		sortPanel:Point("BOTTOMRIGHT", vaultStatus, "TOPRIGHT", 0, 8)
+	end
 	sortPanel:Height(32)
 
 	local sortModeButton = CreateFrame("Frame", nil, sortPanel)
@@ -1336,7 +1347,12 @@ function LL:InitializeRightPanel()
 	-- Quick Access Panel
 	local quickAccessPanel = CreateFrame("Frame", nil, frame)
 	quickAccessPanel:Point("TOPLEFT", frame.affixes, "BOTTOMLEFT", 0, -10)
-	quickAccessPanel:Point("BOTTOMRIGHT", frame.vaultStatus, "TOPRIGHT", 0, 10)
+	-- In Timerunning mode, anchor to frame bottom instead of vaultStatus
+	if isTimerunning then
+		quickAccessPanel:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -PANEL_PADDING, PANEL_PADDING)
+	else
+		quickAccessPanel:Point("BOTTOMRIGHT", frame.vaultStatus, "TOPRIGHT", 0, 10)
+	end
 
 	-- Quick Access Title
 	local quickAccessTitle = quickAccessPanel:CreateFontString(nil, "OVERLAY")

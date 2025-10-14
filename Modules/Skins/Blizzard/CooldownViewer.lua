@@ -49,12 +49,18 @@ function S:Blizzard_CooldownViewer()
 	end)
 
 	self:SecureHook(ES, "CooldownManager_SkinBar", function(_, _, bar)
+		---@cast bar StatusBar
 		if bar.__windSkin then
 			return
 		end
+
+		bar:SetStatusBarTexture(E.media.normTex)
+		bar:GetStatusBarTexture():SetTextureSliceMode(0)
+
 		for _, region in pairs({ bar:GetRegions() }) do
 			if region:IsObjectType("Texture") and region.backdrop then
 				self:CreateBackdropShadow(region)
+				break
 			end
 		end
 		bar.__windSkin = true

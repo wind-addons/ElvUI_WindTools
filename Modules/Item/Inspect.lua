@@ -881,7 +881,7 @@ function I:ShowPanel(unit, parent, ilevel)
 		F.SetFontWithDB(line.ItemName, self.db.itemNameText)
 		line.ItemName:Height(self.db.itemNameText.size + 2)
 
-		if itemInfo and itemInfo.level > 0 then
+		if itemInfo and itemInfo.level and itemInfo.level > 0 then
 			line.ItemLevel:SetText(format("%d", itemInfo.level))
 			line.ItemName:SetText(itemInfo.cleanLink or itemInfo.link or itemInfo.name)
 		else

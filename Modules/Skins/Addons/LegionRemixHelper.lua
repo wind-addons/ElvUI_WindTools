@@ -311,7 +311,7 @@ local function ReskinCollectionTabUI()
 		S:ReskinTab(tab)
 		tab.Text:Width(tab:GetWidth())
 
-		local finder = OF:New(_G.CollectionsJournal)
+		local finder = OF.New({ parent = _G.CollectionsJournal, objectsPerFrame = 10 })
 		finder:Find("Frame", function(frame)
 			if not strfind(frame:GetDebugName(), "CollectionsJournal.", 1, true) then
 				return false

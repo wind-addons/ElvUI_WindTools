@@ -79,7 +79,6 @@ local LEFT_BUTTON_ICON = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:
 local RIGHT_BUTTON_ICON = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:333:410|t"
 local SCROLL_BUTTON_ICON = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:127:204|t"
 
-local isTimerunning = PlayerIsTimerunning()
 local friendOnline = gsub(_G.ERR_FRIEND_ONLINE_SS, "\124Hplayer:%%s\124h%[%%s%]\124h", "")
 local friendOffline = gsub(_G.ERR_FRIEND_OFFLINE_S, "%%s", "")
 
@@ -605,7 +604,7 @@ local ButtonTypes = {
 				DT.tooltip:SetText(L["Home"])
 				DT.tooltip:AddLine("\n")
 				AddDoubleLineForItem(GB.db.home.left, LEFT_BUTTON_ICON)
-				if isTimerunning then
+				if PlayerIsTimerunning() then
 					AddDoubleLineForItem(250411, SCROLL_BUTTON_ICON)
 				end
 				AddDoubleLineForItem(GB.db.home.right, RIGHT_BUTTON_ICON)
@@ -1182,7 +1181,7 @@ function GB:UpdateButton(button, buttonType)
 		self:UpdateHomeButtonMacro(button, "left", config.item.item1)
 		self:UpdateHomeButtonMacro(button, "right", config.item.item2)
 		-- Legion Remix Hearthstone (250411)
-		button:SetAttribute("macrotext3", isTimerunning and "/use item:250411" or "")
+		button:SetAttribute("macrotext3", PlayerIsTimerunning() and "/use item:250411" or "")
 		tinsert(self.HomeButtons, button)
 	elseif config.macro then
 		button:SetAttribute("type*", "macro")

@@ -508,7 +508,7 @@ do
 	for _, config in ipairs({
 		{ target = "specialAchievement", data = W.MythicPlusSeasonAchievementData },
 		{ target = "raid", data = W.RaidData },
-		{ target = "mythicPlus.args.instances", data = W.MythicPlusMapData },
+		{ target = "mythicPlus.args.instances", data = W.AllMythicPlusMapData },
 	}) do
 		local target = options.progression.args
 		for _, key in ipairs({ strsplit(".", config.target) }) do

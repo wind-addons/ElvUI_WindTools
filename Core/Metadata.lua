@@ -14,6 +14,7 @@ local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 local GetRealmID = GetRealmID
 local GetRealmName = GetRealmName
 local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
+local MergeTable = MergeTable
 local PlayerIsTimerunning = PlayerIsTimerunning
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
@@ -51,7 +52,7 @@ W.MythicPlusMapData = {
 }
 
 -- Legion Remix dungeons
-W.LegionRemixMythicPlusMapData = {
+W.TimerunningMythicPlusMapData = {
 	-- Phase 1: Skies of Fire
 	[197] = { abbr = L["[ABBR] Eye of Azshara"], activityID = 112, timers = { 1260, 1680, 2100 } },
 	[198] = { abbr = L["[ABBR] Darkheart Thicket"], activityID = 113, timers = { 1080, 1440, 1800 } },
@@ -73,6 +74,10 @@ W.LegionRemixMythicPlusMapData = {
 	-- Phase 4: Argus Eternal
 	-- [239] = { abbr = L["[ABBR] Seat of the Triumvirate"], activityID = 133, timers = { 1260, 1680, 2100 } },
 }
+
+function W:GetMythicPlusMapData()
+	return PlayerIsTimerunning() and W.TimerunningMythicPlusMapData or W.MythicPlusMapData
+end
 
 -- Histories (for localization)
 -- [247] = { abbr = L["[ABBR] The MOTHERLODE!!"], activityID = 140, timers = { 1188, 1584, 1980 } },
@@ -201,10 +206,6 @@ for id in pairs(W.CurrentTierSetTable) do
 end
 
 function W:InitializeMetadata()
-	if PlayerIsTimerunning() then
-		W.MythicPlusMapData = W.LegionRemixMythicPlusMapData
-	end
-
 	for id in pairs(W.MythicPlusMapData) do
 		local name, _, timeLimit, tex = C_ChallengeMode_GetMapUIInfo(id)
 		W.MythicPlusMapData[id].name = name
@@ -225,6 +226,21 @@ function W:InitializeMetadata()
 		-- 	end
 		-- end)
 	end
+
+	for id in pairs(W.TimerunningMythicPlusMapData) do
+		local name, _, timeLimit, tex = C_ChallengeMode_GetMapUIInfo(id)
+		W.TimerunningMythicPlusMapData[id].name = name
+		W.TimerunningMythicPlusMapData[id].tex = tex
+		W.TimerunningMythicPlusMapData[id].idString = tostring(id)
+		W.TimerunningMythicPlusMapData[id].timeLimit = timeLimit
+		if W.TimerunningMythicPlusMapData[id].timers then
+			W.TimerunningMythicPlusMapData[id].timers[#W.TimerunningMythicPlusMapData[id].timers] = timeLimit
+		end
+	end
+
+	W.AllMythicPlusMapData = {}
+	MergeTable(W.AllMythicPlusMapData, W.MythicPlusMapData)
+	MergeTable(W.AllMythicPlusMapData, W.TimerunningMythicPlusMapData)
 
 	for id in pairs(W.MythicPlusSeasonAchievementData) do
 		W.Utilities.Async.WithAchievementID(id, function(data)

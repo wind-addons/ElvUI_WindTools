@@ -76,8 +76,6 @@ local FILTER_BUTTONS_PER_COLUMN = 4
 local PANEL_PADDING = 10
 local QUICK_ACCESS_PANEL_WIDTH = 2 * FILTER_BUTTON_WIDTH + FILTER_BUTTON_SPACING + PANEL_PADDING * 2
 
-local isTimerunning = PlayerIsTimerunning()
-
 local seasonGroups = C_LFGList_GetAvailableActivityGroups(
 	GROUP_FINDER_CATEGORY_ID_DUNGEONS,
 	bit.bor(Enum_LFGListFilter.CurrentSeason, Enum_LFGListFilter.PvE)
@@ -532,8 +530,8 @@ function LL:UpdatePartyKeystoneFrame()
 		local unit = i == 1 and "player" or "party" .. i - 1
 		local data = KI:UnitData(unit)
 		local mapID = data and data.challengeMapID
-		if mapID and W.MythicPlusMapData[mapID] then
-			local mapData = W.MythicPlusMapData[mapID]
+		if mapID and W.AllMythicPlusMapData[mapID] then
+			local mapData = W.AllMythicPlusMapData[mapID]
 
 			tinsert(cache, {
 				level = data.level,
@@ -631,6 +629,8 @@ function LL:InitializeRightPanel()
 		return
 	end
 
+	local mythicPlusMapData = W:GetMythicPlusMapData()
+
 	local frame = CreateFrame("Frame", nil, _G.PVEFrame)
 	frame:Point("TOPLEFT", _G.PVEFrame, "TOPRIGHT", 4, 0)
 	frame:Point("BOTTOMLEFT", _G.PVEFrame, "BOTTOMRIGHT", 4, 0)
@@ -681,7 +681,7 @@ function LL:InitializeRightPanel()
 		end
 	end)
 
-	local affixes = not isTimerunning and C_MythicPlus_GetCurrentAffixes() or legionRemixAffixes
+	local affixes = not PlayerIsTimerunning() and C_MythicPlus_GetCurrentAffixes() or legionRemixAffixes
 	frame.affixes = CreateFrame("Frame", nil, frame)
 	frame.affixes:Height(AFFIX_ICON_SIZE)
 	frame.affixes:Point("TOPLEFT", frame, "TOPLEFT", PANEL_PADDING, -PANEL_PADDING)
@@ -708,7 +708,7 @@ function LL:InitializeRightPanel()
 		for i = 1, #affixes do
 			local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixes[i].id)
 			_G.GameTooltip:AddLine(" ")
-			if not isTimerunning then
+			if not PlayerIsTimerunning() then
 				local level = affixAddedAtLevel[i] or 0
 				_G.GameTooltip:AddLine(format("%s (%d) %s", F.GetIconString(fileDataID, 16, 18, true), level, name))
 			else
@@ -744,7 +744,7 @@ function LL:InitializeRightPanel()
 	end
 
 	local mapIDs = {}
-	for key in pairs(W.MythicPlusMapData) do
+	for key in pairs(mythicPlusMapData) do
 		tinsert(mapIDs, key)
 	end
 
@@ -776,12 +776,12 @@ function LL:InitializeRightPanel()
 		filterButton.tex = filterButton:CreateTexture(nil, "ARTWORK")
 		filterButton.tex:Size(20, 20)
 		filterButton.tex:Point("LEFT", filterButton, "LEFT", 4, 0)
-		filterButton.tex:SetTexture(W.MythicPlusMapData[mapID].tex)
+		filterButton.tex:SetTexture(mythicPlusMapData[mapID].tex)
 
 		filterButton.name = filterButton:CreateFontString(nil, "OVERLAY")
 		filterButton.name:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
 		filterButton.name:Point("LEFT", filterButton.tex, "RIGHT", 8, 0)
-		filterButton.name:SetText(W.MythicPlusMapData[mapID].abbr)
+		filterButton.name:SetText(mythicPlusMapData[mapID].abbr)
 
 		addSetActive(filterButton)
 
@@ -1095,7 +1095,7 @@ function LL:InitializeRightPanel()
 	vaultStatus:SetTemplate()
 
 	-- Hide vault status in Timerunning mode
-	if isTimerunning then
+	if PlayerIsTimerunning() then
 		vaultStatus:Hide()
 	end
 
@@ -1121,8 +1121,7 @@ function LL:InitializeRightPanel()
 		for i = 1, 8 do
 			if btn.cache[i] then
 				local mapID = btn.cache[i].mapID
-				local mapData = W.MythicPlusMapData[mapID]
-
+				local mapData = mythicPlusMapData[mapID]
 				if mapData then
 					local level = btn.cache[i].level
 					local iconString = F.GetIconString(mapData.tex, 14, 16, true)
@@ -1210,7 +1209,7 @@ function LL:InitializeRightPanel()
 
 	local sortPanel = CreateFrame("Frame", nil, frame)
 	-- In Timerunning mode, anchor to frame bottom instead of vaultStatus
-	if isTimerunning then
+	if PlayerIsTimerunning() then
 		sortPanel:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
 		sortPanel:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, 10)
 	else
@@ -1348,7 +1347,7 @@ function LL:InitializeRightPanel()
 	local quickAccessPanel = CreateFrame("Frame", nil, frame)
 	quickAccessPanel:Point("TOPLEFT", frame.affixes, "BOTTOMLEFT", 0, -10)
 	-- In Timerunning mode, anchor to frame bottom instead of vaultStatus
-	if isTimerunning then
+	if PlayerIsTimerunning() then
 		quickAccessPanel:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -PANEL_PADDING, PANEL_PADDING)
 	else
 		quickAccessPanel:Point("BOTTOMRIGHT", frame.vaultStatus, "TOPRIGHT", 0, 10)
@@ -1372,88 +1371,93 @@ function LL:InitializeRightPanel()
 	local buttonData = {
 		{ text = L["Mythic+"], categoryID = GROUP_FINDER_CATEGORY_ID_DUNGEONS, filters = 0 },
 		{ text = L["Raids"], categoryID = 3, filters = 1 },
-		{ text = L["Delves"], categoryID = 121, filters = 0 },
+		{ text = L["Delves"], categoryID = 121, filters = 0, disableIfTimerunning = true },
 		{ text = L["Quest"], categoryID = 1, filters = 0 },
-		{ text = L["Custom"], categoryID = GROUP_FINDER_CUSTOM_CATEGORY, filters = 0 },
+		{ text = L["Custom"], categoryID = GROUP_FINDER_CUSTOM_CATEGORY, filters = 0, disableIfTimerunning = true },
 	}
 
-	for i, data in ipairs(buttonData) do
-		local button = CreateFrame("Frame", nil, quickAccessPanel)
-		if i == 1 then
-			button:Point("TOPLEFT", quickAccessTitle, "BOTTOMLEFT")
-			button:Point("BOTTOMRIGHT", quickAccessTitle, "BOTTOMRIGHT", 0, -64)
-		else
-			button:Point("TOPLEFT", quickAccessButtons[i - 1], "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
-			button:Point("BOTTOMRIGHT", quickAccessButtons[i - 1], "BOTTOMRIGHT", 0, -32 - FILTER_BUTTON_SPACING)
-		end
-		button:SetTemplate()
-		addSetActive(button)
-
-		button.text = button:CreateFontString(nil, "OVERLAY")
-		button.text:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-		button.text:Point("CENTER", button, "CENTER", 0, 0)
-		button.text:SetText(data.text)
-
-		button.categoryID = data.categoryID
-
-		button:SetScript("OnEnter", function(btn)
-			btn:SetActive(true)
-		end)
-
-		button:SetScript("OnLeave", function(btn)
-			btn:SetActive(false)
-		end)
-
-		button:SetScript("OnMouseDown", function(_, mouseButton)
-			if mouseButton ~= "LeftButton" then
-				return
+	local playerIsTimerunning = PlayerIsTimerunning()
+	local prevButton
+	for _, data in ipairs(buttonData) do
+		if not playerIsTimerunning or not data.disableIfTimerunning then
+			local button = CreateFrame("Frame", nil, quickAccessPanel)
+			if not prevButton then
+				button:Point("TOPLEFT", quickAccessTitle, "BOTTOMLEFT")
+				button:Point("BOTTOMRIGHT", quickAccessTitle, "BOTTOMRIGHT", 0, -64)
+			else
+				button:Point("TOPLEFT", prevButton, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
+				button:Point("BOTTOMRIGHT", prevButton, "BOTTOMRIGHT", 0, -32 - FILTER_BUTTON_SPACING)
 			end
+			prevButton = button
+			button:SetTemplate()
+			addSetActive(button)
 
-			if _G.PVEFrame.activeTabIndex ~= 1 then
-				_G.PVEFrame_ShowFrame("GroupFinderFrame")
-			end
+			button.text = button:CreateFontString(nil, "OVERLAY")
+			button.text:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+			button.text:Point("CENTER", button, "CENTER", 0, 0)
+			button.text:SetText(data.text)
 
-			if not _G.LFGListFrame.SearchPanel:IsShown() or _G.GroupFinderFrame.selection ~= _G.LFGListPVEStub then
-				local PremadeGroupButton = _G.PVEFrame:ScenariosEnabled() and _G.GroupFinderFrame.groupButton4
-					or _G.GroupFinderFrame.groupButton3
-				GroupFinderFrameGroupButton_OnClick(PremadeGroupButton)
-			end
+			button.categoryID = data.categoryID
 
-			local searchPanel, selection = _G.LFGListFrame.SearchPanel, _G.LFGListFrame.CategorySelection
-			if not selection or not searchPanel then
-				return
-			end
+			button:SetScript("OnEnter", function(btn)
+				btn:SetActive(true)
+			end)
 
-			for _, categoryButton in ipairs(selection.CategoryButtons) do
-				if categoryButton.categoryID == data.categoryID and categoryButton.filters == data.filters then
-					local baseFilters = _G.LFGListFrame.baseFilters
+			button:SetScript("OnLeave", function(btn)
+				btn:SetActive(false)
+			end)
 
-					-- Set the selectedCategory and selectedFilters to a not nil value will cause taint, needs cleanup later
-					self.needTaintCleanup = true
-					selection.selectedCategory = data.categoryID
-					selection.selectedFilters = data.filters
-
-					LFGListSearchPanel_Clear(searchPanel)
-					LFGListSearchPanel_SetCategory(searchPanel, data.categoryID, data.filters, baseFilters)
-					LFGListSearchPanel_DoSearch(searchPanel)
-					_G.LFGListFrame_SetActivePanel(_G.LFGListFrame, searchPanel)
+			button:SetScript("OnMouseDown", function(_, mouseButton)
+				if mouseButton ~= "LeftButton" then
 					return
 				end
-			end
-		end)
 
-		-- Prehook the back button to clear the selectedCategory and selectedFilters to avoid taint
-		local backButtonOnClick = _G.LFGListFrame.SearchPanel.BackButton:GetScript("OnClick")
-		_G.LFGListFrame.SearchPanel.BackButton:SetScript("OnClick", function(...)
-			if self.needTaintCleanup then
-				_G.LFGListFrame.CategorySelection.selectedCategory = nil
-				_G.LFGListFrame.CategorySelection.selectedFilters = nil
-			end
-			backButtonOnClick(...)
-		end)
+				if _G.PVEFrame.activeTabIndex ~= 1 then
+					_G.PVEFrame_ShowFrame("GroupFinderFrame")
+				end
 
-		button:SetActive(false)
-		quickAccessButtons[i] = button
+				if not _G.LFGListFrame.SearchPanel:IsShown() or _G.GroupFinderFrame.selection ~= _G.LFGListPVEStub then
+					local PremadeGroupButton = _G.PVEFrame:ScenariosEnabled() and _G.GroupFinderFrame.groupButton4
+						or _G.GroupFinderFrame.groupButton3
+					GroupFinderFrameGroupButton_OnClick(PremadeGroupButton)
+				end
+
+				local searchPanel, selection = _G.LFGListFrame.SearchPanel, _G.LFGListFrame.CategorySelection
+				if not selection or not searchPanel then
+					return
+				end
+
+				for _, categoryButton in ipairs(selection.CategoryButtons) do
+					if categoryButton.categoryID == data.categoryID and categoryButton.filters == data.filters then
+						local baseFilters = _G.LFGListFrame.baseFilters
+
+						-- Set the selectedCategory and selectedFilters to a not nil value will cause taint, needs cleanup later
+						self.needTaintCleanup = true
+						selection.selectedCategory = data.categoryID
+						selection.selectedFilters = data.filters
+
+						LFGListSearchPanel_Clear(searchPanel)
+						LFGListSearchPanel_SetCategory(searchPanel, data.categoryID, data.filters, baseFilters)
+						LFGListSearchPanel_DoSearch(searchPanel)
+						_G.LFGListFrame_SetActivePanel(_G.LFGListFrame, searchPanel)
+						return
+					end
+				end
+			end)
+
+			-- Prehook the back button to clear the selectedCategory and selectedFilters to avoid taint
+			local backButtonOnClick = _G.LFGListFrame.SearchPanel.BackButton:GetScript("OnClick")
+			_G.LFGListFrame.SearchPanel.BackButton:SetScript("OnClick", function(...)
+				if self.needTaintCleanup then
+					_G.LFGListFrame.CategorySelection.selectedCategory = nil
+					_G.LFGListFrame.CategorySelection.selectedFilters = nil
+				end
+				backButtonOnClick(...)
+			end)
+
+			button:SetActive(false)
+			tinsert(quickAccessButtons, button)
+		end
 	end
 
 	quickAccessPanel.title = quickAccessTitle
@@ -1588,7 +1592,7 @@ function LL:UpdateAdvancedFilters()
 
 	local activities = {}
 	local numActiveMaps = 0
-	for mapID, data in pairs(W.MythicPlusMapData) do
+	for mapID, data in pairs(W:GetMythicPlusMapData()) do
 		if dfDB[mapID] then
 			tinsert(activities, data.activityID)
 			numActiveMaps = numActiveMaps + 1
@@ -1596,7 +1600,7 @@ function LL:UpdateAdvancedFilters()
 	end
 
 	if numActiveMaps == 0 then
-		if isTimerunning then
+		if PlayerIsTimerunning() then
 			tAppendAll(activities, timerunningGroups)
 		else
 			tAppendAll(activities, seasonGroups)

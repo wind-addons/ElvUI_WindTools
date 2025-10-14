@@ -285,7 +285,7 @@ local function SetProgressionInfo(tt, guid)
 
 		local lines = {}
 
-		for id, data in pairs(W.MythicPlusMapData) do
+		for id, data in pairs(W:GetMythicPlusMapData()) do
 			if db.mythicPlus[id] then
 				local left = format(
 					"%s %s",

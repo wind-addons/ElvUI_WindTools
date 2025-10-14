@@ -38,7 +38,7 @@ function T:GetMythicPlusData(unit)
 	if data and data.runs then
 		local highestScore, highestScoreDungeonID, highestScoreDungeonIndex
 		for i, run in pairs(data.runs) do
-			local metadata = W.MythicPlusMapData[run.challengeModeID]
+			local metadata = W.AllMythicPlusMapData[run.challengeModeID]
 
 			if not highestScore or run.mapScore > highestScore then
 				highestScore = run.mapScore
@@ -97,7 +97,7 @@ function T:AddMythicInfo(mod, tt, unit)
 	end
 
 	if ET.db.mythicBestRun then
-		local mapData = data.highestScoreDungeonID and W.MythicPlusMapData[data.highestScoreDungeonID]
+		local mapData = data.highestScoreDungeonID and W.AllMythicPlusMapData[data.highestScoreDungeonID]
 		local run = data.highestScoreDungeonIndex and data.runs and data.runs[data.highestScoreDungeonIndex]
 		if mapData and run then
 			local bestRunLevelText

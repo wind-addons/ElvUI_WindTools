@@ -11,11 +11,10 @@ function T:AddKeystone(tt, unit)
 	if not db or not db.enable then
 		return
 	end
-
 	local data = KI:UnitData(unit)
 	local mapID = data and data.challengeMapID
-	if mapID and W.MythicPlusMapData[mapID] then
-		local mapData = W.MythicPlusMapData[mapID]
+	if mapID and W.AllMythicPlusMapData[mapID] then
+		local mapData = W.AllMythicPlusMapData[mapID]
 		local right = C.StringWithKeystoneLevel(
 			format("%s (%d)", db.useAbbreviation and mapData.abbr or mapData.name, data.level),
 			data.level

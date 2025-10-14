@@ -293,6 +293,12 @@ local BlizzardFramesOnDemand = {
 	["Blizzard_ReforgingUI"] = {
 		"ReforgingFrame",
 	},
+	["Blizzard_RemixArtifactUI"] = {
+		["RemixArtifactFrame"] = {
+			"RemixArtifactFrame.Header",
+			"RemixArtifactFrame.ButtonsParent",
+		},
+	},
 	["Blizzard_ScrappingMachineUI"] = {
 		"ScrappingMachineFrame",
 	},

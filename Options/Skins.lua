@@ -876,6 +876,11 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Raid Info"],
 		},
+		remixArtifact = {
+			order = 10,
+			type = "toggle",
+			name = L["Remix Artifact"],
+		},
 		scenario = {
 			order = 10,
 			type = "toggle",

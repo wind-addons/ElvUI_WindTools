@@ -610,6 +610,7 @@ V.skins = {
 		professionsCustomerOrders = true,
 		quest = true,
 		raidInfo = true,
+		remixArtifact = true,
 		scenario = true,
 		scrappingMachine = true,
 		settingsPanel = true,

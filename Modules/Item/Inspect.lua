@@ -780,8 +780,8 @@ function I:CreatePanel(parent)
 		-- Item Level
 		line.ItemLevel = line:CreateFontString(nil, "ARTWORK")
 		F.SetFontWithDB(line.ItemLevel, self.db.levelText)
-		line.ItemLevel:Point("LEFT", line.Label, "RIGHT", PANEL_COMPONENT_SPACING, 0)
-		line.ItemLevel:SetJustifyH("RIGHT")
+		line.ItemLevel:Point("LEFT", line.Label, "RIGHT", PANEL_COMPONENT_SPACING + 2, 0)
+		line.ItemLevel:SetJustifyH("CENTER")
 
 		-- Item Texture
 		line.ItemTextureFrame = CreateFrame("Frame", nil, line, "BackdropTemplate")

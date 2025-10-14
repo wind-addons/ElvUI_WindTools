@@ -1085,15 +1085,15 @@ function I:CreateStatsComparePanel(parent)
 				row:Point("TOPRIGHT", frame, "TOPRIGHT", -STAT_PADDING, -STAT_PADDING)
 			end
 
-			row:SetScript("OnEnter", function(self)
+			row:SetScript("OnEnter", function(rowFrame)
 				if not def.isHeader then
-					self:SetBackdrop({ bgFile = E.media.normTex })
-					self:SetBackdropColor(1, 1, 1, 0.15)
+					rowFrame:SetBackdrop({ bgFile = E.media.normTex })
+					rowFrame:SetBackdropColor(1, 1, 1, 0.15)
 				end
 			end)
 
-			row:SetScript("OnLeave", function(self)
-				self:SetBackdrop(nil)
+			row:SetScript("OnLeave", function(rowFrame)
+				rowFrame:SetBackdrop(nil)
 			end)
 
 			row.label = row:CreateFontString(nil, "OVERLAY")

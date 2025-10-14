@@ -49,8 +49,8 @@ EB.StateCheckList = {
 -- If the item is lower than the threshold, it will be considered not shown
 EB.CountThreshold = {
 	[245653] = 100, -- 寶庫鑰匙裂片
-    [253224] = 10, -- Mote of Broken Time
-    [254267] = 100, -- Fragmented Memento of Epoch Challenges
+    [253224] = 10, -- 破碎時間微粒
+    [254267] = 100, -- 碎裂的時代挑戰紀念物
 }
 
 local potions = {
@@ -1256,8 +1256,8 @@ local openableItems = {
 	246936, -- 鳴響時代紀念物
 	248247, -- 恆龍之力寶箱
 	251821, -- 恆龍之力寶箱
-	253224, -- Mote of Broken Time
-	254267, -- Fragmented Memento of Epoch Challenges
+	253224, -- 破碎時間微粒
+	254267, -- 碎裂的時代挑戰紀念物
 	254847, -- 小型青銅寶箱
 	254848, -- 小型青銅寶箱
 	254849, -- 小型青銅寶箱

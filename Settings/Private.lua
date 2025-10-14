@@ -347,6 +347,7 @@ V.skins = {
 	},
 	uiErrors = {
 		normalTextClassColor = false,
+		width = 1024,
 		normalTextColor = C.GetRGBFromTemplate("neutral-50"),
 		redTextColor = C.GetRGBFromTemplate("red-500"),
 		yellowTextColor = C.GetRGBFromTemplate("yellow-300"),

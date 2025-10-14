@@ -240,8 +240,24 @@ options.general = {
 					type = "description",
 					name = L["The middle top errors / messages frame (also used for quest progress text)."],
 				},
-				normalTextClassColor = {
+				width = {
 					order = 2,
+					type = "range",
+					name = L["Width"],
+					desc = L["Set the width of UIErrorsFrame."],
+					min = 256,
+					max = 2048,
+					step = 1,
+					get = function()
+						return E.private.WT.skins.uiErrors.width
+					end,
+					set = function(_, value)
+						E.private.WT.skins.uiErrors.width = value
+						_G.UIErrorsFrame:SetWidth(value)
+					end,
+				},
+				normalTextClassColor = {
+					order = 3,
 					type = "toggle",
 					name = L["Class Color"],
 					desc = L["Replace the default color used for messages with class color."],
@@ -253,7 +269,7 @@ options.general = {
 					end,
 				},
 				normalTextColor = {
-					order = 3,
+					order = 4,
 					type = "color",
 					name = L["Default"],
 					desc = L["Replace the default color used for messages."],
@@ -272,7 +288,7 @@ options.general = {
 					end,
 				},
 				redTextColor = {
-					order = 4,
+					order = 5,
 					type = "color",
 					name = L["Red"],
 					desc = L["Replace the default color used for error messages."],
@@ -288,7 +304,7 @@ options.general = {
 					end,
 				},
 				yellowTextColor = {
-					order = 4,
+					order = 6,
 					type = "color",
 					name = L["Yellow"],
 					desc = L["Replace the default color used for warning messages."],
@@ -304,7 +320,7 @@ options.general = {
 					end,
 				},
 				testButton = {
-					order = 6,
+					order = 7,
 					type = "execute",
 					name = L["Test"],
 					func = function()

@@ -49,8 +49,8 @@ EB.StateCheckList = {
 -- If the item is lower than the threshold, it will be considered not shown
 EB.CountThreshold = {
 	[245653] = 100, -- 寶庫鑰匙裂片
-    [253224] = 10, -- 破碎時間微粒
-    [254267] = 100, -- 碎裂的時代挑戰紀念物
+	[253224] = 10, -- 破碎時間微粒
+	[254267] = 100, -- 碎裂的時代挑戰紀念物
 }
 
 local potions = {

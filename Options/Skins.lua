@@ -635,6 +635,11 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Communities"],
 		},
+		cooldownViewer = {
+			order = 10,
+			type = "toggle",
+			name = L["Cooldown Viewer"],
+		},
 		covenantRenown = {
 			order = 10,
 			type = "toggle",

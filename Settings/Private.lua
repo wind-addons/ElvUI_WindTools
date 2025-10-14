@@ -563,6 +563,7 @@ V.skins = {
 		clickBinding = true,
 		collections = true,
 		communities = true,
+		cooldownViewer = true,
 		covenantPreview = true,
 		covenantRenown = true,
 		covenantSanctum = true,

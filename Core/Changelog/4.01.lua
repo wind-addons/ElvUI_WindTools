@@ -104,6 +104,7 @@ W.Changelog[401] = {
 			"[装备观察] 优化了装备等级的显示宽度和位置.",
 			"[移动框体] 新增对冷却技能监控设置界面的支持.",
 			"[移动框体] 新增对 Remix 神器界面的支持.",
+			"[成就追踪] 优化了扫描时的性能和部分界面元素.",
 		},
 		["zhTW"] = {
 			"[美化外觀] 優化了 Auctionator 的皮膚.",
@@ -122,6 +123,7 @@ W.Changelog[401] = {
 			"[裝備觀察] 優化了裝備等級的顯示寬度和位置.",
 			"[移動框架] 新增對冷卻技能監控設定介面的支援.",
 			"[移動框架] 新增對 Remix 神器介面的支援.",
+			"[成就追蹤] 優化了掃描時的效能和部分介面元素.",
 		},
 		["enUS"] = {
 			"[Skins] Update Auctionator skin.",
@@ -140,6 +142,7 @@ W.Changelog[401] = {
 			"[Inspect] Optimize the display width and position of item level.",
 			"[Move Frames] Add support for Cooldown Viewer settings frame.",
 			"[Move Frames] Add support for Remix Artifact frame.",
+			"[Achievement Tracker] Optimize performance during scanning and some UI elements.",
 		},
 		["koKR"] = {
 			"[스킨] Auctionator 스킨이 업데이트되었습니다.",
@@ -158,6 +161,7 @@ W.Changelog[401] = {
 			"[관찰] 아이템 레벨의 표시 너비와 위치를 최적화했습니다.",
 			"[이동 프레임] 쿨다운 뷰어 설정 프레임에 대한 지원이 추가되었습니다.",
 			"[이동 프레임] 리믹스 아티팩트 프레임에 대한 지원이 추가되었습니다.",
+			"[업적 추적기] 스캔 중 성능과 일부 UI 요소를 최적화했습니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Обновлен скин Auctionator.",
@@ -176,6 +180,7 @@ W.Changelog[401] = {
 			"[Осмотр] Оптимизированы ширина и позиция отображения уровня предмета.",
 			"[Перемещение фреймов] Добавлена поддержка окна настроек Cooldown Viewer.",
 			"[Перемещение фреймов] Добавлена поддержка окна Remix Artifact.",
+			"[Трекер достижений] Оптимизирована производительность при сканировании и некоторые элементы интерфейса.",
 		},
 	},
 }

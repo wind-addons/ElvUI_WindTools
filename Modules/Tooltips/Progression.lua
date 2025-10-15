@@ -274,7 +274,11 @@ local function SetProgressionInfo(tt, guid)
 		end
 	end
 
-	if db.mythicPlus.enable and cache[guid].info.mythicPlus and displayMythicPlus and PlayerIsTimerunning() then
+	if PlayerIsTimerunning() then
+		displayMythicPlus = false
+	end
+
+	if db.mythicPlus.enable and cache[guid].info.mythicPlus and displayMythicPlus then
 		local highestScoreDungeonID = cache[guid].info.mythicPlus.highestScoreDungeonID
 
 		tt:AddLine(" ")

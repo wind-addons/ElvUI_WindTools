@@ -1169,6 +1169,9 @@ for key, value in pairs(options.elvui.args) do
 	end
 end
 
+-- WIP label
+-- "addon" .. " " .. C.StringByTemplate(L["WIP"], "rose-500"),
+
 options.addons = {
 	order = 6,
 	type = "group",
@@ -1399,7 +1402,7 @@ options.addons = {
 		rematch = {
 			order = 10,
 			type = "toggle",
-			name = L["Rematch"] .. " " .. C.StringByTemplate(L["WIP"], "rose-500"),
+			name = L["Rematch"],
 			addonName = "Rematch",
 			addonskinsKey = "Rematch",
 		},

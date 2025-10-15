@@ -112,6 +112,7 @@ W.Changelog[401] = {
 			"[移动框体] 新增对冷却技能监控设置界面的支持.",
 			"[移动框体] 新增对 Remix 神器界面的支持.",
 			"[成就追踪] 优化了扫描时的性能和部分界面元素.",
+			"[任务交接] 部分可跳过任务提示存在时，将不再自动接取任务.",
 		},
 		["zhTW"] = {
 			"[美化外觀] 優化了 Auctionator 的皮膚.",
@@ -133,6 +134,7 @@ W.Changelog[401] = {
 			"[移動框架] 新增對冷卻技能監控設定介面的支援.",
 			"[移動框架] 新增對 Remix 神器介面的支援.",
 			"[成就追蹤] 優化了掃描時的效能和部分介面元素.",
+			"[任務交接] 部分可跳過任務提示存在時，將不再自動接取任務.",
 		},
 		["enUS"] = {
 			"[Skins] Update Auctionator skin.",
@@ -154,6 +156,7 @@ W.Changelog[401] = {
 			"[Move Frames] Add support for Cooldown Viewer settings frame.",
 			"[Move Frames] Add support for Remix Artifact frame.",
 			"[Achievement Tracker] Optimize performance during scanning and some UI elements.",
+			"[Quest TurnIn] Will no longer auto accept quests when some skipable quest option exist.",
 		},
 		["koKR"] = {
 			"[스킨] Auctionator 스킨이 업데이트되었습니다.",
@@ -175,6 +178,7 @@ W.Changelog[401] = {
 			"[이동 프레임] 쿨다운 뷰어 설정 프레임에 대한 지원이 추가되었습니다.",
 			"[이동 프레임] 리믹스 아티팩트 프레임에 대한 지원이 추가되었습니다.",
 			"[업적 추적기] 스캔 중 성능과 일부 UI 요소를 최적화했습니다.",
+			"[퀘스트 수락] 일부 건너뛸 수 있는 퀘스트 옵션이 존재할 때 더 이상 자동으로 퀘스트를 수락하지 않습니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Обновлен скин Auctionator.",
@@ -196,6 +200,7 @@ W.Changelog[401] = {
 			"[Перемещение фреймов] Добавлена поддержка окна настроек Cooldown Viewer.",
 			"[Перемещение фреймов] Добавлена поддержка окна Remix Artifact.",
 			"[Трекер достижений] Оптимизирована производительность при сканировании и некоторые элементы интерфейса.",
+			"[Завершение задания] Больше не будет автоматически принимать задания, когда существуют некоторые варианты пропускаемых заданий.",
 		},
 	},
 }

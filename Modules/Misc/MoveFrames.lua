@@ -16,7 +16,6 @@ local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 local BlizzardFrames = {
 	"AddonList",
-	"AudioOptionsFrame",
 	"BankFrame",
 	"BonusRollFrame",
 	"ChatConfigFrame",
@@ -35,27 +34,29 @@ local BlizzardFrames = {
 	"LFGDungeonReadyStatus",
 	"LootFrame",
 	"MerchantFrame",
-	"PetitionFrame",
-	"PetStableFrame",
-	"ReportFrame",
+	"ModelPreviewFrame",
 	"PVEFrame",
 	"PVPReadyDialog",
+	"PetitionFrame",
 	"QuestFrame",
 	"QuestLogPopupDetailFrame",
+	"QuickKeybindFrame",
 	"RaidBrowserFrame",
 	"RaidParentFrame",
 	"ReadyCheckFrame",
+	"RecruitAFriendRecruitmentFrame",
 	"RecruitAFriendRewardsFrame",
 	"ReportCheatingDialog",
+	"ReportFrame",
 	"SettingsPanel",
 	"SplashFrame",
 	"TabardFrame",
 	"TaxiFrame",
 	"TradeFrame",
 	"TutorialFrame",
-	"VideoOptionsFrame",
 	["DressUpFrame"] = {
 		"DressUpFrame.OutfitDetailsPanel",
+		"DressUpFrame.SetSelectionPanel",
 	},
 	["MailFrame"] = {
 		"SendMailFrame",
@@ -71,10 +72,19 @@ local BlizzardFrames = {
 }
 
 local BlizzardFramesOnDemand = {
+	["Blizzard_AccountStore"] = {
+		"AccountStoreFrame",
+	},
 	["Blizzard_AchievementUI"] = {
 		["AchievementFrame"] = {
 			"AchievementFrame.Header",
 			"AchievementFrame.SearchResults",
+		},
+	},
+	["Blizzard_AnimaDiversionUI"] = {
+		["AnimaDiversionFrame"] = {
+			"AnimaDiversionFrame.ScrollContainer",
+			"AnimaDiversionFrame.ReinforceProgressFrame",
 		},
 	},
 	["Blizzard_AlliedRacesUI"] = {
@@ -97,6 +107,9 @@ local BlizzardFramesOnDemand = {
 	},
 	["Blizzard_AzeriteUI"] = {
 		"AzeriteEmpoweredItemUI",
+	},
+	["Blizzard_BehavioralMessaging"] = {
+		"BehavioralMessagingDetails",
 	},
 	["Blizzard_BindingUI"] = {
 		"KeyBindingFrame",
@@ -169,6 +182,9 @@ local BlizzardFramesOnDemand = {
 		"DelvesCompanionConfigurationFrame",
 		"DelvesCompanionAbilityListFrame",
 	},
+	["Blizzard_DelvesDifficultyPicker"] = {
+		"DelvesDifficultyPickerFrame",
+	},
 	["Blizzard_EncounterJournal"] = {
 		["EncounterJournal"] = {
 			"EncounterJournal.instanceSelect.ScrollBox",
@@ -220,8 +236,8 @@ local BlizzardFramesOnDemand = {
 	["Blizzard_GuildControlUI"] = {
 		"GuildControlUI",
 	},
-	["Blizzard_GuildUI"] = {
-		"GuildFrame",
+	["Blizzard_GuildRename"] = {
+		"GuildRenameFrame",
 	},
 	["Blizzard_InspectUI"] = {
 		"InspectFrame",
@@ -232,9 +248,6 @@ local BlizzardFramesOnDemand = {
 	["Blizzard_IslandsQueueUI"] = {
 		"IslandsQueueFrame",
 	},
-	["Blizzard_ItemAlterationUI"] = {
-		"TransmogrifyFrame",
-	},
 	["Blizzard_ItemInteractionUI"] = {
 		"ItemInteractionFrame",
 	},
@@ -244,9 +257,6 @@ local BlizzardFramesOnDemand = {
 	["Blizzard_ItemUpgradeUI"] = {
 		"ItemUpgradeFrame",
 	},
-	["Blizzard_LookingForGuildUI"] = {
-		"LookingForGuildFrame",
-	},
 	["Blizzard_MacroUI"] = {
 		"MacroFrame",
 	},
@@ -255,6 +265,9 @@ local BlizzardFramesOnDemand = {
 	},
 	["Blizzard_ObliterumUI"] = {
 		"ObliterumForgeFrame",
+	},
+	["Blizzard_MatchCelebrationPartyPoseUI"] = {
+		"MatchCelebrationPartyPoseFrame",
 	},
 	["Blizzard_OrderHallUI"] = {
 		"OrderHallTalentFrame",
@@ -270,6 +283,9 @@ local BlizzardFramesOnDemand = {
 		"PlayerChoiceFrame",
 	},
 	["Blizzard_Professions"] = {
+		"InspectRecipeFrame",
+		"ProfessionsFrame.CraftingPage.SchematicForm.QualityDialog",
+		"ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.QualityDialog",
 		["ProfessionsFrame"] = {
 			"ProfessionsFrame.CraftingPage.CraftingOutputLog",
 			"ProfessionsFrame.CraftingPage.CraftingOutputLog.ScrollBox",
@@ -289,9 +305,6 @@ local BlizzardFramesOnDemand = {
 	},
 	["Blizzard_PVPUI"] = {
 		"PVPMatchScoreboard",
-	},
-	["Blizzard_ReforgingUI"] = {
-		"ReforgingFrame",
 	},
 	["Blizzard_RemixArtifactUI"] = {
 		["RemixArtifactFrame"] = {
@@ -317,6 +330,9 @@ local BlizzardFramesOnDemand = {
 	["Blizzard_TimeManager"] = {
 		"TimeManagerFrame",
 	},
+	["Blizzard_TokenUI"] = {
+		"CurrencyTransferMenu",
+	},
 	["Blizzard_TorghastLevelPicker"] = {
 		"TorghastLevelPickerFrame",
 	},
@@ -324,8 +340,8 @@ local BlizzardFramesOnDemand = {
 		"ClassTrainerFrame",
 	},
 	["Blizzard_UIPanels_Game"] = {
-		"CurrencyTransferMenu",
 		["CharacterFrame"] = {
+			"CurrencyTransferLog",
 			"PaperDollFrame",
 			"ReputationFrame",
 			"TokenFrame",
@@ -334,9 +350,6 @@ local BlizzardFramesOnDemand = {
 	},
 	["Blizzard_VoidStorageUI"] = {
 		"VoidStorageFrame",
-	},
-	["Blizzard_WarboardUI"] = {
-		"WarboardQuestChoiceFrame",
 	},
 	["Blizzard_WarfrontsPartyPoseUI"] = {
 		"WarfrontsPartyPoseFrame",

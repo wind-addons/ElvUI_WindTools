@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local async = W.Utilities.Async
 local M = W.Modules.Misc ---@class Misc
 local S = W.Modules.Skins ---@type Skins

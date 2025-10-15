@@ -1,5 +1,5 @@
 ---@diagnostic disable: need-check-nil
-local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local CT = W:NewModule("ChatText", "AceEvent-3.0")
 local CH = E:GetModule("Chat")
 local LSM = E.Libs.LSM

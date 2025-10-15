@@ -1,5 +1,5 @@
 local G ---@class GlobalDB
-local W, F, E, L, V, P ---@type WindTools, Functions, ElvUI, table, PrivateDB, ProfileDB
+local W, F, E, L, V, P ---@type WindTools, Functions, ElvUI, LocaleTable, PrivateDB, ProfileDB
 W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 G.core = {

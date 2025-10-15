@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local ST = W:NewModule("SmartTab", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G

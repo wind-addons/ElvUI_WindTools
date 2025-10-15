@@ -1,5 +1,5 @@
 local W ---@class WindTools
-local F, E, L ---@type Functions, ElvUI, table
+local F, E, L ---@type Functions, ElvUI, LocaleTable
 W, F, E, L = unpack((select(2, ...)))
 local C = W.Utilities.Color ---@type ColorUtility
 

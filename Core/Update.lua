@@ -1,5 +1,5 @@
 local W ---@class WindTools
-local F, E, L, V, P, G ---@type Functions, ElvUI, table, PrivateDB, ProfileDB, GlobalDB
+local F, E, L, V, P, G ---@type Functions, ElvUI, LocaleTable, PrivateDB, ProfileDB, GlobalDB
 W, F, E, L, V, P, G = unpack((select(2, ...)))
 local C = W.Utilities.Color ---@type ColorUtility
 

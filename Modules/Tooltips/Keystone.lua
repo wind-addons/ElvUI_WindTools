@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local T = W.Modules.Tooltips
 local KI = W:GetModule("KeystoneInfo")
 local C = W.Utilities.Color

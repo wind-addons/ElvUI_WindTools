@@ -1,5 +1,5 @@
 local P ---@class ProfileDB
-local W, F, E, L, V, G ---@type WindTools, Functions, ElvUI, table, PrivateDB, GlobalDB
+local W, F, E, L, V, G ---@type WindTools, Functions, ElvUI, LocaleTable, PrivateDB, GlobalDB
 W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 ---@cast W WindTools

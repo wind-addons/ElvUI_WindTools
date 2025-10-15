@@ -2,7 +2,7 @@ local E, _, V, P, G = unpack(ElvUI)
 local addonName, addon = ...
 local EP = E.Libs.EP
 local AceAddon = E.Libs.AceAddon
-local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
+local L = E.Libs.ACL--[[@as AceLocale-3.0]]:GetLocale("ElvUI", E.global.general.locale)
 
 local _G = _G
 local collectgarbage = collectgarbage
@@ -25,7 +25,7 @@ G.WT = {} ---@class GlobalDB
 addon[1] = W
 addon[2] = {} ---@class Functions
 addon[3] = E
-addon[4] = L
+addon[4] = L ---@alias LocaleTable table<string, string>
 addon[5] = V.WT
 addon[6] = P.WT
 addon[7] = G.WT

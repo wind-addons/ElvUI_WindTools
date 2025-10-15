@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local RM = W:NewModule("RectangleMinimap", "AceEvent-3.0", "AceHook-3.0")
 local M = E:GetModule("Minimap")
 

@@ -4,7 +4,6 @@ local E ---@type ElvUI
 W, F, E = unpack((select(2, ...)))
 local LSM = E.Libs.LSM
 
-local _G = _G
 local abs = abs
 local coroutine = coroutine
 local format = format
@@ -14,7 +13,6 @@ local pcall = pcall
 local print = print
 local strfind = strfind
 local strjoin = strjoin
-local strmatch = strmatch
 local tonumber = tonumber
 local tostring = tostring
 local tremove = tremove

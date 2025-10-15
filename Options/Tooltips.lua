@@ -9,6 +9,8 @@ local pairs = pairs
 local strsplit = strsplit
 local tonumber = tonumber
 
+local PlayerIsTimerunning = PlayerIsTimerunning
+
 local cache = {
 	groupInfo = {},
 }
@@ -508,7 +510,7 @@ do
 	for _, config in ipairs({
 		{ target = "specialAchievement", data = W.MythicPlusSeasonAchievementData },
 		{ target = "raid", data = W.RaidData },
-		{ target = "mythicPlus.args.instances", data = W.AllMythicPlusMapData },
+		{ target = "mythicPlus.args.instances", data = W.MythicPlusMapData },
 	}) do
 		local target = options.progression.args
 		for _, key in ipairs({ strsplit(".", config.target) }) do
@@ -525,6 +527,13 @@ do
 		end
 	end
 end
+
+F.TaskManager:AfterLogin(function()
+	if PlayerIsTimerunning() then
+		-- Remove options for Legion Remix
+		options.progression.args.mythicPlus = nil
+	end
+end)
 
 options.keystone = {
 	order = 5,

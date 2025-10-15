@@ -12,9 +12,9 @@ function T:AddKeystone(tt, unit)
 		return
 	end
 	local data = KI:UnitData(unit)
-	local mapID = data and data.challengeMapID
-	if mapID and W.AllMythicPlusMapData[mapID] then
-		local mapData = W.AllMythicPlusMapData[mapID]
+	local mythicPlusMapData = W:GetMythicPlusMapData()
+	local mapData = data and data.challengeMapID and mythicPlusMapData[data.challengeMapID]
+	if mapData then
 		local right = C.StringWithKeystoneLevel(
 			format("%s (%d)", db.useAbbreviation and mapData.abbr or mapData.name, data.level),
 			data.level

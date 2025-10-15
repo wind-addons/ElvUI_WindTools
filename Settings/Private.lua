@@ -684,10 +684,7 @@ V.tooltips = {
 			{ enable = true, [20525] = false, [20526] = false },
 			W.MythicPlusSeasonAchievementData
 		),
-		mythicPlus = configTable(
-			{ enable = true, markHighestScore = true, showNoRecord = true },
-			W.AllMythicPlusMapData
-		),
+		mythicPlus = configTable({ enable = true, markHighestScore = true, showNoRecord = true }, W.MythicPlusMapData),
 	},
 }
 

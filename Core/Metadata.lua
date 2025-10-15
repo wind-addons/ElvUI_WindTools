@@ -238,10 +238,6 @@ function W:InitializeMetadata()
 		end
 	end
 
-	W.AllMythicPlusMapData = {}
-	MergeTable(W.AllMythicPlusMapData, W.MythicPlusMapData)
-	MergeTable(W.AllMythicPlusMapData, W.TimerunningMythicPlusMapData)
-
 	for id in pairs(W.MythicPlusSeasonAchievementData) do
 		W.Utilities.Async.WithAchievementID(id, function(data)
 			W.MythicPlusSeasonAchievementData[id].name = data[2]

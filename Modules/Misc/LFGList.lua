@@ -526,13 +526,12 @@ function LL:UpdatePartyKeystoneFrame()
 
 	frame.partyMessages = {}
 
+	local mythicPlusMapData = W:GetMythicPlusMapData()
 	for i = 1, 5 do
 		local unit = i == 1 and "player" or "party" .. i - 1
 		local data = KI:UnitData(unit)
-		local mapID = data and data.challengeMapID
-		if mapID and W.AllMythicPlusMapData[mapID] then
-			local mapData = W.AllMythicPlusMapData[mapID]
-
+		local mapData = data and data.challengeMapID and mythicPlusMapData[data.challengeMapID]
+		if mapData then
 			tinsert(cache, {
 				level = data.level,
 				name = mapData.abbr,

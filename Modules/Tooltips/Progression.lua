@@ -25,6 +25,7 @@ local GetTime = GetTime
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
 local MuteSoundFile = MuteSoundFile
+local PlayerIsTimerunning = PlayerIsTimerunning
 local SetAchievementComparisonUnit = SetAchievementComparisonUnit
 local UnitExists = UnitExists
 local UnitGUID = UnitGUID
@@ -273,7 +274,7 @@ local function SetProgressionInfo(tt, guid)
 		end
 	end
 
-	if db.mythicPlus.enable and cache[guid].info.mythicPlus and displayMythicPlus then
+	if db.mythicPlus.enable and cache[guid].info.mythicPlus and displayMythicPlus and PlayerIsTimerunning() then
 		local highestScoreDungeonID = cache[guid].info.mythicPlus.highestScoreDungeonID
 
 		tt:AddLine(" ")
@@ -285,7 +286,7 @@ local function SetProgressionInfo(tt, guid)
 
 		local lines = {}
 
-		for id, data in pairs(W:GetMythicPlusMapData()) do
+		for id, data in pairs(W.MythicPlusMapData) do
 			if db.mythicPlus[id] then
 				local left = format(
 					"%s %s",

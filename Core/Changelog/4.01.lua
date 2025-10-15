@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...))) ---@type WindTools
 
 W.Changelog[401] = {
-	RELEASE_DATE = "TBD",
+	RELEASE_DATE = "2025/10/16",
 	IMPORTANT = {
 		["zhCN"] = {
 			"进行了一些核心代码的重构, 提升了稳定性和性能.",

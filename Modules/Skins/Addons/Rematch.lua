@@ -1059,6 +1059,13 @@ local function ReskinCanvas(frame)
 		GroupPicker.List.ScrollBox:ForEachFrame(ReskinButton)
 	end
 
+	local Team = frame.Team
+	if Team and Team.ListButtonTeam then
+		Team.ListButtonTeam.Back:Kill()
+		Team.ListButtonTeam.Border:Kill()
+		Team.ListButtonTeam:CreateBackdrop("Transparent")
+	end
+
 	local TeamWithAbilities = frame.TeamWithAbilities
 	if TeamWithAbilities then
 		for _, subGroup in pairs({ TeamWithAbilities:GetChildren() }) do

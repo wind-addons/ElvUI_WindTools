@@ -41,18 +41,6 @@ function S:Blizzard_TokenUI()
 		return
 	end
 
-	-- local button = _G.TokenFrame.CurrencyTransferLogToggleButton
-	-- if button then
-	-- 	self:Proxy("HandleButton", button)
-	-- 	button:SetNormalTexture(E.Media.Textures.ArrowUp)
-	-- 	button:GetNormalTexture():SetRotation(ES.ArrowRotation.right)
-	-- 	button:GetNormalTexture():SetInside(button, 3, 3)
-
-	-- 	button:SetPushedTexture(E.Media.Textures.ArrowUp)
-	-- 	button:GetPushedTexture():SetRotation(ES.ArrowRotation.right)
-	-- 	button:GetPushedTexture():SetInside(button, 3, 3)
-	-- end
-
 	self:CreateShadow(_G.CurrencyTransferLog)
 	self:CreateShadow(_G.CurrencyTransferMenu)
 end

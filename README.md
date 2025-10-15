@@ -1,12 +1,12 @@
 <div align="center">
 <img width="512" alt="Title" src="https://raw.githubusercontent.com/wind-addons/resources/main/dist/addons/elvui-windtools/logo.svg"/><br><br>
 
-![Version](https://img.shields.io/badge/Version-4.00-538AED.svg?longCache=true&style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-4.01-538AED.svg?longCache=true&style=for-the-badge)
 ![ElvUI version](https://img.shields.io/badge/ElvUI-14.02-ff784d.svg?longCache=true&style=for-the-badge)
 
-[![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=DISCORD&logo=discord&style=for-the-badge)](https://discord.gg/CMDsBmhvyW) [![GitHub Stars](https://img.shields.io/github/stars/wind-addons/ElvUI_WindTools?style=for-the-badge&label=GitHub%20Stars%20%E2%AD%90&logo=github&color=yellow)](https://github.com/wind-addons/ElvUI_WindTools)
+[![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=DISCORD&logo=discord&style=for-the-badge)](https://discord.gg/CMDsBmhvyW) [![GitHub Stars](https://img.shields.io/github/stars/wind-addons/ElvUI_WindTools?style=for-the-badge&label=GitHub%20Stars%20%E2%AD%90&logo=github&color=yellow)](https://github.com/wind-addons/ElvUI_WindTools) [![CurseForge](https://cf.way2muchnoise.eu/full_300361_Downloads.svg?badge_style=for_the_badge)](https://www.curseforge.com/wow/addons/elvui-windtools)
 
-[简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS) | [Español (esES/esMX)](README_esES.md)
+[简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 
 ![Screenshot](https://raw.githubusercontent.com/wind-addons/resources/main/dist/addons/elvui-windtools/screenshot.png)
 
@@ -56,129 +56,139 @@ Português, Italiano
 
 ### Item
 
-1. **Delete Item**: Enter DELETE automatically; Click to confirm; Delete Key support.
-2. **Already Known**: Add a colored overlay to the recipes you have already learned.
-3. **Fast Loot**: Make the auto-loot more efficiently.
-4. **Trade**: Say thanks to the trade target with one-click.
-5. **Extra Item Bar**: Add bars to collect flasks, potions, quest items, and custom items automatically.
-6. **Contacts**: Add a contact frame beside the mail frame.
-7. **Inspect**: Add an equipment list beside the character panel and inspect frame.
-8. **Extended Merchant Pages**: Extend the merchant frame to show more items.
+1. **Delete Item**: Automatically fill "DELETE" text when deleting items; supports click-to-confirm and delete key; customizable confirm button style.
+2. **Already Known**: Add colored overlay to recipes, toys, pets, and mounts you already know; supports custom colors and opacity; works in bags, mailbox, and merchant frames.
+3. **Fast Loot**: Enhance auto-loot speed for more efficient looting.
+4. **Trade**: One-click thank you button on trade frame to express appreciation.
+5. **Extra Item Bar**: Customizable item bars for flasks, potions, quest items, and custom items; supports up to 5 bars with configurable size, spacing, backdrop, and item slots; auto-show/hide based on content; keybind support.
+6. **Contacts**: Add contact list panel beside mailbox with favorites and quick mail sending.
+7. **Inspect**: Add equipment list panel beside character and inspect frames showing all slots; displays item level, gem info, and enchants;
+8. **Extended Merchant Pages**: Extend merchant frame to display more items per page for faster browsing.
 
 ### Combat
 
-1. **Raid Markers**: Add bar contains mark buttons, ready check, pull counter, and more!
-2. **Combat Alert**: Show an animation when you enter or leave combat.
-3. **Quick Keystone**: Put the keystone from bag automatically.
-4. **Class Helper**: Special features for each class. (e.g. DK: Death Strike Estimator)
+1. **Raid Markers**: Add customizable raid marker bar with world markers, skull/cross markers, ready check, pull countdown, and clear markers; supports button size, spacing, backdrop, keybinds, and visibility options (party/raid/solo).
+2. **Combat Alert**: Display customizable animations and screen effects when entering/leaving combat; adjust size, speed, and color.
+3. **Quick Keystone**: Automatically place Mythic Keystone from bags into font when the UI opens.
+4. **Class Helper**: Class-specific utility modules - Death Knight (Death Strike heal estimator).
 
 ### Map
 
-1. **Who Clicked?**: Display the name of players who clicked the minimap.
-2. **Rectangle Minimap**: Customize the minimap with diffrent length of width and height.
-3. **Minimap Buttons**: Collect all the minimap buttons to a bar.
-4. **World Map**: Remove the fog of war; scale the world map.
-5. **Super Tracker**: Right click to clear waypoint; unlock the distance limitation, etc.
-6. **Instance Difficulty**: Reskin the instance difficulty in text style.
-7. **Event Tracker**: Track the world events in the world map.
+1. **Super Tracker**: Additional features for waypoint - auto track, middle click to clear, remove distance limitation, waypoint parse support, virtual TomTom command support.
+2. **Who Clicked Minimap**: Display the name of players who clicked the minimap with customizable animation and colors.
+3. **Rectangle Minimap**: Customize the minimap with different length of width and height.
+4. **Minimap Buttons**: Collect all minimap buttons to a bar with customizable layout, sorting priority, and expansion buttons support.
+5. **World Map**: Remove fog of war with optional colored fog; resize world map with custom scale.
+6. **Instance Difficulty**: Reskin the instance difficulty in text style with customizable font and strings.
+7. **Event Tracker**: Track world events in the world map - supports TWW weekly quests, Nightfall, Theater Troupe, Radiant Echoes, Dragonlands events with customizable alerts and sounds.
 
 ### Quest
 
-1. **Objective Tracker**: Customize the style, size, font of objective tracker.
-2. **Turn In**: Turn in the quest automatically; Open follower recruit frame automatically.
-3. **Switch Buttons**: Add buttons for switching turn in and announcement module status.
+1. **Objective Tracker**: Customize fonts, colors, and add cosmetic bars to quest headers; supports colorful progress text, percentage display, and custom backdrop.
+2. **Turn In**: Automatically accept and complete quests with smart reward selection, customizable pause modifiers, and smart NPC chat support (Darkmoon Faire, Follower Assignees); includes NPC ignore list.
+3. **Switch Buttons**: Add a customizable bar with buttons for quickly toggling Turn In and Announcement modules.
 
 ### Social
 
-1. **Chat Bar**: Add a bar contains channel buttons, roll, emote; Custom world channel and custom community channel is also supported.
-2. **Chat Link**: Add additional information, icons to the links.
-3. **Chat Text**: Change the role icon sets; No brackets in the name; Better abbreviation.
-4. **Context Menu**: Add the following buttons to the context menu: guild invite, armory, who.
-5. **Emote**: Add support for send and parse emotes.
-6. **Friend List**: Add colorful level, faction, area text into friend list.
-7. **Smart Tab**: Use Tab to cycle the chat channel; Save the whisper target cross character.
+1. **Chat Bar**: Add customizable channel switching bar with support for world channels, community channels, emote panel, and roll buttons; supports horizontal/vertical orientation, auto-hide, mouseover, block/text styles, and custom button sizes.
+2. **Chat Link**: Enhance item links with icons, level, numerical quality tier, armor/weapon categories, and item name translation; customizable icon sizes.
+3. **Chat Text**: Customize role icon packs (8 styles: FFXIV, PhilMod, Hexagon, ElvUI, SunUI, LynUI, ElvUI Old, Blizzard); remove brackets, realm names; add class/faction icons; enhance guild member status; merge achievements; BNet friend online/offline alerts; custom channel abbreviations.
+4. **Context Menu**: Add taint-free context menu options: guild invite, who, report stats, and armory (with region override support); includes styled section titles.
+5. **Emote**: Parse and send emotes with customizable icon size; emote panel activated by pressing {; chat bubble support.
+6. **Friend List**: Enhance friend list with status icon packs (Default/Diablo 3/Square), game icon styles; add colorful level (with hide max level option), class color, client color; use notes as names; hide realm; custom fonts for name and info.
+7. **Smart Tab**: Use Tab to cycle chat channels intelligently; configurable channel inclusion (Yell, Battleground, Raid Warning, Officer); whisper history with adjustable expiration time.
 
 ### Announcement
 
-1. **Quest**: Detailed quest progress.
-2. **Interrupt**: Send a message after the spell interrupt; Supports pet spells.
-3. **Taunt**: Send a message after the taunt spell cast; Supports pets and monk ox statue.
-4. **Combat Resurrection**: Alert teammates the usage of combat resurrection spells.
-5. **Utility**: Alert the usage of bots, feast, toys, and more.
-6. **Threat Transfer**: If someone tries to transfer the threat to the other player, send a message.
-7. **Goodbye**: Say goodbye to teammates after the dungeon is completed.
-8. **Thanks**: Say thanks for the player who helped you.
-9. **Reset Instance**: Alert teammates after instance resetting.
+1. **Quest**: Announce detailed quest progress to party members, supports including quest link and progress information; and also better quest progression text display.
+2. **Interrupt**: Announce spell interrupts with customizable messages; supports pet spells and shows interrupted spell information.
+3. **Dispel**: Announce successful dispels with customizable messages.
+4. **Taunt**: Announce taunt casts with customizable messages; supports pets and Monk ox statue; shows target information.
+5. **Combat Resurrection**: Announce combat resurrection usage with customizable messages and channel selection (party/raid/raid warning).
+6. **Utility**: Announce utility spell usage including bots, feasts, portals, toys with customizable messages; organized by categories (Toy, Feast, Portal, Soulwell, Mail, Lightwell, Repair, Ritual of Summoning).
+7. **Threat Transfer**: Announce threat transfer abilities like Tricks of the Trade and Misdirection with target information.
+8. **Goodbye**: Say goodbye to teammates after dungeon/raid completion with customizable messages and delay.
+9. **Thanks**: Thank players for resurrection, buffs, and other helpful actions with customizable messages, delay, and action filters.
+10. **Reset Instance**: Alert teammates after resetting instances with customizable messages.
+11. **Keystone**: Announce Mythic+ keystone information with customizable format.
 
 ### Tooltip
 
-1. **Icons**: Add the icon of items and spells.
-2. **Objective Progress**: Add the additional progress information of mobs.
-3. **Group Info**: Add LFG group information into tooltips.
-4. **Health Bar**: Set the offset of the health bar and health text in tooltips.
-5. **Tier Set**: Add the number of the equipments in the tier set in tooltips.
-6. **Progression**: Add the raid progression, special archivements, and mythic+ scores in the inspect tooltip.
+1. **General**: Customizable modifier key; add title icons for items, spells, achievements; faction icons; pet icons and IDs; tier set information.
+2. **ElvUI Tooltip Tweaks**: Adjust health bar and text Y-offsets; add spec icons and race icons with customizable sizes; enhanced Mythic+ info with dungeon icons; force item level display.
+3. **Progression**: Display raid progression, special achievements, and Mythic+ scores with customizable header styles (none/text/texture); supports instance filtering and highest score marking; disable in combat option.
+4. **Keystone**: Show keystone information in tooltips (requires both side Details!, BigWigs or WindTools installed); supports abbreviation and custom icon sizes.
+5. **Group Info**: Add detailed LFG group information with customizable templates, class icon styles, compact/normal modes; options to exclude dungeons and hide Blizzard default info.
+6. **Objective Progress**: Add detailed objective progress information for mobs with adjustable accuracy.
 
 ### Unit Frames
 
-1. **Quick Focus**: Set focus to mouseover unit by modifier key + click.
-2. **Absorb**: Customize the texture of ElvUI absorb bar, and add Blizzard style absorb spark to the end of health bar.
-3. **Role Icon**: Change the icon pack of role icons.
+1. **Quick Focus**: Set focus to mouseover unit using customizable modifier keys (Alt/Ctrl/Shift) + left/right/middle mouse click combinations; works on all unit frames.
+2. **Absorb**: Customize ElvUI absorb bar texture and add Blizzard-style absorb spark to health bar end; customize spark size, color, and offset.
+3. **Role Icon**: Change role icon pack (8 styles: FFXIV, PhilMod, Hexagon, ElvUI, SunUI, LynUI, ElvUI Old, Blizzard); applies to all unit frames with role icons.
 
 ### Skins
 
 1. **Vignetting**: Add the shadowed border inner game interface.
-2. **Angry Keystones Skin**: Apply skins for Angry Keystones mythic plus timer.
-3. **Blizzard Frame Skins**: Additional skins for Blizzard frames.
-4. **ElvUI Frame Skins**: Reskin ElvUI modules.
-5. **WindTools Skins**: Reskin WindTools modules.
-6. **Ace3 Skins**: Apply ElvUI skin for Ace3-GUI widgets.
-7. **Bigwigs Skin**: Apply ElvUI skin for Bigwigs.
-8. **BugSack Skin**: Apply ElvUI skin for BugSack.
-9. **Hekili Skin**: Apply ElvUI skin for Hekili.
-10. **Immersion Skin**: Apply ElvUI skin for Immersion.
-11. **NetEase Meeting Stone Skin**: Apply ElvUI skin for NetEase Meeting Stone.
-12. **Myslot Skin**: Apply ElvUI skin for Myslot.
-13. **Mythic Dungeon Tools Skin**: Apply ElvUI skin for Mythic Dungeon Tools.
-14. **Premade Groups Filter Skin**: Apply ElvUI skin for Premade Groups Filter.
-15. **TinyInspect Skin**: Apply ElvUI skin for TinyInspect.
-16. **TomCat's Tour Skin**: Reskin the tooltip and header of TomCat's Tour.
-17. **WarpDeplete Skin**: Reskin the bars in WarpDeplete.
-18. **WeakAurasPatched Skin**: Apply ElvUI skins for WeakAurasPatched, WeakAurasPatched option.
-19. **Simulationcraft Skin**: Apply ElvUI skin for Simulationcraft.
-20. **RadierIO Skin**: Apply ElvUI skin for RadierIO.
-21. **OmniCD Skin**: Apply ElvUI skin for OmniCD Config GUI, icons, and status bars.
-22. **Autionator Skin**: Apply ElvUI skin for Auctionator all frames.
-23. **Postal Skin**: Apply ElvUI skin for Postal normal buttons and quick attach buttons.
-24. **World Quest Tab Skin**: Apply ElvUI skin for World Quest Tab tabs and settings.
-25. **BtWQuests Skin**: Apply ElvUI skin for BtWQuests.
-26. **Talent Loadouts Ex Skin**: Apply ElvUI skin for Talent Loadouts Ex.
-27. **SilverDragon Skin**: Apply ElvUI skin for SilverDragon.
-28. **Mount Route Planner Skin**: Apply ElvUI skin for Mount Route Planner.
-29. **WhisperPop Skin**: Apply ElvUI skin for WhisperPop.
-30. **Paragon Reputation Skin**: Apply ElvUI skin for Paragon Reputation.
-31. **Manuscripts Journal Skin**: Apply ElvUI skin for Manuscripts Journal.
-32. **MultiLanguage Skin**: Apply ElvUI skin for MultiLanguage.
+2. **Blizzard Frame Skins**: Additional skins for Blizzard frames.
+3. **ElvUI Frame Skins**: Reskin ElvUI modules.
+4. **WindTools Skins**: Reskin WindTools modules.
+5. **Ace3 Skins**: Apply ElvUI skin for Ace3-GUI widgets.
+6. **Angry Keystones Skin**: Apply skins for Angry Keystones mythic plus timer.
+7. **Auctionator Skin**: Apply ElvUI skin for Auctionator all frames.
+8. **BigWigs Skin**: Apply ElvUI skin for BigWigs.
+9. **BigWigs Queue Timer Skin**: Apply ElvUI skin for BigWigs Queue Timer.
+10. **BtWQuests Skin**: Apply ElvUI skin for BtWQuests.
+11. **BugSack Skin**: Apply ElvUI skin for BugSack.
+12. **Collectionator Skin**: Apply ElvUI skin for Collectionator.
+13. **Hekili Skin**: Apply ElvUI skin for Hekili.
+14. **Immersion Skin**: Apply ElvUI skin for Immersion.
+15. **Legion Remix Helper Skin**: Apply ElvUI skin for Legion Remix Helper.
+16. **Manuscripts Journal Skin**: Apply ElvUI skin for Manuscripts Journal.
+17. **Mount Route Planner Skin**: Apply ElvUI skin for Mount Route Planner.
+18. **MultiLanguage Skin**: Apply ElvUI skin for MultiLanguage.
+19. **Myslot Skin**: Apply ElvUI skin for Myslot.
+20. **Mythic Dungeon Tools Skin**: Apply ElvUI skin for Mythic Dungeon Tools.
+21. **OmniCD Skin**: Apply ElvUI skin for OmniCD Config GUI, icons, extra bars, and status bars.
+22. **Paragon Reputation Skin**: Apply ElvUI skin for Paragon Reputation.
+23. **Plumber Skin**: Apply ElvUI skin for Plumber.
+24. **Postal Skin**: Apply ElvUI skin for Postal normal buttons and quick attach buttons.
+25. **Premade Groups Filter Skin**: Apply ElvUI skin for Premade Groups Filter.
+26. **RaiderIO Skin**: Apply ElvUI skin for RaiderIO.
+27. **RareScanner Skin**: Apply ElvUI skin for RareScanner.
+28. **Rematch Skin**: Apply ElvUI skin for Rematch.
+29. **SilverDragon Skin**: Apply ElvUI skin for SilverDragon.
+30. **Simple Addon Manager Skin**: Apply ElvUI skin for Simple Addon Manager.
+31. **Simulationcraft Skin**: Apply ElvUI skin for Simulationcraft.
+32. **Talent Loadouts Ex Skin**: Apply ElvUI skin for Talent Loadouts Ex.
+33. **TinyInspect Skin**: Apply ElvUI skin for TinyInspect.
+34. **TomCat's Tours Skin**: Reskin the tooltip and header of TomCat's Tours.
+35. **TomTom Skin**: Apply ElvUI skin for TomTom.
+36. **WarpDeplete Skin**: Reskin the bars in WarpDeplete.
+37. **WeakAuras Skin**: Apply ElvUI skins for WeakAuras.
+38. **WeakAuras Options Skin**: Apply ElvUI skins for WeakAuras Options.
+39. **WhisperPop Skin**: Apply ElvUI skin for WhisperPop.
+40. **World Quest Tab Skin**: Apply ElvUI skin for World Quest Tab tabs and settings.
 
 ### Misc
 
-1. **CVars Editor**: Simple editor for changing CVars.
-2. **Move Frames**: Move Blizzard frames and ElvUI bags with drag; Supports remember positions.
-3. **Mute**: Disable some annoying sound effects.
-4. **Pause to Slash**: Convert CJK pause to slash.
-5. **Disable Talking Head**: Disable the talking head.
-6. **Tags**: Additional tags like range, health text without the sign, class color.
-7. **Game Bar**: A system bar in modern style; Support customization.
-8. **Skip Cut Scene**: Skip most cut scenes; Press the modified key to stop it temporarily.
-9. **LFG List**: Reskin the icons inside LFG group list with a bar in class color.
-10. **Move Speed**: Add move speed to the list in character panel.
-11. **Automation**: Automatically accept resurrection, summon and hide frames in combat.
-12. **Math Without Kanji**: Replace Kanji with latin characters in values.
-13. **Auto Screenshot**: Screenshot after you earned an achievement automatically.
-14. **Hide Crafter**: Hide crafter name in the item tooltip.
-15. **HotKey Above CD**: Show hotkeys above the ElvUI cooldown animation.
-16. **Guild News Item Level**: Show item level of each item in guild news.
-17. **Custom Hotkey Alias**: Custom hotkey alias for keybinding.
-18. **Cooldown Text Offset**: Customize the ElvUI cooldown text offset.
-19. **Exit Phase Diving**: Allow players to exit the diving phase with one-click.
-20. **Reshii Wraps Upgrade**: Middle click the Reshii Wraps to open upgrade menu.
+1. **CVars Editor**: Simple editor for changing CVars with search, favorites, and reset functionality.
+2. **Move Frames**: Move Blizzard frames and ElvUI bags by dragging; remember positions; supports Blizard frames and ElvUI bag frames.
+3. **Mute**: Mute annoying sound effects with customizable lists and instant stop all sounds hotkey.
+4. **Pause to Slash**: Convert CJK pause symbols (、) to slash (/) for easier slash command input.
+5. **Disable Talking Head**: Disable the talking head frame.
+6. **Tags**: Add custom ElvUI tags including range display, health/power without signs, class colors, and icons.
+7. **Game Bar**: Modern system status bar with customizable buttons (Home, Guild, Friend, Calendar, Volume, System, Mute, Config, Game Menu) positioned left/right; time/latency display; custom fonts, colors, backdrop, and tooltips; supports normal/combat modes with auto-hide.
+8. **Skip Cut Scene**: Skip most cutscenes automatically; hold modifier key to watch; option to disable in instances/raids.
+9.  **LFG List**: Enhance Premade Groups list with class-colored bars, larger class icons, and additional member information.
+10. **Move Speed**: Display current movement speed in character panel stats.
+11. **Automation**: Auto-accept resurrection, summon, quests; auto-hide frames in combat.
+12. **Math Without Kanji**: Replace Chinese/Japanese unit characters with alphabetic characters.
+13. **Auto Screenshot**: Automatically screenshot when earning achievements.
+14. **Hide Crafter**: Hide crafted by information in item tooltips.
+15. **HotKey Above CD**: Display hotkey text above ElvUI cooldown spirals for better visibility.
+16. **Guild News Item Level**: Show item level in guild news feed.
+17. **Custom Hotkey Alias**: Create custom aliases for key bindings (e.g., change "BUTTON1" to "L").
+18. **Cooldown Text Offset**: Customize X/Y offset of ElvUI cooldown text on action bars, unit frames, and nameplates.
+19. **Exit Phase Diving**: Add a button to quickly exit phased diving areas.
+20. **Spell Activation Alert**: Customize position and scale of spell activation alerts (proc overlays).

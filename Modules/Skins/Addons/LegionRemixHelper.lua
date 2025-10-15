@@ -7,6 +7,7 @@ local ES = E.Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local ipairs = ipairs
 local pairs = pairs
 local select = select
 local strfind = strfind
@@ -32,18 +33,20 @@ local function ReskinResetButton(button)
 	button.HighlightTexture:Hide()
 end
 
-local function ReskinScrapPanel(panel)
-	for _, grandChild in pairs({ panel:GetChildren() }) do
-		local objectType = grandChild:GetObjectType()
+local function ReskinScrapPanelSubFrame(tabFrame)
+	for _, child in pairs({ tabFrame:GetChildren() }) do
+		local objectType = child:GetObjectType()
 		if objectType == "CheckButton" then
-			S:Proxy("HandleCheckBox", grandChild)
+			S:Proxy("HandleCheckBox", child)
 		elseif objectType == "EditBox" then
-			S:Proxy("HandleEditBox", grandChild)
-		elseif grandChild.Arrow then
-			S:Proxy("HandleDropDownBox", grandChild)
-		elseif grandChild.ScrollTarget and grandChild.ForEachFrame then
+			S:Proxy("HandleEditBox", child)
+		elseif child.Arrow then
+			S:Proxy("HandleDropDownBox", child)
+		elseif child.intrinsic == "DropdownButton" then
+			S:Proxy("HandleButton", child, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, "right")
+		elseif child.ScrollTarget and child.ForEachFrame then
 			local function ReskinScrollBox()
-				grandChild:ForEachFrame(function(frame)
+				child:ForEachFrame(function(frame)
 					if not frame or not frame.Icon or frame.__windSkin then
 						return
 					end
@@ -80,14 +83,34 @@ local function ReskinScrapPanel(panel)
 				end)
 			end
 
-			hooksecurefunc(grandChild, "Update", ReskinScrollBox)
+			hooksecurefunc(child, "Update", ReskinScrollBox)
 			ReskinScrollBox()
-		elseif grandChild.Back and grandChild.Forward and grandChild.Track then
-			S:Proxy("HandleTrimScrollBar", grandChild)
+		elseif child.Back and child.Forward and child.Track then
+			S:Proxy("HandleTrimScrollBar", child)
 		end
 	end
+end
+
+local function ReskinScrapPanel(panel)
 	S:Proxy("HandleFrame", panel)
 	S:CreateShadow(panel)
+
+	for _, child in pairs({ panel:GetChildren() }) do
+		if child:IsObjectType("Frame") and child:GetNumChildren() > 0 and child:GetNumRegions() == 0 then
+			if child.tabTemplate == "TabSystemButtonTemplate" then
+				for i, tab in ipairs(child.tabs) do
+					S:Proxy("HandleTab", tab)
+					tab:Width(tab:GetWidth() + 30)
+					S:ReskinTab(tab)
+					if i == 2 then
+						F.Move(tab, 30, 0)
+					end
+				end
+			else
+				ReskinScrapPanelSubFrame(child)
+			end
+		end
+	end
 end
 
 local function ReskinScrappingUI()

@@ -38,18 +38,23 @@ function S:RareScanner()
 	if scannerButton.FilterEntityButton then
 		self:Proxy("HandleButton", scannerButton.FilterEntityButton)
 		scannerButton.FilterEntityButton:SetNormalTexture(W.Media.Icons.buttonMinus, true)
+		scannerButton.FilterEntityButton:GetNormalTexture():SetTexCoord(0, 1, 0, 1)
 		scannerButton.FilterEntityButton:SetPushedTexture(W.Media.Icons.buttonMinus, true)
+		scannerButton.FilterEntityButton:GetPushedTexture():SetTexCoord(0, 1, 0, 1)
 		scannerButton.FilterEntityButton:ClearAllPoints()
 		scannerButton.FilterEntityButton:Size(16, 16)
 		scannerButton.FilterEntityButton:Point("TOPLEFT", scannerButton, "TOPLEFT", 5, -5)
 	end
 
-	if scannerButton.UnfilterEnabledButton then
-		self:Proxy("HandleButton", scannerButton.UnfilterEnabledButton)
-		scannerButton.UnfilterEnabledButton:SetNormalTexture([[Interface\WorldMap\Skull_64]], true)
-		scannerButton.UnfilterEnabledButton:GetNormalTexture():SetTexCoord(0, 0.5, 0, 0.5)
-		scannerButton.UnfilterEnabledButton:SetPushedTexture([[Interface\WorldMap\Skull_64]], true)
-		scannerButton.UnfilterEnabledButton:GetPushedTexture():SetTexCoord(0, 0.5, 0, 0.5)
+	if scannerButton.UnFilterEntityButton then
+		self:Proxy("HandleButton", scannerButton.UnFilterEntityButton)
+		scannerButton.UnFilterEntityButton:SetNormalTexture([[Interface\WorldMap\Skull_64]], true)
+		scannerButton.UnFilterEntityButton:GetNormalTexture():SetTexCoord(0, 0.5, 0, 0.5)
+		scannerButton.UnFilterEntityButton:SetPushedTexture([[Interface\WorldMap\Skull_64]], true)
+		scannerButton.UnFilterEntityButton:GetPushedTexture():SetTexCoord(0, 0.5, 0, 0.5)
+		scannerButton.UnFilterEntityButton:ClearAllPoints()
+		scannerButton.UnFilterEntityButton:Size(16, 16)
+		scannerButton.UnFilterEntityButton:Point("TOPLEFT", scannerButton, "TOPLEFT", 5, -5)
 	end
 
 	if scannerButton.Title then

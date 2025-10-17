@@ -142,16 +142,15 @@ local function ReskinTitlebarButton(frame, size)
 		end
 		local texData = texList[frame.icon]
 
-		tex:SetTexture(texData[1])
-		tex:SetRotation(texData[2] or 0)
-		tex:SetTexCoord(0, 1, 0, 1)
+		F.InternalizeMethod(tex, "SetTexture", true)
+		F.InternalizeMethod(tex, "SetTexCoord", true)
+		F.CallMethod(tex, "SetTexture", texData[1])
+		F.CallMethod(tex, "SetTexCoord", 0, 1, 0, 1)
 		tex:Size(size or 12)
+		tex:SetRotation(texData[2] or 0)
 		tex:SetVertexColor(r or 1, g or 1, b or 1)
 		tex:SetAlpha(1)
 		tex:SetBlendMode("BLEND")
-
-		F.InternalizeMethod(tex, "SetTexture", true)
-		F.InternalizeMethod(tex, "SetTexCoord", true)
 	end
 
 	local hoverColor = E.media.rgbvaluecolor
@@ -1131,6 +1130,7 @@ local function ReskinCanvas(frame)
 		ReskinList(Lister.List)
 		hooksecurefunc(Lister.List.ScrollBox, "Update", function()
 			Lister.List.ScrollBox:ForEachFrame(ReskinTargetsButton)
+			Lister.List.ScrollBox:ForEachFrame(ReskinSelectionIndicator)
 		end)
 		hooksecurefunc(Lister.List, "Refresh", function()
 			Lister.List.ScrollBox:ForEachFrame(ReskinSelectionIndicator)

@@ -345,8 +345,17 @@ local function ReskinCollectionTabUI()
 			if frame.NineSlice == nil then
 				return false
 			end
+
 			return true
-		end, ReskinCollectionFrame)
+		end, function(frame)
+			tab:HookScript("OnClick", function()
+				for _, child in pairs({ frame:GetChildren() }) do
+					ReskinContentTabs(child)
+				end
+			end)
+
+			ReskinCollectionFrame(frame)
+		end)
 
 		finder:Start()
 	end, 0.01, 100)

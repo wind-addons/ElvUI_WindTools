@@ -368,6 +368,16 @@ function MB:SkinButton(button, force)
 				region:Hide()
 			end
 		end
+	elseif name == "RematchMinimapButton" then
+		if button.Border then
+			button.Border:Kill()
+		end
+	elseif name == "WIM3MinimapButton" then
+		for _, region in pairs({ button:GetRegions() }) do
+			if region:IsObjectType("Texture") and region ~= button.icon then
+				region:Kill()
+			end
+		end
 	elseif buttonType ~= 2 then
 		button:SetPushedTexture("")
 		button:SetDisabledTexture("")

@@ -136,16 +136,6 @@ function T:GroupInfo()
 	end
 
 	self:SecureHook("LFGListUtil_SetSearchEntryTooltip", "AddGroupInfo")
-
-	-- Fix taint issue with "Report Advertisement" dropdown option.
-	-- Addons that modify the LFG dropdown menu can cause taint that breaks
-	-- the Report Advertisement functionality. This fix aliases the function
-	-- to prevent the taint from propagating.
-	-- Reference: https://github.com/RaiderIO/raiderio-addon/blob/edee8290d281f6bffaa28612d01f6b9ae768d37b/core.lua#L7504-L7510
-	-- Original issue: https://github.com/Stanzilla/WoWUIBugs/issues/237
-	if _G.LFGList_ReportAdvertisement and _G.LFGList_ReportListing then
-		_G.LFGList_ReportAdvertisement = _G.LFGList_ReportListing
-	end
 end
 
 T:AddCallback("GroupInfo")

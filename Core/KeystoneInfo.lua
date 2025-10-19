@@ -13,7 +13,10 @@ local GetInstanceInfo = GetInstanceInfo
 local UnitIsPlayer = UnitIsPlayer
 local UnitName = UnitName
 
+local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
+
 KI.LibKeystoneInfo = {}
+
 function KI.RequestData()
 	-- Disable in Delve
 	local difficulty = select(3, GetInstanceInfo())
@@ -22,7 +25,9 @@ function KI.RequestData()
 	end
 
 	if not OR.RequestKeystoneDataFromRaid() then
-		KS.Request("PARTY")
+		if IsInGroup(LE_PARTY_CATEGORY_HOME) then
+			KS.Request("PARTY")
+		end
 		OR.RequestKeystoneDataFromParty()
 	end
 end

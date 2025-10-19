@@ -131,6 +131,7 @@ local function viewItem(frame)
 
 	frame.IconSelectedHighlight:SetTexture(E.Media.Textures.White8x8)
 	frame.IconSelectedHighlight:SetVertexColor(1, 1, 1, 0.4)
+	frame.IconSelectedHighlight:SetOutside(frame.Icon)
 
 	frame:GetPushedTexture():SetTexture(E.Media.Textures.White8x8)
 	frame:GetPushedTexture():SetVertexColor(1, 1, 0, 0.3)

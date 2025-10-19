@@ -1045,11 +1045,14 @@ function GB:UpdateTimeArea()
 	if self.db.time.alwaysSystemInfo then
 		DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
 		panel.text:SetAlpha(1)
-		if not self.alwaysSystemInfoTimer or self.alwaysSystemInfoTimer:IsCancelled() then
-			self.alwaysSystemInfoTimer = C_Timer_NewTicker(1, function()
-				DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
-			end)
+		-- Cancel old timer if exists and running
+		if self.alwaysSystemInfoTimer and not self.alwaysSystemInfoTimer:IsCancelled() then
+			self.alwaysSystemInfoTimer:Cancel()
 		end
+		-- Always create new timer to ensure fresh state
+		self.alwaysSystemInfoTimer = C_Timer_NewTicker(1, function()
+			DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
+		end)
 	else
 		panel.text:SetAlpha(0)
 		if self.alwaysSystemInfoTimer and not self.alwaysSystemInfoTimer:IsCancelled() then

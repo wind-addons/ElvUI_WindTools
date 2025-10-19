@@ -1425,6 +1425,7 @@ local function ReskinMiniLoadoutPanel(frame)
 			if loadout.Icon then
 				loadout.Icon:CreateBackdrop()
 				loadout.Icon.backdrop:SetFrameLevel(3)
+				loadout.Icon.backdrop.Center:Kill()
 			end
 		end
 	end

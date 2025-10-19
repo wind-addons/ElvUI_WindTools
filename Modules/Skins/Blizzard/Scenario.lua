@@ -196,14 +196,98 @@ local function ScenarioObjectiveTracker_Update(tracker)
 	end
 end
 
+local handledSpellFrames = {}
+local function ReskinSpellFrame(frame)
+	if not frame or handledSpellFrames[frame] then
+		return
+	end
+
+	local SpellButton = frame.SpellButton
+	if SpellButton then
+		local normalTex = SpellButton:GetNormalTexture()
+		if normalTex then
+			normalTex:SetAlpha(0)
+		end
+
+		local highlightTex = SpellButton:GetHighlightTexture()
+		if highlightTex then
+			highlightTex:SetTexture(E.media.blankTex)
+			highlightTex:SetTexCoord(unpack(E.TexCoords))
+			highlightTex:SetVertexColor(1, 1, 1, 0.25)
+		end
+
+		local pushedTex = SpellButton:GetPushedTexture()
+		if pushedTex then
+			pushedTex:SetTexture(E.media.blankTex)
+			pushedTex:SetTexCoord(unpack(E.TexCoords))
+			pushedTex:SetVertexColor(1, 1, 1, 0.4)
+		end
+
+		local SpellIcon = SpellButton.Icon
+		if SpellIcon then
+			S:Proxy("HandleIcon", SpellIcon)
+			SpellIcon:CreateBackdrop()
+			SpellIcon.backdrop.Center:Kill()
+
+			SpellButton:HookScript("OnEnter", function(self)
+				if self.Icon and self.Icon.backdrop then
+					self.Icon.backdrop:SetBackdropBorderColor(unpack(E.media.rgbvaluecolor))
+				end
+			end)
+
+			SpellButton:HookScript("OnLeave", function(self)
+				if self.Icon and self.Icon.backdrop then
+					self.Icon.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+				end
+			end)
+		end
+	end
+
+	handledSpellFrames[frame] = true
+end
+
+local function HookSpellFramePool()
+	if not _G.ScenarioObjectiveTracker or not _G.ScenarioObjectiveTracker.spellFramePool then
+		return
+	end
+
+	hooksecurefunc(_G.ScenarioObjectiveTracker.spellFramePool, "Acquire", function(self)
+		for frame in self:EnumerateActive() do
+			ReskinSpellFrame(frame)
+		end
+	end)
+
+	for frame in _G.ScenarioObjectiveTracker.spellFramePool:EnumerateActive() do
+		ReskinSpellFrame(frame)
+	end
+end
+
 function S:ScenarioStage()
 	if not self:CheckDB(nil, "scenario") then
 		return
 	end
 
-	hooksecurefunc(_G.ScenarioObjectiveTracker, "Update", ScenarioObjectiveTracker_Update)
-	hooksecurefunc(_G.ScenarioObjectiveTracker, "AddBlock", ScenarioObjectiveTracker_AddBlock)
-	SkinMawBuffsContainer(_G.ScenarioObjectiveTracker.MawBuffsBlock.Container)
+	local ScenarioObjectiveTracker = _G.ScenarioObjectiveTracker
+	if not ScenarioObjectiveTracker then
+		return
+	end
+
+	hooksecurefunc(ScenarioObjectiveTracker, "Update", ScenarioObjectiveTracker_Update)
+	hooksecurefunc(ScenarioObjectiveTracker, "AddBlock", ScenarioObjectiveTracker_AddBlock)
+
+	if ScenarioObjectiveTracker.spellFramePool then
+		HookSpellFramePool()
+	else
+		hooksecurefunc(ScenarioObjectiveTracker, "InitModule", function(self)
+			if self.spellFramePool then
+				HookSpellFramePool()
+			end
+		end)
+	end
+
+	if ScenarioObjectiveTracker.MawBuffsBlock then
+		SkinMawBuffsContainer(ScenarioObjectiveTracker.MawBuffsBlock.Container)
+	end
 end
 
 S:AddCallback("ScenarioStage")

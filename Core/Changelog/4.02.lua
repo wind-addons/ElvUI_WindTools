@@ -35,6 +35,7 @@ W.Changelog[402] = {
 			"[美化外观] 优化了 RareScanner 皮肤.",
 			"[小地图按钮] 优化了 Rematch 和 WIM 小地图按钮的材质清理.",
 			"[额外物品条] 新增了一些可开启物品.",
+			"[游戏条] 尝试修复在某些情况下系统信息无法正确刷新的问题.",
 		},
 		["zhTW"] = {
 			"[美化外觀] 修復了 Rematch 皮膚在獨立模式下可能的報錯問題.",
@@ -44,6 +45,7 @@ W.Changelog[402] = {
 			"[美化外觀] 優化了 RareScanner 皮膚.",
 			"[小地圖按鍵] 優化了 Rematch 和 WIM 小地圖按鍵的材質清理.",
 			"[額外物品條] 新增了一些可開啟物品.",
+			"[遊戲條] 嘗試修復在某些情況下系統信息無法正確刷新的問題.",
 		},
 		["enUS"] = {
 			"[Skins] Fix possible error with Rematch skin in standalone mode.",
@@ -53,6 +55,7 @@ W.Changelog[402] = {
 			"[Skins] Optimize RareScanner skin.",
 			"[Minimap Buttons] Optimize texture cleanup for Rematch and WIM minimap buttons.",
 			"[Extra Item Bar] Add some activatable items.",
+			"[Game Bar] Attempt to fix issue where system info may not refresh correctly in some cases.",
 		},
 		["koKR"] = {
 			"[스킨] 독립 모드에서 Rematch 스킨의 가능한 오류를 수정했습니다.",
@@ -62,6 +65,7 @@ W.Changelog[402] = {
 			"[스킨] RareScanner 스킨을 최적화했습니다.",
 			"[미니맵 버튼] Rematch 및 WIM 미니맵 버튼의 텍스처 정리를 최적화했습니다.",
 			"[추가 아이템 바] 일부 활성화 가능한 아이템을 추가했습니다.",
+			"[게임 바] 일부 경우에 시스템 정보가 올바르게 새로 고쳐지지 않는 문제를 수정하려고 시도했습니다.",
 		},
 		["ruRU"] = {
 			"[Интерфейс] Исправлена возможная ошибка скина Rematch в автономном режиме.",
@@ -71,6 +75,7 @@ W.Changelog[402] = {
 			"[Интерфейс] Оптимизирован скин RareScanner.",
 			"[Кнопки миникарты] Оптимизирована очистка текстур для кнопок миникарты Rematch и WIM.",
 			"[Дополнительная панель предметов] Добавлены некоторые активируемые предметы.",
+			"[Игровая панель] Попытка исправить проблему, из-за которой системная информация может некорректно обновляться в некоторых случаях.",
 		},
 	},
 }

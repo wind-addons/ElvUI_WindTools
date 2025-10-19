@@ -616,6 +616,11 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Calendar"],
 		},
+		catalogShop = {
+			order = 10,
+			type = "toggle",
+			name = L["Shop"],
+		},
 		challenges = {
 			order = 10,
 			type = "toggle",

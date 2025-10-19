@@ -18,6 +18,7 @@ local BlizzardFrames = {
 	"AddonList",
 	"BankFrame",
 	"BonusRollFrame",
+	"CatalogShopFrame",
 	"ChatConfigFrame",
 	"CinematicFrame",
 	"ContainerFrameCombinedBags",

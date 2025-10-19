@@ -1287,6 +1287,7 @@ L["Shaman"] = "Chamane"
 L["Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Private database is also exist for saving configuration of General, Skins, etc."] = "Le partage de profil ElvUI est très courant de nos jours, mais en réalité, une base de données privée ElvUI existe également pour enregistrer la configuration de General, Skins, etc."
 L["Shift"] = true
 L["Shift Key"] = "Touche Maj"
+L["Shop"] = "Boutique"
 L["Short"] = "Court"
 L["Short Channels"] = "Raccourcis canaux"
 L["Short Header"] = "Courte entête"

@@ -1287,6 +1287,7 @@ L["Shaman"] = "薩滿"
 L["Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Private database is also exist for saving configuration of General, Skins, etc."] = "現在分享 ElvUI 設定檔是一件非常普遍的事情, 但實際上 ElvUI 還有一個私人設定檔, 用於保存一些通用設定, 皮膚設定等."
 L["Shift"] = true
 L["Shift Key"] = "Shift 鍵"
+L["Shop"] = "游戲商城"
 L["Short"] = "簡短"
 L["Short Channels"] = "頻道縮寫"
 L["Short Header"] = "簡短頂部"

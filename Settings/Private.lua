@@ -557,6 +557,7 @@ V.skins = {
 		binding = true,
 		blackMarket = true,
 		calendar = true,
+		catalogShop = true,
 		challenges = true,
 		channels = true,
 		character = true,

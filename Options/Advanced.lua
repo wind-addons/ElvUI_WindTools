@@ -814,8 +814,18 @@ options.reset = {
 						end)
 					end,
 				},
-				blizzard = {
+				cooldownViewer = {
 					order = 3,
+					type = "execute",
+					name = L["Cooldown Viewer"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Cooldown Viewer"], nil, function()
+							E.private.WT.skins.cooldownViewer = V.skins.cooldownViewer
+						end)
+					end,
+				},
+				blizzard = {
+					order = 4,
 					type = "execute",
 					name = L["Blizzard"],
 					func = function()
@@ -825,7 +835,7 @@ options.reset = {
 					end,
 				},
 				elvui = {
-					order = 4,
+					order = 5,
 					type = "execute",
 					name = L["ElvUI"],
 					func = function()
@@ -835,7 +845,7 @@ options.reset = {
 					end,
 				},
 				addons = {
-					order = 5,
+					order = 6,
 					type = "execute",
 					name = L["Addons"],
 					func = function()
@@ -844,8 +854,18 @@ options.reset = {
 						end)
 					end,
 				},
-				widgets = {
+				libraries = {
 					order = 6,
+					type = "execute",
+					name = L["Libraries"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Libraries"], nil, function()
+							E.private.WT.skins.libraries = V.skins.libraries
+						end)
+					end,
+				},
+				widgets = {
+					order = 8,
 					type = "execute",
 					name = L["Widgets"],
 					func = function()
@@ -855,7 +875,7 @@ options.reset = {
 					end,
 				},
 				bigWigsSkin = {
-					order = 7,
+					order = 9,
 					type = "execute",
 					name = L["BigWigs Skin"],
 					func = function()

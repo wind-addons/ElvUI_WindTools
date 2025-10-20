@@ -745,8 +745,11 @@ function I:CreatePanel(parent)
 	end)
 
 	-- Lines
+	local parentHeight = parent:GetHeight()
+	parentHeight = parentHeight > 400 and parentHeight or 424
+
 	frame.Lines = {}
-	frame.lineHeight = (parent:GetHeight() - 82) / #DISPLAY_SLOTS
+	frame.lineHeight = (parentHeight - 82) / #DISPLAY_SLOTS
 
 	for displayIndex, slotInfo in ipairs(DISPLAY_SLOTS) do
 		-- Line

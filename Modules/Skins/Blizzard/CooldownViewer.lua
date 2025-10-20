@@ -120,7 +120,7 @@ function S:CooldownManager_AcquireItemFrame(container, frame)
 
 		local Icon = frame.Icon
 		if Icon and Icon.Icon then
-			if not Icon.Icon.__windSkin and self.db.cooldownViewer.buffBar.iconShadow then
+			if not Icon.Icon.__windSkin and self.db.cooldownViewer.general.iconShadow then
 				S:CreateBackdropShadow(Icon.Icon)
 				Icon.Icon.__windSkin = true
 			end
@@ -128,7 +128,7 @@ function S:CooldownManager_AcquireItemFrame(container, frame)
 
 		local Bar = frame.Bar
 		if Bar then
-			if not Bar.__windSkin and self.db.cooldownViewer.buffBar.barShadow then
+			if not Bar.__windSkin and self.db.cooldownViewer.general.barShadow then
 				for _, region in pairs({ Bar:GetRegions() }) do
 					if region:IsObjectType("Texture") and region.backdrop then
 						self:CreateBackdropShadow(region)

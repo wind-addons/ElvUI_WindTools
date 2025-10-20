@@ -518,7 +518,7 @@ options.cooldownViewer = {
 			end,
 			set = function(info, value)
 				E.private.WT.skins.cooldownViewer[info[#info - 1]][info[#info]] = value
-				S:RefreshElvUICustomGlowOnCooldownManager()
+				E:StaticPopup_Show("PRIVATE_RL")
 			end,
 			disabled = function()
 				return not E.private.WT.skins.cooldownViewer.enable

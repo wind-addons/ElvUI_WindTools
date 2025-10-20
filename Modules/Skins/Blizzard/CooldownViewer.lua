@@ -10,11 +10,23 @@ local ipairs = ipairs
 local pairs = pairs
 
 local hookFunctions = {
-	RefreshSpellCooldownInfo = S.CooldownManager_RefreshSpellCooldownInfo,
-	OnSpellActivationOverlayGlowShowEvent = S.CooldownManager_ShowGlowEvent,
-	OnSpellActivationOverlayGlowHideEvent = S.CooldownManager_HideGlowEvent,
-	RefreshOverlayGlow = S.CooldownManager_RefreshOverlayGlow,
-	SetTimerShown = S.CooldownManager_SetTimerShown,
+	RefreshSpellCooldownInfo = ES.CooldownManager_RefreshSpellCooldownInfo,
+	OnSpellActivationOverlayGlowShowEvent = function(...)
+		if not S.db or not S.db.cooldownViewer.general.useBlizzardGlow then
+			return ES.CooldownManager_ShowGlowEvent(...)
+		end
+	end,
+	OnSpellActivationOverlayGlowHideEvent = function(...)
+		if not S.db or not S.db.cooldownViewer.general.useBlizzardGlow then
+			return ES.CooldownManager_HideGlowEvent(...)
+		end
+	end,
+	RefreshOverlayGlow = function(...)
+		if not S.db or not S.db.cooldownViewer.general.useBlizzardGlow then
+			return ES.CooldownManager_RefreshOverlayGlow(...)
+		end
+	end,
+	SetTimerShown = ES.CooldownManager_SetTimerShown,
 }
 
 function ES:CooldownManager_SkinItemFrame(frame)
@@ -36,18 +48,6 @@ function ES:CooldownManager_SkinItemFrame(frame)
 		ES:CooldownManager_SkinBar(frame, frame.Bar)
 	elseif frame.Icon then
 		ES:CooldownManager_SkinIcon(frame, frame.Icon)
-	end
-end
-
-function S:RefreshElvUICustomGlowOnCooldownManager()
-	if self.db.cooldownViewer.general.useBlizzardGlow then
-		hookFunctions.OnSpellActivationOverlayGlowHideEvent = nil
-		hookFunctions.OnSpellActivationOverlayGlowShowEvent = nil
-		hookFunctions.RefreshOverlayGlow = nil
-	else
-		hookFunctions.OnSpellActivationOverlayGlowHideEvent = S.CooldownManager_HideGlowEvent
-		hookFunctions.OnSpellActivationOverlayGlowShowEvent = S.CooldownManager_ShowGlowEvent
-		hookFunctions.RefreshOverlayGlow = S.CooldownManager_RefreshOverlayGlow
 	end
 end
 
@@ -187,8 +187,6 @@ function S:Blizzard_CooldownViewer_Modification()
 	if self.db.cooldownViewer.essential.enable then
 		self:CooldownManager_HandleViewer(_G.EssentialCooldownViewer)
 	end
-
-	self:RefreshElvUICustomGlowOnCooldownManager()
 end
 
 function S:Blizzard_CooldownViewer()

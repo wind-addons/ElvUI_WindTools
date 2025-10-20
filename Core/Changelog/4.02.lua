@@ -5,29 +5,50 @@ W.Changelog[402] = {
 	IMPORTANT = {
 		["zhCN"] = {
 			"优化了韩语翻译. 感谢 Crazyyoungs",
+			"修复了队伍组成变化时可能产生的 '不在队伍中' 错误提示问题.",
 		},
 		["zhTW"] = {
 			"優化了韓語翻譯. 感謝 Crazyyoungs",
+			"修復了隊伍組成變化時可能產生的 '不在隊伍中' 錯誤提示問題.",
 		},
 		["enUS"] = {
 			"Optimize Korean translation. Thanks to Crazyyoungs",
+			"Fix issue where 'not in a party' error message may appear when party composition changes.",
 		},
 		["koKR"] = {
 			"한국어 번역을 최적화했습니다. Crazyyoungs에게 감사합니다",
+			"파티 구성 변경 시 '파티에 없음' 오류 메시지가 나타날 수 있는 문제를 수정했습니다.",
 		},
 		["ruRU"] = {
 			"Оптимизирован перевод на корейский язык. Спасибо Crazyyoungs",
+			"Исправлена проблема, из-за которой при изменении состава группы могло появляться сообщение об ошибке 'не в группе'.",
 		},
 	},
 	NEW = {
-		["zhCN"] = {},
-		["zhTW"] = {},
-		["enUS"] = {},
-		["koKR"] = {},
-		["ruRU"] = {},
+		["zhCN"] = {
+			"[美化外观] 新增了暴雪冷却技能监控的美化设定页. 支持修改图标的比例, 文字, 材质等.",
+			"[美化外观] 新增了新暴雪商店美化. (ElvUI 版本 14.03 开发版及以上支持此功能)",
+		},
+		["zhTW"] = {
+			"[美化外觀] 新增了暴雪冷卻技能監控的美化設定頁. 支援修改圖示的比例, 文字, 材質等.",
+			"[美化外觀] 新增了新暴雪商店美化. (ElvUI 版本 14.03 開發版及以上支援此功能)",
+		},
+		["enUS"] = {
+			"[Skins] Add separate styling options tab for Blizzard Cooldown Viewer. Supports modifying icon ratio, text, textures, etc.",
+			"[Skins] Add styling for the new Blizzard Catalog Shop. (Supported in ElvUI version 14.03 Dev and above)",
+		},
+		["koKR"] = {
+			"[스킨] 블리자드 쿨다운 뷰어를 위한 별도의 스타일링 옵션 탭을 추가했습니다. 아이콘 비율, 텍스트, 텍스처 등을 수정하는 것을 지원합니다.",
+			"[스킨] 새로운 블리자드 카탈로그 상점을 위한 스타일링을 추가했습니다. (ElvUI 버전 14.03 개발 버전 이상에서 지원됨)",
+		},
+		["ruRU"] = {
+			"[Скины] Добавлена отдельная вкладка параметров стилизации для Blizzard Cooldown Viewer. Поддерживает изменение соотношения иконок, текста, текстур и т.д.",
+			"[Скины] Добавлена стилизация для нового Blizzard Catalog Shop. (Поддерживается в версии ElvUI 14.03 Dev и выше)",
+		},
 	},
 	IMPROVEMENT = {
 		["zhCN"] = {
+			"[美化外观] 优化了场景中的法术按钮.",
 			"[美化外观] 修复了 Rematch 皮肤在独立模式下可能的报错问题.",
 			"[美化外观] 优化了 Rematch 皮肤的背景效果. 感谢 gizzmo",
 			"[美化外观] 优化了 Legion Remix Helper 收藏页面美化的稳定性.",
@@ -36,8 +57,10 @@ W.Changelog[402] = {
 			"[小地图按钮] 优化了 Rematch 和 WIM 小地图按钮的材质清理.",
 			"[额外物品条] 新增了一些可开启物品.",
 			"[游戏条] 尝试修复在某些情况下系统信息无法正确刷新的问题.",
+			"[装备观察] 优化了自动布局的稳定性.",
 		},
 		["zhTW"] = {
+			"[美化外觀] 優化了場景中的法術按鈕.",
 			"[美化外觀] 修復了 Rematch 皮膚在獨立模式下可能的報錯問題.",
 			"[美化外觀] 優化了 Rematch 皮膚的背景效果. 感謝 gizzmo",
 			"[美化外觀] 優化了 Legion Remix Helper 收藏頁面美化的穩定性.",
@@ -46,8 +69,10 @@ W.Changelog[402] = {
 			"[小地圖按鍵] 優化了 Rematch 和 WIM 小地圖按鍵的材質清理.",
 			"[額外物品條] 新增了一些可開啟物品.",
 			"[遊戲條] 嘗試修復在某些情況下系統信息無法正確刷新的問題.",
+			"[裝備觀察] 優化了自動佈局的穩定性.",
 		},
 		["enUS"] = {
+			"[Skins] Optimize spell button frames in scenarios.",
 			"[Skins] Fix possible error with Rematch skin in standalone mode.",
 			"[Skins] Optimize background effect of Rematch skin. Thanks to gizzmo",
 			"[Skins] Improve stability of Legion Remix Helper collection page styling.",
@@ -56,8 +81,10 @@ W.Changelog[402] = {
 			"[Minimap Buttons] Optimize texture cleanup for Rematch and WIM minimap buttons.",
 			"[Extra Item Bar] Add some activatable items.",
 			"[Game Bar] Attempt to fix issue where system info may not refresh correctly in some cases.",
+			"[Inspect] Optimize stability of automatic layout.",
 		},
 		["koKR"] = {
+			"[스킨] 시나리오 내의 주문 버튼 프레임을 최적화했습니다.",
 			"[스킨] 독립 모드에서 Rematch 스킨의 가능한 오류를 수정했습니다.",
 			"[스킨] Rematch 스킨의 배경 효과를 최적화했습니다. gizzmo에게 감사합니다",
 			"[스킨] Legion Remix Helper 컬렉션 페이지 스킬링의 안정성을 개선했습니다.",
@@ -66,8 +93,10 @@ W.Changelog[402] = {
 			"[미니맵 버튼] Rematch 및 WIM 미니맵 버튼의 텍스처 정리를 최적화했습니다.",
 			"[추가 아이템 바] 일부 활성화 가능한 아이템을 추가했습니다.",
 			"[게임 바] 일부 경우에 시스템 정보가 올바르게 새로 고쳐지지 않는 문제를 수정하려고 시도했습니다.",
+			"[장비 살펴보기] 자동 레이아웃의 안정성을 최적화했습니다.",
 		},
 		["ruRU"] = {
+			"[Скины] Оптимизированы кнопки заклинаний в сценариях.",
 			"[Скины] Исправлена возможная ошибка скина Rematch в автономном режиме.",
 			"[Скины] Оптимизирован фоновый эффект скина Rematch. Спасибо gizzmo",
 			"[Скины] Улучшена стабильность стилизации страницы коллекций Legion Remix Helper.",
@@ -76,6 +105,7 @@ W.Changelog[402] = {
 			"[Кнопки миникарты] Оптимизирована очистка текстур для кнопок миникарты Rematch и WIM.",
 			"[Дополнительная панель предметов] Добавлены некоторые активируемые предметы.",
 			"[Игровая панель] Попытка исправить проблему, из-за которой системная информация может некорректно обновляться в некоторых случаях.",
+			"[Осмотр] Оптимизирована стабильность автоматической компоновки.",
 		},
 	},
 }

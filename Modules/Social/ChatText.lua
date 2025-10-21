@@ -687,36 +687,29 @@ CT.cache.blizzardRoleIcons = {
 
 local windIcon = F.GetIconString(W.Media.Textures.smallLogo, 14)
 local authorIcons = {
-	["Player-917-0482C915"] = windIcon, -- Tabidh-迅捷微风
-	["Player-917-0482D382"] = windIcon, -- Tabidruid-影之哀伤
-	["Tabideath-影之哀伤"] = windIcon,
-	["Tabideath-暗影之月"] = windIcon,
-	["Tabideath-水晶之刺"] = windIcon,
-	["Tabidh-暗影之月"] = windIcon,
-	["Tabidh-水晶之刺"] = windIcon,
-	["Tabidk-暗影之月"] = windIcon,
-	["Tabidruid-暗影之月"] = windIcon,
-	["Tabidruid-水晶之刺"] = windIcon,
-	["Tabievoker-暗影之月"] = windIcon,
-	["Tabievoker-水晶之刺"] = windIcon,
-	["Tabihunter-暗影之月"] = windIcon,
-	["Tabikaeru-暗影之月"] = windIcon,
-	["Tabilock-暗影之月"] = windIcon,
-	["Tabilock-水晶之刺"] = windIcon,
-	["Tabimage-暗影之月"] = windIcon,
-	["Tabimonk-影之哀伤"] = windIcon,
-	["Tabimonk-暗影之月"] = windIcon,
-	["Tabimonk-水晶之刺"] = windIcon,
-	["Tabipaladin-暗影之月"] = windIcon,
-	["Tabipaladin-水晶之刺"] = windIcon,
-	["Tabipriest-暗影之月"] = windIcon,
-	["Tabirogue-暗影之月"] = windIcon,
-	["Tabirogue-水晶之刺"] = windIcon,
-	["Tabishaman-暗影之月"] = windIcon,
-	["Tabishaman-水晶之刺"] = windIcon,
-	["Tabiwarrior-暗影之月"] = windIcon,
-	["争霸艾泽拉斯-罗宁"] = windIcon,
-	["游学者-寒冰皇冠"] = windIcon,
+	-- zhCN Server
+	["Player-2133-0EA906AC"] = windIcon, -- Tabideath-影之哀伤
+	["Player-2133-0EA9374F"] = windIcon, -- Tabimonk-影之哀伤
+	["Player-2133-0EDB2623"] = windIcon, -- Tabidruid-影之哀伤
+	["Player-2133-0EDB2716"] = windIcon, -- Tabidemon-影之哀伤
+	["Player-858-0390AAA9"] = windIcon, -- Tabiwarrior-寒冰皇冠
+	["Player-858-03954572"] = windIcon, -- Tabihunter-寒冰皇冠
+	-- zhTW Server
+	["Player-963-04504559"] = windIcon, -- Tabidruid-暗影之月
+	["Player-963-0450457B"] = windIcon, -- Tabilock-暗影之月
+	["Player-963-0450459F"] = windIcon, -- Tabishaman-暗影之月
+	["Player-963-045045AA"] = windIcon, -- Tabipaladin-暗影之月
+	["Player-963-04507626"] = windIcon, -- Tabiwarrior-暗影之月
+	["Player-963-046DDD41"] = windIcon, -- Tabidh-暗影之月
+	["Player-963-04C27464"] = windIcon, -- Tabimonk-暗影之月
+	["Player-963-04CBB42D"] = windIcon, -- Tabikaeru-暗影之月
+	["Player-963-04CBB440"] = windIcon, -- Tabihunter-暗影之月
+	["Player-963-04DD3C38"] = windIcon, -- Tabideath-暗影之月
+	["Player-963-06DB939B"] = windIcon, -- Tabievoker-暗影之月
+	["Player-980-06DCA63A"] = windIcon, -- Tabievoker-水晶之刺
+	["Player-980-07E14771"] = windIcon, -- Tabidruid-水晶之刺
+	["Player-980-07E1E1DC"] = windIcon, -- Tabipaladin-水晶之刺
+	["Player-980-07E1E1F0"] = windIcon, -- Tabimonk-水晶之刺
 }
 
 CH:AddPluginIcons(function(sender)

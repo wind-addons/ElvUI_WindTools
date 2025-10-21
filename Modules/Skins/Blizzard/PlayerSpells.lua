@@ -10,8 +10,9 @@ function S:Blizzard_PlayerSpells()
 		return
 	end
 
-	self:CreateBackdropShadow(_G.ClassTalentLoadoutImportDialog)
+	self:CreateBackdropShadow(_G.ClassTalentLoadoutCreateDialog)
 	self:CreateBackdropShadow(_G.ClassTalentLoadoutEditDialog)
+	self:CreateBackdropShadow(_G.ClassTalentLoadoutImportDialog)
 
 	self:CreateShadow(_G.PlayerSpellsFrame)
 

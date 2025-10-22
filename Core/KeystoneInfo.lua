@@ -10,6 +10,7 @@ local select = select
 
 local Ambiguate = Ambiguate
 local GetInstanceInfo = GetInstanceInfo
+local IsInGroup = IsInGroup
 local UnitIsPlayer = UnitIsPlayer
 local UnitName = UnitName
 

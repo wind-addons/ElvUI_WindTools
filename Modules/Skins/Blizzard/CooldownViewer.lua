@@ -5,8 +5,10 @@ local LSM = E.Libs.LSM
 local C = W.Utilities.Color
 
 local _G = _G
+local ceil = ceil
 local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
+local next = next
 local pairs = pairs
 
 local hookFunctions = {

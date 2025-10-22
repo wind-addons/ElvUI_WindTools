@@ -490,14 +490,42 @@ options.cooldownViewer = {
 	order = 4,
 	type = "group",
 	name = L["Cooldown Viewer"],
-	hidden = function()
-		return not E.private.WT.skins.blizzard.enable
-			or not E.private.skins.blizzard.cooldownManager
-			or not E.private.WT.skins.blizzard.cooldownViewer
-	end,
 	args = {
-		enable = {
+		notice = {
 			order = 1,
+			type = "group",
+			name = " ",
+			inline = true,
+			args = {
+				desc = {
+					order = 1,
+					type = "description",
+					name = C.StringByTemplate(L["Notice"], "rose-500")
+						.. " "
+						.. L["This module will override ElvUI's Cooldown Manager count font settings."],
+					width = "full",
+					fontSize = "medium",
+				},
+				desc2 = {
+					order = 2,
+					type = "description",
+					hidden = function()
+						return E.private.WT.skins.blizzard.enable
+							and E.private.skins.blizzard.cooldownManager
+							and E.private.WT.skins.blizzard.cooldownViewer
+					end,
+					name = format(
+						L["To enable the modifications below, you need to enable [%s] - [%s] skin first."],
+						L["Blizzard"],
+						F.GetWindStyleText(L["Cooldown Viewer"])
+					),
+					width = "full",
+					fontSize = "medium",
+				},
+			},
+		},
+		enable = {
+			order = 2,
 			type = "toggle",
 			name = L["Enable"],
 			get = function(info)
@@ -508,8 +536,9 @@ options.cooldownViewer = {
 				E:StaticPopup_Show("PRIVATE_RL")
 			end,
 		},
+
 		general = {
-			order = 2,
+			order = 10,
 			type = "group",
 			inline = true,
 			name = L["General"],
@@ -543,7 +572,7 @@ options.cooldownViewer = {
 			},
 		},
 		essential = {
-			order = 3,
+			order = 11,
 			type = "group",
 			name = L["Essential"],
 			get = function(info)
@@ -703,7 +732,7 @@ options.cooldownViewer = {
 			},
 		},
 		utility = {
-			order = 4,
+			order = 13,
 			type = "group",
 			name = L["Utility"],
 			get = function(info)
@@ -863,7 +892,7 @@ options.cooldownViewer = {
 			},
 		},
 		buffIcon = {
-			order = 5,
+			order = 14,
 			type = "group",
 			name = L["Buff Icon"],
 			get = function(info)
@@ -1023,7 +1052,7 @@ options.cooldownViewer = {
 			},
 		},
 		buffBar = {
-			order = 6,
+			order = 15,
 			type = "group",
 			name = L["Buff Bar"],
 			get = function(info)

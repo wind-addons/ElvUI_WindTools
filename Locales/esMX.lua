@@ -1531,6 +1531,7 @@ L["This module will add an equipment list beside the character panel and inspect
 L["This module will change the channel when Tab has been pressed."] = "Este módulo cambiará el canal cuando se presione TAB."
 L["This module will display a alert frame when entering and leaving combat.\nYou can customize animations and text effects."] = "Este módulo mostrará una alerta cuando entres y sales de combate.\nPuedes personalizar animaciones y efectos de texto."
 L["This module will help you to reveal and resize maps."] = "Este módulo te ayudará a revelar y redimensionar mapas."
+L["This module will override ElvUI's Cooldown Manager count font settings."] = true
 L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = "Este módulo registrará susurros para cambiar.\n Puedes establecer el tiempo de expiración aquí para hacer una lista corta de objetivos recientes."
 L["This the QQ group for Wind Addons users."] = true
 L["Threat Transfer"] = "Transferencia de amenaza"
@@ -1549,6 +1550,7 @@ L["Tips"] = "Consejos"
 L["Title"] = "Título"
 L["Title Color"] = "Color del título"
 L["Title Icon"] = true
+L["To enable the modifications below, you need to enable [%s] - [%s] skin first."] = true
 L["To enable the name of friendly player in instances, you can set as following:"] = "Para habilitar el nombre de jugador amigable en mazmorras, puedes configurarlo de la siguiente manera:"
 L["To enable this feature, you need to enable the check box skin in ElvUI Skins first."] = "Para habilitar esta funcionalidad, necesitas activar la casilla de verificación de skin en ElvUI Skins primero."
 L["Toggle CPU Profiling"] = "Activar el seguimiento del CPU"

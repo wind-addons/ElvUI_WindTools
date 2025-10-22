@@ -1531,6 +1531,7 @@ L["This module will add an equipment list beside the character panel and inspect
 L["This module will change the channel when Tab has been pressed."] = "Этот модуль изменит канал при нажатии Tab."
 L["This module will display a alert frame when entering and leaving combat.\nYou can customize animations and text effects."] = "Этот модуль будет отображать фрейм предупреждения при входе в бой и выходе из него.\nВы можете настроить анимацию и текстовые эффекты."
 L["This module will help you to reveal and resize maps."] = "Этот модуль поможет Вам открывать карты и изменять их размер."
+L["This module will override ElvUI's Cooldown Manager count font settings."] = true
 L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = "Этот модуль будет записывать шепоты для переключения. \n Вы можете установить время истечения для получения краткого списка последних целей."
 L["This the QQ group for Wind Addons users."] = "Это QQ группа для пользователей Wind Addons."
 L["Threat Transfer"] = "Перенаправление угрозы"
@@ -1549,6 +1550,7 @@ L["Tips"] = "Советы"
 L["Title"] = "Название"
 L["Title Color"] = "Цвет заголовка"
 L["Title Icon"] = "Значок заголовка"
+L["To enable the modifications below, you need to enable [%s] - [%s] skin first."] = true
 L["To enable the name of friendly player in instances, you can set as following:"] = "Чтобы включить имя дружественного игрока в подземельях, Вы можете установить следующее:"
 L["To enable this feature, you need to enable the check box skin in ElvUI Skins first."] = "Чтобы включить эту функцию, Вам нужно сначала включить скин флажка в скинах ElvUI."
 L["Toggle CPU Profiling"] = "Включить/отключить профилирование ЦП"

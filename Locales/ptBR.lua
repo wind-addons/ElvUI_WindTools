@@ -1531,6 +1531,7 @@ L["This module will add an equipment list beside the character panel and inspect
 L["This module will change the channel when Tab has been pressed."] = true
 L["This module will display a alert frame when entering and leaving combat.\nYou can customize animations and text effects."] = true
 L["This module will help you to reveal and resize maps."] = true
+L["This module will override ElvUI's Cooldown Manager count font settings."] = true
 L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = true
 L["This the QQ group for Wind Addons users."] = true
 L["Threat Transfer"] = true
@@ -1549,6 +1550,7 @@ L["Tips"] = true
 L["Title"] = "Título"
 L["Title Color"] = true
 L["Title Icon"] = true
+L["To enable the modifications below, you need to enable [%s] - [%s] skin first."] = true
 L["To enable the name of friendly player in instances, you can set as following:"] = true
 L["To enable this feature, you need to enable the check box skin in ElvUI Skins first."] = true
 L["Toggle CPU Profiling"] = true

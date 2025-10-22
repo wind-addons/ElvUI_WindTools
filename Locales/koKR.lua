@@ -1531,6 +1531,7 @@ L["This module will add an equipment list beside the character panel and inspect
 L["This module will change the channel when Tab has been pressed."] = "이 모듈은 Tab을 눌렀을 때 채널을 변경합니다."
 L["This module will display a alert frame when entering and leaving combat.\nYou can customize animations and text effects."] = "이 모듈은 전투가 시작되거나 종료될 때 알림창을 표시합니다.\n애니메이션과 텍스트 효과를 설정할 수 있습니다."
 L["This module will help you to reveal and resize maps."] = "이 모듈은 지도를 표시하고 크기를 조정합니다."
+L["This module will override ElvUI's Cooldown Manager count font settings."] = true
 L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = "이 모듈은 귓속말을 기록합니다.\n최근 대상 목록을 만들기 위해 만료 시간을 설정할 수 있습니다."
 L["This the QQ group for Wind Addons users."] = "Wind Addons 사용자 QQ 그룹"
 L["Threat Transfer"] = "위협 이전"
@@ -1549,6 +1550,7 @@ L["Tips"] = "팁"
 L["Title"] = "제목"
 L["Title Color"] = "제목 색상"
 L["Title Icon"] = "제목 아이콘"
+L["To enable the modifications below, you need to enable [%s] - [%s] skin first."] = true
 L["To enable the name of friendly player in instances, you can set as following:"] = "던전에 있는 아군 플레이어의 이름을 표시하고 싶다면 다음과 같이 설정할 수 있습니다 :"
 L["To enable this feature, you need to enable the check box skin in ElvUI Skins first."] = "이 기능을 활성화하려면 먼저 ElvUI 스킨에서 체크박스 스킨을 활성화해야 합니다."
 L["Toggle CPU Profiling"] = "CPU 프로파일링 토글"

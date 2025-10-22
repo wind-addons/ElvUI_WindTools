@@ -15,14 +15,7 @@ function S:Blizzard_AdventureMap()
 	local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
 	local childFrame = AdventureMapQuestChoiceDialog.Details.Child
 
-	if AdventureMapQuestChoiceDialog.backdrop then
-		self:CreateBackdropShadow(AdventureMapQuestChoiceDialog)
-	else
-		self:CreateShadow(AdventureMapQuestChoiceDialog)
-		if AdventureMapQuestChoiceDialog.shadow then
-			AdventureMapQuestChoiceDialog.shadow:SetFrameStrata("LOW")
-		end
-	end
+	self:CreateShadow(AdventureMapQuestChoiceDialog.backdrop or AdventureMapQuestChoiceDialog)
 
 	F.SetFont(childFrame.TitleHeader)
 	F.SetFont(childFrame.DescriptionText)
@@ -33,11 +26,10 @@ function S:Blizzard_AdventureMap()
 	hooksecurefunc(AdventureMapQuestChoiceDialog, "RefreshRewards", function()
 		for reward in AdventureMapQuestChoiceDialog.rewardPool:EnumerateActive() do
 			if not reward.__windSkin then
-				reward.ItemNameBG:SetAlpha(0)
 				reward.windItemNameBG = CreateFrame("Frame", nil, reward)
-				S:Reposition(reward.windItemNameBG, reward.ItemNameBG, 2, 0, -1, -3, -1)
 				reward.windItemNameBG:SetFrameLevel(reward:GetFrameLevel())
 				reward.windItemNameBG:SetTemplate("Transparent")
+				S:Reposition(reward.windItemNameBG, reward.ItemNameBG, 2, 0, -1, -3, -1)
 				reward.__windSkin = true
 			end
 		end

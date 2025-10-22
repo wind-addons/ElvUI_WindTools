@@ -4,7 +4,6 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 
 local hooksecurefunc = hooksecurefunc
-local unpack = unpack
 
 local CreateFrame = CreateFrame
 
@@ -16,16 +15,13 @@ function S:Blizzard_AdventureMap()
 	local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
 	local childFrame = AdventureMapQuestChoiceDialog.Details.Child
 
-	self:CreateShadow(AdventureMapQuestChoiceDialog)
-
-	if AdventureMapQuestChoiceDialog.shadow then
-		AdventureMapQuestChoiceDialog.shadow:SetFrameStrata("LOW")
-	end
-
-	if AdventureMapQuestChoiceDialog.Portrait then
-		AdventureMapQuestChoiceDialog
-			.Portrait--[[@as Texture]]
-			:SetDrawLayer("OVERLAY", 3)
+	if AdventureMapQuestChoiceDialog.backdrop then
+		self:CreateBackdropShadow(AdventureMapQuestChoiceDialog)
+	else
+		self:CreateShadow(AdventureMapQuestChoiceDialog)
+		if AdventureMapQuestChoiceDialog.shadow then
+			AdventureMapQuestChoiceDialog.shadow:SetFrameStrata("LOW")
+		end
 	end
 
 	F.SetFont(childFrame.TitleHeader)
@@ -37,18 +33,11 @@ function S:Blizzard_AdventureMap()
 	hooksecurefunc(AdventureMapQuestChoiceDialog, "RefreshRewards", function()
 		for reward in AdventureMapQuestChoiceDialog.rewardPool:EnumerateActive() do
 			if not reward.__windSkin then
-				if reward.Icon then
-					reward.Icon:CreateBackdrop()
-					reward.Icon:SetTexCoord(unpack(E.TexCoords))
-				end
-
-				if reward.ItemNameBG then
-					reward.ItemNameBG:SetAlpha(0)
-					reward.windItemNameBG = CreateFrame("Frame", nil, reward)
-					S:Reposition(reward.windItemNameBG, reward.ItemNameBG, 2, 0, 0, -3, -1)
-					reward.windItemNameBG:SetFrameLevel(reward:GetFrameLevel())
-					reward.windItemNameBG:SetTemplate("Transparent")
-				end
+				reward.ItemNameBG:SetAlpha(0)
+				reward.windItemNameBG = CreateFrame("Frame", nil, reward)
+				S:Reposition(reward.windItemNameBG, reward.ItemNameBG, 2, 0, -1, -3, -1)
+				reward.windItemNameBG:SetFrameLevel(reward:GetFrameLevel())
+				reward.windItemNameBG:SetTemplate("Transparent")
 				reward.__windSkin = true
 			end
 		end

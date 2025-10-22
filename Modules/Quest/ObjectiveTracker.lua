@@ -239,14 +239,15 @@ end
 ---@param b number Blue component
 ---@param a number Alpha component
 ---@return nil
-function OT:BlockHeaderText_SetTextColor(text, r, g, b, a)
-	if not self.db or not self.db.enable or not self.db.titleColor then
-		return self.hooks[text].SetTextColor(text, r, g, b, a)
+function OT:BlockHeaderText_SetTextColor(text, r, g, b, a, skip)
+	if skip or not self.db or not self.db.enable or not self.db.titleColor then
+		return
 	end
 
 	local rgba = { r = r, g = g, b = b, a = a }
 	rgba = OverrideColor(rgba, self.db.titleColor, "Header", "HeaderHighlight")
-	self.hooks[text].SetTextColor(text, rgba.r, rgba.g, rgba.b, rgba.a)
+	---@diagnostic disable-next-line: redundant-parameter use the custom 'skip' parameter
+	text:SetTextColor(rgba.r, rgba.g, rgba.b, rgba.a, true)
 end
 
 ---Override SetTextColor for line text with custom colors
@@ -255,15 +256,17 @@ end
 ---@param g number Green component
 ---@param b number Blue component
 ---@param a number Alpha component
+---@param skip boolean? Whether to skip the override
 ---@return nil
-function OT:LineText_SetTextColor(text, r, g, b, a)
-	if not self.db or not self.db.enable or not self.db.infoColor then
-		return self.hooks[text].SetTextColor(text, r, g, b, a)
+function OT:LineText_SetTextColor(text, r, g, b, a, skip)
+	if skip or not self.db or not self.db.enable or not self.db.infoColor then
+		return
 	end
 
 	local rgba = { r = r, g = g, b = b, a = a }
 	rgba = OverrideColor(rgba, self.db.infoColor, "Normal", "NormalHighlight")
-	self.hooks[text].SetTextColor(text, rgba.r, rgba.g, rgba.b, rgba.a)
+	---@diagnostic disable-next-line: redundant-parameter use the custom 'skip' parameter
+	text:SetTextColor(rgba.r, rgba.g, rgba.b, rgba.a, true)
 end
 
 ---@param frame ObjectiveTrackerBlockTemplate|{Text: FontString}
@@ -277,7 +280,7 @@ function OT:HandleBlockHeader(frame)
 	text:Height(text:GetStringHeight() + 2)
 
 	if not self:IsHooked(text, "SetTextColor") then
-		self:RawHook(text, "SetTextColor", "BlockHeaderText_SetTextColor", true)
+		self:SecureHook(text, "SetTextColor", "BlockHeaderText_SetTextColor")
 		self:BlockHeaderText_SetTextColor(
 			text,
 			C.ExtractColorFromTable(_G.OBJECTIVE_TRACKER_COLOR["Header"], { a = 1 })
@@ -325,7 +328,7 @@ function OT:HandleLine(line, _)
 	F.SetFontWithDB(line.Text, self.db.info)
 
 	if not self:IsHooked(line.Text, "SetTextColor") then
-		self:RawHook(line.Text, "SetTextColor", "LineText_SetTextColor", true)
+		self:SecureHook(line.Text, "SetTextColor", "LineText_SetTextColor")
 		self:LineText_SetTextColor(line.Text, C.ExtractColorFromTable(_G.OBJECTIVE_TRACKER_COLOR["Normal"], { a = 1 }))
 	end
 
@@ -350,7 +353,9 @@ function OT:ScenarioObjectiveTracker_UpdateCriteria(tracker, numCriteria)
 	local objectivesBlock = tracker.ObjectivesBlock
 	for criteriaIndex = 1, numCriteria do
 		local existingLine = objectivesBlock:GetExistingLine(criteriaIndex)
-		existingLine.Icon:Hide()
+		if existingLine and existingLine.Icon then
+			existingLine.Icon:Hide()
+		end
 	end
 end
 

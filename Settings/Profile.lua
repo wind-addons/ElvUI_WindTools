@@ -1160,8 +1160,8 @@ P.quest = {
 		title = {
 			template = "%s",
 			color = {
-				left = C.GetRGBFromTemplate("teal-500"),
-				right = C.GetRGBFromTemplate("teal-300"),
+				left = C.GetRGBFromTemplate("amber-400"),
+				right = C.GetRGBFromTemplate("amber-200"),
 			},
 		},
 		progress = {

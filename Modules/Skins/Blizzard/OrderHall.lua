@@ -9,15 +9,6 @@ function S:Blizzard_OrderHallUI()
 	end
 
 	self:CreateShadow(_G.OrderHallTalentFrame)
-
-	local bar = _G.OrderHallCommandBar
-	if bar then
-		self:CreateShadow(bar)
-		F.SetFont(bar.AreaName)
-		F.SetFont(bar.Currency)
-		bar.AreaName:ClearAllPoints()
-		bar.AreaName:Point("CENTER", 0, 0)
-	end
 end
 
 S:AddCallbackForAddon("Blizzard_OrderHallUI")

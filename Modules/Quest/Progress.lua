@@ -247,8 +247,11 @@ function QP:ProcessScenarioUpdate()
 		return
 	end
 
-	if #cachedScenarioStep.objectives > 0 and #currentScenarioStep.objectives > 0 then
-		for objectiveIndex = 1, #currentScenarioStep.objectives do
+	local numCurrent = currentScenarioStep.objectives and #currentScenarioStep.objectives or 0
+	local numCached = cachedScenarioStep.objectives and #cachedScenarioStep.objectives or 0
+
+	if numCached > 0 and numCurrent > 0 then
+		for objectiveIndex = 1, numCurrent do
 			local objectiveData = currentScenarioStep.objectives[objectiveIndex]
 			local previousObjectiveData = cachedScenarioStep.objectives[objectiveIndex]
 			if not previousObjectiveData or not tCompare(objectiveData, previousObjectiveData) then

@@ -68,7 +68,7 @@ function S:SkinCriteriaAlert(frame)
 
 	self:CreateBackdropShadow(frame)
 
-	frame:SetWidth(frame:GetWidth() + 10)
+	frame:Width(frame:GetWidth() + 10)
 
 	F.SetFont(frame.Unlocked, nil, "+1")
 	F.SetFont(frame.Name, nil, "+3")
@@ -235,7 +235,7 @@ function S:SkinLootAlert(frame)
 	if frame.Label and frame.Label.GetNumPoints and frame.Label:GetNumPoints() == 1 then
 		local point, relativeTo, relativePoint, x, y = frame.Label:GetPoint(1)
 		frame.Label:ClearAllPoints()
-		frame.Label:SetPoint(point, relativeTo, relativePoint, x + 1, y - 5)
+		frame.Label:Point(point, relativeTo, relativePoint, x + 1, y - 5)
 	end
 
 	F.SetFont(frame.RollValue)

@@ -15,9 +15,9 @@ function S:AngryKeystones()
 		if block and block.TimerFrame and not block.TimerFrame.__windSkin then
 			for _, bar in pairs({ block.TimerFrame.Bar2, block.TimerFrame.Bar3 }) do
 				bar:SetTexture(E.media.blankTex)
-				bar:SetWidth(2)
+				bar:Width(2)
 				bar:SetAlpha(0.618)
-				bar:SetHeight(bar:GetHeight() + 2)
+				bar:Height(bar:GetHeight() + 2)
 			end
 			block.TimerFrame.__windSkin = true
 		end

@@ -101,7 +101,7 @@ local function ReskinToggleButton(button)
 	F.InternalizeMethod(button.Text, "SetPoint", true)
 	button.windExpandIcon = button:CreateTexture(nil, "OVERLAY")
 	button.windExpandIcon:Point("LEFT", button, "LEFT", 7, 0)
-	button.windExpandIcon:Size(12, 12)
+	button.windExpandIcon:Size(12)
 	hooksecurefunc(button.Back, "SetTexCoord", function(_, ...)
 		if F.IsAlmost({ 0, 1, 0, 0.1875 }, { ... }) then
 			button.windExpandIcon:SetTexture(W.Media.Icons.buttonPlus)
@@ -164,7 +164,7 @@ local function ReskinTitlebarButton(frame, size)
 
 	frame:Update()
 
-	frame:Size(size or 12, size or 12)
+	frame:Size(size or 12)
 
 	frame.__windSkin = true
 end
@@ -273,7 +273,7 @@ local function ReskinCheck(frame)
 
 	frame.CheckFrame = CreateFrame("Frame", nil, frame)
 	frame.CheckFrame:SetTemplate()
-	frame.CheckFrame:Size(14, 14)
+	frame.CheckFrame:Size(14)
 	frame.CheckFrame:Point("LEFT", frame.Check, "LEFT", 6, 0)
 	frame.CheckFrame:SetShown(frame.Check:IsShown())
 	frame.CheckFrame.Checked = frame.CheckFrame:CreateTexture(nil, "OVERLAY")
@@ -712,7 +712,7 @@ local function ReskinListElement(frame)
 			frame.Border:Kill()
 		end
 
-		frame.ExpandIcon:Size(12, 12)
+		frame.ExpandIcon:Size(12)
 		F.Move(frame.ExpandIcon, 6, 0)
 		F.InternalizeMethod(frame.ExpandIcon, "SetTexCoord")
 		local ULx, ULy, _, _, _, _, LRx, LRy = frame.ExpandIcon:GetTexCoord()
@@ -1160,7 +1160,7 @@ local function ReskinCanvas(frame)
 			input.backdrop:Point("TOPLEFT", input, "TOPLEFT", 2, 0)
 		end
 		S:Proxy("HandleCheckBox", Preferences.AllowMM)
-		Preferences.AllowMM:Size(22, 22)
+		Preferences.AllowMM:Size(22)
 		F.Move(Preferences.AllowMM.Text, 0, -2)
 
 		Preferences.ExpectedDamage.Borders:Kill()
@@ -1230,7 +1230,7 @@ local function ReskinCanvas(frame)
 			IncludeCheckButtons.IncludePreferences,
 		}) do
 			S:Proxy("HandleCheckBox", checkButton)
-			checkButton:Size(22, 22)
+			checkButton:Size(22)
 			F.Move(checkButton.Text, 0, -1)
 		end
 	end
@@ -1288,7 +1288,7 @@ local function ReskinCanvas(frame)
 	local CheckButton = frame.CheckButton
 	if CheckButton then
 		S:Proxy("HandleCheckBox", CheckButton.Check)
-		CheckButton.Check:Size(22, 22)
+		CheckButton.Check:Size(22)
 		F.Move(CheckButton.CheckText, 0, -1)
 	end
 
@@ -1357,8 +1357,8 @@ local function ReskinDialog(frame)
 		Prompt.TopBar:SetTexture(E.media.blankTex)
 		Prompt.TopBar:SetVertexColor(C.ExtractRGBAFromTemplate("gray-400"))
 		Prompt.TopBar:Height(3)
-		Prompt.TopBar:SetPoint("TOPLEFT", Prompt, "TOPLEFT", 1, -1)
-		Prompt.TopBar:SetPoint("TOPRIGHT", Prompt, "TOPRIGHT", -1, -1)
+		Prompt.TopBar:Point("TOPLEFT", Prompt, "TOPLEFT", 1, -1)
+		Prompt.TopBar:Point("TOPRIGHT", Prompt, "TOPRIGHT", -1, -1)
 	end
 
 	ReskinCanvas(frame.Canvas)

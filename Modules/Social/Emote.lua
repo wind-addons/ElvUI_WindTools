@@ -131,10 +131,10 @@ function CE:CreateInterface()
 	S:Proxy("HandleCloseButton", _G.WTCustomEmoteFrameClose)
 
 	-- 定位
-	frame:SetWidth(column * (width + space) + 24)
+	frame:Width(column * (width + space) + 24)
 	frame:SetClampedToScreen(true)
 	frame:SetFrameStrata("DIALOG")
-	frame:SetPoint("LEFT", _G.LeftChatPanel, "RIGHT", 60, 0)
+	frame:Point("LEFT", _G.LeftChatPanel, "RIGHT", 60, 0)
 
 	-- 拖动
 	frame:SetMovable(true)
@@ -154,7 +154,7 @@ function CE:CreateInterface()
 		elseif mouseButton == "RightButton" and not scriptFrame.isMoving then
 			-- 右键复原
 			scriptFrame:ClearAllPoints()
-			scriptFrame:SetPoint("TOPLEFT", _G.WTCustomEmoteFrameMover, "TOPLEFT", 0, 0)
+			scriptFrame:Point("TOPLEFT", _G.WTCustomEmoteFrameMover, "TOPLEFT", 0, 0)
 		end
 	end)
 	frame:SetScript("OnHide", function(scriptFrame)
@@ -166,15 +166,15 @@ function CE:CreateInterface()
 
 	-- 标题
 	frame.title = frame:CreateFontString(nil, "ARTWORK", "ChatFontNormal")
-	frame.title:SetPoint("TOP", frame, "TOP", 0, -9)
+	frame.title:Point("TOP", frame, "TOP", 0, -9)
 	frame.title:FontTemplate(E.media.normFont, 16, "OUTLINE")
 
 	-- 帮助提示
 	local tipsButton = CreateFrame("Frame", nil, frame)
-	tipsButton:SetSize(25, 25)
-	tipsButton:SetPoint("TOPLEFT", frame, "TOPLEFT", 3, -4)
+	tipsButton:Size(25)
+	tipsButton:Point("TOPLEFT", frame, "TOPLEFT", 3, -4)
 	tipsButton.text = tipsButton:CreateFontString(nil, "ARTWORK")
-	tipsButton.text:SetPoint("CENTER", 0, 0)
+	tipsButton.text:Point("CENTER", 0, 0)
 	tipsButton.text:FontTemplate(E.media.normFont, 14, "OUTLINE")
 	tipsButton.text:SetText("?")
 	tipsButton:SetScript("OnEnter", function()
@@ -188,24 +188,20 @@ function CE:CreateInterface()
 	for _, v in pairs(emotes) do
 		local button = CreateFrame("Button", nil, frame)
 		button.emote = "{" .. (v[E.global.general.locale] or v.key) .. "}"
-		button:SetSize(width, height)
+		button:Size(width, height)
 		if v.texture then
 			button:SetNormalTexture(v.texture)
 		else
 			button:SetNormalTexture("Interface\\Addons\\ElvUI_WindTools\\Media\\Emotes\\" .. v.key)
 		end
 		button:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight", "ADD")
-		button:SetPoint(
-			"TOPLEFT",
-			16 + (index % column) * (width + space),
-			-36 - floor(index / column) * (height + space)
-		)
+		button:Point("TOPLEFT", 16 + (index % column) * (width + space), -36 - floor(index / column) * (height + space))
 		button:SetScript("OnMouseUp", EmoteButton_OnClick)
 		button:SetScript("OnEnter", EmoteButton_OnEnter)
 		button:SetScript("OnLeave", EmoteButton_OnLeave)
 		index = index + 1
 	end
-	frame:SetHeight(ceil(index / column) * (height + space) + 46)
+	frame:Height(ceil(index / column) * (height + space) + 46)
 	frame:Hide()
 
 	-- 让输入框支持当输入 { 时自动弹出聊天表情选择框

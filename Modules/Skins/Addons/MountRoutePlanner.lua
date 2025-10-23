@@ -28,7 +28,7 @@ local function reskinTextButton(button)
 	S:Proxy("HandleButton", button)
 
 	if W.ChineseLocale then
-		button:SetWidth(80)
+		button:Width(80)
 	end
 end
 
@@ -122,11 +122,9 @@ function S:MountRoutePlanner()
 			trySkin(actionButton)(child)
 		elseif objectType == "CheckButton" then
 			self:Proxy("HandleCheckBox", child)
-			child:Size(24, 24)
+			child:Size(24)
 		end
 	end
-
-	local waitForUpdate = false
 
 	hooksecurefunc(frame.stepText, "SetText", function()
 		if frame.rewardIcons then

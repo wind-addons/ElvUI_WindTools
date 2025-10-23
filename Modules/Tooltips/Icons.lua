@@ -177,8 +177,8 @@ function T:AddFactionIcon(tt, unit, guid)
 		if faction and faction ~= "Neutral" then
 			if not tt.factionFrame then
 				local f = tt:CreateTexture(nil, "OVERLAY")
-				f:SetPoint("TOPRIGHT", 0, -5)
-				f:SetSize(35, 35)
+				f:Point("TOPRIGHT", 0, -5)
+				f:Size(35)
 				f:SetBlendMode("ADD")
 				tt.factionFrame = f
 			end
@@ -198,8 +198,8 @@ function T:AddPetIcon(tt, unit, guid)
 	if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
 		if not tt.petIcon then
 			local f = tt:CreateTexture(nil, "OVERLAY")
-			f:SetPoint("TOPRIGHT", -5, -5)
-			f:SetSize(35, 35)
+			f:Point("TOPRIGHT", -5, -5)
+			f:Size(35)
 			f:SetBlendMode("ADD")
 			tt.petIcon = f
 		end

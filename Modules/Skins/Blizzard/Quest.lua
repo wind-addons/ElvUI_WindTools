@@ -142,11 +142,7 @@ local function StyleRewardButtonWithSize(rewardButton, isMapQuestInfo)
 
 	-- Apply size-specific adjustments based on context
 	if rewardButton.Icon then
-		if isMapQuestInfo then
-			rewardButton.Icon:Size(29, 29) -- Smaller size for map quest info
-		else
-			rewardButton.Icon:Size(34, 34) -- Standard size for regular quest info
-		end
+		rewardButton.Icon:Size(isMapQuestInfo and 29 or 34)
 	end
 end
 

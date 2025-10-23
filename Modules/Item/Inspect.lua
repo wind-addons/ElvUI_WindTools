@@ -362,7 +362,7 @@ function circleIconPool:CreateIcon()
 	Mixin(frame, circleIconPrototype)
 
 	frame.Texture = frame:CreateTexture(nil, "ARTWORK")
-	frame.Texture:SetPoint("CENTER")
+	frame.Texture:Point("CENTER")
 	frame.Texture:SetMask(CIRCLE_MASK)
 
 	frame.CraftingTierText = frame:CreateFontString(nil, "OVERLAY")
@@ -373,7 +373,7 @@ function circleIconPool:CreateIcon()
 
 	frame.Border = frame:CreateTexture(nil, "BORDER")
 	frame.Border:SetTexture(W.Media.Textures.inspectGemBG)
-	frame.Border:SetPoint("CENTER", frame.Texture, "CENTER")
+	frame.Border:Point("CENTER", frame.Texture, "CENTER")
 
 	frame:SetScript("OnEnter", frame.OnEnter)
 	frame:SetScript("OnLeave", frame.OnLeave)
@@ -726,7 +726,7 @@ function I:CreatePanel(parent)
 	frame.PlayerItemLevel:Point("TOPLEFT", frame, "TOPLEFT", 75, -42)
 
 	frame.SpecIcon = frame:CreateTexture(nil, "ARTWORK")
-	frame.SpecIcon:Size(38, 38)
+	frame.SpecIcon:Size(38)
 	frame.SpecIcon:Point("TOPRIGHT", frame, "TOPRIGHT", -28, -17)
 	frame.SpecIcon:SetTexCoord(unpack(E.TexCoords))
 	frame.SpecIcon:SetShown(false)
@@ -916,7 +916,7 @@ function I:ShowPanel(unit, parent, ilevel)
 		line.link = itemInfo and itemInfo.link
 		line.level = itemInfo and itemInfo.level
 		line.quality = itemInfo and itemInfo.quality
-		line.ItemName:SetWidth(0)
+		line.ItemName:Width(0)
 
 		F.SetFontWithDB(line.Label.Text, self.db.slotText)
 		line.Label.Text:Height(self.db.slotText.size + 2)

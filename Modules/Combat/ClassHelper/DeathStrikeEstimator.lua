@@ -126,8 +126,8 @@ local function profileUpdate(_, db)
 	init()
 
 	if helper.initialized then
-		helper.env.frame.tex:SetWidth(db.width)
-		helper.env.frame.tex:SetHeight(db.height)
+		helper.env.frame.tex:Width(db.width)
+		helper.env.frame.tex:Height(db.height)
 		if db.sparkTexture then
 			helper.env.frame.tex:SetTexture("Interface/RaidFrame/Shield-Overshield")
 			helper.env.frame.tex:SetBlendMode("ADD")
@@ -175,7 +175,7 @@ local function updateUI()
 	end
 
 	tex:ClearAllPoints()
-	tex:SetPoint("CENTER", frame, "LEFT", percent * frame:GetWidth(), helper.db.yOffset)
+	tex:Point("CENTER", frame, "LEFT", percent * frame:GetWidth(), helper.db.yOffset)
 	tex:Show()
 end
 

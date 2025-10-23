@@ -36,7 +36,7 @@ local function ReskinQuestIcon(button)
 	end
 
 	if not button.IsSkinned then
-		button:SetSize(24, 24)
+		button:Size(24)
 		button:SetNormalTexture(E.ClearTexture)
 		button:SetPushedTexture(E.ClearTexture)
 		button:GetHighlightTexture():SetColorTexture(1, 1, 1, 0.25)

@@ -38,13 +38,13 @@ function S:RaiderIO_DelayedSkinning()
 						child:DisableDrawLayer("BORDER")
 						self:Proxy("HandleEditBox", child)
 						child:SetTextInsets(2, 2, 2, 2)
-						child:SetHeight(30)
+						child:Height(30)
 
 						if child:GetNumPoints() == 1 then
 							local point, relativeTo, relativePoint, xOffset, yOffset = child:GetPoint(1)
 							yOffset = -3
 							child:ClearAllPoints()
-							child:SetPoint(point, relativeTo, relativePoint, xOffset, yOffset)
+							child:Point(point, relativeTo, relativePoint, xOffset, yOffset)
 						end
 
 						child.IsSkinned = true
@@ -116,7 +116,7 @@ function S:RaiderIO_GuildWeeklyFrame()
 			frame.Title:SetShadowColor(0, 0, 0, 0)
 			F.SetFont(frame.SubTitle)
 			frame.SubTitle:SetShadowColor(0, 0, 0, 0)
-			frame.SwitchGuildBest:SetSize(18, 18)
+			frame.SwitchGuildBest:Size(18)
 			self:Proxy("HandleCheckBox", frame.SwitchGuildBest)
 		end
 	end)

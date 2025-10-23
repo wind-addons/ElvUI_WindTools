@@ -65,7 +65,7 @@ local function reskinProgressBar(bar)
 	bar.text:Point("CENTER")
 	bar:SetStatusBarTexture(E.media.normTex)
 	bar:CreateBackdrop()
-	bar:SetHeight(15)
+	bar:Height(15)
 end
 
 local function reskinTabs(tabsFrame)

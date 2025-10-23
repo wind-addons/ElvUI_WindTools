@@ -74,8 +74,8 @@ function DI:ShowFillInButton(dialog)
 
 	-- 覆盖住
 	editBoxFrame:Hide()
-	self.fillInButton:SetPoint("TOPLEFT", editBoxFrame, "TOPLEFT", -2, -4)
-	self.fillInButton:SetPoint("BOTTOMRIGHT", editBoxFrame, "BOTTOMRIGHT", 2, 4)
+	self.fillInButton:Point("TOPLEFT", editBoxFrame, "TOPLEFT", -2, -4)
+	self.fillInButton:Point("BOTTOMRIGHT", editBoxFrame, "BOTTOMRIGHT", 2, 4)
 
 	-- 点击后填入 Delete
 	self.fillInButton:SetText(C.StringByTemplate(L["Click to confirm"], "rose-500"))
@@ -97,19 +97,19 @@ function DI:ResizeQuestItemPopup(dialog)
 	local isQuestItem = dialog.which == "DELETE_QUEST_ITEM" or dialog.which == "DELETE_GOOD_QUEST_ITEM"
 
 	if isQuestItem then
-		dialog:SetSize(400, 180)
+		dialog:Size(400, 180)
 
 		local button1 = dialog:GetButton1()
 		local button2 = dialog:GetButton2()
 
 		if button1 then
 			button1:ClearAllPoints()
-			button1:SetPoint("BOTTOMRIGHT", dialog, "BOTTOM", -10, 20)
+			button1:Point("BOTTOMRIGHT", dialog, "BOTTOM", -10, 20)
 		end
 
 		if button2 then
 			button2:ClearAllPoints()
-			button2:SetPoint("BOTTOMLEFT", dialog, "BOTTOM", 10, 20)
+			button2:Point("BOTTOMLEFT", dialog, "BOTTOM", 10, 20)
 		end
 	end
 end

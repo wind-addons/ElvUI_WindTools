@@ -15,7 +15,7 @@ function S:BugSack_InterfaceOptionOnShow(frame)
 
 		local point, relativeTo, relativePoint, xOffset, yOffset = dropdown:GetPoint(1)
 		dropdown:ClearAllPoints()
-		dropdown:SetPoint(point, relativeTo, relativePoint, xOffset - 1, yOffset)
+		dropdown:Point(point, relativeTo, relativePoint, xOffset - 1, yOffset)
 
 		dropdown.__windSkinMarked = true
 	end
@@ -26,7 +26,7 @@ function S:BugSack_InterfaceOptionOnShow(frame)
 
 		local point, relativeTo, relativePoint = dropdown:GetPoint(1)
 		dropdown:ClearAllPoints()
-		dropdown:SetPoint(point, relativeTo, relativePoint)
+		dropdown:Point(point, relativeTo, relativePoint)
 
 		dropdown.__windSkinMarked = true
 	end
@@ -45,7 +45,7 @@ function S:BugSack_InterfaceOptionOnShow(frame)
 				local point, relativeTo, relativePoint = child:GetPoint(1)
 				if point == "LEFT" and relativeTo == _G.BugSackSoundDropdown then
 					child:ClearAllPoints()
-					child:SetPoint(point, relativeTo, relativePoint, 0, 3)
+					child:Point(point, relativeTo, relativePoint, 0, 3)
 				end
 			end
 		end
@@ -88,10 +88,10 @@ function S:BugSack_OpenSack()
 
 	if _G.BugSackNextButton and _G.BugSackPrevButton and _G.BugSackSendButton then
 		local width, height = _G.BugSackSendButton:GetSize()
-		_G.BugSackSendButton:SetSize(width - 8, height)
+		_G.BugSackSendButton:Size(width - 8, height)
 		_G.BugSackSendButton:ClearAllPoints()
-		_G.BugSackSendButton:SetPoint("LEFT", _G.BugSackPrevButton, "RIGHT", 4, 0)
-		_G.BugSackSendButton:SetPoint("RIGHT", _G.BugSackNextButton, "LEFT", -4, 0)
+		_G.BugSackSendButton:Point("LEFT", _G.BugSackPrevButton, "RIGHT", 4, 0)
+		_G.BugSackSendButton:Point("RIGHT", _G.BugSackNextButton, "LEFT", -4, 0)
 
 		self:Proxy("HandleButton", _G.BugSackNextButton)
 		self:Proxy("HandleButton", _G.BugSackPrevButton)
@@ -116,7 +116,7 @@ function S:BugSack_OpenSack()
 			yOffset = -2
 		end
 
-		tab:SetPoint(point, relativeTo, relativePoint, xOffset, yOffset)
+		tab:Point(point, relativeTo, relativePoint, xOffset, yOffset)
 	end
 
 	bugSackFrame.__windSkin = true

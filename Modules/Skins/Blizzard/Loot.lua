@@ -22,12 +22,12 @@ function S:LootFrame()
 	self:CreateShadow(_G.GroupLootHistoryFrame.ResizeButton)
 
 	_G.GroupLootHistoryFrame.ResizeButton:SetTemplate("Transparent")
-	_G.GroupLootHistoryFrame:SetWidth(300)
-	_G.GroupLootHistoryFrame.ResizeButton:SetWidth(300)
+	_G.GroupLootHistoryFrame:Width(300)
+	_G.GroupLootHistoryFrame.ResizeButton:Width(300)
 
 	_G.GroupLootHistoryFrame.ScrollBox:ClearAllPoints()
-	_G.GroupLootHistoryFrame.ScrollBox:SetPoint("TOPLEFT", _G.GroupLootHistoryFrame, "TOPLEFT", 6, -90)
-	_G.GroupLootHistoryFrame.ScrollBox:SetPoint("BOTTOMRIGHT", _G.GroupLootHistoryFrame, "BOTTOMRIGHT", -23, 5)
+	_G.GroupLootHistoryFrame.ScrollBox:Point("TOPLEFT", _G.GroupLootHistoryFrame, "TOPLEFT", 6, -90)
+	_G.GroupLootHistoryFrame.ScrollBox:Point("BOTTOMRIGHT", _G.GroupLootHistoryFrame, "BOTTOMRIGHT", -23, 5)
 
 	F.Move(_G.GroupLootHistoryFrame.Timer, 0, -7)
 end

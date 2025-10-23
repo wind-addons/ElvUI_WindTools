@@ -10,7 +10,7 @@ function S:PremadeGroupsFilter_SetPoint(frame, point, relativeFrame, relativePoi
 	if point == "TOPLEFT" and relativePoint == "TOPRIGHT" then
 		if (not x and not y) or (x == 0 and y == 0) then
 			frame:ClearAllPoints()
-			frame:SetPoint("TOPLEFT", relativeFrame, "TOPRIGHT", 5, 0)
+			frame:Point("TOPLEFT", relativeFrame, "TOPRIGHT", 5, 0)
 		end
 	end
 end
@@ -28,8 +28,8 @@ function S:PremadeGroupsFilter()
 	-- Extend 1 pixel looks as same height as PVEFrame
 	frame.backdrop:SetTemplate("Transparent")
 	frame.backdrop:ClearAllPoints()
-	frame.backdrop:SetPoint("TOPLEFT", frame, "TOPLEFT", -1, 0)
-	frame.backdrop:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 1, -1)
+	frame.backdrop:Point("TOPLEFT", frame, "TOPLEFT", -1, 0)
+	frame.backdrop:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 1, -1)
 
 	self:CreateBackdropShadow(frame, true)
 	self:MerathilisUISkin(frame)
@@ -93,7 +93,7 @@ function S:PremadeGroupsFilter()
 			end
 
 			if line == "Defeated" and frame[line].Title then
-				frame[line].Title:SetHeight(18)
+				frame[line].Title:Height(18)
 			end
 
 			if frame[line].DropDown then
@@ -123,7 +123,7 @@ function S:PremadeGroupsFilter()
 	if _G.UsePFGButton then
 		self:Proxy("HandleCheckBox", _G.UsePFGButton)
 		_G.UsePFGButton:ClearAllPoints()
-		_G.UsePFGButton:SetPoint("RIGHT", _G.LFGListFrame.SearchPanel.RefreshButton, "LEFT", -50, 0)
+		_G.UsePFGButton:Point("RIGHT", _G.LFGListFrame.SearchPanel.RefreshButton, "LEFT", -50, 0)
 	end
 end
 

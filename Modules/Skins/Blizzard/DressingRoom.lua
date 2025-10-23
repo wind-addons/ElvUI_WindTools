@@ -21,7 +21,7 @@ function S:DressUpFrame()
 			F.SetFont(frame.ItemName)
 			local width = frame.ItemSlot:GetWidth()
 			F.SetFont(frame.ItemSlot)
-			frame.ItemSlot:SetWidth(width + 4)
+			frame.ItemSlot:Width(width + 4)
 
 			frame.__windSkin = true
 		end)

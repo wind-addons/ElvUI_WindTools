@@ -12,7 +12,7 @@ function T:CreateThanksButton()
 		end
 	end)
 
-	self.thanksButton:SetPoint("BOTTOMLEFT", _G.TradeFrame, "BOTTOMLEFT", 5, 5)
+	self.thanksButton:Point("BOTTOMLEFT", _G.TradeFrame, "BOTTOMLEFT", 5, 5)
 end
 
 function T:TRADE_SHOW()

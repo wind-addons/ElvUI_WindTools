@@ -57,7 +57,7 @@ local function StyleSilverDragonLootWindow(_, frame)
 	if frame.close then
 		S:Proxy("HandleCloseButton", frame.close)
 		frame.close:SetHitRectInsets(0, 0, 0, 0)
-		frame.close:Size(18, 18)
+		frame.close:Size(18)
 		frame.close:ClearAllPoints()
 		frame.close:Point("TOPRIGHT", frame, "TOPRIGHT", -4, -4)
 	end
@@ -87,7 +87,7 @@ local function StyleSilverDragonPopup(popup, module)
 		popup.close:SetHitRectInsets(0, 0, 0, 0)
 		popup.close:SetFrameLevel(popup:GetFrameLevel() + 2)
 		popup.close:Point("TOPRIGHT", popup, "TOPRIGHT", -3, -3)
-		popup.close:Size(18, 18)
+		popup.close:Size(18)
 		if popup.close.backdrop then
 			S:CreateShadow(popup.close.backdrop)
 		end
@@ -112,14 +112,14 @@ local function StyleSilverDragonPopup(popup, module)
 	if popup.shine then
 		popup.shine:Point("TOPLEFT", 0, 0)
 		popup.shine:Point("BOTTOMLEFT", 0, 0)
-		popup.shine:SetWidth(32)
+		popup.shine:Width(32)
 	end
 	if popup.dead then
 		popup.dead:SetAtlas("XMarksTheSpot")
 		popup.dead:SetAlpha(0)
 	end
 	if popup.raidIcon then
-		popup.raidIcon:Size(20, 20)
+		popup.raidIcon:Size(20)
 		popup.raidIcon:SetTexture([[Interface\TargetingFrame\UI-RaidTargetingIcons]])
 	end
 
@@ -155,7 +155,7 @@ local function StyleSilverDragonHistoryWindow(frame, collapseButtonStatus)
 	end
 
 	if frame.collapseButton then
-		frame.collapseButton:Size(20, 20)
+		frame.collapseButton:Size(20)
 		frame.collapseButton:StripTextures()
 
 		frame.collapseButton.SetNormalAtlas = E.noop
@@ -174,7 +174,7 @@ local function StyleSilverDragonHistoryWindow(frame, collapseButtonStatus)
 		for _, tex in pairs(texes) do
 			tex:ClearAllPoints()
 			tex:Point("CENTER")
-			tex:Size(12, 12)
+			tex:Size(12)
 		end
 
 		hooksecurefunc(frame.collapseButton, "SetButtonMode", function(button, mode)
@@ -187,7 +187,7 @@ local function StyleSilverDragonHistoryWindow(frame, collapseButtonStatus)
 	end
 
 	if frame.clearButton then
-		frame.clearButton:Size(20, 20)
+		frame.clearButton:Size(20)
 		frame.clearButton:StripTextures()
 
 		S:Proxy("HandleButton", frame.clearButton)
@@ -201,7 +201,7 @@ local function StyleSilverDragonHistoryWindow(frame, collapseButtonStatus)
 			tex:SetTexture(W.Media.Icons.buttonDelete)
 			tex:ClearAllPoints()
 			tex:Point("CENTER")
-			tex:Size(14, 14)
+			tex:Size(14)
 		end
 	end
 
@@ -288,7 +288,7 @@ local function ConfigureSilverDragonPopup(popup, config, module)
 		popup.modelbg:SetVertexColor(0.2, 0.2, 0.2, 0.8)
 		popup.modelbg:Point("TOPLEFT", 2, -2)
 		popup.modelbg:Point("BOTTOMLEFT", 2, 2)
-		popup.modelbg:SetWidth(popup:GetHeight() - 4)
+		popup.modelbg:Width(popup:GetHeight() - 4)
 		module:SizeModel(popup, 0, 0)
 
 		popup.title:Point("TOPLEFT", popup.modelbg, "TOPRIGHT", 8, -8)
@@ -299,7 +299,7 @@ local function ConfigureSilverDragonPopup(popup, config, module)
 
 		popup.raidIcon:Point("BOTTOM", popup.modelbg, "TOP", 0, 2)
 		popup.lootIcon:Point("BOTTOMLEFT", popup.modelbg, "BOTTOMLEFT", -2, -2)
-		popup.lootIcon:Size(24, 24)
+		popup.lootIcon:Size(24)
 
 		popup.dead:SetAllPoints(popup.modelbg)
 		popup.shine.animIn.translate:SetOffset(240, 0)
@@ -315,7 +315,7 @@ local function ConfigureSilverDragonPopup(popup, config, module)
 
 		popup.raidIcon:Point("BOTTOM", popup.title, "TOP", 0, 2)
 		popup.lootIcon:Point("BOTTOMLEFT", 4, 4)
-		popup.lootIcon:Size(20, 20)
+		popup.lootIcon:Size(20)
 
 		popup.dead:SetAllPoints(popup)
 		popup.shine.animIn.translate:SetOffset(180, 0)

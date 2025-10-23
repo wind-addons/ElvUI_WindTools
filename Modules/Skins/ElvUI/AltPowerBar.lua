@@ -16,7 +16,7 @@ function S:ElvUI_AltPowerBar()
 	self:CreateBackdropShadow(bar)
 
 	bar.text:ClearAllPoints()
-	bar.text:SetPoint("CENTER", bar, "CENTER", 0, 1)
+	bar.text:Point("CENTER", bar, "CENTER", 0, 1)
 end
 
 S:AddCallback("ElvUI_AltPowerBar")

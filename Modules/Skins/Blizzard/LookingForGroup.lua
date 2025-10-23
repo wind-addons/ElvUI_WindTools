@@ -40,8 +40,8 @@ function S:LookingForGroupFrames()
 	-- if no party found, the button also need skin
 	S:Proxy("HandleButton", _G.LFGListFrame.SearchPanel.ScrollBox.StartGroupButton)
 
-	_G.LFGListFrame.SearchPanel.FilterButton:SetWidth(93)
-	_G.LFGListFrame.SearchPanel.FilterButton.SetWidth = E.noop
+	_G.LFGListFrame.SearchPanel.FilterButton:Width(93)
+	F.InternalizeMethod(_G.LFGListFrame.SearchPanel.FilterButton, "SetWidth", true)
 end
 
 S:AddCallback("LookingForGroupFrames")

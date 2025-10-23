@@ -36,7 +36,7 @@ function A:ConstructTextures(frame)
 		local glow = absorb:CreateTexture(nil, "OVERLAY", nil, 7)
 		glow:SetTexture("Interface/RaidFrame/Shield-Overshield")
 		glow:SetBlendMode("ADD")
-		glow:SetWidth(16)
+		glow:Width(16)
 		absorb.glow = glow
 	end
 end
@@ -62,21 +62,21 @@ function A:ConfigureTextures(unitFramesModule, frame)
 			if isHorizontal then
 				local anchor = isReverse and "RIGHT" or "LEFT"
 				overlay.SetOverlaySize = function(overlayObj, percent)
-					overlayObj:SetWidth(frame.Health:GetWidth() * percent)
+					overlayObj:Width(frame.Health:GetWidth() * percent)
 					overlayObj:SetTexCoord(0, overlay:GetWidth() / 32, 0, overlay:GetHeight() / 32)
 				end
-				overlay:SetPoint("TOP" .. anchor, pred.absorbBar, "TOP" .. anchor)
-				overlay:SetPoint("BOTTOM" .. anchor, pred.absorbBar, "BOTTOM" .. anchor)
+				overlay:Point("TOP" .. anchor, pred.absorbBar, "TOP" .. anchor)
+				overlay:Point("BOTTOM" .. anchor, pred.absorbBar, "BOTTOM" .. anchor)
 			else
 				local anchor = isReverse and "TOP" or "BOTTOM"
 
 				overlay.SetOverlaySize = function(overlayObj, percent)
-					overlayObj:SetHeight(frame.Health:GetHeight() * percent)
+					overlayObj:Height(frame.Health:GetHeight() * percent)
 					overlayObj:SetTexCoord(0, overlay:GetWidth() / 32, 0, overlay:GetHeight() / 32)
 				end
 
-				overlay:SetPoint(anchor .. "LEFT", pred.absorbBar, anchor .. "LEFT")
-				overlay:SetPoint(anchor .. "RIGHT", pred.absorbBar, anchor .. "RIGHT")
+				overlay:Point(anchor .. "LEFT", pred.absorbBar, anchor .. "LEFT")
+				overlay:Point(anchor .. "RIGHT", pred.absorbBar, anchor .. "RIGHT")
 			end
 			overlay:Show()
 		else
@@ -88,8 +88,8 @@ function A:ConfigureTextures(unitFramesModule, frame)
 			if isHorizontal then
 				local offset = isReverse and -3 or 3
 				local anchor = isReverse and "LEFT" or "RIGHT"
-				glow:SetPoint("TOP", frame.Health, "TOP" .. anchor, offset, 2)
-				glow:SetPoint("BOTTOM", frame.Health, "BOTTOM" .. anchor, offset, -2)
+				glow:Point("TOP", frame.Health, "TOP" .. anchor, offset, 2)
+				glow:Point("BOTTOM", frame.Health, "BOTTOM" .. anchor, offset, -2)
 				glow:SetRotation(rad(isReverse and 180 or 0))
 			else
 				local offset = isReverse and 2 or -2
@@ -97,8 +97,8 @@ function A:ConfigureTextures(unitFramesModule, frame)
 				local healthBarWidth = frame.Health:GetWidth()
 				local halfWidth = healthBarWidth / 2
 
-				glow:SetPoint("TOP", frame.Health, anchor, 0, halfWidth + 2 + offset)
-				glow:SetPoint("BOTTOM", frame.Health, anchor, 0, offset - 1 - halfWidth)
+				glow:Point("TOP", frame.Health, anchor, 0, halfWidth + 2 + offset)
+				glow:Point("BOTTOM", frame.Health, anchor, 0, offset - 1 - halfWidth)
 				glow:SetRotation(rad(isReverse and 90 or 270))
 			end
 			glow:Show()

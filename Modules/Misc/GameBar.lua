@@ -799,29 +799,29 @@ function GB:ConstructBar()
 	end
 
 	local bar = CreateFrame("Frame", "WTGameBar", E.UIParent)
-	bar:SetSize(800, 60)
-	bar:SetPoint("TOP", 0, -20)
+	bar:Size(800, 60)
+	bar:Point("TOP", 0, -20)
 	bar:SetFrameStrata("MEDIUM")
 
 	bar:SetScript("OnEnter", GenerateClosure(self.OnEnter, self))
 	bar:SetScript("OnLeave", GenerateClosure(self.OnLeave, self))
 
 	local middlePanel = CreateFrame("Button", "WTGameBarMiddlePanel", bar, "SecureActionButtonTemplate")
-	middlePanel:SetSize(81, 50)
-	middlePanel:SetPoint("CENTER")
+	middlePanel:Size(81, 50)
+	middlePanel:Point("CENTER")
 	middlePanel:CreateBackdrop("Transparent")
 	middlePanel:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
 	bar.middlePanel = middlePanel
 
 	local leftPanel = CreateFrame("Frame", "WTGameBarLeftPanel", bar)
-	leftPanel:SetSize(300, 40)
-	leftPanel:SetPoint("RIGHT", middlePanel, "LEFT", -10, 0)
+	leftPanel:Size(300, 40)
+	leftPanel:Point("RIGHT", middlePanel, "LEFT", -10, 0)
 	leftPanel:CreateBackdrop("Transparent")
 	bar.leftPanel = leftPanel
 
 	local rightPanel = CreateFrame("Frame", "WTGameBarRightPanel", bar)
-	rightPanel:SetSize(300, 40)
-	rightPanel:SetPoint("LEFT", middlePanel, "RIGHT", 10, 0)
+	rightPanel:Size(300, 40)
+	rightPanel:Point("LEFT", middlePanel, "RIGHT", 10, 0)
 	rightPanel:CreateBackdrop("Transparent")
 	bar.rightPanel = rightPanel
 
@@ -851,12 +851,12 @@ end
 
 function GB:ConstructTimeArea()
 	local colon = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
-	colon:SetPoint("CENTER")
+	colon:Point("CENTER")
 	F.SetFontWithDB(colon, self.db.time.font)
 	self.bar.middlePanel.colon = colon
 
 	local hour = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
-	hour:SetPoint("RIGHT", colon, "LEFT", 1, 0)
+	hour:Point("RIGHT", colon, "LEFT", 1, 0)
 	F.SetFontWithDB(hour, self.db.time.font)
 	self.bar.middlePanel.hour = hour
 
@@ -866,7 +866,7 @@ function GB:ConstructTimeArea()
 	animationSetFinished(hour.group.anim)
 
 	local minutes = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
-	minutes:SetPoint("LEFT", colon, "RIGHT", 0, 0)
+	minutes:Point("LEFT", colon, "RIGHT", 0, 0)
 	F.SetFontWithDB(minutes, self.db.time.font)
 	self.bar.middlePanel.minutes = minutes
 
@@ -875,12 +875,12 @@ function GB:ConstructTimeArea()
 	minutes.group.anim:SetColorType("text")
 
 	local text = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
-	text:SetPoint("TOP", self.bar, "BOTTOM", 0, -5)
+	text:Point("TOP", self.bar, "BOTTOM", 0, -5)
 	F.SetFontWithDB(text, self.db.additionalText.font)
 	text:SetAlpha(self.db.time.alwaysSystemInfo and 1 or 0)
 	self.bar.middlePanel.text = text
 
-	self.bar.middlePanel:SetSize(self.db.timeAreaWidth, self.db.timeAreaHeight)
+	self.bar.middlePanel:Size(self.db.timeAreaWidth, self.db.timeAreaHeight)
 
 	self:UpdateTime()
 	self.timeAreaUpdateTimer = C_Timer_NewTicker(self.db.time.interval, function()
@@ -1023,7 +1023,7 @@ function GB:UpdateTime()
 	panel.colon:ClearAllPoints()
 
 	local offset = (panel.hour:GetStringWidth() - panel.minutes:GetStringWidth()) / 2
-	panel.colon:SetPoint("CENTER", offset, -1)
+	panel.colon:Point("CENTER", offset, -1)
 end
 
 function GB:UpdateTimeArea()
@@ -1037,9 +1037,9 @@ function GB:UpdateTimeArea()
 
 	panel.text:ClearAllPoints()
 	if self.db.tooltipsAnchor == "ANCHOR_TOP" then
-		panel.text:SetPoint("BOTTOM", self.bar, "TOP", 0, 5)
+		panel.text:Point("BOTTOM", self.bar, "TOP", 0, 5)
 	else
-		panel.text:SetPoint("TOP", self.bar, "BOTTOM", 0, -5)
+		panel.text:Point("TOP", self.bar, "BOTTOM", 0, -5)
 	end
 
 	if self.db.time.alwaysSystemInfo then
@@ -1121,12 +1121,12 @@ function GB:ConstructButton()
 	end
 
 	local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate")
-	button:SetSize(self.db.buttonSize, self.db.buttonSize)
+	button:Size(self.db.buttonSize, self.db.buttonSize)
 	button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
 
 	local mainTex = button:CreateTexture(nil, "ARTWORK")
-	mainTex:SetPoint("CENTER")
-	mainTex:SetSize(self.db.buttonSize, self.db.buttonSize)
+	mainTex:Point("CENTER")
+	mainTex:Size(self.db.buttonSize, self.db.buttonSize)
 	mainTex.group = _G.CreateAnimationGroup(mainTex)
 	mainTex.group.anim = mainTex.group:CreateAnimation("color")
 	mainTex.group.anim:SetColorType("vertex")
@@ -1135,12 +1135,12 @@ function GB:ConstructButton()
 
 	local notificationTex = button:CreateTexture(nil, "OVERLAY")
 	notificationTex:SetTexture(W.Media.Icons.barNotification)
-	notificationTex:SetPoint("TOPRIGHT")
-	notificationTex:SetSize(0.38 * self.db.buttonSize, 0.38 * self.db.buttonSize)
+	notificationTex:Point("TOPRIGHT")
+	notificationTex:Size(0.38 * self.db.buttonSize)
 	button.notificationTex = notificationTex
 
 	local additionalText = button:CreateFontString(nil, "OVERLAY")
-	additionalText:SetPoint(self.db.additionalText.anchor, self.db.additionalText.x, self.db.additionalText.y)
+	additionalText:Point(self.db.additionalText.anchor, self.db.additionalText.x, self.db.additionalText.y)
 	F.SetFontWithDB(additionalText, self.db.additionalText.font)
 	additionalText:SetJustifyH("CENTER")
 	additionalText:SetJustifyV("MIDDLE")
@@ -1169,7 +1169,7 @@ function GB:UpdateButton(button, buttonType)
 	end
 
 	local config = ButtonTypes[buttonType]
-	button:SetSize(self.db.buttonSize, self.db.buttonSize)
+	button:Size(self.db.buttonSize, self.db.buttonSize)
 	button.type = buttonType
 	button.name = config.name
 	button.tooltips = config.tooltips
@@ -1207,7 +1207,7 @@ function GB:UpdateButton(button, buttonType)
 	-- Normal
 	button.mainTex.group:Stop()
 	button.mainTex:SetTexture(config.icon)
-	button.mainTex:SetSize(self.db.buttonSize, self.db.buttonSize)
+	button.mainTex:Size(self.db.buttonSize, self.db.buttonSize)
 	animationReset(button.mainTex.group.anim)
 	button.mainTex.group.anim.isEnterMode = true
 
@@ -1252,11 +1252,7 @@ function GB:UpdateButton(button, buttonType)
 		end
 
 		button.additionalText:ClearAllPoints()
-		button.additionalText:SetPoint(
-			self.db.additionalText.anchor,
-			self.db.additionalText.x,
-			self.db.additionalText.y
-		)
+		button.additionalText:Point(self.db.additionalText.anchor, self.db.additionalText.x, self.db.additionalText.y)
 		F.SetFontWithDB(button.additionalText, self.db.additionalText.font)
 		button.additionalText:Show()
 	else
@@ -1314,9 +1310,9 @@ function GB:UpdateLayout()
 			button:Show()
 			button:ClearAllPoints()
 			if not lastButton then
-				button:SetPoint("LEFT", self.bar.leftPanel, "LEFT", self.db.backdropSpacing, 0)
+				button:Point("LEFT", self.bar.leftPanel, "LEFT", self.db.backdropSpacing, 0)
 			else
-				button:SetPoint("LEFT", lastButton, "RIGHT", self.db.spacing, 0)
+				button:Point("LEFT", lastButton, "RIGHT", self.db.spacing, 0)
 			end
 			lastButton = button
 			numLeftButtons = numLeftButtons + 1
@@ -1333,7 +1329,7 @@ function GB:UpdateLayout()
 			+ (numLeftButtons - 1) * self.db.spacing
 			+ numLeftButtons * self.db.buttonSize
 		local panelHeight = self.db.backdropSpacing * 2 + self.db.buttonSize
-		self.bar.leftPanel:SetSize(panelWidth, panelHeight)
+		self.bar.leftPanel:Size(panelWidth, panelHeight)
 	end
 
 	-- Right Panel
@@ -1344,9 +1340,9 @@ function GB:UpdateLayout()
 			button:Show()
 			button:ClearAllPoints()
 			if not lastButton then
-				button:SetPoint("LEFT", self.bar.rightPanel, "LEFT", self.db.backdropSpacing, 0)
+				button:Point("LEFT", self.bar.rightPanel, "LEFT", self.db.backdropSpacing, 0)
 			else
-				button:SetPoint("LEFT", lastButton, "RIGHT", self.db.spacing, 0)
+				button:Point("LEFT", lastButton, "RIGHT", self.db.spacing, 0)
 			end
 			lastButton = button
 			numRightButtons = numRightButtons + 1
@@ -1363,11 +1359,11 @@ function GB:UpdateLayout()
 			+ (numRightButtons - 1) * self.db.spacing
 			+ numRightButtons * self.db.buttonSize
 		local panelHeight = self.db.backdropSpacing * 2 + self.db.buttonSize
-		self.bar.rightPanel:SetSize(panelWidth, panelHeight)
+		self.bar.rightPanel:Size(panelWidth, panelHeight)
 	end
 
 	-- Time Panel
-	self.bar.middlePanel:SetSize(self.db.timeAreaWidth, self.db.timeAreaHeight)
+	self.bar.middlePanel:Size(self.db.timeAreaWidth, self.db.timeAreaHeight)
 
 	-- Update the size of moveable zones
 	local areaWidth = 20 + self.bar.middlePanel:GetWidth()
@@ -1380,7 +1376,7 @@ function GB:UpdateLayout()
 	local rightHeight = self.bar.rightPanel:IsShown() and self.bar.rightPanel:GetHeight() or 0
 	areaHeight = max(max(leftHeight, rightHeight), areaHeight)
 
-	self.bar:SetSize(areaWidth, areaHeight)
+	self.bar:Size(areaWidth, areaHeight)
 end
 
 function GB:NEW_TOY_ADDED(_, toyID)

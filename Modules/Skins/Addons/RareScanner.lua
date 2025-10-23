@@ -31,7 +31,7 @@ function S:RareScanner()
 	if scannerButton.CloseButton then
 		self:Proxy("HandleCloseButton", scannerButton.CloseButton)
 		scannerButton.CloseButton:ClearAllPoints()
-		scannerButton.CloseButton:Size(20, 20)
+		scannerButton.CloseButton:Size(20)
 		scannerButton.CloseButton:Point("TOPRIGHT", -3, -3)
 	end
 
@@ -42,7 +42,7 @@ function S:RareScanner()
 		scannerButton.FilterEntityButton:SetPushedTexture(W.Media.Icons.buttonMinus, true)
 		scannerButton.FilterEntityButton:GetPushedTexture():SetTexCoord(0, 1, 0, 1)
 		scannerButton.FilterEntityButton:ClearAllPoints()
-		scannerButton.FilterEntityButton:Size(16, 16)
+		scannerButton.FilterEntityButton:Size(16)
 		scannerButton.FilterEntityButton:Point("TOPLEFT", scannerButton, "TOPLEFT", 5, -5)
 	end
 
@@ -53,7 +53,7 @@ function S:RareScanner()
 		scannerButton.UnFilterEntityButton:SetPushedTexture([[Interface\WorldMap\Skull_64]], true)
 		scannerButton.UnFilterEntityButton:GetPushedTexture():SetTexCoord(0, 0.5, 0, 0.5)
 		scannerButton.UnFilterEntityButton:ClearAllPoints()
-		scannerButton.UnFilterEntityButton:Size(16, 16)
+		scannerButton.UnFilterEntityButton:Size(16)
 		scannerButton.UnFilterEntityButton:Point("TOPLEFT", scannerButton, "TOPLEFT", 5, -5)
 	end
 
@@ -107,7 +107,7 @@ function S:RareScanner()
 					end
 
 					local size = button.Icon:GetWidth() - 2
-					button.Icon:Size(size, size)
+					button.Icon:Size(size)
 
 					button:CreateBackdrop()
 					button.backdrop:SetOutside(button.Icon)
@@ -138,7 +138,7 @@ function S:RareScanner()
 			local ST = W:GetModule("SuperTracker")
 			if ST.db and ST.db.enable and ST.db.waypointParse.enable and ST.WorldMapInput then
 				child.EditBox:SetTemplate()
-				child.EditBox:SetHeight(ST.WorldMapInput:GetHeight())
+				child.EditBox:Height(ST.WorldMapInput:GetHeight())
 				child:Point("LEFT", ST.WorldMapInput, "RIGHT", 12, 0)
 				local placeholder = child.EditBox:CreateFontString(nil, "ARTWORK")
 				placeholder:FontTemplate(nil, nil, "OUTLINE")

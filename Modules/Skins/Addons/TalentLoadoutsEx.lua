@@ -63,8 +63,8 @@ function S:TalentLoadoutsEx()
 	frame:StripTextures()
 	frame:SetTemplate("Transparent")
 	frame:ClearAllPoints()
-	frame:SetPoint("TOPLEFT", _G.PlayerSpellsFrame, "TOPRIGHT", 1, 0)
-	frame:SetPoint("BOTTOMLEFT", _G.PlayerSpellsFrame, "BOTTOMRIGHT", 1, 0)
+	frame:Point("TOPLEFT", _G.PlayerSpellsFrame, "TOPRIGHT", 1, 0)
+	frame:Point("BOTTOMLEFT", _G.PlayerSpellsFrame, "BOTTOMRIGHT", 1, 0)
 	self:Proxy("HandleTrimScrollBar", frame.ScrollBar)
 	ReskinChildButton(frame)
 	self:CreateShadow(frame)
@@ -98,8 +98,8 @@ function S:TalentLoadoutsEx()
 			listFrame:SetTemplate("Transparent")
 			self:CreateShadow(listFrame)
 			listFrame:ClearAllPoints()
-			listFrame:SetPoint("TOPLEFT", popupFrame, "BOTTOMLEFT", 0, -4)
-			listFrame:SetPoint("TOPRIGHT", popupFrame, "BOTTOMRIGHT", 0, -4)
+			listFrame:Point("TOPLEFT", popupFrame, "BOTTOMLEFT", 0, -4)
+			listFrame:Point("TOPRIGHT", popupFrame, "BOTTOMRIGHT", 0, -4)
 
 			for _, child in pairs({ listFrame:GetChildren() }) do
 				if child.icon and child.name then
@@ -117,16 +117,16 @@ function S:TalentLoadoutsEx()
 			textFrame:SetTemplate("Transparent")
 			self:CreateShadow(textFrame)
 			textFrame:ClearAllPoints()
-			textFrame:SetPoint("BOTTOMLEFT", popupFrame, "TOPLEFT", 0, 4)
-			textFrame:SetPoint("BOTTOMRIGHT", popupFrame, "TOPRIGHT", 0, 4)
+			textFrame:Point("BOTTOMLEFT", popupFrame, "TOPLEFT", 0, 4)
+			textFrame:Point("BOTTOMRIGHT", popupFrame, "TOPRIGHT", 0, 4)
 			textFrame.Main:StripTextures()
 
 			local editBox = textFrame.Main and textFrame.Main.EditBox
 			if editBox then
 				self:Proxy("HandleEditBox", editBox)
 				editBox:ClearAllPoints()
-				editBox:SetPoint("TOPLEFT", 2, -2)
-				editBox:SetPoint("BOTTOMRIGHT", -2, 2)
+				editBox:Point("TOPLEFT", 2, -2)
+				editBox:Point("BOTTOMRIGHT", -2, 2)
 			end
 		end
 	end
@@ -158,7 +158,7 @@ function S:TalentLoadoutsEx()
 	if pvpFrame then
 		pvpFrame:StripTextures()
 		self:Proxy("HandleCheckBox", pvpFrame.CheckButton)
-		pvpFrame.CheckButton:Size(24, 24)
+		pvpFrame.CheckButton:Size(24)
 	end
 end
 

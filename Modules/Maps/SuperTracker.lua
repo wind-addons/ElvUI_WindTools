@@ -266,14 +266,14 @@ function ST:WaypointParse()
 
 	ST.WorldMapInput = editBox
 
-	editBox:SetPoint("TOPLEFT", _G.WorldMapFrame, "TOPLEFT", 3, -8)
+	editBox:Point("TOPLEFT", _G.WorldMapFrame, "TOPLEFT", 3, -8)
 	editBox:SetAutoFocus(false)
 
 	-- Placeholder
 	local placeholder = editBox:CreateFontString(nil, "ARTWORK")
 	placeholder:FontTemplate(nil, nil, "OUTLINE")
 	placeholder:SetText(C.StringByTemplate(L["Go to ..."], "gray-300"))
-	placeholder:SetPoint("CENTER", editBox, "CENTER", 0, 0)
+	placeholder:Point("CENTER", editBox, "CENTER", 0, 0)
 
 	editBox:HookScript("OnEditFocusGained", function()
 		placeholder:Hide()
@@ -291,7 +291,7 @@ function ST:WaypointParse()
 	-- Status Text
 	local statusText = editBox:CreateFontString(nil, "ARTWORK")
 	statusText:FontTemplate(nil, nil, "OUTLINE")
-	statusText:SetPoint("LEFT", editBox, "RIGHT", 5, 0)
+	statusText:Point("LEFT", editBox, "RIGHT", 5, 0)
 
 	-- worldquest-questmarker-questionmark
 	editBox:SetScript("OnTextChanged", function(eb)

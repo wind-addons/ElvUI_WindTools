@@ -132,7 +132,7 @@ end
 
 function EB:CreateButton(name, barDB)
 	local button = CreateFrame("Button", name, E.UIParent, "SecureActionButtonTemplate, BackdropTemplate") --[[@as Button]]
-	button:SetSize(barDB.buttonWidth, barDB.buttonHeight)
+	button:Size(barDB.buttonWidth, barDB.buttonHeight)
 	button:SetTemplate("Default")
 	button:SetClampedToScreen(true)
 	button:SetAttribute("type", "item")
@@ -140,13 +140,13 @@ function EB:CreateButton(name, barDB)
 	button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
 
 	local tex = button:CreateTexture(nil, "OVERLAY", nil)
-	tex:SetPoint("TOPLEFT", button, "TOPLEFT", 1, -1)
-	tex:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -1, 1)
+	tex:Point("TOPLEFT", button, "TOPLEFT", 1, -1)
+	tex:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -1, 1)
 	tex:SetTexCoord(unpack(E.TexCoords))
 
 	local qualityTier = button:CreateFontString(nil, "OVERLAY")
 	qualityTier:SetTextColor(1, 1, 1, 1)
-	qualityTier:SetPoint("TOPLEFT", button, "TOPLEFT")
+	qualityTier:Point("TOPLEFT", button, "TOPLEFT")
 	qualityTier:SetJustifyH("CENTER")
 	F.SetFontWithDB(qualityTier, {
 		size = barDB.qualityTier.size,
@@ -156,13 +156,13 @@ function EB:CreateButton(name, barDB)
 
 	local count = button:CreateFontString(nil, "OVERLAY")
 	count:SetTextColor(1, 1, 1, 1)
-	count:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT")
+	count:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT")
 	count:SetJustifyH("CENTER")
 	F.SetFontWithDB(count, barDB.countFont)
 
 	local bind = button:CreateFontString(nil, "OVERLAY")
 	bind:SetTextColor(0.6, 0.6, 0.6)
-	bind:SetPoint("TOPRIGHT", button, "TOPRIGHT")
+	bind:Point("TOPRIGHT", button, "TOPRIGHT")
 	bind:SetJustifyH("CENTER")
 	F.SetFontWithDB(bind, barDB.bindFont)
 
@@ -359,7 +359,7 @@ function EB:SetUpButton(button, itemData, slotID, waitGroup)
 end
 
 function EB:UpdateButtonSize(button, barDB)
-	button:SetSize(barDB.buttonWidth, barDB.buttonHeight)
+	button:Size(barDB.buttonWidth, barDB.buttonHeight)
 	local left, right, top, bottom = unpack(E.TexCoords)
 
 	if barDB.buttonWidth > barDB.buttonHeight then
@@ -407,8 +407,8 @@ function EB:CreateBar(id)
 
 	local anchor = CreateFrame("Frame", "WTExtraItemsBar" .. id .. "Anchor", E.UIParent)
 	anchor:SetClampedToScreen(true)
-	anchor:SetPoint("BOTTOMLEFT", _G.RightChatPanel or _G.LeftChatPanel, "TOPLEFT", 0, (id - 1) * 45)
-	anchor:SetSize(200, 40)
+	anchor:Point("BOTTOMLEFT", _G.RightChatPanel or _G.LeftChatPanel, "TOPLEFT", 0, (id - 1) * 45)
+	anchor:Size(200, 40)
 	E:CreateMover(
 		anchor,
 		"WTExtraItemsBar" .. id .. "Mover",
@@ -428,8 +428,8 @@ function EB:CreateBar(id)
 	bar.id = id
 	bar:ClearAllPoints()
 	bar:SetParent(anchor)
-	bar:SetPoint("CENTER", anchor, "CENTER", 0, 0)
-	bar:SetSize(200, 40)
+	bar:Point("CENTER", anchor, "CENTER", 0, 0)
+	bar:Size(200, 40)
 	bar:CreateBackdrop("Transparent")
 	bar:SetFrameStrata("LOW")
 
@@ -439,9 +439,9 @@ function EB:CreateBar(id)
 		bar.buttons[i] = self:CreateButton(bar:GetName() .. "Button" .. i, barDB)
 		bar.buttons[i]:SetParent(bar)
 		if i == 1 then
-			bar.buttons[i]:SetPoint("LEFT", bar, "LEFT", 5, 0)
+			bar.buttons[i]:Point("LEFT", bar, "LEFT", 5, 0)
 		else
-			bar.buttons[i]:SetPoint("LEFT", bar.buttons[i - 1], "RIGHT", 5, 0)
+			bar.buttons[i]:Point("LEFT", bar.buttons[i - 1], "RIGHT", 5, 0)
 		end
 	end
 
@@ -591,7 +591,7 @@ function EB:UpdateBar(id)
 	local numCols = buttonID > barDB.buttonsPerRow and barDB.buttonsPerRow or (buttonID - 1)
 	local newBarWidth = 2 * barDB.backdropSpacing + numCols * barDB.buttonWidth + (numCols - 1) * barDB.spacing
 	local newBarHeight = 2 * barDB.backdropSpacing + numRows * barDB.buttonHeight + (numRows - 1) * barDB.spacing
-	bar:SetSize(newBarWidth, newBarHeight)
+	bar:Size(newBarWidth, newBarHeight)
 
 	-- Update anchor size
 	local numMoverRows = ceil(barDB.numButtons / barDB.buttonsPerRow)
@@ -602,10 +602,10 @@ function EB:UpdateBar(id)
 	local newMoverHeight = 2 * barDB.backdropSpacing
 		+ numMoverRows * barDB.buttonHeight
 		+ (numMoverRows - 1) * barDB.spacing
-	bar:GetParent():SetSize(newMoverWidth, newMoverHeight)
+	bar:GetParent():Size(newMoverWidth, newMoverHeight)
 
 	bar:ClearAllPoints()
-	bar:SetPoint(barDB.anchor)
+	bar:Point(barDB.anchor)
 
 	-- Hide buttons not in use
 	if buttonID == 1 then
@@ -633,27 +633,27 @@ function EB:UpdateBar(id)
 
 		if i == 1 then
 			if anchor == "TOPLEFT" then
-				button:SetPoint(anchor, bar, anchor, barDB.backdropSpacing, -barDB.backdropSpacing)
+				button:Point(anchor, bar, anchor, barDB.backdropSpacing, -barDB.backdropSpacing)
 			elseif anchor == "TOPRIGHT" then
-				button:SetPoint(anchor, bar, anchor, -barDB.backdropSpacing, -barDB.backdropSpacing)
+				button:Point(anchor, bar, anchor, -barDB.backdropSpacing, -barDB.backdropSpacing)
 			elseif anchor == "BOTTOMLEFT" then
-				button:SetPoint(anchor, bar, anchor, barDB.backdropSpacing, barDB.backdropSpacing)
+				button:Point(anchor, bar, anchor, barDB.backdropSpacing, barDB.backdropSpacing)
 			elseif anchor == "BOTTOMRIGHT" then
-				button:SetPoint(anchor, bar, anchor, -barDB.backdropSpacing, barDB.backdropSpacing)
+				button:Point(anchor, bar, anchor, -barDB.backdropSpacing, barDB.backdropSpacing)
 			end
 		elseif i <= barDB.buttonsPerRow then
 			local nearest = bar.buttons[i - 1]
 			if anchor == "TOPLEFT" or anchor == "BOTTOMLEFT" then
-				button:SetPoint("LEFT", nearest, "RIGHT", barDB.spacing, 0)
+				button:Point("LEFT", nearest, "RIGHT", barDB.spacing, 0)
 			else
-				button:SetPoint("RIGHT", nearest, "LEFT", -barDB.spacing, 0)
+				button:Point("RIGHT", nearest, "LEFT", -barDB.spacing, 0)
 			end
 		else
 			local nearest = bar.buttons[i - barDB.buttonsPerRow]
 			if anchor == "TOPLEFT" or anchor == "TOPRIGHT" then
-				button:SetPoint("TOP", nearest, "BOTTOM", 0, -barDB.spacing)
+				button:Point("TOP", nearest, "BOTTOM", 0, -barDB.spacing)
 			else
-				button:SetPoint("BOTTOM", nearest, "TOP", 0, barDB.spacing)
+				button:Point("BOTTOM", nearest, "TOP", 0, barDB.spacing)
 			end
 		end
 
@@ -670,13 +670,13 @@ function EB:UpdateBar(id)
 		F.SetFontColorWithDB(button.bind, barDB.bindFont.color)
 
 		button.qualityTier:ClearAllPoints()
-		button.qualityTier:SetPoint("TOPLEFT", button, "TOPLEFT", barDB.qualityTier.xOffset, barDB.qualityTier.yOffset)
+		button.qualityTier:Point("TOPLEFT", button, "TOPLEFT", barDB.qualityTier.xOffset, barDB.qualityTier.yOffset)
 
 		button.count:ClearAllPoints()
-		button.count:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", barDB.countFont.xOffset, barDB.countFont.yOffset)
+		button.count:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", barDB.countFont.xOffset, barDB.countFont.yOffset)
 
 		button.bind:ClearAllPoints()
-		button.bind:SetPoint("TOPRIGHT", button, "TOPRIGHT", barDB.bindFont.xOffset, barDB.bindFont.yOffset)
+		button.bind:Point("TOPRIGHT", button, "TOPRIGHT", barDB.bindFont.xOffset, barDB.bindFont.yOffset)
 	end
 
 	if bar.registeredVisibility ~= barDB.visibility and bar.register then

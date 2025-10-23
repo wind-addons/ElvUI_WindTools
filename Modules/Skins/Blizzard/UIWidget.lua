@@ -113,7 +113,7 @@ function S:BlizzardUIWidget()
 			ReskinLabel(widget.Bar.Label)
 
 			if widget.isJailersTowerBar and self:CheckDB(nil, "scenario") then
-				widget.Bar:SetWidth(234)
+				widget.Bar:Width(234)
 			end
 		end
 	end)

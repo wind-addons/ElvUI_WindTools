@@ -51,8 +51,8 @@ function RM:UpdateBar()
 	for i = 1, 11 do
 		local button = self.bar.buttons[i]
 		button:ClearAllPoints()
-		button:SetSize(self.db.buttonSize, self.db.buttonSize)
-		button.tex:SetSize(self.db.buttonSize, self.db.buttonSize)
+		button:Size(self.db.buttonSize, self.db.buttonSize)
+		button.tex:Size(self.db.buttonSize, self.db.buttonSize)
 		button.animGroup:Stop()
 
 		if (i == 10 and not self.db.readyCheck) or (i == 11 and not self.db.countDown) then
@@ -61,15 +61,15 @@ function RM:UpdateBar()
 			button:Show()
 			if self.db.orientation == "VERTICAL" then
 				if i == 1 then
-					button:SetPoint("TOP", 0, -self.db.backdropSpacing)
+					button:Point("TOP", 0, -self.db.backdropSpacing)
 				else
-					button:SetPoint("TOP", previousButton, "BOTTOM", 0, -self.db.spacing)
+					button:Point("TOP", previousButton, "BOTTOM", 0, -self.db.spacing)
 				end
 			else
 				if i == 1 then
-					button:SetPoint("LEFT", self.db.backdropSpacing, 0)
+					button:Point("LEFT", self.db.backdropSpacing, 0)
 				else
-					button:SetPoint("LEFT", previousButton, "RIGHT", self.db.spacing, 0)
+					button:Point("LEFT", previousButton, "RIGHT", self.db.spacing, 0)
 				end
 			end
 			previousButton = button
@@ -85,8 +85,8 @@ function RM:UpdateBar()
 	end
 
 	self.bar:Show()
-	self.bar:SetSize(width, height)
-	self.barAnchor:SetSize(width, height)
+	self.bar:Size(width, height)
+	self.barAnchor:Size(width, height)
 
 	if self.db.backdrop then
 		self.bar.backdrop:Show()
@@ -195,7 +195,7 @@ function RM:CreateBar()
 	end
 
 	local frame = CreateFrame("Frame", nil, E.UIParent, "SecureHandlerStateTemplate")
-	frame:SetPoint("BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", -1, 3)
+	frame:Point("BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", -1, 3)
 	frame:SetFrameStrata("DIALOG")
 	self.barAnchor = frame
 
@@ -205,7 +205,7 @@ function RM:CreateBar()
 	frame:SetFrameStrata("LOW")
 	frame:CreateBackdrop("Transparent")
 	frame:ClearAllPoints()
-	frame:SetPoint("CENTER", self.barAnchor, "CENTER", 0, 0)
+	frame:Point("CENTER", self.barAnchor, "CENTER", 0, 0)
 	frame.buttons = {}
 	self.bar = frame
 
@@ -256,15 +256,15 @@ function RM:CreateButtons()
 			button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate") --[[@as Button]]
 			button:CreateBackdrop("Transparent")
 		end
-		button:SetSize(self.db.buttonSize, self.db.buttonSize)
+		button:Size(self.db.buttonSize)
 
 		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
 			S:CreateBackdropShadow(button)
 		end
 
 		local tex = button:CreateTexture(nil, "ARTWORK")
-		tex:SetSize(self.db.buttonSize, self.db.buttonSize)
-		tex:SetPoint("CENTER")
+		tex:Size(self.db.buttonSize)
+		tex:Point("CENTER")
 		button.tex = tex
 
 		if i < 9 then -- 标记

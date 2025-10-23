@@ -12,9 +12,9 @@ local function reskinToast(toast)
 	toast.texture:Kill()
 
 	S:Proxy("HandleButton", toast.reset)
-	toast.reset:SetWidth(toast.reset:GetWidth() - 3)
+	toast.reset:Width(toast.reset:GetWidth() - 3)
 	S:Proxy("HandleButton", toast.lock)
-	toast.lock:SetWidth(toast.lock:GetWidth() - 3)
+	toast.lock:Width(toast.lock:GetWidth() - 3)
 end
 
 local function reskinSetting(frame)

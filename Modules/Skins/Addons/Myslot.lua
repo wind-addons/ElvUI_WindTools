@@ -30,7 +30,7 @@ function S:Myslot()
 				if relativePoint == "RIGHT" then
 					xOfs = xOfs + 3
 					child:ClearAllPoints()
-					child:SetPoint(point, relativeTo, relativePoint, xOfs, yOfs)
+					child:Point(point, relativeTo, relativePoint, xOfs, yOfs)
 				end
 			end
 		elseif objType == "EditBox" then
@@ -49,7 +49,7 @@ function S:Myslot()
 			elseif child.initialize and child.Icon then
 				self:Proxy("HandleDropDownBox", child, 220, nil, true)
 				child:ClearAllPoints()
-				child:SetPoint("TOPLEFT", frame, 7, -45)
+				child:Point("TOPLEFT", frame, 7, -45)
 			end
 		end
 	end

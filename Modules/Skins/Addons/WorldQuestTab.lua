@@ -69,7 +69,7 @@ end
 local function reskinWhatsNew(container)
 	reskinContainer(container)
 
-	container.CloseButton:Size(20, 20)
+	container.CloseButton:Size(20)
 	S:Proxy("HandleCloseButton", container.CloseButton)
 end
 

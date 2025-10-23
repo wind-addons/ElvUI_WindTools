@@ -24,7 +24,7 @@ local function SkinMawBuffsContainer(container)
 	container:SetPushedTexture(pushed)
 	container.SetHighlightAtlas = E.noop
 	container.SetPushedAtlas = E.noop
-	container.SetWidth = E.noop
+	container.Width = E.noop
 	container.SetPushedTextOffset = E.noop
 
 	container:CreateBackdrop("Transparent")
@@ -45,8 +45,8 @@ local function ScenarioObjectiveTrackerStage_UpdateStageBlock(block)
 	if not block.backdrop then
 		block:CreateBackdrop("Transparent")
 		block.backdrop:ClearAllPoints()
-		block.backdrop:SetPoint("TOPLEFT", block.GlowTexture, 6, -4)
-		block.backdrop:SetPoint("BOTTOMRIGHT", block.GlowTexture, 12, 3)
+		block.backdrop:Point("TOPLEFT", block.GlowTexture, 6, -4)
+		block.backdrop:Point("BOTTOMRIGHT", block.GlowTexture, 12, 3)
 		S:CreateShadow(block.backdrop)
 	end
 
@@ -94,7 +94,7 @@ local function ScenarioObjectiveTrackerChallengeMode_Activate(block)
 	block.StatusBar.backdrop:SetBackdropBorderColor(0.2, 0.2, 0.2, 0.6)
 	block.StatusBar:SetStatusBarTexture(E.media.normTex)
 	block.StatusBar:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
-	block.StatusBar:SetHeight(12)
+	block.StatusBar:Height(12)
 
 	select(3, block:GetRegions()):Hide()
 

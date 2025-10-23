@@ -91,7 +91,7 @@ function S:TomCats()
 		self:RawHook(header, "SetPushedAtlas", "TomCats_HeaderCollapseButton_SetPushedAtlas", true)
 		header:SetHighlightTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
 		F.InternalizeMethod(header, "SetHighlightTexture", true)
-		header:SetSize(16, 16)
+		header:Size(16)
 		header.topPadding = 16
 		F.SetFont(header.text)
 	end
@@ -109,7 +109,7 @@ function S:TomCats()
 
 				if frame.icon.logo then
 					frame.icon.logo:ClearAllPoints()
-					frame.icon.logo:SetPoint("CENTER", frame, "BOTTOM", 5, -3)
+					frame.icon.logo:Point("CENTER", frame, "BOTTOM", 5, -3)
 				end
 
 				frame.headerBar:SetAlpha(0)

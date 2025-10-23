@@ -81,9 +81,9 @@ local function ReskinModules(frame)
 	SAMDropDownSkin(frame.CharacterDropDown)
 
 	frame.OkButton:ClearAllPoints()
-	frame.OkButton:SetPoint("RIGHT", frame.CancelButton, "LEFT", -2, 0)
+	frame.OkButton:Point("RIGHT", frame.CancelButton, "LEFT", -2, 0)
 	frame.DisableAllButton:ClearAllPoints()
-	frame.DisableAllButton:SetPoint("LEFT", frame.EnableAllButton, "RIGHT", 2, 0)
+	frame.DisableAllButton:Point("LEFT", frame.EnableAllButton, "RIGHT", 2, 0)
 	ReskinSizer(frame.Sizer)
 
 	-- SearchBox
@@ -101,9 +101,9 @@ local function ReskinModules(frame)
 	S:Proxy("HandleScrollBar", frame.CategoryFrame.ScrollFrame.ScrollBar)
 
 	frame.CategoryFrame.NewButton:ClearAllPoints()
-	frame.CategoryFrame.NewButton:SetHeight(20)
-	frame.CategoryFrame.NewButton:SetPoint("BOTTOMLEFT", frame.CategoryFrame.SelectAllButton, "TOPLEFT", 0, 2)
-	frame.CategoryFrame.NewButton:SetPoint("BOTTOMRIGHT", frame.CategoryFrame.ClearSelectionButton, "TOPRIGHT", 0, 2)
+	frame.CategoryFrame.NewButton:Height(20)
+	frame.CategoryFrame.NewButton:Point("BOTTOMLEFT", frame.CategoryFrame.SelectAllButton, "TOPLEFT", 0, 2)
+	frame.CategoryFrame.NewButton:Point("BOTTOMRIGHT", frame.CategoryFrame.ClearSelectionButton, "TOPRIGHT", 0, 2)
 
 	-- Profile
 	S:Proxy("HandleButton", frame.SetsButton)

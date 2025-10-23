@@ -36,7 +36,7 @@ end
 local function updateButton(button, db)
 	if E.db.WT.misc.exitPhaseDiving.enable then
 		button:Show()
-		button:SetSize(db.width, db.height)
+		button:Size(db.width, db.height)
 		button.Icon:SetTexCoord(E:CropRatio(db.width, db.height))
 		updateVisual(button)
 	else
@@ -50,7 +50,7 @@ local function createButton()
 	button:SetAttribute("type*", "macro")
 	button:SetAttribute("macrotext1", "/cancelaura 1214374\n/run _G.GameTooltip:Hide()")
 	button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
-	button:SetPoint("TOP", 0, -90)
+	button:Point("TOP", 0, -90)
 
 	button:StripTextures()
 	button:CreateBackdrop("Transparent")

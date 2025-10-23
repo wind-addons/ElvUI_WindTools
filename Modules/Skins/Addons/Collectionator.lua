@@ -45,9 +45,9 @@ local function reskinView(frame)
 
 	local function reskinResetButton(f, anchor, x, y)
 		S:Proxy("HandleButton", f)
-		f:Size(20, 20)
+		f:Size(20)
 		f:ClearAllPoints()
-		f:SetPoint("LEFT", anchor, "RIGHT", x, y)
+		f:Point("LEFT", anchor, "RIGHT", x, y)
 	end
 
 	for _, filter in pairs({

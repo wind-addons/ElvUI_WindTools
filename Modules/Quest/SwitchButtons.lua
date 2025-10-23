@@ -23,7 +23,7 @@ function SB:CreateButton(text, tooltipText)
 	button.text:SetText(C.StringWithRGB(button.originalText, self.db.font.color))
 	button.text:SetJustifyV("MIDDLE")
 	button.text:SetJustifyH("LEFT")
-	button.text:SetPoint("LEFT", button, "RIGHT")
+	button.text:Point("LEFT", button, "RIGHT")
 
 	local function onEnter()
 		if self.db.tooltip then
@@ -109,13 +109,13 @@ function SB:UpdateLayout()
 	self:UpdateButton(self.bar.turnIn, self.db.turnIn)
 
 	if self.db.announcement then
-		self.bar.announcement:SetPoint("LEFT", xOffset, 0)
+		self.bar.announcement:Point("LEFT", xOffset, 0)
 		xOffset = xOffset + self.bar.announcement.buttonSize
 		self.bar.announcement:SetChecked(E.db.WT.announcement.quest.enable and not E.db.WT.announcement.quest.paused)
 	end
 
 	if self.db.turnIn then
-		self.bar.turnIn:SetPoint("LEFT", xOffset, 0)
+		self.bar.turnIn:Point("LEFT", xOffset, 0)
 		xOffset = xOffset + self.bar.turnIn.buttonSize
 		self.bar.turnIn:SetChecked(E.db.WT.quest.turnIn.enable)
 	end
@@ -152,7 +152,7 @@ function SB:CreateBar()
 	end
 
 	local frame = CreateFrame("Frame", "WTSwitchButtonsBar", E.UIParent)
-	frame:SetPoint("TOPRIGHT", _G.ObjectiveTrackerFrame, "TOPRIGHT", -28, -5)
+	frame:Point("TOPRIGHT", _G.ObjectiveTrackerFrame, "TOPRIGHT", -28, -5)
 	frame:SetFrameStrata("LOW")
 	frame:SetFrameLevel(5)
 	frame:CreateBackdrop("Transparent")

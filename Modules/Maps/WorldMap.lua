@@ -2863,10 +2863,10 @@ function WM:MapExplorationPin_RefreshOverlays(pin, fullUpdate, cache)
 						textureFileWidth = textureFileWidth * 2
 					end
 				end
-				texture:SetWidth(texturePixelWidth)
-				texture:SetHeight(texturePixelHeight)
+				texture:Width(texturePixelWidth)
+				texture:Height(texturePixelHeight)
 				texture:SetTexCoord(0, texturePixelWidth / textureFileWidth, 0, texturePixelHeight / textureFileHeight)
-				texture:SetPoint(
+				texture:Point(
 					"TOPLEFT",
 					offsetX + (TILE_SIZE_WIDTH * (k - 1)),
 					-(offsetY + (TILE_SIZE_HEIGHT * (j - 1)))

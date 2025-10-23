@@ -39,7 +39,7 @@ function pool:Get(type)
 		local spark = E.UIParent:CreateTexture(nil, "ARTWORK", nil, 1)
 		spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
 		spark:SetBlendMode("ADD")
-		spark:SetSize(4, 26)
+		spark:Size(4, 26)
 
 		spark.windPoolType = "spark"
 
@@ -79,7 +79,7 @@ local function applyPoints(object, points)
 	object:ClearAllPoints()
 	for i = 1, #points do
 		local point, relativeTo, relativePoint, xOfs, yOfs = unpack(points[i])
-		object:SetPoint(point, relativeTo, relativePoint, xOfs, yOfs)
+		object:Point(point, relativeTo, relativePoint, xOfs, yOfs)
 	end
 end
 
@@ -113,7 +113,7 @@ local function modifyStyle(frame)
 	local spark = frame:Get("bigwigs:windtools:spark")
 
 	if spark then
-		spark:SetSize(4, frame.candyBarBar:GetHeight() * 2)
+		spark:Size(4, frame.candyBarBar:GetHeight() * 2)
 		spark:SetShown(db.spark)
 	end
 end
@@ -129,13 +129,13 @@ local function applyStyle(frame)
 	end
 
 	local height = frame:GetHeight()
-	frame:SetHeight(height * 0.618)
+	frame:Height(height * 0.618)
 	frame:Set("bigwigs:windtools:originalheight", height)
 
 	local spark = pool:Get("spark")
 	spark:SetParent(frame.candyBarBar)
 	spark:ClearAllPoints()
-	spark:SetPoint("CENTER", frame.candyBarBar:GetStatusBarTexture(), "RIGHT", 0, 0)
+	spark:Point("CENTER", frame.candyBarBar:GetStatusBarTexture(), "RIGHT", 0, 0)
 	spark:SetBlendMode("ADD")
 	spark:Show()
 	frame:Set("bigwigs:windtools:spark", spark)
@@ -163,12 +163,12 @@ local function applyStyle(frame)
 		frame:Set("bigwigs:windtools:iconpoints", getPoints(frame.candyBarIconFrame))
 
 		if frame.iconPosition == "RIGHT" then
-			frame.candyBarIconFrame:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", 5, 0)
+			frame.candyBarIconFrame:Point("BOTTOMLEFT", frame, "BOTTOMRIGHT", 5, 0)
 		else
-			frame.candyBarIconFrame:SetPoint("BOTTOMRIGHT", frame, "BOTTOMLEFT", -5, 0)
+			frame.candyBarIconFrame:Point("BOTTOMRIGHT", frame, "BOTTOMLEFT", -5, 0)
 		end
 
-		frame.candyBarIconFrame:SetSize(height + 2, height + 2)
+		frame.candyBarIconFrame:Size(height + 2)
 		frame:Set("bigwigs:windtools:tex", tex)
 
 		local iconBackdrop = pool:Get("backdrop")
@@ -184,12 +184,12 @@ local function applyStyle(frame)
 	frame:Set("bigwigs:windtools:durationpoints", getPoints(frame.candyBarDuration))
 	frame.candyBarLabel:SetShadowOffset(0, 0)
 	frame.candyBarLabel:ClearAllPoints()
-	frame.candyBarLabel:SetPoint("BOTTOMLEFT", frame.candyBarBar, "TOPLEFT", 3, -height * 0.22)
+	frame.candyBarLabel:Point("BOTTOMLEFT", frame.candyBarBar, "TOPLEFT", 3, -height * 0.22)
 
 	frame:Set("bigwigs:windtools:labelpoints", getPoints(frame.candyBarLabel))
 	frame.candyBarDuration:SetShadowOffset(0, 0)
 	frame.candyBarDuration:ClearAllPoints()
-	frame.candyBarDuration:SetPoint("BOTTOMRIGHT", frame.candyBarBar, "TOPRIGHT", -3, -height * 0.22)
+	frame.candyBarDuration:Point("BOTTOMRIGHT", frame.candyBarBar, "TOPRIGHT", -3, -height * 0.22)
 end
 
 local function barStopped(frame)
@@ -254,7 +254,7 @@ local function barStopped(frame)
 
 	local height = frame:Get("bigwigs:windtools:originalheight")
 	if height then
-		frame:SetHeight(height)
+		frame:Height(height)
 	end
 end
 
@@ -311,19 +311,19 @@ function S:BigWigs_QueueTimer()
 					frame.spark = frame:CreateTexture(nil, "ARTWORK", nil, 1)
 					frame.spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
 					frame.spark:SetBlendMode("ADD")
-					frame.spark:SetSize(4, frame:GetHeight())
+					frame.spark:Size(4, frame:GetHeight())
 				end
 
-				frame:SetSize(parent:GetWidth(), 10)
+				frame:Size(parent:GetWidth(), 10)
 				frame:ClearAllPoints()
-				frame:SetPoint("TOPLEFT", parent, "BOTTOMLEFT", 1, -5)
-				frame:SetPoint("TOPRIGHT", parent, "BOTTOMRIGHT", -1, -5)
+				frame:Point("TOPLEFT", parent, "BOTTOMLEFT", 1, -5)
+				frame:Point("TOPRIGHT", parent, "BOTTOMRIGHT", -1, -5)
 				frame.text.SetFormattedText = function(textFrame, _, time)
 					textFrame:SetText(format("%d", time))
 				end
 				F.SetFontWithDB(frame.text, db.countDown)
 				frame.text:ClearAllPoints()
-				frame.text:SetPoint("TOP", frame, "TOP", db.countDown.offsetX, db.countDown.offsetY)
+				frame.text:Point("TOP", frame, "TOP", db.countDown.offsetX, db.countDown.offsetY)
 			end
 		end)
 
@@ -375,11 +375,11 @@ function S:BigWigs_Keystone()
 			for _, tab in next, frame.Tabs do
 				self:Proxy("HandleTab", tab)
 				self:ReskinTab(tab)
-				tab:SetHeight(32)
+				tab:Height(32)
 
 				if tab:GetPoint(1) == "BOTTOMLEFT" then
 					tab:ClearAllPoints()
-					tab:SetPoint("BOTTOMLEFT", 10, -31)
+					tab:Point("BOTTOMLEFT", 10, -31)
 				end
 			end
 		end

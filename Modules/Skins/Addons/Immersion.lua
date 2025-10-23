@@ -10,8 +10,8 @@ function S:Immersion_ReskinTitleButton(frame)
 		if button and not button.__windSkin then
 			self:Proxy("HandleButton", button, nil, nil, nil, true, "Transparent")
 			button.backdrop:ClearAllPoints()
-			button.backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", 3, -3)
-			button.backdrop:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -10, 3)
+			button.backdrop:Point("TOPLEFT", button, "TOPLEFT", 3, -3)
+			button.backdrop:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -10, 3)
 			self:CreateBackdropShadow(button)
 			self:MerathilisUISkin(button.backdrop)
 
@@ -108,8 +108,8 @@ function S:Immersion()
 	talkBox.BackgroundFrame:StripTextures()
 	talkBox:CreateBackdrop("Transparent")
 	talkBox.backdrop:ClearAllPoints()
-	talkBox.backdrop:SetPoint("TOPLEFT", talkBox, "TOPLEFT", 10, -10)
-	talkBox.backdrop:SetPoint("BOTTOMRIGHT", talkBox, "BOTTOMRIGHT", -10, 10)
+	talkBox.backdrop:Point("TOPLEFT", talkBox, "TOPLEFT", 10, -10)
+	talkBox.backdrop:Point("BOTTOMRIGHT", talkBox, "BOTTOMRIGHT", -10, 10)
 	self:CreateBackdropShadow(talkBox)
 	self:MerathilisUISkin(talkBox.backdrop)
 
@@ -150,7 +150,7 @@ function S:Immersion()
 
 	-- Indicator
 	talkBox.MainFrame.Indicator:ClearAllPoints()
-	talkBox.MainFrame.Indicator:SetPoint("RIGHT", talkBox.MainFrame.CloseButton, "LEFT", -2, 0)
+	talkBox.MainFrame.Indicator:Point("RIGHT", talkBox.MainFrame.CloseButton, "LEFT", -2, 0)
 
 	-- Reputation bar
 	local repBar = talkBox.ReputationBar
@@ -158,8 +158,8 @@ function S:Immersion()
 	repBar:SetStatusBarTexture(E.media.normTex)
 	repBar:CreateBackdrop()
 	repBar:ClearAllPoints()
-	repBar:SetPoint("TOPLEFT", talkBox, "TOPLEFT", 11, -11)
-	repBar:SetHeight(6)
+	repBar:Point("TOPLEFT", talkBox, "TOPLEFT", 11, -11)
+	repBar:Height(6)
 
 	E:RegisterStatusBar(repBar)
 
@@ -168,8 +168,8 @@ function S:Immersion()
 	elements:SetBackdrop(nil)
 	elements:CreateBackdrop("Transparent")
 	elements.backdrop:ClearAllPoints()
-	elements.backdrop:SetPoint("TOPLEFT", elements, "TOPLEFT", 10, -5)
-	elements.backdrop:SetPoint("BOTTOMRIGHT", elements, "BOTTOMRIGHT", -10, 5)
+	elements.backdrop:Point("TOPLEFT", elements, "TOPLEFT", 10, -5)
+	elements.backdrop:Point("BOTTOMRIGHT", elements, "BOTTOMRIGHT", -10, 5)
 	F.SetFont(elements.Progress.ReqText)
 	S:CreateBackdropShadow(elements)
 	S:MerathilisUISkin(elements.backdrop)

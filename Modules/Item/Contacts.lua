@@ -145,8 +145,8 @@ function CT:RepositionWithPostal()
 	width = width and width + 2 or 0
 
 	self.frame:ClearAllPoints()
-	self.frame:SetPoint("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3 + width, -1)
-	self.frame:SetPoint("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153 + width, 1)
+	self.frame:Point("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3 + width, -1)
+	self.frame:Point("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153 + width, 1)
 end
 
 function CT:ConstructFrame()
@@ -155,8 +155,8 @@ function CT:ConstructFrame()
 	end
 
 	local frame = CreateFrame("Frame", "WTContacts", _G.SendMailFrame)
-	frame:SetPoint("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3, -1)
-	frame:SetPoint("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153, 1)
+	frame:Point("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3, -1)
+	frame:Point("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153, 1)
 	frame:CreateBackdrop("Transparent")
 	frame:EnableMouse(true)
 

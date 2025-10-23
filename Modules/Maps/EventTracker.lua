@@ -81,18 +81,18 @@ local functionFactory = {
 		setup = function(self)
 			self.icon:SetTexture(self.args.icon)
 			self.icon:SetTexCoord(unpack(E.TexCoords))
-			self.icon:SetSize(22, 22)
+			self.icon:Size(22)
 			self.icon:ClearAllPoints()
-			self.icon:SetPoint("LEFT", self, "LEFT", 0, 0)
+			self.icon:Point("LEFT", self, "LEFT", 0, 0)
 
 			ET:SetFont(self.name, 13)
 			self.name:ClearAllPoints()
-			self.name:SetPoint("LEFT", self, "LEFT", 30, 0)
+			self.name:Point("LEFT", self, "LEFT", 30, 0)
 			self.name:SetText(self.args.label)
 
 			self.completed:ClearAllPoints()
-			self.completed:SetSize(16, 16)
-			self.completed:SetPoint("RIGHT", self, "RIGHT", 0, 0)
+			self.completed:Size(16)
+			self.completed:Point("RIGHT", self, "RIGHT", 0, 0)
 			self.completed:SetTexCoord(F.GetRoleTexCoord("PENDING"))
 		end,
 		ticker = {
@@ -241,8 +241,8 @@ local functionFactory = {
 			self.statusBar.spark = self.statusBar:CreateTexture(nil, "ARTWORK", nil, 1)
 			self.statusBar.spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
 			self.statusBar.spark:SetBlendMode("ADD")
-			self.statusBar.spark:SetPoint("CENTER", self.statusBar:GetStatusBarTexture(), "RIGHT", 0, 0)
-			self.statusBar.spark:SetSize(4, 26)
+			self.statusBar.spark:Point("CENTER", self.statusBar:GetStatusBarTexture(), "RIGHT", 0, 0)
+			self.statusBar.spark:Size(4, 26)
 
 			self:SetScript("OnMouseDown", function()
 				if self.args.onClick then
@@ -253,26 +253,26 @@ local functionFactory = {
 		setup = function(self)
 			self.icon:SetTexture(self.args.icon)
 			self.icon:SetTexCoord(unpack(E.TexCoords))
-			self.icon:SetSize(22, 22)
+			self.icon:Size(22)
 			self.icon:ClearAllPoints()
-			self.icon:SetPoint("LEFT", self, "LEFT", 0, 0)
+			self.icon:Point("LEFT", self, "LEFT", 0, 0)
 
 			self.statusBar:ClearAllPoints()
-			self.statusBar:SetPoint("TOPLEFT", self, "LEFT", 26, 2)
-			self.statusBar:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 6)
+			self.statusBar:Point("TOPLEFT", self, "LEFT", 26, 2)
+			self.statusBar:Point("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 6)
 
 			ET:SetFont(self.timerText, 13)
 			self.timerText:ClearAllPoints()
-			self.timerText:SetPoint("TOPRIGHT", self, "TOPRIGHT", -2, -6)
+			self.timerText:Point("TOPRIGHT", self, "TOPRIGHT", -2, -6)
 
 			ET:SetFont(self.name, 13)
 			self.name:ClearAllPoints()
-			self.name:SetPoint("TOPLEFT", self, "TOPLEFT", 30, -6)
+			self.name:Point("TOPLEFT", self, "TOPLEFT", 30, -6)
 			self.name:SetText(self.args.label)
 
 			ET:SetFont(self.runningTip, 10)
 			self.runningTip:SetText(self.args.runningText)
-			self.runningTip:SetPoint("CENTER", self.statusBar, "BOTTOM", 0, 0)
+			self.runningTip:Point("CENTER", self.statusBar, "BOTTOM", 0, 0)
 		end,
 		ticker = {
 			interval = 0.3,
@@ -509,32 +509,32 @@ local functionFactory = {
 			self.statusBar.spark = self.statusBar:CreateTexture(nil, "ARTWORK", nil, 1)
 			self.statusBar.spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
 			self.statusBar.spark:SetBlendMode("ADD")
-			self.statusBar.spark:SetPoint("CENTER", self.statusBar:GetStatusBarTexture(), "RIGHT", 0, 0)
-			self.statusBar.spark:SetSize(4, 26)
+			self.statusBar.spark:Point("CENTER", self.statusBar:GetStatusBarTexture(), "RIGHT", 0, 0)
+			self.statusBar.spark:Size(4, 26)
 		end,
 		setup = function(self)
 			self.icon:SetTexture(self.args.icon)
 			self.icon:SetTexCoord(unpack(E.TexCoords))
-			self.icon:SetSize(22, 22)
+			self.icon:Size(22)
 			self.icon:ClearAllPoints()
-			self.icon:SetPoint("LEFT", self, "LEFT", 0, 0)
+			self.icon:Point("LEFT", self, "LEFT", 0, 0)
 
 			self.statusBar:ClearAllPoints()
-			self.statusBar:SetPoint("TOPLEFT", self, "LEFT", 26, 2)
-			self.statusBar:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 6)
+			self.statusBar:Point("TOPLEFT", self, "LEFT", 26, 2)
+			self.statusBar:Point("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 6)
 
 			ET:SetFont(self.timerText, 13)
 			self.timerText:ClearAllPoints()
-			self.timerText:SetPoint("TOPRIGHT", self, "TOPRIGHT", -2, -6)
+			self.timerText:Point("TOPRIGHT", self, "TOPRIGHT", -2, -6)
 
 			ET:SetFont(self.name, 13)
 			self.name:ClearAllPoints()
-			self.name:SetPoint("TOPLEFT", self, "TOPLEFT", 30, -6)
+			self.name:Point("TOPLEFT", self, "TOPLEFT", 30, -6)
 			self.name:SetText(self.args.label)
 
 			ET:SetFont(self.runningTip, 10)
 			self.runningTip:SetText(self.args.runningText)
-			self.runningTip:SetPoint("CENTER", self.statusBar, "BOTTOM", 0, 0)
+			self.runningTip:Point("CENTER", self.statusBar, "BOTTOM", 0, 0)
 		end,
 		ticker = {
 			interval = 0.3,
@@ -823,7 +823,7 @@ function trackers:get(event)
 	local data = ET.EventData[event]
 
 	local frame = CreateFrame("Frame", "WTEventTracker" .. event, ET.frame)
-	frame:SetSize(220, 30)
+	frame:Size(220, 30)
 
 	frame.dbKey = data.dbKey
 	frame.args = data.args
@@ -973,8 +973,8 @@ function ET:UpdateTrackers()
 	self:ConstructFrame()
 	self.frame:ClearAllPoints()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.worldmap) then
-		self.frame:SetPoint("TOPLEFT", _G.WorldMapFrame, "BOTTOMLEFT", -2, -self.db.style.backdropYOffset)
-		self.frame:SetPoint("TOPRIGHT", _G.WorldMapFrame, "BOTTOMRIGHT", 2, -self.db.style.backdropYOffset)
+		self.frame:Point("TOPLEFT", _G.WorldMapFrame, "BOTTOMLEFT", -2, -self.db.style.backdropYOffset)
+		self.frame:Point("TOPRIGHT", _G.WorldMapFrame, "BOTTOMRIGHT", 2, -self.db.style.backdropYOffset)
 
 		if self.db.style.backdrop then
 			if not self.frame.backdrop then
@@ -988,8 +988,8 @@ function ET:UpdateTrackers()
 			end
 		end
 	else
-		self.frame:SetPoint("TOPLEFT", _G.WorldMapFrame.backdrop, "BOTTOMLEFT", 1, -self.db.style.backdropYOffset)
-		self.frame:SetPoint("TOPRIGHT", _G.WorldMapFrame.backdrop, "BOTTOMRIGHT", -1, -self.db.style.backdropYOffset)
+		self.frame:Point("TOPLEFT", _G.WorldMapFrame.backdrop, "BOTTOMLEFT", 1, -self.db.style.backdropYOffset)
+		self.frame:Point("TOPRIGHT", _G.WorldMapFrame.backdrop, "BOTTOMRIGHT", -1, -self.db.style.backdropYOffset)
 
 		if self.db.style.backdrop then
 			if not self.frame.backdrop then
@@ -1014,7 +1014,7 @@ function ET:UpdateTrackers()
 				tracker.profileUpdate()
 			end
 
-			tracker:SetSize(self.db.style.trackerWidth, self.db.style.trackerHeight)
+			tracker:Size(self.db.style.trackerWidth, self.db.style.trackerHeight)
 
 			tracker.args.desaturate = self.db[data.dbKey].desaturate
 			tracker.args.soundFile = self.db[data.dbKey].sound and self.db[data.dbKey].soundFile
@@ -1039,7 +1039,7 @@ function ET:UpdateTrackers()
 				col = 1
 			end
 
-			tracker:SetPoint(
+			tracker:Point(
 				"TOPLEFT",
 				self.frame,
 				"TOPLEFT",

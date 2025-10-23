@@ -16,7 +16,7 @@ do
 
 		local frame = parent.inspectFrame
 		frame:ClearAllPoints()
-		frame:SetPoint("TOPLEFT", parent, "TOPRIGHT", 5, 0)
+		frame:Point("TOPLEFT", parent, "TOPRIGHT", 5, 0)
 
 		if parent.inspectFrameHolder then
 			parent.inspectFrameHolder:Show()
@@ -26,7 +26,7 @@ do
 		self:StripEdgeTextures(frame)
 
 		frame.closeButton:ClearAllPoints()
-		frame.closeButton:SetPoint("BOTTOMLEFT", 3, 3)
+		frame.closeButton:Point("BOTTOMLEFT", 3, 3)
 
 		if frame.specicon then
 			frame.specicon:SetMask("")
@@ -46,8 +46,8 @@ do
 		end
 
 		local inspectFrameHolder = CreateFrame("Frame", nil, parent)
-		inspectFrameHolder:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		inspectFrameHolder:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
+		inspectFrameHolder:Point("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		inspectFrameHolder:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
 		inspectFrameHolder:SetTemplate("Transparent")
 		self:CreateShadow(inspectFrameHolder)
 
@@ -109,14 +109,14 @@ do
 		for _, region in pairs({ statsFrame:GetRegions() }) do
 			if region:GetTexture() == "Interface\\Tooltips\\UI-Tooltip-Background" then
 				region:ClearAllPoints()
-				region:SetPoint("TOPLEFT", statsFrame, "TOPRIGHT", -58, -1)
-				region:SetPoint("BOTTOMRIGHT", statsFrame, "BOTTOMRIGHT", 0, 1)
+				region:Point("TOPLEFT", statsFrame, "TOPRIGHT", -58, -1)
+				region:Point("BOTTOMRIGHT", statsFrame, "BOTTOMRIGHT", 0, 1)
 			end
 		end
 
 		local statsFrameHolder = CreateFrame("Frame", nil, frame)
-		statsFrameHolder:SetPoint("TOPLEFT", statsFrame, "TOPLEFT", 0, -1)
-		statsFrameHolder:SetPoint("BOTTOMRIGHT", statsFrame, "BOTTOMRIGHT", 0, 1)
+		statsFrameHolder:Point("TOPLEFT", statsFrame, "TOPLEFT", 0, -1)
+		statsFrameHolder:Point("BOTTOMRIGHT", statsFrame, "BOTTOMRIGHT", 0, 1)
 		statsFrameHolder:CreateBackdrop("Transparent")
 		statsFrameHolder.backdrop:SetFrameLevel(statsFrame:GetFrameLevel())
 		statsFrameHolder.backdrop:SetFrameStrata(statsFrame:GetFrameStrata())
@@ -148,7 +148,7 @@ do
 		self:SecureHook(statsFrame, "SetPoint", function(_, _, _, _, _, y)
 			if y ~= 0 then
 				statsFrame:ClearAllPoints()
-				statsFrame:SetPoint("TOPLEFT", statsFrame:GetParent(), "TOPRIGHT", 5, 0)
+				statsFrame:Point("TOPLEFT", statsFrame:GetParent(), "TOPRIGHT", 5, 0)
 			end
 		end)
 	end

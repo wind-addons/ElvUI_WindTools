@@ -43,7 +43,7 @@ function S:InputMethodEditor()
 						if region:GetObjectType() == "FontString" then
 							F.SetFont(region)
 							region:ClearAllPoints()
-							region:SetPoint("CENTER", langIcon, "CENTER", 0, 0)
+							region:Point("CENTER", langIcon, "CENTER", 0, 0)
 							self:Unhook(editBox, "Show")
 						end
 					end

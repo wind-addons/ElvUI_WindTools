@@ -18,8 +18,8 @@ function S:Vignetting()
 	end
 
 	local frame = CreateFrame("Frame", "ShadowBackground", _G.UIParent)
-	frame:SetPoint("TOPLEFT")
-	frame:SetPoint("BOTTOMRIGHT")
+	frame:Point("TOPLEFT")
+	frame:Point("BOTTOMRIGHT")
 	frame:SetFrameLevel(0)
 	frame:SetFrameStrata("BACKGROUND")
 	frame.tex = frame:CreateTexture()

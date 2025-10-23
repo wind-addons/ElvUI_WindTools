@@ -28,17 +28,8 @@ local function createButton(parent, text, width, height, onClick)
 		frame:SetText(text)
 	end
 
-	if width then
-		frame:SetWidth(width)
-	else
-		frame:SetWidth(100)
-	end
-
-	if height then
-		frame:SetHeight(height)
-	else
-		frame:SetHeight(22)
-	end
+	frame:Width(width or 100)
+	frame:Height(height or 22)
 
 	if onClick then
 		frame:SetScript("OnClick", onClick)
@@ -58,7 +49,7 @@ local function createCloseButton(parent, size, onClick)
 	local frame = CreateFrame("Button", nil, parent, "UIPanelCloseButton, BackdropTemplate")
 
 	if size then
-		frame:SetSize(size, size)
+		frame:Size(size)
 	end
 
 	if onClick then
@@ -95,19 +86,19 @@ local function createTextureButton(parent, texture, normalColor, hoverColor, wid
 
 	local frame = CreateFrame("Button", nil, parent, "SecureActionButtonTemplate")
 	frame:RegisterForClicks("AnyUp")
-	frame:SetSize(width, height)
+	frame:Size(width, height)
 
 	frame.normalTex = frame:CreateTexture(nil, "ARTWORK")
-	frame.normalTex:SetPoint("CENTER")
-	frame.normalTex:SetSize(width, height)
+	frame.normalTex:Point("CENTER")
+	frame.normalTex:Size(width, height)
 	frame.normalTex:SetTexture(texture)
 	frame.normalTex:SetAlpha(1)
 
 	frame.normalTex:SetVertexColor(unpack(normalColor))
 
 	frame.hoverTex = frame:CreateTexture(nil, "ARTWORK")
-	frame.hoverTex:SetPoint("CENTER")
-	frame.hoverTex:SetSize(width, height)
+	frame.hoverTex:Point("CENTER")
+	frame.hoverTex:Size(width, height)
 	frame.hoverTex:SetTexture(texture)
 	frame.hoverTex:SetVertexColor(unpack(hoverColor))
 	frame.hoverTex:SetAlpha(0)
@@ -139,11 +130,11 @@ local function createInput(parent, width, height, onEnterPressed)
 	local frame = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
 
 	if width then
-		frame:SetWidth(width)
+		frame:Width(width)
 	end
 
 	if height then
-		frame:SetHeight(height)
+		frame:Height(height)
 	end
 
 	frame:SetScript("OnEnterPressed", onEnterPressed)

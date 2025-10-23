@@ -631,7 +631,7 @@ function AT:ScrollElementInitializer(frame, data, scrollBox)
 
 				if not line.StatusIcon then
 					line.StatusIcon = line:CreateTexture(nil, "OVERLAY")
-					line.StatusIcon:Size(14, 14)
+					line.StatusIcon:Size(14)
 					line.StatusIcon:Point("LEFT", line, "LEFT", 5, 0)
 					line.StatusIcon:SetTexture(W.Media.Icons.buttonCheck)
 					line.StatusIcon:SetVertexColor(C.ExtractRGBFromTemplate("emerald-500"))
@@ -826,10 +826,10 @@ function AT:Construct()
 	ControlFrame1.NearlyCompleteButton = NearlyCompleteButton
 
 	local RefreshButton = CreateFrame("Button", nil, ControlFrame1, "UIPanelButtonTemplate")
-	RefreshButton:Size(25, 25)
+	RefreshButton:Size(25)
 	RefreshButton:Point("RIGHT", ControlFrame1, "RIGHT", -8, 0)
 	RefreshButton.Icon = RefreshButton:CreateTexture(nil, "OVERLAY")
-	RefreshButton.Icon:Size(16, 16)
+	RefreshButton.Icon:Size(16)
 	RefreshButton.Icon:Point("CENTER")
 	RefreshButton.Icon:SetTexture(W.Media.Icons.buttonUndo)
 	S:Proxy("HandleButton", RefreshButton)
@@ -915,7 +915,7 @@ function AT:Construct()
 	ControlFrame2.CategoryDropdown = CategoryDropdown
 
 	local RewardsCheckButton = CreateFrame("CheckButton", nil, ControlFrame2, "UICheckButtonTemplate")
-	RewardsCheckButton:Size(22, 22)
+	RewardsCheckButton:Size(22)
 	RewardsCheckButton:Point("LEFT", CategoryDropdown, "RIGHT", 15, 0)
 	RewardsCheckButton.Text:SetText(L["Rewards"])
 	RewardsCheckButton.Text:SetTextColor(1, 1, 1)
@@ -933,7 +933,7 @@ function AT:Construct()
 	SortOrderButton:Point("RIGHT", ControlFrame2, "RIGHT", -8, 0)
 	S:Proxy("HandleButton", SortOrderButton)
 	SortOrderButton.Arrow = SortOrderButton:CreateTexture(nil, "OVERLAY")
-	SortOrderButton.Arrow:Size(16, 16)
+	SortOrderButton.Arrow:Size(16)
 	SortOrderButton.Arrow:Point("CENTER")
 	SortOrderButton.Arrow:SetTexture(W.Media.Textures.arrowDown)
 	SortOrderButton.Arrow:SetVertexColor(1, 1, 1)
@@ -979,8 +979,8 @@ function AT:Construct()
 	MainFrame.ScrollFrame = ScrollFrame
 
 	local ScrollBar = CreateFrame("EventFrame", nil, ScrollFrame, "MinimalScrollBar")
-	ScrollBar:SetPoint("TOPRIGHT", ScrollFrame, "TOPRIGHT", -5, 0)
-	ScrollBar:SetPoint("BOTTOMRIGHT", ScrollFrame, "BOTTOMRIGHT", -5, 0)
+	ScrollBar:Point("TOPRIGHT", ScrollFrame, "TOPRIGHT", -5, 0)
+	ScrollBar:Point("BOTTOMRIGHT", ScrollFrame, "BOTTOMRIGHT", -5, 0)
 	S:Proxy("HandleTrimScrollBar", ScrollBar)
 	ScrollFrame.ScrollBar = ScrollBar
 

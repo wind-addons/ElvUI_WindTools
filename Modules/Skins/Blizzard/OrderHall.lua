@@ -16,7 +16,7 @@ function S:Blizzard_OrderHallUI()
 		F.SetFont(bar.AreaName)
 		F.SetFont(bar.Currency)
 		bar.AreaName:ClearAllPoints()
-		bar.AreaName:SetPoint("CENTER", 0, 0)
+		bar.AreaName:Point("CENTER", 0, 0)
 	end
 end
 

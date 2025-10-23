@@ -119,7 +119,7 @@ local function viewItem(frame)
 
 		for i = 1, #pointsCache do
 			local pointData = pointsCache[i]
-			frame.Icon:SetPoint(pointData[1], pointData[2], pointData[3], pointData[4], pointData[5])
+			frame.Icon:Point(pointData[1], pointData[2], pointData[3], pointData[4], pointData[5])
 		end
 	end
 
@@ -184,16 +184,16 @@ local function configMoneyInput(frame)
 	frame.MoneyInput.GoldBox:SetTextInsets(3, 0, 0, 0)
 	frame.MoneyInput.SilverBox:SetTextInsets(3, 0, 0, 0)
 
-	frame.MoneyInput.CopperBox:SetHeight(24)
-	frame.MoneyInput.GoldBox:SetHeight(24)
-	frame.MoneyInput.SilverBox:SetHeight(24)
+	frame.MoneyInput.CopperBox:Height(24)
+	frame.MoneyInput.GoldBox:Height(24)
+	frame.MoneyInput.SilverBox:Height(24)
 
 	frame.MoneyInput.CopperBox.Icon:ClearAllPoints()
-	frame.MoneyInput.CopperBox.Icon:SetPoint("RIGHT", frame.MoneyInput.CopperBox, "RIGHT", -10, 0)
+	frame.MoneyInput.CopperBox.Icon:Point("RIGHT", frame.MoneyInput.CopperBox, "RIGHT", -10, 0)
 	frame.MoneyInput.GoldBox.Icon:ClearAllPoints()
-	frame.MoneyInput.GoldBox.Icon:SetPoint("RIGHT", frame.MoneyInput.GoldBox, "RIGHT", -10, 0)
+	frame.MoneyInput.GoldBox.Icon:Point("RIGHT", frame.MoneyInput.GoldBox, "RIGHT", -10, 0)
 	frame.MoneyInput.SilverBox.Icon:ClearAllPoints()
-	frame.MoneyInput.SilverBox.Icon:SetPoint("RIGHT", frame.MoneyInput.SilverBox, "RIGHT", -10, 0)
+	frame.MoneyInput.SilverBox.Icon:Point("RIGHT", frame.MoneyInput.SilverBox, "RIGHT", -10, 0)
 end
 
 local function configMinMax(frame)
@@ -221,7 +221,7 @@ local function saleItem(frame)
 
 	S:Proxy("HandleButton", frame.MaxButton)
 	frame.MaxButton:ClearAllPoints()
-	frame.MaxButton:SetPoint("TOPLEFT", frame.Quantity, "TOPRIGHT", 0, 0)
+	frame.MaxButton:Point("TOPLEFT", frame.Quantity, "TOPRIGHT", 0, 0)
 	S:Proxy("HandleButton", frame.PostButton)
 	S:Proxy("HandleButton", frame.SkipButton)
 
@@ -240,12 +240,12 @@ local function bottomTabButtons(frame)
 		if tabButton and not tabButton.__windSkin then
 			S:Proxy("HandleTab", tabButton, nil, "Transparent")
 			S:ReskinTab(tabButton)
-			tabButton.Text:SetWidth(tabButton:GetWidth())
+			tabButton.Text:Width(tabButton:GetWidth())
 			if details.tabOrder > 1 then
 				local pointData = { tabButton:GetPoint(1) }
 				pointData[4] = -5
 				tabButton:ClearAllPoints()
-				tabButton:SetPoint(unpack(pointData))
+				tabButton:Point(unpack(pointData))
 			end
 
 			tabButton.__windSkin = true
@@ -334,9 +334,9 @@ local function shoppingItem(frame)
 
 	local function reskinResetButton(f, anchor, x, y)
 		S:Proxy("HandleButton", f)
-		f:Size(20, 20)
+		f:Size(20)
 		f:ClearAllPoints()
-		f:SetPoint("LEFT", anchor, "RIGHT", x, y)
+		f:Point("LEFT", anchor, "RIGHT", x, y)
 	end
 
 	S:Proxy("HandleEditBox", frame.SearchContainer.SearchString)

@@ -115,8 +115,8 @@ function RM:UpdateMiniMapHolderAndMover()
 	local panelSize, joinPanel = (panel:IsShown() and panel:GetHeight()) or E:Scale(E.PixelMode and 1 or -1), E:Scale(1)
 	local HEIGHT, WIDTH = (mHeight * scale) + (panelSize - joinPanel), mWidth * scale
 
-	holder:SetSize(WIDTH + bWidth, HEIGHT + bHeight)
-	mover:SetSize(WIDTH + bWidth, HEIGHT + bHeight)
+	holder:Size(WIDTH + bWidth, HEIGHT + bHeight)
+	mover:Size(WIDTH + bWidth, HEIGHT + bHeight)
 end
 
 function RM:SetUpdateHook()

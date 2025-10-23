@@ -26,16 +26,16 @@ function T:ChangeHealthBarPosition(_, tt)
 		if ET.db.healthBar.statusPosition == "BOTTOM" then
 			if not tt.StatusBar.anchoredToTop then
 				tt.StatusBar:ClearAllPoints()
-				tt.StatusBar:SetPoint("TOPLEFT", tt, "BOTTOMLEFT", E.Border, -(E.Spacing * 3) + barYOffset)
-				tt.StatusBar:SetPoint("TOPRIGHT", tt, "BOTTOMRIGHT", -E.Border, -(E.Spacing * 3) + barYOffset)
-				tt.StatusBar.text:SetPoint("CENTER", tt.StatusBar, 0, textYOffset)
+				tt.StatusBar:Point("TOPLEFT", tt, "BOTTOMLEFT", E.Border, -(E.Spacing * 3) + barYOffset)
+				tt.StatusBar:Point("TOPRIGHT", tt, "BOTTOMRIGHT", -E.Border, -(E.Spacing * 3) + barYOffset)
+				tt.StatusBar.text:Point("CENTER", tt.StatusBar, 0, textYOffset)
 			end
 		else
 			if tt.StatusBar.anchoredToTop then
 				tt.StatusBar:ClearAllPoints()
-				tt.StatusBar:SetPoint("BOTTOMLEFT", tt, "TOPLEFT", E.Border, (E.Spacing * 3) + barYOffset)
-				tt.StatusBar:SetPoint("BOTTOMRIGHT", tt, "TOPRIGHT", -E.Border, (E.Spacing * 3) + barYOffset)
-				tt.StatusBar.text:SetPoint("CENTER", tt.StatusBar, 0, textYOffset)
+				tt.StatusBar:Point("BOTTOMLEFT", tt, "TOPLEFT", E.Border, (E.Spacing * 3) + barYOffset)
+				tt.StatusBar:Point("BOTTOMRIGHT", tt, "TOPRIGHT", -E.Border, (E.Spacing * 3) + barYOffset)
+				tt.StatusBar.text:Point("CENTER", tt.StatusBar, 0, textYOffset)
 			end
 		end
 	end

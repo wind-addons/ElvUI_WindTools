@@ -47,9 +47,9 @@ local function postalMain()
 
 		reskinArrowButton(_G.Postal_ModuleMenuButton)
 
-		_G.Postal_ModuleMenuButton:SetSize(20, 20)
+		_G.Postal_ModuleMenuButton:Size(20)
 		_G.Postal_ModuleMenuButton:ClearAllPoints()
-		_G.Postal_ModuleMenuButton:SetPoint("TOPRIGHT", _G.MailFrame, "TOPRIGHT", -22, -1)
+		_G.Postal_ModuleMenuButton:Point("TOPRIGHT", _G.MailFrame, "TOPRIGHT", -22, -1)
 
 		_G.Postal_ModuleMenuButton.__windSkin = true
 	end
@@ -82,11 +82,10 @@ local function postalOpenAll()
 	if not _G.Postal_OpenAllMenuButton.__windSkin then
 		S:Proxy("HandleButton", _G.Postal_OpenAllMenuButton)
 		reskinArrowButton(_G.Postal_OpenAllMenuButton)
-		local height = _G.PostalOpenAllButton:GetHeight()
-		_G.Postal_OpenAllMenuButton:SetSize(height, height)
+		_G.Postal_OpenAllMenuButton:Size(_G.PostalOpenAllButton:GetHeight())
 
 		_G.Postal_OpenAllMenuButton:ClearAllPoints()
-		_G.Postal_OpenAllMenuButton:SetPoint("LEFT", _G.PostalOpenAllButton, "RIGHT", 2, 0)
+		_G.Postal_OpenAllMenuButton:Point("LEFT", _G.PostalOpenAllButton, "RIGHT", 2, 0)
 		_G.Postal_OpenAllMenuButton.__windSkin = true
 	end
 
@@ -101,9 +100,9 @@ local function postalBlackBook()
 		S:Proxy("HandleButton", _G.Postal_BlackBookButton)
 
 		reskinArrowButton(_G.Postal_BlackBookButton)
-		_G.Postal_BlackBookButton:SetSize(18, 18)
+		_G.Postal_BlackBookButton:Size(18)
 		_G.Postal_BlackBookButton:ClearAllPoints()
-		_G.Postal_BlackBookButton:SetPoint("LEFT", _G.SendMailNameEditBox, "RIGHT", 2, 0)
+		_G.Postal_BlackBookButton:Point("LEFT", _G.SendMailNameEditBox, "RIGHT", 2, 0)
 		_G.Postal_BlackBookButton.__windSkin = true
 	end
 
@@ -128,9 +127,9 @@ local function postalQuickAttach()
 			button:SetScale(1)
 			reskinQuickAttachButton(button)
 			S:CreateShadow(button)
-			button:SetSize(height, height)
+			button:Size(height, height)
 			button:ClearAllPoints()
-			button:SetPoint("TOPLEFT", _G.MailFrame, "TOPRIGHT", 2, floor(-(i - 1) * (height + 2)))
+			button:Point("TOPLEFT", _G.MailFrame, "TOPRIGHT", 2, floor(-(i - 1) * (height + 2)))
 			button.__windSkin = true
 		end
 	end

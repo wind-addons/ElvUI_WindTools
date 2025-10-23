@@ -18,8 +18,8 @@ local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 function W:ConstructCompatibilityFrame()
 	local frame = CreateFrame("Frame", "WTCompatibilityFrame", E.UIParent)
-	frame:SetSize(550, 500)
-	frame:SetPoint("CENTER")
+	frame:Size(550, 500)
+	frame:Point("CENTER")
 	frame:CreateBackdrop("Transparent")
 	S:CreateShadowModule(frame.backdrop)
 	S:MerathilisUISkin(frame.backdrop)
@@ -37,7 +37,7 @@ function W:ConstructCompatibilityFrame()
 
 	local close = F.Widgets.New("CloseButton", frame)
 	if close then
-		close:SetPoint("TOPRIGHT", frame.backdrop, "TOPRIGHT")
+		close:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT")
 		close:SetFrameLevel(frame:GetFrameLevel() + 1)
 	end
 
@@ -45,7 +45,7 @@ function W:ConstructCompatibilityFrame()
 	title:FontTemplate()
 	F.SetFont(title, nil, "2")
 	title:SetText(W.Title .. " " .. L["Compatibility Check"])
-	title:SetPoint("TOP", frame, "TOP", 0, -10)
+	title:Point("TOP", frame, "TOP", 0, -10)
 
 	local desc = frame:CreateFontString(nil, "ARTWORK")
 	desc:FontTemplate()
@@ -57,7 +57,7 @@ function W:ConstructCompatibilityFrame()
 			.. " "
 			.. format(L["Have a good time with %s!"], W.Title)
 	)
-	desc:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
+	desc:Point("TOPLEFT", frame, "TOPLEFT", 10, -40)
 
 	local largeTip = frame:CreateFontString(nil, "ARTWORK")
 	largeTip:FontTemplate()
@@ -72,12 +72,12 @@ function W:ConstructCompatibilityFrame()
 			C.StringWithRGB("]", E.db.general.valuecolor)
 		)
 	)
-	largeTip:SetPoint("TOPLEFT", desc, "BOTTOMLEFT", 0, -10)
+	largeTip:Point("TOPLEFT", desc, "BOTTOMLEFT", 0, -10)
 
 	local tex = frame:CreateTexture("WTCompatibilityFrameIllustration", "ARTWORK")
-	tex:SetSize(64, 64)
+	tex:Size(64)
 	tex:SetTexture(W.Media.Textures.illMurloc1)
-	tex:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -20, -25)
+	tex:Point("TOPRIGHT", frame, "TOPRIGHT", -20, -25)
 
 	local bottomDesc = frame:CreateFontString(nil, "ARTWORK")
 	bottomDesc:FontTemplate()
@@ -90,16 +90,17 @@ function W:ConstructCompatibilityFrame()
 			.. "\n"
 			.. L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Advanced]-[Core]."]
 	)
-	bottomDesc:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
+	bottomDesc:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
 
 	local completeButton =
 		CreateFrame("Button", "WTCompatibilityFrameCompleteButton", frame, "UIPanelButtonTemplate, BackdropTemplate")
+	---@cast completeButton Button
 	completeButton.Text:SetText(L["Complete"])
 	completeButton.Text:SetJustifyH("CENTER")
 	completeButton.Text:SetJustifyV("MIDDLE")
 	F.SetFont(completeButton.Text, E.db.general.font, "4")
-	completeButton:SetSize(350, 35)
-	completeButton:SetPoint("BOTTOM", bottomDesc, "TOP", 0, 10)
+	completeButton:Size(350, 35)
+	completeButton:Point("BOTTOM", bottomDesc, "TOP", 0, 10)
 	S:Proxy("HandleButton", completeButton)
 	completeButton:SetScript("OnClick", function()
 		frame:Hide()
@@ -108,12 +109,12 @@ function W:ConstructCompatibilityFrame()
 	local scrollFrameParent =
 		CreateFrame("ScrollFrame", "WTCompatibilityFrameScrollFrameParent", frame, "UIPanelScrollFrameTemplate")
 	scrollFrameParent:CreateBackdrop("Transparent")
-	scrollFrameParent:SetPoint("TOPLEFT", largeTip, "BOTTOMLEFT", 0, -10)
-	scrollFrameParent:SetPoint("RIGHT", frame, "RIGHT", -32, 0)
-	scrollFrameParent:SetPoint("BOTTOM", completeButton, "TOP", 0, 10)
+	scrollFrameParent:Point("TOPLEFT", largeTip, "BOTTOMLEFT", 0, -10)
+	scrollFrameParent:Point("RIGHT", frame, "RIGHT", -32, 0)
+	scrollFrameParent:Point("BOTTOM", completeButton, "TOP", 0, 10)
 	S:Proxy("HandleScrollBar", scrollFrameParent.ScrollBar)
 	local scrollFrame = CreateFrame("Frame", "WTCompatibilityFrameScrollFrame", scrollFrameParent)
-	scrollFrame:SetSize(scrollFrameParent:GetSize())
+	scrollFrame:Size(scrollFrameParent:GetSize())
 
 	scrollFrameParent:SetScrollChild(scrollFrame)
 	frame.scrollFrameParent = scrollFrameParent
@@ -132,12 +133,13 @@ local function AddButtonToCompatibilityFrame(data)
 		frame.scrollFrame,
 		"UIPanelButtonTemplate, BackdropTemplate"
 	)
+	---@cast leftButton Button
 	leftButton.Text:SetText(format("%s\n%s", data.module1, data.plugin1))
 	leftButton.Text:SetJustifyH("CENTER")
 	leftButton.Text:SetJustifyV("MIDDLE")
 	F.SetFont(leftButton.Text, E.db.general.font)
-	leftButton:SetSize(220, 40)
-	leftButton:SetPoint("TOPLEFT", frame.scrollFrame, "TOPLEFT", 5, -frame.numModules * 50 + 45)
+	leftButton:Size(220, 40)
+	leftButton:Point("TOPLEFT", frame.scrollFrame, "TOPLEFT", 5, -frame.numModules * 50 + 45)
 	S:Proxy("HandleButton", leftButton)
 	leftButton:SetScript("OnClick", function(self)
 		data.func1()
@@ -152,11 +154,11 @@ local function AddButtonToCompatibilityFrame(data)
 
 	local middleTexture =
 		frame.scrollFrame:CreateTexture("WTCompatibilityFrameMiddleTexture" .. frame.numModules, "ARTWORK")
-	middleTexture:SetPoint("CENTER")
-	middleTexture:SetSize(20, 20)
+	middleTexture:Point("CENTER")
+	middleTexture:Size(20)
 	middleTexture:SetTexture(W.Media.Icons.convert)
 	middleTexture:SetVertexColor(1, 1, 1)
-	middleTexture:SetPoint("CENTER", frame.scrollFrame, "TOP", 0, -frame.numModules * 50 + 25)
+	middleTexture:Point("CENTER", frame.scrollFrame, "TOP", 0, -frame.numModules * 50 + 25)
 
 	local rightButton = CreateFrame(
 		"Button",
@@ -164,12 +166,13 @@ local function AddButtonToCompatibilityFrame(data)
 		frame.scrollFrame,
 		"UIPanelButtonTemplate, BackdropTemplate"
 	)
+	---@cast rightButton Button
 	rightButton.Text:SetText(format("%s\n%s", data.module2, data.plugin2))
 	rightButton.Text:SetJustifyH("CENTER")
 	rightButton.Text:SetJustifyV("MIDDLE")
 	F.SetFont(rightButton.Text, E.db.general.font)
-	rightButton:SetSize(220, 40)
-	rightButton:SetPoint("TOPRIGHT", frame.scrollFrame, "TOPRIGHT", -5, -frame.numModules * 50 + 45)
+	rightButton:Size(220, 40)
+	rightButton:Point("TOPRIGHT", frame.scrollFrame, "TOPRIGHT", -5, -frame.numModules * 50 + 45)
 	S:Proxy("HandleButton", rightButton)
 	rightButton:SetScript("OnClick", function(self)
 		data.func2()

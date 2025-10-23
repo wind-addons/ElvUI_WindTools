@@ -78,7 +78,7 @@ function S:Blizzard_Communities()
 				child.backdrop:ClearAllPoints()
 				child.backdrop:Point("TOPLEFT", child.Icon.backdrop)
 				child.backdrop:Point("BOTTOMLEFT", child.Icon.backdrop)
-				child.backdrop:SetWidth(child:GetWidth() - 5)
+				child.backdrop:Width(child:GetWidth() - 5)
 				child.IsSkinned = true
 			end
 
@@ -86,7 +86,7 @@ function S:Blizzard_Communities()
 				child.backdrop:ClearAllPoints()
 				child.backdrop:Point("TOPLEFT", child.Icon.backdrop, -7, 5)
 				child.backdrop:Point("BOTTOMLEFT", child.Icon.backdrop, -7, -5)
-				child.backdrop:SetWidth(child:GetWidth() + 9)
+				child.backdrop:Width(child:GetWidth() + 9)
 				child.__windSkin = true
 			end
 		end

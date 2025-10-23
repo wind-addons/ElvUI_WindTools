@@ -350,6 +350,19 @@ local function SetupSilverDragonPopups(silverDragon)
 		return
 	end
 
+	-- Reskin anchor window
+	if module.anchor then
+		module.anchor:StripTextures()
+		module.anchor:SetTemplate("Transparent")
+		S:CreateShadow(module.anchor)
+
+		for _, child in pairs({ module.anchor:GetChildren() }) do
+			if child and child.IsObjectType and child:IsObjectType("Button") then
+				S:Proxy("HandleCloseButton", child)
+			end
+		end
+	end
+
 	-- Register the WindTools look
 	function module.Looks:WindTools(popup, config)
 		StyleSilverDragonPopup(popup, module)

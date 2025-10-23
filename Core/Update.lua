@@ -347,6 +347,20 @@ function W:UpdateScripts()
 		end
 	end
 
+	if profileVersion < 4.02 then
+		if E.db.WT and E.db.WT.combat and E.db.WT.combat.combatAlert then
+			E:CopyTable(E.db.WT.combat.combatAlert.enterColor, P.combat.combatAlert.enterColor)
+			E:CopyTable(E.db.WT.combat.combatAlert.leaveColor, P.combat.combatAlert.leaveColor)
+			UpdateMessage(L["Combat Alert"] .. ": " .. L["Database cleanup"], profileVersion)
+		end
+
+		if E.db.WT and E.db.WT.announcement and E.db.WT.announcement.quest then
+			for _, key in pairs({ "disable", "tag", "suggestedGroup", "level", "daily", "weekly" }) do
+				E.db.WT.announcement.quest[key] = nil
+			end
+		end
+	end
+
 	if not isFirstLine then
 		F.PrintGradientLine()
 	end

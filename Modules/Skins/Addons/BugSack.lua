@@ -131,7 +131,6 @@ function S:BugSack()
 		return
 	end
 
-	self:SecureHookScript(_G.BugSack.frame, "OnShow", "BugSack_InterfaceOptionOnShow")
 	self:SecureHook(_G.BugSack, "OpenSack", "BugSack_OpenSack")
 	self:DisableAddOnSkin("BugSack")
 end

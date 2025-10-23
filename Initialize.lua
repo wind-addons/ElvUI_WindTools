@@ -1,8 +1,8 @@
-local E, _, V, P, G = unpack(ElvUI)
+local E, _, V, P, G = unpack(ElvUI) ---@type ElvUI
 local addonName, addon = ...
 local EP = E.Libs.EP
 local AceAddon = E.Libs.AceAddon
-local L = E.Libs.ACL--[[@as AceLocale-3.0]]:GetLocale("ElvUI", E.global.general.locale)
+local L = E.Libs.ACL:GetLocale("ElvUI", true)
 
 local _G = _G
 local collectgarbage = collectgarbage
@@ -83,6 +83,8 @@ W.Modules = {
 	---@class MoveFrames : AceModule, AceHook-3.0, AceEvent-3.0
 	MoveFrames = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0"),
 }
+
+W:NewModule("QuestProgress", "AceEvent-3.0")
 
 -- Utilities namespace
 W.Utilities = {}

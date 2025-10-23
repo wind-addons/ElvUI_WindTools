@@ -3,11 +3,14 @@ local F, E ---@type Functions ElvUI
 W, F, E = unpack((select(2, ...)))
 
 local format = format
+local ipairs = ipairs
 local math = math
 local strsub = strsub
+local tAppendAll = tAppendAll
 local tonumber = tonumber
 local tostring = tostring
 local type = type
+local unpack = unpack
 
 local CreateColor = CreateColor
 
@@ -712,4 +715,43 @@ end
 ---@return string coloredText The colored string with level-appropriate color
 function W.Utilities.Color.StringWithKeystoneLevel(text, level)
 	return W.Utilities.Color.StringWithHex(text, keyStoneLevelHex(level))
+end
+
+---Create gradient text by RGB values
+---@param text string
+---@param ... RGB
+---@return string
+function W.Utilities.Color.GradientStringByRGB(text, ...)
+	local colors = { ... }
+
+	if #colors == 1 then
+		return W.Utilities.Color.StringWithRGB(text, colors[1])
+	end
+
+	local args = {}
+	for _, color in ipairs(colors) do
+		tAppendAll(args, { color.r, color.g, color.b })
+	end
+
+	return E:TextGradient(text, unpack(args))
+end
+
+---Create gradient text by color templates
+---@param text string
+---@param ... ColorTemplate
+---@return string
+function W.Utilities.Color.GradientStringByTemplate(text, ...)
+	local templates = { ... }
+
+	if #templates == 1 then
+		return W.Utilities.Color.StringByTemplate(text, templates[1])
+	end
+
+	local args = {}
+	for _, template in ipairs(templates) do
+		local r, g, b = W.Utilities.Color.ExtractRGBFromTemplate(template)
+		tAppendAll(args, { r, g, b })
+	end
+
+	return E:TextGradient(text, unpack(args))
 end

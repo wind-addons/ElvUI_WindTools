@@ -82,34 +82,13 @@ P.announcement = {
 	quest = {
 		enable = false,
 		paused = true,
-		disableBlizzard = true,
-		includeDetails = true,
+		includeDetails = false,
 		channel = {
 			party = "PARTY",
 			instance = "INSTANCE_CHAT",
 			raid = "RAID",
 		},
-		tag = {
-			enable = true,
-			color = C.GetRGBFromTemplate("yellow-300"),
-		},
-		suggestedGroup = {
-			enable = true,
-			color = C.GetRGBFromTemplate("rose-500"),
-		},
-		level = {
-			enable = true,
-			color = C.GetRGBFromTemplate("emerald-400"),
-			hideOnMax = true,
-		},
-		daily = {
-			enable = true,
-			color = C.GetRGBFromTemplate("cyan-500"),
-		},
-		weekly = {
-			enable = true,
-			color = C.GetRGBFromTemplate("blue-500"),
-		},
+		template = "{{level}}{{link}} {{progress}}",
 	},
 	resetInstance = {
 		enable = true,
@@ -1133,6 +1112,76 @@ if W.ChineseLocale then
 end
 
 P.quest = {
+	progress = {
+		enable = true,
+		displayTemplate = "{{level}} {{suggestedGroup}} {{tag}} {{daily}}{{weekly}} {{title}} - {{progress}} {{icon}}",
+		tag = {
+			template = "[%s]",
+			color = {
+				left = C.GetRGBFromTemplate("sky-500"),
+				right = C.GetRGBFromTemplate("sky-300"),
+			},
+		},
+		suggestedGroup = {
+			template = "[%d]",
+			color = {
+				left = C.GetRGBFromTemplate("rose-400"),
+				right = C.GetRGBFromTemplate("rose-300"),
+			},
+		},
+		level = {
+			template = "[%d]",
+			hideOnCharacterLevel = true,
+			color = {
+				left = C.GetRGBFromTemplate("fuchsia-500"),
+				right = C.GetRGBFromTemplate("pink-400"),
+			},
+		},
+		daily = {
+			template = format("[%s]", L["Daily"]),
+			color = {
+				left = C.GetRGBFromTemplate("cyan-400"),
+				right = C.GetRGBFromTemplate("cyan-200"),
+			},
+		},
+		weekly = {
+			template = format("[%s]", L["Weekly"]),
+			color = {
+				left = C.GetRGBFromTemplate("blue-400"),
+				right = C.GetRGBFromTemplate("blue-200"),
+			},
+		},
+		title = {
+			template = "%s",
+			color = {
+				left = C.GetRGBFromTemplate("teal-500"),
+				right = C.GetRGBFromTemplate("teal-300"),
+			},
+		},
+		progress = {
+			objective = {
+				detailTemplate = "%d/%d",
+				color = {
+					left = C.GetRGBFromTemplate("neutral-100"),
+					right = C.GetRGBFromTemplate("neutral-50"),
+				},
+			},
+			complete = {
+				template = "%s",
+				color = {
+					left = C.GetRGBFromTemplate("green-400"),
+					right = C.GetRGBFromTemplate("emerald-300"),
+				},
+			},
+			accepted = {
+				template = "%s",
+				color = {
+					left = C.GetRGBFromTemplate("blue-400"),
+					right = C.GetRGBFromTemplate("sky-300"),
+				},
+			},
+		},
+	},
 	switchButtons = {
 		enable = true,
 		tooltip = true,

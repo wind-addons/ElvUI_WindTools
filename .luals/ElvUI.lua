@@ -16,7 +16,7 @@
 ---@field wowtoc string WoW TOC version
 ---@field locale string Game locale
 ---@field oUF table oUF reference
----@field Libs table Libraries table
+---@field Libs { ACL: AceLocale-3.0, LSM: LibSharedMedia-3.0 }
 ---@field LibsMinor table Library minor versions
 ---@field FPS table FPS tracking data
 ---@field OtherAddons table Other addon states

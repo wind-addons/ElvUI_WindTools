@@ -176,7 +176,7 @@ do
 
 	---Get color based on progress value (0.0 to 1.0)
 	---@param progress number Progress value between 0 and 1
-	---@return table color Color table with r, g, b values
+	---@return RGB color Color table with r, g, b values
 	function F.GetProgressColor(progress)
 		local r = (color.complete.r - color.start.r) * progress + color.start.r
 		local g = (color.complete.g - color.start.g) * progress + color.start.g

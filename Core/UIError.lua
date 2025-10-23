@@ -24,6 +24,7 @@ local DEFAULT_HANDLER_PRIORITY = 1000
 ---@field priority number
 ---@field handler UIErrorHandlerFunc
 
+W.UIERRORFRAME_IGNORE_PATTERN = "WINDTOOLS_IGNORE"
 W.UIErrorHandlers = W.UIErrorHandlers or {} ---@type UIErrorHandler[]
 
 function W:HookUIError()
@@ -32,6 +33,10 @@ function W:HookUIError()
 	end
 
 	self:RawHook(_G.UIErrorsFrame, "AddMessage", function(frame, message, r, g, b, a)
+		if message and message == W.UIERRORFRAME_IGNORE_PATTERN then
+			return
+		end
+
 		local params = { frame = frame, message = message, r = r, g = g, b = b, a = a } ---@type UIErrorHandlerParams
 		for _, handlerData in ipairs(self.UIErrorHandlers) do
 			local success, result = xpcall(handlerData.handler, F.Developer.ThrowError, params)

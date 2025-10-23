@@ -2,18 +2,22 @@ local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functio
 local options = W.options.announcement.args
 local A = W:GetModule("Announcement")
 local SB = W:GetModule("SwitchButtons")
+local QP = W:GetModule("QuestProgress")
 local C = W.Utilities.Color
+
+---@cast QP QuestProgress
 
 local format = format
 local gsub = gsub
 local pairs = pairs
+local strjoin = strjoin
 local tonumber = tonumber
 
 local C_Spell_GetSpellLink = C_Spell.GetSpellLink
 local C_Spell_GetSpellName = C_Spell.GetSpellName
 
-local function ImportantColorString(string)
-	return C.StringWithRGB(string, 0.204, 0.596, 0.859)
+local function ImportantColorString(s)
+	return C.StringByTemplate(s, "blue-400")
 end
 
 local function FormatDesc(code, helpText)
@@ -94,24 +98,54 @@ options.quest = {
 				SB:ProfileUpdate()
 			end,
 		},
-		disableBlizzard = {
-			order = 3,
-			type = "toggle",
-			name = L["Disable Blizzard"],
-			desc = L["Disable Blizzard quest progress message."],
-			set = function(info, value)
-				E.db.WT.announcement[info[#info - 1]][info[#info]] = value
-				A:UpdateBlizzardQuestAnnouncement()
-			end,
-		},
 		includeDetails = {
-			order = 4,
+			order = 3,
 			type = "toggle",
 			name = L["Include Details"],
 			desc = L["Announce every time the progress has been changed."],
 		},
-		channel = {
+		template = {
+			order = 4,
+			type = "input",
+			name = L["Message Template"],
+			desc = strjoin(
+				"\n",
+				L["The template for rendering announcement message."],
+				format(L["The template of each element can be customized in %s module."], L["Quest Progress"]),
+				"",
+				F.GetWindStyleText(L["Template Elements"]),
+				FormatDesc("{{level}}", L["Quest level"]),
+				FormatDesc("{{daily}}", L["Daily quest label"]),
+				FormatDesc("{{weekly}}", L["Weekly quest label"]),
+				FormatDesc("{{link}}", L["Quest link"]),
+				FormatDesc("{{tag}}", L["Quest tags (Quest series)"]),
+				FormatDesc("{{progress}}", L["Quest progress (including objectives)"]),
+				FormatDesc("{{title}}", L["Quest title"]),
+				FormatDesc("{{suggestedGroup}}", L["Suggested group size"])
+			),
+			width = "full",
+		},
+		example = {
 			order = 5,
+			type = "description",
+			name = function()
+				local context = QP:GetTestContext()
+				context.progress = L["Test Target"] .. ": 3/10"
+				local message = QP:RenderTemplate(E.db.WT.announcement.quest.template, context)
+				return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
+			end,
+		},
+		useDefault = {
+			order = 6,
+			type = "execute",
+			name = L["Default"],
+			desc = L["Reset the template to default value."],
+			func = function(info)
+				E.db.WT.announcement.quest.template = P.announcement.quest.template
+			end,
+		},
+		channel = {
+			order = 7,
 			type = "group",
 			inline = true,
 			name = L["Channel"],
@@ -162,202 +196,6 @@ options.quest = {
 						YELL = L["Yell"],
 						SAY = L["Say"],
 					},
-				},
-			},
-		},
-		tag = {
-			order = 6,
-			type = "group",
-			inline = true,
-			name = L["Tag"],
-			get = function(info)
-				return E.db.WT.announcement.quest[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.announcement.quest[info[#info - 1]][info[#info]] = value
-			end,
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-					desc = L["The category of the quest."],
-				},
-				color = {
-					order = 2,
-					type = "color",
-					name = L["Color"],
-					hasAlpha = false,
-					get = function(info)
-						local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
-						local default = P.announcement.quest[info[#info - 1]].color
-						return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
-					end,
-					set = function(info, r, g, b, a)
-						E.db.WT.announcement.quest[info[#info - 1]].color = {
-							r = r,
-							g = g,
-							b = b,
-						}
-					end,
-				},
-			},
-		},
-		suggestedGroup = {
-			order = 7,
-			type = "group",
-			inline = true,
-			name = L["Suggested Group"],
-			get = function(info)
-				return E.db.WT.announcement.quest[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.announcement.quest[info[#info - 1]][info[#info]] = value
-			end,
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-					desc = L["If the quest is suggested with multi-players, add the number of players to the message."],
-				},
-				color = {
-					order = 2,
-					type = "color",
-					name = L["Color"],
-					hasAlpha = false,
-					get = function(info)
-						local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
-						local default = P.announcement.quest[info[#info - 1]].color
-						return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
-					end,
-					set = function(info, r, g, b, a)
-						E.db.WT.announcement.quest[info[#info - 1]].color = {
-							r = r,
-							g = g,
-							b = b,
-						}
-					end,
-				},
-			},
-		},
-		level = {
-			order = 8,
-			type = "group",
-			inline = true,
-			name = L["Level"],
-			get = function(info)
-				return E.db.WT.announcement.quest[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.announcement.quest[info[#info - 1]][info[#info]] = value
-			end,
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-					desc = L["The level of the quest."],
-				},
-				color = {
-					order = 2,
-					type = "color",
-					name = L["Color"],
-					hasAlpha = false,
-					get = function(info)
-						local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
-						local default = P.announcement.quest[info[#info - 1]].color
-						return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
-					end,
-					set = function(info, r, g, b, a)
-						E.db.WT.announcement.quest[info[#info - 1]].color = {
-							r = r,
-							g = g,
-							b = b,
-						}
-					end,
-				},
-				hideOnMax = {
-					order = 3,
-					type = "toggle",
-					name = L["Hide Max Level"],
-					desc = L["Hide the level part if the quest level is the max level of this expansion."],
-				},
-			},
-		},
-		daily = {
-			order = 9,
-			type = "group",
-			inline = true,
-			name = L["Daily"],
-			get = function(info)
-				return E.db.WT.announcement.quest[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.announcement.quest[info[#info - 1]][info[#info]] = value
-			end,
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-					desc = L["Add the prefix if the quest is a daily quest."],
-				},
-				color = {
-					order = 2,
-					type = "color",
-					name = L["Color"],
-					hasAlpha = false,
-					get = function(info)
-						local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
-						local default = P.announcement.quest[info[#info - 1]].color
-						return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
-					end,
-					set = function(info, r, g, b, a)
-						E.db.WT.announcement.quest[info[#info - 1]].color = {
-							r = r,
-							g = g,
-							b = b,
-						}
-					end,
-				},
-			},
-		},
-		weekly = {
-			order = 10,
-			type = "group",
-			inline = true,
-			name = L["Weekly"],
-			get = function(info)
-				return E.db.WT.announcement.quest[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.announcement.quest[info[#info - 1]][info[#info]] = value
-			end,
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-					desc = L["Add the prefix if the quest is a weekly quest."],
-				},
-				color = {
-					order = 2,
-					type = "color",
-					name = L["Color"],
-					hasAlpha = false,
-					get = function(info)
-						local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
-						local default = P.announcement.quest[info[#info - 1]].color
-						return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
-					end,
-					set = function(info, r, g, b, a)
-						E.db.WT.announcement.quest[info[#info - 1]].color = {
-							r = r,
-							g = g,
-							b = b,
-						}
-					end,
 				},
 			},
 		},

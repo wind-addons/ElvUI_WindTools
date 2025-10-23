@@ -16,15 +16,12 @@ A.EventList = {
 	"ITEM_CHANGED",
 	"LFG_COMPLETION_REWARD",
 	"PLAYER_ENTERING_WORLD",
-	"QUEST_LOG_UPDATE",
 	"UNIT_SPELLCAST_SUCCEEDED",
 }
 
 -- CHAT_MSG_SYSTEM: text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons
-function A:CHAT_MSG_SYSTEM(event, text)
-	local data = {}
-
-	self:ResetInstance(text) -- 重置副本
+function A:CHAT_MSG_SYSTEM(_, text)
+	self:ResetInstance(text)
 end
 
 function A:CHAT_MSG_PARTY(event, ...)
@@ -44,7 +41,6 @@ function A:ITEM_CHANGED(event, ...)
 end
 
 function A:COMBAT_LOG_EVENT_UNFILTERED()
-	-- 参数列表
 	-- https://wow.gamepedia.com/COMBAT_LOG_EVENT#Base_Parameters
 	local timestamp, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId, _, _, extraSpellId =
 		CombatLogGetCurrentEventInfo()
@@ -75,25 +71,17 @@ function A:LFG_COMPLETION_REWARD()
 	self:Goodbye()
 end
 
-function A:PLAYER_ENTERING_WORLD(event, ...)
-	self:Quest()
+function A:PLAYER_ENTERING_WORLD(event)
 	E:Delay(2, self.Keystone, self, event)
 	E:Delay(4, self.ResetAuthority, self)
 	E:Delay(10, self.ResetAuthority, self)
 end
 
-function A:CHALLENGE_MODE_COMPLETED(event, ...)
+function A:CHALLENGE_MODE_COMPLETED(event)
 	self:Goodbye()
 	E:Delay(2, self.Keystone, self, event)
 end
 
--- TODO: SCENARIO_COMPLETED 场景完成事件
-
-function A:QUEST_LOG_UPDATE()
-	F.TaskManager:AfterLogin(self.Quest, self)
-end
-
--- 权限认证部分
 function A:CHAT_MSG_ADDON(_, prefix, text)
 	if prefix == self.prefix then
 		self:ReceiveLevel(text)
@@ -104,6 +92,6 @@ function A:GROUP_ROSTER_UPDATE()
 	self:ResetAuthority()
 end
 
-function A:UNIT_SPELLCAST_SUCCEEDED(event, unitTarget, castGUID, spellId)
+function A:UNIT_SPELLCAST_SUCCEEDED(event, unitTarget, _, spellId)
 	self:Utility(event, UnitName(unitTarget), spellId)
 end

@@ -5,7 +5,9 @@ local LSM = E.Libs.LSM
 local TI = W:GetModule("TurnIn")
 local SB = W:GetModule("SwitchButtons")
 local OT = W:GetModule("ObjectiveTracker")
+local QP = W:GetModule("QuestProgress")
 
+local format = format
 local pairs = pairs
 local tonumber = tonumber
 local tostring = tostring
@@ -13,6 +15,14 @@ local tostring = tostring
 local C_QuestLog_SortQuestWatches = C_QuestLog.SortQuestWatches
 
 local customListSelected
+
+local function ImportantColorString(s)
+	return C.StringByTemplate(s, "blue-400")
+end
+
+local function FormatDesc(code, helpText)
+	return ImportantColorString(code) .. " = " .. helpText
+end
 
 options.objectiveTracker = {
 	order = 1,
@@ -1162,8 +1172,927 @@ options.turnIn = {
 	},
 }
 
-options.switchButtons = {
+options.progress = {
 	order = 3,
+	type = "group",
+	name = L["Progress"],
+	get = function(info)
+		return E.db.WT.quest.progress[info[#info]]
+	end,
+	set = function(info, value)
+		E.db.WT.quest.progress[info[#info]] = value
+		QP:ProfileUpdate()
+	end,
+	args = {
+		desc = {
+			order = 0,
+			type = "group",
+			inline = true,
+			name = L["Description"],
+			args = {
+				feature = {
+					order = 1,
+					type = "description",
+					name = L["Display colorful quest progress information to replace Blizzard's default."],
+					fontSize = "medium",
+				},
+			},
+		},
+		enable = {
+			order = 1,
+			type = "toggle",
+			name = L["Enable"],
+			width = "full",
+		},
+		displayTemplate = {
+			order = 2,
+			type = "input",
+			name = L["Display Template"],
+			desc = strjoin(
+				"\n",
+				L["The template for rendering progress message in UIErrorsFrame."],
+				"",
+				F.GetWindStyleText(L["Template Elements"]),
+				FormatDesc("{{level}}", L["Quest level"]),
+				FormatDesc("{{suggestedGroup}}", L["Suggested group size"]),
+				FormatDesc("{{daily}}", L["Daily quest label"]),
+				FormatDesc("{{weekly}}", L["Weekly quest label"]),
+				FormatDesc("{{tag}}", L["Quest tags (Quest series)"]),
+				FormatDesc("{{title}}", L["Quest title"]),
+				FormatDesc("{{link}}", L["Quest link"]),
+				FormatDesc("{{progress}}", L["Quest progress (including objectives)"]),
+				FormatDesc("{{icon}}", L["Status icon (accept/complete)"])
+			),
+			width = "full",
+			disabled = function()
+				return not E.db.WT.quest.progress.enable
+			end,
+		},
+		example = {
+			order = 3,
+			type = "description",
+			name = function()
+				local _, coloredContext = QP:GetTestContext()
+				local color = E.db.WT.quest.progress.progress.objective.color
+				coloredContext.progress = C.GradientStringByRGB(L["Test Target"], color.left, color.right)
+				coloredContext.icon = format("|T%s:0|t", W.Media.Icons.complete)
+				local message = QP:RenderTemplate(E.db.WT.quest.progress.displayTemplate, coloredContext)
+				return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
+			end,
+		},
+		useDefault = {
+			order = 4,
+			type = "execute",
+			name = L["Default"],
+			desc = L["Reset the template to default value."],
+			func = function()
+				E.db.WT.quest.progress.displayTemplate = P.quest.progress.displayTemplate
+			end,
+		},
+		tag = {
+			order = 5,
+			type = "group",
+			name = L["Tag"],
+			disabled = function()
+				return not E.db.WT.quest.progress.enable
+			end,
+			get = function(info)
+				return E.db.WT.quest.progress.tag[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.quest.progress.tag[info[#info]] = value
+			end,
+			args = {
+				descGroup = {
+					order = 1,
+					type = "group",
+					inline = true,
+					name = L["Description"],
+					args = {
+						tag = {
+							order = 1,
+							type = "description",
+							name = format(
+								L["%s contains the quest tag, which is typically the quest series name."],
+								ImportantColorString("{{tag}}")
+							),
+							fontSize = "medium",
+						},
+					},
+				},
+				template = {
+					order = 2,
+					type = "input",
+					name = L["Template"],
+					width = 1.5,
+				},
+				default = {
+					order = 3,
+					type = "execute",
+					name = L["Default"],
+					desc = L["Reset the template to default value."],
+					func = function()
+						E.db.WT.quest.progress.tag.template = P.quest.progress.tag.template
+					end,
+				},
+				color = {
+					order = 4,
+					type = "group",
+					inline = true,
+					name = L["Color"],
+					get = function(info)
+						return E.db.WT.quest.progress.tag.color[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.progress.tag.color[info[#info]] = value
+					end,
+					args = {
+						left = {
+							order = 1,
+							type = "color",
+							name = L["Gradient Color 1"],
+							hasAlpha = false,
+							get = function(info)
+								local colordb = E.db.WT.quest.progress.tag.color.left
+								local default = P.quest.progress.tag.color.left
+								return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.progress.tag.color.left
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+						right = {
+							order = 2,
+							type = "color",
+							name = L["Gradient Color 2"],
+							hasAlpha = false,
+							get = function(info)
+								local colordb = E.db.WT.quest.progress.tag.color.right
+								local default = P.quest.progress.tag.color.right
+								return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.progress.tag.color.right
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+					},
+				},
+			},
+		},
+		suggestedGroup = {
+			order = 6,
+			type = "group",
+			name = L["Suggested Group"],
+			disabled = function()
+				return not E.db.WT.quest.progress.enable
+			end,
+			get = function(info)
+				return E.db.WT.quest.progress.suggestedGroup[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.quest.progress.suggestedGroup[info[#info]] = value
+			end,
+			args = {
+				descGroup = {
+					order = 1,
+					type = "group",
+					inline = true,
+					name = L["Description"],
+					args = {
+						suggestedGroup = {
+							order = 1,
+							type = "description",
+							name = format(
+								L["%s contains the suggested group size for the quest."],
+								ImportantColorString("{{suggestedGroup}}")
+							),
+							fontSize = "medium",
+						},
+					},
+				},
+				template = {
+					order = 2,
+					type = "input",
+					name = L["Template"],
+					width = 1.5,
+				},
+				default = {
+					order = 3,
+					type = "execute",
+					name = L["Default"],
+					desc = L["Reset the template to default value."],
+					func = function()
+						E.db.WT.quest.progress.suggestedGroup.template = P.quest.progress.suggestedGroup.template
+					end,
+				},
+				color = {
+					order = 4,
+					type = "group",
+					inline = true,
+					name = L["Color"],
+					get = function(info)
+						return E.db.WT.quest.progress.suggestedGroup.color[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.progress.suggestedGroup.color[info[#info]] = value
+					end,
+					args = {
+						left = {
+							order = 1,
+							type = "color",
+							name = L["Gradient Color 1"],
+							hasAlpha = false,
+							get = function(info)
+								local colordb = E.db.WT.quest.progress.suggestedGroup.color.left
+								local default = P.quest.progress.suggestedGroup.color.left
+								return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.progress.suggestedGroup.color.left
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+						right = {
+							order = 2,
+							type = "color",
+							name = L["Gradient Color 2"],
+							hasAlpha = false,
+							get = function(info)
+								local colordb = E.db.WT.quest.progress.suggestedGroup.color.right
+								local default = P.quest.progress.suggestedGroup.color.right
+								return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.progress.suggestedGroup.color.right
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+					},
+				},
+			},
+		},
+		level = {
+			order = 7,
+			type = "group",
+			name = L["Level"],
+			disabled = function()
+				return not E.db.WT.quest.progress.enable
+			end,
+			get = function(info)
+				return E.db.WT.quest.progress.level[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.quest.progress.level[info[#info]] = value
+			end,
+			args = {
+				descGroup = {
+					order = 1,
+					type = "group",
+					inline = true,
+					name = L["Description"],
+					args = {
+						level = {
+							order = 1,
+							type = "description",
+							name = format(L["%s contains the quest level."], ImportantColorString("{{level}}")),
+							fontSize = "medium",
+						},
+					},
+				},
+				template = {
+					order = 2,
+					type = "input",
+					name = L["Template"],
+					width = 1.5,
+				},
+				default = {
+					order = 3,
+					type = "execute",
+					name = L["Default"],
+					desc = L["Reset the template to default value."],
+					func = function()
+						E.db.WT.quest.progress.level.template = P.quest.progress.level.template
+					end,
+				},
+				hideOnCharacterLevel = {
+					order = 4,
+					type = "toggle",
+					width = 1.5,
+					name = L["Hide On Character Level"],
+					desc = L["Hide the level part if the quest level is the same as your character level."],
+				},
+				color = {
+					order = 5,
+					type = "group",
+					inline = true,
+					name = L["Color"],
+					get = function(info)
+						return E.db.WT.quest.progress.level.color[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.progress.level.color[info[#info]] = value
+					end,
+					args = {
+						left = {
+							order = 1,
+							type = "color",
+							name = L["Gradient Color 1"],
+							hasAlpha = false,
+							get = function(info)
+								local colordb = E.db.WT.quest.progress.level.color.left
+								local default = P.quest.progress.level.color.left
+								return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.progress.level.color.left
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+						right = {
+							order = 2,
+							type = "color",
+							name = L["Gradient Color 2"],
+							hasAlpha = false,
+							get = function(info)
+								local colordb = E.db.WT.quest.progress.level.color.right
+								local default = P.quest.progress.level.color.right
+								return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.progress.level.color.right
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+					},
+				},
+			},
+		},
+		daily = {
+			order = 8,
+			type = "group",
+			name = L["Daily"],
+			disabled = function()
+				return not E.db.WT.quest.progress.enable
+			end,
+			get = function(info)
+				return E.db.WT.quest.progress.daily[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.quest.progress.daily[info[#info]] = value
+			end,
+			args = {
+				descGroup = {
+					order = 1,
+					type = "group",
+					inline = true,
+					name = L["Description"],
+					args = {
+						daily = {
+							order = 1,
+							type = "description",
+							name = format(L["%s contains the daily quest label."], ImportantColorString("{{daily}}")),
+							fontSize = "medium",
+						},
+					},
+				},
+				template = {
+					order = 2,
+					type = "input",
+					name = L["Template"],
+					width = 1.5,
+				},
+				default = {
+					order = 3,
+					type = "execute",
+					name = L["Default"],
+					desc = L["Reset the template to default value."],
+					func = function()
+						E.db.WT.quest.progress.daily.template = P.quest.progress.daily.template
+					end,
+				},
+				color = {
+					order = 4,
+					type = "group",
+					inline = true,
+					name = L["Color"],
+					get = function(info)
+						return E.db.WT.quest.progress.daily.color[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.progress.daily.color[info[#info]] = value
+					end,
+					args = {
+						left = {
+							order = 1,
+							type = "color",
+							name = L["Gradient Color 1"],
+							hasAlpha = false,
+							get = function(info)
+								local colordb = E.db.WT.quest.progress.daily.color.left
+								local default = P.quest.progress.daily.color.left
+								return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.progress.daily.color.left
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+						right = {
+							order = 2,
+							type = "color",
+							name = L["Gradient Color 2"],
+							hasAlpha = false,
+							get = function(info)
+								local colordb = E.db.WT.quest.progress.daily.color.right
+								local default = P.quest.progress.daily.color.right
+								return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.progress.daily.color.right
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+					},
+				},
+			},
+		},
+		weekly = {
+			order = 9,
+			type = "group",
+			name = L["Weekly"],
+			disabled = function()
+				return not E.db.WT.quest.progress.enable
+			end,
+			get = function(info)
+				return E.db.WT.quest.progress.weekly[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.quest.progress.weekly[info[#info]] = value
+			end,
+			args = {
+				descGroup = {
+					order = 1,
+					type = "group",
+					inline = true,
+					name = L["Description"],
+					args = {
+						weekly = {
+							order = 1,
+							type = "description",
+							name = format(L["%s contains the weekly quest label."], ImportantColorString("{{weekly}}")),
+							fontSize = "medium",
+						},
+					},
+				},
+				template = {
+					order = 2,
+					type = "input",
+					name = L["Template"],
+					width = 1.5,
+				},
+				default = {
+					order = 3,
+					type = "execute",
+					name = L["Default"],
+					desc = L["Reset the template to default value."],
+					func = function()
+						E.db.WT.quest.progress.weekly.template = P.quest.progress.weekly.template
+					end,
+				},
+				color = {
+					order = 4,
+					type = "group",
+					inline = true,
+					name = L["Color"],
+					get = function(info)
+						return E.db.WT.quest.progress.weekly.color[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.progress.weekly.color[info[#info]] = value
+					end,
+					args = {
+						left = {
+							order = 1,
+							type = "color",
+							name = L["Gradient Color 1"],
+							hasAlpha = false,
+							get = function(info)
+								local colordb = E.db.WT.quest.progress.weekly.color.left
+								local default = P.quest.progress.weekly.color.left
+								return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.progress.weekly.color.left
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+						right = {
+							order = 2,
+							type = "color",
+							name = L["Gradient Color 2"],
+							hasAlpha = false,
+							get = function(info)
+								local colordb = E.db.WT.quest.progress.weekly.color.right
+								local default = P.quest.progress.weekly.color.right
+								return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.progress.weekly.color.right
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+					},
+				},
+			},
+		},
+		title = {
+			order = 10,
+			type = "group",
+			name = L["Title"],
+			disabled = function()
+				return not E.db.WT.quest.progress.enable
+			end,
+			get = function(info)
+				return E.db.WT.quest.progress.title[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.quest.progress.title[info[#info]] = value
+			end,
+			args = {
+				descGroup = {
+					order = 1,
+					type = "group",
+					inline = true,
+					name = L["Description"],
+					args = {
+						title = {
+							order = 1,
+							type = "description",
+							name = format(L["%s contains the quest title."], ImportantColorString("{{title}}")),
+							fontSize = "medium",
+						},
+					},
+				},
+				template = {
+					order = 2,
+					type = "input",
+					name = L["Template"],
+					width = 1.5,
+				},
+				default = {
+					order = 3,
+					type = "execute",
+					name = L["Default"],
+					desc = L["Reset the template to default value."],
+					func = function()
+						E.db.WT.quest.progress.title.template = P.quest.progress.title.template
+					end,
+				},
+				color = {
+					order = 4,
+					type = "group",
+					inline = true,
+					name = L["Color"],
+					get = function(info)
+						return E.db.WT.quest.progress.title.color[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.progress.title.color[info[#info]] = value
+					end,
+					args = {
+						left = {
+							order = 1,
+							type = "color",
+							name = L["Gradient Color 1"],
+							hasAlpha = false,
+							get = function(info)
+								local colordb = E.db.WT.quest.progress.title.color.left
+								local default = P.quest.progress.title.color.left
+								return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.progress.title.color.left
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+						right = {
+							order = 2,
+							type = "color",
+							name = L["Gradient Color 2"],
+							hasAlpha = false,
+							get = function(info)
+								local colordb = E.db.WT.quest.progress.title.color.right
+								local default = P.quest.progress.title.color.right
+								return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.progress.title.color.right
+								db.r, db.g, db.b = r, g, b
+							end,
+						},
+					},
+				},
+			},
+		},
+		progress = {
+			order = 11,
+			type = "group",
+			name = L["Progress"],
+			disabled = function()
+				return not E.db.WT.quest.progress.enable
+			end,
+			args = {
+				objective = {
+					order = 1,
+					type = "group",
+					inline = true,
+					name = L["Objective"],
+					get = function(info)
+						return E.db.WT.quest.progress.progress.objective[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.progress.progress.objective[info[#info]] = value
+					end,
+					args = {
+						descGroup = {
+							order = 1,
+							type = "group",
+							inline = true,
+							name = L["Description"],
+							args = {
+								objective = {
+									order = 1,
+									type = "description",
+									name = format(
+										L["%s contains the quest objective progress."],
+										ImportantColorString("{{progress}}")
+									),
+									fontSize = "medium",
+								},
+							},
+						},
+						detailTemplate = {
+							order = 2,
+							type = "input",
+							name = L["Detail Template"],
+							desc = L["The progress details like 10/20."],
+							width = 1.5,
+						},
+						default = {
+							order = 3,
+							type = "execute",
+							name = L["Default"],
+							desc = L["Reset the template to default value."],
+							func = function()
+								E.db.WT.quest.progress.progress.objective.detailTemplate =
+									P.quest.progress.progress.objective.detailTemplate
+							end,
+						},
+						color = {
+							order = 4,
+							type = "group",
+							inline = true,
+							name = L["Objective Color"],
+							get = function(info)
+								return E.db.WT.quest.progress.progress.objective.color[info[#info]]
+							end,
+							set = function(info, value)
+								E.db.WT.quest.progress.progress.objective.color[info[#info]] = value
+							end,
+							args = {
+								left = {
+									order = 1,
+									type = "color",
+									name = L["Gradient Color 1"],
+									hasAlpha = false,
+									get = function(info)
+										local colordb = E.db.WT.quest.progress.progress.objective.color.left
+										local default = P.quest.progress.progress.objective.color.left
+										return colordb.r,
+											colordb.g,
+											colordb.b,
+											nil,
+											default.r,
+											default.g,
+											default.b,
+											nil
+									end,
+									set = function(info, r, g, b)
+										local db = E.db.WT.quest.progress.progress.objective.color.left
+										db.r, db.g, db.b = r, g, b
+									end,
+								},
+								right = {
+									order = 2,
+									type = "color",
+									name = L["Gradient Color 2"],
+									hasAlpha = false,
+									get = function(info)
+										local colordb = E.db.WT.quest.progress.progress.objective.color.right
+										local default = P.quest.progress.progress.objective.color.right
+										return colordb.r,
+											colordb.g,
+											colordb.b,
+											nil,
+											default.r,
+											default.g,
+											default.b,
+											nil
+									end,
+									set = function(info, r, g, b)
+										local db = E.db.WT.quest.progress.progress.objective.color.right
+										db.r, db.g, db.b = r, g, b
+									end,
+								},
+							},
+						},
+					},
+				},
+				complete = {
+					order = 2,
+					type = "group",
+					inline = true,
+					name = L["Complete"],
+					get = function(info)
+						return E.db.WT.quest.progress.progress.complete[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.progress.progress.complete[info[#info]] = value
+					end,
+					args = {
+						template = {
+							order = 1,
+							type = "input",
+							name = L["Template"],
+							width = 1.5,
+						},
+						default = {
+							order = 2,
+							type = "execute",
+							name = L["Default"],
+							desc = L["Reset the template to default value."],
+							func = function()
+								E.db.WT.quest.progress.progress.complete.template =
+									P.quest.progress.progress.complete.template
+							end,
+						},
+						color = {
+							order = 3,
+							type = "group",
+							inline = true,
+							name = L["Color"],
+							get = function(info)
+								return E.db.WT.quest.progress.progress.complete.color[info[#info]]
+							end,
+							set = function(info, value)
+								E.db.WT.quest.progress.progress.complete.color[info[#info]] = value
+							end,
+							args = {
+								left = {
+									order = 1,
+									type = "color",
+									name = L["Gradient Color 1"],
+									hasAlpha = false,
+									get = function(info)
+										local colordb = E.db.WT.quest.progress.progress.complete.color.left
+										local default = P.quest.progress.progress.complete.color.left
+										return colordb.r,
+											colordb.g,
+											colordb.b,
+											nil,
+											default.r,
+											default.g,
+											default.b,
+											nil
+									end,
+									set = function(info, r, g, b)
+										local db = E.db.WT.quest.progress.progress.complete.color.left
+										db.r, db.g, db.b = r, g, b
+									end,
+								},
+								right = {
+									order = 2,
+									type = "color",
+									name = L["Gradient Color 2"],
+									hasAlpha = false,
+									get = function(info)
+										local colordb = E.db.WT.quest.progress.progress.complete.color.right
+										local default = P.quest.progress.progress.complete.color.right
+										return colordb.r,
+											colordb.g,
+											colordb.b,
+											nil,
+											default.r,
+											default.g,
+											default.b,
+											nil
+									end,
+									set = function(info, r, g, b)
+										local db = E.db.WT.quest.progress.progress.complete.color.right
+										db.r, db.g, db.b = r, g, b
+									end,
+								},
+							},
+						},
+					},
+				},
+				accepted = {
+					order = 3,
+					type = "group",
+					inline = true,
+					name = L["Accepted"],
+					get = function(info)
+						return E.db.WT.quest.progress.progress.accepted[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.progress.progress.accepted[info[#info]] = value
+					end,
+					args = {
+						template = {
+							order = 1,
+							type = "input",
+							name = L["Template"],
+							width = 1.5,
+						},
+						default = {
+							order = 2,
+							type = "execute",
+							name = L["Default"],
+							desc = L["Reset the template to default value."],
+							func = function()
+								E.db.WT.quest.progress.progress.accepted.template =
+									P.quest.progress.progress.accepted.template
+							end,
+						},
+						color = {
+							order = 3,
+							type = "group",
+							inline = true,
+							name = L["Color"],
+							get = function(info)
+								return E.db.WT.quest.progress.progress.accepted.color[info[#info]]
+							end,
+							set = function(info, value)
+								E.db.WT.quest.progress.progress.accepted.color[info[#info]] = value
+							end,
+							args = {
+								left = {
+									order = 1,
+									type = "color",
+									name = L["Gradient Color 1"],
+									hasAlpha = false,
+									get = function(info)
+										local colordb = E.db.WT.quest.progress.progress.accepted.color.left
+										local default = P.quest.progress.progress.accepted.color.left
+										return colordb.r,
+											colordb.g,
+											colordb.b,
+											nil,
+											default.r,
+											default.g,
+											default.b,
+											nil
+									end,
+									set = function(info, r, g, b)
+										local db = E.db.WT.quest.progress.progress.accepted.color.left
+										db.r, db.g, db.b = r, g, b
+									end,
+								},
+								right = {
+									order = 2,
+									type = "color",
+									name = L["Gradient Color 2"],
+									hasAlpha = false,
+									get = function(info)
+										local colordb = E.db.WT.quest.progress.progress.accepted.color.right
+										local default = P.quest.progress.progress.accepted.color.right
+										return colordb.r,
+											colordb.g,
+											colordb.b,
+											nil,
+											default.r,
+											default.g,
+											default.b,
+											nil
+									end,
+									set = function(info, r, g, b)
+										local db = E.db.WT.quest.progress.progress.accepted.color.right
+										db.r, db.g, db.b = r, g, b
+									end,
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	},
+}
+
+options.switchButtons = {
+	order = 4,
 	type = "group",
 	name = L["Switch Buttons"],
 	get = function(info)

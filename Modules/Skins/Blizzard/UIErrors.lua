@@ -22,12 +22,14 @@ function S:UIErrors()
 
 	_G.UIErrorsFrame:Width(E.private.WT.skins.uiErrors.width)
 
-	hooksecurefunc(_G.UIErrorsFrame, "SetWidth", function(frame)
-		frame:Width(E.private.WT.skins.uiErrors.width)
+	hooksecurefunc(_G.UIErrorsFrame, "SetWidth", function(frame, _, skip)
+		if not skip then
+			frame:Width(E.private.WT.skins.uiErrors.width, true)
+		end
 	end)
 
 	hooksecurefunc(_G.UIErrorsFrame, "SetSize", function(frame)
-		frame:Width(E.private.WT.skins.uiErrors.width)
+		frame:Width(E.private.WT.skins.uiErrors.width, true)
 	end)
 
 	W:RegisterUIErrorHandler(function(params)

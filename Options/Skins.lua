@@ -253,7 +253,7 @@ options.general = {
 					end,
 					set = function(_, value)
 						E.private.WT.skins.uiErrors.width = value
-						_G.UIErrorsFrame:Width(value)
+						_G.UIErrorsFrame:Width(value, true)
 					end,
 				},
 				normalTextClassColor = {

@@ -246,7 +246,7 @@ options.general = {
 					name = L["Width"],
 					desc = L["Set the width of UIErrorsFrame."],
 					min = 256,
-					max = 2048,
+					max = 4096,
 					step = 1,
 					get = function()
 						return E.private.WT.skins.uiErrors.width

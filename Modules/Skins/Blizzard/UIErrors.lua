@@ -20,7 +20,15 @@ function S:UIErrors()
 		return
 	end
 
-	_G.UIErrorsFrame:SetWidth(E.private.WT.skins.uiErrors.width)
+	_G.UIErrorsFrame:Width(E.private.WT.skins.uiErrors.width)
+
+	hooksecurefunc(_G.UIErrorsFrame, "SetWidth", function(frame)
+		frame:Width(E.private.WT.skins.uiErrors.width)
+	end)
+
+	hooksecurefunc(_G.UIErrorsFrame, "SetSize", function(frame)
+		frame:Width(E.private.WT.skins.uiErrors.width)
+	end)
 
 	W:RegisterUIErrorHandler(function(params)
 		if params.r == nil or params.g == nil or params.b == nil then

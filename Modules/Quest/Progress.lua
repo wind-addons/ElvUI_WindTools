@@ -25,6 +25,7 @@ local C_QuestLog_GetQuestObjectives = C_QuestLog.GetQuestObjectives
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 
 local cachedQuests ---@type table<number, QuestProgressData>
+local cachedScenarioStep ---@type ScenarioProgressData
 
 local ignoreTagIDs = {
 	[128] = true, -- Emissary
@@ -43,6 +44,11 @@ local ignoreTagIDs = {
 ---@field worldQuestType? number World quest type ID
 ---@field objectives QuestObjectiveData[] List of quest objectives
 
+---@class ScenarioProgressData
+---@field title string Scenario title
+---@field tag string Scenario tag
+---@field objectives QuestObjectiveData[] List of scenario objectives
+
 ---@class QuestObjectiveData
 ---@field item string
 ---@field finished boolean
@@ -50,6 +56,35 @@ local ignoreTagIDs = {
 ---@field numRequired number
 
 ---@alias QuestProgressContext table<string, string?>
+
+---@return ScenarioProgressData
+local function fetchAllScenarioProgressData()
+	local scenarioStepInfo = C_ScenarioInfo.GetScenarioStepInfo()
+	if not scenarioStepInfo or scenarioStepInfo.numCriteria == 0 then
+		return {}
+	end
+
+	---@type ScenarioProgressData
+	local data = {
+		title = scenarioStepInfo.title,
+		tag = L["Scenario"],
+		objectives = {},
+	}
+
+	for i = 1, scenarioStepInfo.numCriteria do
+		local criteriaInfo = C_ScenarioInfo.GetCriteriaInfo(i)
+		if criteriaInfo and criteriaInfo.quantity and criteriaInfo.totalQuantity and criteriaInfo.completed ~= nil then
+			tinsert(data.objectives, {
+				item = criteriaInfo.description,
+				finished = criteriaInfo.completed,
+				numFulfilled = criteriaInfo.quantity,
+				numRequired = criteriaInfo.totalQuantity,
+			})
+		end
+	end
+
+	return data
+end
 
 ---Get all current quest progress data
 ---@return table<number, QuestProgressData> quests
@@ -138,10 +173,10 @@ function QP:RenderTemplate(template, context)
 	return result
 end
 
----@param data QuestProgressData
+---@param data QuestProgressData | ScenarioProgressData
 ---@return QuestProgressContext plainContext
 ---@return QuestProgressContext coloredContext
-function QP:BuildQuestContext(data)
+function QP:BuildContext(data)
 	local db = self.db
 	local plainContext, coloredContext = {}, {}
 
@@ -158,12 +193,12 @@ function QP:BuildQuestContext(data)
 		end
 	end
 
-	if data.suggestedGroup > 1 then
+	if data.suggestedGroup and data.suggestedGroup > 1 then
 		plainContext.suggestedGroup, coloredContext.suggestedGroup =
 			render(data.suggestedGroup, db.suggestedGroup.template, db.suggestedGroup.color)
 	end
 
-	if data.level ~= E.mylevel then
+	if data.level and data.level ~= E.mylevel then
 		plainContext.autoHideLevel, coloredContext.autoHideLevel = plainContext.level, coloredContext.level
 	end
 
@@ -193,7 +228,7 @@ function QP:ProcessQuestUpdate()
 					local previousObjectiveData = previousQuestData.objectives[objectiveIndex]
 					if not previousObjectiveData or not tCompare(objectiveData, previousObjectiveData) then
 						if objectiveData.numFulfilled and tonumber(objectiveData.numFulfilled) > 0 then
-							self:HandleQuestProgress("update", questData, objectiveData)
+							self:HandleQuestProgress("quest_update", questData, objectiveData)
 						end
 					end
 				end
@@ -202,6 +237,29 @@ function QP:ProcessQuestUpdate()
 	end
 
 	cachedQuests = currentQuests
+end
+
+function QP:ProcessScenarioUpdate()
+	local currentScenarioStep = fetchAllScenarioProgressData()
+
+	if not cachedScenarioStep or cachedScenarioStep.title ~= currentScenarioStep.title then
+		cachedScenarioStep = currentScenarioStep
+		return
+	end
+
+	if #cachedScenarioStep.objectives > 0 and #currentScenarioStep.objectives > 0 then
+		for objectiveIndex = 1, #currentScenarioStep.objectives do
+			local objectiveData = currentScenarioStep.objectives[objectiveIndex]
+			local previousObjectiveData = cachedScenarioStep.objectives[objectiveIndex]
+			if not previousObjectiveData or not tCompare(objectiveData, previousObjectiveData) then
+				if objectiveData.numFulfilled and tonumber(objectiveData.numFulfilled) > 0 then
+					self:HandleQuestProgress("scenario_update", currentScenarioStep, objectiveData)
+				end
+			end
+		end
+	end
+
+	cachedScenarioStep = currentScenarioStep
 end
 
 ---@param context QuestProgressContext
@@ -218,11 +276,12 @@ function QP:FilterContext(context)
 end
 
 ---Handle quest progress update event
----@param status "accepted" | "update" | "complete"
----@param questData QuestProgressData
+---@param status "accepted" | "complete" | "quest_update" | "scenario_update"
+---@param questData QuestProgressData | ScenarioProgressData
 ---@param objectiveData? QuestObjectiveData
 function QP:HandleQuestProgress(status, questData, objectiveData)
-	local plainContext, coloredContext = self:BuildQuestContext(questData)
+	local plainContext, coloredContext = self:BuildContext(questData)
+
 	if status == "accepted" then
 		local db = self.db.progress.accepted
 		plainContext.progress, coloredContext.progress = render(L["Accepted"], db.template, db.color)
@@ -230,7 +289,7 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 	elseif status == "complete" then
 		local db = self.db.progress.complete
 		plainContext.progress, coloredContext.progress = render(L["Complete"], db.template, db.color)
-	elseif status == "update" then
+	elseif status == "quest_update" or status == "scenario_update" then
 		assert(objectiveData, "Objective data is required for progress update")
 		local db = self.db.progress.objective
 		local objectiveText, coloredObjectiveText = render(objectiveData.item, "%s", db.color)
@@ -249,6 +308,11 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 	end
 
 	-- Send to announcement module
+	if status == "scenario_update" then
+		-- Scenario progress should shared across all party members, no need to announce
+		return
+	end
+
 	local event ---@type QuestAnnounceEventType
 	if status == "accepted" then
 		event = A.QUEST_EVENT.ACCEPTED
@@ -286,11 +350,15 @@ function QP:QUEST_LOG_UPDATE()
 	F.TaskManager:AfterLogin(self.ProcessQuestUpdate, self)
 end
 
+function QP:SCENARIO_CRITERIA_UPDATE()
+	F.TaskManager:AfterLogin(self.ProcessScenarioUpdate, self)
+end
+
 ---Fetch the context for preview or test
 ---@return QuestProgressContext plainContext
 ---@return QuestProgressContext coloredContext
 function QP:GetTestContext()
-	return self:BuildQuestContext({
+	return self:BuildContext({
 		questID = 39987,
 		title = L["Test Quest Name"],
 		level = 99,
@@ -315,10 +383,17 @@ function QP:Initialize()
 
 	if not self.initialized then
 		self:RegisterEvent("QUEST_LOG_UPDATE")
+		self:RegisterEvent("SCENARIO_CRITERIA_UPDATE")
+		self:RegisterEvent("SCENARIO_UPDATE", "SCENARIO_CRITERIA_UPDATE")
+		self:RegisterEvent("SCENARIO_CRITERIA_SHOW_STATE_UPDATE", "SCENARIO_CRITERIA_UPDATE")
 		self.initialized = true
 	end
 
-	F.TaskManager:AfterLogin(self.UpdateBlizzardQuestMessage, self)
+	F.TaskManager:AfterLogin(function()
+		self:UpdateBlizzardQuestMessage()
+		self:ProcessQuestUpdate()
+		self:ProcessScenarioUpdate()
+	end)
 end
 
 QP.ProfileUpdate = QP.Initialize

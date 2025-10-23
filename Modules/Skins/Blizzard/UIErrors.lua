@@ -4,6 +4,7 @@ local C = W.Utilities.Color
 
 local _G = _G
 local pairs = pairs
+local hooksecurefunc = hooksecurefunc
 
 local RED_FONT_COLOR = RED_FONT_COLOR
 local YELLOW_FONT_COLOR = YELLOW_FONT_COLOR

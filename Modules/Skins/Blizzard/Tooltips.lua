@@ -1,7 +1,7 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local TT = E:GetModule("Tooltip")
 local DT = E:GetModule("DataTexts")
-local S = W.Modules.Skins ---@type Skins
+local S = W.Modules.Skins ---@class Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -61,6 +61,7 @@ function S:StyleIconsInTooltip(tt)
 	end
 end
 
+---@param tt table GameTooltip like frame
 function S:ReskinTooltip(tt)
 	if not tt or (tt == E.ScanTooltip or tt.IsEmbedded or not tt.NineSlice) or tt:IsForbidden() then
 		return

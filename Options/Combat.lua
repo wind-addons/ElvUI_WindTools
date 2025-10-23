@@ -366,18 +366,50 @@ options.combatAlert = {
 				},
 				enterColor = {
 					order = 3,
-					type = "color",
-					hasAlpha = true,
+					type = "group",
+					inline = true,
 					name = L["Enter Color"],
 					get = function(info)
-						local db = E.db.WT.combat.combatAlert[info[#info]]
-						local default = P.combat.combatAlert[info[#info]]
-						return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+						return E.db.WT.combat.combatAlert.enterColor[info[#info]]
 					end,
-					set = function(info, r, g, b, a)
-						local db = E.db.WT.combat.combatAlert[info[#info]]
-						db.r, db.g, db.b, db.a = r, g, b, a
+					set = function(info, value)
+						E.db.WT.combat.combatAlert.enterColor[info[#info]] = value
+						C:ProfileUpdate()
 					end,
+					args = {
+						left = {
+							order = 1,
+							type = "color",
+							name = L["Gradient Color 1"],
+							hasAlpha = false,
+							get = function(info)
+								local db = E.db.WT.combat.combatAlert.enterColor.left
+								local default = P.combat.combatAlert.enterColor.left
+								return db.r, db.g, db.b, nil, default.r, default.g, default.b
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.combat.combatAlert.enterColor.left
+								db.r, db.g, db.b = r, g, b
+								C:ProfileUpdate()
+							end,
+						},
+						right = {
+							order = 2,
+							type = "color",
+							name = L["Gradient Color 2"],
+							hasAlpha = false,
+							get = function(info)
+								local db = E.db.WT.combat.combatAlert.enterColor.right
+								local default = P.combat.combatAlert.enterColor.right
+								return db.r, db.g, db.b, nil, default.r, default.g, default.b
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.combat.combatAlert.enterColor.right
+								db.r, db.g, db.b = r, g, b
+								C:ProfileUpdate()
+							end,
+						},
+					},
 				},
 				leaveText = {
 					order = 4,
@@ -386,18 +418,50 @@ options.combatAlert = {
 				},
 				leaveColor = {
 					order = 5,
-					type = "color",
-					hasAlpha = true,
+					type = "group",
+					inline = true,
 					name = L["Leave Color"],
 					get = function(info)
-						local db = E.db.WT.combat.combatAlert[info[#info]]
-						local default = P.combat.combatAlert[info[#info]]
-						return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+						return E.db.WT.combat.combatAlert.leaveColor[info[#info]]
 					end,
-					set = function(info, r, g, b, a)
-						local db = E.db.WT.combat.combatAlert[info[#info]]
-						db.r, db.g, db.b, db.a = r, g, b, a
+					set = function(info, value)
+						E.db.WT.combat.combatAlert.leaveColor[info[#info]] = value
+						C:ProfileUpdate()
 					end,
+					args = {
+						left = {
+							order = 1,
+							type = "color",
+							name = L["Gradient Color 1"],
+							hasAlpha = false,
+							get = function(info)
+								local db = E.db.WT.combat.combatAlert.leaveColor.left
+								local default = P.combat.combatAlert.leaveColor.left
+								return db.r, db.g, db.b, nil, default.r, default.g, default.b
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.combat.combatAlert.leaveColor.left
+								db.r, db.g, db.b = r, g, b
+								C:ProfileUpdate()
+							end,
+						},
+						right = {
+							order = 2,
+							type = "color",
+							name = L["Gradient Color 2"],
+							hasAlpha = false,
+							get = function(info)
+								local db = E.db.WT.combat.combatAlert.leaveColor.right
+								local default = P.combat.combatAlert.leaveColor.right
+								return db.r, db.g, db.b, nil, default.r, default.g, default.b
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.combat.combatAlert.leaveColor.right
+								db.r, db.g, db.b = r, g, b
+								C:ProfileUpdate()
+							end,
+						},
+					},
 				},
 				font = {
 					type = "group",

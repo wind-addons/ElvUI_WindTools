@@ -1,5 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local C = W:NewModule("CombatAlert", "AceEvent-3.0") ---@class CombatAlert: AceModule
+local CA = W:NewModule("CombatAlert", "AceEvent-3.0") ---@class CombatAlert: AceModule
+local C = W.Utilities.Color
 
 local _G = _G
 local assert = assert
@@ -102,7 +103,7 @@ end
 ---Create shield frame with enter/leave animations
 ---@param parent Frame Parent frame to attach to
 ---@return Frame ShieldFrame Shield frame with animations
-function C:CreateShieldFrame(parent)
+function CA:CreateShieldFrame(parent)
 	local ShieldFrame = CreateFrame("Frame", nil, parent)
 	ShieldFrame:SetFrameStrata("HIGH")
 	ShieldFrame:SetFrameLevel(3)
@@ -172,7 +173,7 @@ end
 ---@param parent Frame Parent frame to attach to
 ---@param flipHorizontal boolean Whether to flip the sword texture horizontally
 ---@return Frame SwordFrame Sword frame with animations
-function C:CreateSwordFrame(parent, flipHorizontal)
+function CA:CreateSwordFrame(parent, flipHorizontal)
 	local SwordFrame = CreateFrame("Frame", nil, parent)
 	SwordFrame:SetFrameStrata("HIGH")
 	SwordFrame:SetFrameLevel(2)
@@ -237,7 +238,7 @@ function C:CreateSwordFrame(parent, flipHorizontal)
 	return SwordFrame
 end
 
-function C:CreateAnimationFrame()
+function CA:CreateAnimationFrame()
 	if self.AnimationContainerFrame then
 		return
 	end
@@ -257,7 +258,7 @@ function C:CreateAnimationFrame()
 	ContainerFrame.SwordRightToLeft = self:CreateSwordFrame(ContainerFrame, true)
 end
 
-function C:UpdateAnimationFrame()
+function CA:UpdateAnimationFrame()
 	if not self.AnimationContainerFrame then
 		return
 	end
@@ -371,7 +372,7 @@ function C:UpdateAnimationFrame()
 end
 
 ---Create text frame with enter/leave animations
-function C:CreateTextFrame()
+function CA:CreateTextFrame()
 	if self.TextFrame then
 		return
 	end
@@ -421,7 +422,7 @@ function C:CreateTextFrame()
 	self.TextFrame = TextFrame
 end
 
-function C:UpdateTextFrame()
+function CA:UpdateTextFrame()
 	if not self.TextFrame then
 		return
 	end
@@ -485,7 +486,7 @@ end
 
 ---Display combat alert animation and text
 ---@param alertType "ENTER"|"LEAVE" Type of alert to show
-function C:ShowAlert(alertType)
+function CA:ShowAlert(alertType)
 	if not self.AnimationContainerFrame then
 		self:Log("debug", "Animation container frame not initialized")
 	end
@@ -552,8 +553,9 @@ function C:ShowAlert(alertType)
 		end
 
 		if self.db.text then
-			textFrame.text:SetText(self.db.enterText)
-			F.SetFontColorWithDB(textFrame.text, self.db.enterColor)
+			local coloredText =
+				C.GradientStringByRGB(self.db.enterText, self.db.enterColor.left, self.db.enterColor.right)
+			textFrame.text:SetText(coloredText)
 			textFrame:Size(textFrame.text:GetStringWidth(), textFrame.text:GetStringHeight())
 
 			-- Position text below animations or alert frame
@@ -587,8 +589,9 @@ function C:ShowAlert(alertType)
 		end
 
 		if self.db.text then
-			textFrame.text:SetText(self.db.leaveText)
-			F.SetFontColorWithDB(textFrame.text, self.db.leaveColor)
+			local coloredText =
+				C.GradientStringByRGB(self.db.leaveText, self.db.leaveColor.left, self.db.leaveColor.right)
+			textFrame.text:SetText(coloredText)
 			textFrame:Size(textFrame.text:GetStringWidth(), textFrame.text:GetStringHeight())
 
 			-- Position text below animations or alert frame
@@ -602,12 +605,12 @@ end
 
 ---Add an alert to the queue for later playback
 ---@param alertType "ENTER"|"LEAVE" Type of alert to queue
-function C:QueueAlert(alertType)
+function CA:QueueAlert(alertType)
 	tinsert(alertQueue, alertType)
 end
 
 ---Load and play the next queued alert, if any
-function C:LoadNextAlert()
+function CA:LoadNextAlert()
 	isPlaying = false
 
 	if alertQueue and alertQueue[1] then
@@ -617,15 +620,15 @@ function C:LoadNextAlert()
 end
 
 ---Event handler: Player enters combat
-function C:PLAYER_REGEN_DISABLED()
+function CA:PLAYER_REGEN_DISABLED()
 	self:ShowAlert("ENTER")
 end
 
-function C:PLAYER_REGEN_ENABLED()
+function CA:PLAYER_REGEN_ENABLED()
 	self:ShowAlert("LEAVE")
 end
 
-function C:UpdateMover()
+function CA:UpdateMover()
 	if not self.AlertFrame then
 		return
 	end
@@ -648,7 +651,7 @@ function C:UpdateMover()
 	end
 end
 
-function C:UpdateFrames()
+function CA:UpdateFrames()
 	if not self.AlertFrame then
 		self:ConstructFrames()
 	else
@@ -658,7 +661,7 @@ function C:UpdateFrames()
 	end
 end
 
-function C:ConstructFrames()
+function CA:ConstructFrames()
 	self.AlertFrame = CreateFrame("Frame", nil, E.UIParent)
 	self.AlertFrame:Point("TOP", 0, -200)
 
@@ -685,12 +688,12 @@ function C:ConstructFrames()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 end
-function C:Preview()
+function CA:Preview()
 	self:ShowAlert("ENTER")
 	self:QueueAlert("LEAVE")
 end
 
-function C:Initialize()
+function CA:Initialize()
 	if not E.db.WT.combat.combatAlert.enable then
 		return
 	end
@@ -699,7 +702,7 @@ function C:Initialize()
 	self:RegisterEvent("PLAYER_ENTERING_WORLD", "ConstructFrames")
 end
 
-function C:ProfileUpdate()
+function CA:ProfileUpdate()
 	if E.db.WT.combat.combatAlert.enable then
 		self.db = E.db.WT.combat.combatAlert
 		self:UpdateFrames()
@@ -711,4 +714,4 @@ function C:ProfileUpdate()
 	end
 end
 
-W:RegisterModule(C:GetName())
+W:RegisterModule(CA:GetName())

@@ -309,8 +309,14 @@ P.combat = {
 		text = true,
 		enterText = L["Enter Combat"],
 		leaveText = L["Leave Combat"],
-		enterColor = C.GetRGBAFromTemplate("rose-500"),
-		leaveColor = C.GetRGBAFromTemplate("green-500"),
+		enterColor = {
+			left = W.AsianLocale and C.GetRGBFromTemplate("rose-500") or C.GetRGBFromTemplate("rose-300"),
+			right = C.GetRGBFromTemplate("rose-500"),
+		},
+		leaveColor = {
+			left = W.AsianLocale and C.GetRGBFromTemplate("emerald-500") or C.GetRGBFromTemplate("emerald-300"),
+			right = C.GetRGBFromTemplate("emerald-500"),
+		},
 		font = {
 			name = E.db.general.font,
 			size = 25,

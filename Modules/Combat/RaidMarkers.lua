@@ -20,7 +20,6 @@ local SetRaidTarget = SetRaidTarget
 local UnregisterStateDriver = UnregisterStateDriver
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-local C_PartyInfo_DoCountdown = C_PartyInfo.DoCountdown
 
 local lastClear = 0
 
@@ -111,7 +110,6 @@ function RM:UpdateButtons()
 			button.backdrop:Hide()
 		end
 
-		-- WindSkins 阴影处理
 		if button and button.backdrop.shadow then
 			if self.db.backdrop then
 				button.backdrop.shadow:Hide()
@@ -120,7 +118,7 @@ function RM:UpdateButtons()
 			end
 		end
 
-		-- 宏按键绑定
+		-- Key bindings
 		if button.isMarkButton then
 			button:SetAttribute("shift-type*", nil)
 			button:SetAttribute("alt-type*", nil)
@@ -160,7 +158,6 @@ function RM:ToggleSettings()
 	self:UpdateButtons()
 	self:UpdateBar()
 
-	-- 注册团队状况显隐
 	if self.bar and self.db and self.db.visibility then
 		RegisterStateDriver(
 			self.bar,
@@ -171,7 +168,7 @@ function RM:ToggleSettings()
 		)
 	end
 
-	-- 鼠标显隐
+	-- Fade in/out for mouseover
 	if self.db.mouseOver then
 		self.bar:SetScript("OnEnter", function(bar)
 			bar:SetAlpha(1)
@@ -267,14 +264,14 @@ function RM:CreateButtons()
 		tex:Point("CENTER")
 		button.tex = tex
 
-		if i < 9 then -- 标记
+		if i < 9 then -- Markers
 			tex:SetTexture(format("Interface\\TargetingFrame\\UI-RaidTargetingIcon_%d", i))
 
 			button:SetAttribute("type*", "macro")
 			button:SetAttribute(format("%s-type*", self.db.modifier), "macro")
 
 			button.isMarkButton = true
-		elseif i == 9 then -- 清除按钮
+		elseif i == 9 then -- Clear All
 			tex:SetTexture("Interface\\BUTTONS\\UI-GroupLoot-Pass-Up")
 
 			button:SetAttribute("type", "click")
@@ -307,12 +304,12 @@ function RM:CreateButtons()
 					end
 				end)
 			end
-		elseif i == 10 then -- 准备确认 & 战斗记录
+		elseif i == 10 then -- Ready Check & Combat Log
 			tex:SetTexture("Interface\\RaidFrame\\ReadyCheck-Ready")
 			button:SetAttribute("type*", "macro")
 			button:SetAttribute("macrotext1", "/readycheck")
 			button:SetAttribute("macrotext2", "/combatlog")
-		elseif i == 11 then -- 开怪倒数
+		elseif i == 11 then -- Pull Countdown
 			tex:SetTexture("Interface\\Icons\\Spell_unused2")
 			tex:SetTexCoord(0.25, 0.8, 0.2, 0.75)
 			button:SetAttribute("type*", "macro")
@@ -330,7 +327,6 @@ function RM:CreateButtons()
 
 		button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
 
-		-- 鼠标提示
 		local tooltipText = ""
 
 		if i < 9 then
@@ -441,7 +437,7 @@ function RM:CreateButtons()
 			end
 		end)
 
-		-- 鼠标显隐
+		-- Fade in/out for mouseover
 		button:HookScript("OnEnter", function()
 			if not self.db.mouseOver then
 				return

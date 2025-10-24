@@ -21,31 +21,44 @@ function EMP:SkinButton(index)
 	end
 
 	local item = _G["MerchantItem" .. index]
-	local button = _G["MerchantItem" .. index .. "ItemButton"]
-	local icon = _G["MerchantItem" .. index .. "ItemButtonIconTexture"]
-	local money = _G["MerchantItem" .. index .. "MoneyFrame"]
-	local nameFrame = _G["MerchantItem" .. index .. "NameFrame"]
-	local name = _G["MerchantItem" .. index .. "Name"]
-	local slot = _G["MerchantItem" .. index .. "SlotTexture"]
-
+	item:Size(155, 45)
 	item:StripTextures(true)
 	item:CreateBackdrop("Transparent")
-	item:Size(155, 45)
-	item.backdrop:Point("TOPLEFT", -1, 3)
+	item.backdrop:Point("TOPLEFT", -3, 2)
 	item.backdrop:Point("BOTTOMRIGHT", 2, -3)
 
+	local slot = _G["MerchantItem" .. index .. "SlotTexture"]
+	item.Name:Point("LEFT", slot, "RIGHT", -5, 5)
+	item.Name:Size(110, 30)
+
+	local button = _G["MerchantItem" .. index .. "ItemButton"]
 	button:StripTextures()
 	button:StyleButton()
 	button:SetTemplate(nil, true)
-	button:Size(40)
-	button:Point("TOPLEFT", item, "TOPLEFT", 4, -2)
+	button:Point("TOPLEFT", item, "TOPLEFT", 4, -4)
 
+	local icon = button.icon
 	icon:SetTexCoord(unpack(E.TexCoords))
-	icon:SetInside()
+	icon:ClearAllPoints()
+	icon:Point("TOPLEFT", 1, -1)
+	icon:Point("BOTTOMRIGHT", -1, 1)
 
+	local questIcon = button.IconQuestTexture
+	questIcon:SetTexCoord(0, 1, 0, 1)
+	questIcon:SetInside()
+	hooksecurefunc(questIcon, "SetTexture", function(iconQuest, texture)
+		if texture == [[Interface\ContainerFrame\UI-Icon-QuestBang]] then
+			iconQuest:SetTexture(E.Media.Textures.BagQuestIcon)
+		end
+	end)
+
+	local nameFrame = _G["MerchantItem" .. index .. "NameFrame"]
 	nameFrame:Point("LEFT", slot, "RIGHT", -6, -17)
+
+	local name = _G["MerchantItem" .. index .. "Name"]
 	name:Point("LEFT", slot, "RIGHT", -4, 5)
 
+	local money = _G["MerchantItem" .. index .. "MoneyFrame"]
 	money:ClearAllPoints()
 	money:Point("BOTTOMLEFT", button, "BOTTOMRIGHT", 3, 0)
 

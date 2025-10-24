@@ -573,6 +573,7 @@ L["Enable this filter will only show the group that fits you or your group membe
 L["Enable this filter will only show the group that have the healer already in party."] = true
 L["Enable this filter will only show the group that have the tank already in party."] = true
 L["Enable to use the command to set the waypoint."] = true
+L["Enable word wrap for long text."] = true
 L["Enable/Disable the spell activation alert frame."] = true
 L["Enabled"] = "|cff00ff00Enabled|r"
 L["Enchant Icon"] = true
@@ -1700,6 +1701,7 @@ L["WindTools Modules"] = "|cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|c
 L["WindTools provides a new shadow style for original ElvUI."] = true
 L["WindTools saves all data in ElvUI Profile and Private database."] = true
 L["WoW Build"] = true
+L["Word Wrap"] = true
 L["World"] = true
 L["World Map"] = true
 L["World Quest Tab"] = true

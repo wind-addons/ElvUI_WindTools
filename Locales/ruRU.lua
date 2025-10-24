@@ -573,6 +573,7 @@ L["Enable this filter will only show the group that fits you or your group membe
 L["Enable this filter will only show the group that have the healer already in party."] = "При включении этого фильтра будут показаны только те группы, у которых уже есть Лекарь в команде."
 L["Enable this filter will only show the group that have the tank already in party."] = "При включении этого фильтра будут показаны только те группы, у которых уже есть Танк в команде."
 L["Enable to use the command to set the waypoint."] = "Включите, чтобы использовать команду для установки путевой точки."
+L["Enable word wrap for long text."] = true
 L["Enable/Disable the spell activation alert frame."] = "Включение/выключение рамки оповещения об активации заклинания."
 L["Enabled"] = "|cff00ff00Включено|r"
 L["Enchant Icon"] = "Иконка наложения чар"
@@ -1700,6 +1701,7 @@ L["WindTools Modules"] = "Модули |cff5385edW|r|cff5094eai|r|cff4da4e7n|r|c
 L["WindTools provides a new shadow style for original ElvUI."] = "WindTools предоставляет новый стиль тени для оригинального интерфейса ElvUI."
 L["WindTools saves all data in ElvUI Profile and Private database."] = "WindTools сохраняет все данные в профиле ElvUI и в Private базе данных."
 L["WoW Build"] = "Сборка WoW"
+L["Word Wrap"] = "Перенос слов"
 L["World"] = "Мир"
 L["World Map"] = "Карта мира"
 L["World Quest Tab"] = true

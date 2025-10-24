@@ -573,6 +573,7 @@ L["Enable this filter will only show the group that fits you or your group membe
 L["Enable this filter will only show the group that have the healer already in party."] = "이 필터를 활성화하면 힐러가 있는 파티만 표시됩니다"
 L["Enable this filter will only show the group that have the tank already in party."] = "이 필터를 활성화하면 탱커가 있는 파티만 표시됩니다"
 L["Enable to use the command to set the waypoint."] = "명령을 사용하여 웨이포인트를 설정하는 기능을 활성화합니다."
+L["Enable word wrap for long text."] = true
 L["Enable/Disable the spell activation alert frame."] = "주문 경고 프레임을 표시/숨김처리 합니다."
 L["Enabled"] = "|cff00ff00사용|r"
 L["Enchant Icon"] = "마법부여 아이콘"
@@ -1700,6 +1701,7 @@ L["WindTools Modules"] = "|cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|c
 L["WindTools provides a new shadow style for original ElvUI."] = "WindTools는 ElvUI에 새로운 그림자 스타일을 제공합니다."
 L["WindTools saves all data in ElvUI Profile and Private database."] = "WindTools는 ElvUI 프로필 및 개인 데이터베이스에 모든 데이터를 저장합니다."
 L["WoW Build"] = "WoW 버전"
+L["Word Wrap"] = "줄 바꿈"
 L["World"] = "월드"
 L["World Map"] = "월드맵"
 L["World Quest Tab"] = true

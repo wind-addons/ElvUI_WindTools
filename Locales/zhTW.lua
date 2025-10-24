@@ -573,6 +573,7 @@ L["Enable this filter will only show the group that fits you or your group membe
 L["Enable this filter will only show the group that have the healer already in party."] = "啟用此過濾器將只顯示已經有治療者的隊伍."
 L["Enable this filter will only show the group that have the tank already in party."] = "啟用此過濾器將只顯示已經有坦克的隊伍."
 L["Enable to use the command to set the waypoint."] = "啟用使用指令設定地圖標記的功能."
+L["Enable word wrap for long text."] = "為長文本啟用自動換行."
 L["Enable/Disable the spell activation alert frame."] = "啟用/停用法術激活提示框架."
 L["Enabled"] = "|cff00ff00啟用|r"
 L["Enchant Icon"] = "附魔圖示"
@@ -1700,6 +1701,7 @@ L["WindTools Modules"] = "|cff5385edW|r|cff5192ebi|r|cff4e9fe8n|r|cff4bace5d|r |
 L["WindTools provides a new shadow style for original ElvUI."] = "Wind 工具箱為 ElvUI 原版提供了一個全新的陰影風格."
 L["WindTools saves all data in ElvUI Profile and Private database."] = "Wind 工具箱將所有資料儲存在 ElvUI 設定檔和私人設定檔中."
 L["WoW Build"] = "魔獸世界版本號"
+L["Word Wrap"] = "自動換行"
 L["World"] = "世界"
 L["World Map"] = "世界地圖"
 L["World Quest Tab"] = true

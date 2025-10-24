@@ -90,6 +90,23 @@ function QF:WaitUnitframesLoad(triedTimes)
 	end
 end
 
+function QF:GetMacroText()
+	local macroText = "/focus mouseover"
+	if self.db.setMark and self.db.markNumber and self.db.markNumber >= 1 and self.db.markNumber <= 8 then
+		local extra = strjoin(
+			" ",
+			"/run",
+			'local u,f="mouseover",UnitFactionGroup;',
+			format('if(not UnitIsPlayer(u)or f(u)==f("player"))and GetRaidTargetIndex(u)~=%d then', self.db.markNumber),
+			format('SetRaidTarget("focus",%d)', self.db.markNumber),
+			"end"
+		)
+		return macroText .. "\n" .. extra
+	end
+
+	return macroText
+end
+
 function QF:Initialize()
 	self.db = E.private.WT.unitFrames.quickFocus
 	if not self.db or not self.db.enable then
@@ -98,7 +115,7 @@ function QF:Initialize()
 
 	local button = CreateFrame("Button", "WTQuickFocusButton", E.UIParent, "SecureActionButtonTemplate")
 	button:SetAttribute("type1", "macro")
-	button:SetAttribute("macrotext", "/focus mouseover")
+	button:SetAttribute("macrotext", self:GetMacroText())
 	button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
 	SetOverrideBindingClick(button, true, self.db.modifier .. "-" .. self.db.button, "WTQuickFocusButton")
 

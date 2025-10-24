@@ -517,6 +517,10 @@ local function ReskinTooltipsAndMenus()
 	_G.RematchTooltip:CreateBackdrop("Transparent")
 	S:CreateBackdropShadow(_G.RematchTooltip)
 
+	_G.RematchAbilityTooltip:StripTextures()
+	_G.RematchAbilityTooltip:CreateBackdrop("Transparent")
+	S:CreateBackdropShadow(_G.RematchAbilityTooltip)
+
 	_G.FloatingPetBattleAbilityTooltip:StripTextures()
 	_G.FloatingPetBattleAbilityTooltip:CreateBackdrop("Transparent")
 	S:CreateBackdropShadow(_G.FloatingPetBattleAbilityTooltip)

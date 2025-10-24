@@ -570,23 +570,33 @@ options.reset = {
 						end)
 					end,
 				},
-				switchButtons = {
-					order = 2,
-					type = "execute",
-					name = L["Switch Buttons"],
-					func = function()
-						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Switch Buttons"], nil, function()
-							E.db.WT.quest.switchButtons = P.quest.switchButtons
-						end)
-					end,
-				},
 				turnIn = {
-					order = 3,
+					order = 2,
 					type = "execute",
 					name = L["Turn In"],
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Turn In"], nil, function()
 							E.db.WT.quest.turnIn = P.quest.turnIn
+						end)
+					end,
+				},
+				progress = {
+					order = 3,
+					type = "execute",
+					name = L["Progress"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Progress"], nil, function()
+							E.db.WT.quest.progress = P.quest.progress
+						end)
+					end,
+				},
+				switchButtons = {
+					order = 4,
+					type = "execute",
+					name = L["Switch Buttons"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Switch Buttons"], nil, function()
+							E.db.WT.quest.switchButtons = P.quest.switchButtons
 						end)
 					end,
 				},
@@ -800,6 +810,8 @@ options.reset = {
 							E.private.WT.skins.shadow = V.skins.shadow
 							E.private.WT.skins.increasedSize = V.skins.increasedSize
 							E.private.WT.skins.color = V.skins.color
+							E.private.WT.skins.border = V.skins.border
+							E.private.WT.skins.uiErrors = V.skins.uiErrors
 						end)
 					end,
 				},
@@ -810,7 +822,7 @@ options.reset = {
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Font"], nil, function()
 							E.private.WT.skins.ime = V.skins.ime
-							E.private.WT.skins.errorMessage = V.skins.errorMessage
+							E.private.WT.skins.actionStatus = V.skins.actionStatus
 						end)
 					end,
 				},

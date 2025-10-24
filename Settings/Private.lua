@@ -340,11 +340,7 @@ V.skins = {
 			colorRight = { r = 0.98824, g = 0.40392, b = 0.40392, a = 1 },
 		},
 	},
-	color = {
-		r = 0,
-		g = 0,
-		b = 0,
-	},
+	color = { r = 0, g = 0, b = 0 },
 	uiErrors = {
 		normalTextClassColor = false,
 		width = 1024,

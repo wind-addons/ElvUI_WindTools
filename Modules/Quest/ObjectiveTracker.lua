@@ -277,6 +277,9 @@ function OT:HandleBlockHeader(frame)
 	end
 
 	F.SetFontWithDB(text, self.db.title)
+	if not self.db.title.wordWrap then
+		text:SetWordWrap(self.db.title.wordWrap)
+	end
 	text:Height(text:GetStringHeight() + 2)
 
 	if not self:IsHooked(text, "SetTextColor") then
@@ -326,6 +329,9 @@ function OT:HandleLine(line, _)
 	end
 
 	F.SetFontWithDB(line.Text, self.db.info)
+	if not self.db.info.wordWrap then
+		line.Text:SetWordWrap(self.db.info.wordWrap)
+	end
 
 	if not self:IsHooked(line.Text, "SetTextColor") then
 		self:SecureHook(line.Text, "SetTextColor", "LineText_SetTextColor")

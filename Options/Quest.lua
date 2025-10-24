@@ -657,6 +657,12 @@ options.objectiveTracker = {
 					max = 60,
 					step = 1,
 				},
+				wordWrap = {
+					order = 4,
+					type = "toggle",
+					name = L["Word Wrap"],
+					desc = L["Enable word wrap for long quest titles."],
+				},
 			},
 		},
 		infoColor = {
@@ -764,6 +770,12 @@ options.objectiveTracker = {
 					min = 5,
 					max = 60,
 					step = 1,
+				},
+				wordWrap = {
+					order = 4,
+					type = "toggle",
+					name = L["Word Wrap"],
+					desc = L["Enable word wrap for long quest information."],
 				},
 			},
 		},

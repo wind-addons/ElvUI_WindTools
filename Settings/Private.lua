@@ -272,11 +272,13 @@ V.quest = {
 			name = E.db.general.font,
 			size = E.db.general.fontSize + 1,
 			style = "OUTLINE",
+			wordWrap = true,
 		},
 		info = {
 			name = E.db.general.font,
 			size = E.db.general.fontSize - 1,
 			style = "OUTLINE",
+			wordWrap = true,
 		},
 		titleColor = {
 			enable = true,

@@ -346,6 +346,12 @@ do
 	icons = icons .. E:TextureString(W.Media.Icons.elvUIOldHealer, ":16:16") .. " "
 	icons = icons .. E:TextureString(W.Media.Icons.elvUIOldDPS, ":16:16")
 	SampleStrings.elvui_old = icons
+
+	icons = ""
+	icons = icons .. E:TextureString(W.Media.Icons.blizzardTank, ":16:16") .. " "
+	icons = icons .. E:TextureString(W.Media.Icons.blizzardHealer, ":16:16") .. " "
+	icons = icons .. E:TextureString(W.Media.Icons.blizzardDPS, ":16:16")
+	SampleStrings.blizzard = icons
 end
 
 options.roleIcon = {
@@ -392,6 +398,7 @@ options.roleIcon = {
 				SUNUI = SampleStrings.sunui,
 				LYNUI = SampleStrings.lynui,
 				ELVUI_OLD = SampleStrings.elvui_old,
+				BLIZZARD = SampleStrings.blizzard,
 				DEFAULT = SampleStrings.elvui,
 			},
 		},

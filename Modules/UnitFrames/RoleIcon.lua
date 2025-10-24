@@ -2,8 +2,6 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local UF = E:GetModule("UnitFrames")
 local RI = W:NewModule("RoleIcon")
 
-local _G = _G
-
 local RoleIconTextures = {
 	PHILMOD = {
 		TANK = W.Media.Icons.philModTank,
@@ -34,6 +32,11 @@ local RoleIconTextures = {
 		TANK = W.Media.Icons.elvUIOldTank,
 		HEALER = W.Media.Icons.elvUIOldHealer,
 		DAMAGER = W.Media.Icons.elvUIOldDPS,
+	},
+	BLIZZARD = {
+		TANK = W.Media.Icons.blizzardTank,
+		HEALER = W.Media.Icons.blizzardHealer,
+		DAMAGER = W.Media.Icons.blizzardDPS,
 	},
 	DEFAULT = {
 		TANK = E.Media.Textures.Tank,

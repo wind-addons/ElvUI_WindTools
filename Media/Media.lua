@@ -521,6 +521,10 @@ AddMedia("elvUIOldTank", "ElvUI_Old/Tank.tga", "Icons")
 AddMedia("elvUIOldDPS", "ElvUI_Old/DPS.tga", "Icons")
 AddMedia("elvUIOldHealer", "ElvUI_Old/Healer.tga", "Icons")
 
+AddMedia("blizzardTank", "Blizzard/Tank.tga", "Icons")
+AddMedia("blizzardDPS", "Blizzard/DPS.tga", "Icons")
+AddMedia("blizzardHealer", "Blizzard/Healer.tga", "Icons")
+
 AddMedia("announcement", "Categories/Announcement.tga", "Icons")
 AddMedia("advanced", "Categories/Advanced.tga", "Icons")
 AddMedia("social", "Categories/Social.tga", "Icons")

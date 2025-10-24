@@ -230,9 +230,9 @@ local function ReskinPet(frame)
 		frame.Status:SetAllPoints(frame.Icon)
 		hooksecurefunc(frame.Status, "SetTexCoord", function(self, ...)
 			if F.IsAlmost({ 0.3125, 0.625, 0, 0.625 }, { ... }) then
-				self:SetTexCoord(0.325, 0.6125, 0.025, 0.6)
+				self:SetTexCoord(0.3375, 0.6, 0.05, 0.6)
 			elseif F.IsAlmost({ 0, 0.3125, 0, 0.625 }, { ... }) then
-				self:SetTexCoord(0.0125, 0.3, 0.025, 0.6)
+				self:SetTexCoord(0.025, 0.2875, 0.05, 0.6)
 			end
 		end)
 		local ULx, ULy, _, _, _, _, LRx, LRy = frame.Status:GetTexCoord()

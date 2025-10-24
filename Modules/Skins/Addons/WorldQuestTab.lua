@@ -1,13 +1,12 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames ---@type MoveFrames
+local C = W.Utilities.Color
 
 local _G = _G
 local next = next
 local hooksecurefunc = hooksecurefunc
 local unpack = unpack
-
-local CreateFrame = CreateFrame
 
 local C_AddOns_GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
@@ -101,7 +100,6 @@ end
 local function settingsCategory(frame)
 	if frame.ExpandIcon then
 		S:Proxy("HandleButton", frame, true, nil, nil, true)
-		local container = CreateFrame("Frame", nil, frame:GetParent())
 		frame.Highlight:SetAlpha(0)
 		frame.backdrop:SetInside(frame, 10, 5)
 
@@ -163,14 +161,22 @@ end
 
 local function listButton(button)
 	button.Bg:SetTexture(E.media.blankTex)
-	button.Bg:SetVertexColor(1, 1, 1, 0.1)
+	button.Bg:SetVertexColor(C.ExtractRGBFromTemplate("neutral-500"))
 
 	button.Highlight:StripTextures()
 	local tex = button.Highlight:CreateTexture(nil, "ARTWORK")
-	tex:SetTexture(E.media.blankTex)
+	tex:SetTexture(E.media.normTex)
 	tex:SetVertexColor(1, 1, 1, 0.2)
-	tex:SetAllPoints(button.Bg)
+	tex:SetInside(button)
 	button.Highlight.windTex = tex
+
+	button.TrackedBorder:StripTextures()
+	tex = button.TrackedBorder:CreateTexture(nil, "OVERLAY")
+	tex:SetTexture(E.media.normTex)
+	tex:SetVertexColor(C.ExtractRGBFromTemplate("amber-400"))
+	tex:SetAlpha(0.3)
+	tex:SetInside(button)
+	button.TrackedBorder.windTex = tex
 end
 
 function S:WorldQuestTab()

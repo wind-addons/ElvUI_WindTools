@@ -1,7 +1,7 @@
 --@curseforge-project-slug: libkeystone@
 if WOW_PROJECT_ID ~= 1 then return end -- Retail
 
-local LKS = LibStub:NewLibrary("LibKeystone", 5)
+local LKS = LibStub:NewLibrary("LibKeystone", 6)
 if not LKS then return end -- No upgrade needed
 
 LKS.callbackMap = LKS.callbackMap or {}
@@ -48,8 +48,14 @@ end
 
 local GetInfo
 do
+	-- Normal APIs
 	local GetOwnedKeystoneLevel, GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneLevel, C_MythicPlus.GetOwnedKeystoneChallengeMapID
 	local GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
+
+	-- Timerunning APIs
+	local GetContainerNumSlots, GetContainerItemID, GetContainerItemLink = C_Container.GetContainerNumSlots, C_Container.GetContainerItemID, C_Container.GetContainerItemLink
+	local IsItemKeystoneByID, PlayerIsTimerunning = C_Item.IsItemKeystoneByID, PlayerIsTimerunning
+	local strsplit = string.split
 	function GetInfo()
 		-- Keystone level
 		local keyLevel = GetOwnedKeystoneLevel()
@@ -62,6 +68,29 @@ do
 		if type(keyChallengeMapID) ~= "number" then
 			keyChallengeMapID = 0
 		end
+
+		if keyLevel == 0 and keyChallengeMapID == 0 and PlayerIsTimerunning and PlayerIsTimerunning() then
+			for currentBag = 0, 4 do -- 0=Backpack, 1/2/3/4=Bags
+				local slots = GetContainerNumSlots(currentBag)
+				for currentSlot = 1, slots do
+					local itemID = GetContainerItemID(currentBag, currentSlot)
+					if itemID and IsItemKeystoneByID(itemID) then
+						local itemLink = GetContainerItemLink(currentBag, currentSlot)
+						if type(itemLink) == "string" then
+							local _, _, _, strChallengeMapID, strLevel = strsplit(":", itemLink)
+							local challengeMapID = tonumber(strChallengeMapID)
+							local level = tonumber(strLevel)
+							if challengeMapID and level then
+								keyChallengeMapID = challengeMapID
+								keyLevel = level
+								break
+							end
+						end
+					end
+				end
+			end
+		end
+
 		-- M+ rating
 		local playerRatingSummary = GetPlayerMythicPlusRatingSummary("player")
 		local playerRating = 0

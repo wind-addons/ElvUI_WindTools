@@ -24,6 +24,8 @@ local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local C_QuestLog_GetQuestObjectives = C_QuestLog.GetQuestObjectives
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
+local C_ScenarioInfo_GetCriteriaInfo = C_ScenarioInfo.GetCriteriaInfo
+local C_ScenarioInfo_GetScenarioStepInfo = C_ScenarioInfo.GetScenarioStepInfo
 
 local cachedQuests ---@type table<number, QuestProgressData>
 local cachedScenarioStep ---@type ScenarioProgressData
@@ -60,7 +62,7 @@ local ignoreTagIDs = {
 
 ---@return ScenarioProgressData
 local function fetchAllScenarioProgressData()
-	local scenarioStepInfo = C_ScenarioInfo.GetScenarioStepInfo()
+	local scenarioStepInfo = C_ScenarioInfo_GetScenarioStepInfo()
 	if not scenarioStepInfo or scenarioStepInfo.numCriteria == 0 then
 		return {}
 	end
@@ -73,7 +75,7 @@ local function fetchAllScenarioProgressData()
 	}
 
 	for i = 1, scenarioStepInfo.numCriteria do
-		local criteriaInfo = C_ScenarioInfo.GetCriteriaInfo(i)
+		local criteriaInfo = C_ScenarioInfo_GetCriteriaInfo(i)
 		if criteriaInfo and criteriaInfo.quantity and criteriaInfo.totalQuantity and criteriaInfo.completed ~= nil then
 			tinsert(data.objectives, {
 				item = criteriaInfo.description,
@@ -206,6 +208,25 @@ function QP:BuildContext(data)
 	return plainContext, coloredContext
 end
 
+function QP:ValidateObjectiveData(objectiveData)
+	if not objectiveData then
+		return false
+	end
+
+	local numFulfilled = tonumber(objectiveData.numFulfilled)
+	local numRequired = tonumber(objectiveData.numRequired)
+
+	if
+		(numFulfilled and numFulfilled > 0)
+		and (numRequired and numRequired > 0)
+		and (numFulfilled == numRequired or numRequired > self.db.disableIfRequiredOver)
+	then
+		return true
+	end
+
+	return false
+end
+
 function QP:ProcessQuestUpdate()
 	local currentQuests = fetchAllQuestProgressData()
 
@@ -228,7 +249,7 @@ function QP:ProcessQuestUpdate()
 					local objectiveData = questData.objectives[objectiveIndex]
 					local previousObjectiveData = previousQuestData.objectives[objectiveIndex]
 					if not previousObjectiveData or not tCompare(objectiveData, previousObjectiveData) then
-						if objectiveData.numFulfilled and tonumber(objectiveData.numFulfilled) > 0 then
+						if self:ValidateObjectiveData(objectiveData) then
 							self:HandleQuestProgress("quest_update", questData, objectiveData)
 						end
 					end
@@ -256,7 +277,7 @@ function QP:ProcessScenarioUpdate()
 			local objectiveData = currentScenarioStep.objectives[objectiveIndex]
 			local previousObjectiveData = cachedScenarioStep.objectives[objectiveIndex]
 			if not previousObjectiveData or not tCompare(objectiveData, previousObjectiveData) then
-				if objectiveData.numFulfilled and tonumber(objectiveData.numFulfilled) > 0 then
+				if self:ValidateObjectiveData(objectiveData) then
 					self:HandleQuestProgress("scenario_update", currentScenarioStep, objectiveData)
 				end
 			end

@@ -1233,8 +1233,17 @@ options.progress = {
 			name = L["Enable"],
 			width = "full",
 		},
-		displayTemplate = {
+		disableIfRequiredOver = {
 			order = 2,
+			type = "range",
+			name = L["Disable If Required Over"],
+			desc = L["Disable the progress message if the required number of objectives is over this value to avoid spamming."],
+			step = 1,
+			min = 1,
+			max = 2000,
+		},
+		displayTemplate = {
+			order = 3,
 			type = "input",
 			name = L["Display Template"],
 			desc = strjoin(
@@ -1258,7 +1267,7 @@ options.progress = {
 			end,
 		},
 		example = {
-			order = 3,
+			order = 4,
 			type = "description",
 			name = function()
 				local _, coloredContext = QP:GetTestContext()
@@ -1270,7 +1279,7 @@ options.progress = {
 			end,
 		},
 		useDefault = {
-			order = 4,
+			order = 5,
 			type = "execute",
 			name = L["Default"],
 			desc = L["Reset the template to default value."],
@@ -1279,7 +1288,7 @@ options.progress = {
 			end,
 		},
 		tag = {
-			order = 5,
+			order = 6,
 			type = "group",
 			name = L["Tag"],
 			disabled = function()
@@ -1371,7 +1380,7 @@ options.progress = {
 			},
 		},
 		suggestedGroup = {
-			order = 6,
+			order = 7,
 			type = "group",
 			name = L["Suggested Group"],
 			disabled = function()
@@ -1463,7 +1472,7 @@ options.progress = {
 			},
 		},
 		level = {
-			order = 7,
+			order = 8,
 			type = "group",
 			name = L["Level"],
 			disabled = function()
@@ -1559,7 +1568,7 @@ options.progress = {
 			},
 		},
 		daily = {
-			order = 8,
+			order = 9,
 			type = "group",
 			name = L["Daily"],
 			disabled = function()
@@ -1648,7 +1657,7 @@ options.progress = {
 			},
 		},
 		weekly = {
-			order = 9,
+			order = 10,
 			type = "group",
 			name = L["Weekly"],
 			disabled = function()
@@ -1737,7 +1746,7 @@ options.progress = {
 			},
 		},
 		title = {
-			order = 10,
+			order = 11,
 			type = "group",
 			name = L["Title"],
 			disabled = function()
@@ -1826,7 +1835,7 @@ options.progress = {
 			},
 		},
 		progress = {
-			order = 11,
+			order = 12,
 			type = "group",
 			name = L["Progress"],
 			disabled = function()

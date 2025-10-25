@@ -511,6 +511,7 @@ L["Disable All"] = "모두 비활성"
 L["Disable Blizzard Talking Head."] = "블리자드 말머리 비활성"
 L["Disable Blizzard loot info which auto showing after combat overed."] = "전투 후 자동으로 표시되는 Blizzard 전리품 정보를 비활성화합니다."
 L["Disable ElvUI's LibCustomGlow for fixing cooldown animations."] = "쿨다운 애니메이션 수정을 위해 ElvUI의 LibCustomGlow를 비활성화합니다."
+L["Disable If Required Over"] = true
 L["Disable In Combat"] = "전투 중 비활성화"
 L["Disable Talking Head"] = "말머리 비활성"
 L["Disable all other addons except ElvUI Core, ElvUI %s and BugSack."] = "ElvUI Core, ElvUI %s 및 BugSack을 제외한 다른 모든 애드온을 비활성화합니다."
@@ -523,6 +524,7 @@ L["Disable the default behaviour that prevents inconsistent filters with flags '
 L["Disable the default class-colored background circle in LFG Lists, leaving only the skinned icons from preferences"] = "LFG 목록에서 기본 직업 색상 배경 원을 비활성화 하고 환경 설정에서 스킨 처리된 아이콘만 남겨 둡니다."
 L["Disable the health bar of nameplate."] = "네임플레이트의 체력바를 비활성화합니다."
 L["Disable the middle click UI reloading in combat."] = "전투 중 가운데 클릭 UI 새로고침 비활성화"
+L["Disable the progress message if the required number of objectives is over this value to avoid spamming."] = true
 L["Disabled"] = "|cffff0000비활성화|r"
 L["Discord"] = "디스코드"
 L["Dispel"] = "해제"

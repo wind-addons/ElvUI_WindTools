@@ -511,6 +511,7 @@ L["Disable All"] = "Tout désactiver"
 L["Disable Blizzard Talking Head."] = "Désactiver la tête parlante de Blizzard"
 L["Disable Blizzard loot info which auto showing after combat overed."] = "Désactive les infos de butin Blizzard qui s'affichent automatiquement après la fin du combat."
 L["Disable ElvUI's LibCustomGlow for fixing cooldown animations."] = true
+L["Disable If Required Over"] = true
 L["Disable In Combat"] = true
 L["Disable Talking Head"] = "Cacher le cadre du PNJ qui parle"
 L["Disable all other addons except ElvUI Core, ElvUI %s and BugSack."] = "Désactiver tous les autres addons à l'exception de ElvUI Core, ElvUI %s et BugSack."
@@ -523,6 +524,7 @@ L["Disable the default behaviour that prevents inconsistent filters with flags '
 L["Disable the default class-colored background circle in LFG Lists, leaving only the skinned icons from preferences"] = "Désactiver le cercle de fond coloré par classe par défaut dans les listes LFG, ne laissant que les icônes personnalisées des préférences"
 L["Disable the health bar of nameplate."] = "Désactive la barre de santé du nom."
 L["Disable the middle click UI reloading in combat."] = true
+L["Disable the progress message if the required number of objectives is over this value to avoid spamming."] = true
 L["Disabled"] = "|cffff0000Désactivé|r"
 L["Discord"] = "Discord"
 L["Dispel"] = "Dissipation"

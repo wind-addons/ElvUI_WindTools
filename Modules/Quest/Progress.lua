@@ -18,6 +18,7 @@ local tostring = tostring
 
 local GetQuestLink = GetQuestLink
 local UIErrorsFrame = _G.UIErrorsFrame
+local UnitLevel = UnitLevel
 
 local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
@@ -198,7 +199,7 @@ function QP:BuildContext(data)
 			render(data.suggestedGroup, db.suggestedGroup.template, db.suggestedGroup.color)
 	end
 
-	if data.level and data.level ~= E.mylevel then
+	if data.level and data.level ~= UnitLevel("player") then
 		plainContext.autoHideLevel, coloredContext.autoHideLevel = plainContext.level, coloredContext.level
 	end
 

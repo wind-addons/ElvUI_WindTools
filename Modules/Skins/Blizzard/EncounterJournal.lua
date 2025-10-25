@@ -15,9 +15,13 @@ local function createPositionHook(tab, point, relativeTo, relativePoint, x, y)
 	tab:ClearAllPoints()
 	tab:Point(point, relativeTo, relativePoint, x, y)
 	---@param frame Frame
-	hooksecurefunc(tab, "Point", function(frame)
+	hooksecurefunc(tab, "Point", function(frame, _, _, _, _, _, skip)
+		if skip then
+			return
+		end
+
 		frame:ClearAllPoints()
-		frame:Point(point, relativeTo, relativePoint, x, y)
+		frame:Point(point, relativeTo, relativePoint, x, y, true)
 	end)
 end
 

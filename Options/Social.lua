@@ -716,7 +716,7 @@ options.chatBar = {
 	},
 }
 
-do -- 普通频道
+do -- Normal Channels
 	local channels = { "SAY", "YELL", "EMOTE", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "OFFICER" }
 	local locales = {
 		SAY = L["Say"],
@@ -1015,8 +1015,15 @@ do
 						type = "toggle",
 						name = L["Remove Brackets"],
 					},
-					classIcon = {
+					trimEditBoxHeader = {
 						order = 2,
+						type = "toggle",
+						hidden = W.Locale ~= "zhCN",
+						name = L["Trim Edit Box Header"],
+						desc = L["Remove extra leading and trailing spaces from the edit box prefix."],
+					},
+					classIcon = {
+						order = 3,
 						type = "toggle",
 						name = L["Class Icon"],
 						desc = L["Show the class icon before the player name."]
@@ -1024,7 +1031,7 @@ do
 							.. L["This feature only works for message that sent by this module."],
 					},
 					classIconStyle = {
-						order = 3,
+						order = 4,
 						type = "select",
 						name = L["Class Icon Style"],
 						desc = L["Select the style of class icon."],
@@ -1042,7 +1049,7 @@ do
 						end,
 					},
 					factionIcon = {
-						order = 4,
+						order = 5,
 						type = "toggle",
 						name = L["Faction Icon"],
 						desc = L["Show the faction icon before the player name."]

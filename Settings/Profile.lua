@@ -1012,6 +1012,7 @@ P.social = {
 		enable = true,
 		abbreviation = "SHORT",
 		removeBrackets = true,
+		trimEditBoxHeader = true,
 		roleIconSize = 16,
 		roleIconStyle = "SUNUI",
 		removeRealm = true,

@@ -7,18 +7,6 @@ local gsub = gsub
 
 local NUM_CHAT_WINDOWS = NUM_CHAT_WINDOWS
 
-function S:ChatFrameEditBox_SetText(self, text, skip)
-	if skip or not text then
-		return
-	end
-
-	local after = gsub(text, "：", ":")
-
-	if text ~= after then
-		self:SetText(after, true)
-	end
-end
-
 function S:InputMethodEditor()
 	if not self:CheckDB(nil, "inputMethodEditor") then
 		return
@@ -48,11 +36,6 @@ function S:InputMethodEditor()
 						end
 					end
 				end)
-			end
-
-			if W.ChineseLocale and not self:IsHooked(editBox.header, "SetText") then
-				self:SecureHook(editBox.header, "SetText", "ChatFrameEditBox_SetText")
-				self:ChatFrameEditBox_SetText(editBox.header, editBox.header:GetText())
 			end
 		end
 	end

@@ -8,6 +8,7 @@ local pairs = pairs
 local select = select
 local unpack = unpack
 
+local CreateFrame = CreateFrame
 local GetInstanceInfo = GetInstanceInfo
 
 local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo

@@ -4,6 +4,7 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 local floor = math.floor
+local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local unpack = unpack
 

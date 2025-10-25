@@ -3,6 +3,9 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 local pairs = pairs
+local hooksecurefunc = hooksecurefunc
+
+local SettingsPanel = SettingsPanel
 
 function S:BugSack_OpenSack()
 	if _G.BugSackFrame.__windSkin then

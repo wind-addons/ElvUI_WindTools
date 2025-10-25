@@ -2,10 +2,10 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local UF = E:GetModule("UnitFrames")
 local QF = W:NewModule("QuickFocus", "AceHook-3.0", "AceEvent-3.0")
 
-local _G = _G
 local format = format
 local next = next
 local pairs = pairs
+local strjoin = strjoin
 local strmatch = strmatch
 local strsub = strsub
 

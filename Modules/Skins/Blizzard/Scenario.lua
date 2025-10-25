@@ -196,10 +196,15 @@ local function ScenarioObjectiveTracker_Update(tracker)
 	end
 end
 
-local handledSpellFrames = {}
+local handledSpellFrames, iconBackdrops = {}, {}
 local function ReskinSpellFrame(frame)
 	if not frame or handledSpellFrames[frame] then
 		return
+	end
+
+	local SpellName = frame.SpellName
+	if SpellName then
+		F.SetFont(SpellName)
 	end
 
 	local SpellButton = frame.SpellButton
@@ -225,20 +230,34 @@ local function ReskinSpellFrame(frame)
 
 		local SpellIcon = SpellButton.Icon
 		if SpellIcon then
-			S:Proxy("HandleIcon", SpellIcon)
-			SpellIcon:CreateBackdrop()
-			SpellIcon.backdrop.Center:Kill()
+			if not iconBackdrops[SpellIcon] then
+				local backdrop = CreateFrame("Frame", nil, E.UIParent)
+				backdrop:SetTemplate("Default")
+				backdrop.Center:Kill()
+				iconBackdrops[SpellIcon] = backdrop
+				S:CreateShadow(backdrop)
 
-			SpellButton:HookScript("OnEnter", function(self)
-				if self.Icon and self.Icon.backdrop then
-					self.Icon.backdrop:SetBackdropBorderColor(unpack(E.media.rgbvaluecolor))
-				end
+				-- Handle the release / reuse of the frame
+				frame:HookScript("OnHide", function()
+					backdrop:Hide()
+				end)
+
+				frame:HookScript("OnShow", function()
+					backdrop:Show()
+				end)
+			end
+
+			local backdrop = iconBackdrops[SpellIcon]
+			backdrop:ClearAllPoints()
+			backdrop:SetOutside(SpellIcon)
+			SpellIcon:SetTexCoord(unpack(E.TexCoords))
+
+			SpellButton:HookScript("OnEnter", function()
+				backdrop:SetBackdropBorderColor(unpack(E.media.rgbvaluecolor))
 			end)
 
-			SpellButton:HookScript("OnLeave", function(self)
-				if self.Icon and self.Icon.backdrop then
-					self.Icon.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
-				end
+			SpellButton:HookScript("OnLeave", function()
+				backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
 			end)
 		end
 	end

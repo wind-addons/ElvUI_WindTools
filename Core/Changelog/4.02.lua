@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...))) ---@type WindTools
 
 W.Changelog[402] = {
-	RELEASE_DATE = "TBD",
+	RELEASE_DATE = "2025/10/25",
 	IMPORTANT = {
 		["zhCN"] = {
 			"清理代码, 移除一些过时的功能和函数.",

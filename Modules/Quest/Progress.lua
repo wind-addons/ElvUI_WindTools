@@ -219,7 +219,7 @@ function QP:ValidateObjectiveData(objectiveData)
 	if
 		(numFulfilled and numFulfilled > 0)
 		and (numRequired and numRequired > 0)
-		and (numFulfilled == numRequired or numRequired > self.db.disableIfRequiredOver)
+		and (numFulfilled == numRequired or numRequired <= self.db.disableIfRequiredOver)
 	then
 		return true
 	end

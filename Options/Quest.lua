@@ -1205,8 +1205,25 @@ options.progress = {
 				feature = {
 					order = 1,
 					type = "description",
-					name = L["Display colorful quest progress information to replace Blizzard's default."],
+					name = L["Display colorful quest progress information to replace Blizzard's default."] .. "\n\n",
 					fontSize = "medium",
+					width = "full",
+				},
+				notice = {
+					order = 2,
+					type = "description",
+					name = ImportantColorString(L["Notice"])
+						.. " "
+						.. L["To ensure the colorful progress information remains clearly visible across different environments, the 'OUTLINE' font style is recommended."]
+						.. " "
+						.. format(
+							L["You can find the setting in 'ElvUI > %s > %s > %s'."],
+							L["General"],
+							L["Fonts"],
+							L["Quest Progress and Error Text"]
+						),
+					fontSize = "medium",
+					width = "full",
 				},
 			},
 		},

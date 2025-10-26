@@ -262,6 +262,10 @@ function QP:ProcessQuestUpdate()
 end
 
 function QP:ProcessScenarioUpdate()
+	if not self.db.scenario then
+		return
+	end
+
 	local currentScenarioStep = fetchAllScenarioProgressData()
 
 	if not cachedScenarioStep or cachedScenarioStep.title ~= currentScenarioStep.title then

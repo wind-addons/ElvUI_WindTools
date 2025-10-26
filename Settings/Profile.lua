@@ -1121,7 +1121,8 @@ end
 P.quest = {
 	progress = {
 		enable = true,
-		disableIfRequiredOver = 100,
+		scenario = false,
+		disableIfRequiredOver = 50,
 		displayTemplate = "{{level}} {{suggestedGroup}} {{tag}} {{daily}}{{weekly}} {{title}} - {{progress}} {{icon}}",
 		tag = {
 			template = "[%s]",

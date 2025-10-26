@@ -1233,14 +1233,28 @@ options.progress = {
 			name = L["Enable"],
 			width = "full",
 		},
-		disableIfRequiredOver = {
+		general = {
 			order = 2,
-			type = "range",
-			name = L["Disable If Required Over"],
-			desc = L["Disable the progress message if the required number of objectives is over this value to avoid spamming."],
-			step = 1,
-			min = 1,
-			max = 2000,
+			type = "group",
+			name = L["General"],
+			inline = true,
+			args = {
+				scenario = {
+					order = 1,
+					type = "toggle",
+					name = L["Scenario"],
+					desc = L["Enable scenario progress tracking."],
+				},
+				disableIfRequiredOver = {
+					order = 2,
+					type = "range",
+					name = L["Disable If Required Over"],
+					desc = L["Disable the progress message if the required number of objectives is over this value to avoid spamming."],
+					step = 1,
+					min = 1,
+					max = 2000,
+				},
+			},
 		},
 		displayTemplate = {
 			order = 3,

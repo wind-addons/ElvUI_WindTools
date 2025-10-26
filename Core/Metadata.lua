@@ -13,7 +13,6 @@ local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 local GetRealmID = GetRealmID
 local GetRealmName = GetRealmName
 local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
-local MergeTable = MergeTable
 local PlayerIsTimerunning = PlayerIsTimerunning
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo

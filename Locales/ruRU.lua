@@ -571,6 +571,7 @@ L["Enable"] = "Включить"
 L["Enable All"] = "Включить все"
 L["Enable a transparent backdrop for the IME candidate frame."] = "Включить прозрачный фон для фрейма кандидата IME"
 L["Enable debug mode"] = "Включить режим отладки"
+L["Enable scenario progress tracking."] = true
 L["Enable the replacing of ElvUI absorb bar textures."] = "Включить замену ElvUI текстур полос поглощения."
 L["Enable this filter will only show the group that fits you or your group members to join."] = "При включении этого фильтра будут показаны только те группы, которые подходят для вступления Вам или членам Вашей группы."
 L["Enable this filter will only show the group that have the healer already in party."] = "При включении этого фильтра будут показаны только те группы, у которых уже есть Лекарь в команде."

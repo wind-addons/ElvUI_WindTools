@@ -571,6 +571,7 @@ L["Enable"] = true
 L["Enable All"] = true
 L["Enable a transparent backdrop for the IME candidate frame."] = true
 L["Enable debug mode"] = true
+L["Enable scenario progress tracking."] = true
 L["Enable the replacing of ElvUI absorb bar textures."] = true
 L["Enable this filter will only show the group that fits you or your group members to join."] = true
 L["Enable this filter will only show the group that have the healer already in party."] = true

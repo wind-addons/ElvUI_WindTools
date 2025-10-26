@@ -571,6 +571,7 @@ L["Enable"] = "활성"
 L["Enable All"] = "모두 활성"
 L["Enable a transparent backdrop for the IME candidate frame."] = "IME 입력기창에 투명 배경을 적용합니다."
 L["Enable debug mode"] = "디버그 모드 활성화"
+L["Enable scenario progress tracking."] = true
 L["Enable the replacing of ElvUI absorb bar textures."] = "ElvUI 피해흡수 바 텍스처 교체를 활성화합니다."
 L["Enable this filter will only show the group that fits you or your group members to join."] = "이 필터를 활성화하면 참여 가능한 파티만 표시됩니다"
 L["Enable this filter will only show the group that have the healer already in party."] = "이 필터를 활성화하면 힐러가 있는 파티만 표시됩니다"

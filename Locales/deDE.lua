@@ -571,6 +571,7 @@ L["Enable"] = "Eingeschaltet"
 L["Enable All"] = "Schalte alle ein"
 L["Enable a transparent backdrop for the IME candidate frame."] = "Aktiviert einen transparenten Hintergrund für den IME-Kandidatenfenster."
 L["Enable debug mode"] = "Debug Modus aktivieren"
+L["Enable scenario progress tracking."] = true
 L["Enable the replacing of ElvUI absorb bar textures."] = "Ersetzen von ElvUI Absorptionsleistentexturen aktivieren."
 L["Enable this filter will only show the group that fits you or your group members to join."] = "Aktiviert diesen Filter, um nur die Gruppe anzuzeigen, die zu Dir oder Deinen Gruppenmitgliedern passt."
 L["Enable this filter will only show the group that have the healer already in party."] = "Wenn Du diesen Filter aktivierst, wird nur die Gruppe angezeigt, in der der Heiler bereits in der Gruppe ist."

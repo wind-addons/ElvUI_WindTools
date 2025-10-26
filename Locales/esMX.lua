@@ -571,6 +571,7 @@ L["Enable"] = "Habilitar"
 L["Enable All"] = "Habilitar todo"
 L["Enable a transparent backdrop for the IME candidate frame."] = true
 L["Enable debug mode"] = "Activar modo de depuración"
+L["Enable scenario progress tracking."] = true
 L["Enable the replacing of ElvUI absorb bar textures."] = "Activar el reemplazo de texturas de la barra de absorción de ElvUI"
 L["Enable this filter will only show the group that fits you or your group members to join."] = "Activar este filtro solo mostrará el grupo que se ajuste a ti o a tus miembros del grupo para unirse"
 L["Enable this filter will only show the group that have the healer already in party."] = "Activar este filtro solo mostrará el grupo que ya tenga un sanador en el grupo"

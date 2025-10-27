@@ -43,6 +43,7 @@ function S:Blizzard_Communities()
 	self:CreateShadow(CommunitiesFrame.RecruitmentDialog)
 	self:CreateShadow(_G.CommunitiesGuildLogFrame)
 	self:CreateShadow(_G.CommunitiesSettingsDialog)
+	self:CreateShadow(_G.CommunitiesGuildNewsFiltersFrame)
 
 	for _, frame in pairs({
 		_G.ClubFinderCommunityAndGuildFinderFrame,

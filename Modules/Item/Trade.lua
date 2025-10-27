@@ -6,19 +6,19 @@ local GetUnitName = GetUnitName
 local SendChatMessage = SendChatMessage
 
 function T:CreateThanksButton()
-	self.thanksButton = F.Widgets.New("Button", _G.TradeFrame, L["Thanks"], 80, 20, function(_)
-		if self.thanksButton.targetName then
-			SendChatMessage(T.db.thanksText, "WHISPER", nil, self.thanksButton.targetName)
+	self.ThanksButton = F.Widgets.New("Button", _G.TradeFrame, L["Thanks"], 80, 20, function(_)
+		if self.ThanksButton.targetName then
+			SendChatMessage(T.db.thanksText, "WHISPER", nil, self.ThanksButton.targetName)
 		end
 	end)
 
-	self.thanksButton:Point("BOTTOMLEFT", _G.TradeFrame, "BOTTOMLEFT", 5, 5)
+	self.ThanksButton:Point("BOTTOMLEFT", _G.TradeFrame, "BOTTOMLEFT", 5, 5)
 end
 
 function T:TRADE_SHOW()
 	local targetName = GetUnitName("NPC", true)
-	if self.thanksButton then
-		self.thanksButton.targetName = targetName
+	if self.ThanksButton then
+		self.ThanksButton.targetName = targetName
 	end
 end
 
@@ -41,15 +41,15 @@ function T:ProfileUpdate()
 	end
 
 	if self.db.enable and self.db.thanksButton then
-		if self.thanksButton then
-			self.thanksButton:Show()
+		if self.ThanksButton then
+			self.ThanksButton:Show()
 		else
 			self:CreateThanksButton()
 		end
 		self:RegisterEvent("TRADE_SHOW")
 	else
-		if self.thanksButton then
-			self.thanksButton:Hide()
+		if self.ThanksButton then
+			self.ThanksButton:Hide()
 		end
 		self:UnregisterEvent("TRADE_SHOW")
 	end

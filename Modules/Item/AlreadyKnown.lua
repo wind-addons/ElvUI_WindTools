@@ -15,7 +15,6 @@ local GetBuybackItemLink = GetBuybackItemLink
 local GetCurrentGuildBankTab = GetCurrentGuildBankTab
 local GetGuildBankItemInfo = GetGuildBankItemInfo
 local GetGuildBankItemLink = GetGuildBankItemLink
-local C_MerchantFrame_GetItemInfo = C_MerchantFrame.GetItemInfo
 local GetMerchantItemLink = GetMerchantItemLink
 local GetMerchantNumItems = GetMerchantNumItems
 local GetNumBuybackItems = GetNumBuybackItems
@@ -24,14 +23,14 @@ local SetItemButtonTextureVertexColor = SetItemButtonTextureVertexColor
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Item_GetItemInfo = C_Item.GetItemInfo
+local C_MerchantFrame_GetItemInfo = C_MerchantFrame.GetItemInfo
 local C_PetJournal_GetNumCollectedInfo = C_PetJournal.GetNumCollectedInfo
 local C_TooltipInfo_GetGuildBankItem = C_TooltipInfo.GetGuildBankItem
 local C_TooltipInfo_GetHyperlink = C_TooltipInfo.GetHyperlink
 
-local Enum_ItemClass_Battlepet = Enum.ItemClass.Battlepet
-
 local BUYBACK_ITEMS_PER_PAGE = BUYBACK_ITEMS_PER_PAGE
 local COLLECTED = COLLECTED
+local Enum_ItemClass_Battlepet = Enum.ItemClass.Battlepet
 local ITEM_SPELL_KNOWN = ITEM_SPELL_KNOWN
 local MAX_GUILDBANK_SLOTS_PER_TAB = 98
 local NUM_SLOTS_PER_GUILDBANK_GROUP = 14

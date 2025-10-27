@@ -145,15 +145,11 @@ function S:FriendsFrame()
 		local Text = tab.Text
 		if Text then
 			hooksecurefunc(Text, "SetPoint", function(text, point, relativeTo, relativePoint, xOffset, yOffset)
-				if
-					point == "CENTER"
-					and relativeTo == tab
-					and relativePoint == "CENTER"
-					and F.IsAlmost(xOffset, 0)
-					and F.IsAlmost(yOffset, -3)
-				then
-					Text:ClearAllPoints()
-					Text:Point("CENTER", tab, "CENTER", 0, 1)
+				if point == "CENTER" and relativeTo == tab and relativePoint == "CENTER" then
+					if F.IsAlmost(xOffset, 0) and (F.IsAlmost(yOffset, -3) or F.IsAlmost(yOffset, 0)) then
+						Text:ClearAllPoints()
+						Text:Point("CENTER", tab, "CENTER", 0, 1)
+					end
 				end
 			end)
 		end

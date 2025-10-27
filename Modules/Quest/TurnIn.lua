@@ -365,6 +365,7 @@ function TI:GOSSIP_SHOW()
 			if gossipQuestUIInfo.isComplete and not isWorldQuest and not skipRepeatable then
 				if not self:IsPaused("COMPLETE") then
 					C_GossipInfo_SelectActiveQuest(questID)
+					return
 				end
 			end
 		end
@@ -392,6 +393,7 @@ function TI:GOSSIP_SHOW()
 				and not self:IsPaused("ACCEPT")
 			then
 				C_GossipInfo_SelectAvailableQuest(questID)
+				return
 			end
 		end
 	end

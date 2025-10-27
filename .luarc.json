@@ -90,7 +90,8 @@
     "LE_UNIT_STAT_AGILITY",
     "LE_UNIT_STAT_INTELLECT",
     "LE_UNIT_STAT_STAMINA",
-    "LE_UNIT_STAT_STRENGTH"
+    "LE_UNIT_STAT_STRENGTH",
+        "QUESTS_LABEL"
   ],
   "diagnostics.disable": [
     "inject-field",

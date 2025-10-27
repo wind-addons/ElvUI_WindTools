@@ -73,10 +73,10 @@ local Enum_MinimapTrackingFilter_AccountCompletedQuests = Enum.MinimapTrackingFi
 local Enum_QuestClassification_Calling = Enum.QuestClassification.Calling
 local Enum_QuestClassification_Recurring = Enum.QuestClassification.Recurring
 
-local QUEST_STRING = "cFF0000FF.-" .. TRANSMOG_SOURCE_2
+local DELVE_STRING = "^|cFF0000FF.-" .. DELVE_LABEL
+local QUEST_STRING = "^|cFF0000FF.-" .. QUESTS_LABEL
 local SKIP_STRING_1 = "^.+|cFFFF0000<.+>|r"
 local SKIP_STRING_2 = "|cnRED_FONT_COLOR"
-local DELVE_STRING = "%(" .. DELVE_LABEL .. "%)"
 
 local choiceQueue = nil
 
@@ -355,6 +355,7 @@ function TI:GOSSIP_SHOW()
 		return
 	end
 
+	-- 1. Attempt to complete active quests first
 	local numActiveQuests = C_GossipInfo_GetNumActiveQuests()
 	if numActiveQuests > 0 then
 		for _, gossipQuestUIInfo in ipairs(C_GossipInfo_GetActiveQuests()) do
@@ -369,21 +370,21 @@ function TI:GOSSIP_SHOW()
 		end
 	end
 
+	-- 2. Before accepting quests, check for skip strings in gossip options
 	local gossipOptions = C_GossipInfo_GetOptions() or C_GossipInfo_GetActiveDelveGossip()
-	local numGossipOptions = gossipOptions and #gossipOptions
 	for _, gossipOption in ipairs(gossipOptions) do
 		if strfind(gossipOption.name, SKIP_STRING_1) or strfind(gossipOption.name, SKIP_STRING_2) then
 			return
 		end
 	end
 
+	-- 3. Attempt to accept available quests
 	local numAvailableQuests = C_GossipInfo_GetNumAvailableQuests()
 	if numAvailableQuests > 0 then
 		for _, gossipQuestUIInfo in ipairs(C_GossipInfo_GetAvailableQuests()) do
 			local isTrivial = gossipQuestUIInfo.isTrivial
 			local questID = gossipQuestUIInfo.questID
 			local skipRepeatable = self.db.onlyRepeatable and not IsQuestRepeatable(questID)
-
 			if
 				not IsAccountCompleted(questID)
 				and (not isTrivial or C_Minimap_IsTrackingHiddenQuests() or (isTrivial and npcID == 64337))
@@ -395,16 +396,17 @@ function TI:GOSSIP_SHOW()
 		end
 	end
 
+	-- 4. Attempt to click the gossip options
+	if not (self.db and self.db.smartChat) then
+		return
+	end
+
+	local numGossipOptions = gossipOptions and #gossipOptions
 	if not numGossipOptions or numGossipOptions <= 0 then
 		return
 	end
 
 	local firstGossipOptionID = gossipOptions[1].gossipOptionID --[[@as number]]
-
-	if not (self.db and self.db.smartChat) then
-		return
-	end
-
 	if smartChatNPCs[npcID] then
 		return C_GossipInfo_SelectOption(firstGossipOptionID)
 	end
@@ -419,7 +421,7 @@ function TI:GOSSIP_SHOW()
 			if instance ~= "raid" and not ignoreGossipNPC[npcID] and not ignoreInstances[mapID] then
 				local name, status = gossipOptions[1].name, gossipOptions[1].status
 				if name and status and status == 0 then
-					local questNameFound = strfind(name, "cFF0000FF") and strfind(name, QUEST_STRING)
+					local questNameFound = strfind(name, QUEST_STRING)
 					local delveNameFound = strfind(name, DELVE_STRING)
 					if questNameFound or delveNameFound then
 						return C_GossipInfo_SelectOption(firstGossipOptionID)

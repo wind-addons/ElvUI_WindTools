@@ -44,11 +44,15 @@ function S:Blizzard_Communities()
 	self:CreateShadow(_G.CommunitiesGuildLogFrame)
 	self:CreateShadow(_G.CommunitiesSettingsDialog)
 
-	local ClubFinderFrame = _G.ClubFinderCommunityAndGuildFinderFrame
-	if ClubFinderFrame then
-		self:CreateShadow(ClubFinderFrame.ClubFinderPendingTab)
-		self:CreateShadow(ClubFinderFrame.ClubFinderSearchTab)
-		self:CreateShadow(ClubFinderFrame.RequestToJoinFrame)
+	for _, frame in pairs({
+		_G.ClubFinderCommunityAndGuildFinderFrame,
+		_G.ClubFinderGuildFinderFrame,
+	}) do
+		if frame then
+			self:CreateShadow(frame.ClubFinderPendingTab)
+			self:CreateShadow(frame.ClubFinderSearchTab)
+			self:CreateShadow(frame.RequestToJoinFrame)
+		end
 	end
 
 	hooksecurefunc(CommunitiesFrame.MemberList, "RefreshListDisplay", function(memberList)

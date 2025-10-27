@@ -33,6 +33,7 @@ local cachedScenarioStep ---@type ScenarioProgressData
 local ignoreTagIDs = {
 	[128] = true, -- Emissary
 	[265] = true, -- Hidden
+	[291] = true, -- Hidden
 }
 
 ---@class QuestProgressData
@@ -111,7 +112,7 @@ local function fetchAllQuestProgressData()
 				skip = false
 			end
 
-			if questInfo.isOnMap and tagInfo and tagInfo.tagID ~= 265 then
+			if questInfo.isOnMap and tagInfo and tagInfo.tagID == 128 then
 				skip = false
 			end
 

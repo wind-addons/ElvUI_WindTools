@@ -141,6 +141,24 @@ function S:FriendsFrame()
 		self:ReskinTab(_G["FriendsFrameTab" .. i])
 	end
 
+	for _, tab in next, { _G.FriendsTabHeader.TabSystem:GetChildren() } do
+		local Text = tab.Text
+		if Text then
+			hooksecurefunc(Text, "SetPoint", function(text, point, relativeTo, relativePoint, xOffset, yOffset)
+				if
+					point == "CENTER"
+					and relativeTo == tab
+					and relativePoint == "CENTER"
+					and F.IsAlmost(xOffset, 0)
+					and F.IsAlmost(yOffset, -3)
+				then
+					Text:ClearAllPoints()
+					Text:Point("CENTER", tab, "CENTER", 0, 1)
+				end
+			end)
+		end
+	end
+
 	self:SecureHook("FriendsFrame_UpdateFriendButton", ReskinFriendButton)
 
 	local RecentAlliesFrame = _G.RecentAlliesFrame

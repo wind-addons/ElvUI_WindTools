@@ -2,6 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local select = select
 
@@ -28,11 +29,7 @@ local function ReskinFriendButton(button)
 			button.right:Hide()
 		end)
 
-		if button.gameIcon:IsShown() then
-			button.right:Show()
-		else
-			button.right:Hide()
-		end
+		button.right:SetShown(button.gameIcon:IsShown())
 	end
 end
 
@@ -141,7 +138,7 @@ function S:FriendsFrame()
 		self:ReskinTab(_G["FriendsFrameTab" .. i])
 	end
 
-	for _, tab in next, { _G.FriendsTabHeader.TabSystem:GetChildren() } do
+	for _, tab in pairs({ _G.FriendsTabHeader.TabSystem:GetChildren() }) do
 		local Text = tab.Text
 		if Text then
 			hooksecurefunc(Text, "SetPoint", function(text, point, relativeTo, relativePoint, xOffset, yOffset)

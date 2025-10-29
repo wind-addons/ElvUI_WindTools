@@ -16,6 +16,7 @@ local pairs = pairs
 local select = select
 local sort = sort
 local strfind = strfind
+local strlen = strlen
 local strlower = strlower
 local strtrim = strtrim
 local tFilter = tFilter
@@ -75,7 +76,7 @@ local REWARDS_ICON_OFFSET_X = 80
 ---@field category { id: number, name: string }
 ---@field criteriaData AchievementCriteriaData
 ---@field flags number
----@field reward { itemID: number|nil, text: string }
+---@field reward { itemID: number|nil, text: string|nil }
 ---@field isExpanded? boolean whether the element is expanded to show details
 ---@field isLastElement? boolean used to avoid cutting off the last element when expanding
 
@@ -244,11 +245,14 @@ function AT:ScanAchievements()
 							name = name,
 							nameLower = strlower(name), -- Cache lowercase for sorting
 							description = description,
-							icon = icon,
+							icon = icon --[[@as number]],
 							category = { id = categoryID, name = categoryName },
 							criteriaData = GetCriteriaData(id),
 							flags = flags,
-							reward = { itemID = C_AchievementInfo_GetRewardItemID(id), text = rewardText },
+							reward = {
+								itemID = C_AchievementInfo_GetRewardItemID(id),
+								text = strlen(rewardText or "") > 0 and rewardText or nil,
+							},
 						}
 
 						tinsert(self.states.results, result)
@@ -284,7 +288,7 @@ function AT:UpdateView()
 	local filters = self.states.filters
 	local results = tFilter(self.states.results, function(data)
 		---@cast data AchievementData
-		if filters.hasRewards and not data.reward.itemID then
+		if filters.hasRewards and not data.reward.text then
 			return false
 		end
 
@@ -519,11 +523,12 @@ function AT:ScrollElementInitializer(frame, data, scrollBox)
 		RewardsIcon:CreateBackdrop()
 		RewardsIcon:SetTexCoord(unpack(E.TexCoords))
 		RewardsIcon:SetScript("OnEnter", function(icon)
-			if not frame.data.reward.itemID then
-				return
-			end
 			GameTooltip:SetOwner(icon, "ANCHOR_RIGHT")
-			GameTooltip:SetItemByID(frame.data.reward.itemID)
+			if frame.data.reward.itemID then
+				GameTooltip:SetItemByID(frame.data.reward.itemID)
+			else
+				GameTooltip:AddLine(frame.data.reward.text, nil, nil, nil, true)
+			end
 			GameTooltip:Show()
 		end)
 		RewardsIcon:SetScript("OnLeave", function()
@@ -704,6 +709,11 @@ function AT:ScrollElementInitializer(frame, data, scrollBox)
 			frame.IndicatorFrame.RewardsIcon:Show()
 			frame.IndicatorFrame.RewardsIcon.backdrop:Show()
 		end)
+	elseif data.reward.text then
+		frame.IndicatorFrame.RewardsIcon:SetTexture(237282)
+		frame.IndicatorFrame.RewardsIcon.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		frame.IndicatorFrame.RewardsIcon:Show()
+		frame.IndicatorFrame.RewardsIcon.backdrop:Show()
 	end
 
 	frame.IconFrame.Icon:SetTexture(data.icon)
@@ -750,7 +760,7 @@ function AT:Construct()
 	SearchBox:SetFont(E.db.general.font, E.db.general.fontSize, "OUTLINE")
 	SearchBox:SetAutoFocus(false)
 	SearchBox:SetMaxLetters(50)
-	SearchBox.Instructions:SetText(L["Search by name, description, ID"])
+	SearchBox.Instructions:SetText(L["Search by name, description, ID, rewards, title, etc."])
 	SearchBox:HookScript("OnEnterPressed", function(editBox)
 		self.states.filters.pattern = editBox:GetText()
 		self:UpdateView()
@@ -1001,7 +1011,7 @@ function AT:Construct()
 	ScrollView:SetElementInitializer("BackdropTemplate", function(frame, data)
 		self:ScrollElementInitializer(frame, data, ScrollBox)
 	end)
-	ScrollView:SetElementExtentCalculator(function(dataIndex, elementData)
+	ScrollView:SetElementExtentCalculator(function(_, elementData)
 		return elementData.height or (ELEMENT_ICON_SIZE + 2 * ELEMENT_PADDING)
 	end)
 	ScrollView:SetElementResetter(function(frame)

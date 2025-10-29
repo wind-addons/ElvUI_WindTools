@@ -505,6 +505,25 @@ options.rectangleMinimap = {
 			max = 1,
 			step = 0.01,
 		},
+		fixHereBeDragons = {
+			order = 4,
+			type = "toggle",
+			name = L["Fix HereBeDragons"],
+			desc = format(
+				"%s (%s)",
+				L["Fix pins added by HereBeDragons to hide correctly on rectangular minimaps."],
+				format(L["Related addons: %s"], strjoin(", ", "HandyNotes", "SilverDragon", "RareScanner"))
+			),
+		},
+		pinHidingTolerance = {
+			order = 5,
+			type = "range",
+			name = L["Pin Hiding Tolerance"],
+			desc = L["Prevents pins from appearing outside the rectangular minimap boundaries. Increase this value to hide pins further from the edge."],
+			min = 0,
+			max = 100,
+			step = 1,
+		},
 	},
 }
 

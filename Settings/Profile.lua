@@ -868,6 +868,8 @@ P.maps = {
 	rectangleMinimap = {
 		enable = false,
 		heightPercentage = 0.8,
+		fixHereBeDragons = true,
+		pinHidingTolerance = 10,
 	},
 	whoClicked = {
 		enable = true,

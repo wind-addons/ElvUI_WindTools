@@ -8,10 +8,13 @@ local ceil = ceil
 local floor = floor
 local format = format
 local hooksecurefunc = hooksecurefunc
+local pairs = pairs
+local select = select
 local tinsert = tinsert
 local tremove = tremove
 
 local InCombatLockdown = InCombatLockdown
+local Minimap = _G.Minimap
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
@@ -31,15 +34,54 @@ function RM:HereBeDragons_Pins_AddMinimapIconMap(_, _, icon)
 	end
 end
 
-function RM:HandyNotesFix()
-	local lib = _G.LibStub("HereBeDragons-Pins-2.0", true)
-	if not lib then
+function RM:SetHereBeDragonsPinShown(pin, isShown)
+	local forceShown = not self.db or not self.db.enable or not self.db.fixHereBeDragons
+	if isShown or forceShown then
+		if pin.__windHidden then
+			pin:SetAlpha(1)
+			pin.__windHidden = nil
+		end
+	else
+		if not pin.__windHidden then
+			pin:SetAlpha(0)
+			pin.__windHidden = true
+		end
+	end
+end
+
+function RM:HereBeDragonsPinsFix()
+	if self.hereBeDragonsPinsFixed or not self.db.fixHereBeDragons then
 		return
 	end
 
-	self.HereBeDragonsPinLib = lib
+	local lib = _G.LibStub("HereBeDragons-Pins-2.0", true)
+	if not lib or not lib.updateFrame or not lib.activeMinimapPins then
+		return
+	end
 
-	-- self:SecureHook(lib, "AddMinimapIconMap", "HereBeDragons_Pins_AddMinimapIconMap")
+	local OnUpdate = lib.updateFrame.GetScript and lib.updateFrame:GetScript("OnUpdate")
+	if not OnUpdate then
+		return
+	end
+
+	self:HookScript(lib.updateFrame, "OnUpdate", function()
+		local minimapCenterY = lib.Minimap and select(2, lib.Minimap:GetCenter())
+		if not minimapCenterY or not self.effectiveHeight then
+			return
+		end
+
+		local halfHeightLimit = self.effectiveHeight / 2 - self.db.pinHidingTolerance
+		for pin in pairs(lib.activeMinimapPins) do
+			if pin and pin.IsObjectType and pin:IsObjectType("Frame") then
+				local pinCenterY = select(2, pin:GetCenter())
+				if pinCenterY then
+					self:SetHereBeDragonsPinShown(pin, abs(pinCenterY - minimapCenterY) <= halfHeightLimit)
+				end
+			end
+		end
+	end)
+
+	self.hereBeDragonsPinsFixed = true
 end
 
 function RM:ChangeShape()
@@ -47,7 +89,6 @@ function RM:ChangeShape()
 		return
 	end
 
-	local Minimap = _G.Minimap
 	local holder = M.MapHolder
 	local panel = _G.MinimapPanel
 
@@ -102,6 +143,8 @@ function RM:ChangeShape()
 		mapCanvas:SetMaskTexture(rectangleMask)
 		mapCanvas:SetUseMaskTexture(true)
 	end
+
+	self:HereBeDragonsPinsFix()
 end
 
 function RM:UpdateMiniMapHolderAndMover()
@@ -146,10 +189,6 @@ function RM:Initialize()
 	self.db = E.db.WT.maps.rectangleMinimap
 	if not self.db or not self.db.enable or not M.Initialized then
 		return
-	end
-
-	if C_AddOns_IsAddOnLoaded("HandyNotes") then
-		self:HandyNotesFix()
 	end
 
 	self.addonLoadedCallbacks = {}

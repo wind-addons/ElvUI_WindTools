@@ -387,7 +387,7 @@ function AT:ScrollElementInitializer(frame, data, scrollBox)
 		frame:SetTemplate()
 		frame:SetBackdropColor(C.ExtractRGBAFromTemplate("neutral-900"))
 
-		local TooltipFrame = CreateFrame("Frame", nil, self.MainFrame, "BackdropTemplate")
+		local TooltipFrame = CreateFrame("Frame", nil, self.MainFrame.ScrollFrame, "BackdropTemplate")
 		TooltipFrame:SetFrameStrata("TOOLTIP")
 		TooltipFrame:SetTemplate("Transparent")
 		TooltipFrame:SetBackdropColor(0, 0, 0, 0.95)
@@ -976,6 +976,7 @@ function AT:Construct()
 	ScrollFrame:Point("TOPLEFT", ControlFrame2, "BOTTOMLEFT", 0, -8)
 	ScrollFrame:Point("TOPRIGHT", ControlFrame2, "BOTTOMRIGHT", 0, -8)
 	ScrollFrame:Point("BOTTOM", MainFrame, "BOTTOM", 0, 8)
+	ScrollFrame:SetClipsChildren(true)
 	MainFrame.ScrollFrame = ScrollFrame
 
 	local ScrollBar = CreateFrame("EventFrame", nil, ScrollFrame, "MinimalScrollBar")

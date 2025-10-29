@@ -3,20 +3,23 @@ local A = W:GetModule("Announcement") ---@class Announcement
 
 local gsub = gsub
 
-local UnitGroupRolesAssigned = UnitGroupRolesAssigned
-
 local C_Spell_GetSpellLink = C_Spell.GetSpellLink
 
 local CombatResurrectionList = {
-	[20484] = true, -- 復生
-	[20707] = true, -- 靈魂石
-	[61999] = true, -- 盟友復生
-	[265116] = true, -- 不穩定的時間轉移器（工程學）
-	[345130] = true, -- 拋棄式光學相位復生器（工程學）
-	[391054] = true, -- 代禱
+	[20484] = true, -- 复生
+	[20707] = true, -- 灵魂石
+	[61999] = true, -- 复活盟友
+	[265116] = true, -- 不稳定的时空转移器
+	[345130] = true, -- 即抛型幽魂相位复生装置
+	[391054] = true, -- 代祷
 }
 
--- 格式化自定义字符串
+--- Format the announcement message
+---@param message string
+---@param sourceName string
+---@param destName string
+---@param spellId number
+---@return string
 local function FormatMessage(message, sourceName, destName, spellId)
 	destName = destName:gsub("%-[^|]+", "")
 	sourceName = sourceName:gsub("%-[^|]+", "")

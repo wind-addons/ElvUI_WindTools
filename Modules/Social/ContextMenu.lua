@@ -126,7 +126,8 @@ CM.Features = {
 							for j = 1, numGameAccounts do
 								local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j)
 								if
-									gameAccountInfo.clientProgram
+									gameAccountInfo
+									and gameAccountInfo.clientProgram
 									and gameAccountInfo.clientProgram == "WoW"
 									and gameAccountInfo.wowProjectID == 1
 								then
@@ -330,7 +331,7 @@ CM.Features = {
 			local _SendChatMessage = C_ChatInfo_SendChatMessage
 
 			if contextData.bnetIDAccount then
-				_SendChatMessage = function(message, chatType, languageID, target)
+				_SendChatMessage = function(message)
 					BNSendWhisper(contextData.bnetIDAccount, message)
 				end
 				name = "BN"

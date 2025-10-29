@@ -2,7 +2,7 @@ local E, _, V, P, G = unpack(ElvUI) ---@type ElvUI
 local addonName, addon = ...
 local EP = E.Libs.EP
 local AceAddon = E.Libs.AceAddon
-local L = E.Libs.ACL:GetLocale('ElvUI', E.global.general.locale)
+local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
 
 local _G = _G
 local collectgarbage = collectgarbage

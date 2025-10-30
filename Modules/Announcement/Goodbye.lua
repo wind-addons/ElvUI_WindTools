@@ -7,8 +7,7 @@ function A:Goodbye()
 		return
 	end
 
-	-- 延后 1 秒防止喊话过快阻挡其他系统信息
 	E:Delay(config.delay + 1, function()
-		A:SendMessage(config.text, A:GetChannel(config.channel))
+		self:SendMessage(config.text, self:GetChannel(config.channel))
 	end)
 end

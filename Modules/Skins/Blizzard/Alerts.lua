@@ -228,14 +228,18 @@ function S:SkinLootAlert(frame)
 	if not frame or frame.__windSkin then
 		return
 	end
+
 	self:CreateBackdropShadow(frame)
 
 	F.SetFont(frame.Label)
 
 	if frame.Label and frame.Label.GetNumPoints and frame.Label:GetNumPoints() == 1 then
-		local point, relativeTo, relativePoint, x, y = frame.Label:GetPoint(1)
-		frame.Label:ClearAllPoints()
-		frame.Label:Point(point, relativeTo, relativePoint, x + 1, y - 5)
+		F.Move(frame.Label, 0, -6)
+		hooksecurefunc(frame.Label, "SetPoint", function(_, point, relativeTo, relativePoint, xOffset, yOffset)
+			if F.IsAlmost({ xOffset, yOffset }, { 7, 5 }) then
+				F.Move(frame.Label, 0, -6)
+			end
+		end)
 	end
 
 	F.SetFont(frame.RollValue)

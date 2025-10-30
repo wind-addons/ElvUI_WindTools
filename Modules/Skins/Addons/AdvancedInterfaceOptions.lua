@@ -15,6 +15,25 @@ local function ReskinBrowser(frame)
 	frame:Width(frame:GetWidth() - 12)
 end
 
+---@param frame Frame?
+function S:AdvancedInterfaceOptions_CVarBrowser(frame)
+	if not frame or frame.__windSkin then
+		return
+	end
+
+	for _, child in pairs({ frame:GetChildren() }) do
+		if child:IsObjectType("EditBox") then
+			self:Proxy("HandleEditBox", child)
+		elseif child:IsObjectType("Frame") then
+			if child.scrollbar then
+				ReskinBrowser(child)
+			end
+		end
+	end
+
+	frame.__windSkin = true
+end
+
 function S:AdvancedInterfaceOptions()
 	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.advancedInterfaceOptions then
 		return
@@ -25,21 +44,15 @@ function S:AdvancedInterfaceOptions()
 		return
 	end
 
-	local frame = dialog.BlizOptions and dialog.BlizOptions[CVAR_BROWSER_CONFIG_DIALOG_KEY]
-	frame = frame[CVAR_BROWSER_CONFIG_DIALOG_KEY] and frame[CVAR_BROWSER_CONFIG_DIALOG_KEY].frame
-	if frame and not frame.__windSkin then
-		for _, child in pairs({ frame:GetChildren() }) do
-			if child:IsObjectType("EditBox") then
-				self:Proxy("HandleEditBox", child)
-			elseif child:IsObjectType("Frame") then
-				if child.scrollbar then
-					ReskinBrowser(child)
-				end
-			end
-		end
+	local frame ---@type Frame?
 
-		frame.__windSkin = true
-	end
+	F.WaitFor(function()
+		frame = dialog.BlizOptions and dialog.BlizOptions[CVAR_BROWSER_CONFIG_DIALOG_KEY]
+		frame = frame and frame[CVAR_BROWSER_CONFIG_DIALOG_KEY] and frame[CVAR_BROWSER_CONFIG_DIALOG_KEY].frame
+		return frame ~= nil
+	end, function()
+		self:AdvancedInterfaceOptions_CVarBrowser(frame)
+	end)
 end
 
 S:AddCallbackForAddon("AdvancedInterfaceOptions")

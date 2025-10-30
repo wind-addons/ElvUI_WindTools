@@ -467,7 +467,7 @@ function CB:UpdateBar()
 	if self.db.channels.emote.enable and E.db.WT.social.emote.enable then
 		local db = self.db.channels.emote
 
-		local chatFunc = function(btn, mouseButton)
+		local chatFunc = function(_, mouseButton)
 			if mouseButton == "LeftButton" then
 				if _G.WTCustomEmoteFrame then
 					if _G.WTCustomEmoteFrame:IsShown() then

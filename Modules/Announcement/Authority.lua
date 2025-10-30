@@ -16,13 +16,13 @@ local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
--- 前缀
+-- Prefix
 A.prefix = "WT_AS"
 
--- 基础信息
+-- Base info
 local myServerID, myPlayerUID
 
--- 频道分级, 优先高级别的玩家
+-- Channel priority level
 local channelLevel = {
 	EMOTE = 1,
 	SAY = 2,
@@ -33,7 +33,7 @@ local channelLevel = {
 	RAID_WARNING = 7,
 }
 
--- 缓存最高权限
+-- Cache the received levels
 local cache = {}
 
 local function GetBestChannel()
@@ -94,14 +94,15 @@ function A:ReceiveLevel(message)
 		return
 	end
 
+	-- Level > Server ID > Player UID
 	local needUpdate = false
-	if value > cache[key].value then -- 等级比较
+	if value > cache[key].value then
 		needUpdate = true
 	elseif value == cache[key].value then
-		if serverID > cache[key].serverID then -- 服务器 ID 比较
+		if serverID > cache[key].serverID then
 			needUpdate = true
 		elseif serverID == cache[key].serverID then
-			if playerUID > cache[key].playerUID then -- 玩家 ID 比较
+			if playerUID > cache[key].playerUID then
 				needUpdate = true
 			end
 		end

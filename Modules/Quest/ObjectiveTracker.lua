@@ -359,8 +359,16 @@ function OT:ScenarioObjectiveTracker_UpdateCriteria(tracker, numCriteria)
 	local objectivesBlock = tracker.ObjectivesBlock
 	for criteriaIndex = 1, numCriteria do
 		local existingLine = objectivesBlock:GetExistingLine(criteriaIndex)
-		if existingLine and existingLine.Icon then
-			existingLine.Icon:Hide()
+		if existingLine then
+			local Icon = existingLine.Icon
+			if Icon then
+				Icon:Hide()
+			end
+
+			local CheckGlow = existingLine.CheckGlow
+			if CheckGlow then
+				CheckGlow:Hide()
+			end
 		end
 	end
 end

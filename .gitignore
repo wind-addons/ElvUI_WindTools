@@ -6,3 +6,4 @@
 !.vscode/extensions.json
 
 check.txt
+!.luarc.json

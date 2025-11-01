@@ -276,7 +276,7 @@ function RM:CreateButtons()
 
 			button:SetAttribute("type", "click")
 			if not self.db.inverse then
-				button:SetScript("OnClick", function(btn)
+				button:SetScript("OnClick", function()
 					if _G[format("Is%sKeyDown", RM.modifierString)]() then
 						ClearRaidMarker()
 					else

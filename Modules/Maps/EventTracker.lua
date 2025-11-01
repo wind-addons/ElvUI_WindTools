@@ -221,7 +221,7 @@ local functionFactory = {
 
 				_G.GameTooltip:Show()
 			end,
-			onLeave = function(self)
+			onLeave = function()
 				_G.GameTooltip:Hide()
 			end,
 		},
@@ -384,7 +384,10 @@ local functionFactory = {
 					)
 
 					if self.args.soundFile then
-						PlaySoundFile(LSM:Fetch("sound", self.args.soundFile), "Master")
+						local sound = LSM:Fetch("sound", self.args.soundFile)
+						if sound then
+							PlaySoundFile(sound, "Master")
+						end
 					end
 				end
 			end,
@@ -489,7 +492,7 @@ local functionFactory = {
 
 				_G.GameTooltip:Show()
 			end,
-			onLeave = function(self)
+			onLeave = function()
 				_G.GameTooltip:Hide()
 			end,
 		},
@@ -734,7 +737,10 @@ local functionFactory = {
 					F.Print(format(eventIconString .. " " .. gradientName .. " " .. L["%s can be collected"], netsText))
 
 					if self.args.soundFile then
-						PlaySoundFile(LSM:Fetch("sound", self.args.soundFile), "Master")
+						local sound = LSM:Fetch("sound", self.args.soundFile)
+						if sound then
+							PlaySoundFile(sound, "Master")
+						end
 					end
 				end
 			end,
@@ -800,7 +806,7 @@ local functionFactory = {
 
 				_G.GameTooltip:Show()
 			end,
-			onLeave = function(self)
+			onLeave = function()
 				_G.GameTooltip:Hide()
 			end,
 		},

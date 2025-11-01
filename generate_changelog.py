@@ -1,4 +1,3 @@
-
 import os
 import re
 from slpp import slpp as lua
@@ -31,7 +30,7 @@ locales = [
         "IMPORTANT": "Important",
         "NEW": "New",
         "IMPROVEMENT": "Improvement",
-        "RELEASED_STRING": "{} Released"
+        "RELEASED_STRING": "{} Released",
     },
     {
         "language": "zhCN",
@@ -39,7 +38,7 @@ locales = [
         "IMPORTANT": "重要",
         "NEW": "新增",
         "IMPROVEMENT": "改善",
-        "RELEASED_STRING": "{} 发布"
+        "RELEASED_STRING": "{} 发布",
     },
     {
         "language": "zhTW",
@@ -47,7 +46,7 @@ locales = [
         "IMPORTANT": "重要",
         "NEW": "新增",
         "IMPROVEMENT": "改善",
-        "RELEASED_STRING": "{} 發布"
+        "RELEASED_STRING": "{} 發布",
     },
     {
         "language": "koKR",
@@ -55,7 +54,7 @@ locales = [
         "IMPORTANT": "중요 사항",
         "NEW": "신규 사항",
         "IMPROVEMENT": "개선 사항",
-        "RELEASED_STRING": "{} Released"
+        "RELEASED_STRING": "{} Released",
     },
     {
         "language": "ruRU",
@@ -63,8 +62,8 @@ locales = [
         "IMPORTANT": "Важные",
         "NEW": "Новые",
         "IMPROVEMENT": "Улучшения",
-        "RELEASED_STRING": "{} Релиз"
-    }
+        "RELEASED_STRING": "{} Релиз",
+    },
 ]
 
 parts = [
@@ -79,20 +78,18 @@ parts = [
     {
         "emoji": "💪",
         "name": "IMPROVEMENT",
-    }
+    },
 ]
 
 with open("CHANGELOG.md", "w", encoding="utf8") as f:
     for locale in locales:
         f.write("# {}: {:.2f}\n".format(locale["VERSION"], latest_version))
-        f.write(locale["RELEASED_STRING"].format(
-            changelog["RELEASE_DATE"])+"\n")
+        f.write(locale["RELEASED_STRING"].format(changelog["RELEASE_DATE"]) + "\n")
 
         for part in parts:
             try:
                 if len(changelog[part["name"]]["zhTW"]) > 0:
-                    f.write("## {} {}\n".format(
-                        part["emoji"], locale[part["name"]]))
+                    f.write("## {} {}\n".format(part["emoji"], locale[part["name"]]))
                     for line in changelog[part["name"]][locale["language"]]:
                         f.write("- {}\n".format(line))
             except:

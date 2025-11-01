@@ -180,7 +180,7 @@ Português, Italiano
 6. **Tags**: Add custom ElvUI tags including range display, health/power without signs, class colors, and icons.
 7. **Game Bar**: Modern system status bar with customizable buttons (Home, Guild, Friend, Calendar, Volume, System, Mute, Config, Game Menu) positioned left/right; time/latency display; custom fonts, colors, backdrop, and tooltips; supports normal/combat modes with auto-hide.
 8. **Skip Cut Scene**: Skip most cutscenes automatically; hold modifier key to watch; option to disable in instances/raids.
-9.  **LFG List**: Enhance Premade Groups list with class-colored bars, larger class icons, and additional member information.
+9. **LFG List**: Enhance Premade Groups list with class-colored bars, larger class icons, and additional member information.
 10. **Move Speed**: Display current movement speed in character panel stats.
 11. **Automation**: Auto-accept resurrection, summon, quests; auto-hide frames in combat.
 12. **Math Without Kanji**: Replace Chinese/Japanese unit characters with alphabetic characters.

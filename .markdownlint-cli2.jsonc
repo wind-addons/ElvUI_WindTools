@@ -1,0 +1,8 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint-cli2/main/schema/markdownlint-cli2-config-schema.json",
+  "config": {
+    "MD010": {
+      "code_blocks": false
+    }
+  }
+}

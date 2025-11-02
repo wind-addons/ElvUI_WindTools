@@ -2,6 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 
 local function SettingsListScrollUpdateChild(child)
 	if child.__windSkin then

@@ -41,30 +41,27 @@ do
 	end
 end
 
-local function Tex_SetTexture(tex, texPath)
+function WS:CheckBoxCheckedTexture_SetTexture(tex, texPath)
 	if not texPath then
 		return
 	end
 
-	if texPath == "" then
-		F.CallMethod(tex, "SetTexture", "")
-	else
-		F.CallMethod(
-			tex,
-			"SetTexture",
-			LSM:Fetch("statusbar", E.private.WT.skins.widgets.checkBox.texture) or E.media.normTex
-		)
-	end
+	texPath = texPath == "" and ""
+		or LSM:Fetch("statusbar", E.private.WT.skins.widgets.checkBox.texture)
+		or E.media.normTex
+
+	self.hooks[tex].SetTexture(tex, texPath)
 end
 
-local function Tex_SetVertexColor(tex, ...)
-	local isDefaultColor = WS.IsUglyYellow(...)
+function WS:CheckBoxCheckedTexture_SetVertexColor(tex, ...)
+	local isDefaultColor = self.IsUglyYellow(...)
+	local SetVertexColor = self.hooks[tex].SetVertexColor
 
 	-- Let skin use its own logic to colorize the check texture
 	if tex.__windColorOverride and type(tex.__windColorOverride) == "function" then
 		local color = tex.__windColorOverride(...)
 		if type(color) == "table" and color.r and color.g and color.b then
-			return F.CallMethod(tex, "SetVertexColor", color.r, color.g, color.b, color.a)
+			return SetVertexColor(tex, color.r, color.g, color.b, color.a)
 		elseif type(color) == "string" and color == "DEFAULT" then
 			isDefaultColor = true
 		end
@@ -73,13 +70,11 @@ local function Tex_SetVertexColor(tex, ...)
 	if isDefaultColor then
 		local color = E.private.WT.skins.widgets.checkBox.classColor and E.myClassColor
 			or E.private.WT.skins.widgets.checkBox.color
-		return F.CallMethod(tex, "SetVertexColor", color.r, color.g, color.b, color.a)
+		return SetVertexColor(tex, color.r, color.g, color.b, color.a)
 	end
 
-	return F.CallMethod(tex, "SetVertexColor", ...)
+	return SetVertexColor(tex, ...)
 end
-
-local skinnedCheckBoxes = {}
 
 function WS:OverrideUpdateCheckBoxTexture(checkBox)
 	local db = E.private.WT
@@ -93,20 +88,17 @@ function WS:OverrideUpdateCheckBoxTexture(checkBox)
 
 	local checked = checkBox.GetCheckedTexture and checkBox:GetCheckedTexture()
 	if checked then
-		if not skinnedCheckBoxes[checkBox] then
-			F.InternalizeMethod(checked, "SetTexture", true)
+		if not self:IsHooked(checked, "SetVertexColor") then
 			F.SetVertexColorWithDB(checked, db.classColor and E.myClassColor or db.color)
-			F.InternalizeMethod(checked, "SetVertexColor")
-			checked.SetVertexColor = Tex_SetVertexColor
+			self:RawHook(checked, "SetVertexColor", "CheckBoxCheckedTexture_SetVertexColor", true)
+			F.InternalizeMethod(checked, "SetTexture", true)
 		end
-
 		F.CallMethod(checked, "SetTexture", LSM:Fetch("statusbar", db.texture) or E.media.normTex)
 	end
 
 	local disabled = checkBox.GetDisabledTexture and checkBox:GetDisabledTexture()
-	if disabled and not skinnedCheckBoxes[checkBox] then
-		F.InternalizeMethod(disabled, "SetTexture")
-		disabled.SetTexture = Tex_SetTexture
+	if disabled and not self:IsHooked(disabled, "SetTexture") then
+		self:RawHook(disabled, "SetTexture", "CheckBoxCheckedTexture_SetTexture", true)
 	end
 end
 
@@ -124,14 +116,12 @@ function WS:HandleCheckBox(_, checkBox)
 		return
 	end
 
-	if skinnedCheckBoxes[checkBox] then
+	if self:IsHooked(checkBox, "SetCheckedTexture") then
 		return
 	end
 
-	self:OverrideUpdateCheckBoxTexture(checkBox)
 	self:SecureHook(checkBox, "SetCheckedTexture", "OverrideUpdateCheckBoxTexture")
-
-	skinnedCheckBoxes[checkBox] = true
+	self:OverrideUpdateCheckBoxTexture(checkBox)
 end
 
 WS:SecureHook(ES, "HandleCheckBox")

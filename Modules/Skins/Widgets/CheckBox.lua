@@ -79,7 +79,38 @@ local function Tex_SetVertexColor(tex, ...)
 	return F.CallMethod(tex, "SetVertexColor", ...)
 end
 
-function WS:HandleCheckBox(_, check)
+local skinnedCheckBoxes = {}
+
+function WS:OverrideUpdateCheckBoxTexture(checkBox)
+	local db = E.private.WT
+		and E.private.WT.skins
+		and E.private.WT.skins.widgets
+		and E.private.WT.skins.widgets.checkBox
+
+	if not checkBox or not db or not db.enable then
+		return
+	end
+
+	local checked = checkBox.GetCheckedTexture and checkBox:GetCheckedTexture()
+	if checked then
+		if not skinnedCheckBoxes[checkBox] then
+			F.InternalizeMethod(checked, "SetTexture", true)
+			F.SetVertexColorWithDB(checked, db.classColor and E.myClassColor or db.color)
+			F.InternalizeMethod(checked, "SetVertexColor")
+			checked.SetVertexColor = Tex_SetVertexColor
+		end
+
+		F.CallMethod(checked, "SetTexture", LSM:Fetch("statusbar", db.texture) or E.media.normTex)
+	end
+
+	local disabled = checkBox.GetDisabledTexture and checkBox:GetDisabledTexture()
+	if disabled and not skinnedCheckBoxes[checkBox] then
+		F.InternalizeMethod(disabled, "SetTexture")
+		disabled.SetTexture = Tex_SetTexture
+	end
+end
+
+function WS:HandleCheckBox(_, checkBox)
 	if not E.private.skins.checkBoxSkin then
 		return
 	end
@@ -88,32 +119,19 @@ function WS:HandleCheckBox(_, check)
 		and E.private.WT.skins
 		and E.private.WT.skins.widgets
 		and E.private.WT.skins.widgets.checkBox
-	if not check or not db or not db.enable then
+
+	if not checkBox or not db or not db.enable then
 		return
 	end
 
-	if not check.windWidgetSkinned then
-		if check.GetCheckedTexture then
-			local texture = check:GetCheckedTexture()
-			if texture then
-				texture:SetTexture(LSM:Fetch("statusbar", db.texture) or E.media.normTex)
-				F.InternalizeMethod(texture, "SetTexture", true)
-				F.SetVertexColorWithDB(texture, db.classColor and E.myClassColor or db.color)
-				F.InternalizeMethod(texture, "SetVertexColor")
-				texture.SetVertexColor = Tex_SetVertexColor
-			end
-		end
-
-		if check.GetDisabledTexture then
-			local texture = check:GetDisabledTexture()
-			if texture then
-				F.InternalizeMethod(texture, "SetTexture")
-				texture.SetTexture = Tex_SetTexture
-			end
-		end
-
-		check.windWidgetSkinned = true
+	if skinnedCheckBoxes[checkBox] then
+		return
 	end
+
+	self:OverrideUpdateCheckBoxTexture(checkBox)
+	self:SecureHook(checkBox, "SetCheckedTexture", "OverrideUpdateCheckBoxTexture")
+
+	skinnedCheckBoxes[checkBox] = true
 end
 
 WS:SecureHook(ES, "HandleCheckBox")

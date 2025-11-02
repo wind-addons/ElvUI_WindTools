@@ -31,7 +31,6 @@ local cachedQuests ---@type table<number, QuestProgressData>
 local cachedScenarioStep ---@type ScenarioProgressData
 
 local ignoreTagIDs = {
-	[128] = true, -- Emissary
 	[265] = true, -- Hidden
 	[291] = true, -- Hidden
 }
@@ -45,6 +44,7 @@ local ignoreTagIDs = {
 ---@field isComplete boolean Quest completion status
 ---@field frequency? number Quest frequency (1=Daily, 2=Weekly)
 ---@field tag? string Quest tag name
+---@field tagID? number Quest tag ID
 ---@field worldQuestType? number World quest type ID
 ---@field objectives QuestObjectiveData[] List of quest objectives
 
@@ -80,7 +80,7 @@ local function fetchAllScenarioProgressData()
 		if criteriaInfo and criteriaInfo.quantity and criteriaInfo.totalQuantity and criteriaInfo.completed ~= nil then
 			tinsert(data.objectives, {
 				item = criteriaInfo.description,
-				finished = criteriaInfo.completed,
+				finished = criteriaInfo.completed or criteriaInfo.quantity >= criteriaInfo.totalQuantity,
 				numFulfilled = criteriaInfo.quantity,
 				numRequired = criteriaInfo.totalQuantity,
 			})
@@ -112,17 +112,15 @@ local function fetchAllQuestProgressData()
 				skip = false
 			end
 
-			if questInfo.isOnMap and tagInfo and tagInfo.tagID == 128 then
-				skip = false
-			end
-
 			if not skip then
 				local objectiveData = {}
 				for _, objective in pairs(C_QuestLog_GetQuestObjectives(questInfo.questID)) do
 					local numFulfilled, numRequired, itemName = select(3, strfind(objective.text, "(%d+)/(%d+) ?(.*)"))
+					numFulfilled = tonumber(numFulfilled)
+					numRequired = tonumber(numRequired)
 					tinsert(objectiveData, {
 						item = itemName,
-						finished = objective.finished,
+						finished = objective.finished or (numFulfilled and numRequired and numFulfilled >= numRequired),
 						numFulfilled = numFulfilled,
 						numRequired = numRequired,
 					})
@@ -136,6 +134,7 @@ local function fetchAllQuestProgressData()
 					isComplete = questInfo.isComplete,
 					frequency = questInfo.frequency,
 					tag = tagInfo and tagInfo.tagName,
+					tagID = tagInfo and tagInfo.tagID,
 					worldQuestType = tagInfo and tagInfo.worldQuestType,
 					link = GetQuestLink(questInfo.questID),
 					objectives = objectiveData,
@@ -214,13 +213,13 @@ function QP:ValidateObjectiveData(objectiveData)
 		return false
 	end
 
-	local numFulfilled = tonumber(objectiveData.numFulfilled)
-	local numRequired = tonumber(objectiveData.numRequired)
+	local numFulfilled = objectiveData.numFulfilled
+	local numRequired = objectiveData.numRequired
 
 	if
 		(numFulfilled and numFulfilled > 0)
 		and (numRequired and numRequired > 0)
-		and (numFulfilled == numRequired or numRequired <= self.db.disableIfRequiredOver)
+		and (numFulfilled >= numRequired or numRequired <= self.db.disableIfRequiredOver)
 	then
 		return true
 	end
@@ -333,8 +332,16 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 
 	-- Send to UIErrorsFrame
 	if self.db.enable then
-		local message = self:RenderTemplate(self.db.displayTemplate, self:FilterContext(coloredContext))
-		UIErrorsFrame:AddMessage(message)
+		local shouldShow = true
+
+		if questData.tagID == 128 then
+			shouldShow = objectiveData and objectiveData.finished or false
+		end
+
+		if shouldShow then
+			local message = self:RenderTemplate(self.db.displayTemplate, self:FilterContext(coloredContext))
+			UIErrorsFrame:AddMessage(message)
+		end
 	end
 
 	-- Send to announcement module

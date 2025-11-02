@@ -64,7 +64,7 @@ function RM:HereBeDragonsPinsFix()
 		return
 	end
 
-	self:HookScript(lib.updateFrame, "OnUpdate", function()
+	self:SecureHookScript(lib.updateFrame, "OnUpdate", function()
 		local minimapCenterY = lib.Minimap and select(2, lib.Minimap:GetCenter())
 		if not minimapCenterY or not self.effectiveHeight then
 			return
@@ -180,11 +180,6 @@ function RM:Blizzard_HybridMinimap_Loaded()
 	self:SetUpdateHook()
 end
 
-function RM:PLAYER_ENTERING_WORLD()
-	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-	self:SetUpdateHook()
-end
-
 function RM:Initialize()
 	self.db = E.db.WT.maps.rectangleMinimap
 	if not self.db or not self.db.enable or not M.Initialized then
@@ -204,7 +199,7 @@ function RM:Initialize()
 		self:RegisterEvent("ADDON_LOADED")
 	end
 
-	self:RegisterEvent("PLAYER_ENTERING_WORLD")
+	F.TaskManager:AfterLogin(self.SetUpdateHook, self)
 end
 
 function RM:ADDON_LOADED(_, addon)

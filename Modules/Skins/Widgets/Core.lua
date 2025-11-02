@@ -1,8 +1,8 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local S = W.Modules.Skins ---@type Skins
+local S = W.Modules.Skins ---@class Skins
 local ES = E.Skins
 
-local WS = W:NewModule("WidgetSkins", "AceHook-3.0", "AceEvent-3.0")
+local WS = W:NewModule("WidgetSkins", "AceHook-3.0", "AceEvent-3.0") ---@class WidgetSkins : AceModule, AceHook-3.0, AceEvent-3.0
 S.Widgets = WS
 
 local abs = abs

@@ -74,7 +74,7 @@ local FILTER_BUTTON_HEIGHT = 28
 local FILTER_BUTTON_SPACING = 6
 local FILTER_BUTTONS_PER_COLUMN = 4
 local PANEL_PADDING = 10
-local QUICK_ACCESS_PANEL_WIDTH = 2 * FILTER_BUTTON_WIDTH + FILTER_BUTTON_SPACING + PANEL_PADDING * 2
+local QUICK_ACCESS_PANEL_WIDTH = 2 * FILTER_BUTTON_WIDTH + FILTER_BUTTON_SPACING + PANEL_PADDING * 2 + 10
 
 local seasonGroups = C_LFGList_GetAvailableActivityGroups(
 	GROUP_FINDER_CATEGORY_ID_DUNGEONS,
@@ -409,7 +409,7 @@ end
 
 function LL:InitializePartyKeystoneFrame()
 	local frame = CreateFrame("Frame", "WTPartyKeystoneFrame", _G.ChallengesFrame)
-	frame:Size(200, 150)
+	frame:Size(190, 150)
 	frame:SetTemplate("Transparent")
 	frame:Point("BOTTOMRIGHT", _G.ChallengesFrame, "BOTTOMRIGHT", -8, 85)
 
@@ -586,6 +586,8 @@ function LL:UpdatePartyKeystoneFrame()
 		20 + (heightIncrement + self.db.partyKeystone.font.size) * #cache + self.db.partyKeystone.font.size
 	)
 	frame:Show()
+
+	self:RepositionPartyKeystoneInLegionRemix()
 end
 
 function LL:RequestKeystoneData()
@@ -1550,6 +1552,8 @@ function LL:UpdateRightPanel()
 
 	self.RightPanel:Show()
 	self:UpdateAdvancedFilters()
+
+	self:RepositionPartyKeystoneInLegionRemix()
 end
 
 function LL:LFGListEventHandler(event)
@@ -1767,6 +1771,20 @@ function LL:Initialize()
 
 	E:Delay(2, self.RequestKeystoneData, self)
 	E:Delay(2, self.UpdatePartyKeystoneFrame, self)
+end
+
+function LL:RepositionPartyKeystoneInLegionRemix()
+	if self.partyKeystonePositionFixed or not self.RightPanel or not self.PartyKeystoneFrame then
+		return
+	end
+
+	if PlayerIsTimerunning() then
+		self.PartyKeystoneFrame:SetParent(self.RightPanel.QuickAccessPanel)
+		self.PartyKeystoneFrame:ClearAllPoints()
+		self.PartyKeystoneFrame:Point("BOTTOM", 0, 10)
+	end
+
+	self.partyKeystonePositionFixed = true
 end
 
 W:RegisterModule(LL:GetName())

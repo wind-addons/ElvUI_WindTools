@@ -1245,6 +1245,12 @@ options.progress = {
 					name = L["Scenario"],
 					desc = L["Enable scenario progress tracking."],
 				},
+				disableInMythicPlus = {
+					order = 2,
+					type = "toggle",
+					name = L["Disable In Mythic+"],
+					desc = L["Disable the progress message in Mythic+ dungeons."],
+				},
 				disableIfRequiredOver = {
 					order = 2,
 					type = "range",

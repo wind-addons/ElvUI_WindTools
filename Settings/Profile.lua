@@ -1132,6 +1132,7 @@ P.quest = {
 		enable = true,
 		scenario = false,
 		disableIfRequiredOver = 50,
+		disableInMythicPlus = true,
 		displayTemplate = "{{level}} {{suggestedGroup}} {{tag}} {{daily}}{{weekly}} {{title}} - {{progress}} {{icon}}",
 		tag = {
 			template = "[%s]",

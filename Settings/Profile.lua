@@ -201,6 +201,13 @@ P.announcement = {
 				raidWarning = false,
 				text = L["%player% is handing out cookies, go and get one!"],
 			},
+			["441169"] = {
+				-- 召唤卷轴 (Legion Remix)
+				enable = true,
+				includePlayer = true,
+				raidWarning = true,
+				text = L["%player% used %spell%, please assist!"],
+			},
 			["54710"] = {
 				-- MOLL-E 郵箱
 				enable = true,

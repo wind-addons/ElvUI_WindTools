@@ -215,6 +215,9 @@ function A:Utility(event, sourceName, spellId)
 		if TryAnnounce(spellId, sourceName, 29893) then
 			return
 		end -- 靈魂之井
+		if TryAnnounce(spellId, sourceName, 441169) then
+			return
+		end -- 召唤卷轴
 		if TryAnnounce(spellId, sourceName, nil, ToyList, "toys") then
 			return
 		end -- 玩具

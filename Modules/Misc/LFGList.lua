@@ -1781,7 +1781,7 @@ function LL:RepositionPartyKeystoneInLegionRemix()
 	if PlayerIsTimerunning() then
 		self.PartyKeystoneFrame:SetParent(self.RightPanel.QuickAccessPanel)
 		self.PartyKeystoneFrame:ClearAllPoints()
-		self.PartyKeystoneFrame:Point("BOTTOM", 0, 10)
+		self.PartyKeystoneFrame:Point("BOTTOM")
 	end
 
 	self.partyKeystonePositionFixed = true

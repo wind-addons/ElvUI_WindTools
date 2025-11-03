@@ -34,7 +34,7 @@ W.Changelog[347] = {
 	IMPROVEMENT = {
 		["zhCN"] = {
 			"[进度] 修复新 Raid 进度无法正确显示的问题. 感谢 Nujitsu@GitHub",
-			"[预组建队伍] 新增有T, 有奶筛选按钮. 感谢 mattiagraziani-it@GitHub",
+			"[预创建队伍] 新增有T, 有奶筛选按钮. 感谢 mattiagraziani-it@GitHub",
 		},
 		["zhTW"] = {
 			"[進度] 修復新 Raid 進度無法正確顯示的問題. 感謝 Nujitsu@GitHub",

@@ -1,6 +1,9 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local A = W:GetModule("Announcement") ---@class Announcement
-local QP = W:GetModule("QuestProgress")
+local QP = W:GetModule("QuestProgress") ---@class QuestProgress
+
+local tostring = tostring
+local UnitLevel = UnitLevel
 
 ---@cast QP QuestProgress
 
@@ -45,6 +48,15 @@ function A:AnnounceQuestProgress(eventType, context)
 
 	if not shouldAnnounce then
 		return
+	end
+
+	if context.level then
+		if
+			config.hideLevelOnMaxLevel and context.level == tostring(W.MaxLevelForPlayerExpansion)
+			or config.hideLevelIfSameAsPlayer and context.level == tostring(UnitLevel("player"))
+		then
+			context.level = nil
+		end
 	end
 
 	-- Render message using template and contexts

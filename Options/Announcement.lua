@@ -104,8 +104,22 @@ options.quest = {
 			name = L["Include Details"],
 			desc = L["Announce every time the progress has been changed."],
 		},
-		template = {
+		hideLevelOnMaxLevel = {
 			order = 4,
+			type = "toggle",
+			name = L["Hide Level on Max Level"],
+			desc = L["Do not show quest level if the quest level is the same as the maximum level of your current expansion."],
+			width = 2,
+		},
+		hideLevelIfSameAsPlayer = {
+			order = 5,
+			type = "toggle",
+			name = L["Hide Level if Same as Player"],
+			desc = L["Do not show quest level if the quest level is the same as your current level."],
+			width = 2,
+		},
+		template = {
+			order = 6,
 			type = "input",
 			name = L["Message Template"],
 			desc = strjoin(
@@ -126,7 +140,7 @@ options.quest = {
 			width = "full",
 		},
 		example = {
-			order = 5,
+			order = 7,
 			type = "description",
 			name = function()
 				local context = QP:GetTestContext()
@@ -136,7 +150,7 @@ options.quest = {
 			end,
 		},
 		useDefault = {
-			order = 6,
+			order = 8,
 			type = "execute",
 			name = L["Default"],
 			desc = L["Reset the template to default value."],
@@ -145,7 +159,7 @@ options.quest = {
 			end,
 		},
 		channel = {
-			order = 7,
+			order = 9,
 			type = "group",
 			inline = true,
 			name = L["Channel"],

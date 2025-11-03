@@ -1,8 +1,7 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local QP = W:GetModule("QuestProgress") ---@class QuestProgress : AceModule, AceEvent-3.0
-local A = W:GetModule("Announcement")
+local A = W:GetModule("Announcement") ---@class Announcement
 local C = W.Utilities.Color
----@cast A Announcement
 
 local _G = _G
 local assert = assert
@@ -27,6 +26,15 @@ local C_QuestLog_GetQuestObjectives = C_QuestLog.GetQuestObjectives
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 local C_ScenarioInfo_GetCriteriaInfo = C_ScenarioInfo.GetCriteriaInfo
 local C_ScenarioInfo_GetScenarioStepInfo = C_ScenarioInfo.GetScenarioStepInfo
+
+---@class QuestStatusType : number
+---@type table<string, QuestStatusType>
+local QUEST_STATUS = {
+	ACCEPTED = 1,
+	COMPLETED = 2,
+	QUEST_UPDATE = 3,
+	SCENARIO_UPDATE = 4,
+}
 
 local cachedQuests ---@type table<number, QuestProgressData>
 local cachedScenarioStep ---@type ScenarioProgressData
@@ -203,7 +211,7 @@ function QP:BuildContext(data)
 	end
 
 	if data.level and data.level ~= UnitLevel("player") then
-		plainContext.autoHideLevel, coloredContext.autoHideLevel = plainContext.level, coloredContext.level
+		coloredContext.autoHideLevel = coloredContext.level
 	end
 
 	return plainContext, coloredContext
@@ -240,18 +248,18 @@ function QP:ProcessQuestUpdate()
 		local previousQuestData = cachedQuests[id]
 		if not previousQuestData then
 			if not questData.worldQuestType then
-				self:HandleQuestProgress("accepted", questData)
+				self:HandleQuestProgress(QUEST_STATUS.ACCEPTED, questData)
 			end
 		elseif not previousQuestData.isComplete then
 			if questData.isComplete then
-				self:HandleQuestProgress("complete", questData)
+				self:HandleQuestProgress(QUEST_STATUS.COMPLETED, questData)
 			elseif #previousQuestData.objectives > 0 and #questData.objectives > 0 then
 				for objectiveIndex = 1, #questData.objectives do
 					local objectiveData = questData.objectives[objectiveIndex]
 					local previousObjectiveData = previousQuestData.objectives[objectiveIndex]
 					if not previousObjectiveData or not tCompare(objectiveData, previousObjectiveData) then
 						if self:ValidateObjectiveData(objectiveData) then
-							self:HandleQuestProgress("quest_update", questData, objectiveData)
+							self:HandleQuestProgress(QUEST_STATUS.QUEST_UPDATE, questData, objectiveData)
 						end
 					end
 				end
@@ -287,7 +295,7 @@ function QP:ProcessScenarioUpdate()
 			local previousObjectiveData = cachedScenarioStep.objectives[objectiveIndex]
 			if not previousObjectiveData or not tCompare(objectiveData, previousObjectiveData) then
 				if self:ValidateObjectiveData(objectiveData) then
-					self:HandleQuestProgress("scenario_update", currentScenarioStep, objectiveData)
+					self:HandleQuestProgress(QUEST_STATUS.SCENARIO_UPDATE, currentScenarioStep, objectiveData)
 				end
 			end
 		end
@@ -310,20 +318,20 @@ function QP:FilterContext(context)
 end
 
 ---Handle quest progress update event
----@param status "accepted" | "complete" | "quest_update" | "scenario_update"
+---@param status QuestStatusType
 ---@param questData QuestProgressData | ScenarioProgressData
 ---@param objectiveData? QuestObjectiveData
 function QP:HandleQuestProgress(status, questData, objectiveData)
 	local plainContext, coloredContext = self:BuildContext(questData)
 
-	if status == "accepted" then
+	if status == QUEST_STATUS.ACCEPTED then
 		local db = self.db.progress.accepted
 		plainContext.progress, coloredContext.progress = render(L["Accepted"], db.template, db.color)
 		coloredContext.icon = format("|T%s:0|t", W.Media.Icons.accept)
-	elseif status == "complete" then
+	elseif status == QUEST_STATUS.COMPLETED then
 		local db = self.db.progress.complete
 		plainContext.progress, coloredContext.progress = render(L["Complete"], db.template, db.color)
-	elseif status == "quest_update" or status == "scenario_update" then
+	elseif status == QUEST_STATUS.QUEST_UPDATE or status == QUEST_STATUS.SCENARIO_UPDATE then
 		assert(objectiveData, "Objective data is required for progress update")
 		local db = self.db.progress.objective
 		local objectiveText, coloredObjectiveText = render(objectiveData.item, "%s", db.color)
@@ -350,22 +358,20 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 	end
 
 	-- Send to announcement module
-	if status == "scenario_update" then
-		-- Scenario progress should shared across all party members, no need to announce
-		return
-	end
-
 	local event ---@type QuestAnnounceEventType
-	if status == "accepted" then
+	if status == QUEST_STATUS.ACCEPTED then
 		event = A.QUEST_EVENT.ACCEPTED
-	elseif status == "complete" then
+	elseif status == QUEST_STATUS.COMPLETED then
 		event = A.QUEST_EVENT.COMPLETED
-	elseif status == "update" then
+	elseif status == QUEST_STATUS.QUEST_UPDATE then
 		if objectiveData and objectiveData.finished then
 			event = A.QUEST_EVENT.OBJECTIVE_COMPLETED
 		else
 			event = A.QUEST_EVENT.PROGRESS_UPDATE
 		end
+	elseif status == QUEST_STATUS.SCENARIO_UPDATE then
+		-- Scenario progress should shared across all party members, no need to announce
+		return
 	end
 
 	A:AnnounceQuestProgress(event, plainContext)

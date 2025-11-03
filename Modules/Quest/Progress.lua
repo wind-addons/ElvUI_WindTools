@@ -214,6 +214,8 @@ function QP:BuildContext(data)
 		coloredContext.autoHideLevel = coloredContext.level
 	end
 
+	plainContext.rawLevel = data.level
+
 	return plainContext, coloredContext
 end
 

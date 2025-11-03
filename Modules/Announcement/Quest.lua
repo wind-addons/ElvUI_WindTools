@@ -50,10 +50,10 @@ function A:AnnounceQuestProgress(eventType, context)
 		return
 	end
 
-	if context.level then
+	if context.rawLevel then
 		if
-			config.hideLevelOnMaxLevel and context.level == tostring(W.MaxLevelForPlayerExpansion)
-			or config.hideLevelIfSameAsPlayer and context.level == tostring(UnitLevel("player"))
+			config.hideLevelOnMaxLevel and context.rawLevel == W.MaxLevelForPlayerExpansion
+			or config.hideLevelIfSameAsPlayer and context.rawLevel == UnitLevel("player")
 		then
 			context.level = nil
 		end

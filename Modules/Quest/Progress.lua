@@ -334,6 +334,7 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 	elseif status == QUEST_STATUS.COMPLETED then
 		local db = self.db.progress.complete
 		plainContext.progress, coloredContext.progress = render(L["Complete"], db.template, db.color)
+		coloredContext.icon = format("|T%s:0|t", W.Media.Icons.complete)
 	elseif status == QUEST_STATUS.QUEST_UPDATE or status == QUEST_STATUS.SCENARIO_UPDATE then
 		assert(objectiveData, "Objective data is required for progress update")
 		local db = self.db.progress.objective

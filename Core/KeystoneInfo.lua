@@ -10,9 +10,9 @@ local select = select
 
 local Ambiguate = Ambiguate
 local GetInstanceInfo = GetInstanceInfo
+local GetUnitName = GetUnitName
 local IsInGroup = IsInGroup
 local UnitIsPlayer = UnitIsPlayer
-local UnitName = UnitName
 
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 
@@ -58,7 +58,7 @@ function KI:UnitData(unit)
 
 	-- If Details! library no returns data, try to get it from Bigwigs library
 	if self.LibKeystoneInfo and (not data or not data.level or data.level == 0) then
-		local name = UnitName(unit)
+		local name = GetUnitName(unit, true)
 		local sender = name and Ambiguate(name, "none")
 		data = sender and self.LibKeystoneInfo[sender]
 	end

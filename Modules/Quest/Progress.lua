@@ -349,16 +349,8 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 
 	-- Send to UIErrorsFrame
 	if self.db.enable then
-		local shouldShow = true
-
-		if questData.tagID == 128 then
-			shouldShow = objectiveData and objectiveData.finished or false
-		end
-
-		if shouldShow then
-			local message = self:RenderTemplate(self.db.displayTemplate, self:FilterContext(coloredContext))
-			UIErrorsFrame:AddMessage(message)
-		end
+		local message = self:RenderTemplate(self.db.displayTemplate, self:FilterContext(coloredContext))
+		UIErrorsFrame:AddMessage(message)
 	end
 
 	-- Send to announcement module

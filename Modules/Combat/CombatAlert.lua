@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local CA = W:NewModule("CombatAlert", "AceEvent-3.0") ---@class CombatAlert: AceModule
+local CA = W:NewModule("CombatAlert", "AceEvent-3.0") ---@class CombatAlert: AceModule, AceEvent-3.0
 local C = W.Utilities.Color
 
 local _G = _G

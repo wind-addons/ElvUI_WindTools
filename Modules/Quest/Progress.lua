@@ -24,6 +24,7 @@ local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local C_QuestLog_GetQuestObjectives = C_QuestLog.GetQuestObjectives
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
+local C_QuestLog_IsComplete = C_QuestLog.IsComplete
 local C_ScenarioInfo_GetCriteriaInfo = C_ScenarioInfo.GetCriteriaInfo
 local C_ScenarioInfo_GetScenarioStepInfo = C_ScenarioInfo.GetScenarioStepInfo
 
@@ -140,7 +141,7 @@ local function fetchAllQuestProgressData()
 					questID = questInfo.questID,
 					level = questInfo.level,
 					suggestedGroup = questInfo.suggestedGroup,
-					isComplete = questInfo.isComplete,
+					isComplete = C_QuestLog_IsComplete(questInfo.questID),
 					frequency = questInfo.frequency,
 					tag = tagInfo and tagInfo.tagName,
 					tagID = tagInfo and tagInfo.tagID,

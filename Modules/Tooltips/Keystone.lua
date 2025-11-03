@@ -15,7 +15,12 @@ function T:AddKeystone(tt, unit)
 	end
 
 	local data = KI:UnitData(unit)
+	if not data or not data.challengeMapID or not data.level then
+		return
+	end
+
 	local mythicPlusMapData = W:GetMythicPlusMapData()
+
 	local mapData = data.challengeMapID and mythicPlusMapData[data.challengeMapID]
 	if not mapData then
 		return

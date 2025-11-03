@@ -49,7 +49,7 @@ function KI:UnitData(unit)
 	local data = OR.GetKeystoneInfo(unit)
 
 	-- If Details! library no returns data, try to get it from Bigwigs library
-	if not data and self.LibKeystoneInfo then
+	if self.LibKeystoneInfo and (not data or not data.challengeMapID or data.challengeMapID == 0) then
 		local name = UnitName(unit)
 		local sender = name and Ambiguate(name, "none")
 		data = sender and self.LibKeystoneInfo[sender]

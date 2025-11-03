@@ -415,21 +415,21 @@ function LL:InitializePartyKeystoneFrame()
 
 	frame.lines = {}
 
-	frame.title = frame:CreateFontString(nil, "OVERLAY")
-	F.SetFontWithDB(frame.title, self.db.partyKeystone.font)
-	frame.title:Point("TOPLEFT", frame, "TOPLEFT", 8, -10)
-	frame.title:SetJustifyH("LEFT")
-	frame.title:SetText(F.GetWindStyleText(L["Party Keystone"]))
+	frame.Title = frame:CreateFontString(nil, "OVERLAY")
+	F.SetFontWithDB(frame.Title, self.db.partyKeystone.font)
+	frame.Title:Point("TOPLEFT", frame, "TOPLEFT", 8, -10)
+	frame.Title:SetJustifyH("LEFT")
+	frame.Title:SetText(F.GetWindStyleText(L["Party Keystone"]))
 
-	frame.detailsButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-	frame.detailsButton:Size(40, self.db.partyKeystone.font.size + 4)
-	F.SetFontWithDB(frame.detailsButton.Text, self.db.partyKeystone.font)
-	F.SetFont(frame.detailsButton.Text, nil, "-2")
-	frame.detailsButton:SetText(L["More"])
-	frame.detailsButton:Point("TOPRIGHT", frame, "TOPRIGHT", -8, -8)
-	S:Proxy("HandleButton", frame.detailsButton)
+	frame.MoreButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+	frame.MoreButton:Size(40, self.db.partyKeystone.font.size + 4)
+	F.SetFontWithDB(frame.MoreButton.Text, self.db.partyKeystone.font)
+	F.SetFont(frame.MoreButton.Text, nil, "-2")
+	frame.MoreButton:SetText(L["More"])
+	frame.MoreButton:Point("TOPRIGHT", frame, "TOPRIGHT", -8, -8)
+	S:Proxy("HandleButton", frame.MoreButton)
 
-	frame.detailsButton:SetScript("OnClick", function()
+	frame.MoreButton:SetScript("OnClick", function()
 		if _G.SlashCmdList["KEYSTONE"] then
 			_G.SlashCmdList["KEYSTONE"]("", FakeChatEditBox)
 		else
@@ -437,26 +437,26 @@ function LL:InitializePartyKeystoneFrame()
 		end
 	end)
 
-	frame.detailsButton:SetScript("OnEnter", function(s)
+	frame.MoreButton:SetScript("OnEnter", function(s)
 		_G.GameTooltip:SetOwner(s, "ANCHOR_TOP", 0, 3)
 		_G.GameTooltip:ClearLines()
 		_G.GameTooltip:AddLine(L["Click to open Details! keystone info window."])
 		_G.GameTooltip:Show()
 	end)
 
-	frame.detailsButton:SetScript("OnLeave", function()
+	frame.MoreButton:SetScript("OnLeave", function()
 		_G.GameTooltip:Hide()
 	end)
 
-	frame.sendToPartyChat = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-	frame.sendToPartyChat:Size(40, self.db.partyKeystone.font.size + 4)
-	F.SetFontWithDB(frame.sendToPartyChat.Text, self.db.partyKeystone.font)
-	F.SetFont(frame.sendToPartyChat.Text, nil, "-2")
-	frame.sendToPartyChat:SetText(L["Send"])
-	frame.sendToPartyChat:Point("RIGHT", frame.detailsButton, "LEFT", -5, 0)
-	S:Proxy("HandleButton", frame.sendToPartyChat)
+	frame.SendToPartyChatButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+	frame.SendToPartyChatButton:Size(40, self.db.partyKeystone.font.size + 4)
+	F.SetFontWithDB(frame.SendToPartyChatButton.Text, self.db.partyKeystone.font)
+	F.SetFont(frame.SendToPartyChatButton.Text, nil, "-2")
+	frame.SendToPartyChatButton:SetText(L["Send"])
+	frame.SendToPartyChatButton:Point("RIGHT", frame.MoreButton, "LEFT", -5, 0)
+	S:Proxy("HandleButton", frame.SendToPartyChatButton)
 
-	frame.sendToPartyChat:SetScript("OnClick", function()
+	frame.SendToPartyChatButton:SetScript("OnClick", function()
 		if not IsInGroup() then
 			F.Print(L["You are not in a party."])
 			return
@@ -473,14 +473,14 @@ function LL:InitializePartyKeystoneFrame()
 		end
 	end)
 
-	frame.sendToPartyChat:SetScript("OnEnter", function(s)
+	frame.SendToPartyChatButton:SetScript("OnEnter", function(s)
 		_G.GameTooltip:SetOwner(s, "ANCHOR_TOP", 0, 3)
 		_G.GameTooltip:ClearLines()
 		_G.GameTooltip:AddLine(L["Click to send keystone info to party chat."])
 		_G.GameTooltip:Show()
 	end)
 
-	frame.sendToPartyChat:SetScript("OnLeave", function()
+	frame.SendToPartyChatButton:SetScript("OnLeave", function()
 		_G.GameTooltip:Hide()
 	end)
 
@@ -502,22 +502,22 @@ function LL:InitializePartyKeystoneFrame()
 		frame.lines[i] = { left = leftText, right = rightText }
 	end
 
-	self.partyKeystoneFrame = frame
+	self.PartyKeystoneFrame = frame
 end
 
 function LL:UpdatePartyKeystoneFrame()
 	if not self.db.partyKeystone.enable then
-		if self.partyKeystoneFrame then
-			self.partyKeystoneFrame:Hide()
+		if self.PartyKeystoneFrame then
+			self.PartyKeystoneFrame:Hide()
 		end
 		return
 	end
 
-	if not self.partyKeystoneFrame then
+	if not self.PartyKeystoneFrame then
 		self:InitializePartyKeystoneFrame()
 	end
 
-	local frame = self.partyKeystoneFrame
+	local frame = self.PartyKeystoneFrame
 
 	local scale = self.db.partyKeystone.font.size / 12
 	local heightIncrement = floor(8 * scale)
@@ -543,16 +543,16 @@ function LL:UpdatePartyKeystoneFrame()
 		end
 	end
 
-	F.SetFontWithDB(frame.title, self.db.partyKeystone.font)
+	F.SetFontWithDB(frame.Title, self.db.partyKeystone.font)
 
-	frame.detailsButton:Size(floor(40 * scale), self.db.partyKeystone.font.size + 4)
-	F.SetFontWithDB(frame.detailsButton.Text, self.db.partyKeystone.font)
-	F.SetFont(frame.detailsButton.Text, nil, "-2")
+	frame.MoreButton:Size(floor(40 * scale), self.db.partyKeystone.font.size + 4)
+	F.SetFontWithDB(frame.MoreButton.Text, self.db.partyKeystone.font)
+	F.SetFont(frame.MoreButton.Text, nil, "-2")
 
-	frame.sendToPartyChat:SetEnabled(#frame.partyMessages ~= 0)
-	frame.sendToPartyChat:Size(floor(40 * scale), self.db.partyKeystone.font.size + 4)
-	F.SetFontWithDB(frame.sendToPartyChat.Text, self.db.partyKeystone.font)
-	F.SetFont(frame.sendToPartyChat.Text, nil, "-2")
+	frame.SendToPartyChatButton:SetEnabled(#frame.partyMessages ~= 0)
+	frame.SendToPartyChatButton:Size(floor(40 * scale), self.db.partyKeystone.font.size + 4)
+	F.SetFontWithDB(frame.SendToPartyChatButton.Text, self.db.partyKeystone.font)
+	F.SetFont(frame.SendToPartyChatButton.Text, nil, "-2")
 
 	for i = 1, 5 do
 		local yOffset = (heightIncrement + self.db.partyKeystone.font.size) * (i - 1) + 10
@@ -570,10 +570,10 @@ function LL:UpdatePartyKeystoneFrame()
 
 		if cache[i] then
 			frame.lines[i].right:SetText(cache[i].player)
-			frame.lines[i].left:SetText(
-				F.GetIconString(cache[i].icon, 16, 18, true)
-					.. " "
-					.. C.StringWithKeystoneLevel(format("%s (%s)", cache[i].name, cache[i].level), cache[i].level)
+			frame.lines[i].left:SetFormattedText(
+				"%s %s",
+				F.GetIconString(cache[i].icon, 16, 18, true),
+				C.StringWithKeystoneLevel(format("%s (%s)", cache[i].name, cache[i].level), cache[i].level)
 			)
 		else
 			frame.lines[i].right:SetText("")
@@ -624,21 +624,21 @@ function LL:RepositionRaiderIOProfileTooltip(frame)
 end
 
 function LL:InitializeRightPanel()
-	if self.rightPanel then
+	if self.RightPanel then
 		return
 	end
 
 	local mythicPlusMapData = W:GetMythicPlusMapData()
 
-	local frame = CreateFrame("Frame", nil, _G.PVEFrame)
-	frame:Point("TOPLEFT", _G.PVEFrame, "TOPRIGHT", 4, 0)
-	frame:Point("BOTTOMLEFT", _G.PVEFrame, "BOTTOMRIGHT", 4, 0)
-	frame:SetTemplate("Transparent")
-	S:CreateShadowModule(frame)
-	MF:InternalHandle(frame, "PVEFrame")
+	local Panel = CreateFrame("Frame", nil, _G.PVEFrame)
+	Panel:Point("TOPLEFT", _G.PVEFrame, "TOPRIGHT", 4, 0)
+	Panel:Point("BOTTOMLEFT", _G.PVEFrame, "BOTTOMRIGHT", 4, 0)
+	Panel:SetTemplate("Transparent")
+	S:CreateShadowModule(Panel)
+	MF:InternalHandle(Panel, "PVEFrame")
 
-	self:SecureHook(frame, "Show", "RepositionRaiderIOProfileTooltip")
-	self:SecureHook(frame, "Hide", "RepositionRaiderIOProfileTooltip")
+	self:SecureHook(Panel, "Show", "RepositionRaiderIOProfileTooltip")
+	self:SecureHook(Panel, "Hide", "RepositionRaiderIOProfileTooltip")
 
 	local function HandleAutoJoin(module, resultID, button)
 		if not module.db.rightPanel.autoJoin then
@@ -681,26 +681,32 @@ function LL:InitializeRightPanel()
 	end)
 
 	local affixes = not PlayerIsTimerunning() and C_MythicPlus_GetCurrentAffixes() or legionRemixAffixes
-	frame.affixes = CreateFrame("Frame", nil, frame)
-	frame.affixes:Height(AFFIX_ICON_SIZE)
-	frame.affixes:Point("TOPLEFT", frame, "TOPLEFT", PANEL_PADDING, -PANEL_PADDING)
-	frame.affixes:Point("TOPRIGHT", frame, "TOPRIGHT", -PANEL_PADDING, -PANEL_PADDING)
-	frame.affixes.alignFrame = CreateFrame("Frame", nil, frame.affixes)
-	frame.affixes.alignFrame:Point("CENTER")
-	frame.affixes.alignFrame:Height(AFFIX_ICON_SIZE)
-	frame.affixes.alignFrame:Width(#affixes * AFFIX_ICON_SIZE + (#affixes - 1) * AFFIX_ICON_SPACING + 4)
+	Panel.Affixes = CreateFrame("Frame", nil, Panel)
+	Panel.Affixes:Height(AFFIX_ICON_SIZE)
+	Panel.Affixes:Point("TOPLEFT", Panel, "TOPLEFT", PANEL_PADDING, -PANEL_PADDING)
+	Panel.Affixes:Point("TOPRIGHT", Panel, "TOPRIGHT", -PANEL_PADDING, -PANEL_PADDING)
+	Panel.Affixes.AlignFrame = CreateFrame("Frame", nil, Panel.Affixes)
+	Panel.Affixes.AlignFrame:Point("CENTER")
+	Panel.Affixes.AlignFrame:Height(AFFIX_ICON_SIZE)
+	Panel.Affixes.AlignFrame:Width(#affixes * AFFIX_ICON_SIZE + (#affixes - 1) * AFFIX_ICON_SPACING + 4)
 
 	for i = 1, #affixes do
-		local affix = frame.affixes:CreateTexture(nil, "ARTWORK")
-		affix:CreateBackdrop()
-		affix:Size(AFFIX_ICON_SIZE)
-		affix:Point("LEFT", frame.affixes.alignFrame, "LEFT", 2 + (i - 1) * (AFFIX_ICON_SIZE + AFFIX_ICON_SPACING), 0)
-		affix:SetTexture(select(3, C_ChallengeMode_GetAffixInfo(affixes[i].id)))
-		affix:SetTexCoord(unpack(E.TexCoords))
+		local AffixIcon = Panel.Affixes:CreateTexture(nil, "ARTWORK")
+		AffixIcon:CreateBackdrop()
+		AffixIcon:Size(AFFIX_ICON_SIZE)
+		AffixIcon:Point(
+			"LEFT",
+			Panel.Affixes.AlignFrame,
+			"LEFT",
+			2 + (i - 1) * (AFFIX_ICON_SIZE + AFFIX_ICON_SPACING),
+			0
+		)
+		AffixIcon:SetTexture(select(3, C_ChallengeMode_GetAffixInfo(affixes[i].id)))
+		AffixIcon:SetTexCoord(unpack(E.TexCoords))
 	end
 
-	frame.affixes:SetScript("OnEnter", function()
-		_G.GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMRIGHT", 3, frame:GetHeight())
+	Panel.Affixes:SetScript("OnEnter", function()
+		_G.GameTooltip:SetOwner(Panel, "ANCHOR_BOTTOMRIGHT", 3, Panel:GetHeight())
 		_G.GameTooltip:ClearLines()
 		_G.GameTooltip:AddLine(F.GetWindStyleText(L["Affixes"]))
 
@@ -718,15 +724,15 @@ function LL:InitializeRightPanel()
 		_G.GameTooltip:Show()
 	end)
 
-	frame.affixes:SetScript("OnLeave", function()
+	Panel.Affixes:SetScript("OnLeave", function()
 		_G.GameTooltip:Hide()
 	end)
 
 	-- Filters container
-	local filters = CreateFrame("Frame", nil, frame)
-	filters:Point("TOPLEFT", frame.affixes, "BOTTOMLEFT", 0, -10)
-	filters:Point("TOPRIGHT", frame.affixes, "BOTTOMRIGHT", 0, -10)
-	filters.buttons = {}
+	local Filters = CreateFrame("Frame", nil, Panel)
+	Filters:Point("TOPLEFT", Panel.Affixes, "BOTTOMLEFT", 0, -10)
+	Filters:Point("TOPRIGHT", Panel.Affixes, "BOTTOMRIGHT", 0, -10)
+	Filters.buttons = {}
 
 	local function addSetActive(obj)
 		obj.SetActive = function(f, active)
@@ -755,36 +761,36 @@ function LL:InitializeRightPanel()
 	local numColumns = math.ceil(numDungeons / FILTER_BUTTONS_PER_COLUMN)
 	local filtersWidth = numColumns * FILTER_BUTTON_WIDTH + (numColumns - 1) * FILTER_BUTTON_SPACING
 	local frameWidth = filtersWidth + PANEL_PADDING * 2
-	frame.FilterPanelWidth = frameWidth
-	frame:Width(frame.FilterPanelWidth)
+	Panel.filterPanelWidth = frameWidth
+	Panel:Width(Panel.filterPanelWidth)
 
 	-- Set filters container height based on actual number of rows needed
 	local numRows = math.min(numDungeons, FILTER_BUTTONS_PER_COLUMN)
-	filters:Height(FILTER_BUTTON_HEIGHT * numRows + FILTER_BUTTON_SPACING * (numRows - 1))
+	Filters:Height(FILTER_BUTTON_HEIGHT * numRows + FILTER_BUTTON_SPACING * (numRows - 1))
 
 	for i, mapID in ipairs(mapIDs) do
-		local filterButton = CreateFrame("Frame", nil, filters)
-		filterButton:SetTemplate()
-		filterButton:Size(FILTER_BUTTON_WIDTH, FILTER_BUTTON_HEIGHT)
+		local FilterButton = CreateFrame("Frame", nil, Filters)
+		FilterButton:SetTemplate()
+		FilterButton:Size(FILTER_BUTTON_WIDTH, FILTER_BUTTON_HEIGHT)
 		local col = floor((i - 1) / FILTER_BUTTONS_PER_COLUMN)
 		local row = (i - 1) % FILTER_BUTTONS_PER_COLUMN
 		local xOffset = col * (FILTER_BUTTON_WIDTH + FILTER_BUTTON_SPACING)
 		local yOffset = -row * (FILTER_BUTTON_HEIGHT + FILTER_BUTTON_SPACING)
-		filterButton:Point("TOPLEFT", filters, "TOPLEFT", xOffset, yOffset)
+		FilterButton:Point("TOPLEFT", Filters, "TOPLEFT", xOffset, yOffset)
 
-		filterButton.tex = filterButton:CreateTexture(nil, "ARTWORK")
-		filterButton.tex:Size(20)
-		filterButton.tex:Point("LEFT", filterButton, "LEFT", 4, 0)
-		filterButton.tex:SetTexture(mythicPlusMapData[mapID].tex)
+		FilterButton.tex = FilterButton:CreateTexture(nil, "ARTWORK")
+		FilterButton.tex:Size(20)
+		FilterButton.tex:Point("LEFT", FilterButton, "LEFT", 4, 0)
+		FilterButton.tex:SetTexture(mythicPlusMapData[mapID].tex)
 
-		filterButton.name = filterButton:CreateFontString(nil, "OVERLAY")
-		filterButton.name:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-		filterButton.name:Point("LEFT", filterButton.tex, "RIGHT", 8, 0)
-		filterButton.name:SetText(mythicPlusMapData[mapID].abbr)
+		FilterButton.name = FilterButton:CreateFontString(nil, "OVERLAY")
+		FilterButton.name:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+		FilterButton.name:Point("LEFT", FilterButton.tex, "RIGHT", 8, 0)
+		FilterButton.name:SetText(mythicPlusMapData[mapID].abbr)
 
-		addSetActive(filterButton)
+		addSetActive(FilterButton)
 
-		filterButton:SetScript("OnMouseDown", function(btn, button)
+		FilterButton:SetScript("OnMouseDown", function(btn, button)
 			if button == "LeftButton" then
 				local dfDB = self:GetPlayerDB("dungeonFilter")
 				btn:SetActive(not btn.active)
@@ -794,32 +800,32 @@ function LL:InitializeRightPanel()
 			end
 		end)
 
-		filters.buttons[mapID] = filterButton
+		Filters.buttons[mapID] = FilterButton
 	end
 
 	-- Leader Overall Score
-	local leaderScore = CreateFrame("Frame", nil, filters)
-	leaderScore:Height(32)
-	leaderScore:Point("TOPLEFT", filters, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
-	leaderScore:Point("TOPRIGHT", filters, "BOTTOMRIGHT", 0, -FILTER_BUTTON_SPACING)
-	leaderScore:SetTemplate()
+	local LeaderScoreButton = CreateFrame("Frame", nil, Filters)
+	LeaderScoreButton:Height(32)
+	LeaderScoreButton:Point("TOPLEFT", Filters, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
+	LeaderScoreButton:Point("TOPRIGHT", Filters, "BOTTOMRIGHT", 0, -FILTER_BUTTON_SPACING)
+	LeaderScoreButton:SetTemplate()
 
-	leaderScore.text = leaderScore:CreateFontString(nil, "OVERLAY")
-	leaderScore.text:SetFont(E.media.normFont, 11 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-	leaderScore.text:Point("LEFT", leaderScore, "LEFT", 8, 0)
-	leaderScore.text:SetText(L["Leader Score Over"])
+	LeaderScoreButton.text = LeaderScoreButton:CreateFontString(nil, "OVERLAY")
+	LeaderScoreButton.text:SetFont(E.media.normFont, 11 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+	LeaderScoreButton.text:Point("LEFT", LeaderScoreButton, "LEFT", 8, 0)
+	LeaderScoreButton.text:SetText(L["Leader Score Over"])
 
-	leaderScore.editBox = CreateFrame("EditBox", nil, leaderScore)
-	leaderScore.editBox:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-	leaderScore.editBox:Size(40, 20)
-	leaderScore.editBox:SetJustifyH("CENTER")
-	leaderScore.editBox:Point("RIGHT", leaderScore, "RIGHT", -10, 0)
-	leaderScore.editBox:SetAutoFocus(false)
-	leaderScore.editBox:SetScript("OnEscapePressed", function(editBox)
+	LeaderScoreButton.editBox = CreateFrame("EditBox", nil, LeaderScoreButton)
+	LeaderScoreButton.editBox:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+	LeaderScoreButton.editBox:Size(40, 20)
+	LeaderScoreButton.editBox:SetJustifyH("CENTER")
+	LeaderScoreButton.editBox:Point("RIGHT", LeaderScoreButton, "RIGHT", -10, 0)
+	LeaderScoreButton.editBox:SetAutoFocus(false)
+	LeaderScoreButton.editBox:SetScript("OnEscapePressed", function(editBox)
 		editBox:ClearFocus()
 	end)
 
-	leaderScore.editBox:SetScript("OnEnterPressed", function(editBox)
+	LeaderScoreButton.editBox:SetScript("OnEnterPressed", function(editBox)
 		local dfDB = self:GetPlayerDB("dungeonFilter")
 
 		local text = editBox:GetText()
@@ -834,22 +840,22 @@ function LL:InitializeRightPanel()
 		LL:RefreshSearch()
 	end)
 
-	S:Proxy("HandleEditBox", leaderScore.editBox)
+	S:Proxy("HandleEditBox", LeaderScoreButton.editBox)
 
-	addSetActive(leaderScore)
+	addSetActive(LeaderScoreButton)
 
-	leaderScore:SetScript("OnEnter", function(btn)
+	LeaderScoreButton:SetScript("OnEnter", function(btn)
 		_G.GameTooltip:SetOwner(btn, "ANCHOR_TOP", 0, 4)
 		_G.GameTooltip:AddLine(F.GetWindStyleText(L["Leader Score"]), 1, 1, 1)
 		_G.GameTooltip:AddLine(L["The overall mythic+ score of the leader."], 1, 1, 1, true)
 		_G.GameTooltip:Show()
 	end)
 
-	leaderScore:SetScript("OnLeave", function(btn)
+	LeaderScoreButton:SetScript("OnLeave", function(btn)
 		_G.GameTooltip:Hide()
 	end)
 
-	leaderScore:SetScript("OnMouseDown", function(btn, button)
+	LeaderScoreButton:SetScript("OnMouseDown", function(btn, button)
 		if button == "LeftButton" then
 			local dfDB = self:GetPlayerDB("dungeonFilter")
 			btn:SetActive(not btn.active)
@@ -859,31 +865,31 @@ function LL:InitializeRightPanel()
 		end
 	end)
 
-	filters.leaderScore = leaderScore
+	Filters.LeaderScoreButton = LeaderScoreButton
 
 	-- Leader Dungeon Score
-	local leaderDungeonScore = CreateFrame("Frame", nil, filters)
-	leaderDungeonScore:Height(32)
-	leaderDungeonScore:Point("TOPLEFT", leaderScore, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
-	leaderDungeonScore:Point("TOPRIGHT", leaderScore, "BOTTOMRIGHT", 0, -FILTER_BUTTON_SPACING)
-	leaderDungeonScore:SetTemplate()
+	local LeaderDungeonScoreButton = CreateFrame("Frame", nil, Filters)
+	LeaderDungeonScoreButton:Height(32)
+	LeaderDungeonScoreButton:Point("TOPLEFT", LeaderScoreButton, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
+	LeaderDungeonScoreButton:Point("TOPRIGHT", LeaderScoreButton, "BOTTOMRIGHT", 0, -FILTER_BUTTON_SPACING)
+	LeaderDungeonScoreButton:SetTemplate()
 
-	leaderDungeonScore.text = leaderDungeonScore:CreateFontString(nil, "OVERLAY")
-	leaderDungeonScore.text:SetFont(E.media.normFont, 11 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-	leaderDungeonScore.text:Point("LEFT", leaderDungeonScore, "LEFT", 8, 0)
-	leaderDungeonScore.text:SetText(L["Dungeon Score Over"])
+	LeaderDungeonScoreButton.text = LeaderDungeonScoreButton:CreateFontString(nil, "OVERLAY")
+	LeaderDungeonScoreButton.text:SetFont(E.media.normFont, 11 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+	LeaderDungeonScoreButton.text:Point("LEFT", LeaderDungeonScoreButton, "LEFT", 8, 0)
+	LeaderDungeonScoreButton.text:SetText(L["Dungeon Score Over"])
 
-	leaderDungeonScore.editBox = CreateFrame("EditBox", nil, leaderDungeonScore)
-	leaderDungeonScore.editBox:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-	leaderDungeonScore.editBox:Size(40, 20)
-	leaderDungeonScore.editBox:SetJustifyH("CENTER")
-	leaderDungeonScore.editBox:Point("RIGHT", leaderDungeonScore, "RIGHT", -10, 0)
-	leaderDungeonScore.editBox:SetAutoFocus(false)
-	leaderDungeonScore.editBox:SetScript("OnEscapePressed", function(editBox)
+	LeaderDungeonScoreButton.editBox = CreateFrame("EditBox", nil, LeaderDungeonScoreButton)
+	LeaderDungeonScoreButton.editBox:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+	LeaderDungeonScoreButton.editBox:Size(40, 20)
+	LeaderDungeonScoreButton.editBox:SetJustifyH("CENTER")
+	LeaderDungeonScoreButton.editBox:Point("RIGHT", LeaderDungeonScoreButton, "RIGHT", -10, 0)
+	LeaderDungeonScoreButton.editBox:SetAutoFocus(false)
+	LeaderDungeonScoreButton.editBox:SetScript("OnEscapePressed", function(editBox)
 		editBox:ClearFocus()
 	end)
 
-	leaderDungeonScore.editBox:SetScript("OnEnterPressed", function(editBox)
+	LeaderDungeonScoreButton.editBox:SetScript("OnEnterPressed", function(editBox)
 		local dfDB = self:GetPlayerDB("dungeonFilter")
 
 		local text = editBox:GetText()
@@ -898,22 +904,22 @@ function LL:InitializeRightPanel()
 		LL:RefreshSearch()
 	end)
 
-	S:Proxy("HandleEditBox", leaderDungeonScore.editBox)
+	S:Proxy("HandleEditBox", LeaderDungeonScoreButton.editBox)
 
-	addSetActive(leaderDungeonScore)
+	addSetActive(LeaderDungeonScoreButton)
 
-	leaderDungeonScore:SetScript("OnEnter", function(btn)
+	LeaderDungeonScoreButton:SetScript("OnEnter", function(btn)
 		_G.GameTooltip:SetOwner(btn, "ANCHOR_TOP", 0, 4)
 		_G.GameTooltip:AddLine(F.GetWindStyleText(L["Leader's Dungeon Score"]), 1, 1, 1)
 		_G.GameTooltip:AddLine(L["The recruited dungeon mythic+ score of the leader."], 1, 1, 1, true)
 		_G.GameTooltip:Show()
 	end)
 
-	leaderDungeonScore:SetScript("OnLeave", function(btn)
+	LeaderDungeonScoreButton:SetScript("OnLeave", function(btn)
 		_G.GameTooltip:Hide()
 	end)
 
-	leaderDungeonScore:SetScript("OnMouseDown", function(btn, button)
+	LeaderDungeonScoreButton:SetScript("OnMouseDown", function(btn, button)
 		if button == "LeftButton" then
 			local dfDB = self:GetPlayerDB("dungeonFilter")
 			btn:SetActive(not btn.active)
@@ -922,48 +928,60 @@ function LL:InitializeRightPanel()
 		end
 	end)
 
-	filters.leaderDungeonScore = leaderDungeonScore
+	Filters.LeaderDungeonScoreButton = LeaderDungeonScoreButton
 
 	-- Role Available
-	local roleAvailable = CreateFrame("Frame", nil, filters)
-	roleAvailable:Height(32)
-	roleAvailable:Point("TOPLEFT", leaderDungeonScore, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
-	roleAvailable:Point("TOPRIGHT", leaderDungeonScore, "BOTTOMRIGHT", 0, -FILTER_BUTTON_SPACING)
-	roleAvailable:SetTemplate()
+	local RoleAvailableButton = CreateFrame("Frame", nil, Filters)
+	RoleAvailableButton:Height(32)
+	RoleAvailableButton:Point("TOPLEFT", LeaderDungeonScoreButton, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
+	RoleAvailableButton:Point("TOPRIGHT", LeaderDungeonScoreButton, "BOTTOMRIGHT", 0, -FILTER_BUTTON_SPACING)
+	RoleAvailableButton:SetTemplate()
 
-	roleAvailable.text = roleAvailable:CreateFontString(nil, "OVERLAY")
-	roleAvailable.text:SetFont(E.media.normFont, 11 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-	roleAvailable.text:Point("CENTER", roleAvailable, "CENTER", 0, 0)
-	roleAvailable.text:SetText(L["Role Available"])
-	roleAvailable.text:SetJustifyH("CENTER")
+	RoleAvailableButton.text = RoleAvailableButton:CreateFontString(nil, "OVERLAY")
+	RoleAvailableButton.text:SetFont(E.media.normFont, 11 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+	RoleAvailableButton.text:Point("CENTER", RoleAvailableButton, "CENTER", 0, 0)
+	RoleAvailableButton.text:SetText(L["Role Available"])
+	RoleAvailableButton.text:SetJustifyH("CENTER")
 
 	-- Need Tank
-	local needTank = CreateFrame("Frame", nil, filters)
-	needTank:Height(28)
-	needTank:Point("TOPLEFT", roleAvailable, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
-	needTank:Point("RIGHT", roleAvailable, "BOTTOM", -FILTER_BUTTON_SPACING / 2, -FILTER_BUTTON_SPACING - 14)
-	needTank:SetTemplate()
+	local NeedTankButton = CreateFrame("Frame", nil, Filters)
+	NeedTankButton:Height(28)
+	NeedTankButton:Point("TOPLEFT", RoleAvailableButton, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
+	NeedTankButton:Point(
+		"RIGHT",
+		RoleAvailableButton,
+		"BOTTOM",
+		-FILTER_BUTTON_SPACING / 2,
+		-FILTER_BUTTON_SPACING - 14
+	)
+	NeedTankButton:SetTemplate()
 
-	needTank.text = needTank:CreateFontString(nil, "OVERLAY")
-	needTank.text:SetFont(E.media.normFont, 11 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-	needTank.text:Point("CENTER", needTank, "CENTER", 0, 0)
-	needTank.text:SetText(L["Has Tank"])
-	needTank.text:SetJustifyH("CENTER")
+	NeedTankButton.text = NeedTankButton:CreateFontString(nil, "OVERLAY")
+	NeedTankButton.text:SetFont(E.media.normFont, 11 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+	NeedTankButton.text:Point("CENTER", NeedTankButton, "CENTER", 0, 0)
+	NeedTankButton.text:SetText(L["Has Tank"])
+	NeedTankButton.text:SetJustifyH("CENTER")
 
 	-- Need Healer
-	local needHealer = CreateFrame("Frame", nil, filters)
-	needHealer:Height(28)
-	needHealer:Point("LEFT", roleAvailable, "BOTTOM", FILTER_BUTTON_SPACING / 2, -FILTER_BUTTON_SPACING - 14)
-	needHealer:Point("TOPRIGHT", roleAvailable, "BOTTOMRIGHT", 0, -FILTER_BUTTON_SPACING)
-	needHealer:SetTemplate()
+	local NeedHealerButton = CreateFrame("Frame", nil, Filters)
+	NeedHealerButton:Height(28)
+	NeedHealerButton:Point(
+		"LEFT",
+		RoleAvailableButton,
+		"BOTTOM",
+		FILTER_BUTTON_SPACING / 2,
+		-FILTER_BUTTON_SPACING - 14
+	)
+	NeedHealerButton:Point("TOPRIGHT", RoleAvailableButton, "BOTTOMRIGHT", 0, -FILTER_BUTTON_SPACING)
+	NeedHealerButton:SetTemplate()
 
-	needHealer.text = needHealer:CreateFontString(nil, "OVERLAY")
-	needHealer.text:SetFont(E.media.normFont, 11 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-	needHealer.text:Point("CENTER", needHealer, "CENTER", 0, 0)
-	needHealer.text:SetText(L["Has Healer"])
-	needHealer.text:SetJustifyH("CENTER")
+	NeedHealerButton.text = NeedHealerButton:CreateFontString(nil, "OVERLAY")
+	NeedHealerButton.text:SetFont(E.media.normFont, 11 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+	NeedHealerButton.text:Point("CENTER", NeedHealerButton, "CENTER", 0, 0)
+	NeedHealerButton.text:SetText(L["Has Healer"])
+	NeedHealerButton.text:SetJustifyH("CENTER")
 
-	roleAvailable:SetScript("OnEnter", function(btn)
+	RoleAvailableButton:SetScript("OnEnter", function(btn)
 		_G.GameTooltip:SetOwner(btn, "ANCHOR_TOP", 0, 4)
 		_G.GameTooltip:AddLine(F.GetWindStyleText(L["Role Available"]), 1, 1, 1)
 		_G.GameTooltip:AddLine(
@@ -981,21 +999,21 @@ function LL:InitializeRightPanel()
 		_G.GameTooltip:Show()
 	end)
 
-	roleAvailable:SetScript("OnLeave", function(btn)
+	RoleAvailableButton:SetScript("OnLeave", function(btn)
 		_G.GameTooltip:Hide()
 	end)
 
-	addSetActive(roleAvailable)
+	addSetActive(RoleAvailableButton)
 
-	roleAvailable:SetScript("OnMouseDown", function(btn, button)
+	RoleAvailableButton:SetScript("OnMouseDown", function(btn, button)
 		if button ~= "LeftButton" then
 			return
 		end
 		local dfDB = self:GetPlayerDB("dungeonFilter")
 		btn:SetActive(not btn.active)
 		if not self.db.rightPanel.disableSafeFilters and btn.active then
-			needTank:SetActive(false)
-			needHealer:SetActive(false)
+			NeedTankButton:SetActive(false)
+			NeedHealerButton:SetActive(false)
 			dfDB.needTankEnable = false
 			dfDB.needHealerEnable = false
 		end
@@ -1005,9 +1023,9 @@ function LL:InitializeRightPanel()
 		self:RefreshSearch()
 	end)
 
-	filters.roleAvailable = roleAvailable
+	Filters.RoleAvailableButton = RoleAvailableButton
 
-	needTank:SetScript("OnEnter", function(btn)
+	NeedTankButton:SetScript("OnEnter", function(btn)
 		_G.GameTooltip:SetOwner(btn, "ANCHOR_TOP", 0, 4)
 		_G.GameTooltip:AddLine(F.GetWindStyleText(L["Has Tank"]), 1, 1, 1)
 		_G.GameTooltip:AddLine(
@@ -1024,18 +1042,18 @@ function LL:InitializeRightPanel()
 		_G.GameTooltip:Show()
 	end)
 
-	needTank:SetScript("OnLeave", function(btn)
+	NeedTankButton:SetScript("OnLeave", function(btn)
 		_G.GameTooltip:Hide()
 	end)
 
-	addSetActive(needTank)
+	addSetActive(NeedTankButton)
 
-	needTank:SetScript("OnMouseDown", function(btn, button)
+	NeedTankButton:SetScript("OnMouseDown", function(btn, button)
 		if button == "LeftButton" then
 			local dfDB = self:GetPlayerDB("dungeonFilter")
 			btn:SetActive(not btn.active)
 			if not self.db.rightPanel.disableSafeFilters and btn.active then
-				roleAvailable:SetActive(false)
+				RoleAvailableButton:SetActive(false)
 				dfDB.roleAvailableEnable = false
 			end
 			dfDB.needTankEnable = btn.active
@@ -1044,9 +1062,9 @@ function LL:InitializeRightPanel()
 		end
 	end)
 
-	filters.needTank = needTank
+	Filters.NeedTankButton = NeedTankButton
 
-	needHealer:SetScript("OnEnter", function(btn)
+	NeedHealerButton:SetScript("OnEnter", function(btn)
 		_G.GameTooltip:SetOwner(btn, "ANCHOR_TOP", 0, 4)
 		_G.GameTooltip:AddLine(F.GetWindStyleText(L["Has Healer"]), 1, 1, 1)
 		_G.GameTooltip:AddLine(
@@ -1063,18 +1081,18 @@ function LL:InitializeRightPanel()
 		_G.GameTooltip:Show()
 	end)
 
-	needHealer:SetScript("OnLeave", function(btn)
+	NeedHealerButton:SetScript("OnLeave", function(btn)
 		_G.GameTooltip:Hide()
 	end)
 
-	addSetActive(needHealer)
+	addSetActive(NeedHealerButton)
 
-	needHealer:SetScript("OnMouseDown", function(btn, button)
+	NeedHealerButton:SetScript("OnMouseDown", function(btn, button)
 		if button == "LeftButton" then
 			local dfDB = self:GetPlayerDB("dungeonFilter")
 			btn:SetActive(not btn.active)
 			if not self.db.rightPanel.disableSafeFilters and btn.active then
-				roleAvailable:SetActive(false)
+				RoleAvailableButton:SetActive(false)
 				dfDB.roleAvailableEnable = false
 			end
 			dfDB.needHealerEnable = btn.active
@@ -1083,30 +1101,30 @@ function LL:InitializeRightPanel()
 		end
 	end)
 
-	filters.needHealer = needHealer
+	Filters.NeedHealerButton = NeedHealerButton
 
-	frame.filters = filters
+	Panel.Filters = Filters
 
-	local vaultStatus = CreateFrame("Frame", nil, frame)
-	vaultStatus:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
-	vaultStatus:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, 10)
-	vaultStatus:Height(32)
-	vaultStatus:SetTemplate()
+	local VaultStatus = CreateFrame("Frame", nil, Panel)
+	VaultStatus:Point("BOTTOMLEFT", Panel, "BOTTOMLEFT", 10, 10)
+	VaultStatus:Point("BOTTOMRIGHT", Panel, "BOTTOMRIGHT", -10, 10)
+	VaultStatus:Height(32)
+	VaultStatus:SetTemplate()
 
 	-- Hide vault status in Timerunning mode
 	if PlayerIsTimerunning() then
-		vaultStatus:Hide()
+		VaultStatus:Hide()
 	end
 
-	addSetActive(vaultStatus)
+	addSetActive(VaultStatus)
 
-	vaultStatus.text = vaultStatus:CreateFontString(nil, "OVERLAY")
-	vaultStatus.text:SetFont(E.media.normFont, 13 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-	vaultStatus.text:Point("CENTER", vaultStatus, "CENTER", 0, 0)
-	vaultStatus.text:SetJustifyH("CENTER")
+	VaultStatus.text = VaultStatus:CreateFontString(nil, "OVERLAY")
+	VaultStatus.text:SetFont(E.media.normFont, 13 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+	VaultStatus.text:Point("CENTER", VaultStatus, "CENTER", 0, 0)
+	VaultStatus.text:SetJustifyH("CENTER")
 
-	vaultStatus:SetScript("OnEnter", function(btn)
-		vaultStatus:SetActive(true)
+	VaultStatus:SetScript("OnEnter", function(btn)
+		VaultStatus:SetActive(true)
 
 		btn.update()
 		if not btn.cache then
@@ -1150,18 +1168,18 @@ function LL:InitializeRightPanel()
 		_G.GameTooltip:Show()
 	end)
 
-	vaultStatus:SetScript("OnLeave", function()
-		vaultStatus:SetActive(false)
+	VaultStatus:SetScript("OnLeave", function()
+		VaultStatus:SetActive(false)
 		_G.GameTooltip:Hide()
 	end)
 
-	vaultStatus:SetScript("OnMouseDown", function(btn, button)
+	VaultStatus:SetScript("OnMouseDown", function(btn, button)
 		if button == "LeftButton" and not InCombatLockdown() then
 			WeeklyRewards_ShowUI()
 		end
 	end)
 
-	vaultStatus.update = function()
+	VaultStatus.update = function()
 		local vaultStatusCache = {}
 		local runHistory = C_MythicPlus_GetRunHistory(false, true)
 		local comparison = function(entry1, entry2)
@@ -1200,50 +1218,50 @@ function LL:InitializeRightPanel()
 				.. C.StringWithKeystoneLevel(tostring(vaultStatusCache[8].level), vaultStatusCache[8].level)
 		end
 
-		vaultStatus.cache = vaultStatusCache
-		vaultStatus.text:SetText(vaultItemString)
+		VaultStatus.cache = vaultStatusCache
+		VaultStatus.text:SetText(vaultItemString)
 	end
 
-	frame.vaultStatus = vaultStatus
+	Panel.VaultStatus = VaultStatus
 
-	local sortPanel = CreateFrame("Frame", nil, frame)
+	local SortPanel = CreateFrame("Frame", nil, Panel)
 	-- In Timerunning mode, anchor to frame bottom instead of vaultStatus
 	if PlayerIsTimerunning() then
-		sortPanel:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
-		sortPanel:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, 10)
+		SortPanel:Point("BOTTOMLEFT", Panel, "BOTTOMLEFT", 10, 10)
+		SortPanel:Point("BOTTOMRIGHT", Panel, "BOTTOMRIGHT", -10, 10)
 	else
-		sortPanel:Point("BOTTOMLEFT", vaultStatus, "TOPLEFT", 0, 8)
-		sortPanel:Point("BOTTOMRIGHT", vaultStatus, "TOPRIGHT", 0, 8)
+		SortPanel:Point("BOTTOMLEFT", VaultStatus, "TOPLEFT", 0, 8)
+		SortPanel:Point("BOTTOMRIGHT", VaultStatus, "TOPRIGHT", 0, 8)
 	end
-	sortPanel:Height(32)
+	SortPanel:Height(32)
 
-	local sortModeButton = CreateFrame("Frame", nil, sortPanel)
-	sortModeButton:Point("RIGHT", sortPanel, "RIGHT", 0, 0)
-	sortModeButton:Size(32)
-	sortModeButton:SetTemplate()
-	sortModeButton.tex = sortModeButton:CreateTexture(nil, "OVERLAY")
-	sortModeButton.tex:Size(24)
-	sortModeButton.tex:Point("CENTER", sortModeButton, "CENTER", 0, 0)
-	sortModeButton.tex:SetTexture(W.Media.Textures.arrowDown)
-	sortModeButton.tex:SetTexCoord(0, 1, 0, 1)
-	sortModeButton.tex:SetVertexColor(1, 1, 1)
+	local SortModeButton = CreateFrame("Frame", nil, SortPanel)
+	SortModeButton:Point("RIGHT", SortPanel, "RIGHT", 0, 0)
+	SortModeButton:Size(32)
+	SortModeButton:SetTemplate()
+	SortModeButton.tex = SortModeButton:CreateTexture(nil, "OVERLAY")
+	SortModeButton.tex:Size(24)
+	SortModeButton.tex:Point("CENTER", SortModeButton, "CENTER", 0, 0)
+	SortModeButton.tex:SetTexture(W.Media.Textures.arrowDown)
+	SortModeButton.tex:SetTexCoord(0, 1, 0, 1)
+	SortModeButton.tex:SetVertexColor(1, 1, 1)
 
-	addSetActive(sortModeButton)
+	addSetActive(SortModeButton)
 
-	sortModeButton:SetScript("OnEnter", function(btn)
-		sortModeButton:SetActive(true)
+	SortModeButton:SetScript("OnEnter", function(btn)
+		SortModeButton:SetActive(true)
 
 		_G.GameTooltip:SetOwner(btn, "ANCHOR_RIGHT", 4, -34)
 		_G.GameTooltip:AddLine(btn.descending and L["Descending"] or L["Ascending"], 1, 1, 1)
 		_G.GameTooltip:Show()
 	end)
 
-	sortModeButton:SetScript("OnLeave", function()
-		sortModeButton:SetActive(false)
+	SortModeButton:SetScript("OnLeave", function()
+		SortModeButton:SetActive(false)
 		_G.GameTooltip:Hide()
 	end)
 
-	sortModeButton:SetScript("OnMouseDown", function(btn, button)
+	SortModeButton:SetScript("OnMouseDown", function(btn, button)
 		if button == "LeftButton" then
 			local dfDB = self:GetPlayerDB("dungeonFilter")
 
@@ -1259,29 +1277,29 @@ function LL:InitializeRightPanel()
 		end
 	end)
 
-	sortPanel.sortModeButton = sortModeButton
+	SortPanel.SortModeButton = SortModeButton
 
-	local sortByButton = CreateFrame("Frame", nil, sortPanel)
-	sortByButton:Point("LEFT", sortPanel, "LEFT", 0, 0)
-	sortByButton:Point("RIGHT", sortModeButton, "LEFT", -6, 0)
-	sortByButton:Height(32)
-	sortByButton:SetTemplate()
+	local SortByButton = CreateFrame("Frame", nil, SortPanel)
+	SortByButton:Point("LEFT", SortPanel, "LEFT", 0, 0)
+	SortByButton:Point("RIGHT", SortModeButton, "LEFT", -6, 0)
+	SortByButton:Height(32)
+	SortByButton:SetTemplate()
 
-	addSetActive(sortByButton)
+	addSetActive(SortByButton)
 
-	sortByButton.text = sortByButton:CreateFontString(nil, "OVERLAY")
-	sortByButton.text:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-	sortByButton.text:Point("CENTER", sortByButton, "CENTER", 0, 0)
+	SortByButton.text = SortByButton:CreateFontString(nil, "OVERLAY")
+	SortByButton.text:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+	SortByButton.text:Point("CENTER", SortByButton, "CENTER", 0, 0)
 
-	sortByButton.title = sortByButton:CreateFontString(nil, "OVERLAY")
-	sortByButton.title:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-	sortByButton.title:Point("CENTER", sortByButton, "TOP", 0, 0)
-	sortByButton.title:SetText(F.GetWindStyleText(L["Sort by"]))
-	sortByButton.title:Hide()
+	SortByButton.title = SortByButton:CreateFontString(nil, "OVERLAY")
+	SortByButton.title:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+	SortByButton.title:Point("CENTER", SortByButton, "TOP", 0, 0)
+	SortByButton.title:SetText(F.GetWindStyleText(L["Sort by"]))
+	SortByButton.title:Hide()
 
-	sortByButton:SetScript("OnEnter", function(btn)
-		sortByButton:SetActive(true)
-		sortByButton.title:Show()
+	SortByButton:SetScript("OnEnter", function(btn)
+		SortByButton:SetActive(true)
+		SortByButton.title:Show()
 
 		local tooltip = btn.sortBy and sortMode[btn.sortBy] and sortMode[btn.sortBy].tooltip
 		_G.GameTooltip:SetOwner(btn, "ANCHOR_LEFT", -4, -34)
@@ -1289,13 +1307,13 @@ function LL:InitializeRightPanel()
 		_G.GameTooltip:Show()
 	end)
 
-	sortByButton:SetScript("OnLeave", function()
-		sortByButton:SetActive(false)
-		sortByButton.title:Hide()
+	SortByButton:SetScript("OnLeave", function()
+		SortByButton:SetActive(false)
+		SortByButton.title:Hide()
 		_G.GameTooltip:Hide()
 	end)
 
-	sortByButton:SetScript("OnMouseDown", function(btn, button)
+	SortByButton:SetScript("OnMouseDown", function(btn, button)
 		if button == "LeftButton" then
 			local dfDB = self:GetPlayerDB("dungeonFilter")
 
@@ -1311,7 +1329,7 @@ function LL:InitializeRightPanel()
 				btn.sortBy = currentModeID and availableSortMode[currentModeID + 1] or availableSortMode[1]
 			end
 
-			sortByButton.text:SetText(sortMode[btn.sortBy].text)
+			SortByButton.text:SetText(sortMode[btn.sortBy].text)
 			LL:RefreshSearch()
 			dfDB.sortBy = btn.sortBy
 
@@ -1321,45 +1339,45 @@ function LL:InitializeRightPanel()
 			_G.GameTooltip:AddLine(tooltip or "", 1, 1, 1)
 			_G.GameTooltip:Show()
 
-			sortByButton.UpdatePosition()
+			SortByButton.UpdatePosition()
 		end
 	end)
 
-	sortByButton.UpdatePosition = function()
-		if sortByButton.sortBy == "DEFAULT" then
-			sortModeButton:Hide()
-			sortByButton:ClearAllPoints()
-			sortByButton:Point("LEFT", sortPanel, "LEFT", 0, 0)
-			sortByButton:Point("RIGHT", sortPanel, "RIGHT", 0, 0)
+	SortByButton.UpdatePosition = function()
+		if SortByButton.sortBy == "DEFAULT" then
+			SortModeButton:Hide()
+			SortByButton:ClearAllPoints()
+			SortByButton:Point("LEFT", SortPanel, "LEFT", 0, 0)
+			SortByButton:Point("RIGHT", SortPanel, "RIGHT", 0, 0)
 		else
-			sortModeButton:Show()
-			sortByButton:ClearAllPoints()
-			sortByButton:Point("LEFT", sortPanel, "LEFT", 0, 0)
-			sortByButton:Point("RIGHT", sortModeButton, "LEFT", -6, 0)
+			SortModeButton:Show()
+			SortByButton:ClearAllPoints()
+			SortByButton:Point("LEFT", SortPanel, "LEFT", 0, 0)
+			SortByButton:Point("RIGHT", SortModeButton, "LEFT", -6, 0)
 		end
 	end
 
-	sortPanel.sortByButton = sortByButton
-	frame.sortPanel = sortPanel
+	SortPanel.SortByButton = SortByButton
+	Panel.SortPanel = SortPanel
 
 	-- Quick Access Panel
-	local quickAccessPanel = CreateFrame("Frame", nil, frame)
-	quickAccessPanel:Point("TOPLEFT", frame.affixes, "BOTTOMLEFT", 0, -10)
+	local QuickAccessPanel = CreateFrame("Frame", nil, Panel)
+	QuickAccessPanel:Point("TOPLEFT", Panel.Affixes, "BOTTOMLEFT", 0, -10)
 	-- In Timerunning mode, anchor to frame bottom instead of vaultStatus
 	if PlayerIsTimerunning() then
-		quickAccessPanel:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -PANEL_PADDING, PANEL_PADDING)
+		QuickAccessPanel:Point("BOTTOMRIGHT", Panel, "BOTTOMRIGHT", -PANEL_PADDING, PANEL_PADDING)
 	else
-		quickAccessPanel:Point("BOTTOMRIGHT", frame.vaultStatus, "TOPRIGHT", 0, 10)
+		QuickAccessPanel:Point("BOTTOMRIGHT", Panel.VaultStatus, "TOPRIGHT", 0, 10)
 	end
 
 	-- Quick Access Title
-	local quickAccessTitle = quickAccessPanel:CreateFontString(nil, "OVERLAY")
-	F.SetFont(quickAccessTitle, nil, 16 + self.db.rightPanel.adjustFontSize)
-	quickAccessTitle:SetJustifyH("CENTER")
-	quickAccessTitle:SetJustifyV("MIDDLE")
-	quickAccessTitle:Point("TOPLEFT", quickAccessPanel, "TOPLEFT", 0, 0)
-	quickAccessTitle:Point("BOTTOMRIGHT", quickAccessPanel, "TOPRIGHT", 0, -60)
-	quickAccessTitle:SetText(F.GetWindStyleText(L["Quick Access"]))
+	local QuickAccessTitle = QuickAccessPanel:CreateFontString(nil, "OVERLAY")
+	F.SetFont(QuickAccessTitle, nil, 16 + self.db.rightPanel.adjustFontSize)
+	QuickAccessTitle:SetJustifyH("CENTER")
+	QuickAccessTitle:SetJustifyV("MIDDLE")
+	QuickAccessTitle:Point("TOPLEFT", QuickAccessPanel, "TOPLEFT", 0, 0)
+	QuickAccessTitle:Point("BOTTOMRIGHT", QuickAccessPanel, "TOPRIGHT", 0, -60)
+	QuickAccessTitle:SetText(F.GetWindStyleText(L["Quick Access"]))
 
 	local quickAccessButtons = {}
 
@@ -1379,10 +1397,10 @@ function LL:InitializeRightPanel()
 	local prevButton
 	for _, data in ipairs(buttonData) do
 		if not playerIsTimerunning or not data.disableIfTimerunning then
-			local button = CreateFrame("Frame", nil, quickAccessPanel)
+			local button = CreateFrame("Frame", nil, QuickAccessPanel)
 			if not prevButton then
-				button:Point("TOPLEFT", quickAccessTitle, "BOTTOMLEFT")
-				button:Point("BOTTOMRIGHT", quickAccessTitle, "BOTTOMRIGHT", 0, -64)
+				button:Point("TOPLEFT", QuickAccessTitle, "BOTTOMLEFT")
+				button:Point("BOTTOMRIGHT", QuickAccessTitle, "BOTTOMRIGHT", 0, -64)
 			else
 				button:Point("TOPLEFT", prevButton, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
 				button:Point("BOTTOMRIGHT", prevButton, "BOTTOMRIGHT", 0, -32 - FILTER_BUTTON_SPACING)
@@ -1459,29 +1477,29 @@ function LL:InitializeRightPanel()
 		end
 	end
 
-	quickAccessPanel.title = quickAccessTitle
-	quickAccessPanel.buttons = quickAccessButtons
-	frame.quickAccessPanel = quickAccessPanel
+	QuickAccessPanel.Title = QuickAccessTitle
+	QuickAccessPanel.buttons = quickAccessButtons
+	Panel.QuickAccessPanel = QuickAccessPanel
 
-	self.rightPanel = frame
+	self.RightPanel = Panel
 end
 
 function LL:UpdateRightPanel()
 	if not self.db.rightPanel.enable then
-		if self.rightPanel then
-			self.rightPanel:Hide()
+		if self.RightPanel then
+			self.RightPanel:Hide()
 		end
 		return
 	end
 
 	if not _G.PVEFrame:IsVisible() then
-		if self.rightPanel then
-			self.rightPanel:Hide()
+		if self.RightPanel then
+			self.RightPanel:Hide()
 		end
 		return
 	end
 
-	if not self.rightPanel then
+	if not self.RightPanel then
 		self:InitializeRightPanel()
 	end
 
@@ -1490,47 +1508,47 @@ function LL:UpdateRightPanel()
 		and _G.LFGListFrame.SearchPanel:IsShown()
 		and _G.LFGListFrame.SearchPanel.categoryID == 2
 
-	self.rightPanel.filters:SetShown(isDungeonMode)
-	self.rightPanel.sortPanel:SetShown(isDungeonMode)
-	self.rightPanel.quickAccessPanel:SetShown(not isDungeonMode)
-	self.rightPanel:Width(isDungeonMode and self.rightPanel.FilterPanelWidth or QUICK_ACCESS_PANEL_WIDTH)
+	self.RightPanel.Filters:SetShown(isDungeonMode)
+	self.RightPanel.SortPanel:SetShown(isDungeonMode)
+	self.RightPanel.QuickAccessPanel:SetShown(not isDungeonMode)
+	self.RightPanel:Width(isDungeonMode and self.RightPanel.filterPanelWidth or QUICK_ACCESS_PANEL_WIDTH)
 
 	local dfDB = self:GetPlayerDB("dungeonFilter")
-	for mapID, btn in pairs(self.rightPanel.filters.buttons) do
+	for mapID, btn in pairs(self.RightPanel.Filters.buttons) do
 		btn:SetActive(dfDB[mapID])
 	end
 
-	self.rightPanel.filters.leaderScore:SetActive(dfDB.leaderScoreEnable)
-	self.rightPanel.filters.leaderScore.editBox:SetText(tostring(dfDB.leaderScore or 0))
-	self.rightPanel.filters.leaderDungeonScore:SetActive(dfDB.leaderDungeonScoreEnable)
-	self.rightPanel.filters.leaderDungeonScore.editBox:SetText(tostring(dfDB.leaderDungeonScore or 0))
-	self.rightPanel.filters.roleAvailable:SetActive(dfDB.roleAvailableEnable)
-	self.rightPanel.filters.needTank:SetActive(dfDB.needTankEnable)
-	self.rightPanel.filters.needHealer:SetActive(dfDB.needHealerEnable)
+	self.RightPanel.Filters.LeaderScoreButton:SetActive(dfDB.leaderScoreEnable)
+	self.RightPanel.Filters.LeaderScoreButton.editBox:SetText(tostring(dfDB.leaderScore or 0))
+	self.RightPanel.Filters.LeaderDungeonScoreButton:SetActive(dfDB.leaderDungeonScoreEnable)
+	self.RightPanel.Filters.LeaderDungeonScoreButton.editBox:SetText(tostring(dfDB.leaderDungeonScore or 0))
+	self.RightPanel.Filters.RoleAvailableButton:SetActive(dfDB.roleAvailableEnable)
+	self.RightPanel.Filters.NeedTankButton:SetActive(dfDB.needTankEnable)
+	self.RightPanel.Filters.NeedHealerButton:SetActive(dfDB.needHealerEnable)
 
-	self.rightPanel.vaultStatus.update()
-	self.rightPanel.vaultStatus:SetActive(false)
+	self.RightPanel.VaultStatus.update()
+	self.RightPanel.VaultStatus:SetActive(false)
 
 	if dfDB.sortDescending == nil then
 		dfDB.sortDescending = true
 	end
 
-	self.rightPanel.sortPanel.sortModeButton.descending = not not dfDB.sortDescending
-	self.rightPanel.sortPanel.sortModeButton.tex:SetRotation(dfDB.sortDescending and 0 or 3.14)
-	self.rightPanel.sortPanel.sortModeButton:SetActive(false)
+	self.RightPanel.SortPanel.SortModeButton.descending = not not dfDB.sortDescending
+	self.RightPanel.SortPanel.SortModeButton.tex:SetRotation(dfDB.sortDescending and 0 or 3.14)
+	self.RightPanel.SortPanel.SortModeButton:SetActive(false)
 
 	if dfDB.sortBy then
-		self.rightPanel.sortPanel.sortByButton.sortBy = dfDB.sortBy
-		self.rightPanel.sortPanel.sortByButton.text:SetText(sortMode[dfDB.sortBy].text)
+		self.RightPanel.SortPanel.SortByButton.sortBy = dfDB.sortBy
+		self.RightPanel.SortPanel.SortByButton.text:SetText(sortMode[dfDB.sortBy].text)
 	else
-		self.rightPanel.sortPanel.sortByButton.sortBy = availableSortMode[1]
-		self.rightPanel.sortPanel.sortByButton.text:SetText(sortMode[availableSortMode[1]].text)
+		self.RightPanel.SortPanel.SortByButton.sortBy = availableSortMode[1]
+		self.RightPanel.SortPanel.SortByButton.text:SetText(sortMode[availableSortMode[1]].text)
 	end
 
-	self.rightPanel.sortPanel.sortByButton:SetActive(false)
-	self.rightPanel.sortPanel.sortByButton.UpdatePosition()
+	self.RightPanel.SortPanel.SortByButton:SetActive(false)
+	self.RightPanel.SortPanel.SortByButton.UpdatePosition()
 
-	self.rightPanel:Show()
+	self.RightPanel:Show()
 	self:UpdateAdvancedFilters()
 end
 
@@ -1710,7 +1728,7 @@ end
 
 function LL:Initialize()
 	if C_AddOns_IsAddOnLoaded("PremadeGroupsFilter") then
-		self.StopRunning = "Premade Groups Filter"
+		self.StopRunning = L["Premade Groups Filter"]
 		return
 	end
 
@@ -1733,6 +1751,7 @@ function LL:Initialize()
 		self:RequestKeystoneData()
 		self:UpdateRightPanel()
 	end)
+
 	self:SecureHook("LFGListFrame_SetActivePanel", "UpdateRightPanel")
 	self:SecureHook("GroupFinderFrame_ShowGroupFrame", "UpdateRightPanel")
 	self:SecureHook("PVEFrame_ShowFrame", "UpdateRightPanel")

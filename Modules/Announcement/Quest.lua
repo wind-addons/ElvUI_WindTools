@@ -2,10 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local A = W:GetModule("Announcement") ---@class Announcement
 local QP = W:GetModule("QuestProgress") ---@class QuestProgress
 
-local tostring = tostring
 local UnitLevel = UnitLevel
-
----@cast QP QuestProgress
 
 ---@class QuestAnnounceEventType : number
 

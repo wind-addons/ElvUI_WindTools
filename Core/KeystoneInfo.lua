@@ -2,7 +2,7 @@ local W ---@class WindTools
 local F, E ---@type Functions, ElvUI
 W, F, E = unpack((select(2, ...)))
 
-local KI = W:NewModule("KeystoneInfo", "AceEvent-3.0")
+local KI = W:NewModule("KeystoneInfo", "AceEvent-3.0") ---@class KeystoneInfo : AceModule, AceEvent-3.0
 local OR = E.Libs.OpenRaid
 local KS = E.Libs.Keystone
 
@@ -16,6 +16,12 @@ local UnitName = UnitName
 
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 
+---@class KeystoneInfoData
+---@field level number
+---@field challengeMapID number
+---@field rating number
+
+---@type table<string, KeystoneInfoData>
 KI.LibKeystoneInfo = {}
 
 function KI.RequestData()
@@ -41,6 +47,8 @@ KS.Register(KI, function(keyLevel, keyChallengeMapID, playerRating, sender)
 	}
 end)
 
+---@param unit UnitToken
+---@return KeystoneInfoData?
 function KI:UnitData(unit)
 	if not unit or not UnitIsPlayer(unit) then
 		return
@@ -49,7 +57,7 @@ function KI:UnitData(unit)
 	local data = OR.GetKeystoneInfo(unit)
 
 	-- If Details! library no returns data, try to get it from Bigwigs library
-	if self.LibKeystoneInfo and (not data or not data.challengeMapID or data.challengeMapID == 0) then
+	if self.LibKeystoneInfo and (not data or not data.level or data.level == 0) then
 		local name = UnitName(unit)
 		local sender = name and Ambiguate(name, "none")
 		data = sender and self.LibKeystoneInfo[sender]
@@ -63,3 +71,4 @@ KI:RegisterEvent("CHALLENGE_MODE_COMPLETED", "RequestData")
 KI:RegisterEvent("CHALLENGE_MODE_START", "RequestData")
 KI:RegisterEvent("CHALLENGE_MODE_RESET", "RequestData")
 F.TaskManager:AfterLogin(KI.RequestData)
+F.TaskManager:AfterLogin(KS.Request, "PARTY") -- For own keystone info

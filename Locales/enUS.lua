@@ -18,6 +18,7 @@ L["%player% puts %spell%"] = true
 L["%player% taunted %target% successfully!"] = true
 L["%player% taunted all enemies!"] = true
 L["%player% used %spell%"] = true
+L["%player% used %spell%, please assist!"] = true
 L["%player%'s %pet_role% %pet% failed on taunting %target%!"] = true
 L["%player%'s %pet_role% %pet% taunted %target% successfully!"] = true
 L["%players% (%bnet%) has come online."] = true

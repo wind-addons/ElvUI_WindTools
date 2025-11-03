@@ -18,6 +18,7 @@ L["%player% puts %spell%"] = "%player%님이 %spell% 꺼냄"
 L["%player% taunted %target% successfully!"] = "%player% -> %target% 도발 성공!"
 L["%player% taunted all enemies!"] = "%player% -> %target% 전체 도발 !"
 L["%player% used %spell%"] = "%player%님이 %spell% 사용합니다."
+L["%player% used %spell%, please assist!"] = true
 L["%player%'s %pet_role% %pet% failed on taunting %target%!"] = "%player%의 %pet_role% %pet% -> %target% 도발 실패!"
 L["%player%'s %pet_role% %pet% taunted %target% successfully!"] = "%player%의 %pet_role% %pet% -> %target% 도발 성공!"
 L["%players% (%bnet%) has come online."] = "%players% (%bnet%) - 게임에 접속했습니다."

@@ -18,6 +18,7 @@ L["%player% puts %spell%"] = "%player% place %spell% !"
 L["%player% taunted %target% successfully!"] = "%player% a réussi à provoquer %target% !"
 L["%player% taunted all enemies!"] = "%player% a provoquer tous les ennemis !"
 L["%player% used %spell%"] = "%player% a utilisé le sort %spell%"
+L["%player% used %spell%, please assist!"] = true
 L["%player%'s %pet_role% %pet% failed on taunting %target%!"] = "%player%'s %pet_role% %pet% a échoué à provoquer %target% !"
 L["%player%'s %pet_role% %pet% taunted %target% successfully!"] = "%player%'s %pet_role% %pet% a réussi à provoquer %target% !"
 L["%players% (%bnet%) has come online."] = "%players% (%bnet%) est en ligne."

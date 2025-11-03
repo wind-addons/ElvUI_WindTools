@@ -18,6 +18,7 @@ L["%player% puts %spell%"] = "%player% ставит %spell%"
 L["%player% taunted %target% successfully!"] = "%player% спровоцировал %target% успешно!"
 L["%player% taunted all enemies!"] = "%player% спровоцировал всех врагов!"
 L["%player% used %spell%"] = "%player% использует %spell%"
+L["%player% used %spell%, please assist!"] = true
 L["%player%'s %pet_role% %pet% failed on taunting %target%!"] = "%player%'s %pet_role% %pet% не удалось спровоцировать %target%!"
 L["%player%'s %pet_role% %pet% taunted %target% successfully!"] = "%player%'s %pet_role% %pet% спровоцировал %target% успешно!"
 L["%players% (%bnet%) has come online."] = "%players% (%bnet%) в сети."

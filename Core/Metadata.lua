@@ -63,11 +63,11 @@ W.TimerunningMythicPlusMapData = {
 	[210] = { abbr = L["[ABBR] Court of Stars"], activityID = 120, timers = { 1080, 1440, 1800 } },
 
 	-- Phase 2: Rise of the Nightfallen
-	-- [227] = { abbr = L["[ABBR] Return to Karazhan: Lower"], activityID = 127, timers = { 1512, 2016, 2520 } },
-	-- [234] = { abbr = L["[ABBR] Return to Karazhan: Upper"], activityID = 128, timers = { 1260, 1680, 2100 } },
+	[227] = { abbr = L["[ABBR] Return to Karazhan: Lower"], activityID = 127, timers = { 1512, 2016, 2520 } },
+	[234] = { abbr = L["[ABBR] Return to Karazhan: Upper"], activityID = 128, timers = { 1260, 1680, 2100 } },
 
 	-- Phase 3: Legionfall
-	-- [233] = { abbr = L["[ABBR] Cathedral of Eternal Night"], activityID = 129, timers = { 1260, 1680, 2100 } },
+	[233] = { abbr = L["[ABBR] Cathedral of Eternal Night"], activityID = 129, timers = { 1260, 1680, 2100 } },
 
 	-- Phase 4: Argus Eternal
 	-- [239] = { abbr = L["[ABBR] Seat of the Triumvirate"], activityID = 133, timers = { 1260, 1680, 2100 } },

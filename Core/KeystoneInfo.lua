@@ -71,4 +71,4 @@ KI:RegisterEvent("CHALLENGE_MODE_COMPLETED", "RequestData")
 KI:RegisterEvent("CHALLENGE_MODE_START", "RequestData")
 KI:RegisterEvent("CHALLENGE_MODE_RESET", "RequestData")
 F.TaskManager:AfterLogin(KI.RequestData)
-F.TaskManager:AfterLogin(KS.Request, "PARTY") -- For own keystone info
+F.TaskManager:AfterLogin(KS.Request, "GUILD") -- For own keystone info

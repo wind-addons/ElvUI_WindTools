@@ -27,5 +27,4 @@
 	<Script file='GameBar.lua'/>
 	<Script file='MoveFrames.lua'/>
 	<Script file='SpellActivationAlert.lua'/>
-	<Script file="AchievementTracker.lua" />
 </Ui>

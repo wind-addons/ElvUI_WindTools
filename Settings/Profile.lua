@@ -1235,6 +1235,23 @@ P.quest = {
 		forceShowUI = true,
 		chatMessage = true,
 	},
+	achievementTracker = {
+		enable = true,
+		show = true,
+		width = 500,
+		height = 500,
+		threshold = 75,
+		tooltip = true,
+		scan = {
+			batchSize = 20,
+			batchInterval = 0.01,
+			automation = {
+				enable = true,
+				onShow = true,
+				onLogin = false,
+			},
+		},
+	},
 }
 
 P.tooltips = {
@@ -1399,22 +1416,5 @@ P.misc = {
 		enable = true,
 		width = 81,
 		height = 50,
-	},
-	achievementTracker = {
-		enable = true,
-		show = true,
-		width = 500,
-		height = 500,
-		threshold = 75,
-		tooltip = true,
-		scan = {
-			batchSize = 20,
-			batchInterval = 0.01,
-			automation = {
-				enable = true,
-				onShow = true,
-				onLogin = false,
-			},
-		},
 	},
 }

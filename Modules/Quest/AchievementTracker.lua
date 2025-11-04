@@ -1163,11 +1163,11 @@ function AT:UpdatePosition()
 end
 
 function AT:Initialize()
-	if not E.db or not E.db.WT or not E.db.WT.misc.achievementTracker then
+	if not E.db or not E.db.WT or not E.db.WT.quest.achievementTracker then
 		return
 	end
 
-	self.db = E.db.WT.misc.achievementTracker
+	self.db = E.db.WT.quest.achievementTracker
 
 	if not self.db.enable then
 		self:Disable()

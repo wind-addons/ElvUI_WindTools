@@ -114,12 +114,8 @@ local function fetchAllQuestProgressData()
 			local skip = questInfo.isHeader or questInfo.isBounty or questInfo.isHidden
 			local tagInfo = C_QuestLog_GetQuestTagInfo(questInfo.questID)
 
-			if tagInfo and ignoreTagIDs[tagInfo.tagID] then
+			if tagInfo and (ignoreTagIDs[tagInfo.tagID] and not tagInfo.worldQuestType) then
 				skip = true
-			end
-
-			if questInfo.isOnMap and tagInfo and tagInfo.worldQuestType then
-				skip = false
 			end
 
 			if not skip then

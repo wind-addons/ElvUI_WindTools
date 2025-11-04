@@ -2309,7 +2309,7 @@ options.switchButtons = {
 options.achievementScreenshot = {
 	order = 5,
 	type = "group",
-	name = L["Auto Screenshot"],
+	name = L["Achievement Screenshot"],
 	get = function(info)
 		return E.db.WT.quest.achievementScreenshot[info[#info]]
 	end,

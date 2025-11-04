@@ -32,8 +32,8 @@ W.options = {
 	},
 	quest = {
 		order = 104,
-		name = L["Quest"],
-		desc = L["Make adventure life easier."],
+		name = L["Quest & Achieve"],
+		desc = L["Some enhancements on quest and achievement systems."],
 		icon = W.Media.Icons.quest,
 		args = {},
 	},

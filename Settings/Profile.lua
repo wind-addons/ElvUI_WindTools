@@ -1228,6 +1228,13 @@ P.quest = {
 		pauseModifier = "SHIFT",
 		customIgnoreNPCs = {},
 	},
+	achievementScreenshot = {
+		enable = false,
+		hideCombatAlert = true,
+		ignoreEarnedBefore = false,
+		forceShowUI = true,
+		chatMessage = true,
+	},
 }
 
 P.tooltips = {

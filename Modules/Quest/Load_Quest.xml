@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file='AchievementScreenshot.lua'/>
 	<Script file='ObjectiveTracker.lua'/>
 	<Script file='Progress.lua'/>
 	<Script file='SwitchButtons.lua'/>

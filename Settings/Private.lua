@@ -144,7 +144,6 @@ V.maps = {
 }
 
 V.misc = {
-	autoScreenshot = false,
 	moveSpeed = false,
 	noKanjiMath = false,
 	pauseToSlash = true,

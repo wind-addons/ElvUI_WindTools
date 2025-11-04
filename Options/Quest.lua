@@ -2,10 +2,11 @@ local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functio
 local C = W.Utilities.Color
 local options = W.options.quest.args
 local LSM = E.Libs.LSM
-local TI = W:GetModule("TurnIn")
-local SB = W:GetModule("SwitchButtons")
+local AS = W:GetModule("AchievementScreenshot")
 local OT = W:GetModule("ObjectiveTracker")
 local QP = W:GetModule("QuestProgress")
+local SB = W:GetModule("SwitchButtons")
+local TI = W:GetModule("TurnIn")
 
 local format = format
 local pairs = pairs
@@ -2300,6 +2301,65 @@ options.switchButtons = {
 					width = 1.667,
 				},
 			},
+		},
+	},
+}
+
+options.achievementScreenshot = {
+	order = 5,
+	type = "group",
+	name = L["Auto Screenshot"],
+	get = function(info)
+		return E.db.WT.quest.achievementScreenshot[info[#info]]
+	end,
+	set = function(info, value)
+		E.db.WT.quest.achievementScreenshot[info[#info]] = value
+		AS:ProfileUpdate()
+	end,
+	args = {
+		desc = {
+			order = 1,
+			type = "group",
+			inline = true,
+			name = L["Description"],
+			args = {
+				feature = {
+					order = 1,
+					type = "description",
+					name = L["Screenshot after you earned an achievement automatically."],
+					fontSize = "medium",
+				},
+			},
+		},
+		enable = {
+			order = 2,
+			type = "toggle",
+			name = L["Enable"],
+			width = "full",
+		},
+		hideCombatAlert = {
+			order = 3,
+			type = "toggle",
+			name = L["Hide Combat Alert"],
+			desc = L["Hide combat alert frame when taking screenshot."],
+		},
+		ignoreEarnedBefore = {
+			order = 4,
+			type = "toggle",
+			name = L["Ignore Earned Before"],
+			desc = L["Ignore achievements already earned by other characters on this account."],
+		},
+		forceShowUI = {
+			order = 5,
+			type = "toggle",
+			name = L["Force Show UI"],
+			desc = L["Force show UI which may be hidden by other addons before taking screenshot."],
+		},
+		chatMessage = {
+			order = 6,
+			type = "toggle",
+			name = L["Chat Message"],
+			desc = L["Show a chat message when a screenshot is taken."],
 		},
 	},
 }

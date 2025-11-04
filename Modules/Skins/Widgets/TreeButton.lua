@@ -138,7 +138,11 @@ function WS:HandleTreeGroup(widget)
 					end
 
 					if frame.windWidgetText then
-						local color = db.text.normalClassColor and E.myClassColor or db.text.normalColor
+						local textDB = db and db.text
+						if not textDB then
+							return
+						end
+						local color = textDB.normalClassColor and E.myClassColor or textDB.normalColor
 						frame.windWidgetText:SetTextColor(color.r, color.g, color.b)
 					end
 				end

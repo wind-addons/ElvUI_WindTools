@@ -1,5 +1,7 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local AK = W:NewModule("AlreadyKnown", "AceEvent-3.0", "AceHook-3.0")
+local AK = W:NewModule("AlreadyKnown", "AceEvent-3.0", "AceHook-3.0") ---@class AlreadyKnown : AceModule, AceEvent-3.0, AceHook-3.0
+
+-- Some check logic references code from Legion Remix Helper.
 
 local _G = _G
 local ceil = ceil
@@ -18,15 +20,24 @@ local GetGuildBankItemLink = GetGuildBankItemLink
 local GetMerchantItemLink = GetMerchantItemLink
 local GetMerchantNumItems = GetMerchantNumItems
 local GetNumBuybackItems = GetNumBuybackItems
+local PlayerHasToy = PlayerHasToy
 local SetItemButtonDesaturated = SetItemButtonDesaturated
 local SetItemButtonTextureVertexColor = SetItemButtonTextureVertexColor
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-local C_Item_GetItemInfo = C_Item.GetItemInfo
+local C_Item_GetItemInfoInstant = C_Item.GetItemInfoInstant
+local C_Item_GetItemLearnTransmogSet = C_Item.GetItemLearnTransmogSet
 local C_MerchantFrame_GetItemInfo = C_MerchantFrame.GetItemInfo
+local C_MountJournal_GetMountFromItem = C_MountJournal.GetMountFromItem
+local C_MountJournal_GetMountInfoByID = C_MountJournal.GetMountInfoByID
 local C_PetJournal_GetNumCollectedInfo = C_PetJournal.GetNumCollectedInfo
+local C_PetJournal_GetPetInfoByItemID = C_PetJournal.GetPetInfoByItemID
 local C_TooltipInfo_GetGuildBankItem = C_TooltipInfo.GetGuildBankItem
 local C_TooltipInfo_GetHyperlink = C_TooltipInfo.GetHyperlink
+local C_ToyBox_GetToyInfo = C_ToyBox.GetToyInfo
+local C_TransmogCollection_PlayerHasTransmogByItemInfo = C_TransmogCollection.PlayerHasTransmogByItemInfo
+local C_TransmogSets_GetSetInfo = C_TransmogSets.GetSetInfo
+local C_Transmog_GetAllSetAppearancesByID = C_Transmog.GetAllSetAppearancesByID
 
 local BUYBACK_ITEMS_PER_PAGE = BUYBACK_ITEMS_PER_PAGE
 local COLLECTED = COLLECTED
@@ -44,16 +55,49 @@ local knowables = {
 local knowns = {}
 
 local function isPetCollected(speciesID)
-	if not speciesID or speciesID == 0 then
-		return
-	end
-	local numOwned = C_PetJournal_GetNumCollectedInfo(speciesID)
-	if numOwned > 0 then
-		return true
-	end
+	return speciesID and speciesID ~= 0 and C_PetJournal_GetNumCollectedInfo(speciesID) > 0
 end
 
-local function IsAlreadyKnown(link, index)
+local function isTransmogSetCollected(itemID)
+	local setID = C_Item_GetItemLearnTransmogSet(itemID)
+	if not setID then
+		return false
+	end
+
+	local info = C_TransmogSets_GetSetInfo(setID)
+	if not info then
+		return false
+	end
+
+	if info.collected then
+		return true
+	end
+
+	local items = C_Transmog_GetAllSetAppearancesByID(setID)
+	if not items then
+		return false
+	end
+
+	return not ContainsIf(items, function(item)
+		return not C_TransmogCollection_PlayerHasTransmogByItemInfo(item.itemID)
+	end)
+end
+
+local function isMountCollected(itemID)
+	local mountID = C_MountJournal_GetMountFromItem(itemID)
+	return mountID and mountID ~= 0 and select(11, C_MountJournal_GetMountInfoByID(mountID))
+end
+
+local function isToyCollected(itemID)
+	return C_ToyBox_GetToyInfo(itemID) and PlayerHasToy(itemID)
+end
+
+local function isPetItemCollected(itemID)
+	local speciesID = select(13, C_PetJournal_GetPetInfoByItemID(itemID))
+	return speciesID and isPetCollected(speciesID)
+end
+
+local function isAlreadyKnown(link, index)
 	if not link then
 		return
 	end
@@ -64,12 +108,8 @@ local function IsAlreadyKnown(link, index)
 	if linkType == "battlepet" then
 		return isPetCollected(linkID)
 	elseif linkType == "item" then
-		local name, _, _, _, _, _, _, _, _, _, _, itemClassID = C_Item_GetItemInfo(link)
-		if not name then
-			return
-		end
-
-		if itemClassID == Enum_ItemClass_Battlepet and index then
+		local classID = select(6, C_Item_GetItemInfoInstant(link))
+		if classID == Enum_ItemClass_Battlepet and index then
 			local tab = GetCurrentGuildBankTab() --[[@as number]]
 			local data = C_TooltipInfo_GetGuildBankItem(tab, index)
 			if data then
@@ -79,17 +119,28 @@ local function IsAlreadyKnown(link, index)
 			if knowns[link] then
 				return true
 			end
-			if not knowables[itemClassID] then
+
+			if
+				isMountCollected(linkID)
+				or isToyCollected(linkID)
+				or isPetItemCollected(linkID)
+				or isTransmogSetCollected(linkID)
+			then
+				knowns[link] = true
+				return true
+			end
+
+			if not knowables[classID] then
 				return
 			end
 
+			-- Final check via tooltip parsing
 			local data = C_TooltipInfo_GetHyperlink(link, nil, nil, true)
 			if data then
-				for i = 1, #data.lines do
-					local lineData = data.lines[i]
-					local text = lineData and lineData.leftText
+				for _, line in ipairs(data.lines) do
+					local text = line.leftText
 					if text then
-						if strfind(text, COLLECTED) or text == ITEM_SPELL_KNOWN then
+						if strfind(text, COLLECTED, 1, true) or text == ITEM_SPELL_KNOWN then
 							knowns[link] = true
 							return true
 						end
@@ -98,6 +149,44 @@ local function IsAlreadyKnown(link, index)
 			end
 		end
 	end
+end
+
+local texCache, pendingUpdate = {}, {}
+
+function AK:UpdateMerchantItemButton(button)
+	if not button or pendingUpdate[button] then
+		return
+	end
+
+	pendingUpdate[button] = true
+
+	RunNextFrame(function()
+		if not button:IsShown() then
+			pendingUpdate[button] = nil
+			return
+		end
+
+		local index = button:GetID()
+		local tex = texCache[button]
+		local info = C_MerchantFrame_GetItemInfo(index)
+		local numAvailable, isUsable = info.numAvailable, info.isUsable
+
+		if isUsable and isAlreadyKnown(GetMerchantItemLink(index)) then
+			if self.db.mode == "MONOCHROME" then
+				tex:SetDesaturated(true)
+			else
+				local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
+				if numAvailable == 0 then
+					r, g, b = r * 0.5, g * 0.5, b * 0.5
+				end
+				button:SetItemButtonTextureVertexColor(0.9 * r, 0.9 * g, 0.9 * b, true)
+			end
+		else -- Reset to original state
+			tex:SetDesaturated(false)
+		end
+
+		pendingUpdate[button] = nil
+	end)
 end
 
 function AK:Merchant()
@@ -113,22 +202,11 @@ function AK:Merchant()
 		end
 
 		local itemButton = _G["MerchantItem" .. i .. "ItemButton"]
-		if itemButton and itemButton:IsShown() then
-			local info = C_MerchantFrame_GetItemInfo(index)
-			local numAvailable, isUsable = info.numAvailable, info.isUsable
-			if isUsable and IsAlreadyKnown(GetMerchantItemLink(index)) then
-				if self.db.mode == "MONOCHROME" then
-					_G["MerchantItem" .. i .. "ItemButtonIconTexture"]:SetDesaturated(true)
-				else
-					local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
-					if numAvailable == 0 then
-						r, g, b = r * 0.5, g * 0.5, b * 0.5
-					end
-					SetItemButtonTextureVertexColor(itemButton, 0.9 * r, 0.9 * g, 0.9 * b)
-				end
-			else
-				_G["MerchantItem" .. i .. "ItemButtonIconTexture"]:SetDesaturated(false)
-			end
+		local itemButtonTex = _G["MerchantItem" .. i .. "ItemButtonIconTexture"]
+		if itemButton and itemButtonTex and not self:IsHooked(itemButton, "SetID") then
+			texCache[itemButton] = itemButtonTex
+			self:SecureHook(itemButton, "SetID", "UpdateMerchantItemButton")
+			self:UpdateMerchantItemButton(itemButton)
 		end
 	end
 end
@@ -147,7 +225,7 @@ function AK:Buyback()
 		local button = _G["MerchantItem" .. index .. "ItemButton"]
 		if button and button:IsShown() then
 			local isUsable = select(6, GetBuybackItemInfo(index))
-			if isUsable and IsAlreadyKnown(GetBuybackItemLink(index)) then
+			if isUsable and isAlreadyKnown(GetBuybackItemLink(index)) then
 				if self.db.mode == "MONOCHROME" then
 					_G["MerchantItem" .. index .. "ItemButtonIconTexture"]:SetDesaturated(true)
 				else
@@ -182,7 +260,7 @@ function AK:GuildBank(frame)
 		if button and button:IsShown() then
 			local texture, _, locked = GetGuildBankItemInfo(tab, i)
 			if texture and not locked then
-				if IsAlreadyKnown(GetGuildBankItemLink(tab, i), i) then
+				if isAlreadyKnown(GetGuildBankItemLink(tab, i), i) then
 					if self.db.mode == "MONOCHROME" then
 						SetItemButtonDesaturated(button, true)
 					else
@@ -216,7 +294,7 @@ function AK:AuctionHouse(frame)
 					itemLink = format("|Hitem:%d", itemKey.itemID)
 				end
 
-				if itemLink and IsAlreadyKnown(itemLink) then
+				if itemLink and isAlreadyKnown(itemLink) then
 					if self.db.mode == "MONOCHROME" then
 						button.Icon:SetDesaturated(true)
 					else

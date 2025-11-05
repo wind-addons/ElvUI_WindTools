@@ -325,11 +325,11 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 
 	if status == QUEST_STATUS.ACCEPTED then
 		local db = self.db.progress.accepted
-		plainContext.progress, coloredContext.progress = render(L["Accepted"], db.template, db.color)
+		plainContext.progress, coloredContext.progress = render(L["Quest Accepted"], db.template, db.color)
 		coloredContext.icon = format("|T%s:0|t", W.Media.Icons.accept)
 	elseif status == QUEST_STATUS.COMPLETED then
 		local db = self.db.progress.complete
-		plainContext.progress, coloredContext.progress = render(L["Complete"], db.template, db.color)
+		plainContext.progress, coloredContext.progress = render(L["Quest Complete"], db.template, db.color)
 		coloredContext.icon = format("|T%s:0|t", W.Media.Icons.complete)
 	elseif status == QUEST_STATUS.QUEST_UPDATE or status == QUEST_STATUS.SCENARIO_UPDATE then
 		assert(objectiveData, "Objective data is required for progress update")
@@ -340,7 +340,12 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 		local coloredProgressText = C.StringWithRGB(progressText, progressColor)
 		plainContext.progress = format("%s %s", objectiveText, progressText)
 		coloredContext.progress = format("%s %s", coloredObjectiveText, coloredProgressText)
-		coloredContext.icon = objectiveData.finished and format("|T%s:0|t", W.Media.Icons.complete) or ""
+		if objectiveData.finished then
+			plainContext.progress = plainContext.progress .. format(" (%s)", L["Complete"])
+			coloredContext.icon = format("|T%s:0|t", W.Media.Icons.complete)
+		else
+			coloredContext.icon = ""
+		end
 	end
 
 	-- Send to UIErrorsFrame

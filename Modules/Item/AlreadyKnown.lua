@@ -1,17 +1,19 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local AK = W:NewModule("AlreadyKnown", "AceEvent-3.0", "AceHook-3.0") ---@class AlreadyKnown : AceModule, AceEvent-3.0, AceHook-3.0
 
--- Some check logic references code from Legion Remix Helper.
+-- Some check logic references code from Legion Remix Helper & AlreadyKnown
 
 local _G = _G
 local ceil = ceil
 local format = format
+local ipairs = ipairs
 local mod = mod
 local select = select
 local strfind = strfind
 local strmatch = strmatch
 local tonumber = tonumber
 
+local ContainsIf = ContainsIf
 local GetBuybackItemInfo = GetBuybackItemInfo
 local GetBuybackItemLink = GetBuybackItemLink
 local GetCurrentGuildBankTab = GetCurrentGuildBankTab
@@ -21,12 +23,15 @@ local GetMerchantItemLink = GetMerchantItemLink
 local GetMerchantNumItems = GetMerchantNumItems
 local GetNumBuybackItems = GetNumBuybackItems
 local PlayerHasToy = PlayerHasToy
+local RunNextFrame = RunNextFrame
 local SetItemButtonDesaturated = SetItemButtonDesaturated
 local SetItemButtonTextureVertexColor = SetItemButtonTextureVertexColor
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Item_GetItemInfoInstant = C_Item.GetItemInfoInstant
+local C_Item_GetItemInventoryTypeByID = C_Item.GetItemInventoryTypeByID
 local C_Item_GetItemLearnTransmogSet = C_Item.GetItemLearnTransmogSet
+local C_Item_IsCosmeticItem = C_Item.IsCosmeticItem
 local C_MerchantFrame_GetItemInfo = C_MerchantFrame.GetItemInfo
 local C_MountJournal_GetMountFromItem = C_MountJournal.GetMountFromItem
 local C_MountJournal_GetMountInfoByID = C_MountJournal.GetMountInfoByID
@@ -39,23 +44,44 @@ local C_TransmogCollection_PlayerHasTransmogByItemInfo = C_TransmogCollection.Pl
 local C_TransmogSets_GetSetInfo = C_TransmogSets.GetSetInfo
 local C_Transmog_GetAllSetAppearancesByID = C_Transmog.GetAllSetAppearancesByID
 
+local Enum_ItemClass_Battlepet = Enum.ItemClass.Battlepet
 local BUYBACK_ITEMS_PER_PAGE = BUYBACK_ITEMS_PER_PAGE
 local COLLECTED = COLLECTED
-local Enum_ItemClass_Battlepet = Enum.ItemClass.Battlepet
 local ITEM_SPELL_KNOWN = ITEM_SPELL_KNOWN
+local PET_SEARCH_PATTERN = strmatch(ITEM_PET_KNOWN, "[^%(（]+")
 local MAX_GUILDBANK_SLOTS_PER_TAB = 98
 local NUM_SLOTS_PER_GUILDBANK_GROUP = 14
 
 local knowables = {
 	[Enum.ItemClass.Consumable] = true,
+	[Enum.ItemClass.Armor] = true,
+	[Enum.ItemClass.ItemEnhancement] = true,
 	[Enum.ItemClass.Recipe] = true,
 	[Enum.ItemClass.Miscellaneous] = true,
-	[Enum.ItemClass.ItemEnhancement] = true,
+	[Enum.ItemClass.Battlepet] = true,
 }
+
+local transmogInventoryTypes = {
+	[Enum.InventoryType.IndexBodyType] = true,
+	[Enum.InventoryType.IndexTabardType] = true,
+}
+
 local knowns = {}
 
 local function isPetCollected(speciesID)
-	return speciesID and speciesID ~= 0 and C_PetJournal_GetNumCollectedInfo(speciesID) > 0
+	local num = speciesID and C_PetJournal_GetNumCollectedInfo(speciesID)
+	return num and num > 0
+end
+
+local function isTransmogCollected(itemID, link)
+	if not C_Item_IsCosmeticItem(itemID) then
+		local inventoryType = C_Item_GetItemInventoryTypeByID(itemID)
+		if not transmogInventoryTypes[inventoryType] then
+			return false
+		end
+	end
+
+	return C_TransmogCollection_PlayerHasTransmogByItemInfo(itemID)
 end
 
 local function isTransmogSetCollected(itemID)
@@ -85,7 +111,7 @@ end
 
 local function isMountCollected(itemID)
 	local mountID = C_MountJournal_GetMountFromItem(itemID)
-	return mountID and mountID ~= 0 and select(11, C_MountJournal_GetMountInfoByID(mountID))
+	return mountID and select(11, C_MountJournal_GetMountInfoByID(mountID))
 end
 
 local function isToyCollected(itemID)
@@ -120,27 +146,32 @@ local function isAlreadyKnown(link, index)
 				return true
 			end
 
+			if not knowables[classID] then
+				return
+			end
+
 			if
 				isMountCollected(linkID)
 				or isToyCollected(linkID)
 				or isPetItemCollected(linkID)
+				or isTransmogCollected(linkID)
 				or isTransmogSetCollected(linkID)
 			then
 				knowns[link] = true
 				return true
 			end
 
-			if not knowables[classID] then
-				return
-			end
-
 			-- Final check via tooltip parsing
-			local data = C_TooltipInfo_GetHyperlink(link, nil, nil, true)
+			local data = C_TooltipInfo_GetHyperlink(link)
 			if data then
 				for _, line in ipairs(data.lines) do
 					local text = line.leftText
 					if text then
-						if strfind(text, COLLECTED, 1, true) or strfind(text, ITEM_SPELL_KNOWN, 1, true) then
+						if
+							strfind(text, COLLECTED, 1, true)
+							or strfind(text, ITEM_SPELL_KNOWN, 1, true)
+							or strmatch(text, PET_SEARCH_PATTERN)
+						then
 							knowns[link] = true
 							return true
 						end

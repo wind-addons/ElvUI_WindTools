@@ -140,7 +140,7 @@ local function isAlreadyKnown(link, index)
 				for _, line in ipairs(data.lines) do
 					local text = line.leftText
 					if text then
-						if strfind(text, COLLECTED, 1, true) or text == ITEM_SPELL_KNOWN then
+						if strfind(text, COLLECTED, 1, true) or strfind(text, ITEM_SPELL_KNOWN, 1, true) then
 							knowns[link] = true
 							return true
 						end

@@ -15,7 +15,6 @@ function AS:DelayScreenshot(_, _, alreadyEarnedOnAccount)
 	end
 
 	if alreadyEarnedOnAccount and self.db.ignoreEarnedBefore then
-		self:Log("debug", "Ignoring screenshot for already earned achievement.")
 		return
 	end
 

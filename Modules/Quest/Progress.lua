@@ -436,8 +436,10 @@ function QP:Initialize()
 
 	F.TaskManager:AfterLogin(function()
 		self:UpdateBlizzardQuestMessage()
-		self:ProcessQuestUpdate()
-		self:ProcessScenarioUpdate()
+		E:Delay(2, function()
+			self:ProcessQuestUpdate()
+			self:ProcessScenarioUpdate()
+		end)
 	end)
 end
 

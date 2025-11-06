@@ -54,6 +54,7 @@ local NUM_SLOTS_PER_GUILDBANK_GROUP = 14
 
 local knowables = {
 	[Enum.ItemClass.Consumable] = true,
+	[Enum.ItemClass.Weapon] = true,
 	[Enum.ItemClass.Armor] = true,
 	[Enum.ItemClass.ItemEnhancement] = true,
 	[Enum.ItemClass.Recipe] = true,
@@ -73,7 +74,7 @@ local function isPetCollected(speciesID)
 	return num and num > 0
 end
 
-local function isTransmogCollected(itemID, link)
+local function isTransmogCollected(itemID)
 	if not C_Item_IsCosmeticItem(itemID) then
 		local inventoryType = C_Item_GetItemInventoryTypeByID(itemID)
 		if not transmogInventoryTypes[inventoryType] then

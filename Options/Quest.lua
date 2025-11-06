@@ -1048,17 +1048,69 @@ options.turnIn = {
 				NONE = L["None"],
 			},
 		},
-		onlyRepeatable = {
-			order = 4,
-			type = "toggle",
-			name = L["Only Repeatable"],
-			desc = L["Only accept and complete repeatable quests."],
+		enableCondition = {
+			order = 5,
+			type = "group",
+			inline = true,
+			name = L["Enable Conditions"],
 			disabled = function()
 				return not E.db.WT.quest.turnIn.enable
 			end,
+			args = {
+				accountCompleted = {
+					order = 1,
+					type = "toggle",
+					name = L["Account Completed"],
+					desc = L["Enable automation for the quests already completed on any character in your account."],
+					disabled = function()
+						return not E.db.WT.quest.turnIn.enable
+					end,
+					get = function(info)
+						return E.db.WT.quest.turnIn.enableCondition[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.turnIn.enableCondition[info[#info]] = value
+					end,
+				},
+				repeatable = {
+					order = 2,
+					type = "toggle",
+					name = L["Repeatable"],
+					desc = format(
+						"%s\n%s: %s",
+						L["Enable automation for repeatable quests (daily, weekly, etc.)."],
+						C.StringByTemplate(L["Notice"], "rose-500"),
+						L["Some repeatable quests are not marked as repeatable by Blizzard."]
+					),
+					disabled = function()
+						return not E.db.WT.quest.turnIn.enable
+					end,
+					get = function(info)
+						return E.db.WT.quest.turnIn.enableCondition[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.turnIn.enableCondition[info[#info]] = value
+					end,
+				},
+				other = {
+					order = 3,
+					type = "toggle",
+					name = L["Other"],
+					desc = L["Enable automation for the quests not matched by other conditions."],
+					disabled = function()
+						return not E.db.WT.quest.turnIn.enable
+					end,
+					get = function(info)
+						return E.db.WT.quest.turnIn.enableCondition[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.turnIn.enableCondition[info[#info]] = value
+					end,
+				},
+			},
 		},
 		reward = {
-			order = 5,
+			order = 6,
 			type = "group",
 			inline = true,
 			name = L["Reward"],
@@ -1089,7 +1141,7 @@ options.turnIn = {
 			},
 		},
 		smartChat = {
-			order = 6,
+			order = 7,
 			type = "group",
 			inline = true,
 			name = L["Smart Chat"],
@@ -1127,7 +1179,7 @@ options.turnIn = {
 			},
 		},
 		ignore = {
-			order = 7,
+			order = 8,
 			type = "group",
 			inline = true,
 			name = L["Ignored NPCs"],

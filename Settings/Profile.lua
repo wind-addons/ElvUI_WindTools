@@ -1219,7 +1219,11 @@ P.quest = {
 	turnIn = {
 		enable = true,
 		mode = "ALL",
-		onlyRepeatable = false,
+		enableCondition = {
+			accountCompleted = true,
+			repeatable = true,
+			other = false,
+		},
 		smartChat = true,
 		selectReward = true,
 		getBestReward = false,

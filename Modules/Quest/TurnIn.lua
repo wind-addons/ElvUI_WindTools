@@ -59,9 +59,10 @@ local C_GossipInfo_SelectActiveQuest = C_GossipInfo.SelectActiveQuest
 local C_GossipInfo_SelectAvailableQuest = C_GossipInfo.SelectAvailableQuest
 local C_GossipInfo_SelectOption = C_GossipInfo.SelectOption
 local C_Item_GetItemInfo = C_Item.GetItemInfo
-local C_Minimap_IsFilteredOut = C_Minimap.IsFilteredOut
 local C_Minimap_IsTrackingHiddenQuests = C_Minimap.IsTrackingHiddenQuests
 local C_QuestInfoSystem_GetQuestClassification = C_QuestInfoSystem.GetQuestClassification
+local C_QuestLog_GetInfo = C_QuestLog.GetInfo
+local C_QuestLog_GetLogIndexForQuestID = C_QuestLog.GetLogIndexForQuestID
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 local C_QuestLog_IsQuestFlaggedCompletedOnAccount = C_QuestLog.IsQuestFlaggedCompletedOnAccount
 local C_QuestLog_IsQuestTrivial = C_QuestLog.IsQuestTrivial
@@ -69,12 +70,13 @@ local C_QuestLog_IsRepeatableQuest = C_QuestLog.IsRepeatableQuest
 local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
 
 local Enum_GossipOptionRecFlags_QuestLabelPrepend = Enum.GossipOptionRecFlags.QuestLabelPrepend
-local Enum_MinimapTrackingFilter_AccountCompletedQuests = Enum.MinimapTrackingFilter.AccountCompletedQuests
 local Enum_QuestClassification_Calling = Enum.QuestClassification.Calling
+local Enum_QuestClassification_Meta = Enum.QuestClassification.Meta
 local Enum_QuestClassification_Recurring = Enum.QuestClassification.Recurring
+local Enum_QuestFrequency_Default = Enum.QuestFrequency.Default
 
 local DELVE_STRING = "^|cFF0000FF.-" .. DELVE_LABEL
-local QUEST_STRING = "^|cFF0000FF.-" .. QUESTS_LABEL
+local RED_QUEST_STRING = "^|cFF0000FF.-" .. QUESTS_LABEL
 local SKIP_STRING_1 = "^.+|cFFFF0000<.+>|r"
 local SKIP_STRING_2 = "|cnRED_FONT_COLOR"
 
@@ -171,6 +173,10 @@ local smartChatNPCs = {
 	[167839] = true, -- 灌注了一半的灵魂残迹
 }
 
+local smartChatNPCOverPossibility = {
+	[241748] = 2, -- 伊特努丝
+}
+
 local followerAssignees = {
 	[135614] = true, -- 马迪亚斯·肖尔大师
 	[138708] = true, -- 半兽人迦罗娜
@@ -251,22 +257,71 @@ local cashRewards = {
 	[138133] = 27, -- 无尽奇迹药剂
 }
 
-local function IsAccountCompleted(questID)
-	return C_Minimap_IsFilteredOut(Enum_MinimapTrackingFilter_AccountCompletedQuests)
-		and C_QuestLog_IsQuestFlaggedCompletedOnAccount(questID)
-end
-
-local function IsQuestRepeatable(questID)
-	if C_QuestLog_IsWorldQuest(questID) then
-		return true
-	end
-
+---@param questID number
+---@param context QuestTurnInContext?
+local function IsRepeatableQuest(questID, context)
 	if C_QuestLog_IsRepeatableQuest(questID) then
 		return true
 	end
 
+	if C_QuestLog_IsWorldQuest(questID) then
+		return true
+	end
+
 	local classification = C_QuestInfoSystem_GetQuestClassification(questID)
-	return classification == Enum_QuestClassification_Recurring or classification == Enum_QuestClassification_Calling
+	if
+		classification == Enum_QuestClassification_Recurring
+		or classification == Enum_QuestClassification_Calling
+		or classification == Enum_QuestClassification_Meta
+	then
+		return true
+	end
+
+	if context and context.gossipQuestUIInfo then
+		if context.gossipQuestUIInfo.isRepeatable then
+			return true
+		end
+
+		local frequency = context.gossipQuestUIInfo.frequency
+		if frequency and frequency ~= Enum_QuestFrequency_Default then
+			return true
+		end
+	end
+
+	local questLogIndex = C_QuestLog_GetLogIndexForQuestID(questID)
+	if questLogIndex then
+		local info = C_QuestLog_GetInfo(questLogIndex)
+		if info and info.frequency ~= Enum_QuestFrequency_Default then
+			return true
+		end
+	end
+
+	return false
+end
+
+---@class QuestTurnInContext
+---@field gossipQuestUIInfo GossipQuestUIInfo?
+
+---@param questID number?
+---@param context QuestTurnInContext?
+---@return boolean
+function TI:EnableOnQuestID(questID, context)
+	if not questID or not self.db or not self.db.enableCondition then
+		return true -- Default to enabled
+	end
+
+	-- Repeatable
+	if IsRepeatableQuest(questID, context) and self.db.enableCondition.repeatable then
+		return true
+	end
+
+	-- Account completed
+	if C_QuestLog_IsQuestFlaggedCompletedOnAccount(questID) and self.db.enableCondition.accountCompleted then
+		return true
+	end
+
+	-- Other
+	return self.db.enableCondition.other
 end
 
 function TI:GetNPCID(unit)
@@ -320,8 +375,7 @@ function TI:QUEST_GREETING()
 			local questID = GetActiveQuestID(index)
 			if questID then
 				local isWorldQuest = C_QuestLog_IsWorldQuest(questID)
-				local skipRepeatable = self.db.onlyRepeatable and not IsQuestRepeatable(questID)
-				if isComplete and not isWorldQuest and not skipRepeatable then
+				if isComplete and not isWorldQuest and self:EnableOnQuestID(questID) then
 					if not self:IsPaused("COMPLETE") then
 						---@diagnostic disable-next-line: redundant-parameter -- The API doc is wrong
 						SelectActiveQuest(index)
@@ -335,11 +389,9 @@ function TI:QUEST_GREETING()
 	if available > 0 then
 		for index = 1, available do
 			local isTrivial, _, _, _, questID = GetAvailableQuestInfo(index)
-			local skipRepeatable = self.db.onlyRepeatable and not IsQuestRepeatable(questID)
 			if
-				not IsAccountCompleted(questID)
+				self:EnableOnQuestID(questID)
 				and (not isTrivial or C_Minimap_IsTrackingHiddenQuests())
-				and not skipRepeatable
 				and not self:IsPaused("ACCEPT")
 			then
 				---@diagnostic disable-next-line: redundant-parameter -- The API doc is wrong
@@ -361,8 +413,11 @@ function TI:GOSSIP_SHOW()
 		for _, gossipQuestUIInfo in ipairs(C_GossipInfo_GetActiveQuests()) do
 			local questID = gossipQuestUIInfo.questID
 			local isWorldQuest = C_QuestLog_IsWorldQuest(questID)
-			local skipRepeatable = self.db.onlyRepeatable and not IsQuestRepeatable(questID)
-			if gossipQuestUIInfo.isComplete and not isWorldQuest and not skipRepeatable then
+			if
+				gossipQuestUIInfo.isComplete
+				and not isWorldQuest
+				and self:EnableOnQuestID(questID, { gossipQuestUIInfo = gossipQuestUIInfo })
+			then
 				if not self:IsPaused("COMPLETE") then
 					C_GossipInfo_SelectActiveQuest(questID)
 					return
@@ -372,7 +427,7 @@ function TI:GOSSIP_SHOW()
 	end
 
 	-- 2. Before accepting quests, check for skip strings in gossip options
-	local gossipOptions = C_GossipInfo_GetOptions() or C_GossipInfo_GetActiveDelveGossip()
+	local gossipOptions = C_GossipInfo_GetOptions() or { C_GossipInfo_GetActiveDelveGossip() }
 	for _, gossipOption in ipairs(gossipOptions) do
 		if strfind(gossipOption.name, SKIP_STRING_1) or strfind(gossipOption.name, SKIP_STRING_2) then
 			return
@@ -385,11 +440,9 @@ function TI:GOSSIP_SHOW()
 		for _, gossipQuestUIInfo in ipairs(C_GossipInfo_GetAvailableQuests()) do
 			local isTrivial = gossipQuestUIInfo.isTrivial
 			local questID = gossipQuestUIInfo.questID
-			local skipRepeatable = self.db.onlyRepeatable and not IsQuestRepeatable(questID)
 			if
-				not IsAccountCompleted(questID)
+				self:EnableOnQuestID(questID, { gossipQuestUIInfo = gossipQuestUIInfo })
 				and (not isTrivial or C_Minimap_IsTrackingHiddenQuests() or (isTrivial and npcID == 64337))
-				and not skipRepeatable
 				and not self:IsPaused("ACCEPT")
 			then
 				C_GossipInfo_SelectAvailableQuest(questID)
@@ -399,7 +452,7 @@ function TI:GOSSIP_SHOW()
 	end
 
 	-- 4. Attempt to click the gossip options
-	if not (self.db and self.db.smartChat) then
+	if not self.db or not self.db.smartChat then
 		return
 	end
 
@@ -423,7 +476,7 @@ function TI:GOSSIP_SHOW()
 			if instance ~= "raid" and not ignoreGossipNPC[npcID] and not ignoreInstances[mapID] then
 				local name, status = gossipOptions[1].name, gossipOptions[1].status
 				if name and status and status == 0 then
-					local questNameFound = strfind(name, QUEST_STRING)
+					local questNameFound = strfind(name, RED_QUEST_STRING)
 					local delveNameFound = strfind(name, DELVE_STRING)
 					if questNameFound or delveNameFound then
 						return C_GossipInfo_SelectOption(firstGossipOptionID)
@@ -436,24 +489,32 @@ function TI:GOSSIP_SHOW()
 	end
 
 	if numGossipOptions > 0 then
-		local maybeQuestIndexes = {}
+		local maybeQuestOptions = {}
 		for index, gossipOption in ipairs(gossipOptions) do
-			if
-				gossipOption.name
-				and (
-					gossipOption.flags == Enum_GossipOptionRecFlags_QuestLabelPrepend
-					or strfind(gossipOption.name, QUEST_STRING)
-				)
-			then
-				tinsert(maybeQuestIndexes, index)
+			local possibility
+			if gossipOption.flags == Enum_GossipOptionRecFlags_QuestLabelPrepend then
+				possibility = 1
+			end
+
+			if gossipOption.name and strfind(gossipOption.name, RED_QUEST_STRING) then
+				possibility = 2
+			end
+
+			if possibility then
+				tinsert(maybeQuestOptions, { possibility = possibility, index = index })
 			end
 		end
 
-		if #maybeQuestIndexes == 1 then
-			local index = maybeQuestIndexes[1]
-			local status = gossipOptions[index] and gossipOptions[index].status
-			if status and status == 0 then
-				return C_GossipInfo_SelectOption(gossipOptions[index].gossipOptionID)
+		if #maybeQuestOptions == 1 then
+			local option = maybeQuestOptions[1]
+			if smartChatNPCOverPossibility[npcID] and option.possibility < smartChatNPCOverPossibility[npcID] then
+				return
+			end
+
+			local status = gossipOptions[option.index] and gossipOptions[option.index].status
+			local optionID = gossipOptions[option.index] and gossipOptions[option.index].gossipOptionID
+			if status and status == 0 and optionID then
+				return C_GossipInfo_SelectOption(optionID)
 			end
 		end
 	end
@@ -491,11 +552,9 @@ function TI:QUEST_DETAIL()
 			return
 		end
 
-		if questID and self.db.onlyRepeatable and not IsQuestRepeatable(questID) then
-			return
+		if self:EnableOnQuestID(questID) then
+			AcceptQuest()
 		end
-
-		AcceptQuest()
 	end
 end
 
@@ -504,14 +563,9 @@ function TI:QUEST_ACCEPT_CONFIRM()
 		return
 	end
 
-	if self.db.onlyRepeatable then
-		local questID = GetQuestID()
-		if questID and not IsQuestRepeatable(questID) then
-			return
-		end
+	if self:EnableOnQuestID(GetQuestID()) then
+		AcceptQuest()
 	end
-
-	AcceptQuest()
 end
 
 function TI:QUEST_ACCEPTED()
@@ -536,7 +590,7 @@ function TI:QUEST_PROGRESS()
 	end
 
 	local questID = GetQuestID()
-	if self.db.onlyRepeatable and questID and not IsQuestRepeatable(questID) then
+	if not self:EnableOnQuestID(questID) then
 		return
 	end
 
@@ -573,11 +627,9 @@ function TI:QUEST_COMPLETE()
 		return
 	end
 
-	if self.db.onlyRepeatable then
-		local questID = GetQuestID()
-		if questID and not IsQuestRepeatable(questID) then
-			return
-		end
+	local questID = GetQuestID()
+	if not self:EnableOnQuestID(questID) then
+		return
 	end
 
 	local choices = GetNumQuestChoices()
@@ -624,11 +676,8 @@ function TI:AttemptAutoComplete(event)
 		end
 
 		local questID, popUpType = GetAutoQuestPopUp(1)
-
-		if self.db.onlyRepeatable then
-			if questID and not IsQuestRepeatable(questID) then
-				return
-			end
+		if not self:EnableOnQuestID(questID) then
+			return
 		end
 
 		if not C_QuestLog_IsWorldQuest(questID) then

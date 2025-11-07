@@ -25,8 +25,10 @@ local function configTable(t, sourceMetadata)
 	return t
 end
 
+---@class PrivateDB.combat
 V.combat = {}
 
+---@class PrivateDB.item
 V.item = {
 	extendMerchantPages = {
 		enable = false,
@@ -34,7 +36,9 @@ V.item = {
 	},
 }
 
+---@class PrivateDB.maps
 V.maps = {
+	---@class PrivateDB.maps.instanceDifficulty
 	instanceDifficulty = {
 		enable = false,
 		hideBlizzard = true,
@@ -143,6 +147,7 @@ V.maps = {
 	},
 }
 
+---@class PrivateDB.misc
 V.misc = {
 	moveSpeed = false,
 	noKanjiMath = false,
@@ -156,6 +161,7 @@ V.misc = {
 	autoToggleChatBubble = false,
 	antiOverride = GetLocale() == "zhCN",
 	reshiiWrapsUpgrade = true,
+	---@class PrivateDB.misc.moveFrames
 	moveFrames = {
 		enable = true,
 		elvUIBags = true,
@@ -163,6 +169,7 @@ V.misc = {
 		rememberPositions = false,
 		framePositions = {},
 	},
+	---@class PrivateDB.misc.mute
 	mute = {
 		enable = false,
 		mount = {
@@ -181,6 +188,7 @@ V.misc = {
 			["Jewelcrafting"] = false,
 		},
 	},
+	---@class PrivateDB.misc.lfgList
 	lfgList = {
 		enable = true,
 		icon = {
@@ -226,7 +234,9 @@ V.misc = {
 	},
 }
 
+---@class PrivateDB.quest
 V.quest = {
+	---@class PrivateDB.quest.objectiveTracker
 	objectiveTracker = {
 		enable = false,
 		noDash = true,
@@ -304,6 +314,7 @@ V.quest = {
 	},
 }
 
+---@class PrivateDB.skins
 V.skins = {
 	enable = true,
 	windtools = true,
@@ -723,6 +734,7 @@ V.skins = {
 	},
 }
 
+---@class PrivateDB.tooltips
 V.tooltips = {
 	modifier = "SHIFT",
 	titleIcon = {
@@ -751,13 +763,17 @@ V.tooltips = {
 	},
 }
 
+---@class PrivateDB.social
 V.social = {
+	---@class PrivateDB.social.smartTab
 	smartTab = {
 		whisperTargets = {},
 	},
 }
 
+---@class PrivateDB.unitFrames
 V.unitFrames = {
+	---@class PrivateDB.unitFrames.quickFocus
 	quickFocus = {
 		enable = false,
 		modifier = "shift",

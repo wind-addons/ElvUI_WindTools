@@ -7,6 +7,7 @@ local C = W.Utilities.Color
 
 local tinsert = tinsert
 
+---@class ProfileDB.announcement
 P.announcement = {
 	enable = true,
 	emoteFormat = ": %s",
@@ -295,6 +296,7 @@ P.announcement = {
 	},
 }
 
+---@class ProfileDB.combat
 P.combat = {
 	classHelper = {
 		enable = false,
@@ -357,6 +359,7 @@ P.combat = {
 	},
 }
 
+---@class ProfileDB.item
 P.item = {
 	contacts = {
 		enable = true,
@@ -706,8 +709,10 @@ P.item = {
 			},
 		},
 	},
+	---@class ProfileDB.item.itemLevel
 	itemLevel = {
 		enable = true,
+		---@class ProfileDB.item.itemLevel.flyout
 		flyout = {
 			enable = true,
 			useBagsFontSetting = false,
@@ -721,6 +726,7 @@ P.item = {
 				color = { r = 1, g = 1, b = 1 },
 			},
 		},
+		---@class ProfileDB.item.itemLevel.scrappingMachine
 		scrappingMachine = {
 			enable = true,
 			useBagsFontSetting = false,
@@ -737,7 +743,9 @@ P.item = {
 	},
 }
 
+---@class ProfileDB.maps
 P.maps = {
+	---@class ProfileDB.maps.eventTracker
 	eventTracker = {
 		enable = true,
 		style = {
@@ -907,14 +915,18 @@ P.maps = {
 	},
 }
 
+---@class ProfileDB.skins
 P.skins = {
+	---@class ProfileDB.skins.vignetting
 	vignetting = {
 		enable = true,
 		level = 30,
 	},
 }
 
+---@class ProfileDB.social
 P.social = {
+	---@class ProfileDB.social.chatBar
 	chatBar = {
 		enable = true,
 		style = "BLOCK",
@@ -1137,7 +1149,9 @@ if W.ChineseLocale then
 	})
 end
 
+---@class ProfileDB.quest
 P.quest = {
+	---@class ProfileDB.quest.progress
 	progress = {
 		enable = true,
 		scenario = false,
@@ -1267,7 +1281,9 @@ P.quest = {
 	},
 }
 
+---@class ProfileDB.tooltips
 P.tooltips = {
+	---@class ProfileDB.tooltips.elvUITweaks
 	elvUITweaks = {
 		forceItemLevel = false,
 		healthBar = {
@@ -1313,7 +1329,9 @@ P.tooltips = {
 	},
 }
 
+---@class ProfileDB.unitFrames
 P.unitFrames = {
+	---@class ProfileDB.unitFrames.absorb
 	absorb = {
 		enable = false,
 		texture = {
@@ -1326,14 +1344,17 @@ P.unitFrames = {
 	},
 }
 
+---@class ProfileDB.misc
 P.misc = {
 	disableTalkingHead = false,
 	hideCrafter = false,
 	noLootPanel = false,
+	---@class ProfileDB.misc.spellActivationAlert
 	spellActivationAlert = {
 		enable = false,
 		scale = 1,
 	},
+	---@class ProfileDB.misc.gameBar
 	gameBar = {
 		enable = true,
 		mouseOver = false,
@@ -1408,6 +1429,7 @@ P.misc = {
 			[7] = "BAGS",
 		},
 	},
+	---@class ProfileDB.misc.automation
 	automation = {
 		enable = false,
 		hideBagAfterEnteringCombat = false,
@@ -1416,15 +1438,18 @@ P.misc = {
 		acceptCombatResurrect = false,
 		confirmSummon = false,
 	},
+	---@class ProfileDB.misc.cooldownTextOffset
 	cooldownTextOffset = {
 		enable = false,
 		offsetX = 0,
 		offsetY = 0,
 	},
+	---@class ProfileDB.misc.keybindAlias
 	keybindAlias = {
 		enable = false,
 		list = {},
 	},
+	---@class ProfileDB.misc.exitPhaseDiving
 	exitPhaseDiving = {
 		enable = true,
 		width = 81,

@@ -71,6 +71,7 @@ function A:SendMyLevel(key, value)
 	end
 
 	local message = format("%s=%s;%d;%d", key, value, myServerID, myPlayerUID)
+	
 	C_ChatInfo_SendAddonMessage(self.prefix, message, GetBestChannel())
 end
 
@@ -86,11 +87,7 @@ function A:ReceiveLevel(message)
 	playerUID = tonumber(playerUID)
 
 	if not cache[key] then
-		cache[key] = {
-			value = value,
-			serverID = serverID,
-			playerUID = playerUID,
-		}
+		cache[key] = { value = value, serverID = serverID, playerUID = playerUID }
 		return
 	end
 
@@ -109,9 +106,7 @@ function A:ReceiveLevel(message)
 	end
 
 	if needUpdate then
-		cache[key].value = value
-		cache[key].serverID = serverID
-		cache[key].playerUID = playerUID
+		cache[key].value, cache[key].serverID, cache[key].playerUID = value, serverID, playerUID
 	end
 end
 

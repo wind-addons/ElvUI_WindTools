@@ -41,7 +41,7 @@ local cachedQuests ---@type table<number, QuestProgressData>
 local cachedScenarioStep ---@type ScenarioProgressData
 
 local ignoreTagIDs = {
-	[265] = true, -- Hidden
+	[265] = true, -- Hidden Quest
 	[291] = true, -- Hidden
 }
 
@@ -119,7 +119,7 @@ local function fetchAllQuestProgressData()
 				or questInfo.isHidden
 
 			-- Ensure world quests are only included if they are on the map
-			if questInfo.isOnMap and tagInfo and tagInfo.worldQuestType then
+			if tagInfo and tagInfo.worldQuestType and questInfo.isOnMap then
 				skip = false
 			end
 

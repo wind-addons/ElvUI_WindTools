@@ -1194,6 +1194,73 @@ options.eventTracker = {
 				},
 			},
 		},
+		legionAssaultRemix = {
+			order = 11,
+			type = "group",
+			inline = true,
+			name = L["Legion Assault (Remix)"],
+			get = function(info)
+				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
+				ET:ProfileUpdate()
+			end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+				},
+				alert = {
+					order = 2,
+					type = "toggle",
+					name = L["Alert"],
+				},
+				sound = {
+					order = 3,
+					type = "toggle",
+					name = L["Alert Sound"],
+					hidden = function(info)
+						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+					end,
+					desc = L["Play sound when the alert is triggered."],
+				},
+				soundFile = {
+					order = 4,
+					type = "select",
+					dialogControl = "LSM30_Sound",
+					name = L["Sound File"],
+					hidden = function(info)
+						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+					end,
+					values = LSM:HashTable("sound"),
+				},
+				second = {
+					order = 5,
+					type = "range",
+					name = L["Alert Second"],
+					desc = L["Alert will be triggered when the remaining time is less than the set value."],
+					min = 0,
+					max = 3600,
+					step = 1,
+					hidden = function(info)
+						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+					end,
+				},
+				stopAlertIfNotRemixPlayer = {
+					order = 6,
+					type = "toggle",
+					name = L["Only Remix Character"],
+					desc = L["Stop alert when the player is not in Remix mode."],
+					width = 1.5,
+					hidden = function(info)
+						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+					end,
+				},
+			},
+		},
 		weeklyTWW = {
 			order = 12,
 			type = "group",

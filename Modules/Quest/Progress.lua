@@ -321,6 +321,11 @@ end
 ---@param questData QuestProgressData | ScenarioProgressData
 ---@param objectiveData? QuestObjectiveData
 function QP:HandleQuestProgress(status, questData, objectiveData)
+	-- Ignore progress messages within 5 seconds after login to avoid spam
+	if not self.afterFiveSecondsAfterLogin then
+		return
+	end
+
 	local plainContext, coloredContext = self:BuildContext(questData)
 
 	if status == QUEST_STATUS.ACCEPTED then
@@ -436,9 +441,11 @@ function QP:Initialize()
 
 	F.TaskManager:AfterLogin(function()
 		self:UpdateBlizzardQuestMessage()
-		E:Delay(2, function()
-			self:ProcessQuestUpdate()
-			self:ProcessScenarioUpdate()
+		self:ProcessQuestUpdate()
+		self:ProcessScenarioUpdate()
+
+		E:Delay(5, function()
+			self.afterFiveSecondsAfterLogin = true
 		end)
 	end)
 end

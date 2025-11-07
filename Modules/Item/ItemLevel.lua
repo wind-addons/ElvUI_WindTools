@@ -6,6 +6,7 @@ local LSM = E.Libs.LSM
 local _G = _G
 local pairs = pairs
 local select = select
+local tostring = tostring
 local type = type
 
 local EquipmentManager_UnpackLocation = EquipmentManager_UnpackLocation
@@ -17,20 +18,27 @@ local C_Item_DoesItemExist = C_Item.DoesItemExist
 
 local EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION = EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION
 
+---@param text FontString
+---@param db ProfileDB.item.itemLevel.flyout | ProfileDB.item.itemLevel.scrappingMachine
 local function UpdateFlyoutItemLevelTextStyle(text, db)
 	if db.useBagsFontSetting then
 		text:FontTemplate(LSM:Fetch("font", B.db.itemLevelFont), B.db.itemLevelFontSize, B.db.itemLevelFontOutline)
 		text:ClearAllPoints()
 		text:Point(B.db.itemLevelPosition, B.db.itemLevelxOffset, B.db.itemLevelyOffset)
-	else
-		F.SetFontWithDB(text, db.font)
-		text:ClearAllPoints()
-		text:Point("BOTTOMRIGHT", db.font.xOffset, db.font.yOffset)
+		return
 	end
+
+	F.SetFontWithDB(text, db.font)
+	text:ClearAllPoints()
+	text:Point("BOTTOMRIGHT", db.font.xOffset, db.font.yOffset)
 end
 
+---Refresh the item level text for a given item
+---@param text FontString
+---@param db ProfileDB.item.itemLevel.flyout | ProfileDB.item.itemLevel.scrappingMachine
+---@param location ItemLocation
 local function RefreshItemLevel(text, db, location)
-	if not text or not C_Item_DoesItemExist(location) then
+	if not text or not location:IsValid() or not C_Item_DoesItemExist(location) then
 		return
 	end
 
@@ -38,7 +46,8 @@ local function RefreshItemLevel(text, db, location)
 
 	local item = Item:CreateFromItemLocation(location)
 	item:ContinueOnItemLoad(function()
-		text:SetText(item:GetCurrentItemLevel())
+		local itemLevel = item:GetCurrentItemLevel()
+		text:SetText(itemLevel and tostring(itemLevel) or "")
 		F.SetFontColorWithDB(text, db.qualityColor and item:GetItemQualityColor() or db.font.color)
 	end)
 end
@@ -92,6 +101,7 @@ function IL:FlyoutButton()
 	end
 end
 
+---@param button ScrappingMachineItemSlot
 function IL:ScrappingMachineButton(button)
 	if not self.db.enable or not self.db.scrappingMachine.enable or not button.itemLocation then
 		if button.itemLevel then
@@ -101,12 +111,14 @@ function IL:ScrappingMachineButton(button)
 	end
 
 	if not button.itemLevel then
-		button.itemLevel = button:CreateFontString(nil, "ARTWORK", nil, 1)
+		button.itemLevel = button:CreateFontString(nil, "ARTWORK")
 	end
 
 	RefreshItemLevel(button.itemLevel, self.db.scrappingMachine, button.itemLocation)
 end
 
+---@param _ "ADDON_LOADED"
+---@param addon string
 function IL:ADDON_LOADED(_, addon)
 	if addon == "Blizzard_ScrappingMachineUI" then
 		self:UnregisterEvent("ADDON_LOADED")
@@ -116,9 +128,8 @@ end
 
 function IL:ReskinAllButtonsInScrappingMachine()
 	for button in _G.ScrappingMachineFrame.ItemSlots.scrapButtons:EnumerateActive() do
-		if button and not button.__windItemLevelHooked then
+		if not self:IsHooked(button, "RefreshIcon") then
 			self:SecureHook(button, "RefreshIcon", "ScrappingMachineButton")
-			button.__windItemLevelHooked = true
 		end
 	end
 end

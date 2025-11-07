@@ -1952,6 +1952,13 @@ options.progress = {
 							desc = L["The progress details like 10/20."],
 							width = 1.5,
 						},
+						completeText = {
+							order = 2.5,
+							type = "input",
+							name = L["Complete Text"],
+							desc = L["The text to show when the objective is completed."],
+							width = 1.5,
+						},
 						default = {
 							order = 3,
 							type = "execute",
@@ -1960,6 +1967,8 @@ options.progress = {
 							func = function()
 								E.db.WT.quest.progress.progress.objective.detailTemplate =
 									P.quest.progress.progress.objective.detailTemplate
+								E.db.WT.quest.progress.progress.objective.completeText =
+									P.quest.progress.progress.objective.completeText
 							end,
 						},
 						color = {
@@ -2034,20 +2043,19 @@ options.progress = {
 						E.db.WT.quest.progress.progress.complete[info[#info]] = value
 					end,
 					args = {
-						template = {
+						text = {
 							order = 1,
 							type = "input",
-							name = L["Template"],
+							name = L["Text"],
 							width = 1.5,
 						},
 						default = {
 							order = 2,
 							type = "execute",
 							name = L["Default"],
-							desc = L["Reset the template to default value."],
+							desc = L["Reset the text to default value."],
 							func = function()
-								E.db.WT.quest.progress.progress.complete.template =
-									P.quest.progress.progress.complete.template
+								E.db.WT.quest.progress.progress.complete.text = P.quest.progress.progress.complete.text
 							end,
 						},
 						color = {
@@ -2122,20 +2130,19 @@ options.progress = {
 						E.db.WT.quest.progress.progress.accepted[info[#info]] = value
 					end,
 					args = {
-						template = {
+						text = {
 							order = 1,
 							type = "input",
-							name = L["Template"],
+							name = L["Text"],
 							width = 1.5,
 						},
 						default = {
 							order = 2,
 							type = "execute",
 							name = L["Default"],
-							desc = L["Reset the template to default value."],
+							desc = L["Reset the text to default value."],
 							func = function()
-								E.db.WT.quest.progress.progress.accepted.template =
-									P.quest.progress.progress.accepted.template
+								E.db.WT.quest.progress.progress.accepted.text = P.quest.progress.progress.accepted.text
 							end,
 						},
 						color = {

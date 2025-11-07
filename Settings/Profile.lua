@@ -756,7 +756,6 @@ P.maps = {
 		},
 		legionAssaultRemix = {
 			enable = true,
-			desaturate = false,
 			alert = true,
 			sound = true,
 			soundFile = "OnePlus Surprise",
@@ -1191,20 +1190,21 @@ P.quest = {
 		progress = {
 			objective = {
 				detailTemplate = "%d/%d",
+				completeText = format("(%s)", L["Complete"]),
 				color = {
 					left = C.GetRGBFromTemplate("neutral-100"),
 					right = C.GetRGBFromTemplate("neutral-50"),
 				},
 			},
 			complete = {
-				template = "%s",
+				text = L["Quest Complete"],
 				color = {
 					left = C.GetRGBFromTemplate("green-400"),
 					right = C.GetRGBFromTemplate("emerald-300"),
 				},
 			},
 			accepted = {
-				template = "%s",
+				text = L["Quest Accepted"],
 				color = {
 					left = C.GetRGBFromTemplate("blue-400"),
 					right = C.GetRGBFromTemplate("sky-300"),

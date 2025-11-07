@@ -158,8 +158,31 @@ options.quest = {
 				E.db.WT.announcement.quest.template = P.announcement.quest.template
 			end,
 		},
-		channel = {
+		tip = {
 			order = 9,
+			type = "group",
+			inline = true,
+			name = L["Tips"],
+			args = {
+				note = {
+					order = 1,
+					type = "description",
+					name = format(
+						"%s\n%s",
+						format(
+							L["Because the quest announcement is actually an extension of the %s module."],
+							L["Quest Progress"]
+						),
+						format(
+							L["You can custom the text for Quest Accepted, Quest Complete and Objective Progress in %s module's progress customization."],
+							L["Quest Progress"]
+						)
+					),
+				},
+			},
+		},
+		channel = {
+			order = 10,
 			type = "group",
 			inline = true,
 			name = L["Channel"],

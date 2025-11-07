@@ -108,14 +108,19 @@ local function fetchAllQuestProgressData()
 	for questIndex = 1, C_QuestLog_GetNumQuestLogEntries() do
 		local questInfo = C_QuestLog_GetInfo(questIndex)
 		if questInfo then
+			local tagInfo = C_QuestLog_GetQuestTagInfo(questInfo.questID)
+
 			-- isHeader: Quest category header (e.g., "Highmountain-Highmountain Tribe" quests, "Highmountain" should be excluded)
 			-- isBounty: Bounty quests (e.g., "The Nightfallen" quests)
 			-- isHidden: Auto-accepted weekly quests (e.g., "Conqueror's Reward" weekly PvP quest)
-			local skip = questInfo.isHeader or questInfo.isBounty or questInfo.isHidden
-			local tagInfo = C_QuestLog_GetQuestTagInfo(questInfo.questID)
+			local skip = tagInfo and ignoreTagIDs[tagInfo.tagID]
+				or questInfo.isHeader
+				or questInfo.isBounty
+				or questInfo.isHidden
 
-			if tagInfo and (ignoreTagIDs[tagInfo.tagID] and not tagInfo.worldQuestType) then
-				skip = true
+			-- Ensure world quests are only included if they are on the map
+			if questInfo.isOnMap and tagInfo and tagInfo.worldQuestType then
+				skip = false
 			end
 
 			if not skip then
@@ -237,7 +242,6 @@ end
 
 function QP:ProcessQuestUpdate()
 	local currentQuests = fetchAllQuestProgressData()
-
 	if not cachedQuests then
 		cachedQuests = currentQuests
 		return

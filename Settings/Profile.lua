@@ -754,6 +754,15 @@ P.maps = {
 			scale = 1,
 			outline = "OUTLINE",
 		},
+		legionAssaultRemix = {
+			enable = true,
+			desaturate = false,
+			alert = true,
+			sound = true,
+			soundFile = "OnePlus Surprise",
+			second = 600,
+			stopAlertIfNotRemixPlayer = true,
+		},
 		professionsWeeklyTWW = {
 			enable = true,
 			desaturate = true,

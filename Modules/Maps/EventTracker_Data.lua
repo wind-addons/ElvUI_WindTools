@@ -12,9 +12,10 @@ local tinsert = tinsert
 local math_pow = math.pow
 
 local GetCurrentRegion = GetCurrentRegion
-local GetServerTime = GetServerTime
-local GetProfessions = GetProfessions
 local GetProfessionInfo = GetProfessionInfo
+local GetProfessions = GetProfessions
+local GetServerTime = GetServerTime
+local PlayerIsTimerunning = PlayerIsTimerunning
 
 local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
 local C_Map_GetMapInfo = C_Map.GetMapInfo
@@ -76,36 +77,17 @@ ET.Meta = {
 	},
 }
 
----@type table<string, RGBA[]>
+---@type table<string, ColorTemplate[]>
 ET.ColorPalette = {
-	blue = {
-		{ r = 0.32941, g = 0.52157, b = 0.93333, a = 1 },
-		{ r = 0.25882, g = 0.84314, b = 0.86667, a = 1 },
-	},
-	red = {
-		{ r = 0.92549, g = 0.00000, b = 0.54902, a = 1 },
-		{ r = 0.98824, g = 0.40392, b = 0.40392, a = 1 },
-	},
-	green = {
-		{ r = 0.40392, g = 0.92549, b = 0.54902, a = 1 },
-		{ r = 0.00000, g = 0.98824, b = 0.40392, a = 1 },
-	},
-	purple = {
-		{ r = 0.27843, g = 0.46275, b = 0.90196, a = 1 },
-		{ r = 0.55686, g = 0.32941, b = 0.91373, a = 1 },
-	},
-	bronze = {
-		{ r = 0.83000, g = 0.42000, b = 0.10000, a = 1 },
-		{ r = 0.56500, g = 0.40800, b = 0.16900, a = 1 },
-	},
-	running = {
-		{ r = 0.06667, g = 0.60000, b = 0.55686, a = 1 },
-		{ r = 0.21961, g = 0.93725, b = 0.49020, a = 1 },
-	},
-	radiantEchoes = {
-		{ r = 0.26275, g = 0.79608, b = 1.00000, a = 1 },
-		{ r = 1.00000, g = 0.96078, b = 0.86275, a = 1 },
-	},
+	blue = { "blue-500", "cyan-400" },
+	red = { "rose-500", "red-400" },
+	green = { "lime-400", "emerald-500" },
+	purple = { "blue-600", "violet-500" },
+	bronze = { "amber-400", "yellow-700" },
+	running = { "teal-600", "emerald-400" },
+	radiantEchoes = { "sky-400", "yellow-100" },
+	legionAssaultRemix = { "lime-400", "lime-700" },
+	gray = { "neutral-400", "neutral-700" },
 }
 
 ---@alias EventKey
@@ -125,9 +107,12 @@ ET.ColorPalette = {
 ---|"SuperBloom"
 ---|"BigDig"
 ---|"IskaaranFishingNet"
+---|"LegionAssaultRemix"
 
 ---@type EventKey[]
 ET.EventList = {
+	-- Legion Remix
+	"LegionAssaultRemix",
 	-- TWW
 	-- "ProfessionsWeeklyTWW",
 	"WeeklyTWW",
@@ -871,6 +856,50 @@ ET.EventData = {
 				},
 			},
 			onClick = worldMapIDSetter(2024),
+			onClickHelpText = L["Click to show location"],
+		},
+	},
+	-- Legion
+	LegionAssaultRemix = {
+		dbKey = "legionAssaultRemix",
+		args = {
+			icon = 1371267,
+			type = "loopTimer",
+			hasWeeklyReward = false,
+			duration = 6 * 60 * 60,
+			interval = 14.5 * 60 * 60,
+			barColor = ET.ColorPalette.gray,
+			flash = true,
+			runningBarColor = ET.ColorPalette.legionAssaultRemix,
+			eventName = L["Legion Assault (Remix)"],
+			label = L["Legion Assault"],
+			location = C_Map_GetMapInfo(619).name,
+			runningText = C.GradientStringByTemplate(L["Assaulting"], "pink-500", "rose-500"),
+			filter = function(args)
+				if args.stopAlertIfNotRemixPlayer and not PlayerIsTimerunning() then
+					return false
+				end
+				return true
+			end,
+			startTimestamp = (function()
+				local timestampTable = {
+					[1] = 1762421400, -- NA
+					[2] = 1762502400, -- KR
+					[3] = 1762507800, -- EU
+					[4] = 1762502400, -- TW
+					[5] = 1762502400, -- CN
+					[72] = 1762502400, -- PTR
+				}
+
+				local region = GetCurrentRegion()
+				-- TW is not a real region, so we need to check the client language if player in KR
+				if region == 2 and W.Locale ~= "koKR" then
+					region = 4
+				end
+
+				return timestampTable[region]
+			end)(),
+			onClick = worldMapIDSetter(619),
 			onClickHelpText = L["Click to show location"],
 		},
 	},

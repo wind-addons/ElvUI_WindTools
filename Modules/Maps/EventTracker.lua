@@ -47,21 +47,6 @@ local function reskinStatusBar(bar)
 	E:RegisterStatusBar(bar)
 end
 
-local function getGradientText(text, colorTable)
-	if not text or not colorTable then
-		return text
-	end
-	return E:TextGradient(
-		text,
-		colorTable[1].r,
-		colorTable[1].g,
-		colorTable[1].b,
-		colorTable[2].r,
-		colorTable[2].g,
-		colorTable[2].b
-	)
-end
-
 local functionFactory = {
 	weekly = {
 		init = function(self)
@@ -315,7 +300,11 @@ local functionFactory = {
 					self.statusBar:SetValue(self.timeOver)
 					local tex = self.statusBar:GetStatusBarTexture()
 					local platte = self.args.runningBarColor or ET.ColorPalette.running
-					tex:SetGradient("HORIZONTAL", C.CreateColorFromTable(platte[1]), C.CreateColorFromTable(platte[2]))
+					tex:SetGradient(
+						"HORIZONTAL",
+						C.CreateColorFromTemplate(platte[1]),
+						C.CreateColorFromTemplate(platte[2])
+					)
 					if self.args.runningTextUpdater then
 						self.runningTip:SetText(self.args:runningTextUpdater())
 					end
@@ -335,8 +324,8 @@ local functionFactory = {
 						local tex = self.statusBar:GetStatusBarTexture()
 						tex:SetGradient(
 							"HORIZONTAL",
-							C.CreateColorFromTable(self.args.barColor[1]),
-							C.CreateColorFromTable(self.args.barColor[2])
+							C.CreateColorFromTemplate(self.args.barColor[1]),
+							C.CreateColorFromTemplate(self.args.barColor[2])
 						)
 					end
 
@@ -374,7 +363,7 @@ local functionFactory = {
 				if self.timeLeft <= self.args.alertSecond then
 					self.args["alertCache"][self.nextEventIndex] = true
 					local eventIconString = F.GetIconString(self.args.icon, 16, 16)
-					local gradientName = getGradientText(self.args.eventName, self.args.barColor)
+					local gradientName = C.GradientStringByTemplate(self.args.eventName, unpack(self.args.barColor))
 					F.Print(
 						format(
 							L["%s will be started in %s!"],
@@ -599,8 +588,8 @@ local functionFactory = {
 
 					self.statusBar:GetStatusBarTexture():SetGradient(
 						"HORIZONTAL",
-						C.CreateColorFromTable(ET.ColorPalette.running[1]),
-						C.CreateColorFromTable(ET.ColorPalette.running[2])
+						C.CreateColorFromTemplate(ET.ColorPalette.running[1]),
+						C.CreateColorFromTemplate(ET.ColorPalette.running[2])
 					)
 					self.statusBar:SetMinMaxValues(0, 1)
 					self.statusBar:SetValue(1)
@@ -632,8 +621,8 @@ local functionFactory = {
 					else
 						self.statusBar:GetStatusBarTexture():SetGradient(
 							"HORIZONTAL",
-							C.CreateColorFromTable(self.args.barColor[1]),
-							C.CreateColorFromTable(self.args.barColor[2])
+							C.CreateColorFromTemplate(self.args.barColor[1]),
+							C.CreateColorFromTemplate(self.args.barColor[2])
 						)
 					end
 
@@ -646,8 +635,8 @@ local functionFactory = {
 					self.timerText:SetText("")
 					self.statusBar:GetStatusBarTexture():SetGradient(
 						"HORIZONTAL",
-						C.CreateColorFromTable(ET.ColorPalette.running[1]),
-						C.CreateColorFromTable(ET.ColorPalette.running[2])
+						C.CreateColorFromTemplate(ET.ColorPalette.running[1]),
+						C.CreateColorFromTemplate(ET.ColorPalette.running[2])
 					)
 					self.statusBar:SetMinMaxValues(0, 1)
 
@@ -732,7 +721,7 @@ local functionFactory = {
 					end
 
 					local eventIconString = F.GetIconString(self.args.icon, 16, 16)
-					local gradientName = getGradientText(self.args.eventName, self.args.barColor)
+					local gradientName = C.GradientStringByTemplate(self.args.eventName, unpack(self.args.barColor))
 
 					F.Print(format(eventIconString .. " " .. gradientName .. " " .. L["%s can be collected"], netsText))
 

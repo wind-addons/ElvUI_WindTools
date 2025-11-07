@@ -544,6 +544,14 @@ function W.Utilities.Color.CreateColorFromTable(colorTable)
 	return CreateColor(colorTable.r, colorTable.g, colorTable.b, colorTable.a)
 end
 
+---Create a ColorMixin object from predefined color template
+---@param template ColorTemplate The color template name
+---@return ColorMixin color The created color object
+function W.Utilities.Color.CreateColorFromTemplate(template)
+	local r, g, b = W.Utilities.Color.ExtractRGBFromTemplate(template)
+	return CreateColor(r, g, b, 1)
+end
+
 ---Get RGB values from predefined color template
 ---@param template ColorTemplate The color template name
 ---@return number r Red component (0-1)

@@ -69,12 +69,12 @@ local transmogInventoryTypes = {
 
 local knowns = {}
 
-local function isPetCollected(speciesID)
+local function IsPetCollected(speciesID)
 	local num = speciesID and C_PetJournal_GetNumCollectedInfo(speciesID)
 	return num and num > 0
 end
 
-local function isTransmogCollected(itemID)
+local function IsTransmogCollected(itemID)
 	if not C_Item_IsCosmeticItem(itemID) then
 		local inventoryType = C_Item_GetItemInventoryTypeByID(itemID)
 		if not transmogInventoryTypes[inventoryType] then
@@ -85,7 +85,7 @@ local function isTransmogCollected(itemID)
 	return C_TransmogCollection_PlayerHasTransmogByItemInfo(itemID)
 end
 
-local function isTransmogSetCollected(itemID)
+local function IsTransmogSetCollected(itemID)
 	local setID = C_Item_GetItemLearnTransmogSet(itemID)
 	if not setID then
 		return false
@@ -110,21 +110,21 @@ local function isTransmogSetCollected(itemID)
 	end)
 end
 
-local function isMountCollected(itemID)
+local function IsMountCollected(itemID)
 	local mountID = C_MountJournal_GetMountFromItem(itemID)
 	return mountID and select(11, C_MountJournal_GetMountInfoByID(mountID))
 end
 
-local function isToyCollected(itemID)
+local function IsToyCollected(itemID)
 	return C_ToyBox_GetToyInfo(itemID) and PlayerHasToy(itemID)
 end
 
-local function isPetItemCollected(itemID)
+local function IsPetItemCollected(itemID)
 	local speciesID = select(13, C_PetJournal_GetPetInfoByItemID(itemID))
-	return speciesID and isPetCollected(speciesID)
+	return speciesID and IsPetCollected(speciesID)
 end
 
-local function isAlreadyKnown(link, index)
+local function IsKnown(link, index)
 	if not link then
 		return
 	end
@@ -133,14 +133,14 @@ local function isAlreadyKnown(link, index)
 	linkID = tonumber(linkID)
 
 	if linkType == "battlepet" then
-		return isPetCollected(linkID)
+		return IsPetCollected(linkID)
 	elseif linkType == "item" then
 		local classID = select(6, C_Item_GetItemInfoInstant(link))
 		if classID == Enum_ItemClass_Battlepet and index then
 			local tab = GetCurrentGuildBankTab() --[[@as number]]
 			local data = C_TooltipInfo_GetGuildBankItem(tab, index)
 			if data then
-				return data.battlePetSpeciesID and isPetCollected(data.battlePetSpeciesID)
+				return data.battlePetSpeciesID and IsPetCollected(data.battlePetSpeciesID)
 			end
 		else
 			if knowns[link] then
@@ -152,11 +152,11 @@ local function isAlreadyKnown(link, index)
 			end
 
 			if
-				isMountCollected(linkID)
-				or isToyCollected(linkID)
-				or isPetItemCollected(linkID)
-				or isTransmogCollected(linkID)
-				or isTransmogSetCollected(linkID)
+				IsMountCollected(linkID)
+				or IsToyCollected(linkID)
+				or IsPetItemCollected(linkID)
+				or IsTransmogCollected(linkID)
+				or IsTransmogSetCollected(linkID)
 			then
 				knowns[link] = true
 				return true
@@ -201,14 +201,12 @@ function AK:UpdateMerchantItemButton(button)
 		local index = button:GetID()
 		local tex = texCache[button]
 		local info = C_MerchantFrame_GetItemInfo(index)
-		local numAvailable, isUsable = info.numAvailable, info.isUsable
-
-		if isUsable and isAlreadyKnown(GetMerchantItemLink(index)) then
+		if info and info.isUsable and IsKnown(GetMerchantItemLink(index)) then
 			if self.db.mode == "MONOCHROME" then
 				tex:SetDesaturated(true)
 			else
 				local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
-				if numAvailable == 0 then
+				if info.numAvailable == 0 then
 					r, g, b = r * 0.5, g * 0.5, b * 0.5
 				end
 				button:SetItemButtonTextureVertexColor(0.9 * r, 0.9 * g, 0.9 * b, true)
@@ -257,7 +255,7 @@ function AK:Buyback()
 		local button = _G["MerchantItem" .. index .. "ItemButton"]
 		if button and button:IsShown() then
 			local isUsable = select(6, GetBuybackItemInfo(index))
-			if isUsable and isAlreadyKnown(GetBuybackItemLink(index)) then
+			if isUsable and IsKnown(GetBuybackItemLink(index)) then
 				if self.db.mode == "MONOCHROME" then
 					_G["MerchantItem" .. index .. "ItemButtonIconTexture"]:SetDesaturated(true)
 				else
@@ -292,7 +290,7 @@ function AK:GuildBank(frame)
 		if button and button:IsShown() then
 			local texture, _, locked = GetGuildBankItemInfo(tab, i)
 			if texture and not locked then
-				if isAlreadyKnown(GetGuildBankItemLink(tab, i), i) then
+				if IsKnown(GetGuildBankItemLink(tab, i), i) then
 					if self.db.mode == "MONOCHROME" then
 						SetItemButtonDesaturated(button, true)
 					else
@@ -326,7 +324,7 @@ function AK:AuctionHouse(frame)
 					itemLink = format("|Hitem:%d", itemKey.itemID)
 				end
 
-				if itemLink and isAlreadyKnown(itemLink) then
+				if itemLink and IsKnown(itemLink) then
 					if self.db.mode == "MONOCHROME" then
 						button.Icon:SetDesaturated(true)
 					else

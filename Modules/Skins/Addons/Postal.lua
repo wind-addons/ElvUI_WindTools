@@ -34,7 +34,7 @@ local function reskinQuickAttachButton(button)
 	button:GetHighlightTexture():SetTexture(nil)
 	button.Border:Kill()
 	button:StyleButton(false, false)
-	button.icon:SetTexCoord(unpack(E.TexCoords))
+	button.icon:SetTexCoords()
 end
 
 local function postalMain()

@@ -5,7 +5,6 @@ local _G = _G
 local abs = abs
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
-local unpack = unpack
 
 local TEX_PREFIX = "Interface\\AddOns\\MountRoutePlanner\\Assets\\"
 
@@ -70,8 +69,8 @@ local function mountButton(button)
 		return false
 	end
 
-	button:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
-	button:GetHighlightTexture():SetTexCoord(unpack(E.TexCoords))
+	button:GetNormalTexture():SetTexCoords()
+	button:GetHighlightTexture():SetTexCoords()
 	button:CreateBackdrop()
 end
 
@@ -81,8 +80,8 @@ local function actionButton(button)
 		return false
 	end
 
-	button:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
-	button:GetHighlightTexture():SetTexCoord(unpack(E.TexCoords))
+	button:GetNormalTexture():SetTexCoords()
+	button:GetHighlightTexture():SetTexCoords()
 	button:SetTemplate()
 end
 

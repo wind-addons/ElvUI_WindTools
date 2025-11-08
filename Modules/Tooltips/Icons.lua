@@ -12,7 +12,6 @@ local tContains = tContains
 local tInsertUnique = tInsertUnique
 local tonumber = tonumber
 local tostring = tostring
-local unpack = unpack
 
 local GetAchievementInfo = GetAchievementInfo
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
@@ -166,7 +165,7 @@ end
 
 function T:ReskinRewardIcon(tt)
 	if tt and tt.Icon then
-		tt.Icon:SetTexCoord(unpack(E.TexCoords))
+		tt.Icon:SetTexCoords()
 		tt.IconBorder:Hide()
 	end
 end

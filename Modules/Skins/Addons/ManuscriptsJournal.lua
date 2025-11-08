@@ -25,7 +25,7 @@ local function reskinButton(_, button)
 			button.backdrop:SetBackdropColor(r, g, b, 1)
 		end)
 
-		button.iconTextureUncollected:SetTexCoord(unpack(E.TexCoords))
+		button.iconTextureUncollected:SetTexCoords()
 		button.iconTextureUncollected:SetInside(button)
 		button.iconTexture:SetDrawLayer("ARTWORK")
 		button.hover:SetAllPoints(button.iconTexture)
@@ -72,7 +72,7 @@ local function reskinTabs(tabsFrame)
 	for _, child in pairs({ tabsFrame:GetChildren() }) do
 		for _, region in pairs({ child:GetRegions() }) do
 			if region:IsShown() then
-				region:SetTexCoord(unpack(E.TexCoords))
+				region:SetTexCoords()
 				region:SetInside()
 			end
 		end

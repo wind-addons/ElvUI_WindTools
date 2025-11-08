@@ -4,7 +4,6 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
-local unpack = unpack
 
 function S:HandleMerchantItem(index)
 	for currencyIndex = 1, 3 do
@@ -12,7 +11,7 @@ function S:HandleMerchantItem(index)
 		if itemLine then
 			for _, region in pairs({ itemLine:GetRegions() }) do
 				if region:GetObjectType() == "Texture" then
-					region:SetTexCoord(unpack(E.TexCoords))
+					region:SetTexCoords()
 				end
 			end
 		end
@@ -47,7 +46,7 @@ function S:MerchantFrame()
 				token:Width(token:GetWidth() + 2)
 				F.SetFont(token.Count)
 				F.Move(token.Count, -2, 0)
-				token.Icon:SetTexCoord(unpack(E.TexCoords))
+				token.Icon:SetTexCoords()
 				token.__wind = true
 			end
 		end

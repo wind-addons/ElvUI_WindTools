@@ -142,7 +142,7 @@ function EB:CreateButton(name, barDB)
 	local tex = button:CreateTexture(nil, "OVERLAY", nil)
 	tex:Point("TOPLEFT", button, "TOPLEFT", 1, -1)
 	tex:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -1, 1)
-	tex:SetTexCoord(unpack(E.TexCoords))
+	tex:SetTexCoords()
 
 	local qualityTier = button:CreateFontString(nil, "OVERLAY")
 	qualityTier:SetTextColor(1, 1, 1, 1)

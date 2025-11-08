@@ -4,12 +4,11 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
-local unpack = unpack
 
 local function OnScrollViewUpdateView(view)
 	for _, line in pairs({ view:GetChildren() }) do
 		if line.Icon and not line.Icon.backdrop then
-			line.Icon:SetTexCoord(unpack(E.TexCoords))
+			line.Icon:SetTexCoords()
 			line.Icon:CreateBackdrop()
 		end
 	end
@@ -18,7 +17,7 @@ end
 local function OnDefaultFrameShow(frame)
 	for _, child in pairs({ frame:GetChildren() }) do
 		if child.Icon and not child.Icon.backdrop then
-			child.Icon:SetTexCoord(unpack(E.TexCoords))
+			child.Icon:SetTexCoords()
 			child.Icon:CreateBackdrop()
 		end
 

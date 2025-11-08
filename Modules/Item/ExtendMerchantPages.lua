@@ -6,7 +6,6 @@ local _G = _G
 local floor = math.floor
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
-local unpack = unpack
 
 local CreateFrame = CreateFrame
 local GetNumBuybackItems = GetNumBuybackItems
@@ -39,7 +38,7 @@ function EMP:SkinButton(index)
 	button:Point("TOPLEFT", item, "TOPLEFT", 4, -4)
 
 	local icon = button.icon
-	icon:SetTexCoord(unpack(E.TexCoords))
+	icon:SetTexCoords()
 	icon:ClearAllPoints()
 	icon:Point("TOPLEFT", 1, -1)
 	icon:Point("BOTTOMRIGHT", -1, 1)

@@ -15,7 +15,6 @@ local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
 local type = type
-local unpack = unpack
 local xpcall = xpcall
 
 local CreateFrame = CreateFrame
@@ -722,7 +721,7 @@ function S:TryCropTexture(tex)
 
 	local left, top, _, bottom, right = tex:GetTexCoord()
 	if F.IsAlmost({ left, top, right, bottom }, { 0, 0, 1, 1 }) then
-		tex:SetTexCoord(unpack(E.TexCoords))
+		tex:SetTexCoords()
 	end
 end
 

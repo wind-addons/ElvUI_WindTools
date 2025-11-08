@@ -38,7 +38,7 @@ local function ReskinIconButton(button)
 	end
 
 	if button.Texture then
-		button.Texture:SetTexCoord(unpack(E.TexCoords))
+		button.Texture:SetTexCoords()
 	end
 
 	if button.Icon then
@@ -240,7 +240,7 @@ local function ReskinPet(frame)
 	end
 
 	if frame.Icon then
-		frame.Icon:SetTexCoord(unpack(E.TexCoords))
+		frame.Icon:SetTexCoords()
 	end
 
 	frame.__windSkin = true
@@ -1281,7 +1281,7 @@ local function ReskinCanvas(frame)
 				region:Kill()
 			end
 		end
-		IconPicker.Icon:SetTexCoord(unpack(E.TexCoords))
+		IconPicker.Icon:SetTexCoords()
 
 		for i, region in ipairs({ IconPicker.SearchBox:GetRegions() }) do
 			if i > 5 then

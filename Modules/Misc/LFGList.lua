@@ -257,7 +257,7 @@ function LL:ReskinIcon(parent, icon, role, data)
 			elseif pack == "SPEC" then
 				local tex = LFGPI.GetIconTextureWithClassAndSpecName(class, spec)
 				icon:SetTexture(tex)
-				icon:SetTexCoord(unpack(E.TexCoords))
+				icon:SetTexCoords()
 			else
 				icon:SetTexture(RoleIconTextures[pack][role])
 				icon:SetTexCoord(0, 1, 0, 1)
@@ -706,7 +706,7 @@ function LL:InitializeRightPanel()
 			0
 		)
 		AffixIcon:SetTexture(select(3, C_ChallengeMode_GetAffixInfo(affixes[i].id)))
-		AffixIcon:SetTexCoord(unpack(E.TexCoords))
+		AffixIcon:SetTexCoords()
 	end
 
 	Panel.Affixes:SetScript("OnEnter", function()

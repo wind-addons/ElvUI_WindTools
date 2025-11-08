@@ -31,7 +31,7 @@ do
 		if frame.specicon then
 			frame.specicon:SetMask("")
 			frame.specicon:Size(35)
-			frame.specicon:SetTexCoord(unpack(E.TexCoords))
+			frame.specicon:SetTexCoords()
 		end
 
 		if frame.spectext then

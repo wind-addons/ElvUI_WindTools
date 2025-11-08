@@ -28,7 +28,6 @@ local tonumber = tonumber
 local tostring = tostring
 local tremove = tremove
 local type = type
-local unpack = unpack
 local wipe = wipe
 
 local CreateFrame = CreateFrame
@@ -728,7 +727,7 @@ function I:CreatePanel(parent)
 	frame.SpecIcon = frame:CreateTexture(nil, "ARTWORK")
 	frame.SpecIcon:Size(38)
 	frame.SpecIcon:Point("TOPRIGHT", frame, "TOPRIGHT", -28, -17)
-	frame.SpecIcon:SetTexCoord(unpack(E.TexCoords))
+	frame.SpecIcon:SetTexCoords()
 	frame.SpecIcon:SetShown(false)
 	frame.SpecIcon:CreateBackdrop()
 

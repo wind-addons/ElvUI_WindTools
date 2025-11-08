@@ -9,7 +9,6 @@ local floor = floor
 local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
-local unpack = unpack
 
 function S:RareScanner()
 	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rareScanner then
@@ -103,7 +102,7 @@ function S:RareScanner()
 			for button in pool:EnumerateActive() do
 				if not button.__windSkin then
 					if button.Icon and button.Icon:GetObjectType() == "Texture" then
-						button.Icon:SetTexCoord(unpack(E.TexCoords))
+						button.Icon:SetTexCoords()
 					end
 
 					local size = button.Icon:GetWidth() - 2

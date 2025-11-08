@@ -4,7 +4,6 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
-local unpack = unpack
 
 function S:SkinAlert(alert)
 	if not alert or alert.__windSkin then
@@ -399,7 +398,7 @@ function S:SkinAlertRewardIcons(frame)
 				end
 
 				reward.texture:SetMask("")
-				reward.texture:SetTexCoord(unpack(E.TexCoords))
+				reward.texture:SetTexCoords()
 				reward.texture:ClearAllPoints()
 				reward.texture:SetInside(reward, 7, 7)
 				reward.texture:CreateBackdrop()

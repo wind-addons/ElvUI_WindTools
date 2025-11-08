@@ -65,7 +65,7 @@ local functionFactory = {
 		end,
 		setup = function(self)
 			self.icon:SetTexture(self.args.icon)
-			self.icon:SetTexCoord(unpack(E.TexCoords))
+			self.icon:SetTexCoords()
 			self.icon:Size(22)
 			self.icon:ClearAllPoints()
 			self.icon:Point("LEFT", self, "LEFT", 0, 0)
@@ -237,7 +237,7 @@ local functionFactory = {
 		end,
 		setup = function(self)
 			self.icon:SetTexture(self.args.icon)
-			self.icon:SetTexCoord(unpack(E.TexCoords))
+			self.icon:SetTexCoords()
 			self.icon:Size(22)
 			self.icon:ClearAllPoints()
 			self.icon:Point("LEFT", self, "LEFT", 0, 0)
@@ -506,7 +506,7 @@ local functionFactory = {
 		end,
 		setup = function(self)
 			self.icon:SetTexture(self.args.icon)
-			self.icon:SetTexCoord(unpack(E.TexCoords))
+			self.icon:SetTexCoords()
 			self.icon:Size(22)
 			self.icon:ClearAllPoints()
 			self.icon:Point("LEFT", self, "LEFT", 0, 0)

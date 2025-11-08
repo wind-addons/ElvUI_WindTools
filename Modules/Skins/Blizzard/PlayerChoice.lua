@@ -5,7 +5,6 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local next = next
 local pairs = pairs
-local unpack = unpack
 
 local CreateFrame = CreateFrame
 
@@ -26,7 +25,7 @@ local function handleItemButton(item)
 		item.Icon:SetDrawLayer("ARTWORK")
 		item.Icon:SetParent(item.IconContainer)
 		item.Icon:SetInside(item.IconContainer)
-		item.Icon:SetTexCoord(unpack(E.TexCoords))
+		item.Icon:SetTexCoords()
 		item.IconContainer:SetTemplate()
 		if item.IconBorder then
 			S:Proxy("HandleIconBorder", item.IconBorder, item.IconContainer)

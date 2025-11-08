@@ -155,7 +155,7 @@ function MB:HandleLibDBIconButton(button, name)
 				F.CallMethod(icon, "SetTexCoord", unpack(E.TexCoords))
 			end
 		end)
-		button.icon:SetTexCoord(unpack(E.TexCoords))
+		button.icon:SetTexCoords()
 	end
 
 	return button:IsShown()

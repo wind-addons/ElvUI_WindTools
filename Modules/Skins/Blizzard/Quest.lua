@@ -6,7 +6,6 @@ local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local select = select
 local strmatch = strmatch
-local unpack = unpack
 
 local CreateFrame = CreateFrame
 local GetMaterialTextColors = GetMaterialTextColors
@@ -103,7 +102,7 @@ local function StyleRewardButton(rewardButton)
 	end
 
 	rewardButton.Icon:CreateBackdrop("Transparent")
-	rewardButton.Icon:SetTexCoord(unpack(E.TexCoords))
+	rewardButton.Icon:SetTexCoords()
 	S:CreateBackdropShadow(rewardButton.Icon)
 	S:BindShadowColorWithBorder(rewardButton.Icon.backdrop)
 
@@ -149,7 +148,7 @@ local function StyleSpellObjectiveButton(spellButton)
 	if spellIcon then
 		spellIcon:Point("TOPLEFT", 3, -2)
 		spellIcon:SetDrawLayer("ARTWORK")
-		spellIcon:SetTexCoord(unpack(E.TexCoords))
+		spellIcon:SetTexCoords()
 		S:CreateBackdropShadow(spellIcon)
 	end
 
@@ -251,7 +250,7 @@ local function QuestInfo_Display()
 					if not spellReward.__windSkin then
 						if spellReward.Icon then
 							spellReward.Icon:CreateBackdrop()
-							spellReward.Icon:SetTexCoord(unpack(E.TexCoords))
+							spellReward.Icon:SetTexCoords()
 							S:CreateBackdropShadow(spellReward.Icon)
 							S:BindShadowColorWithBorder(spellReward.Icon.backdrop)
 						end
@@ -264,7 +263,7 @@ local function QuestInfo_Display()
 				if not reputationReward.__windSkin then
 					if reputationReward.Icon then
 						reputationReward.Icon:CreateBackdrop()
-						reputationReward.Icon:SetTexCoord(unpack(E.TexCoords))
+						reputationReward.Icon:SetTexCoords()
 						S:CreateBackdropShadow(reputationReward.Icon)
 						S:BindShadowColorWithBorder(reputationReward.Icon.backdrop)
 					end
@@ -346,7 +345,7 @@ function S:BlizzardQuestFrames()
 		local titleIcon = titleRewardFrame.Icon
 
 		if titleIcon then
-			titleIcon:SetTexCoord(unpack(E.TexCoords))
+			titleIcon:SetTexCoords()
 			titleIcon:CreateBackdrop("Transparent")
 		end
 

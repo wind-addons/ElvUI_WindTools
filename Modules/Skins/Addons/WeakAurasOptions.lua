@@ -86,7 +86,7 @@ local function ApplyTextureCoords(tex, force)
 		return
 	end
 
-	tex:SetTexCoord(unpack(E.TexCoords))
+	tex:SetTexCoords()
 	tex.windTexCoords = true
 end
 

@@ -11,7 +11,6 @@ local ipairs = ipairs
 local pairs = pairs
 local select = select
 local strfind = strfind
-local unpack = unpack
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Item_GetItemQualityByID = C_Item.GetItemQualityByID
@@ -199,7 +198,7 @@ local function ReskinCollectionTabScrollBox(scrollBox)
 		end
 
 		local iconTex, borderTex, description, _, hoverTex = button.icon:GetRegions()
-		iconTex:SetTexCoord(unpack(E.TexCoords))
+		iconTex:SetTexCoords()
 		F.InternalizeMethod(iconTex, "SetTexCoord", true)
 		iconTex:CreateBackdrop()
 		borderTex:SetAlpha(0)

@@ -70,7 +70,7 @@ local function ScenarioObjectiveTrackerChallengeMode_SetUpAffixes(block)
 			frame.backdrop:ClearAllPoints()
 			frame.backdrop:SetOutside(frame.Portrait)
 			frame.Portrait:SetTexture(texPath)
-			frame.Portrait:SetTexCoord(unpack(E.TexCoords))
+			frame.Portrait:SetTexCoords()
 			frame.__windSkin = true
 		end
 	end
@@ -152,7 +152,7 @@ local function UpdateBlock(block)
 			if widgetFrame.CurrencyContainer then
 				for currencyFrame in widgetFrame.currencyPool:EnumerateActive() do
 					if not currencyFrame.__windSkin then
-						currencyFrame.Icon:SetTexCoord(unpack(E.TexCoords))
+						currencyFrame.Icon:SetTexCoords()
 						currencyFrame.__windSkin = true
 					end
 				end
@@ -218,14 +218,14 @@ local function ReskinSpellFrame(frame)
 		local highlightTex = SpellButton:GetHighlightTexture()
 		if highlightTex then
 			highlightTex:SetTexture(E.media.blankTex)
-			highlightTex:SetTexCoord(unpack(E.TexCoords))
+			highlightTex:SetTexCoords()
 			highlightTex:SetVertexColor(1, 1, 1, 0.25)
 		end
 
 		local pushedTex = SpellButton:GetPushedTexture()
 		if pushedTex then
 			pushedTex:SetTexture(E.media.blankTex)
-			pushedTex:SetTexCoord(unpack(E.TexCoords))
+			pushedTex:SetTexCoords()
 			pushedTex:SetVertexColor(1, 1, 1, 0.4)
 		end
 
@@ -251,7 +251,7 @@ local function ReskinSpellFrame(frame)
 			local backdrop = iconBackdrops[SpellIcon]
 			backdrop:ClearAllPoints()
 			backdrop:SetOutside(SpellIcon)
-			SpellIcon:SetTexCoord(unpack(E.TexCoords))
+			SpellIcon:SetTexCoords()
 
 			SpellButton:HookScript("OnEnter", function()
 				backdrop:SetBackdropBorderColor(unpack(E.media.rgbvaluecolor))

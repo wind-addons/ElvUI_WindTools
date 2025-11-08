@@ -140,7 +140,7 @@ local function StyleSilverDragonHistoryLine(line)
 
 	S:Proxy("HandleButton", line)
 
-	line.icon:SetTexCoord(unpack(E.TexCoords))
+	line.icon:SetTexCoords()
 	line.title:SetJustifyH("LEFT")
 	StyleSilverDragonText(line.title, E.db.general.fontSize - 1)
 	StyleSilverDragonText(line.time, E.db.general.fontSize - 2, { 0.8, 0.8, 0.8, 1 })
@@ -218,7 +218,7 @@ local function StyleSilverDragonHistoryWindow(frame, collapseButtonStatus)
 		if region and region:GetObjectType() == "Texture" then
 			local texture = region:GetTexture()
 			if texture and type(texture) == "string" and texture:find("Dragon") then
-				region:SetTexCoord(unpack(E.TexCoords))
+				region:SetTexCoords()
 			end
 		end
 	end

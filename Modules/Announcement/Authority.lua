@@ -71,7 +71,7 @@ function A:SendMyLevel(key, value)
 	end
 
 	local message = format("%s=%s;%d;%d", key, value, myServerID, myPlayerUID)
-	
+
 	C_ChatInfo_SendAddonMessage(self.prefix, message, GetBestChannel())
 end
 

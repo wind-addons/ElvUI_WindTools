@@ -5,7 +5,6 @@ local LSM = E.Libs.LSM
 
 local _G = _G
 local pairs = pairs
-local pcall = pcall
 local select = select
 local tostring = tostring
 local type = type
@@ -39,13 +38,7 @@ end
 ---@param db ProfileDB.item.itemLevel.flyout | ProfileDB.item.itemLevel.scrappingMachine
 ---@param location ItemLocation
 local function RefreshItemLevel(text, db, location)
-	-- temp solution
-	local success, result = pcall(C_Item_DoesItemExist, location)
-	if not success then
-		F.Developer.DevTool(location, "C_Item_DoesItemExist error")
-	end
-
-	if not text or not success or not result then
+	if not text or not location:GetBagAndSlot() or not C_Item_DoesItemExist(location) then
 		return
 	end
 

@@ -38,7 +38,12 @@ end
 ---@param db ProfileDB.item.itemLevel.flyout | ProfileDB.item.itemLevel.scrappingMachine
 ---@param location ItemLocation
 local function RefreshItemLevel(text, db, location)
-	if not text or not location:GetBagAndSlot() or not C_Item_DoesItemExist(location) then
+	if not text then
+		return
+	end
+
+	if not location:GetBagAndSlot() or not C_Item_DoesItemExist(location) then
+		text:SetText("")
 		return
 	end
 

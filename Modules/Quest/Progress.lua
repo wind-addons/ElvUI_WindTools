@@ -10,6 +10,7 @@ local gsub = gsub
 local pairs = pairs
 local select = select
 local strfind = strfind
+local strtrim = strtrim
 local tCompare = tCompare
 local tinsert = tinsert
 local tonumber = tonumber
@@ -180,7 +181,8 @@ local function IsObjectiveDataUpdated(newData, oldData)
 		return true
 	end
 
-	if oldData.item and oldData.item ~= "" and oldData.item ~= newData.item then
+	local serverDataWrong = oldData.item and strtrim(oldData.item) == "" or newData.item and strtrim(newData.item) == ""
+	if not serverDataWrong and oldData.item ~= newData.item then
 		return true
 	end
 
@@ -191,15 +193,14 @@ end
 ---@param text? string|number
 ---@param template? string
 ---@param color { left: RGB, right: RGB }
----@return  string? plainText
----@return  string? coloredText
+---@return string? plainText
+---@return string? coloredText
 local function Render(text, template, color)
 	if not text then
 		return
 	end
 
 	text = tostring(text)
-
 	if template then
 		text = format(template, tostring(text))
 	end

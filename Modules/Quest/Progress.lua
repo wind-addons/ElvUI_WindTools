@@ -45,6 +45,10 @@ local ignoreTagIDs = {
 	[291] = true, -- Hidden
 }
 
+local ignoreWorldQuestTypeIDs = {
+	[Enum.QuestTagType.Profession] = true,
+}
+
 ---@class QuestProgressData
 ---@field questID number Quest ID
 ---@field title string Quest title
@@ -72,7 +76,7 @@ local ignoreTagIDs = {
 ---@alias QuestProgressContext table<string, string?>
 
 ---@return ScenarioProgressData
-local function fetchAllScenarioProgressData()
+local function FetchAllScenarioProgressData()
 	local scenarioStepInfo = C_ScenarioInfo_GetScenarioStepInfo()
 	if not scenarioStepInfo or scenarioStepInfo.numCriteria == 0 then
 		return {}
@@ -102,7 +106,7 @@ end
 
 ---Get all current quest progress data
 ---@return table<number, QuestProgressData> quests
-local function fetchAllQuestProgressData()
+local function FetchAllQuestProgressData()
 	local quests = {} ---@type table<number, QuestProgressData>
 
 	for questIndex = 1, C_QuestLog_GetNumQuestLogEntries() do
@@ -118,8 +122,7 @@ local function fetchAllQuestProgressData()
 				or questInfo.isBounty
 				or questInfo.isHidden
 
-			-- Ensure world quests are only included if they are on the map
-			if tagInfo and tagInfo.worldQuestType and questInfo.isOnMap then
+			if tagInfo and tagInfo.worldQuestType and not ignoreWorldQuestTypeIDs[tagInfo.worldQuestType] then
 				skip = false
 			end
 
@@ -157,13 +160,37 @@ local function fetchAllQuestProgressData()
 	return quests
 end
 
+---Check if objective data has been updated
+---@param newData QuestObjectiveData
+---@param oldData QuestObjectiveData?
+---@return boolean
+local function IsObjectiveDataUpdated(newData, oldData)
+	if not oldData then
+		return true
+	end
+
+	if newData.numFulfilled ~= oldData.numFulfilled then
+		return true
+	end
+
+	if newData.numRequired ~= oldData.numRequired then
+		return true
+	end
+
+	if oldData.item ~= "" and oldData.item ~= newData.item then
+		return true
+	end
+
+	return false
+end
+
 ---Apply color to placeholder text
 ---@param text? string|number
 ---@param template? string
 ---@param color { left: RGB, right: RGB }
 ---@return  string? plainText
 ---@return  string? coloredText
-local function render(text, template, color)
+local function Render(text, template, color)
 	if not text then
 		return
 	end
@@ -200,22 +227,22 @@ function QP:BuildContext(data)
 	local db = self.db
 	local plainContext, coloredContext = {}, {}
 
-	plainContext.tag, coloredContext.tag = render(data.tag, db.tag.template, db.tag.color)
-	plainContext.title, coloredContext.title = render(data.title, db.title.template, db.title.color)
-	plainContext.level, coloredContext.level = render(data.level, db.level.template, db.level.color)
+	plainContext.tag, coloredContext.tag = Render(data.tag, db.tag.template, db.tag.color)
+	plainContext.title, coloredContext.title = Render(data.title, db.title.template, db.title.color)
+	plainContext.level, coloredContext.level = Render(data.level, db.level.template, db.level.color)
 	plainContext.link, coloredContext.link = data.link, data.link
 
 	if data.frequency then
 		if data.frequency == 1 then
-			plainContext.daily, coloredContext.daily = render(data.link, db.daily.template, db.daily.color)
+			plainContext.daily, coloredContext.daily = Render(data.link, db.daily.template, db.daily.color)
 		elseif data.frequency == 2 then
-			plainContext.weekly, coloredContext.weekly = render(data.link, db.weekly.template, db.weekly.color)
+			plainContext.weekly, coloredContext.weekly = Render(data.link, db.weekly.template, db.weekly.color)
 		end
 	end
 
 	if data.suggestedGroup and data.suggestedGroup > 1 then
 		plainContext.suggestedGroup, coloredContext.suggestedGroup =
-			render(data.suggestedGroup, db.suggestedGroup.template, db.suggestedGroup.color)
+			Render(data.suggestedGroup, db.suggestedGroup.template, db.suggestedGroup.color)
 	end
 
 	if data.level and data.level ~= UnitLevel("player") then
@@ -227,6 +254,8 @@ function QP:BuildContext(data)
 	return plainContext, coloredContext
 end
 
+---@param objectiveData QuestObjectiveData
+---@return boolean
 function QP:ValidateObjectiveData(objectiveData)
 	if not objectiveData then
 		return false
@@ -247,7 +276,7 @@ function QP:ValidateObjectiveData(objectiveData)
 end
 
 function QP:ProcessQuestUpdate()
-	local currentQuests = fetchAllQuestProgressData()
+	local currentQuests = FetchAllQuestProgressData()
 	if not cachedQuests then
 		cachedQuests = currentQuests
 		return
@@ -266,10 +295,11 @@ function QP:ProcessQuestUpdate()
 				for objectiveIndex = 1, #questData.objectives do
 					local objectiveData = questData.objectives[objectiveIndex]
 					local previousObjectiveData = previousQuestData.objectives[objectiveIndex]
-					if not previousObjectiveData or not tCompare(objectiveData, previousObjectiveData) then
-						if self:ValidateObjectiveData(objectiveData) then
-							self:HandleQuestProgress(QUEST_STATUS.QUEST_UPDATE, questData, objectiveData)
-						end
+					if
+						IsObjectiveDataUpdated(objectiveData, previousObjectiveData)
+						and self:ValidateObjectiveData(objectiveData)
+					then
+						self:HandleQuestProgress(QUEST_STATUS.QUEST_UPDATE, questData, objectiveData)
 					end
 				end
 			end
@@ -284,7 +314,7 @@ function QP:ProcessScenarioUpdate()
 		return
 	end
 
-	local currentScenarioStep = fetchAllScenarioProgressData()
+	local currentScenarioStep = FetchAllScenarioProgressData()
 
 	if
 		not cachedScenarioStep
@@ -331,25 +361,20 @@ end
 ---@param questData QuestProgressData | ScenarioProgressData
 ---@param objectiveData? QuestObjectiveData
 function QP:HandleQuestProgress(status, questData, objectiveData)
-	-- Ignore progress messages within 5 seconds after login to avoid spam
-	if not self.afterFiveSecondsAfterLogin then
-		return
-	end
-
 	local plainContext, coloredContext = self:BuildContext(questData)
 
 	if status == QUEST_STATUS.ACCEPTED then
 		local db = self.db.progress.accepted
-		plainContext.progress, coloredContext.progress = render(db.text, nil, db.color)
+		plainContext.progress, coloredContext.progress = Render(db.text, nil, db.color)
 		coloredContext.icon = format("|T%s:0|t", W.Media.Icons.accept)
 	elseif status == QUEST_STATUS.COMPLETED then
 		local db = self.db.progress.complete
-		plainContext.progress, coloredContext.progress = render(db.text, nil, db.color)
+		plainContext.progress, coloredContext.progress = Render(db.text, nil, db.color)
 		coloredContext.icon = format("|T%s:0|t", W.Media.Icons.complete)
 	elseif status == QUEST_STATUS.QUEST_UPDATE or status == QUEST_STATUS.SCENARIO_UPDATE then
 		assert(objectiveData, "Objective data is required for progress update")
 		local db = self.db.progress.objective
-		local objectiveText, coloredObjectiveText = render(objectiveData.item, "%s", db.color)
+		local objectiveText, coloredObjectiveText = Render(objectiveData.item, "%s", db.color)
 		local progressText = format(db.detailTemplate, objectiveData.numFulfilled, objectiveData.numRequired)
 		local progressColor = F.GetProgressColor(objectiveData.numFulfilled / objectiveData.numRequired)
 		local coloredProgressText = C.StringWithRGB(progressText, progressColor)
@@ -453,10 +478,6 @@ function QP:Initialize()
 		self:UpdateBlizzardQuestMessage()
 		self:ProcessQuestUpdate()
 		self:ProcessScenarioUpdate()
-
-		E:Delay(5, function()
-			self.afterFiveSecondsAfterLogin = true
-		end)
 	end)
 end
 

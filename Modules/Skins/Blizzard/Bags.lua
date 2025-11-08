@@ -30,11 +30,32 @@ function S:Bank()
 	end
 end
 
+local function SkinItemButton(button)
+	if not button or not button.IconBorder then
+		return
+	end
+
+	hooksecurefunc(button.IconBorder, "SetAlpha", function(border, alpha)
+		if alpha ~= 0 then
+			border:SetAlpha(0)
+		end
+	end)
+end
+
 local function SkinBag(bagID, bag)
 	local container = bag or _G["ContainerFrame" .. bagID]
-	if container then
-		S:CreateShadow(container)
+	if not container then
+		return
 	end
+
+	S:CreateShadow(container)
+
+	-- Some other addons like Zygor may change the alpha, so make the alpha more robust
+	hooksecurefunc(container, "UpdateItems", function()
+		for _, button in container:EnumerateValidItems() do
+			SkinItemButton(button)
+		end
+	end)
 end
 
 function S:Bag()

@@ -35,10 +35,10 @@ local NUM_BAG_SLOTS = NUM_BAG_SLOTS
 ---@type table<string, KeystoneInfoData>
 KI.LibKeystoneInfo = {}
 
----@class KeystoneInfoPlayerKeystone
+---@class KeystoneInfo.PlayerKeystone
 ---@field level number?
 ---@field mapID number?
-KI.playerKeystone = {}
+KI.PlayerKeystone = {}
 
 function KI:GetPlayerKeystoneLink()
 	for bagIndex = 0, NUM_BAG_SLOTS do
@@ -79,22 +79,29 @@ function KI:GetPlayerKeystone()
 	return mapID, keystoneLevel, link
 end
 
----@param skipMessage boolean? the flag to skip sending custom message to other modules
-function KI:RequestAndCheckPlayerKeystone(skipMessage)
+---@param skipEmit boolean? the flag to skip sending custom message to other modules
+function KI:RequestAndCheckPlayerKeystone(skipEmit)
 	self.RequestData()
+	self:CheckPlayerKeystone(skipEmit)
+end
 
+---@param skipEmit boolean? the flag to skip sending custom message to other modules
+function KI:CheckPlayerKeystone(skipEmit)
 	local mapID, level, link = self:GetPlayerKeystone()
-	local changed = self.playerKeystone.level ~= level or self.playerKeystone.mapID ~= mapID
 
-	if changed then
-		if not skipMessage then
+	if self.PlayerKeystone.mapID ~= mapID or self.PlayerKeystone.level ~= level then
+		if not skipEmit then
 			self:SendMessage("WINDTOOLS_PLAYER_KEYSTONE_CHANGED", mapID, level, link)
 		end
 
 		KS.Request("GUILD")
 	end
 
-	self.playerKeystone.mapID, self.playerKeystone.level = mapID, level
+	self.PlayerKeystone.mapID, self.PlayerKeystone.level = mapID, level
+end
+
+function KI:DelayedCheckPlayerKeystone()
+	return E:Delay(0.5, KI.CheckPlayerKeystone, KI)
 end
 
 function KI.RequestData()
@@ -140,10 +147,10 @@ function KI:UnitData(unit)
 end
 
 KI:RegisterEvent("GROUP_ROSTER_UPDATE", "RequestData")
-KI:RegisterEvent("CHALLENGE_MODE_COMPLETED", "RequestAndCheckPlayerKeystone")
 KI:RegisterEvent("CHALLENGE_MODE_START", "RequestData")
 KI:RegisterEvent("CHALLENGE_MODE_RESET", "RequestData")
-KI:RegisterEvent("ITEM_CHANGED", function()
-	E:Delay(0.5, KI.RequestAndCheckPlayerKeystone, KI)
-end)
+KI:RegisterEvent("CHALLENGE_MODE_COMPLETED", "RequestAndCheckPlayerKeystone")
+KI:RegisterEvent("ITEM_CHANGED", "DelayedCheckPlayerKeystone")
+KI:RegisterEvent("ITEM_PUSH", "DelayedCheckPlayerKeystone")
+
 F.TaskManager:AfterLogin(KI.RequestAndCheckPlayerKeystone, KI, true)

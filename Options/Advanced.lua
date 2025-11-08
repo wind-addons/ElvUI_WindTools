@@ -558,7 +558,7 @@ options.reset = {
 			order = 5,
 			type = "group",
 			inline = true,
-			name = C.StringByTemplate(L["Quest"], "blue-500"),
+			name = C.StringByTemplate(L["Quest & Achieve"], "blue-500"),
 			args = {
 				objectiveTracker = {
 					order = 1,
@@ -597,6 +597,26 @@ options.reset = {
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Switch Buttons"], nil, function()
 							E.db.WT.quest.switchButtons = P.quest.switchButtons
+						end)
+					end,
+				},
+				achievementScreenshot = {
+					order = 5,
+					type = "execute",
+					name = L["Achievement Screenshot"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Achievement Screenshot"], nil, function()
+							E.db.WT.quest.achievementScreenshot = P.quest.achievementScreenshot
+						end)
+					end,
+				},
+				achievementTracker = {
+					order = 6,
+					type = "execute",
+					name = L["Achievement Tracker"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Achievement Tracker"], nil, function()
+							E.db.WT.quest.achievementTracker = P.quest.achievementTracker
 						end)
 					end,
 				},
@@ -910,7 +930,6 @@ options.reset = {
 					name = L["General"],
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["General"], nil, function()
-							E.private.WT.misc.autoScreenshot = V.misc.autoScreenshot
 							E.private.WT.misc.moveSpeed = V.misc.moveSpeed
 							E.private.WT.misc.noKanjiMath = V.misc.noKanjiMath
 							E.private.WT.misc.pauseToSlash = V.misc.pauseToSlash

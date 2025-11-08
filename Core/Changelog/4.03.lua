@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...))) ---@type WindTools
 
 W.Changelog[403] = {
-	RELEASE_DATE = "TBD",
+	RELEASE_DATE = "2025/11/08",
 	IMPORTANT = {
 		["zhCN"] = {
 			"代码清理与优化.",
@@ -58,22 +58,27 @@ W.Changelog[403] = {
 		["zhCN"] = {
 			"[矩形小地图] 新增 HereBeDragons-Pins 图标支持, 默认启用. HandyNotes, SilverDragon 等插件的图标将不再显示在矩形小地图之外.",
 			"[事件追踪器] 新增军团幻境军团突袭事件支持.",
+			"[预创建队伍] 现在优先会尝试打开 Bigwigs 的钥石信息窗口, 若未安装 Bigwigs 则尝试打开 Details! 的钥石信息窗口.",
 		},
 		["zhTW"] = {
 			"[矩形小地圖] 新增 HereBeDragons-Pins 圖示支援, 預設啟用. HandyNotes, SilverDragon 等插件的圖示將不再顯示在矩形小地圖之外.",
 			"[事件追蹤器] 新增軍團混搭再造軍團突襲事件支援.",
+			"[預組隊伍] 現在優先會嘗試打開 Bigwigs 的鑰石資訊視窗, 若未安裝 Bigwigs 則嘗試打開 Details! 的鑰石資訊視窗.",
 		},
 		["enUS"] = {
 			"[Rectangular Minimap] Added HereBeDragons-Pins support, enabled by default. Icons from addons like HandyNotes, SilverDragon, etc., will no longer appear outside the rectangle minimap.",
 			"[Event Tracker] Added Legion Assault event support.",
+			"[LFG List] Now prioritizes opening BigWigs keystone info window; if BigWigs is not installed, it will attempt to open Details! keystone info window.",
 		},
 		["koKR"] = {
 			"[사각형 미니맵] HereBeDragons-Pins 지원 추가, 기본 활성화. HandyNotes, SilverDragon 등의 애드온 아이콘이 사각형 미니맵 외부에 더 이상 표시되지 않습니다.",
 			"[이벤트 추적기] 군단 습격 이벤트 지원 추가.",
+			"[사전 생성 파티] 이제 BigWigs 쐐기돌 정보 창을 우선적으로 열며, BigWigs가 설치되어 있지 않은 경우 Details! 쐐기돌 정보 창을 열도록 시도합니다.",
 		},
 		["ruRU"] = {
 			"[Прямоугольная миникарта] Добавлена поддержка HereBeDragons-Pins, включена по умолчанию. Иконки из аддонов, таких как HandyNotes, SilverDragon и др., больше не будут отображаться за пределами прямоугольной миникарты.",
 			"[Трекер событий] Добавлена поддержка событий Легионского вторжения.",
+			"[Список LFG] Теперь приоритетно открывается окно информации о ключах BigWigs; если BigWigs не установлен, будет предпринята попытка открыть окно информации о ключах Details!.",
 		},
 	},
 	IMPROVEMENT = {
@@ -99,6 +104,7 @@ W.Changelog[403] = {
 			"[通告]-[任务] 新增任务等级与玩家等级相同时自动隐藏选项, 默认开启.",
 			"[通告]-[任务] 新增任务等级与满级相同时自动隐藏选项, 默认开启.",
 			"[通告]-[任务] 微调任务各阶段通告格式, 新增自定义格式选项.",
+			"[通告]-[钥石] 修复军团幻境钥石不通告的问题.",
 			"[已知物品上色] 优化物品识别逻辑, 提升已知/已学物品判定准确性.",
 			"[事件追踪器] 调整部分追踪条颜色.",
 			"[事件追踪器] 修复简体中文翻译错误.",
@@ -126,6 +132,7 @@ W.Changelog[403] = {
 			"[通告]-[任務] 新增任務等級與玩家等級相同時自動隱藏選項, 預設開啟.",
 			"[通告]-[任務] 新增任務等級與滿級相同時自動隱藏選項, 預設開啟.",
 			"[通告]-[任務] 微調任務各階段通告格式, 新增自訂格式選項.",
+			"[通告]-[鑰石] 修復軍團混搭再造鑰石不通告的問題.",
 			"[已知物品上色] 優化物品識別邏輯, 提升已知/已學物品判定準確性.",
 			"[事件追蹤器] 調整部分追蹤條顏色.",
 			"[事件追蹤器] 修復簡體中文翻譯錯誤.",
@@ -153,6 +160,7 @@ W.Changelog[403] = {
 			"[Announcement]-[Quest] Added auto-hide level when matching player level, enabled by default.",
 			"[Announcement]-[Quest] Added auto-hide level when matching max level, enabled by default.",
 			"[Announcement]-[Quest] Refined quest stage announcement formats with customization options.",
+			"[Announcement]-[Keystone] Fixed Legion Remix keystone not announcing issues.",
 			"[Already Known] Enhanced item identification logic for better known/learned detection.",
 			"[Event Tracker] Adjusted tracking bar colors.",
 			"[Event Tracker] Fixed Simplified Chinese translation errors.",
@@ -180,6 +188,7 @@ W.Changelog[403] = {
 			"[공지]-[퀘스트] 플레이어 레벨과 일치 시 레벨 자동 숨김 추가, 기본 활성화.",
 			"[공지]-[퀘스트] 최대 레벨과 일치 시 레벨 자동 숨김 추가, 기본 활성화.",
 			"[공지]-[퀘스트] 퀘스트 단계 공지 형식 정교화 및 사용자 정의 옵션.",
+			"[공지]-[쐐기돌] 군단 리믹스 쐐기돌 공지 문제 수정.",
 			"[이미 알고 있는 아이템] 더 나은 알려진/학습된 감지를 위한 아이템 식별 논리 개선.",
 			"[이벤트 추적기] 추적 막대 색상 조정.",
 			"[이벤트 추적기] 간체 중국어 번역 오류 수정.",
@@ -207,6 +216,7 @@ W.Changelog[403] = {
 			"[Объявления]-[Задания] Добавлено авто-скрытие уровня при совпадении с уровнем игрока, включено по умолчанию.",
 			"[Объявления]-[Задания] Добавлено авто-скрытие уровня при совпадении с максимальным уровнем, включено по умолчанию.",
 			"[Объявления]-[Задания] Уточнены форматы объявлений этапов заданий с опциями настройки.",
+			"[Объявления]-[Задания] Добавлено авто-скрытие уровня при совпадении с уровнем игрока, включено по умолчанию.",
 			"[Уже известные] Улучшена логика идентификации предметов для лучшего обнаружения известных/изученных.",
 			"[Трекер событий] Настроены цвета полос отслеживания.",
 			"[Трекер событий] Исправлены ошибки перевода на упрощенный китайский.",

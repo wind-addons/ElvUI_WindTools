@@ -1,57 +1,19 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local A = W:GetModule("Announcement") ---@class Announcement
+local KI = W:GetModule("KeystoneInfo") ---@class KeystoneInfo
 
 local gsub = gsub
 local strlower = strlower
 
-local C_Container_GetContainerItemID = C_Container.GetContainerItemID
-local C_Container_GetContainerItemLink = C_Container.GetContainerItemLink
-local C_Container_GetContainerNumSlots = C_Container.GetContainerNumSlots
-
-local C_Item_IsItemKeystoneByID = C_Item.IsItemKeystoneByID
-local C_MythicPlus_GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID
-local C_MythicPlus_GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
-
-local NUM_BAG_SLOTS = NUM_BAG_SLOTS
-
-local cache = {}
-
-local function getKeystoneLink()
-	for bagIndex = 0, NUM_BAG_SLOTS do
-		for slotIndex = 1, C_Container_GetContainerNumSlots(bagIndex) do
-			local itemID = C_Container_GetContainerItemID(bagIndex, slotIndex)
-			if itemID and C_Item_IsItemKeystoneByID(itemID) then
-				return C_Container_GetContainerItemLink(bagIndex, slotIndex)
-			end
-		end
-	end
-end
-
-function A:Keystone(event)
+function A:Keystone(_, _, link)
 	local config = self.db.keystone
 
 	if not config or not config.enable then
 		return
 	end
 
-	local mapID = C_MythicPlus_GetOwnedKeystoneChallengeMapID()
-	local keystoneLevel = C_MythicPlus_GetOwnedKeystoneLevel()
-
-	if event == "PLAYER_ENTERING_WORLD" then
-		cache.mapID = mapID
-		cache.keystoneLevel = keystoneLevel
-	elseif event == "CHALLENGE_MODE_COMPLETED" or event == "ITEM_CHANGED" then
-		if cache.mapID ~= mapID or cache.keystoneLevel ~= keystoneLevel then
-			cache.mapID = mapID
-			cache.keystoneLevel = keystoneLevel
-
-			local link = getKeystoneLink()
-			if link then
-				local message = gsub(config.text, "%%keystone%%", link)
-				self:SendMessage(message, self:GetChannel(config.channel))
-			end
-		end
-	end
+	local message = gsub(config.text, "%%keystone%%", link)
+	self:SendMessage(message, self:GetChannel(config.channel))
 end
 
 function A:KeystoneLink(event, text)
@@ -73,7 +35,7 @@ function A:KeystoneLink(event, text)
 	end
 
 	if channel then
-		local link = getKeystoneLink()
+		local link = KI:GetPlayerKeystoneLink()
 		if link then
 			self:SendMessage(link, channel)
 		end

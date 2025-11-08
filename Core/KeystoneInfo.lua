@@ -7,14 +7,25 @@ local OR = E.Libs.OpenRaid
 local KS = E.Libs.Keystone
 
 local select = select
+local strsplit = strsplit
+local tonumber = tonumber
 
 local Ambiguate = Ambiguate
 local GetInstanceInfo = GetInstanceInfo
 local GetUnitName = GetUnitName
 local IsInGroup = IsInGroup
 local UnitIsPlayer = UnitIsPlayer
+local PlayerIsTimerunning = PlayerIsTimerunning
+
+local C_Container_GetContainerItemID = C_Container.GetContainerItemID
+local C_Container_GetContainerItemLink = C_Container.GetContainerItemLink
+local C_Container_GetContainerNumSlots = C_Container.GetContainerNumSlots
+local C_Item_IsItemKeystoneByID = C_Item.IsItemKeystoneByID
+local C_MythicPlus_GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID
+local C_MythicPlus_GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
 
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
+local NUM_BAG_SLOTS = NUM_BAG_SLOTS
 
 ---@class KeystoneInfoData
 ---@field level number
@@ -23,6 +34,68 @@ local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 
 ---@type table<string, KeystoneInfoData>
 KI.LibKeystoneInfo = {}
+
+---@class KeystoneInfoPlayerKeystone
+---@field level number?
+---@field mapID number?
+KI.playerKeystone = {}
+
+function KI:GetPlayerKeystoneLink()
+	for bagIndex = 0, NUM_BAG_SLOTS do
+		for slotIndex = 1, C_Container_GetContainerNumSlots(bagIndex) do
+			local itemID = C_Container_GetContainerItemID(bagIndex, slotIndex)
+			if itemID and C_Item_IsItemKeystoneByID(itemID) then
+				return C_Container_GetContainerItemLink(bagIndex, slotIndex)
+			end
+		end
+	end
+end
+
+---@return number? mapID
+---@return number? level
+---@return string? link
+function KI:GetPlayerKeystone()
+	local link = self:GetPlayerKeystoneLink()
+	if not link then
+		return nil, nil, nil
+	end
+
+	if not PlayerIsTimerunning() then
+		return C_MythicPlus_GetOwnedKeystoneChallengeMapID(), C_MythicPlus_GetOwnedKeystoneLevel(), link
+	end
+
+	local challengeMapID, level = select(3, strsplit(":", link))
+	if not challengeMapID or not level then
+		return nil, nil, link
+	end
+
+	local mapID = tonumber(challengeMapID)
+	local keystoneLevel = tonumber(level)
+
+	if not mapID or not keystoneLevel then
+		return nil, nil, link
+	end
+
+	return mapID, keystoneLevel, link
+end
+
+---@param skipMessage boolean? the flag to skip sending custom message to other modules
+function KI:RequestAndCheckPlayerKeystone(skipMessage)
+	self.RequestData()
+
+	local mapID, level, link = self:GetPlayerKeystone()
+	local changed = self.playerKeystone.level ~= level or self.playerKeystone.mapID ~= mapID
+
+	if changed then
+		if not skipMessage then
+			self:SendMessage("WINDTOOLS_PLAYER_KEYSTONE_CHANGED", mapID, level, link)
+		end
+
+		KS.Request("GUILD")
+	end
+
+	self.playerKeystone.mapID, self.playerKeystone.level = mapID, level
+end
 
 function KI.RequestData()
 	-- Disable in Delve
@@ -67,8 +140,10 @@ function KI:UnitData(unit)
 end
 
 KI:RegisterEvent("GROUP_ROSTER_UPDATE", "RequestData")
-KI:RegisterEvent("CHALLENGE_MODE_COMPLETED", "RequestData")
+KI:RegisterEvent("CHALLENGE_MODE_COMPLETED", "RequestAndCheckPlayerKeystone")
 KI:RegisterEvent("CHALLENGE_MODE_START", "RequestData")
 KI:RegisterEvent("CHALLENGE_MODE_RESET", "RequestData")
-F.TaskManager:AfterLogin(KI.RequestData)
-F.TaskManager:AfterLogin(KS.Request, "GUILD") -- For own keystone info
+KI:RegisterEvent("ITEM_CHANGED", function()
+	E:Delay(0.5, KI.RequestAndCheckPlayerKeystone, KI)
+end)
+F.TaskManager:AfterLogin(KI.RequestAndCheckPlayerKeystone, KI, true)

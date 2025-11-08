@@ -173,6 +173,10 @@ function A:Initialize()
 		A:RegisterEvent(event)
 	end
 
+	for _, message in pairs(self.MessageList) do
+		A:RegisterMessage(message)
+	end
+
 	self:InitializeAuthority()
 	self:ResetAuthority()
 
@@ -193,6 +197,10 @@ function A:ProfileUpdate()
 	-- If the module is disabled from profile, unregister all events and reset authority
 	for _, event in pairs(self.EventList) do
 		A:UnregisterEvent(event)
+	end
+
+	for _, message in pairs(self.MessageList) do
+		A:UnregisterMessage(message)
 	end
 
 	self:ResetAuthority()

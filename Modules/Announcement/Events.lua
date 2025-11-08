@@ -16,11 +16,14 @@ A.EventList = {
 	"CHAT_MSG_SYSTEM",
 	"COMBAT_LOG_EVENT_UNFILTERED",
 	"GROUP_ROSTER_UPDATE",
-	"ITEM_CHANGED",
 	"LFG_COMPLETION_REWARD",
 	"PLAYER_ENTERING_WORLD",
 	"SCENARIO_COMPLETED",
 	"UNIT_SPELLCAST_SUCCEEDED",
+}
+
+A.MessageList = {
+	"WINDTOOLS_PLAYER_KEYSTONE_CHANGED",
 }
 
 -- CHAT_MSG_SYSTEM: text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons
@@ -45,10 +48,6 @@ function A:SCENARIO_COMPLETED(_, questID)
 	if questID and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and UnitName("party1") then
 		self:Goodbye()
 	end
-end
-
-function A:ITEM_CHANGED(event, ...)
-	E:Delay(0.5, self.Keystone, self, event)
 end
 
 function A:COMBAT_LOG_EVENT_UNFILTERED()
@@ -82,15 +81,13 @@ function A:LFG_COMPLETION_REWARD()
 	self:Goodbye()
 end
 
-function A:PLAYER_ENTERING_WORLD(event)
-	E:Delay(2, self.Keystone, self, event)
+function A:PLAYER_ENTERING_WORLD()
 	E:Delay(4, self.ResetAuthority, self)
 	E:Delay(10, self.ResetAuthority, self)
 end
 
-function A:CHALLENGE_MODE_COMPLETED(event)
+function A:CHALLENGE_MODE_COMPLETED()
 	self:Goodbye()
-	E:Delay(2, self.Keystone, self, event)
 end
 
 function A:CHAT_MSG_ADDON(_, prefix, text)
@@ -105,4 +102,8 @@ end
 
 function A:UNIT_SPELLCAST_SUCCEEDED(event, unitTarget, _, spellId)
 	self:Utility(event, UnitName(unitTarget), spellId)
+end
+
+function A:WINDTOOLS_PLAYER_KEYSTONE_CHANGED(_, ...)
+	self:Keystone(...)
 end

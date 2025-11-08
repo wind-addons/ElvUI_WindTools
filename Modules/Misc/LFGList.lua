@@ -430,17 +430,19 @@ function LL:InitializePartyKeystoneFrame()
 	S:Proxy("HandleButton", frame.MoreButton)
 
 	frame.MoreButton:SetScript("OnClick", function()
-		if _G.SlashCmdList["KEYSTONE"] then
+		if _G.SlashCmdList["bwkey"] then
+			_G.SlashCmdList["bwkey"]()
+		elseif _G.SlashCmdList["KEYSTONE"] then
 			_G.SlashCmdList["KEYSTONE"]("", FakeChatEditBox)
 		else
-			F.Print(L["You need to install Details! first."])
+			F.Print(L["You need to install Bigwigs or Details! first."])
 		end
 	end)
 
 	frame.MoreButton:SetScript("OnEnter", function(s)
 		_G.GameTooltip:SetOwner(s, "ANCHOR_TOP", 0, 3)
 		_G.GameTooltip:ClearLines()
-		_G.GameTooltip:AddLine(L["Click to open Details! keystone info window."])
+		_G.GameTooltip:AddLine(L["Click to open Bigwigs or Details! keystone info window."])
 		_G.GameTooltip:Show()
 	end)
 

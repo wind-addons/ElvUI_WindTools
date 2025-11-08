@@ -365,6 +365,10 @@ end
 ---@param questData QuestProgressData | ScenarioProgressData
 ---@param objectiveData? QuestObjectiveData
 function QP:HandleQuestProgress(status, questData, objectiveData)
+	if not self.fiveSecondsAfterLogin then
+		return
+	end
+
 	local plainContext, coloredContext = self:BuildContext(questData)
 
 	if status == QUEST_STATUS.ACCEPTED then
@@ -482,6 +486,10 @@ function QP:Initialize()
 		self:UpdateBlizzardQuestMessage()
 		self:ProcessQuestUpdate()
 		self:ProcessScenarioUpdate()
+
+		E:Delay(5, function()
+			self.fiveSecondsAfterLogin = true
+		end)
 	end)
 end
 

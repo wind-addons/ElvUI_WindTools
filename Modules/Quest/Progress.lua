@@ -180,7 +180,7 @@ local function IsObjectiveDataUpdated(newData, oldData)
 		return true
 	end
 
-	if oldData.item ~= "" and oldData.item ~= newData.item then
+	if oldData.item and oldData.item ~= "" and oldData.item ~= newData.item then
 		return true
 	end
 

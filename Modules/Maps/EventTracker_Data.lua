@@ -3,13 +3,11 @@ local C = W.Utilities.Color
 local ET = W:GetModule("EventTracker") ---@class EventTracker
 
 local _G = _G
-local type = type
 local floor = floor
 local format = format
-local ipairs = ipairs
 local pairs = pairs
 local tinsert = tinsert
-local math_pow = math.pow
+local type = type
 
 local GetCurrentRegion = GetCurrentRegion
 local GetProfessionInfo = GetProfessionInfo
@@ -17,10 +15,7 @@ local GetProfessions = GetProfessions
 local GetServerTime = GetServerTime
 local PlayerIsTimerunning = PlayerIsTimerunning
 
-local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
 local C_Map_GetMapInfo = C_Map.GetMapInfo
-local C_Map_GetPlayerMapPosition = C_Map.GetPlayerMapPosition
-local C_NamePlate_GetNamePlates = C_NamePlate.GetNamePlates
 local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 local C_QuestLog_IsOnQuest = C_QuestLog.IsOnQuest
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
@@ -37,26 +32,6 @@ local function worldMapIDSetter(idOrFunc)
 end
 
 ET.Meta = {
-	fishingNetPosition = {
-		-- Waking Shores
-		[1] = { map = 2022, x = 0.63585, y = 0.75349 },
-		[2] = { map = 2022, x = 0.64514, y = 0.74178 },
-		-- Lava
-		[3] = { map = 2022, x = 0.33722, y = 0.65047 },
-		[4] = { map = 2022, x = 0.34376, y = 0.64763 },
-		-- Thaldraszus
-		[5] = { map = 2025, x = 0.56782, y = 0.65178 },
-		[6] = { map = 2025, x = 0.57756, y = 0.65491 },
-		-- Ohn'ahran Plains
-		[7] = { map = 2023, x = 0.80522, y = 0.78433 },
-		[8] = { map = 2023, x = 0.80467, y = 0.77742 },
-	},
-	fishingNetWidgetIDToIndex = {
-		-- data mining: https://wow.tools/dbc/?dbc=uiwidget&build=10.0.5.47621#page=1&colFilter[3]=exact%3A2087
-		-- Waking Shores
-		[4203] = 1,
-		[4317] = 2,
-	},
 	radiantEchoesZoneRotation = {
 		C_Map_GetMapInfo(32),
 		C_Map_GetMapInfo(70),
@@ -77,7 +52,7 @@ ET.Meta = {
 	},
 }
 
----@type table<string, ColorTemplate[]>
+---@alias EventTracker.ColorPalette table<string, [ColorTemplate, ColorTemplate]>
 ET.ColorPalette = {
 	blue = { "blue-500", "cyan-400" },
 	red = { "rose-500", "red-400" },
@@ -88,6 +63,7 @@ ET.ColorPalette = {
 	radiantEchoes = { "sky-400", "yellow-100" },
 	legionAssaultRemix = { "lime-400", "lime-700" },
 	gray = { "neutral-400", "neutral-700" },
+	default = { "neutral-50", "neutral-200" },
 }
 
 ---@alias EventKey
@@ -106,7 +82,6 @@ ET.ColorPalette = {
 ---|"TimeRiftThaldraszus"
 ---|"SuperBloom"
 ---|"BigDig"
----|"IskaaranFishingNet"
 ---|"LegionAssaultRemix"
 
 ---@type EventKey[]
@@ -130,10 +105,9 @@ ET.EventList = {
 	"TimeRiftThaldraszus",
 	"SuperBloom",
 	"BigDig",
-	"IskaaranFishingNet",
 }
 
----@type { [EventKey]: table }
+---@alias EventTracker.EventData { [EventKey]: table }
 ET.EventData = {
 	-- TWW
 	ProfessionsWeeklyTWW = {
@@ -283,7 +257,6 @@ ET.EventData = {
 			hasWeeklyReward = true,
 			duration = 15 * 60,
 			interval = 60 * 60,
-			barColor = ET.ColorPalette.blue,
 			flash = true,
 			runningBarColor = ET.ColorPalette.purple,
 			eventName = L["Nightfall"],
@@ -323,9 +296,8 @@ ET.EventData = {
 			hasWeeklyReward = true,
 			duration = 15 * 60,
 			interval = 60 * 60,
-			barColor = ET.ColorPalette.bronze,
 			flash = true,
-			runningBarColor = ET.ColorPalette.green,
+			runningBarColor = ET.ColorPalette.bronze,
 			eventName = L["Theater Troupe"],
 			location = C_Map_GetMapInfo(2248).name,
 			label = L["Theater Troupe"],
@@ -444,7 +416,6 @@ ET.EventData = {
 			hasWeeklyReward = false,
 			duration = 60 * 60, -- always on
 			interval = 60 * 60,
-			barColor = ET.ColorPalette.blue,
 			flash = false,
 			runningBarColor = ET.ColorPalette.radiantEchoes,
 			eventName = L["Radiant Echoes"],
@@ -517,8 +488,8 @@ ET.EventData = {
 			hasWeeklyReward = true,
 			duration = 16 * 60,
 			interval = 1.5 * 60 * 60,
-			barColor = ET.ColorPalette.blue,
 			flash = true,
+			runningBarColor = ET.ColorPalette.blue,
 			eventName = L["Community Feast"],
 			location = C_Map_GetMapInfo(2024).name,
 			label = L["Feast"],
@@ -562,8 +533,8 @@ ET.EventData = {
 			eventName = L["Siege On Dragonbane Keep"],
 			label = L["Dragonbane Keep"],
 			location = C_Map_GetMapInfo(2022).name,
-			barColor = ET.ColorPalette.red,
 			flash = true,
+			runningBarColor = ET.ColorPalette.red,
 			runningText = L["In Progress"],
 			filter = function(args)
 				if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
@@ -605,8 +576,8 @@ ET.EventData = {
 			eventName = L["Researchers Under Fire"],
 			label = L["Researchers"],
 			location = C_Map_GetMapInfo(2133).name,
-			barColor = ET.ColorPalette.green,
 			flash = true,
+			runningBarColor = ET.ColorPalette.green,
 			runningText = L["In Progress"],
 			filter = function(args)
 				if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
@@ -647,8 +618,8 @@ ET.EventData = {
 			eventName = L["Time Rift Thaldraszus"],
 			label = L["Time Rift"],
 			location = C_Map_GetMapInfo(2025).name,
-			barColor = ET.ColorPalette.bronze,
 			flash = true,
+			runningBarColor = ET.ColorPalette.bronze,
 			runningText = L["In Progress"],
 			filter = function(args)
 				if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
@@ -689,8 +660,8 @@ ET.EventData = {
 			eventName = L["Superbloom Emerald Dream"],
 			label = L["Superbloom"],
 			location = C_Map_GetMapInfo(2200).name,
-			barColor = ET.ColorPalette.green,
 			flash = true,
+			runningBarColor = ET.ColorPalette.green,
 			runningText = L["In Progress"],
 			filter = function(args)
 				if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
@@ -731,8 +702,8 @@ ET.EventData = {
 			eventName = L["The Big Dig"],
 			label = L["Big Dig"],
 			location = C_Map_GetMapInfo(2024).name,
-			barColor = ET.ColorPalette.purple,
 			flash = true,
+			runningBarColor = ET.ColorPalette.purple,
 			runningText = L["In Progress"],
 			filter = function(args)
 				if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
@@ -762,103 +733,6 @@ ET.EventData = {
 			onClickHelpText = L["Click to show location"],
 		},
 	},
-	IskaaranFishingNet = {
-		dbKey = "iskaaranFishingNet",
-		args = {
-			icon = 2159815,
-			type = "triggerTimer",
-			filter = function()
-				return C_QuestLog_IsQuestFlaggedCompleted(70871)
-			end,
-			barColor = ET.ColorPalette.purple,
-			flash = true,
-			eventName = L["Iskaaran Fishing Net"],
-			label = L["Fishing Net"],
-			events = {
-				{
-					"UNIT_SPELLCAST_SUCCEEDED",
-					function(unit, _, spellID)
-						if not unit or unit ~= "player" then
-							return
-						end
-
-						local map = C_Map_GetBestMapForUnit("player")
-						if not map then
-							return
-						end
-
-						local position = C_Map_GetPlayerMapPosition(map, "player")
-
-						if not position then
-							return
-						end
-
-						local lengthMap = {}
-
-						for i, netPos in ipairs(ET.Meta.fishingNetPosition) do
-							if map == netPos.map then
-								local length = math_pow(position.x - netPos.x, 2) + math_pow(position.y - netPos.y, 2)
-								lengthMap[i] = length
-							end
-						end
-
-						local min
-						local netIndex = 0
-						for i, length in pairs(lengthMap) do
-							if not min or length < min then
-								min = length
-								netIndex = i
-							end
-						end
-
-						if not min or netIndex <= 0 then
-							return
-						end
-
-						local db = ET:GetPlayerDB("iskaaranFishingNet") --[[@as table]]
-
-						if spellID == 377887 then -- Get Fish
-							if db[netIndex] then
-								db[netIndex] = nil
-							end
-						elseif spellID == 377883 then -- Set Net
-							E:Delay(0.5, function()
-								local namePlates = C_NamePlate_GetNamePlates(true)
-								if #namePlates > 0 then
-									for _, namePlate in ipairs(namePlates) do
-										if
-											namePlate
-											and namePlate.UnitFrame
-											and namePlate.UnitFrame.WidgetContainer
-										then
-											local container = namePlate.UnitFrame.WidgetContainer
-											if container.timerWidgets then
-												for id, widget in pairs(container.timerWidgets) do
-													if
-														ET.Meta.fishingNetWidgetIDToIndex[id]
-														and ET.Meta.fishingNetWidgetIDToIndex[id] == netIndex
-													then
-														if widget.Bar and widget.Bar.value and widget.Bar.range then
-															db[netIndex] = {
-																time = GetServerTime() + widget.Bar.value,
-																duration = widget.Bar.range,
-															}
-														end
-													end
-												end
-											end
-										end
-									end
-								end
-							end)
-						end
-					end,
-				},
-			},
-			onClick = worldMapIDSetter(2024),
-			onClickHelpText = L["Click to show location"],
-		},
-	},
 	-- Legion
 	LegionAssaultRemix = {
 		dbKey = "legionAssaultRemix",
@@ -871,10 +745,10 @@ ET.EventData = {
 			barColor = ET.ColorPalette.gray,
 			flash = true,
 			runningBarColor = ET.ColorPalette.legionAssaultRemix,
+			runningText = C.GradientStringByTemplate(L["Assaulting"], "pink-500", "rose-500"),
 			eventName = L["Legion Assault (Remix)"],
 			label = L["Legion Assault"],
 			location = C_Map_GetMapInfo(619).name,
-			runningText = C.GradientStringByTemplate(L["Assaulting"], "pink-500", "rose-500"),
 			filter = function(args)
 				if args.stopAlertIfNotRemixPlayer and not PlayerIsTimerunning() then
 					return false

@@ -28,6 +28,9 @@ local C_QuestLog_IsComplete = C_QuestLog.IsComplete
 local C_ScenarioInfo_GetCriteriaInfo = C_ScenarioInfo.GetCriteriaInfo
 local C_ScenarioInfo_GetScenarioStepInfo = C_ScenarioInfo.GetScenarioStepInfo
 
+local Enum_QuestFrequency_Daily = Enum.QuestFrequency.Daily
+local Enum_QuestFrequency_Weekly = Enum.QuestFrequency.Weekly
+
 ---@class QuestStatusType : number
 ---@type table<string, QuestStatusType>
 local QUEST_STATUS = {
@@ -233,9 +236,9 @@ function QP:BuildContext(data)
 	plainContext.link, coloredContext.link = data.link, data.link
 
 	if data.frequency then
-		if data.frequency == 1 then
+		if data.frequency == Enum_QuestFrequency_Daily then
 			plainContext.daily, coloredContext.daily = Render(data.link, db.daily.template, db.daily.color)
-		elseif data.frequency == 2 then
+		elseif data.frequency == Enum_QuestFrequency_Weekly then
 			plainContext.weekly, coloredContext.weekly = Render(data.link, db.weekly.template, db.weekly.color)
 		end
 	end

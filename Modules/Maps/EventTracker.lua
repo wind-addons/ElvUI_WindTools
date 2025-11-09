@@ -363,9 +363,8 @@ local FunctionFactory = {
 					local gradientName = C.GradientStringByTemplate(self.args.eventName, unpack(palette))
 					F.Print(
 						format(
-							L["%s %s will be started in %s!"],
-							eventIconString,
-							gradientName,
+							L["%s will be started in %s!"],
+							eventIconString .. gradientName,
 							SecondToTime(self.timeLeft)
 						)
 					)

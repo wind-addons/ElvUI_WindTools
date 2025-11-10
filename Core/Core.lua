@@ -6,6 +6,7 @@ local C = W.Utilities.Color ---@type ColorUtility
 local _G = _G
 local format = format
 local gmatch = gmatch
+local nop = nop
 local pairs = pairs
 local pcall = pcall
 local strmatch = strmatch
@@ -248,8 +249,9 @@ function W:GameFixing()
 	end
 
 	if E.global.WT.core.fixSetPassThroughButtons then
-		_G.QuestPinMixin.SetPassThroughButtons = E.noop
-		_G.BonusObjectivePinMixin.SetPassThroughButtons = E.noop
+		_G.QuestPinMixin.SetPassThroughButtons = nop
+		_G.BonusObjectivePinMixin.SetPassThroughButtons = nop
+		_G.WorldQuestPinMixin.SetPassThroughButtons = nop
 	end
 end
 

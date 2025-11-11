@@ -183,40 +183,29 @@ local function IsKnown(link, index)
 	end
 end
 
-local texCache, pendingUpdate = {}, {}
+local texCache = {}
 
-function AK:UpdateMerchantItemButton(button)
-	if not button or pendingUpdate[button] then
+function AK:UpdateMerchantItemButton(button, _, _, _, skip)
+	if skip or not button:IsShown() then
 		return
 	end
 
-	pendingUpdate[button] = true
-
-	RunNextFrame(function()
-		if not button:IsShown() then
-			pendingUpdate[button] = nil
-			return
-		end
-
-		local index = button:GetID()
-		local tex = texCache[button]
-		local info = C_MerchantFrame_GetItemInfo(index)
-		if info and info.isUsable and IsKnown(GetMerchantItemLink(index)) then
-			if self.db.mode == "MONOCHROME" then
-				tex:SetDesaturated(true)
-			else
-				local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
-				if info.numAvailable == 0 then
-					r, g, b = r * 0.5, g * 0.5, b * 0.5
-				end
-				button:SetItemButtonTextureVertexColor(0.9 * r, 0.9 * g, 0.9 * b, true)
+	local tex = texCache[button]
+	local index = button:GetID()
+	local info = C_MerchantFrame_GetItemInfo(index)
+	if info and info.isUsable and IsKnown(GetMerchantItemLink(index)) then
+		if self.db.mode == "MONOCHROME" then
+			tex:SetDesaturated(true)
+		else
+			local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
+			if info.numAvailable == 0 then
+				r, g, b = r * 0.5, g * 0.5, b * 0.5
 			end
-		else -- Reset to original state
-			tex:SetDesaturated(false)
+			button:SetItemButtonTextureVertexColor(0.9 * r, 0.9 * g, 0.9 * b, true)
 		end
-
-		pendingUpdate[button] = nil
-	end)
+	else
+		tex:SetDesaturated(false)
+	end
 end
 
 function AK:Merchant()
@@ -233,9 +222,9 @@ function AK:Merchant()
 
 		local itemButton = _G["MerchantItem" .. i .. "ItemButton"]
 		local itemButtonTex = _G["MerchantItem" .. i .. "ItemButtonIconTexture"]
-		if itemButton and itemButtonTex and not self:IsHooked(itemButton, "SetID") then
+		if itemButton and itemButtonTex and not self:IsHooked(itemButton, "SetItemButtonTextureVertexColor") then
 			texCache[itemButton] = itemButtonTex
-			self:SecureHook(itemButton, "SetID", "UpdateMerchantItemButton")
+			self:SecureHook(itemButton, "SetItemButtonTextureVertexColor", "UpdateMerchantItemButton")
 			self:UpdateMerchantItemButton(itemButton)
 		end
 	end

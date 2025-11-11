@@ -7,7 +7,6 @@ local abs = abs
 local ceil = ceil
 local floor = floor
 local format = format
-local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local select = select
 local tinsert = tinsert
@@ -17,22 +16,6 @@ local InCombatLockdown = InCombatLockdown
 local Minimap = _G.Minimap
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-
-function RM:HereBeDragons_Pins_AddMinimapIconMap(_, _, icon)
-	if icon.SetPoint then
-		hooksecurefunc(icon, "SetPoint", function(pin, arg1, arg2, arg3, arg4, arg5)
-			if self.db and self.db.enable and self.effectiveHeight and self.effectiveHeight > 0 then
-				if arg1 and arg1 == "CENTER" and arg3 and arg3 == "CENTER" then
-					if arg5 and abs(arg5) > self.effectiveHeight / 2 then
-						pin:SetAlpha(0)
-					else
-						pin:SetAlpha(1)
-					end
-				end
-			end
-		end)
-	end
-end
 
 function RM:SetHereBeDragonsPinShown(pin, isShown)
 	local forceShown = not self.db or not self.db.enable or not self.db.fixHereBeDragons

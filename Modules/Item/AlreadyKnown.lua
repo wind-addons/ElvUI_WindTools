@@ -23,7 +23,6 @@ local GetMerchantItemLink = GetMerchantItemLink
 local GetMerchantNumItems = GetMerchantNumItems
 local GetNumBuybackItems = GetNumBuybackItems
 local PlayerHasToy = PlayerHasToy
-local RunNextFrame = RunNextFrame
 local SetItemButtonDesaturated = SetItemButtonDesaturated
 local SetItemButtonTextureVertexColor = SetItemButtonTextureVertexColor
 

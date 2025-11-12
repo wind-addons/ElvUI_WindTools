@@ -42,7 +42,9 @@ local function RefreshItemLevel(text, db, location)
 		return
 	end
 
-	if not location:GetBagAndSlot() or not C_Item_DoesItemExist(location) then
+	local isValidLocation = location:GetBagAndSlot() or location:GetEquipmentSlot()
+
+	if not isValidLocation or not C_Item_DoesItemExist(location) then
 		text:SetText("")
 		return
 	end

@@ -23,7 +23,6 @@ local BlizzardFrames = {
 	"CinematicFrame",
 	"ContainerFrameCombinedBags",
 	"DestinyFrame",
-	"FriendsFrame",
 	"GameMenuFrame",
 	"GossipFrame",
 	"GuildInviteFrame",
@@ -55,6 +54,9 @@ local BlizzardFrames = {
 	"TaxiFrame",
 	"TradeFrame",
 	"TutorialFrame",
+	["FriendsFrame"] = {
+		"FriendsFrame.IgnoreListWindow",
+	},
 	["DressUpFrame"] = {
 		"DressUpFrame.OutfitDetailsPanel",
 		"DressUpFrame.SetSelectionPanel",

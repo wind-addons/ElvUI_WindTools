@@ -118,6 +118,7 @@ function S:FriendsFrame()
 
 	local frames = {
 		_G.FriendsFrame,
+		_G.FriendsFrame.IgnoreListWindow,
 		_G.FriendsFriendsFrame,
 		_G.AddFriendFrame,
 		_G.RecruitAFriendFrame.SplashFrame,

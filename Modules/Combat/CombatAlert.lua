@@ -12,13 +12,10 @@ local tremove = tremove
 local CreateAnimationGroup = _G.CreateAnimationGroup
 local CreateFrame = CreateFrame
 
--- Module state
 local isPlaying = false
 local alertQueue = {}
 
--- Animation timing constants (in seconds)
 local ANIMATION_TIMINGS = {
-	-- Shield animations
 	SHIELD_ENTER_MOVE_FADE = 0.2,
 	SHIELD_ENTER_SLEEP = 0.5,
 	SHIELD_ENTER_FADEOUT = 0.3,
@@ -26,7 +23,6 @@ local ANIMATION_TIMINGS = {
 	SHIELD_LEAVE_SLEEP = 0.5,
 	SHIELD_LEAVE_MOVE_SCALE_FADEOUT = 0.6,
 
-	-- Sword animations
 	SWORD_ENTER_MOVE_FADE = 0.4,
 	SWORD_ENTER_SLEEP = 0.6,
 	SWORD_ENTER_FADEOUT = 0.3,
@@ -35,7 +31,6 @@ local ANIMATION_TIMINGS = {
 	SWORD_LEAVE_MOVE = 0.35,
 	SWORD_LEAVE_FADEOUT = 0.3,
 
-	-- Text animations
 	TEXT_ENTER_MOVE_UP = 0.4,
 	TEXT_ENTER_FADEIN = 0.5,
 	TEXT_ENTER_MOVE_DOWN = 0.1,
@@ -432,7 +427,7 @@ function CA:UpdateTextFrame()
 
 	-- Calculate movement offsets based on animation scale
 	local moveUpOffset = 160 * animationSize
-	local moveDownOffset = -40 * animationSize
+	local moveDownOffset = -60 * animationSize
 
 	local textFrame = self.TextFrame
 
@@ -512,8 +507,8 @@ function CA:ShowAlert(alertType)
 	local swordOffsetLeave = 20 * animationSize
 	local shieldOffsetEnter = 50 * animationSize
 	local shieldOffsetLeave = -15 * animationSize
-	local textOffsetEnter = -120 * animationSize
-	local textOffsetLeave = -20 * animationSize
+	local textOffsetEnter = -100 * animationSize
+	local textOffsetLeave = 0
 
 	-- Stop any running animations
 	if self.db.animation then

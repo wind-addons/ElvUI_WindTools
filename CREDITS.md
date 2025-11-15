@@ -194,3 +194,11 @@
 - OnePlus
   - Media/Sounds/OnePlusLight.ogg
   - Media/Sounds/OnePlusSurprise.ogg
+
+- Pixabay
+  - Media/Sounds/Success.ogg (Josué Vilela)
+  - Media/Sounds/Win.ogg (freesound_community)
+  - Media/Sounds/Complete1.ogg
+  - Media/Sounds/Complete2.ogg
+  - Media/Sounds/Accept.ogg
+  - Media/Sounds/Simple.ogg

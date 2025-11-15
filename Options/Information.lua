@@ -638,6 +638,14 @@ do -- Media Files
 			"Media/Sounds/OnePlusLight.ogg",
 			"Media/Sounds/OnePlusSurprise.ogg",
 		},
+		["Pixabay"] = {
+			"Media/Sounds/Success.ogg",
+			"Media/Sounds/Win.ogg",
+			"Media/Sounds/Complete1.ogg",
+			"Media/Sounds/Complete2.ogg",
+			"Media/Sounds/Accept.ogg",
+			"Media/Sounds/Simple.ogg",
+		},
 	}
 
 	local configOrder = 1

@@ -443,6 +443,19 @@ function QP:QUEST_LOG_UPDATE()
 	F.TaskManager:AfterLogin(self.ProcessQuestUpdate, self)
 end
 
+---@param _ "QUEST_TURNED_IN"
+---@param questID number
+function QP:QUEST_TURNED_IN(_, questID)
+	if not questID or not cachedQuests or not cachedQuests[questID] or not cachedQuests[questID].worldQuestType then
+		return
+	end
+
+	if not cachedQuests[questID].isComplete then
+		cachedQuests[questID].isComplete = true
+		self:HandleQuestProgress(QUEST_STATUS.COMPLETED, cachedQuests[questID])
+	end
+end
+
 function QP:SCENARIO_CRITERIA_UPDATE()
 	F.TaskManager:AfterLogin(self.ProcessScenarioUpdate, self)
 end
@@ -476,6 +489,7 @@ function QP:Initialize()
 
 	if not self.initialized then
 		self:RegisterEvent("QUEST_LOG_UPDATE")
+		self:RegisterEvent("QUEST_TURNED_IN")
 		self:RegisterEvent("SCENARIO_CRITERIA_UPDATE")
 		self:RegisterEvent("SCENARIO_UPDATE", "SCENARIO_CRITERIA_UPDATE")
 		self:RegisterEvent("SCENARIO_CRITERIA_SHOW_STATE_UPDATE", "SCENARIO_CRITERIA_UPDATE")

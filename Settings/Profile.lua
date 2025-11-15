@@ -1151,6 +1151,21 @@ P.quest = {
 		disableIfRequiredOver = 75,
 		disableInMythicPlus = true,
 		displayTemplate = "{{level}} {{suggestedGroup}} {{tag}} {{daily}}{{weekly}} {{title}} - {{progress}} {{icon}}",
+		soundEffects = {
+			enable = false,
+			accept = {
+				enable = false,
+				sound = "WT Accept",
+			},
+			partialComplete = {
+				enable = false,
+				sound = "WT Clear",
+			},
+			fullyComplete = {
+				enable = true,
+				sound = "WT Complete",
+			},
+		},
 		tag = {
 			template = "[%s]",
 			color = {

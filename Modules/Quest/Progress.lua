@@ -375,10 +375,16 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 		local db = self.db.progress.accepted
 		plainContext.progress, coloredContext.progress = Render(db.text, nil, db.color)
 		coloredContext.icon = format("|T%s:0|t", W.Media.Icons.accept)
+		if self.db.soundEffects.enable and self.db.soundEffects.accept.enable then
+			F.PlayLSMSound(self.db.soundEffects.accept.sound)
+		end
 	elseif status == QUEST_STATUS.COMPLETED then
 		local db = self.db.progress.complete
 		plainContext.progress, coloredContext.progress = Render(db.text, nil, db.color)
 		coloredContext.icon = format("|T%s:0|t", W.Media.Icons.complete)
+		if self.db.soundEffects.enable and self.db.soundEffects.fullyComplete.enable then
+			F.PlayLSMSound(self.db.soundEffects.fullyComplete.sound)
+		end
 	elseif status == QUEST_STATUS.QUEST_UPDATE or status == QUEST_STATUS.SCENARIO_UPDATE then
 		assert(objectiveData, "Objective data is required for progress update")
 		local db = self.db.progress.objective
@@ -391,6 +397,9 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 		if objectiveData.finished then
 			plainContext.progress = plainContext.progress .. " " .. db.completeText
 			coloredContext.icon = format("|T%s:0|t", W.Media.Icons.complete)
+			if self.db.soundEffects.enable and self.db.soundEffects.partialComplete.enable then
+				F.PlayLSMSound(self.db.soundEffects.partialComplete.sound)
+			end
 		else
 			coloredContext.icon = ""
 		end

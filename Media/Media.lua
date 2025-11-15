@@ -644,9 +644,9 @@ LSM:Register("statusbar", "ToxiUI Half", MediaPath .. "Textures/ToxiUI/ToxiUI-ha
 
 LSM:Register("sound", "OnePlus Light", MediaPath .. "Sounds/OnePlusLight.ogg")
 LSM:Register("sound", "OnePlus Surprise", MediaPath .. "Sounds/OnePlusSurprise.ogg")
-LSM:Register("sound", "WT Simple", MediaPath .. "Sounds/Simple.ogg")
 LSM:Register("sound", "WT Accept", MediaPath .. "Sounds/Accept.ogg")
+LSM:Register("sound", "WT Clear", MediaPath .. "Sounds/Clear.ogg")
+LSM:Register("sound", "WT Complete", MediaPath .. "Sounds/Complete.ogg")
+LSM:Register("sound", "WT Simple", MediaPath .. "Sounds/Simple.ogg")
 LSM:Register("sound", "WT Success", MediaPath .. "Sounds/Success.ogg")
-LSM:Register("sound", "WT Complete 1", MediaPath .. "Sounds/Complete1.ogg")
-LSM:Register("sound", "WT Complete 2", MediaPath .. "Sounds/Complete2.ogg")
 LSM:Register("sound", "WT Win", MediaPath .. "Sounds/Win.ogg")

@@ -196,9 +196,9 @@
   - Media/Sounds/OnePlusSurprise.ogg
 
 - Pixabay
+  - Media/Sounds/Accept.ogg
+  - Media/Sounds/Clear.ogg
+  - Media/Sounds/Complete.ogg (Universfield)
+  - Media/Sounds/Simple.ogg
   - Media/Sounds/Success.ogg (Josué Vilela)
   - Media/Sounds/Win.ogg (freesound_community)
-  - Media/Sounds/Complete1.ogg
-  - Media/Sounds/Complete2.ogg
-  - Media/Sounds/Accept.ogg
-  - Media/Sounds/Simple.ogg

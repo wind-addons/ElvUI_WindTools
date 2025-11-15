@@ -1361,8 +1361,111 @@ options.progress = {
 				E.db.WT.quest.progress.displayTemplate = P.quest.progress.displayTemplate
 			end,
 		},
+		soundEffects = {
+			order = 10,
+			type = "group",
+			name = L["Sound Effects"],
+			get = function(info)
+				return E.db.WT.quest.progress.soundEffects[info[#info - 1]][info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.quest.progress.soundEffects[info[#info - 1]][info[#info]] = value
+			end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+					desc = L["Play sound effects for quest progress updates."],
+					get = function(info)
+						return E.db.WT.quest.progress.soundEffects[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.progress.soundEffects[info[#info]] = value
+					end,
+				},
+				accept = {
+					order = 2,
+					type = "group",
+					inline = true,
+					name = L["Accept"],
+					disabled = function()
+						return not E.db.WT.quest.progress.soundEffects.enable
+					end,
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						sound = {
+							order = 2,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound"],
+							values = LSM:HashTable("sound"),
+							hidden = function()
+								return not E.db.WT.quest.progress.soundEffects.accept.enable
+							end,
+						},
+					},
+				},
+				partialComplete = {
+					order = 3,
+					type = "group",
+					inline = true,
+					name = L["Partial Complete"],
+					disabled = function()
+						return not E.db.WT.quest.progress.soundEffects.enable
+					end,
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						sound = {
+							order = 2,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound"],
+							values = LSM:HashTable("sound"),
+							hidden = function()
+								return not E.db.WT.quest.progress.soundEffects.partialComplete.enable
+							end,
+						},
+					},
+				},
+				fullyComplete = {
+					order = 4,
+					type = "group",
+					inline = true,
+					name = L["Fully Complete"],
+					disabled = function()
+						return not E.db.WT.quest.progress.soundEffects.enable
+					end,
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						sound = {
+							order = 2,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound"],
+							values = LSM:HashTable("sound"),
+							hidden = function()
+								return not E.db.WT.quest.progress.soundEffects.fullyComplete.enable
+							end,
+						},
+					},
+				},
+			},
+		},
 		tag = {
-			order = 6,
+			order = 20,
 			type = "group",
 			name = L["Tag"],
 			disabled = function()
@@ -1454,7 +1557,7 @@ options.progress = {
 			},
 		},
 		suggestedGroup = {
-			order = 7,
+			order = 21,
 			type = "group",
 			name = L["Suggested Group"],
 			disabled = function()
@@ -1546,7 +1649,7 @@ options.progress = {
 			},
 		},
 		level = {
-			order = 8,
+			order = 22,
 			type = "group",
 			name = L["Level"],
 			disabled = function()
@@ -1642,7 +1745,7 @@ options.progress = {
 			},
 		},
 		daily = {
-			order = 9,
+			order = 23,
 			type = "group",
 			name = L["Daily"],
 			disabled = function()
@@ -1731,7 +1834,7 @@ options.progress = {
 			},
 		},
 		weekly = {
-			order = 10,
+			order = 24,
 			type = "group",
 			name = L["Weekly"],
 			disabled = function()
@@ -1820,7 +1923,7 @@ options.progress = {
 			},
 		},
 		title = {
-			order = 11,
+			order = 25,
 			type = "group",
 			name = L["Title"],
 			disabled = function()
@@ -1909,7 +2012,7 @@ options.progress = {
 			},
 		},
 		progress = {
-			order = 12,
+			order = 26,
 			type = "group",
 			name = L["Progress"],
 			disabled = function()

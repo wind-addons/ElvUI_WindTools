@@ -53,7 +53,6 @@ local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
 local IsInGuild = IsInGuild
 local IsInRaid = IsInRaid
-local PlaySoundFile = PlaySoundFile
 local RemoveExtraSpaces = RemoveExtraSpaces
 local RemoveNewlines = RemoveNewlines
 local UnitExists = UnitExists
@@ -1674,10 +1673,7 @@ function CT:ChatFrame_MessageEventHandler(
 				and (not CH.db.noAlertInCombat or not InCombatLockdown())
 			then
 				CH.SoundTimer = E:Delay(5, CH.ThrottleSound)
-				local alertFile = LSM:Fetch("sound", alertType)
-				if alertFile then
-					PlaySoundFile(alertFile, "Master")
-				end
+				F.PlayLSMSound(alertType)
 			end
 
 			local accessID = _G.ChatHistory_GetAccessID(chatGroup, chatTarget)

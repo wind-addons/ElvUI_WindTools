@@ -20,7 +20,6 @@ local unpack = unpack
 local CreateFrame = CreateFrame
 local EventRegistry = EventRegistry
 local GetServerTime = GetServerTime
-local PlaySoundFile = PlaySoundFile
 
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local C_Timer_NewTicker = C_Timer.NewTicker
@@ -370,10 +369,7 @@ local FunctionFactory = {
 					)
 
 					if self.args.soundFile then
-						local sound = LSM:Fetch("sound", self.args.soundFile)
-						if sound then
-							PlaySoundFile(sound, "Master")
-						end
+						F.PlayLSMSound(self.args.soundFile)
 					end
 				end
 			end,

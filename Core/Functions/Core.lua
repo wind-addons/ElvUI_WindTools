@@ -19,6 +19,8 @@ local tremove = tremove
 local type = type
 local unpack = unpack
 
+local PlaySoundFile = PlaySoundFile
+
 ---@cast F Functions
 
 ---Set font style from database settings
@@ -487,4 +489,16 @@ function F.CallMethod(frame, methodKey, ...)
 	end
 
 	return frame[methodKey](frame, ...)
+end
+
+---Play a sound from the LibSharedMedia-3.0 library
+---@param soundName string The name of the sound to play from LSM
+---@param channel string? The audio channel to play the sound on (optional, default: "Master")
+function F.PlayLSMSound(soundName, channel)
+	local soundPath = LSM:Fetch("sound", soundName)
+	if soundPath then
+		PlaySoundFile(soundPath, channel or "Master")
+	else
+		F.Developer.LogDebug("Functions.PlayLSMSound: Sound not found -", tostring(soundName))
+	end
 end

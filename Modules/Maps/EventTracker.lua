@@ -358,15 +358,9 @@ local FunctionFactory = {
 				if self.timeLeft <= self.args.alertSecond then
 					self.args["alertCache"][self.nextEventIndex] = true
 					local eventIconString = F.GetIconString(self.args.icon, 16, 16)
-					local palette = self.args.runningBarColor or ET.ColorPalette.default
-					local gradientName = C.GradientStringByTemplate(self.args.eventName, unpack(palette))
-					F.Print(
-						format(
-							L["%s will be started in %s!"],
-							eventIconString .. gradientName,
-							SecondToTime(self.timeLeft)
-						)
-					)
+					local eventName = C.StringByTemplate(self.args.eventName, "yellow-500")
+					local remainTime = C.StringByTemplate(SecondToTime(self.timeLeft), "emerald-500")
+					F.Print(format(L["%s will be started in %s!"], eventIconString .. " " .. eventName, remainTime))
 
 					if self.args.soundFile then
 						F.PlayLSMSound(self.args.soundFile)

@@ -360,6 +360,36 @@ function QP:FilterContext(context)
 	return context
 end
 
+local lastPlayedTime = {} ---@type table<QuestStatusType, number>
+
+---@param status QuestStatusType
+function QP:PlaySoundEffect(status)
+	if not self.db.soundEffects.enable then
+		return
+	end
+
+	local db
+	if status == QUEST_STATUS.ACCEPTED then
+		db = self.db.soundEffects.accept
+	elseif status == QUEST_STATUS.COMPLETED then
+		db = self.db.soundEffects.fullyComplete
+	elseif status == QUEST_STATUS.QUEST_UPDATE then
+		db = self.db.soundEffects.partialComplete
+	end
+
+	if not db or not db.enable then
+		return
+	end
+
+	local currentTime = GetTime()
+	if lastPlayedTime[status] and currentTime - lastPlayedTime[status] < 1 then
+		return
+	end
+
+	lastPlayedTime[status] = currentTime
+	F.PlayLSMSound(db.sound)
+end
+
 ---Handle quest progress update event
 ---@param status QuestStatusType
 ---@param questData QuestProgressData | ScenarioProgressData
@@ -375,16 +405,12 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 		local db = self.db.progress.accepted
 		plainContext.progress, coloredContext.progress = Render(db.text, nil, db.color)
 		coloredContext.icon = format("|T%s:0|t", W.Media.Icons.accept)
-		if self.db.soundEffects.enable and self.db.soundEffects.accept.enable then
-			F.PlayLSMSound(self.db.soundEffects.accept.sound)
-		end
+		self:PlaySoundEffect(status)
 	elseif status == QUEST_STATUS.COMPLETED then
 		local db = self.db.progress.complete
 		plainContext.progress, coloredContext.progress = Render(db.text, nil, db.color)
 		coloredContext.icon = format("|T%s:0|t", W.Media.Icons.complete)
-		if self.db.soundEffects.enable and self.db.soundEffects.fullyComplete.enable then
-			F.PlayLSMSound(self.db.soundEffects.fullyComplete.sound)
-		end
+		self:PlaySoundEffect(status)
 	elseif status == QUEST_STATUS.QUEST_UPDATE or status == QUEST_STATUS.SCENARIO_UPDATE then
 		assert(objectiveData, "Objective data is required for progress update")
 		local db = self.db.progress.objective
@@ -397,9 +423,7 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 		if objectiveData.finished then
 			plainContext.progress = plainContext.progress .. " " .. db.completeText
 			coloredContext.icon = format("|T%s:0|t", W.Media.Icons.complete)
-			if self.db.soundEffects.enable and self.db.soundEffects.partialComplete.enable then
-				F.PlayLSMSound(self.db.soundEffects.partialComplete.sound)
-			end
+			self:PlaySoundEffect(QUEST_STATUS.QUEST_UPDATE)
 		else
 			coloredContext.icon = ""
 		end

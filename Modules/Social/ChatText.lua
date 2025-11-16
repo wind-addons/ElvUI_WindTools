@@ -694,6 +694,7 @@ local authorIcons = {
 	["Player-858-0390AAA9"] = windIcon, -- Tabiwarrior-寒冰皇冠
 	["Player-858-03954572"] = windIcon, -- Tabihunter-寒冰皇冠
 	["Player-858-05BB0270"] = windIcon, -- Tabipaladin-寒冰皇冠
+	["Player-877-063EB5E7"] = windIcon, -- Tabimonk-回音山
 	-- zhTW Server
 	["Player-963-04504559"] = windIcon, -- Tabidruid-暗影之月
 	["Player-963-0450457B"] = windIcon, -- Tabilock-暗影之月

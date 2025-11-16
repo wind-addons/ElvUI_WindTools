@@ -17,6 +17,7 @@ local tonumber = tonumber
 local tostring = tostring
 
 local GetQuestLink = GetQuestLink
+local GetTime = GetTime
 local UIErrorsFrame = _G.UIErrorsFrame
 local UnitLevel = UnitLevel
 

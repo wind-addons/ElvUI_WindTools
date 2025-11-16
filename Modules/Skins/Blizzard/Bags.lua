@@ -5,6 +5,8 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local select = select
 
+local NUM_CONTAINER_FRAMES = NUM_CONTAINER_FRAMES
+
 function S:Bank()
 	if E.private.bags.enable or not self:CheckDB("bags") then
 		return

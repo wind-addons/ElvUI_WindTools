@@ -13,6 +13,7 @@ local tinsert = tinsert
 local tonumber = tonumber
 
 local AcceptQuest = AcceptQuest
+local AcknowledgeAutoAcceptQuest = AcknowledgeAutoAcceptQuest
 local CloseQuest = CloseQuest
 local CompleteQuest = CompleteQuest
 local GetActiveQuestID = GetActiveQuestID

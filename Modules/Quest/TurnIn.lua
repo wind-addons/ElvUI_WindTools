@@ -541,18 +541,19 @@ function TI:QUEST_DETAIL()
 		return
 	end
 
-	if QuestIsFromAreaTrigger() then
-		AcceptQuest()
-	end
+	local questID = GetQuestID()
 
 	if QuestGetAutoAccept() then
-		AcknowledgeAutoAcceptQuest()
+		if not self:IsIgnoredNPC() and self:EnableOnQuestID(questID) then
+			AcknowledgeAutoAcceptQuest()
+		end
 	end
 
-	local questID = GetQuestID()
-	if C_Minimap_IsTrackingHiddenQuests() or not C_QuestLog_IsQuestTrivial(questID) then
+	if QuestIsFromAreaTrigger() and C_Minimap_IsTrackingHiddenQuests() or not C_QuestLog_IsQuestTrivial(questID) then
 		if not self:IsIgnoredNPC() and self:EnableOnQuestID(questID) then
-			AcceptQuest()
+			E:Delay(0.3, function()
+				AcceptQuest()
+			end)
 		end
 	end
 end

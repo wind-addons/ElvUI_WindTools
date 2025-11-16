@@ -4,6 +4,7 @@ local C = W.Utilities.Color
 
 local _G = _G
 local assert = assert
+local floor = floor
 local ipairs = ipairs
 local max = max
 local tinsert = tinsert
@@ -439,7 +440,7 @@ function CA:UpdateTextFrame()
 	-- Update animation offsets
 	textFrame.enter.moveUp:SetOffset(0, moveUpOffset)
 	textFrame.enter.moveDown:SetOffset(0, moveDownOffset)
-	textFrame.leave.moveUp:SetOffset(0, -moveDownOffset)
+	textFrame.leave.moveUp:SetOffset(0, floor(moveDownOffset * -1.25))
 
 	-- Update enter animation timings
 	for _, anim in ipairs(textFrame.enter.Animations) do

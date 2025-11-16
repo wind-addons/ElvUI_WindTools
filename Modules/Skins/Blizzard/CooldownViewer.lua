@@ -89,6 +89,7 @@ local function UpdateIcon(frame, config)
 	end
 
 	local ChargeCountText = frame.ChargeCount and frame.ChargeCount.Current
+		or frame.Applications and frame.Applications.Applications
 	if ChargeCountText then
 		F.SetFontWithDB(ChargeCountText, S.db.cooldownViewer[config].chargeCountText)
 		ChargeCountText:SetJustifyH(S.db.cooldownViewer[config].chargeCountText.justifyH)

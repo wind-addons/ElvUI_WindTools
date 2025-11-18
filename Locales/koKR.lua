@@ -1605,7 +1605,6 @@ L["Time Manager"] = "시계"
 L["Time Rift"] = "시간의 균열"
 L["Time Rift Thaldraszus"] = "시간의 균열"
 L["Time interval between sending same messages measured in seconds."] = "동일한 메시지를 보내는 시간 간격(초)입니다."
-L["TinyInspect"] = true
 L["Tips"] = "팁"
 L["Title"] = "제목"
 L["Title Color"] = "제목 색상"

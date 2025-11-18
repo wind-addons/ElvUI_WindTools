@@ -1605,7 +1605,6 @@ L["Time Manager"] = "時鐘"
 L["Time Rift"] = "時光的裂隙"
 L["Time Rift Thaldraszus"] = "時光的裂隙"
 L["Time interval between sending same messages measured in seconds."] = "發送相同訊息的時間間隔, 單位為秒."
-L["TinyInspect"] = true
 L["Tips"] = "提示"
 L["Title"] = "標題"
 L["Title Color"] = "標題顏色"

@@ -1605,7 +1605,6 @@ L["Time Manager"] = "Управление временем"
 L["Time Rift"] = "Портал времени"
 L["Time Rift Thaldraszus"] = "Портал времени Тальдразус"
 L["Time interval between sending same messages measured in seconds."] = "Временной интервал между отправкой одинаковых сообщений, измеряемый в секундах."
-L["TinyInspect"] = true
 L["Tips"] = "Советы"
 L["Title"] = "Название"
 L["Title Color"] = "Цвет заголовка"

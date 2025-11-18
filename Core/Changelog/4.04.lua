@@ -6,30 +6,45 @@ W.Changelog[404] = {
 		["zhCN"] = {
 			"最低支持 ElvUI 版本提升至 14.03.",
 			"新增了 6 个音效, WT Accept, WT Complete, WT Win, WT Simple, WT Clear, WT Success. 你可以在工具箱或者其他插件如 BigWigs 中使用这些音效.",
+			"[美化皮肤] 移除 TinyInspect 插件的皮肤支持, 你可以直接使用工具箱内的新版装备观察功能来替代.",
 		},
 		["zhTW"] = {
 			"最低支援 ElvUI 版本提升至 14.03.",
 			"新增了 6 個音效, WT Accept, WT Complete, WT Win, WT Simple, WT Clear, WT Success. 你可以在工具箱或者其他插件如 BigWigs 中使用這些音效.",
+			"[美化皮膚] 移除 TinyInspect 插件的皮膚支援, 你可以直接使用工具箱內的新版裝備觀察功能來替代.",
 		},
 		["enUS"] = {
 			"Minimum supported ElvUI version raise to 14.03.",
 			"Add 6 new sound effects: WT Accept, WT Complete, WT Win, WT Simple, WT Clear, WT Success. You can use these sound effects in the WindTools or other addons like BigWigs.",
+			"[Skins] Remove TinyInspect skin, you can use the new Inspect module as a replacement.",
 		},
 		["koKR"] = {
 			"지원되는 최소 ElvUI 버전이 14.03으로 상향됩니다.",
 			"6개의 새로운 사운드 효과가 추가됩니다: WT Accept, WT Complete, WT Win, WT Simple, WT Clear, WT Success. 이 사운드 효과는 WindTools 또는 BigWigs와 같은 다른 애드온에서 사용할 수 있습니다.",
+			"[스킨] TinyInspect 스킨이 제거되었습니다. 새로운 장비 검사 모듈을 대체 기능으로 사용할 수 있습니다.",
 		},
 		["ruRU"] = {
 			"Минимальная поддерживаемая версия ElvUI повышена до 14.03.",
 			"Добавлены 6 новых звуковых эффектов: WT Accept, WT Complete, WT Win, WT Simple, WT Clear, WT Success. Вы можете использовать эти звуковые эффекты в WindTools или других аддонах, таких как BigWigs.",
+			"[Скины] Удален скин TinyInspect, вы можете использовать новый модуль осмотра в качестве замены.",
 		},
 	},
 	NEW = {
-		["zhCN"] = {},
-		["zhTW"] = {},
-		["enUS"] = {},
-		["koKR"] = {},
-		["ruRU"] = {},
+		["zhCN"] = {
+			"[美化皮肤] 新增 Murlok Export 插件的皮肤支持.",
+		},
+		["zhTW"] = {
+			"[美化皮膚] 新增 Murlok Export 插件的皮膚支援.",
+		},
+		["enUS"] = {
+			"[Skins] Add skin support for Murlok Export addon.",
+		},
+		["koKR"] = {
+			"[스킨] Murlok Export 애드온에 대한 스킨 지원 추가.",
+		},
+		["ruRU"] = {
+			"[Скины] Добавлена поддержка скинов для аддона Murlok Export.",
+		},
 	},
 	IMPROVEMENT = {
 		["zhCN"] = {

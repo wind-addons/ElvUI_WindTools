@@ -251,7 +251,6 @@ function W:GameFixing()
 	if E.global.WT.core.fixSetPassThroughButtons then
 		_G.QuestPinMixin.SetPassThroughButtons = nop
 		_G.BonusObjectivePinMixin.SetPassThroughButtons = nop
-		_G.WorldQuestPinMixin.SetPassThroughButtons = nop
 	end
 end
 

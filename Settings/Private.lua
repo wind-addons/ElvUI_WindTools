@@ -598,7 +598,6 @@ V.skins = {
 		simpleAddonManager = true,
 		simulationcraft = true,
 		talentLoadoutsEx = true,
-		tinyInspect = true,
 		tomCats = true,
 		tomTom = true,
 		warpDeplete = true,

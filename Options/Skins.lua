@@ -2108,13 +2108,6 @@ options.addons = {
 			name = L["Talent Loadouts Ex"],
 			addonName = "TalentLoadoutsEx",
 		},
-		tinyInspect = {
-			order = 10,
-			type = "toggle",
-			name = L["TinyInspect"],
-			addonName = "TinyInspect",
-			addonskinsKey = "TinyInspect",
-		},
 		tomCats = {
 			order = 10,
 			type = "toggle",

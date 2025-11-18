@@ -1985,6 +1985,12 @@ options.addons = {
 			name = L["Multi Language"],
 			addonName = "MultiLanguage",
 		},
+		murlokExport = {
+			order = 10,
+			type = "toggle",
+			name = L["Murlok Export"],
+			addonName = "MurlokExport",
+		},
 		myslot = {
 			order = 10,
 			type = "toggle",

@@ -12,6 +12,7 @@
 	<Script file='ManuscriptsJournal.lua'/>
 	<Script file='MountRoutePlanner.lua'/>
 	<Script file='MultiLanguage.lua'/>
+	<Script file='MurlokExport.lua'/>
 	<Script file='Myslot.lua'/>
 	<Script file='MythicDungeonTools.lua'/>
 	<Script file='OmniCD.lua'/>

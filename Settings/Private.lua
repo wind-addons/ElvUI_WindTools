@@ -580,6 +580,7 @@ V.skins = {
 		manuscriptsJournal = true,
 		mountRoutePlanner = true,
 		multiLanguage = true,
+		murlokExport = true,
 		myslot = true,
 		mythicDungeonTools = true,
 		omniCD = true,

@@ -43,28 +43,34 @@ W.Changelog[404] = {
 		["zhCN"] = {
 			"[美化皮肤] 新增 Murlok Export 皮肤.",
 			"[美化皮肤] 重新加入集合石皮肤. 大幅重写优化了之前的皮肤代码.",
+			"[美化皮肤] 从 Simple Addon Manager 皮肤中分离 ElioteDropDownMenu 库皮肤.",
 		},
 		["zhTW"] = {
 			"[美化皮膚] 新增 Murlok Export 皮膚.",
 			"[美化皮膚] 重新加入集合石皮膚. 大幅重寫優化了之前的皮膚代碼.",
+			"[美化皮膚] 從 Simple Addon Manager 皮膚中分離 ElioteDropDownMenu 庫皮膚.",
 		},
 		["enUS"] = {
 			"[Skins] Add Murlok Export skin.",
 			"[Skins] Re-add NetEase Meeting Stone skin. The previous skin code has been significantly rewritten and optimized.",
+			"[Skins] Separate ElioteDropDownMenu library skin from Simple Addon Manager skin.",
 		},
 		["koKR"] = {
 			"[스킨] Murlok Export 스킨이 추가되었습니다.",
 			"[스킨] NetEase Meeting Stone 스킨이 다시 추가되었습니다. 이전 스킨 코드는 크게 재작성되고 최적화되었습니다.",
+			"[스킨] Simple Addon Manager 스킨에서 ElioteDropDownMenu 라이브러리 스킨을 분리했습니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Добавлен скин Murlok Export.",
-			"[Скины] Повторно добавлен скин NetEase Meeting Stone. Предыдущий код скина был значительно переписан и оптимизирован.",
+			"[Скины] Повторно добавлен скин NetEase Meeting Stone. Предыдущий код скина был значительно переписан и оптимизирован."
+			"[Скины] Отделен скин библиотеки ElioteDropDownMenu от скина Simple Addon Manager.",
 		},
 	},
 	IMPROVEMENT = {
 		["zhCN"] = {
 			"[美化皮肤] 重新制作暴雪背包和银行的皮肤, 同时优化 ElvUI 皮肤处理来解决与其他插件如 Zygor 混用时的边框渲染问题.",
 			"[美化皮肤] 优化好友界面的美化皮肤.",
+			"[美化皮肤] 优化事件追踪器皮肤.",
 			"[美化皮肤] 修复冷却管理器中增益图标中的文字美化.",
 			"[移动框体] 优化好友界面子框体的移动.",
 			"[战斗提示] 稍微调整离开战斗文字的起始位置.",
@@ -81,6 +87,7 @@ W.Changelog[404] = {
 		["zhTW"] = {
 			"[美化皮膚] 重新製作暴雪背包和銀行的皮膚, 同時優化 ElvUI 皮膚處理來解決與其他插件如 Zygor 混用時的邊框渲染問題.",
 			"[美化皮膚] 優化好友介面的美化皮膚.",
+			"[美化皮膚] 優化事件追蹤器皮膚.",
 			"[美化皮膚] 修復冷卻管理器中增益圖示中的文字美化.",
 			"[移動框架] 優化好友介面子框架的移動.",
 			"[戰鬥提示] 稍微調整離開戰鬥文字的起始位置.",
@@ -97,6 +104,7 @@ W.Changelog[404] = {
 		["enUS"] = {
 			"[Skins] Redesign Blizzard bag and bank skins, and optimize ElvUI skin handling to resolve border rendering issues when mixing with other addons like Zygor.",
 			"[Skins] Optimize friend list skin.",
+			"[Skins] Optimize event tracker skin.",
 			"[Skins] Fix text styling in buff icons of the cooldown manager.",
 			"[Move Frames] Optimize movement of friend list subframes.",
 			"[Combat Alert] Slightly adjust the starting position of combat text.",
@@ -113,6 +121,7 @@ W.Changelog[404] = {
 		["koKR"] = {
 			"[스킨] 블리자드 가방과 은행 스킨을 재디자인하고, ElvUI 스킨 처리를 최적화하여 Zygor와 같은 다른 애드온과 혼합 사용 시 테두리 렌더링 문제를 해결합니다.",
 			"[스킨] 친구 목록 스킨을 최적화합니다.",
+			"[스킨] 이벤트 추적기 스킨을 최적화합니다.",
 			"[스킨] 쿨다운 관리자에서 버프 아이콘의 텍스트 스타일을 수정합니다.",
 			"[프레임 이동] 친구 목록 하위 프레임의 이동을 최적화합니다.",
 			"[전투 알림] 전투 텍스트의 시작 위치를 약간 조정합니다.",
@@ -129,6 +138,7 @@ W.Changelog[404] = {
 		["ruRU"] = {
 			"[Скины] Переработаны скины сумок и банка Blizzard, а также оптимизирована обработка скинов ElvUI для решения проблем с рендерингом границ при использовании с другими аддонами, такими как Zygor.",
 			"[Скины] Оптимизирован скин списка друзей.",
+			"[Скины] Оптимизирован скин трекера событий.",
 			"[Скины] Исправлен стиль текста в иконках баффов в Трекере восстановлений.",
 			"[Перемещение фреймов] Оптимизировано перемещение подфреймов списка друзей.",
 			"[Боевое оповещение] Скорректирована начальная позиция текста боя.",

@@ -787,22 +787,6 @@ local function UpdateButtonTypesForNetEaseMeetingStone()
 		return
 	end
 
-	local NetEaseEnv = _G.LibStub("NetEaseEnv-1.0", true)
-	if not NetEaseEnv then
-		return
-	end
-
-	local MeetingStone
-	for k in pairs(NetEaseEnv._NSInclude) do
-		if type(k) == "table" and k.Addon ~= nil then
-			MeetingStone = k.Addon
-		end
-	end
-
-	if not MeetingStone or not MeetingStone.Toggle then
-		return
-	end
-
 	ButtonTypes.GROUP_FINDER.macro.RightButton = ButtonTypes.GROUP_FINDER.macro.LeftButton
 	ButtonTypes.GROUP_FINDER.macro.LeftButton = "/meetingstone"
 

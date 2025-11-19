@@ -587,8 +587,7 @@ local function ReskinLoadedTargetPanel(frame, petsPanel, targetsPanel)
 	frame.titleBackdrop:Point("TOPLEFT", frame, "TOPLEFT", 1, -1)
 	frame.titleBackdrop:Point("BOTTOMRIGHT", frame, "TOPRIGHT", -1, -25)
 	frame.titleBackdrop:SetTexture(E.media.blankTex)
-	frame.titleBackdrop:SetVertexColor(C.ExtractRGBAFromTemplate("gray-400"))
-	frame.titleBackdrop:SetAlpha(0.1)
+	frame.titleBackdrop:SetVertexColor(C.ExtractRGBAFromTemplate("gray-400", 0.1))
 
 	local EnemyTeam = frame.EnemyTeam
 	if EnemyTeam then
@@ -682,11 +681,9 @@ local function ReskinAbilityFlyout(frame)
 			return
 		end
 		frame.AbilitySelecteds[1]:SetTexture(E.media.blankTex)
-		frame.AbilitySelecteds[1]:SetVertexColor(C.ExtractRGBAFromTemplate("yellow-300"))
-		frame.AbilitySelecteds[1]:SetAlpha(0.4)
+		frame.AbilitySelecteds[1]:SetVertexColor(C.ExtractRGBAFromTemplate("yellow-300", 0.4))
 		frame.AbilitySelecteds[2]:SetTexture(E.media.blankTex)
-		frame.AbilitySelecteds[2]:SetVertexColor(C.ExtractRGBAFromTemplate("green-300"))
-		frame.AbilitySelecteds[2]:SetAlpha(0.4)
+		frame.AbilitySelecteds[2]:SetVertexColor(C.ExtractRGBAFromTemplate("green-300", 0.4))
 		self.__windSkin = true
 	end)
 end

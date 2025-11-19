@@ -573,9 +573,9 @@ end
 ---@return number g Green component (0-1)
 ---@return number b Blue component (0-1)
 ---@return number a Alpha component (0-1)
-function W.Utilities.Color.ExtractRGBAFromTemplate(template)
+function W.Utilities.Color.ExtractRGBAFromTemplate(template, alpha)
 	local r, g, b = W.Utilities.Color.ExtractRGBFromTemplate(template)
-	return r, g, b, 1
+	return r, g, b, alpha or 1
 end
 
 ---Get RGB values from predefined color template
@@ -589,9 +589,9 @@ end
 ---Get RGBA values from predefined color template
 ---@param template ColorTemplate The color template name
 ---@return RGBA color The RGBA color object
-function W.Utilities.Color.GetRGBAFromTemplate(template)
+function W.Utilities.Color.GetRGBAFromTemplate(template, alpha)
 	local r, g, b = W.Utilities.Color.ExtractRGBFromTemplate(template)
-	return { r = r, g = g, b = b, a = 1 }
+	return { r = r, g = g, b = b, a = alpha or 1 }
 end
 
 ---Extract RGBA values from color table with optional overrides

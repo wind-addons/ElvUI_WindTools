@@ -19,6 +19,7 @@ local function trySkin(func)
 		end
 	end
 end
+
 local function reskinTextButton(button)
 	if not button.Text then
 		return false

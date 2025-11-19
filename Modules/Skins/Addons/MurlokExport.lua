@@ -35,8 +35,6 @@ local function ReskinClassListFrame(frame)
 		end
 	end
 
-	local yellowColor = C.GetRGBFromTemplate("yellow-400")
-
 	local ClassScrollBar = frame.ClassScrollBar
 	if ClassScrollBar then
 		S:Proxy("HandleTrimScrollBar", ClassScrollBar)
@@ -68,7 +66,7 @@ local function ReskinClassListFrame(frame)
 				local hilightFrame = frame.hilightFrame
 				if hilightFrame and hilightFrame.ActiveTexture then
 					hilightFrame.ActiveTexture:SetTexture(E.Media.Textures.White8x8)
-					hilightFrame.ActiveTexture:SetVertexColor(yellowColor.r, yellowColor.g, yellowColor.b, 0.5)
+					hilightFrame.ActiveTexture:SetVertexColor(C.ExtractRGBAFromTemplate("yellow-500", 0.3))
 					hilightFrame.ActiveTexture:ClearAllPoints()
 					hilightFrame.ActiveTexture:SetAllPoints(frame.specIcon)
 				end
@@ -76,7 +74,7 @@ local function ReskinClassListFrame(frame)
 				local selectedTexture = frame.selectedTexture
 				if selectedTexture then
 					selectedTexture:SetTexture(E.Media.Textures.White8x8)
-					selectedTexture:SetVertexColor(yellowColor.r, yellowColor.g, yellowColor.b, 0.3)
+					selectedTexture:SetVertexColor(C.ExtractRGBAFromTemplate("yellow-400", 0.3))
 					S:Reposition(selectedTexture, frame, -1, -4, -4, 0, -2)
 				end
 

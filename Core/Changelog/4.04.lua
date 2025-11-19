@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...))) ---@type WindTools
 
 W.Changelog[404] = {
-	RELEASE_DATE = "TBD",
+	RELEASE_DATE = "2025/11/20",
 	IMPORTANT = {
 		["zhCN"] = {
 			"最低支持 ElvUI 版本提升至 14.03.",
@@ -62,7 +62,7 @@ W.Changelog[404] = {
 		},
 		["ruRU"] = {
 			"[Скины] Добавлен скин Murlok Export.",
-			"[Скины] Повторно добавлен скин NetEase Meeting Stone. Предыдущий код скина был значительно переписан и оптимизирован."
+			"[Скины] Повторно добавлен скин NetEase Meeting Stone. Предыдущий код скина был значительно переписан и оптимизирован.",
 			"[Скины] Отделен скин библиотеки ElioteDropDownMenu от скина Simple Addon Manager.",
 		},
 	},

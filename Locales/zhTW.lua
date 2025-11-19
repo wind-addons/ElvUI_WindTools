@@ -1585,7 +1585,6 @@ L["This feature also follows the modifier keys setting for additional informatio
 L["This feature only works for message that sent by this module."] = "這個功能僅適用於此模組發送的消息."
 L["This is a test message"] = "這是一條測試消息"
 L["This module contains small features for each classes."] = "這個模組包含了每個職業的小功能."
-L["This module is a lite version of TinyInspect. Installing TinyInspect if you want to have full features."] = "這個模組是一個精簡版的 TinyInspect, 如果你想要完整功能, 請自行安裝 TinyInspect."
 L["This module may prevent clicking quest items in the objective tracker due to taint."] = "這個模組可能會因為污染而阻止點擊任務列表中的任務物品."
 L["This module provides several easy-to-use methods of deleting items."] = "這個模組提供了一些方便使用的刪除物品方式."
 L["This module provides the feature that repositions the frames with drag and drop."] = "這個模組提供了通過拖放來重新定位框架的功能."

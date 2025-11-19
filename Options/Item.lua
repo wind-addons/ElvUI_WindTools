@@ -1101,11 +1101,7 @@ options.inspect = {
 							local errorMsg = format(L["Because of %s, this module will not be loaded."], IS.StopRunning)
 							return C.StringByTemplate(errorMsg, "rose-500")
 						else
-							return format(
-								"%s\n%s",
-								L["This module will add an equipment list beside the character panel and inspect frame."],
-								L["This module is a lite version of TinyInspect. Installing TinyInspect if you want to have full features."]
-							)
+							return L["This module will add an equipment list beside the character panel and inspect frame."]
 						end
 					end,
 					fontSize = "medium",

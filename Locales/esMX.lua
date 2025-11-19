@@ -1585,7 +1585,6 @@ L["This feature also follows the modifier keys setting for additional informatio
 L["This feature only works for message that sent by this module."] = "Esta funcionalidad solo funciona para mensajes enviados por este módulo."
 L["This is a test message"] = true
 L["This module contains small features for each classes."] = "Este módulo contiene pequeñas funcionalidades para cada clase."
-L["This module is a lite version of TinyInspect. Installing TinyInspect if you want to have full features."] = "Este módulo es una versión lite de TinyInspect. Instala TinyInspect si quieres tener todas las funcionalidades."
 L["This module may prevent clicking quest items in the objective tracker due to taint."] = "Este módulo puede evitar que cliques en objetos de misión en el rastreador de objetivo debido a la tainta."
 L["This module provides several easy-to-use methods of deleting items."] = "Este módulo proporciona varios métodos fáciles de usar para eliminar objetos."
 L["This module provides the feature that repositions the frames with drag and drop."] = "Este módulo proporciona la funcionalidad de reubicar los marcos con arrastrar y soltar."

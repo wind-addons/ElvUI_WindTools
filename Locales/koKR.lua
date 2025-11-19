@@ -1585,7 +1585,6 @@ L["This feature also follows the modifier keys setting for additional informatio
 L["This feature only works for message that sent by this module."] = "이 기능은 이 모듈에서 보낸 메세지에만 작동 합니다."
 L["This is a test message"] = "이것은 테스트 메시지입니다"
 L["This module contains small features for each classes."] = "이 모듈에는 각 직업에 대한 작은 기능이 포함되어 있습니다."
-L["This module is a lite version of TinyInspect. Installing TinyInspect if you want to have full features."] = "이 모듈은 TinyInspect의 라이트 버전입니다. 전체 기능을 사용하려면 TinyInspect를 설치하십시오."
 L["This module may prevent clicking quest items in the objective tracker due to taint."] = "이 모듈은 오염으로 인해 목표 추적기에서 퀘스트 항목을 클릭하지 못하게 할 수 있습니다."
 L["This module provides several easy-to-use methods of deleting items."] = "이 모듈은 아이템 파괴시 '아이템 파괴' 입력을 도와주는 기능입니다."
 L["This module provides the feature that repositions the frames with drag and drop."] = "이 모듈은 드래그 앤 드롭으로 프레임의 위치를 변경하는 기능을 제공합니다."

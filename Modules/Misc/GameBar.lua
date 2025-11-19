@@ -793,7 +793,7 @@ local function UpdateButtonTypesForNetEaseMeetingStone()
 	ButtonTypes.GROUP_FINDER.tooltips = {
 		L["Group Finder"],
 		"\n",
-		LEFT_BUTTON_ICON .. " " .. L["NetEase Meeting Stone"],
+		LEFT_BUTTON_ICON .. " " .. L["Meeting Stone"],
 		RIGHT_BUTTON_ICON .. " " .. L["Group Finder"],
 	}
 end

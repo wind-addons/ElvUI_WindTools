@@ -920,6 +920,7 @@ L["Math Without Kanji"] = "한자 대신 로마자 표기"
 L["Max Overflow"] = "최대 치유 흡수 보호막"
 L["Max Tier to Show"] = "표시할 최대 티어"
 L["Media Files"] = "미디어 파일"
+L["Meeting Stone"] = true
 L["Menu"] = "메뉴"
 L["Menu Title"] = "메뉴 제목"
 L["MerathilisUI"] = "|cffffffffMerathilis|r|cffff7d0aUI|r"

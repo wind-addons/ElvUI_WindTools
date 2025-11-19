@@ -920,6 +920,7 @@ L["Math Without Kanji"] = "Maths sans Kanji"
 L["Max Overflow"] = "Dépassement maximum"
 L["Max Tier to Show"] = true
 L["Media Files"] = "Fichiers multimédias"
+L["Meeting Stone"] = true
 L["Menu"] = true
 L["Menu Title"] = "Titre du menu"
 L["MerathilisUI"] = "|cffffffffMerathilis|r|cffff7d0aUI|r"

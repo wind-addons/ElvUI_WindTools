@@ -361,6 +361,13 @@ function W:UpdateScripts()
 		end
 	end
 
+	if profileVersion < 4.04 then
+		if E.db.WT and E.db.WT.maps and E.db.WT.maps.eventTracker then
+			E.db.WT.maps.eventTracker.iskaaranFishingNet = nil
+			UpdateMessage(L["Event Tracker"] .. ": " .. L["Database cleanup"], profileVersion)
+		end
+	end
+
 	if not isFirstLine then
 		F.PrintGradientLine()
 	end

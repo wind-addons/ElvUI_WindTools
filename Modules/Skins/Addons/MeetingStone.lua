@@ -609,7 +609,7 @@ function S:MeetingStone()
 
 	local LibNetEaseEnv = LibStub("NetEaseEnv-1.0")
 	local LibNetEaseGUI = LibStub("NetEaseGUI-2.0")
-	local MeetingStone = LibStub("AceAddon-3.0"):GetAddon("MeetingStone")
+	local MeetingStone = LibStub("AceAddon-3.0"):GetAddon("MeetingStone", true)
 
 	if not LibNetEaseEnv or not LibNetEaseGUI then
 		return
@@ -622,12 +622,30 @@ function S:MeetingStone()
 		end
 	end
 
-	if not NEG then
+	if not NEG or not MeetingStone then
+		return
+	end
+
+	local Profile = MeetingStone:GetModule("Profile", true)
+	if not Profile then
+		return
+	end
+
+	local oldSettingEnabled = Profile:GetGlobalOption("useWindSkin")
+	if oldSettingEnabled then
+		Profile:SaveGlobalOption("useWindSkin", false)
+		F.Print(
+			format(
+				"%s %s",
+				format(L["%s already includes the new Meeting Stone skin."], W.Title),
+				L["The embedded skin will be automatically disabled and switched to the new version after the next reload."]
+			)
+		)
 		return
 	end
 
 	local function GetModule(name)
-		return NEG[name] or MeetingStone and MeetingStone:GetModule(name, true)
+		return NEG[name] or MeetingStone:GetModule(name, true)
 	end
 
 	-- Broker Panel (悬浮框)

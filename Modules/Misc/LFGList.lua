@@ -73,6 +73,8 @@ local FILTER_BUTTON_WIDTH = W.AsianLocale and 85 or 100
 local FILTER_BUTTON_HEIGHT = 28
 local FILTER_BUTTON_SPACING = 6
 local FILTER_BUTTONS_PER_COLUMN = 4
+local FILTER_BUTTONS_PER_COLUMN_HIGH = 5
+local FILTER_HIGH_DUNGEON_THRESHOLD = 12
 local PANEL_PADDING = 10
 local QUICK_ACCESS_PANEL_WIDTH = 2 * FILTER_BUTTON_WIDTH + FILTER_BUTTON_SPACING + PANEL_PADDING * 2 + 10
 
@@ -762,22 +764,24 @@ function LL:InitializeRightPanel()
 	end)
 
 	local numDungeons = #mapIDs
-	local numColumns = math.ceil(numDungeons / FILTER_BUTTONS_PER_COLUMN)
+	local buttonsPerColumn = (numDungeons > FILTER_HIGH_DUNGEON_THRESHOLD) and FILTER_BUTTONS_PER_COLUMN_HIGH
+		or FILTER_BUTTONS_PER_COLUMN
+	local numColumns = math.ceil(numDungeons / buttonsPerColumn)
 	local filtersWidth = numColumns * FILTER_BUTTON_WIDTH + (numColumns - 1) * FILTER_BUTTON_SPACING
 	local frameWidth = filtersWidth + PANEL_PADDING * 2
 	Panel.filterPanelWidth = frameWidth
 	Panel:Width(Panel.filterPanelWidth)
 
 	-- Set filters container height based on actual number of rows needed
-	local numRows = math.min(numDungeons, FILTER_BUTTONS_PER_COLUMN)
+	local numRows = math.min(numDungeons, buttonsPerColumn)
 	Filters:Height(FILTER_BUTTON_HEIGHT * numRows + FILTER_BUTTON_SPACING * (numRows - 1))
 
 	for i, mapID in ipairs(mapIDs) do
 		local FilterButton = CreateFrame("Frame", nil, Filters)
 		FilterButton:SetTemplate()
 		FilterButton:Size(FILTER_BUTTON_WIDTH, FILTER_BUTTON_HEIGHT)
-		local col = floor((i - 1) / FILTER_BUTTONS_PER_COLUMN)
-		local row = (i - 1) % FILTER_BUTTONS_PER_COLUMN
+		local col = floor((i - 1) / buttonsPerColumn)
+		local row = (i - 1) % buttonsPerColumn
 		local xOffset = col * (FILTER_BUTTON_WIDTH + FILTER_BUTTON_SPACING)
 		local yOffset = -row * (FILTER_BUTTON_HEIGHT + FILTER_BUTTON_SPACING)
 		FilterButton:Point("TOPLEFT", Filters, "TOPLEFT", xOffset, yOffset)

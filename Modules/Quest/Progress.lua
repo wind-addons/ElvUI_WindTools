@@ -523,6 +523,8 @@ function QP:Initialize()
 
 	if not self.initialized then
 		self:RegisterEvent("QUEST_LOG_UPDATE")
+		self:RegisterEvent("QUEST_WATCH_UPDATE", "QUEST_LOG_UPDATE")
+		self:RegisterEvent("QUEST_WATCH_LIST_CHANGED", "QUEST_LOG_UPDATE")
 		self:RegisterEvent("QUEST_TURNED_IN")
 		self:RegisterEvent("SCENARIO_CRITERIA_UPDATE")
 		self:RegisterEvent("SCENARIO_UPDATE", "SCENARIO_CRITERIA_UPDATE")

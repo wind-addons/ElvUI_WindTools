@@ -10,6 +10,7 @@
 	<Script file='Immersion.lua'/>
 	<Script file='LegionRemixHelper.lua'/>
 	<Script file='ManuscriptsJournal.lua'/>
+	<Script file='MeetingStone.lua'/>
 	<Script file='MountRoutePlanner.lua'/>
 	<Script file='MultiLanguage.lua'/>
 	<Script file='MurlokExport.lua'/>

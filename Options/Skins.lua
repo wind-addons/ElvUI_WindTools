@@ -1979,6 +1979,12 @@ options.addons = {
 			name = L["Mount Route Planner"],
 			addonName = "MountRoutePlanner",
 		},
+		meetingStone = {
+			order = 10,
+			type = "toggle",
+			name = L["Meeting Stone"],
+			addonName = "MeetingStone",
+		},
 		multiLanguage = {
 			order = 10,
 			type = "toggle",

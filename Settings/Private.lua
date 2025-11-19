@@ -579,6 +579,7 @@ V.skins = {
 		legionRemixHelper = true,
 		manuscriptsJournal = true,
 		mountRoutePlanner = true,
+		meetingStone = true,
 		multiLanguage = true,
 		murlokExport = true,
 		myslot = true,

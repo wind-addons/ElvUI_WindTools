@@ -36,19 +36,24 @@ W.Changelog[404] = {
 	},
 	NEW = {
 		["zhCN"] = {
-			"[美化皮肤] 新增 Murlok Export 插件的皮肤支持.",
+			"[美化皮肤] 新增 Murlok Export 皮肤.",
+			"[美化皮肤] 重新加入集合石皮肤. 大幅重写优化了之前的皮肤代码.",
 		},
 		["zhTW"] = {
-			"[美化皮膚] 新增 Murlok Export 插件的皮膚支援.",
+			"[美化皮膚] 新增 Murlok Export 皮膚.",
+			"[美化皮膚] 重新加入集合石皮膚. 大幅重寫優化了之前的皮膚代碼.",
 		},
 		["enUS"] = {
-			"[Skins] Add skin support for Murlok Export addon.",
+			"[Skins] Add Murlok Export skin.",
+			"[Skins] Re-add NetEase Meeting Stone skin. The previous skin code has been significantly rewritten and optimized.",
 		},
 		["koKR"] = {
-			"[스킨] Murlok Export 애드온에 대한 스킨 지원 추가.",
+			"[스킨] Murlok Export 스킨이 추가되었습니다.",
+			"[스킨] NetEase Meeting Stone 스킨이 다시 추가되었습니다. 이전 스킨 코드는 크게 재작성되고 최적화되었습니다.",
 		},
 		["ruRU"] = {
-			"[Скины] Добавлена поддержка скинов для аддона Murlok Export.",
+			"[Скины] Добавлен скин Murlok Export.",
+			"[Скины] Повторно добавлен скин NetEase Meeting Stone. Предыдущий код скина был значительно переписан и оптимизирован.",
 		},
 	},
 	IMPROVEMENT = {
@@ -65,6 +70,7 @@ W.Changelog[404] = {
 			"[进度] 优化世界任务完成进度的触发逻辑, 现在在任务完成后会更及时的展示进度.",
 			"[交接] 优化部分任务自动交接逻辑, 特别是军团幻境每日任务的处理.",
 			"[矩形小地图] 进一步提升和使用HereBeDragons-Pins库的插件的兼容性, 能够更加严格的隐藏超出矩形小地图边界的图标.",
+			"[预创建队伍] 优化预创建队伍的界面布局, 使其在较多地下城时也能更好的显示.",
 		},
 		["zhTW"] = {
 			"[美化皮膚] 重新製作暴雪背包和銀行的皮膚, 同時優化 ElvUI 皮膚處理來解決與其他插件如 Zygor 混用時的邊框渲染問題.",
@@ -79,6 +85,7 @@ W.Changelog[404] = {
 			"[進度] 優化世界任務完成進度的觸發邏輯, 現在在任務完成後會更及時的展示進度.",
 			"[交接] 優化部分任務自動交接邏輯, 特別是軍團幻境每日任務的處理.",
 			"[矩形小地圖] 進一步提升和使用HereBeDragons-Pins庫的插件的相容性, 能夠更加嚴格的隱藏超出矩形小地圖邊界的圖示.",
+			"[預組隊伍] 優化預組隊伍的介面佈局, 使其在較多地城時也能更好的顯示.",
 		},
 		["enUS"] = {
 			"[Skins] Redesign Blizzard bag and bank skins, and optimize ElvUI skin handling to resolve border rendering issues when mixing with other addons like Zygor.",
@@ -93,6 +100,7 @@ W.Changelog[404] = {
 			"[Progress] Optimize world quest completion progress trigger logic, now display progress more promptly after quest completion.",
 			"[Turn In] Optimize auto turn-in logic for certain quests, especially for the handling of Legion Remix daily quests.",
 			"[Rectangle Minimap] Further improve compatibility with addons using the HereBeDragons-Pins library, allowing for stricter hiding of icons that exceed the boundaries of the rectangle minimap.",
+			"[LFG List] Optimize the layout of the right panel to better display when there are many dungeons.",
 		},
 		["koKR"] = {
 			"[스킨] 블리자드 가방과 은행 스킨을 재디자인하고, ElvUI 스킨 처리를 최적화하여 Zygor와 같은 다른 애드온과 혼합 사용 시 테두리 렌더링 문제를 해결합니다.",
@@ -107,6 +115,7 @@ W.Changelog[404] = {
 			"[진행 상황] 월드 퀘스트 완료 진행률 트리거 로직을 최적화하여, 이제 퀘스트 완료 후 진행률을 더 빠르게 표시합니다.",
 			"[퀘스트 교환] 특정 퀘스트, 특히 군단 리믹스 일일 퀘스트 처리에 대한 자동 교환 로직이 최적화되었습니다.",
 			"[직사각형 미니맵] HereBeDragons-Pins 라이브러리를 사용하는 애드온과의 호환성이 더욱 향상되어, 직사각형 미니맵 경계를 초과하는 아이콘을 더 엄격하게 숨길 수 있습니다.",
+			"[LFG 목록] 많은 던전이 있을 때 더 잘 표시할 수 있도록 오른쪽 패널의 레이아웃을 최적화합니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Переработаны скины сумок и банка Blizzard, а также оптимизирована обработка скинов ElvUI для решения проблем с рендерингом границ при использовании с другими аддонами, такими как Zygor.",
@@ -121,6 +130,7 @@ W.Changelog[404] = {
 			"[Прогресс] Оптимизирована логика триггера прогресса завершения мировых заданий. Теперь прогресс отображается более оперативно после завершения задания.",
 			"[Сдача заданий] Оптимизирована логика автоматической сдачи для определенных заданий, особенно для обработки ежедневных заданий Легиона Ремикс.",
 			"[Прямоугольная миникарта] Дополнительно улучшена совместимость с аддонами, использующими библиотеку HereBeDragons-Pins, что позволяет более строго скрывать значки, выходящие за пределы прямоугольной миникарты.",
+			"[Список поиска группы] Оптимизирован макет правой панели для лучшего отображения при большом количестве подземелий.",
 		},
 	},
 }

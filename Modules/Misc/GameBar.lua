@@ -53,6 +53,7 @@ local ToggleFriendsFrame = ToggleFriendsFrame
 local ToggleTimeManager = ToggleTimeManager
 local UnregisterStateDriver = UnregisterStateDriver
 
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
@@ -571,7 +572,7 @@ local ButtonTypes = {
 			LeftButton = "/click LFDMicroButton",
 		},
 		tooltips = {
-			L["Group Finder"],
+			LEFT_BUTTON_ICON .. " " .. L["Group Finder"],
 		},
 	},
 	GUILD = {
@@ -780,6 +781,38 @@ local ButtonTypes = {
 		end,
 	},
 }
+
+local function UpdateButtonTypesForNetEaseMeetingStone()
+	if not C_AddOns_IsAddOnLoaded("MeetingStone") then
+		return
+	end
+
+	local NetEaseEnv = _G.LibStub("NetEaseEnv-1.0", true)
+	if not NetEaseEnv then
+		return
+	end
+
+	local MeetingStone
+	for k in pairs(NetEaseEnv._NSInclude) do
+		if type(k) == "table" and k.Addon ~= nil then
+			MeetingStone = k.Addon
+		end
+	end
+
+	if not MeetingStone or not MeetingStone.Toggle then
+		return
+	end
+
+	ButtonTypes.GROUP_FINDER.macro.RightButton = ButtonTypes.GROUP_FINDER.macro.LeftButton
+	ButtonTypes.GROUP_FINDER.macro.LeftButton = "/meetingstone"
+
+	ButtonTypes.GROUP_FINDER.tooltips = {
+		L["Group Finder"],
+		"\n",
+		LEFT_BUTTON_ICON .. " " .. L["NetEase Meeting Stone"],
+		RIGHT_BUTTON_ICON .. " " .. L["Group Finder"],
+	}
+end
 
 function GB:OnEnter()
 	if self.db and self.db.mouseOver then
@@ -1417,6 +1450,8 @@ function GB:Initialize()
 			DT.RegisteredDataTexts[name].applySettings(vDT, E.media.hexvaluecolor)
 		end
 	end
+
+	UpdateButtonTypesForNetEaseMeetingStone()
 
 	self:UpdateMetadata()
 	self:UpdateHearthStoneTable()

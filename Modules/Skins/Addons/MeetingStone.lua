@@ -384,6 +384,15 @@ local function ReskinManagerPanel(panel)
 			S:Proxy("HandleButton", DisbandButton)
 		end
 
+		local ViewBoardWidget = LeftPart.ViewBoardWidget
+		if ViewBoardWidget then
+			for _, child in pairs({ ViewBoardWidget:GetChildren() }) do
+				if child.Background then
+					child.Background:Kill()
+				end
+			end
+		end
+
 		local CreateWidget = LeftPart.CreateWidget
 		if CreateWidget then
 			for _, child in pairs({ CreateWidget:GetChildren() }) do
@@ -594,6 +603,27 @@ local function ReskinMiscellaneous()
 					button["@"].Check:Point("CENTER")
 					button["@"].Check:Size(24)
 					F.InternalizeMethod(button["@"].Check, "SetSize", true)
+				end
+
+				local Summary = button.Summary
+				if Summary then
+					local CancelButton = Summary.CancelButton
+					if CancelButton then
+						S:Proxy("HandleButton", CancelButton)
+					end
+				end
+
+				local Option = button.Option
+				if Option then
+					local InviteButton = Option.InviteButton
+					if InviteButton then
+						S:Proxy("HandleButton", InviteButton)
+					end
+
+					local DeclineButton = Option.DeclineButton
+					if DeclineButton then
+						S:Proxy("HandleButton", DeclineButton)
+					end
 				end
 
 				button.__windSkin = true

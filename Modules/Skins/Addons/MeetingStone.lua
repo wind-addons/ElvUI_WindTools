@@ -5,6 +5,7 @@ local C = W.Utilities.Color
 
 local _G = _G
 local assert = assert
+local format = format
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local type = type

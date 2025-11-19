@@ -22,11 +22,7 @@ local function ReskinScrollFrameItems(frame, template)
 						end
 
 						if abs(r - 0.4) < 0.01 and g == 1 and abs(r - 0.4) < 0.01 then
-							return {
-								r = 0.75,
-								g = 0.75,
-								b = 0.75,
-							}
+							return { r = 0.75, g = 0.75, b = 0.75 }
 						end
 					end
 				end
@@ -130,19 +126,6 @@ function S:SimpleAddonManager()
 	_G.SimpleAddonManager:SetTemplate("Transparent")
 	self:CreateShadow(_G.SimpleAddonManager)
 	self:Proxy("HandleCloseButton", _G.SimpleAddonManager.CloseButton)
-
-	local edd = _G.LibStub("ElioteDropDownMenu-1.0", true)
-	if edd then
-		hooksecurefunc(edd, "UIDropDownMenu_CreateFrames", function(level)
-			if _G["ElioteDDM_DropDownList" .. level] and not _G["ElioteDDM_DropDownList" .. level].__windSkin then
-				_G["ElioteDDM_DropDownList" .. level .. "Backdrop"]:SetTemplate("Transparent")
-				_G["ElioteDDM_DropDownList" .. level .. "MenuBackdrop"]:SetTemplate("Transparent")
-				self:CreateShadow(_G["ElioteDDM_DropDownList" .. level .. "Backdrop"])
-				self:CreateShadow(_G["ElioteDDM_DropDownList" .. level .. "MenuBackdrop"])
-				_G["ElioteDDM_DropDownList" .. level].__windSkin = true
-			end
-		end)
-	end
 end
 
 S:AddCallbackForAddon("SimpleAddonManager")

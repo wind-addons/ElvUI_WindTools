@@ -3430,6 +3430,11 @@ options.libraries = {
 				return not E.private.WT.skins.libraries.ace3
 			end,
 		},
+		elioteDropDownMenu = {
+			order = 10,
+			type = "toggle",
+			name = L["ElioteDropDownMenu"],
+		},
 		libQTip = {
 			order = 10,
 			type = "toggle",

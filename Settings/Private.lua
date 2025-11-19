@@ -610,6 +610,7 @@ V.skins = {
 	libraries = {
 		ace3 = true,
 		ace3Dropdown = true,
+		elioteDropDownMenu = true,
 		libQTip = true,
 		secureTabs = true,
 	},

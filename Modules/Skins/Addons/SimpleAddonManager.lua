@@ -35,26 +35,6 @@ local function ReskinScrollFrameItems(frame, template)
 	end
 end
 
-local function ReskinSizer(frame)
-	if not frame then
-		return
-	end
-
-	for _, region in next, { frame:GetRegions() } do
-		if region:IsObjectType("Texture") then
-			region:SetTexture(E.Media.Textures.ArrowUp)
-			region:SetTexCoord(0, 1, 0, 1)
-			region:SetRotation(-2.35)
-			region:SetAllPoints()
-			break
-		end
-	end
-
-	frame:Size(24)
-	frame:Point("BOTTOMRIGHT", 1, -1)
-	frame:SetFrameLevel(200)
-end
-
 local function SAMDropDownSkin(frame)
 	frame:Width(200)
 	frame:Height(32)
@@ -80,7 +60,10 @@ local function ReskinModules(frame)
 	frame.OkButton:Point("RIGHT", frame.CancelButton, "LEFT", -2, 0)
 	frame.DisableAllButton:ClearAllPoints()
 	frame.DisableAllButton:Point("LEFT", frame.EnableAllButton, "RIGHT", 2, 0)
-	ReskinSizer(frame.Sizer)
+	S:HandleResizeButton(frame.Sizer)
+	frame.Sizer:ClearAllPoints()
+	frame.Sizer:Point("BOTTOMRIGHT", 1, -1)
+	frame.Sizer:SetFrameLevel(200)
 
 	-- SearchBox
 	S:Proxy("HandleEditBox", frame.SearchBox)

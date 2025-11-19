@@ -2,19 +2,23 @@ local W, F, E = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local LSM = E.Libs.LSM
 local S = W.Modules.Skins ---@class Skins
 local ES = E.Skins
+local C = W.Utilities.Color
 
 local _G = _G
 local assert = assert
+local floor = floor
 local format = format
 local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
 local next = next
 local pairs = pairs
+local pi = math.pi
 local strmatch = strmatch
 local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
 local type = type
+local unpack = unpack
 local xpcall = xpcall
 
 local CreateFrame = CreateFrame
@@ -723,6 +727,42 @@ function S:TryCropTexture(tex)
 	if F.IsAlmost({ left, top, right, bottom }, { 0, 0, 1, 1 }) then
 		tex:SetTexCoords()
 	end
+end
+
+---Handle resize button styling
+---@param button PanelResizeButtonTemplate
+function S:HandleResizeButton(button)
+	if not button or button.__windSkin then
+		return
+	end
+
+	button:SetNormalTexture(E.Media.Textures.ArrowUp)
+	button:GetHighlightTexture():SetTexture("")
+	button:SetPushedTexture(E.Media.Textures.ArrowUp)
+
+	local normalTex = button:GetNormalTexture()
+	normalTex:SetVertexColor(C.ExtractRGBAFromTemplate("neutral-50"))
+	normalTex:SetTexCoord(0, 1, 0, 1)
+	normalTex:SetRotation(pi * 1.25)
+	normalTex:SetAllPoints()
+
+	local pushedTex = button:GetPushedTexture()
+	pushedTex:SetVertexColor(unpack(E.media.rgbvaluecolor))
+	pushedTex:SetTexCoord(0, 1, 0, 1)
+	pushedTex:SetRotation(pi * 1.25)
+	pushedTex:SetAllPoints()
+
+	self:SecureHookScript(button, "OnEnter", function()
+		normalTex:SetVertexColor(unpack(E.media.rgbvaluecolor))
+	end)
+
+	self:SecureHookScript(button, "OnLeave", function()
+		normalTex:SetVertexColor(C.ExtractRGBAFromTemplate("neutral-50"))
+	end)
+
+	button:Size(floor(button:GetWidth() * 1.25 + 0.5))
+
+	button.__windSkin = true
 end
 
 function S:Initialize()

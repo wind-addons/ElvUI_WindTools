@@ -9,6 +9,7 @@ function S:Blizzard_EventTrace()
 	end
 
 	self:CreateBackdropShadow(_G.EventTrace)
+	self:HandleResizeButton(_G.EventTrace.ResizeButton)
 end
 
 S:AddCallbackForAddon("Blizzard_EventTrace")

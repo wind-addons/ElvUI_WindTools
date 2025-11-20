@@ -281,12 +281,10 @@ CM.Features = {
 		func = function(frame)
 			local name = frame.name
 			local server = frame.server or E.myrealm
+			local slug = server and W.RealmSlugs[server]
 
-			if name and server then
-				-- Remove the single quote in the server name
-				-- e.g. Mal'Ganis -> MalGanis
-				local s = gsub(server, "'", "")
-				local link = CM:GetArmoryBaseURL() .. s .. "/" .. name
+			if name and slug then
+				local link = format("%s/%s/%s", CM:GetArmoryBaseURL(), slug, name)
 				E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, link)
 			else
 				CM:Log("debug", "Cannot get the armory link.")
@@ -412,18 +410,20 @@ end
 
 function CM:GetArmoryBaseURL()
 	local language = strlower(W.Locale)
-	if language == "zhcn" then
-		language = "zhtw" -- There is no simplified Chinese armory
-	end
-
 	local region = self.db and self.db.armoryOverride[E.myrealm] or W.RealRegion
-	if region == "CN" then
-		region = "TW" -- Fix taiwan server region issue
-	end
 	region = strlower(region or "US")
 
+	-- China uses a different armory URL
+	if region == "cn" then
+		return "https://wow.blizzard.cn/character/#"
+	end
+
+	if language == "zhcn" then
+		language = "zhtw" -- Simplified Chinese armory bugged outside of China
+	end
+
 	return format(
-		"https://worldofwarcraft.com/%s-%s/character/%s/",
+		"https://worldofwarcraft.com/%s-%s/character/%s",
 		strsub(language, 1, 2),
 		strsub(language, 3, 4),
 		region

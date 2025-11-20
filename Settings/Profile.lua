@@ -1087,7 +1087,7 @@ P.social = {
 	contextMenu = {
 		enable = true,
 		sectionTitle = true,
-		armory = W.Locale ~= "zhCN",
+		armory = true,
 		armoryOverride = {},
 		guildInvite = true,
 		who = true,

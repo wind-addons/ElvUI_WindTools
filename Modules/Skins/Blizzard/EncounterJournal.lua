@@ -25,6 +25,19 @@ local function createPositionHook(tab, point, relativeTo, relativePoint, x, y)
 	end)
 end
 
+local function BossesScrollUpdateChild(child)
+	if not child.IsSkinned or child.__windSkin then
+		return
+	end
+
+	child:GetHighlightTexture():Kill()
+	child.__windSkin = true
+end
+
+local function BossesScrollUpdate(frame)
+	frame:ForEachFrame(BossesScrollUpdateChild)
+end
+
 function S:Blizzard_EncounterJournal()
 	if not self:CheckDB("encounterjournal", "encounterJournal") then
 		return
@@ -60,6 +73,10 @@ function S:Blizzard_EncounterJournal()
 			self:CreateBackdropShadow(tab)
 			createPositionHook(tab, position[1], position[2], position[3], position[4], position[5])
 		end
+	end
+
+	if E.private.skins.parchmentRemoverEnable then
+		hooksecurefunc(_G.EncounterJournal.encounter.info.BossesScrollBox, "Update", BossesScrollUpdate)
 	end
 
 	-- Monthly Activities

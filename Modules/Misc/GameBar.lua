@@ -782,20 +782,30 @@ local ButtonTypes = {
 	},
 }
 
-local function UpdateButtonTypesForNetEaseMeetingStone()
+function GB:UpdateGroupFinderButton()
 	if not C_AddOns_IsAddOnLoaded("MeetingStone") then
 		return
 	end
 
-	ButtonTypes.GROUP_FINDER.macro.RightButton = ButtonTypes.GROUP_FINDER.macro.LeftButton
-	ButtonTypes.GROUP_FINDER.macro.LeftButton = "/meetingstone"
-
-	ButtonTypes.GROUP_FINDER.tooltips = {
-		L["Group Finder"],
-		"\n",
-		LEFT_BUTTON_ICON .. " " .. L["Meeting Stone"],
-		RIGHT_BUTTON_ICON .. " " .. L["Group Finder"],
-	}
+	if self.db.groupFinder.preferNetEaseMeetingStone then
+		ButtonTypes.GROUP_FINDER.macro.LeftButton = "/meetingstone"
+		ButtonTypes.GROUP_FINDER.macro.RightButton = "/click LFDMicroButton"
+		ButtonTypes.GROUP_FINDER.tooltips = {
+			L["Group Finder"],
+			"\n",
+			LEFT_BUTTON_ICON .. " " .. L["Meeting Stone"],
+			RIGHT_BUTTON_ICON .. " " .. L["Group Finder"],
+		}
+	else
+		ButtonTypes.GROUP_FINDER.macro.LeftButton = "/click LFDMicroButton"
+		ButtonTypes.GROUP_FINDER.macro.RightButton = "/meetingstone"
+		ButtonTypes.GROUP_FINDER.tooltips = {
+			L["Group Finder"],
+			"\n",
+			LEFT_BUTTON_ICON .. " " .. L["Group Finder"],
+			RIGHT_BUTTON_ICON .. " " .. L["Meeting Stone"],
+		}
+	end
 end
 
 function GB:OnEnter()
@@ -1435,8 +1445,7 @@ function GB:Initialize()
 		end
 	end
 
-	UpdateButtonTypesForNetEaseMeetingStone()
-
+	self:UpdateGroupFinderButton()
 	self:UpdateMetadata()
 	self:UpdateHearthStoneTable()
 	self:ConstructBar()
@@ -1491,6 +1500,7 @@ function GB:ProfileUpdate()
 	end
 
 	if self.db.enable then
+		self:UpdateGroupFinderButton()
 		self:UpdateMetadata()
 		if self.initialized then
 			self.bar:Show()

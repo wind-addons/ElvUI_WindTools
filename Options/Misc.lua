@@ -1518,8 +1518,33 @@ options.gameBar = {
 			end,
 			args = {},
 		},
-		leftButtons = {
+		groupFinder = {
 			order = 15,
+			type = "group",
+			name = L["Group Finder"],
+			disabled = function()
+				return not E.db.WT.misc.gameBar.enable
+			end,
+			get = function(info)
+				return E.db.WT.misc.gameBar.groupFinder[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.misc.gameBar.groupFinder[info[#info]] = value
+				GB:UpdateGroupFinderButton()
+				GB:UpdateButtons()
+			end,
+			args = {
+				preferNetEaseMeetingStone = {
+					order = 1,
+					type = "toggle",
+					name = L["Prefer NetEase Meeting Stone"],
+					desc = L["If Meeting Stone is installed, left click the Group Finder button to open NetEase Meeting Stone instead of the Blizzard one."],
+					width = 2,
+				},
+			},
+		},
+		leftButtons = {
+			order = 16,
 			type = "group",
 			name = L["Left Panel"],
 			disabled = function()
@@ -1536,7 +1561,7 @@ options.gameBar = {
 			args = {},
 		},
 		rightButtons = {
-			order = 16,
+			order = 17,
 			type = "group",
 			name = L["Right Panel"],
 			disabled = function()

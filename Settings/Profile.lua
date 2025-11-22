@@ -1386,6 +1386,9 @@ P.misc = {
 		notification = true,
 		visibility = "[petbattle] hide; show",
 		tooltipsAnchor = "ANCHOR_BOTTOM",
+		groupFinder = {
+			preferNetEaseMeetingStone = false,
+		},
 		friends = {
 			showAllFriends = false,
 			countSubAccounts = true,

@@ -28,17 +28,15 @@ local msgList = {
 	ERR_DUNGEON_DIFFICULTY_CHANGED_S = {
 		message = L["Dungeon difficulty set to >> %s <<"],
 		isDifficultyChange = true,
-		ignoreOn = {
-			"partyLeaderChanged",
-		},
+		ignoreOn = { "partyLeaderChanged" },
+		throttleKey = "ANNDungeonDifficultyChanged",
 	},
 	ERR_RAID_DIFFICULTY_CHANGED_S = {
 		message = L["Raid difficulty set to >> %s <<"],
 		isDifficultyChange = true,
 		notMatch = gsub(_G.ERR_LEGACY_RAID_DIFFICULTY_CHANGED_S, "%%s", ".+"),
-		ignoreOn = {
-			"partyLeaderChanged",
-		},
+		ignoreOn = { "partyLeaderChanged" },
+		throttleKey = "ANNRaidDifficultyChanged",
 	},
 }
 
@@ -102,7 +100,13 @@ function A:ResetInstance(text)
 			local cached = resetMessageCache:Get(channel) ---@type string?
 			if not cached or cached ~= message then
 				resetMessageCache:Set(channel, message)
-				self:SendMessage(message, channel)
+				if data.throttleKey then
+					F.ThrottleFirst(0.5, data.throttleKey, function()
+						self:SendMessage(message, channel)
+					end)
+				else
+					self:SendMessage(message, channel)
+				end
 			end
 			return
 		end

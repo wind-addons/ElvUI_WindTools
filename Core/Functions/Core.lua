@@ -239,6 +239,9 @@ end
 ---@type table<any, table> Throttle states storage
 local throttleStates = {}
 
+---@type table<any, table> Throttle first call states storage
+local throttleFirstStates = {}
+
 ---Throttle function execution to prevent excessive calls
 ---@param duration number Duration in seconds to throttle
 ---@param key any? Unique key for throttling (optional, defaults to function)
@@ -290,6 +293,57 @@ function F.Throttle(duration, key, func, ...)
 	end)
 end
 
+---Throttle function execution, including the first call
+---@param duration number Duration in seconds to throttle
+---@param key any? Unique key for throttling (optional, defaults to function)
+---@param func function The function to throttle
+---@param ... any Arguments to pass to the function
+function F.ThrottleFirst(duration, key, func, ...)
+	if type(duration) ~= "number" or duration < 0 then
+		F.Developer.ThrowError("Invalid duration for F.ThrottleFirst: must be a positive number")
+	end
+
+	if duration == 0 then
+		func(...) -- No throttling (only for testing purpose)
+		return
+	end
+
+	if type(func) ~= "function" then
+		F.Developer.ThrowError("Invalid function for F.ThrottleFirst: third argument must be a function")
+	end
+
+	local finalKey = key ~= nil and key or func
+	local state = throttleFirstStates[finalKey]
+
+	if not state then
+		state = {
+			isThrottling = false,
+			timer = nil,
+			lastArgs = { ... },
+		}
+		throttleFirstStates[finalKey] = state
+	else
+		state.lastArgs = { ... }
+
+		if state.isThrottling then
+			return
+		end
+	end
+
+	state.isThrottling = true
+
+	if state.timer then
+		state.timer:Cancel()
+		state.timer = nil
+	end
+
+	state.timer = E:Delay(duration, function()
+		func(unpack(state.lastArgs))
+		state.isThrottling = false
+		state.timer = nil
+	end)
+end
+
 ---Create a throttled version of a function
 ---@param duration number Duration in seconds to throttle
 ---@param func function The function to throttle
@@ -300,10 +354,31 @@ function F.ThrottleFunction(duration, func)
 	end
 end
 
+---Create a throttled version of a function (including first call)
+---@param duration number Duration in seconds to throttle
+---@param func function The function to throttle
+---@return function throttledFunction The throttled version of the function
+function F.ThrottleFirstFunction(duration, func)
+	return function(...)
+		F.ThrottleFirst(duration, func, func, ...)
+	end
+end
+
 ---Cancel throttle for a specific key
 ---@param key any The throttle key to cancel
 function F.CancelThrottle(key)
 	local state = throttleStates[key]
+	if state and state.timer then
+		state.timer:Cancel()
+		state.timer = nil
+		state.isThrottling = false
+	end
+end
+
+---Cancel throttle first for a specific key
+---@param key any The throttle first key to cancel
+function F.CancelThrottleFirst(key)
+	local state = throttleFirstStates[key]
 	if state and state.timer then
 		state.timer:Cancel()
 		state.timer = nil

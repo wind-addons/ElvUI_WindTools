@@ -64,7 +64,7 @@ function KI:GetPlayerKeystone()
 		return C_MythicPlus_GetOwnedKeystoneChallengeMapID(), C_MythicPlus_GetOwnedKeystoneLevel(), link
 	end
 
-	local challengeMapID, level = select(3, strsplit(":", link))
+	local challengeMapID, level = select(4, strsplit(":", link))
 	if not challengeMapID or not level then
 		return nil, nil, link
 	end
@@ -101,7 +101,7 @@ function KI:CheckPlayerKeystone(skipEmit)
 end
 
 function KI:DelayedCheckPlayerKeystone()
-	return E:Delay(0.5, KI.CheckPlayerKeystone, KI)
+	E:Delay(0.5, KI.CheckPlayerKeystone, KI)
 end
 
 function KI.RequestData()

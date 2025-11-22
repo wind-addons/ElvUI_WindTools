@@ -11,8 +11,10 @@ local strmatch = strmatch
 local UnitIsGroupLeader = UnitIsGroupLeader
 
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
+local ERR_RAID_CONVERTED_TO_PARTY = ERR_RAID_CONVERTED_TO_PARTY
+local ERR_PARTY_CONVERTED_TO_RAID = ERR_PARTY_CONVERTED_TO_RAID
 
-local msgList = {
+local messageData = {
 	INSTANCE_RESET_SUCCESS = {
 		message = L["%s has been reset"],
 	},
@@ -28,19 +30,20 @@ local msgList = {
 	ERR_DUNGEON_DIFFICULTY_CHANGED_S = {
 		message = L["Dungeon difficulty set to >> %s <<"],
 		isDifficultyChange = true,
-		ignoreOn = { "partyLeaderChanged" },
+		ignoreOn = { "partyLeaderChanged", "justChangedGroupType" },
 		throttleKey = "ANNDungeonDifficultyChanged",
 	},
 	ERR_RAID_DIFFICULTY_CHANGED_S = {
 		message = L["Raid difficulty set to >> %s <<"],
 		isDifficultyChange = true,
 		notMatch = gsub(_G.ERR_LEGACY_RAID_DIFFICULTY_CHANGED_S, "%%s", ".+"),
-		ignoreOn = { "partyLeaderChanged" },
+		ignoreOn = { "partyLeaderChanged", "justChangedGroupType" },
 		throttleKey = "ANNRaidDifficultyChanged",
 	},
 }
 
 local ignoreCondition = {
+	justChangedGroupType = nil,
 	partyLeaderChanged = nil,
 }
 
@@ -52,15 +55,25 @@ local resetMessageCache = cache.New({
 	cleanupInterval = 60,
 })
 
-function A:ResetInstanceIgnoreUpdate(event)
+function A:ResetInstanceUpdateIgnoreState(event, text)
+	local t = time()
 	if event == "PARTY_LEADER_CHANGED" then
-		local time = time()
-		ignoreCondition.partyLeaderChanged = time
+		ignoreCondition.partyLeaderChanged = t
 		E:Delay(1, function()
-			if ignoreCondition.partyLeaderChanged == time then
+			if ignoreCondition.partyLeaderChanged == t then
 				ignoreCondition.partyLeaderChanged = nil
 			end
 		end)
+	elseif event == "CHAT_MSG_SYSTEM" then
+		if text and (text == ERR_RAID_CONVERTED_TO_PARTY or text == ERR_PARTY_CONVERTED_TO_RAID) then
+			ignoreCondition.justChangedGroupType = t
+			E:Delay(1, function()
+				if ignoreCondition.justChangedGroupType == t then
+					ignoreCondition.justChangedGroupType = nil
+				end
+			end)
+			return
+		end
 	end
 end
 
@@ -70,8 +83,8 @@ function A:ResetInstance(text)
 		return
 	end
 
-	for messageKey, data in pairs(msgList) do
-		local template = _G[messageKey]
+	for key, data in pairs(messageData) do
+		local template = _G[key]
 		if strmatch(text, gsub(template, "%%s", ".+")) then
 			if data.notMatch and strmatch(text, data.notMatch) then
 				return
@@ -80,7 +93,6 @@ function A:ResetInstance(text)
 			if data.ignoreOn then
 				for _, conditionKey in pairs(data.ignoreOn) do
 					if ignoreCondition[conditionKey] then
-						print("Ignored reset instance announcement due to condition:", conditionKey)
 						return
 					end
 				end
@@ -88,7 +100,6 @@ function A:ResetInstance(text)
 
 			if data.isDifficultyChange then
 				if not config.difficultyChange or not UnitIsGroupLeader("player", LE_PARTY_CATEGORY_HOME) then
-					print("Ignored reset instance announcement due to difficulty change or not being group leader")
 					return
 				end
 			end
@@ -102,7 +113,9 @@ function A:ResetInstance(text)
 				resetMessageCache:Set(channel, message)
 				if data.throttleKey then
 					F.ThrottleFirst(0.5, data.throttleKey, function()
-						self:SendMessage(message, channel)
+						if channel == self:GetChannel(config.channel) then
+							self:SendMessage(message, channel)
+						end
 					end)
 				else
 					self:SendMessage(message, channel)

@@ -29,7 +29,8 @@ A.MessageList = {
 }
 
 -- CHAT_MSG_SYSTEM: text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons
-function A:CHAT_MSG_SYSTEM(_, text)
+function A:CHAT_MSG_SYSTEM(event, text)
+	self:ResetInstanceUpdateIgnoreState(event, text)
 	RunNextFrame(function()
 		self:ResetInstance(text)
 	end)
@@ -109,7 +110,7 @@ function A:UNIT_SPELLCAST_SUCCEEDED(event, unitTarget, _, spellId)
 end
 
 function A:PARTY_LEADER_CHANGED(event)
-	self:ResetInstanceIgnoreUpdate(event)
+	self:ResetInstanceUpdateIgnoreState(event)
 end
 
 function A:WINDTOOLS_PLAYER_KEYSTONE_CHANGED(_, ...)

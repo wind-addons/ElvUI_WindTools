@@ -93,6 +93,8 @@
     "UNKNOWN",
     "WAISTSLOT",
     "WRISTSLOT",
+    "ERR_RAID_CONVERTED_TO_PARTY",
+    "ERR_PARTY_CONVERTED_TO_RAID",
   ],
   "diagnostics.disable": [
     "inject-field",

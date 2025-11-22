@@ -19,10 +19,10 @@ function S:ElioteDropDownMenu(lib)
 			end
 
 			local name = "ElioteDDM_DropDownList" .. level
-            local frame = _G[name]
-            if not frame or handledFrames[frame] then
-                return
-            end
+			local frame = _G[name]
+			if not frame or handledFrames[frame] then
+				return
+			end
 
 			_G[name .. "Backdrop"]:SetTemplate("Transparent")
 			_G[name .. "MenuBackdrop"]:SetTemplate("Transparent")

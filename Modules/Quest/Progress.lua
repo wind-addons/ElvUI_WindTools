@@ -2,6 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local QP = W:GetModule("QuestProgress") ---@class QuestProgress : AceModule, AceEvent-3.0
 local A = W:GetModule("Announcement") ---@class Announcement
 local C = W.Utilities.Color
+local cache = W.Utilities.Cache
 
 local _G = _G
 local assert = assert
@@ -53,6 +54,13 @@ local ignoreTagIDs = {
 local ignoreWorldQuestTypeIDs = {
 	[Enum.QuestTagType.Profession] = true,
 }
+
+local manuallyFlaggedCompletedQuests = cache.New({
+	defaultTTL = 5,
+	maxLength = nil,
+	autoCleanup = true,
+	cleanupInterval = 60,
+})
 
 ---@class QuestProgressData
 ---@field questID number Quest ID
@@ -145,12 +153,15 @@ local function FetchAllQuestProgressData()
 					})
 				end
 
+				local manuallyFlagged = manuallyFlaggedCompletedQuests:Get(tostring(questInfo.questID))
+				local isComplete = manuallyFlagged and true or C_QuestLog_IsComplete(questInfo.questID)
+
 				quests[questInfo.questID] = {
 					title = questInfo.title,
 					questID = questInfo.questID,
 					level = questInfo.level,
 					suggestedGroup = questInfo.suggestedGroup,
-					isComplete = C_QuestLog_IsComplete(questInfo.questID),
+					isComplete = isComplete,
 					frequency = questInfo.frequency,
 					tag = tagInfo and tagInfo.tagName,
 					tagID = tagInfo and tagInfo.tagID,
@@ -473,13 +484,15 @@ do
 	end
 end
 
-function QP:QUEST_LOG_UPDATE()
+function QP:HandleQuestUpdateEvent()
 	F.TaskManager:AfterLogin(self.ProcessQuestUpdate, self)
 end
 
 ---@param _ "QUEST_TURNED_IN"
 ---@param questID number
-function QP:QUEST_TURNED_IN(_, questID)
+function QP:HandleQuestTurnedIn(_, questID)
+	manuallyFlaggedCompletedQuests:Set(tostring(questID), true)
+
 	if not questID or not cachedQuests or not cachedQuests[questID] or not cachedQuests[questID].worldQuestType then
 		return
 	end
@@ -490,7 +503,7 @@ function QP:QUEST_TURNED_IN(_, questID)
 	end
 end
 
-function QP:SCENARIO_CRITERIA_UPDATE()
+function QP:HandleScenarioUpdate()
 	F.TaskManager:AfterLogin(self.ProcessScenarioUpdate, self)
 end
 
@@ -522,13 +535,13 @@ function QP:Initialize()
 	end
 
 	if not self.initialized then
-		self:RegisterEvent("QUEST_LOG_UPDATE")
-		self:RegisterEvent("QUEST_WATCH_UPDATE", "QUEST_LOG_UPDATE")
-		self:RegisterEvent("QUEST_WATCH_LIST_CHANGED", "QUEST_LOG_UPDATE")
-		self:RegisterEvent("QUEST_TURNED_IN")
-		self:RegisterEvent("SCENARIO_CRITERIA_UPDATE")
-		self:RegisterEvent("SCENARIO_UPDATE", "SCENARIO_CRITERIA_UPDATE")
-		self:RegisterEvent("SCENARIO_CRITERIA_SHOW_STATE_UPDATE", "SCENARIO_CRITERIA_UPDATE")
+		self:RegisterEvent("QUEST_LOG_UPDATE", "HandleQuestUpdateEvent")
+		self:RegisterEvent("QUEST_WATCH_UPDATE", "HandleQuestUpdateEvent")
+		self:RegisterEvent("QUEST_WATCH_LIST_CHANGED", "HandleQuestUpdateEvent")
+		self:RegisterEvent("QUEST_TURNED_IN", "HandleQuestTurnedIn")
+		self:RegisterEvent("SCENARIO_CRITERIA_UPDATE", "HandleScenarioUpdate")
+		self:RegisterEvent("SCENARIO_UPDATE", "HandleScenarioUpdate")
+		self:RegisterEvent("SCENARIO_CRITERIA_SHOW_STATE_UPDATE", "HandleScenarioUpdate")
 		self.initialized = true
 	end
 

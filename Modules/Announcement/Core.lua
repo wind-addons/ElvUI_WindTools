@@ -1,5 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local A = W:NewModule("Announcement", "AceEvent-3.0") ---@class Announcement : AceModule, AceEvent-3.0
+local ChatThrottleLib = _G.ChatThrottleLib
 
 local _G = _G
 
@@ -12,7 +13,6 @@ local IsInGroup = IsInGroup
 local IsInInstance = IsInInstance
 local IsInRaid = IsInRaid
 local IsPartyLFG = IsPartyLFG
-local C_ChatInfo_SendChatMessage = C_ChatInfo.SendChatMessage
 local UnitIsGroupAssistant = UnitIsGroupAssistant
 local UnitIsGroupLeader = UnitIsGroupLeader
 local UnitInParty = UnitInParty
@@ -71,7 +71,7 @@ function A:SendMessage(text, channel, raidWarning, whisperTarget)
 
 	if channel == "WHISPER" then
 		if whisperTarget then
-			C_ChatInfo_SendChatMessage(text, channel, nil, whisperTarget)
+			ChatThrottleLib:SendChatMessage("NORMAL", "WT", text, channel, nil, whisperTarget)
 		end
 		return
 	end
@@ -91,7 +91,7 @@ function A:SendMessage(text, channel, raidWarning, whisperTarget)
 	end
 
 	if self:CheckBeforeSend(text, channel) then
-		C_ChatInfo_SendChatMessage(text, channel)
+		ChatThrottleLib:SendChatMessage("NORMAL", "WT", text, channel)
 	end
 end
 

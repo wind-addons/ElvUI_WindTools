@@ -2449,10 +2449,11 @@ options.resetInstance = {
 			type = "toggle",
 			name = L["Enable"],
 		},
-		prefix = {
+		difficultyChange = {
 			order = 3,
 			type = "toggle",
-			name = L["Prefix"],
+			name = L["Difficulty Change"],
+			desc = L["Also announce when you change the instance difficulty."],
 		},
 		channel = {
 			order = 4,

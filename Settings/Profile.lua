@@ -95,7 +95,7 @@ P.announcement = {
 	},
 	resetInstance = {
 		enable = true,
-		prefix = true,
+		difficultyChange = true,
 		channel = {
 			party = "PARTY",
 			instance = "INSTANCE_CHAT",

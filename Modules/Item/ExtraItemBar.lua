@@ -821,6 +821,7 @@ function EB:Initialize()
 	self:CreateAll()
 	UpdateQuestItemList()
 	UpdateEquipmentList()
+	self:UpdateState(EB.STATE.QUANTUM_ITEM_ALLOWED)
 	self:UpdateBars()
 	self:UpdateBinding()
 
@@ -847,6 +848,7 @@ function EB:ProfileUpdate()
 	if self.db.enable then
 		UpdateQuestItemList()
 		UpdateEquipmentList()
+		self:UpdateState(EB.STATE.QUANTUM_ITEM_ALLOWED)
 	elseif self.initialized then
 		self:UnregisterEvent("BAG_UPDATE_DELAYED")
 		self:UnregisterEvent("PLAYER_ALIVE")

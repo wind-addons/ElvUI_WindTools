@@ -10,6 +10,7 @@ local GetInstanceInfo = GetInstanceInfo
 
 EB.STATE = {
 	IN_DELVE = 1,
+	QUANTUM_ITEM_ALLOWED = 2,
 }
 
 EB.StateCache = {}
@@ -20,6 +21,9 @@ EB.StateFetcher = {
 			return true
 		end
 		return false
+	end,
+	[EB.STATE.QUANTUM_ITEM_ALLOWED] = function()
+		return not E.db.WT.item.extraItemsBar.noQuantumItems
 	end,
 }
 
@@ -44,6 +48,30 @@ EB.StateCheckList = {
 	[248755] = EB.STATE.IN_DELVE, -- 罐装星辰
 	[248764] = EB.STATE.IN_DELVE, -- 精工闪现陷阱
 	[248954] = EB.STATE.IN_DELVE, -- 虚空扭曲之种
+	-- Quantum items
+	[208061] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子头饰
+	[208062] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子肩甲
+	[208063] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子手套
+	[208064] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子胸甲
+	[208065] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子护腿
+	[208109] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子之剑
+	[208110] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子之锤
+	[208111] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子之斧
+	[208112] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子巨剑
+	[208113] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子巨斧
+	[208114] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子巨锤
+	[208115] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子法杖
+	[208116] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子之钺
+	[208117] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子之弓
+	[208118] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子之弩
+	[208119] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子火枪
+	[208120] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子匕首
+	[208121] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子指刃
+	[208122] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子战刃
+	[208123] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子魔杖
+	[208125] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子法器
+	[208126] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子之盾
+	[208216] = EB.STATE.QUANTUM_ITEM_ALLOWED, -- 量子骏马的缰绳
 }
 
 -- If the item is lower than the threshold, it will be considered not shown

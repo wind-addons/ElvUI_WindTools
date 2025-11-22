@@ -242,6 +242,25 @@ options.extraItemsBar = {
 						end
 					end,
 				},
+				betterAlign = {
+					order = 4,
+					type = "description",
+					name = " ",
+					width = "full",
+				},
+				noQuantumItems = {
+					order = 5,
+					type = "toggle",
+					name = L["No Quantum Items"],
+					desc = L["Automatically blacklist the quantum items to avoid accidentally using them."],
+					get = function()
+						return E.db.WT.item.extraItemsBar.noQuantumItems
+					end,
+					set = function(_, value)
+						E.db.WT.item.extraItemsBar.noQuantumItems = value
+						EB:ProfileUpdate()
+					end,
+				},
 			},
 		},
 	},

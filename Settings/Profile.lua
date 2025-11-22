@@ -386,6 +386,7 @@ P.item = {
 	},
 	extraItemsBar = {
 		enable = true,
+		noQuantumItems = false,
 		customList = {},
 		blackList = {
 			[183040] = true, -- 恆冬符咒

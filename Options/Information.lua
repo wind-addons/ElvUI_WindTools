@@ -28,6 +28,8 @@ local donators = {
 		"Fakewings",
 		"向宁",
 		"Leon",
+		"怪兽",
+		"esby_lan",
 		"不想当人",
 		L["Anonymous"] .. "_TxbM",
 		L["Anonymous"] .. "_Df5K",
@@ -36,6 +38,7 @@ local donators = {
 		L["Anonymous"] .. "_m37v",
 		L["Anonymous"] .. "_thgF",
 		L["Anonymous"] .. "_aqjx",
+		L["Anonymous"] .. "_9f478",
 	}, ", "),
 }
 

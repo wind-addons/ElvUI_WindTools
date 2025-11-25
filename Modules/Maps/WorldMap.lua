@@ -2914,6 +2914,9 @@ function WM:Reveal()
 		hooksecurefunc(pin, "RefreshOverlays", function(_pin, fullUpdate)
 			WM:MapExplorationPin_RefreshOverlays(_pin, fullUpdate, worldMapCache)
 		end)
+		hooksecurefunc(pin, "OnReleased", function(_pin)
+			pin.isWaitingForLoad = nil
+		end)
 		pin.overlayTexturePool.resetterFunc = overlayTexturePoolResetter
 	end
 

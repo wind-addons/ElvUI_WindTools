@@ -3,7 +3,6 @@ local S = W.Modules.Skins ---@class Skins
 
 local _G = _G
 local pairs = pairs
-local gsub = gsub
 
 local NUM_CHAT_WINDOWS = NUM_CHAT_WINDOWS
 

@@ -947,6 +947,7 @@ function CT:HandleShortChannels(msg, hide)
 		msg = gsub(msg, utf8sub(_G.CHAT_WHISPER_INFORM_GET, 1, 3), L["[ABBR] Whisper"])
 		msg = gsub(msg, utf8sub(_G.CHAT_SAY_GET, 3), L["[ABBR] Say"] .. "：")
 		msg = gsub(msg, utf8sub(_G.CHAT_YELL_GET, 3), L["[ABBR] Yell"] .. "：")
+		msg = gsub(msg, "： ", "：")
 	end
 
 	if CT.db and CT.db.removeBrackets then

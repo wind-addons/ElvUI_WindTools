@@ -38,31 +38,31 @@ W.Changelog[405] = {
 	},
 	IMPROVEMENT = {
 		["zhCN"] = {
-			"进一步优化 SetPassThroughButtons 修复功能.",
+			"优化世界地图迷雾去除可能引起的变量污染.",
 			"[通告] 使用 ChatThrottleLib 来防止极端情况下的卡顿掉线问题.",
 			"[右键菜单] 添加了对中国大陆服务器玩家的英雄榜支持.",
 			"[美化外观] 优化了地下城手册中首领按钮的高亮效果.",
 		},
 		["zhTW"] = {
-			"進一步優化 SetPassThroughButtons 修復功能.",
+			"優化世界地圖迷霧去除可能引起的變量污染.",
 			"[通告] 使用 ChatThrottleLib 來防止極端情況下的卡頓掉線問題.",
 			"[右鍵選單] 添加了對中國大陸伺服器玩家的英雄榜支持.",
 			"[美化外觀] 優化了地下城手冊中首領按鈕的高亮效果.",
 		},
 		["enUS"] = {
-			"Further optimiz the SetPassThroughButtons fix feature.",
+			"Optimize variable taint that may be caused by removing fog of war on the world map.",
 			"[Announcement] Use ChatThrottleLib to prevent lag and disconnection issues in extreme cases.",
 			"[Context Menu] Add armory support for players on China mainland servers.",
 			"[Skins] Optimize the highlight effect of Boss buttons in the Encounter Journal.",
 		},
 		["koKR"] = {
-			"SetPassThroughButtons 수정 기능을 추가로 최적화했습니다.",
+			"세계 지도에서 전쟁의 안개를 제거할 때 발생할 수 있는 변수 오염을 최적화했습니다.",
 			"[알림] 극단적인 상황에서의 렉 및 연결 끊김 문제를 방지하기 위해 ChatThrottleLib를 사용했습니다.",
 			"[컨텍스트 메뉴] 중국 본토 서버 플레이어를 위한 전투기록실 지원을 추가했습니다.",
 			"[스킨] 던전 도감에서 보스 버튼의 강조 효과를 최적화했습니다.",
 		},
 		["ruRU"] = {
-			"Дальнейшая оптимизация функции исправления SetPassThroughButtons.",
+			"Оптимизация загрязнения переменных, которое может быть вызвано удалением тумана войны на карте мира.",
 			"[Объявления] Используйте ChatThrottleLib, чтобы предотвратить проблемы с задержкой и отключением в экстремальных случаях.",
 			"[Контекстное меню] Добавлена поддержка арены для игроков на серверах материкового Китая.",
 			"[Скины] Оптимизирован эффект подсветки кнопок боссов в журнале подземелий.",

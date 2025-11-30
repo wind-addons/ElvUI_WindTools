@@ -76,6 +76,11 @@ local IgnoreList = {
 local TexCoordIgnoreList = {
 	["Narci_MinimapButton"] = true,
 	["ZygorGuidesViewerMapIcon"] = true,
+	["LibDBIcon10_IRememberYou"] = true
+}
+
+local LibDBTextureIgnore = {
+	["LibDBIcon10_IRememberYou"] = true
 }
 
 local whiteList = {}
@@ -410,7 +415,7 @@ function MB:SkinButton(button, force)
 			local tex = region:GetTexture()
 
 			-- Remove rings and backdrops of LibDBIcon icons
-			if tex and strsub(name, 1, strlen("LibDBIcon")) == "LibDBIcon" then
+			if tex and strsub(name, 1, strlen("LibDBIcon")) == "LibDBIcon" and not LibDBTextureIgnore[name] then
 				if region ~= button.icon then
 					region:SetTexture(nil)
 				end

@@ -2,7 +2,14 @@ local E, _, V, P, G = unpack(ElvUI) ---@type ElvUI
 local addonName, addon = ...
 local EP = E.Libs.EP
 local AceAddon = E.Libs.AceAddon
-local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
+
+-- Respect esES (Spain) vs esMX (Latin America) distinction
+-- ElvUI converts esES to esMX by default, but we support both
+local wtLocale = E.global.general.locale
+if E.locale == "esES" and wtLocale == "esMX" then
+	wtLocale = "esES"
+end
+local L = E.Libs.ACL:GetLocale("ElvUI", wtLocale)
 
 local _G = _G
 local collectgarbage = collectgarbage

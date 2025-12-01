@@ -23,20 +23,6 @@ function S:TomTom()
 		end
 	end
 
-	-- /ttpaste or /tomtompaste
-	if _G.TomTomPaste then
-		self:Proxy("HandleFrame", _G.TomTomPaste)
-		self:CreateShadow(_G.TomTomPaste)
-		self:BindShadowColorWithBorder(_G.TomTomPaste)
-
-		for _, child in pairs({ _G.TomTomPaste:GetChildren() }) do
-			local objectType = child.GetObjectType and child:GetObjectType()
-			if objectType == "Button" then
-				self:Proxy("HandleButton", child)
-			end
-		end
-	end
-
 	self:DisableAddOnSkin("TomTom")
 end
 

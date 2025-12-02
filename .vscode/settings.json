@@ -26,12 +26,5 @@
   "Lua.workspace.library": [
     "~\\.vscode\\extensions\\ketho.wow-api-0.21.0\\Annotations\\Core",
     "~\\.vscode\\extensions\\ketho.wow-api-0.21.0\\Annotations\\FrameXML"
-  ],
-  "Lua.diagnostics.globals": [
-    "coroutine",
-    "RED_FONT_COLOR",
-    "QUEST_OBJECTIVE_COMPLETED_FONT_COLOR",
-    "YELLOW_FONT_COLOR",
-    "HIGHLIGHT_FONT_COLOR"
   ]
 }

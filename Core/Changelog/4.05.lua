@@ -3,11 +3,21 @@ local W = unpack((select(2, ...))) ---@type WindTools
 W.Changelog[405] = {
 	RELEASE_DATE = "TBD",
 	IMPORTANT = {
-		["zhCN"] = {},
-		["zhTW"] = {},
-		["enUS"] = {},
-		["koKR"] = {},
-		["ruRU"] = {},
+		["zhCN"] = {
+			"大幅更新西班牙语翻译, 感谢 Keralin",
+		},
+		["zhTW"] = {
+			"大幅更新西班牙語翻譯, 感謝 Keralin",
+		},
+		["enUS"] = {
+			"Major update to Spanish translation, thanks to Keralin",
+		},
+		["koKR"] = {
+			"스페인어 번역이 대폭 업데이트되었습니다. Keralin에게 감사드립니다.",
+		},
+		["ruRU"] = {
+			"Большое обновление испанского перевода, спасибо Keralin",
+		},
 	},
 	NEW = {
 		["zhCN"] = {

@@ -1410,8 +1410,34 @@ options.progress = {
 						},
 					},
 				},
+				objectiveProgress = {
+					order = 4,
+					type = "group",
+					inline = true,
+					name = L["Objective Progress"],
+					disabled = function()
+						return not E.db.WT.quest.progress.soundEffects.enable
+					end,
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						sound = {
+							order = 3,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound"],
+							values = LSM:HashTable("sound"),
+							hidden = function()
+								return not E.db.WT.quest.progress.soundEffects.objectiveProgress.enable
+							end,
+						},
+					},
+				},
 				partialComplete = {
-					order = 3,
+					order = 4,
 					type = "group",
 					inline = true,
 					name = L["Partial Complete"],
@@ -1437,7 +1463,7 @@ options.progress = {
 					},
 				},
 				fullyComplete = {
-					order = 4,
+					order = 5,
 					type = "group",
 					inline = true,
 					name = L["Fully Complete"],

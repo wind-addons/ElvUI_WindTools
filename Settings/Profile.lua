@@ -1158,6 +1158,10 @@ P.quest = {
 				enable = false,
 				sound = "WT Accept",
 			},
+			objectiveProgress = {
+				enable = false,
+				sound = "WT Simple",
+			},
 			partialComplete = {
 				enable = false,
 				sound = "WT Clear",

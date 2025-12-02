@@ -1411,7 +1411,7 @@ options.progress = {
 					},
 				},
 				objectiveProgress = {
-					order = 4,
+					order = 3,
 					type = "group",
 					inline = true,
 					name = L["Objective Progress"],

@@ -106,7 +106,9 @@ function S:Ace3_WeakAurasMultiLineEditBox(widget)
 
 	local onShow = widget.frame:GetScript("OnShow")
 	widget.frame:SetScript("OnShow", function(frame)
+		--[[ Is this needed?
 		onShow(frame)
+		]]
 		if not frame.obj or not frame.obj.extraButtons then
 			return
 		end
@@ -704,6 +706,7 @@ end
 S:AddCallbackForAddon("WeakAurasOptions")
 S:AddCallbackForAddon("WeakAurasTemplates")
 S:AddCallbackForAceGUIWidget("WeakAurasMultiLineEditBox", "Ace3_WeakAurasMultiLineEditBox", dbChecker)
+S:AddCallbackForAceGUIWidget("WeakAuras-MultiLineEditBoxWithEnter", "Ace3_WeakAurasMultiLineEditBox", dbChecker)
 S:AddCallbackForAceGUIWidget("WeakAurasDisplayButton", "Ace3_WeakAurasDisplayButton", dbChecker)
 S:AddCallbackForAceGUIWidget("WeakAurasIconButton", "Ace3_WeakAurasIconButton", dbChecker)
 S:AddCallbackForAceGUIWidget("WeakAurasNewButton", "Ace3_WeakAurasDisplayButton", dbChecker)

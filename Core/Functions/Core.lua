@@ -19,6 +19,7 @@ local tremove = tremove
 local type = type
 local unpack = unpack
 
+local GenerateClosure = GenerateClosure
 local PlaySoundFile = PlaySoundFile
 
 ---@cast F Functions
@@ -576,4 +577,63 @@ function F.PlayLSMSound(soundName, channel)
 	else
 		F.Developer.LogDebug("Functions.PlayLSMSound: Sound not found -", tostring(soundName))
 	end
+end
+
+---@type table<any, table> Storage for active value listeners
+local valueListeners = {}
+
+---Stop listening for value updates
+---@param listenerId any The listener ID to stop
+---@param table table The original table being monitored
+local function StopListenValueUpdate(listenerId, table)
+	if valueListeners[listenerId] then
+		setmetatable(table, valueListeners[listenerId].originalMeta or {})
+		valueListeners[listenerId] = nil
+	end
+end
+
+---Listen for value updates on a table key and execute callback when value is set
+---@param tbl table The table to monitor
+---@param key any The key to monitor for changes
+---@param callback function The callback function to execute when key is set (receives stopFunc and value as parameters)
+---@return function? stopFunc Function to stop listening for changes
+function F.ListenValueUpdate(tbl, key, callback)
+	assert(type(tbl) == "table", "first argument must be a table")
+	assert(type(key) ~= "nil", "second argument must be a valid key")
+	assert(type(callback) == "function", "third argument must be a function")
+
+	local listenerID = {}
+	valueListeners[listenerID] = { tbl = tbl, originalMeta = getmetatable(tbl) }
+
+	local stopFunc = GenerateClosure(StopListenValueUpdate, listenerID, tbl)
+
+	if rawget(tbl, key) then
+		callback(stopFunc, tbl[key])
+		if not valueListeners[listenerID] then
+			return
+		end
+	end
+
+	local newMeta = {
+		__newindex = function(t, k, v)
+			if k == key then
+				callback(stopFunc, v)
+			end
+			rawset(t, k, v)
+		end,
+		__index = valueListeners[listenerID].originalMeta and valueListeners[listenerID].originalMeta.__index
+			or function(t, k)
+				return rawget(t, k)
+			end,
+	}
+
+	for metaKey, metaValue in pairs(valueListeners[listenerID].originalMeta or {}) do
+		if metaKey ~= "__newindex" and metaKey ~= "__index" then
+			newMeta[metaKey] = metaValue
+		end
+	end
+
+	setmetatable(tbl, newMeta)
+
+	return stopFunc
 end

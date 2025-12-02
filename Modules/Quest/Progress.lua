@@ -40,6 +40,7 @@ local QUEST_STATUS = {
 	COMPLETED = 2,
 	QUEST_UPDATE = 3,
 	SCENARIO_UPDATE = 4,
+	OBJECTIVE_UPDATE = 5,
 }
 
 local cachedQuests ---@type table<number, QuestProgressData>
@@ -376,6 +377,8 @@ function QP:PlaySoundEffect(status)
 		db = self.db.soundEffects.fullyComplete
 	elseif status == QUEST_STATUS.QUEST_UPDATE then
 		db = self.db.soundEffects.partialComplete
+	elseif status == QUEST_STATUS.OBJECTIVE_UPDATE then
+		db = self.db.soundEffects.objectiveProgress
 	end
 
 	if not db or not db.enable then
@@ -427,6 +430,7 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 			self:PlaySoundEffect(QUEST_STATUS.QUEST_UPDATE)
 		else
 			coloredContext.icon = ""
+			self:PlaySoundEffect(QUEST_STATUS.OBJECTIVE_UPDATE)
 		end
 	end
 

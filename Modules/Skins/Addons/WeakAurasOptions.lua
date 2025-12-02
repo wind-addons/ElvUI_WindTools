@@ -104,11 +104,7 @@ function S:Ace3_WeakAurasMultiLineEditBox(widget)
 	widget.frame.backdrop:Point("TOPLEFT", widget.scrollFrame, "TOPLEFT", -5, 2)
 	widget.frame.backdrop:Point("BOTTOMRIGHT", widget.scrollFrame, "BOTTOMRIGHT", 0, 0)
 
-	local onShow = widget.frame:GetScript("OnShow")
-	widget.frame:SetScript("OnShow", function(frame)
-		--[[ Is this needed?
-		onShow(frame)
-		]]
+	widget.frame:HookScript("OnShow", function(frame)
 		if not frame.obj or not frame.obj.extraButtons then
 			return
 		end

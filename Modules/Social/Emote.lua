@@ -109,7 +109,7 @@ local function ReplaceEmote(value)
 	return value
 end
 
-local function EmoteFilter(self, event, msg, ...)
+local function EmoteFilter(_, _, msg, ...)
 	if CE.db.enable then
 		msg = gsub(msg, "%{.-%}", ReplaceEmote)
 	end
@@ -120,7 +120,7 @@ end
 function CE:CreateInterface()
 	local width, height, column, space = 20, 20, 10, 6
 	local index = 0
-	-- 创建 ElvUI 风格框体
+
 	local frame = CreateFrame("Frame", "WTCustomEmoteFrame", E.UIParent, "UIPanelDialogTemplate")
 	_G.WTCustomEmoteFrameTitleBG:Hide()
 	_G.WTCustomEmoteFrameDialogBG:Hide()
@@ -130,13 +130,11 @@ function CE:CreateInterface()
 	S:MerathilisUISkin(frame.backdrop)
 	S:Proxy("HandleCloseButton", _G.WTCustomEmoteFrameClose)
 
-	-- 定位
 	frame:Width(column * (width + space) + 24)
 	frame:SetClampedToScreen(true)
 	frame:SetFrameStrata("DIALOG")
 	frame:Point("LEFT", _G.LeftChatPanel, "RIGHT", 60, 0)
 
-	-- 拖动
 	frame:SetMovable(true)
 	frame:EnableMouse(true)
 	frame:RegisterForDrag("LeftButton")
@@ -147,16 +145,17 @@ function CE:CreateInterface()
 			scriptFrame.isMoving = true
 		end
 	end)
+
 	frame:SetScript("OnMouseUp", function(scriptFrame, mouseButton)
 		if mouseButton == "LeftButton" and scriptFrame.isMoving then
 			scriptFrame:StopMovingOrSizing()
 			scriptFrame.isMoving = false
 		elseif mouseButton == "RightButton" and not scriptFrame.isMoving then
-			-- 右键复原
 			scriptFrame:ClearAllPoints()
 			scriptFrame:Point("TOPLEFT", _G.WTCustomEmoteFrameMover, "TOPLEFT", 0, 0)
 		end
 	end)
+
 	frame:SetScript("OnHide", function(scriptFrame)
 		if scriptFrame.isMoving then
 			scriptFrame:StopMovingOrSizing()
@@ -164,12 +163,10 @@ function CE:CreateInterface()
 		end
 	end)
 
-	-- 标题
 	frame.title = frame:CreateFontString(nil, "ARTWORK", "ChatFontNormal")
 	frame.title:Point("TOP", frame, "TOP", 0, -9)
 	frame.title:FontTemplate(E.media.normFont, 16, "OUTLINE")
 
-	-- 帮助提示
 	local tipsButton = CreateFrame("Frame", nil, frame)
 	tipsButton:Size(25)
 	tipsButton:Point("TOPLEFT", frame, "TOPLEFT", 3, -4)
@@ -184,7 +181,6 @@ function CE:CreateInterface()
 		frame.title:SetText("")
 	end)
 
-	-- 建立表情
 	for _, v in pairs(emotes) do
 		local button = CreateFrame("Button", nil, frame)
 		button.emote = "{" .. (v[E.global.general.locale] or v.key) .. "}"
@@ -204,8 +200,13 @@ function CE:CreateInterface()
 	frame:Height(ceil(index / column) * (height + space) + 46)
 	frame:Hide()
 
-	-- 让输入框支持当输入 { 时自动弹出聊天表情选择框
-	self:SecureHook("ChatEdit_OnTextChanged")
+	-- Enter { to open the emote frame
+	for _, frameName in ipairs(_G.CHAT_FRAMES) do
+		local chat = _G[frameName]
+		if chat and chat.editBox then
+			self:SecureHookScript(chat.editBox, "OnTextChanged", "ChatEdit_OnTextChanged")
+		end
+	end
 
 	self.EmoteSelector = frame
 
@@ -284,7 +285,6 @@ function CE:ProfileUpdate()
 		self.EmoteSelector:Hide()
 	end
 
-	-- 由于有表情按键, 需要更新一下
 	W:GetModule("ChatBar"):UpdateBar()
 
 	self:HandleEmoteWithBubble()

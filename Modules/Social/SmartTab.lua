@@ -3,13 +3,13 @@ local ST = W:NewModule("SmartTab", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
 local pairs = pairs
-local strsplit = strsplit
 local strsub = strsub
 local time = time
 local tostring = tostring
 local unpack = unpack
 local wipe = wipe
 
+local Ambiguate = Ambiguate
 local IsEveryoneAssistant = IsEveryoneAssistant
 local IsInGroup = IsInGroup
 local IsInGuild = IsInGuild
@@ -20,12 +20,9 @@ local UnitIsGroupLeader = UnitIsGroupLeader
 
 local C_GuildInfo_IsGuildOfficer = C_GuildInfo.IsGuildOfficer
 
-local ACTIVE_CHAT_EDIT_BOX = ACTIVE_CHAT_EDIT_BOX
-local LAST_ACTIVE_CHAT_EDIT_BOX = LAST_ACTIVE_CHAT_EDIT_BOX
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
--- 频道循环列表
 local ChannelList = {
 	"SAY",
 	"YELL",
@@ -52,23 +49,12 @@ local ChannelListWithWhisper = {
 	"BN_WHISPER",
 }
 
--- 缓存 Index 方便查找
 local NumberOfChannelList = #ChannelList
 local NumberOfChannelListWithWhisper = #ChannelListWithWhisper
+local IndexOfChannelList = tInvert(ChannelList)
+local IndexOfChannelListWithWhisper = tInvert(ChannelListWithWhisper)
 
-local IndexOfChannelList = {}
-local IndexOfChannelListWithWhisper = {}
-
-for k, v in pairs(ChannelList) do
-	IndexOfChannelList[v] = k
-end
-for k, v in pairs(ChannelListWithWhisper) do
-	IndexOfChannelListWithWhisper[v] = k
-end
-
--- 用于锁定对象
-local nextChatType
-local nextTellTarget
+local nextChatType, nextTellTarget
 
 function ST:CheckAvailability(type)
 	if type == "YELL" then
@@ -126,15 +112,10 @@ function ST:UpdateWhisperTargets(target, chatTime, type)
 	if not self.private.whisperTargets then
 		return
 	end
-	local currentTime = chatTime or time()
 
-	-- 本服玩家去除服务器名
-	local name, server = strsplit("-", target)
-	if server and (server == E.myrealm) then
-		target = name
-	end
+	local name = Ambiguate(target, "none")
 
-	self.private.whisperTargets[target] = { currentTime, type }
+	self.private.whisperTargets[name] = { chatTime or time(), type }
 end
 
 function ST:GetNextWhisper(currentTarget)
@@ -145,17 +126,16 @@ function ST:GetNextWhisper(currentTarget)
 	local needSwitch = false
 
 	if self:RefreshWhisperTargets() ~= 0 then
-		-- 设定一定要早于当前密语历史目标
 		if currentTarget and self.private.whisperTargets[currentTarget] then
 			limit = self.private.whisperTargets[currentTarget][1]
 		end
 
-		-- 当前不是密语状况下就算一个历史数据也要切换过去
+		-- Force switch when not in whisper
 		if not currentTarget then
 			needSwitch = true
 		end
 
-		-- 遍历历史寻找到 早一个历史目标 或者 初始化频道变换的目标
+		-- Iterate through history to find an earlier historical target or initialize the channel change target
 		for target, data in pairs(self.private.whisperTargets) do
 			local targetTime, targetType = unpack(data)
 			if (targetTime > oldTime and targetTime < limit) or needSwitch then
@@ -170,22 +150,15 @@ function ST:GetNextWhisper(currentTarget)
 	return chatType, tellTarget
 end
 
--- 仅用来密语独立循环使用
 function ST:GetLastWhisper()
-	local chatType = "NONE"
-	local tellTarget = nil
-	local oldTime = 0
-	local limit = time()
-	local needSwitch = false
+	local tellTarget, chatType, oldTime = nil, "NONE", 0
 
 	if self:RefreshWhisperTargets() ~= 0 then
-		-- 遍历历史寻找到 最后一个历史目标
+		-- Iterate through history to find the last historical target
 		for target, data in pairs(self.private.whisperTargets) do
 			local targetTime, targetType = unpack(data)
 			if targetTime > oldTime then
-				tellTarget = target
-				chatType = targetType
-				oldTime = targetTime
+				tellTarget, chatType, oldTime = target, targetType, targetTime
 			end
 		end
 	end
@@ -202,20 +175,19 @@ function ST:GetNext(chatType, currentTarget)
 
 	if self.db.whisperCycle then
 		if chatType == "WHISPER" or chatType == "BN_WHISPER" then
-			-- 密语+战网聊天限定进行寻找
+			-- Whisper and Battle.net whisper limited search
 			newChatType, newTarget = self:GetNextWhisper(currentTarget)
 			if newChatType == "NONE" then
-				-- 如果没有更早的目标，就尝试获取表内最后一个
+				-- If there is no earlier target, try to get the last one in the table
 				newChatType, newTarget = self:GetLastWhisper()
 				if newChatType == "NONE" then
-					-- 如果表内为空，则什么都不改变
 					newChatType = chatType
 					newTarget = currentTarget
 					_G.UIErrorsFrame:AddMessage(L["There is no more whisper targets"], 1, 0, 0)
 				end
 			end
 		else
-			-- 常规的频道变换
+			-- Regular channel change
 			nextIndex = IndexOfChannelList[chatType] % NumberOfChannelList + 1
 			while not ST:CheckAvailability(ChannelList[nextIndex]) do
 				nextIndex = nextIndex % NumberOfChannelList + 1
@@ -224,25 +196,25 @@ function ST:GetNext(chatType, currentTarget)
 		end
 	else
 		if chatType == "WHISPER" or chatType == "BN_WHISPER" then
-			-- 如果当前就在密语状况中，直接查找下一个密语目标
+			-- If currently in whisper, directly find the next whisper target
 			newChatType, newTarget = self:GetNextWhisper(currentTarget)
 			if newChatType == "NONE" then
-				-- 如果当前用户已经是密语循环的最后或者没有密语历史目标，跳到说
+				-- If the current user is already the last in the whisper cycle or there are no whisper history targets, jump to say
 				newChatType = ChannelListWithWhisper[1]
 			end
 		else
-			-- 正常的一个频道循环
+			-- Regular channel cycle
 			nextIndex = IndexOfChannelListWithWhisper[chatType] % NumberOfChannelListWithWhisper + 1
 			while not ST:CheckAvailability(ChannelListWithWhisper[nextIndex]) do
 				nextIndex = nextIndex % NumberOfChannelListWithWhisper + 1
 			end
-			-- 一旦循环到密语部分，就进行特殊处理
+			-- Once cycling to the whisper part, special handling is performed
 			newChatType = ChannelListWithWhisper[nextIndex]
 			if newChatType == "WHISPER" or newChatType == "BN_WHISPER" then
-				-- 查找下一个密语目标
+				-- Find the next whisper target
 				newChatType, newTarget = self:GetNextWhisper(currentTarget)
 				if newChatType == "NONE" then
-					-- 如果当前用户已经是密语循环的最后或者没有密语历史目标，跳到说
+					-- If the current user is already the last in the whisper cycle or there are no whisper history targets, jump to say
 					newChatType = ChannelListWithWhisper[1]
 				end
 			end
@@ -253,9 +225,10 @@ function ST:GetNext(chatType, currentTarget)
 end
 
 function ST:TabPressed(frame)
-	if not ST.db.enable then
+	if not self.db.enable then
 		return
 	end
+
 	if strsub(tostring(frame:GetText()), 1, 1) == "/" then
 		return
 	end
@@ -264,8 +237,8 @@ function ST:TabPressed(frame)
 	nextChatType, nextTellTarget = ST:GetNext(frame:GetAttribute("chatType"), frame:GetAttribute("tellTarget"))
 end
 
-function ST:SetNewChat(frame)
-	if not ST.db.enable then
+function ST:SecureTabPressed(frame)
+	if not self.db.enable then
 		return
 	end
 
@@ -278,33 +251,29 @@ function ST:SetNewChat(frame)
 	ACTIVE_CHAT_EDIT_BOX = frame
 	LAST_ACTIVE_CHAT_EDIT_BOX = frame
 
-	_G.ChatEdit_UpdateHeader(frame)
+	frame:UpdateHeader()
 end
 
--- 接收密语
 function ST:CHAT_MSG_WHISPER(_, _, author)
-	-- 自己别给自己发
-	if author == E.myname .. "-" .. E.myrealm then
+	if Ambiguate(author, "none") == E.myname then
 		return
 	end
+
 	self:UpdateWhisperTargets(author, nil, "WHISPER")
 end
 
--- 发送密语
 function ST:CHAT_MSG_WHISPER_INFORM(_, _, author)
-	-- 自己别给自己发
-	if author == E.myname .. "-" .. E.myrealm then
+	if Ambiguate(author, "none") == E.myname then
 		return
 	end
+
 	self:UpdateWhisperTargets(author, nil, "WHISPER")
 end
 
--- 接收战网聊天
 function ST:CHAT_MSG_BN_WHISPER(_, _, author)
 	self:UpdateWhisperTargets(author, nil, "BN_WHISPER")
 end
 
--- 发送战网聊天
 function ST:CHAT_MSG_BN_WHISPER_INFORM(_, _, author)
 	self:UpdateWhisperTargets(author, nil, "BN_WHISPER")
 end
@@ -313,10 +282,13 @@ function ST:Initialize()
 	self.db = E.db.WT.social.smartTab
 	self.private = E.private.WT.social.smartTab
 
-	-- 缓存 { 密语对象 = {时间, 方式} }
-
-	self:SecureHook("ChatEdit_CustomTabPressed", "TabPressed")
-	self:SecureHook("ChatEdit_SecureTabPressed", "SetNewChat")
+	for _, frameName in ipairs(_G.CHAT_FRAMES) do
+		local chat = _G[frameName]
+		if chat and chat.editBox then
+			self:SecureHook(chat.editBox, "OnTabPressed", "TabPressed")
+			self:SecureHook(chat.editBox, "SecureTabPressed", "SecureTabPressed")
+		end
+	end
 
 	if not self.db.enable then
 		return

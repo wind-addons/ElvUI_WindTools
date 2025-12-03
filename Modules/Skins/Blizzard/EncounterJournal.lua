@@ -52,6 +52,7 @@ function S:Blizzard_EncounterJournal()
 		_G.EncounterJournalDungeonTab,
 		_G.EncounterJournalRaidTab,
 		_G.EncounterJournalLootJournalTab,
+		_G.EncounterJournal.TutorialsTab
 	}
 
 	for _, tab in pairs(tabs) do

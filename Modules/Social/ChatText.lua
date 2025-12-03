@@ -73,6 +73,9 @@ local C_Club_GetClubInfo = C_Club.GetClubInfo
 local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
 local C_Texture_GetTitleIconTexture = C_Texture.GetTitleIconTexture
 local ChatFrameUtil_GetChatCategory = ChatFrameUtil.GetChatCategory
+local ChatFrameUtil_ResolvePrefixedChannelName = ChatFrameUtil.ResolvePrefixedChannelName
+local ChatFrameUtil_GetMobileEmbeddedTexture = ChatFrameUtil.GetMobileEmbeddedTexture
+local ChatFrameUtil_CanChatGroupPerformExpressionExpansion = ChatFrameUtil.CanChatGroupPerformExpressionExpansion
 
 local CHATCHANNELRULESET_MENTOR = Enum.ChatChannelRuleset.Mentor
 local Constants_ChatFrameConstants_MaxChatWindows = Constants.ChatFrameConstants.MaxChatWindows
@@ -1510,7 +1513,7 @@ function CT:ChatFrame_MessageEventHandler(
 			local typeID = CH:GetAccessID(infoType, arg8, arg12)
 
 			if arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
-				_G.ChatFrame_UpdateDefaultChatTarget(frame)
+				frame:UpdateDefaultChatTarget()
 				_G.ChatEdit_UpdateNewcomerEditBoxHint(frame.editBox)
 			else
 				if arg1 == "YOU_LEFT" then
@@ -1532,7 +1535,7 @@ function CT:ChatFrame_MessageEventHandler(
 				end
 
 				frame:AddMessage(
-					format(globalstring, arg8, _G.ChatFrame_ResolvePrefixedChannelName(arg4)),
+					format(globalstring, arg8, ChatFrameUtil_ResolvePrefixedChannelName(arg4)),
 					info.r,
 					info.g,
 					info.b,
@@ -1878,7 +1881,7 @@ function CT:MessageFormatter(
 	arg1 = CH:ChatFrame_ReplaceIconAndGroupExpressions(
 		arg1,
 		arg17,
-		not _G.ChatFrame_CanChatGroupPerformExpressionExpansion(chatGroup)
+		not ChatFrameUtil_CanChatGroupPerformExpressionExpansion(chatGroup)
 	) -- If arg17 is true, don't convert to raid icons
 
 	-- ElvUI: Get class colored name for BattleNet friend
@@ -1945,7 +1948,7 @@ function CT:MessageFormatter(
 
 	local message = arg1
 	if arg14 then --isMobile
-		message = _G.ChatFrame_GetMobileEmbeddedTexture(info.r, info.g, info.b) .. message
+		message = ChatFrameUtil_GetMobileEmbeddedTexture(info.r, info.g, info.b) .. message
 	end
 
 	-- Player Flags
@@ -2045,7 +2048,7 @@ function CT:MessageFormatter(
 
 	-- Add Channel
 	if channelLength > 0 then
-		body = "|Hchannel:channel:" .. arg8 .. "|h[" .. _G.ChatFrame_ResolvePrefixedChannelName(arg4) .. "]|h " .. body
+		body = "|Hchannel:channel:" .. arg8 .. "|h[" .. ChatFrameUtil_ResolvePrefixedChannelName(arg4) .. "]|h " .. body
 	end
 
 	if (chatType ~= "EMOTE" and chatType ~= "TEXT_EMOTE") and (CH.db.shortChannels or CH.db.hideChannels) then

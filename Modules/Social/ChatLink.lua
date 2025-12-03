@@ -10,7 +10,7 @@ local select = select
 local strmatch = strmatch
 local tonumber = tonumber
 
-local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
+local ChatFrameUtil_AddMessageEventFilter = ChatFrameUtil.AddMessageEventFilter
 local GetAchievementInfo = GetAchievementInfo
 local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetTalentInfoByID = GetTalentInfoByID
@@ -327,7 +327,7 @@ function CL:Initialize()
 	}
 
 	for _, event in pairs(events) do
-		ChatFrame_AddMessageEventFilter(event, self.Filter)
+		ChatFrameUtil_AddMessageEventFilter(event, self.Filter)
 	end
 
 	self.initialized = true

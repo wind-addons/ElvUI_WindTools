@@ -2,15 +2,14 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local CT = W:NewModule("ChatText", "AceEvent-3.0", "AceHook-3.0") ---@class ChatTextModule : AceModule, AceEvent-3.0, AceHook-3.0
 local CH = E:GetModule("Chat")
-local LSM = E.Libs.LSM
 local C = W.Utilities.Color
 
 local _G = _G
-
 local format = format
 local gmatch = gmatch
 local gsub = gsub
 local ipairs = ipairs
+local issecretvalue = issecretvalue
 local next = next
 local pairs = pairs
 local select = select
@@ -34,10 +33,12 @@ local utf8sub = string.utf8sub
 local wipe = wipe
 
 local Ambiguate = Ambiguate
-local BNet_GetClientEmbeddedTexture = BNet_GetClientEmbeddedTexture
 local BNGetNumFriendInvites = BNGetNumFriendInvites
 local BNGetNumFriends = BNGetNumFriends
+local BNet_GetClientEmbeddedTexture = BNet_GetClientEmbeddedTexture
 local FlashClientIcon = FlashClientIcon
+local GMChatFrame_IsGM = GMChatFrame_IsGM
+local GMError = GMError
 local GetAchievementLink = GetAchievementLink
 local GetBNPlayerCommunityLink = GetBNPlayerCommunityLink
 local GetBNPlayerLink = GetBNPlayerLink
@@ -47,8 +48,6 @@ local GetNumGroupMembers = GetNumGroupMembers
 local GetNumGuildMembers = GetNumGuildMembers
 local GetPlayerCommunityLink = GetPlayerCommunityLink
 local GetPlayerLink = GetPlayerLink
-local GMChatFrame_IsGM = GMChatFrame_IsGM
-local GMError = GMError
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
 local IsInGuild = IsInGuild
@@ -64,18 +63,19 @@ local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
+local C_CVar_GetCVar = C_CVar.GetCVar
+local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_ChatInfo_GetChannelRuleset = C_ChatInfo.GetChannelRuleset
 local C_ChatInfo_GetChannelShortcutForChannelID = C_ChatInfo.GetChannelShortcutForChannelID
 local C_ChatInfo_IsChannelRegionalForChannelID = C_ChatInfo.IsChannelRegionalForChannelID
 local C_ChatInfo_IsChatLineCensored = C_ChatInfo.IsChatLineCensored
 local C_Club_GetClubInfo = C_Club.GetClubInfo
 local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
-local C_CVar_GetCVar = C_CVar.GetCVar
-local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_Texture_GetTitleIconTexture = C_Texture.GetTitleIconTexture
+local ChatFrameUtil_GetChatCategory = ChatFrameUtil.GetChatCategory
 
 local CHATCHANNELRULESET_MENTOR = Enum.ChatChannelRuleset.Mentor
-local NUM_CHAT_WINDOWS = NUM_CHAT_WINDOWS
+local Constants_ChatFrameConstants_MaxChatWindows = Constants.ChatFrameConstants.MaxChatWindows
 local PLAYER_REALM = E:ShortenRealm(E.myrealm)
 local PLAYER_NAME = format("%s-%s", E.myname, PLAYER_REALM)
 local TitleIconVersion_Small = Enum.TitleIconVersion.Small
@@ -739,12 +739,13 @@ local function FlashTabIfNotShown(frame, info, chatType, chatGroup, chatTarget)
 	end
 end
 
--- From ElvUI Chat
+-- Modified from Blizzard
 local function ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 	-- This is called in the event that a user receives chat events for a channel that isn't enabled for any chat frames.
 	-- Minor hack, because chat channel filtering is backed by the client, but driven entirely from Lua.
 	-- This solves the issue of Guides abdicating their status, and then re-applying in the same game session, unless ChatFrame_AddChannel
 	-- is called, the channel filter will be off even though it's still enabled in the client, since abdication removes the chat channel and its config.
+
 	-- Only add to default (since multiple chat frames receive the event and we don't want to add to others)
 	if chatFrame ~= _G.DEFAULT_CHAT_FRAME then
 		return false
@@ -760,7 +761,7 @@ local function ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 		return false
 	end
 
-	return _G.ChatFrame_AddChannel(chatFrame, C_ChatInfo_GetChannelShortcutForChannelID(channelID)) ~= nil
+	return chatFrame:AddChannel(C_ChatInfo_GetChannelShortcutForChannelID(channelID)) ~= nil
 end
 
 local function updateGuildPlayerCache(_, event)
@@ -1056,6 +1057,8 @@ function CT:ChatFrame_MessageEventHandler(
 		notChatHistory = true
 	end
 
+	local isProtected = issecretvalue and issecretvalue(arg2)
+
 	if _G.TextToSpeechFrame_MessageEventHandler and notChatHistory then
 		_G.TextToSpeechFrame_MessageEventHandler(
 			frame,
@@ -1094,21 +1097,97 @@ function CT:ChatFrame_MessageEventHandler(
 		end
 
 		if _G.ChatFrameUtil and _G.ChatFrameUtil.ProcessMessageEventFilters then
-			local filtered, new1, new2, new3, new4, new5, new6, new7, new8, new9, new10, new11, new12, new13, new14, new15, new16, new17 = _G.ChatFrameUtil.ProcessMessageEventFilters(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17)
+			local filtered, new1, new2, new3, new4, new5, new6, new7, new8, new9, new10, new11, new12, new13, new14, new15, new16, new17 =
+				_G.ChatFrameUtil.ProcessMessageEventFilters(
+					frame,
+					event,
+					arg1,
+					arg2,
+					arg3,
+					arg4,
+					arg5,
+					arg6,
+					arg7,
+					arg8,
+					arg9,
+					arg10,
+					arg11,
+					arg12,
+					arg13,
+					arg14,
+					arg15,
+					arg16,
+					arg17
+				)
 			if filtered then
 				return true
 			else
-				arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17 = new1, new2, new3, new4, new5, new6, new7, new8, new9, new10, new11, new12, new13, new14, new15, new16, new17
+				arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17 =
+					new1,
+					new2,
+					new3,
+					new4,
+					new5,
+					new6,
+					new7,
+					new8,
+					new9,
+					new10,
+					new11,
+					new12,
+					new13,
+					new14,
+					new15,
+					new16,
+					new17
 			end
 		else
 			local chatFilters = _G.ChatFrame_GetMessageEventFilters(event)
 			if chatFilters then
 				for _, filterFunc in next, chatFilters do
-					local filtered, new1, new2, new3, new4, new5, new6, new7, new8, new9, new10, new11, new12, new13, new14, new15, new16, new17 = filterFunc(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17)
+					local filtered, new1, new2, new3, new4, new5, new6, new7, new8, new9, new10, new11, new12, new13, new14, new15, new16, new17 =
+						filterFunc(
+							frame,
+							event,
+							arg1,
+							arg2,
+							arg3,
+							arg4,
+							arg5,
+							arg6,
+							arg7,
+							arg8,
+							arg9,
+							arg10,
+							arg11,
+							arg12,
+							arg13,
+							arg14,
+							arg15,
+							arg16,
+							arg17
+						)
 					if filtered then
 						return true
 					elseif new1 then
-						arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17 = new1, new2, new3, new4, new5, new6, new7, new8, new9, new10, new11, new12, new13, new14, new15, new16, new17
+						arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17 =
+							new1,
+							new2,
+							new3,
+							new4,
+							new5,
+							new6,
+							new7,
+							new8,
+							new9,
+							new10,
+							new11,
+							new12,
+							new13,
+							new14,
+							new15,
+							new16,
+							new17
 					end
 				end
 			end
@@ -1181,7 +1260,7 @@ function CT:ChatFrame_MessageEventHandler(
 			end
 		end
 
-		local chatGroup = _G.Chat_GetChatCategory(chatType)
+		local chatGroup = ChatFrameUtil_GetChatCategory(chatType)
 		local chatTarget = CH:FCFManager_GetChatTarget(chatGroup, arg2, arg8)
 
 		if _G.FCFManager_ShouldSuppressMessage(frame, chatGroup, chatTarget) then
@@ -1427,8 +1506,8 @@ function CT:ChatFrame_MessageEventHandler(
 				)
 			end
 		elseif chatType == "CHANNEL_NOTICE" then
-			local accessID = _G.ChatHistory_GetAccessID(chatGroup, arg8)
-			local typeID = _G.ChatHistory_GetAccessID(infoType, arg8, arg12)
+			local accessID = CH:GetAccessID(chatGroup, arg8)
+			local typeID = CH:GetAccessID(infoType, arg8, arg12)
 
 			if arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
 				_G.ChatFrame_UpdateDefaultChatTarget(frame)
@@ -1499,7 +1578,7 @@ function CT:ChatFrame_MessageEventHandler(
 									10
 								)
 								local linkDisplayText = format(noBrackets and "%s (%s)" or "[%s] (%s)", arg2, charName)
-								local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
+								local playerLink = CH:GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
 								frame:AddMessage(
 									format(globalstring, playerLink),
 									info.r,
@@ -1524,12 +1603,12 @@ function CT:ChatFrame_MessageEventHandler(
 					return
 				else
 					local linkDisplayText = format(noBrackets and "%s" or "[%s]", arg2)
-					local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
+					local playerLink = CH:GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
 					message = format(globalstring, playerLink)
 				end
 			else
 				local linkDisplayText = format(noBrackets and "%s" or "[%s]", arg2)
-				local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
+				local playerLink = CH:GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
 				message = format(globalstring, playerLink)
 			end
 
@@ -1538,7 +1617,7 @@ function CT:ChatFrame_MessageEventHandler(
 			if arg1 ~= "" then
 				arg1 = RemoveNewlines(RemoveExtraSpaces(arg1))
 				local linkDisplayText = format(noBrackets and "%s" or "[%s]", arg2)
-				local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
+				local playerLink = CH:GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
 				frame:AddMessage(
 					format(_G.BN_INLINE_TOAST_BROADCAST, playerLink, arg1),
 					info.r,
@@ -1639,20 +1718,21 @@ function CT:ChatFrame_MessageEventHandler(
 				and not CH.SoundTimer
 				and not strfind(event, "_INFORM")
 				and historyTypes[event]
+			local alertAllow = isProtected or arg2 ~= PLAYER_NAME
 			local alertType = (historyType ~= "CHANNEL" and CH.db.channelAlerts[historyType])
 				or (historyType == "CHANNEL" and CH.db.channelAlerts.CHANNEL[arg9])
 			if
 				alertType
 				and alertType ~= "None"
-				and arg2 ~= PLAYER_NAME
+				and alertAllow
 				and (not CH.db.noAlertInCombat or not InCombatLockdown())
 			then
 				CH.SoundTimer = E:Delay(5, CH.ThrottleSound)
 				F.PlayLSMSound(alertType)
 			end
 
-			local accessID = _G.ChatHistory_GetAccessID(chatGroup, chatTarget)
-			local typeID = _G.ChatHistory_GetAccessID(infoType, chatTarget, arg12 or arg13)
+			local accessID = CH:GetAccessID(chatGroup, chatTarget)
+			local typeID = CH:GetAccessID(infoType, chatTarget, arg12 or arg13)
 			local body = isChatLineCensored and arg1
 				or CT:MessageFormatter(
 					frame,
@@ -1703,7 +1783,10 @@ function CT:ChatFrame_MessageEventHandler(
 		end
 
 		if notChatHistory and (chatType == "WHISPER" or chatType == "BN_WHISPER") then
-			_G.ChatEdit_SetLastTellTarget(arg2, chatType)
+			if not isProtected then
+				_G.ChatEdit_SetLastTellTarget(arg2, chatType)
+			end
+
 			if CH.db.flashClientIcon then
 				FlashClientIcon()
 			end
@@ -2084,7 +2167,7 @@ function CT:ToggleReplacement()
 	end
 
 	if self.db.enable and self.db.trimEditBoxHeader and W.Locale == "zhCN" then
-		for i = 1, NUM_CHAT_WINDOWS do
+		for i = 1, Constants_ChatFrameConstants_MaxChatWindows do
 			local editBox = _G["ChatFrame" .. i .. "EditBox"]
 			if editBox and editBox.header then
 				local header = editBox.header
@@ -2455,7 +2538,7 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture, noRetry)
 		local message = gsub(template, "%%players%%", players)
 		message = gsub(message, "%%bnet%%", bnetLink)
 
-		for i = 1, NUM_CHAT_WINDOWS do
+		for i = 1, Constants_ChatFrameConstants_MaxChatWindows do
 			local chatFrame = _G["ChatFrame" .. i]
 			if chatFrame and chatFrame:IsEventRegistered("CHAT_MSG_BN_INLINE_TOAST_ALERT") then
 				chatFrame:AddMessage(message, ...)

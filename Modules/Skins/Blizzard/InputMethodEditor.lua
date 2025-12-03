@@ -4,14 +4,14 @@ local S = W.Modules.Skins ---@class Skins
 local _G = _G
 local pairs = pairs
 
-local NUM_CHAT_WINDOWS = NUM_CHAT_WINDOWS
+local Constants_ChatFrameConstants_MaxChatWindows = Constants.ChatFrameConstants.MaxChatWindows
 
 function S:InputMethodEditor()
 	if not self:CheckDB(nil, "inputMethodEditor") then
 		return
 	end
 
-	for i = 1, NUM_CHAT_WINDOWS do
+	for i = 1, Constants_ChatFrameConstants_MaxChatWindows do
 		local editBox = _G["ChatFrame" .. i .. "EditBox"]
 		local langIcon = _G["ChatFrame" .. i .. "EditBoxLanguage"]
 

@@ -16,8 +16,7 @@ local tostring = tostring
 
 local C_Club_GetClubInfo = C_Club.GetClubInfo
 local C_GuildInfo_IsGuildOfficer = C_GuildInfo.IsGuildOfficer
-local ChatFrame_AddChannel = ChatFrame_AddChannel
-local ChatFrame_OpenChat = ChatFrame_OpenChat
+local ChatFrameUtil_OpenChat = ChatFrameUtil.OpenChat
 local CreateFrame = CreateFrame
 local DefaultChatFrame = _G.DEFAULT_CHAT_FRAME
 local GetChannelList = GetChannelList
@@ -372,7 +371,7 @@ function CB:UpdateBar()
 				end
 				local currentText = DefaultChatFrame.editBox:GetText()
 				local command = format("/%s ", db.cmd)
-				ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
+				ChatFrameUtil_OpenChat(command .. currentText, DefaultChatFrame)
 			end
 
 			self:UpdateButton(name, chatFunc, anchor, offsetX, offsetY, db.color, self.db.tex, nil, nil, db.abbr)
@@ -397,7 +396,7 @@ function CB:UpdateBar()
 					local autoJoined = false
 					if channelId == 0 and config.autoJoin then
 						JoinPermanentChannel(config.name)
-						ChatFrame_AddChannel(DefaultChatFrame, config.name)
+						DefaultChatFrame:AddChannel(config.name)
 						channelId = GetChannelName(config.name)
 						autoJoined = true
 					end
@@ -408,14 +407,14 @@ function CB:UpdateBar()
 					local command = format("/%s ", channelId)
 					if autoJoined then
 						-- If the channel is just joined, delay a bit to let the server process it
-						E:Delay(0.5, ChatFrame_OpenChat, command .. currentText, DefaultChatFrame)
+						E:Delay(0.5, ChatFrameUtil_OpenChat, command .. currentText, DefaultChatFrame)
 					else
-						ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
+						ChatFrameUtil_OpenChat(command .. currentText, DefaultChatFrame)
 					end
 				elseif mouseButton == "RightButton" then
 					if channelId == 0 then
 						JoinPermanentChannel(config.name)
-						ChatFrame_AddChannel(DefaultChatFrame, config.name)
+						DefaultChatFrame:AddChannel(config.name)
 					else
 						LeaveChannelByName(config.name)
 					end
@@ -451,7 +450,7 @@ function CB:UpdateBar()
 				else
 					local currentText = DefaultChatFrame.editBox:GetText()
 					local command = format("/%s ", clubChannelId)
-					ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
+					ChatFrameUtil_OpenChat(command .. currentText, DefaultChatFrame)
 				end
 			end
 

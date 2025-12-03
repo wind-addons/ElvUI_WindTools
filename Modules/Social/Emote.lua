@@ -10,9 +10,9 @@ local ipairs = ipairs
 local pairs = pairs
 local strsub = strsub
 
-local ChatEdit_ActivateChat = ChatEdit_ActivateChat
-local ChatEdit_ChooseBoxForSend = ChatEdit_ChooseBoxForSend
-local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
+local ChatFrameUtil_ActivateChat = ChatFrameUtil.ActivateChat
+local ChatFrameUtil_AddMessageEventFilter = ChatFrameUtil.AddMessageEventFilter
+local ChatFrameUtil_ChooseBoxForSend = ChatFrameUtil.ChooseBoxForSend
 local CreateFrame = CreateFrame
 
 local C_ChatBubbles_GetAllChatBubbles = C_ChatBubbles.GetAllChatBubbles
@@ -79,8 +79,8 @@ local emotes = {
 }
 
 local function EmoteButton_OnClick(self, button)
-	local editBox = ChatEdit_ChooseBoxForSend()
-	ChatEdit_ActivateChat(editBox)
+	local editBox = ChatFrameUtil_ChooseBoxForSend()
+	ChatFrameUtil_ActivateChat(editBox)
 	editBox:SetText(gsub(editBox:GetText(), "{$", "") .. self.emote)
 	if button == "LeftButton" then
 		self:GetParent():Hide()
@@ -259,18 +259,18 @@ function CE:Initialize()
 		return
 	end
 
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", EmoteFilter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY", EmoteFilter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL", EmoteFilter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", EmoteFilter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", EmoteFilter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", EmoteFilter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", EmoteFilter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", EmoteFilter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", EmoteFilter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD", EmoteFilter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_BATTLEGROUND", EmoteFilter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_EMOTE", EmoteFilter)
+	ChatFrameUtil_AddMessageEventFilter("CHAT_MSG_CHANNEL", EmoteFilter)
+	ChatFrameUtil_AddMessageEventFilter("CHAT_MSG_SAY", EmoteFilter)
+	ChatFrameUtil_AddMessageEventFilter("CHAT_MSG_YELL", EmoteFilter)
+	ChatFrameUtil_AddMessageEventFilter("CHAT_MSG_WHISPER", EmoteFilter)
+	ChatFrameUtil_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", EmoteFilter)
+	ChatFrameUtil_AddMessageEventFilter("CHAT_MSG_RAID", EmoteFilter)
+	ChatFrameUtil_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", EmoteFilter)
+	ChatFrameUtil_AddMessageEventFilter("CHAT_MSG_PARTY", EmoteFilter)
+	ChatFrameUtil_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", EmoteFilter)
+	ChatFrameUtil_AddMessageEventFilter("CHAT_MSG_GUILD", EmoteFilter)
+	ChatFrameUtil_AddMessageEventFilter("CHAT_MSG_BATTLEGROUND", EmoteFilter)
+	ChatFrameUtil_AddMessageEventFilter("CHAT_MSG_EMOTE", EmoteFilter)
 
 	self:CreateInterface()
 	self:HandleEmoteWithBubble()

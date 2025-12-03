@@ -3,6 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
+local RunNextFrame = RunNextFrame
+
 local function SkinPasteWindow(pasteWindow)
 	if not pasteWindow or pasteWindow.__windSkin then
 		return

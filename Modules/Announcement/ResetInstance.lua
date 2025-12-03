@@ -7,6 +7,7 @@ local format = format
 local gsub = gsub
 local pairs = pairs
 local strmatch = strmatch
+local time = time
 
 local UnitIsGroupLeader = UnitIsGroupLeader
 

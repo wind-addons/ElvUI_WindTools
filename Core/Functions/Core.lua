@@ -5,12 +5,17 @@ W, F, E = unpack((select(2, ...)))
 local LSM = E.Libs.LSM
 
 local abs = abs
+local assert = assert
 local coroutine = coroutine
 local format = format
+local getmetatable = getmetatable
 local min = min
 local pairs = pairs
 local pcall = pcall
 local print = print
+local rawget = rawget
+local rawset = rawset
+local setmetatable = setmetatable
 local strfind = strfind
 local strjoin = strjoin
 local tonumber = tonumber

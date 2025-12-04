@@ -1462,7 +1462,7 @@ function CT:ChatFrame_MessageEventHandler(
 			local accessID = CH:GetAccessID(chatGroup, arg8)
 			local typeID = CH:GetAccessID(infoType, arg8, arg12)
 
-			if arg1 == "YOU_CHANGED" and GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
+			if arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
 				frame:UpdateDefaultChatTarget()
 				frame.editBox:UpdateNewcomerEditBoxHint()
 			else
@@ -1813,7 +1813,7 @@ function CT:MessageFormatter(
 		return
 	end
 
-	local linkSender = true
+	local linkSender = true ---@type boolean?
 	local isProtected = CH:MessageIsProtected(arg1)
 	local bossMonster = strsub(chatType, 1, 9) == "RAID_BOSS" or strsub(chatType, 1, 7) == "MONSTER"
 	if bossMonster then

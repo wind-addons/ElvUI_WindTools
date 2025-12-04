@@ -77,6 +77,7 @@ local ChatFrameUtil_GetChatCategory = ChatFrameUtil.GetChatCategory
 local ChatFrameUtil_GetMobileEmbeddedTexture = ChatFrameUtil.GetMobileEmbeddedTexture
 local ChatFrameUtil_ProcessMessageEventFilters = ChatFrameUtil.ProcessMessageEventFilters
 local ChatFrameUtil_ResolvePrefixedChannelName = ChatFrameUtil.ResolvePrefixedChannelName
+local ChatFrameUtil_SetLastTellTarget = ChatFrameUtil.SetLastTellTarget
 
 local CHATCHANNELRULESET_MENTOR = Enum.ChatChannelRuleset.Mentor
 local Constants_ChatFrameConstants_MaxChatWindows = Constants.ChatFrameConstants.MaxChatWindows
@@ -1737,7 +1738,7 @@ function CT:ChatFrame_MessageEventHandler(
 
 		if notChatHistory and (chatType == "WHISPER" or chatType == "BN_WHISPER") then
 			if not isProtected then
-				_G.ChatEdit_SetLastTellTarget(arg2, chatType)
+				ChatFrameUtil_SetLastTellTarget(arg2, chatType)
 			end
 
 			if CH.db.flashClientIcon then

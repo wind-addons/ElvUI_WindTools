@@ -1464,7 +1464,7 @@ function CT:ChatFrame_MessageEventHandler(
 			local typeID = CH:GetAccessID(infoType, arg8, arg12)
 
 			if arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
-				frame:UpdateDefaultChatTarget()
+				_G.ChatFrame_UpdateDefaultChatTarget(frame)
 				frame.editBox:UpdateNewcomerEditBoxHint()
 			else
 				if arg1 == "YOU_LEFT" then

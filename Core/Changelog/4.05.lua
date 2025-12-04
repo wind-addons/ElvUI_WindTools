@@ -1,32 +1,37 @@
 local W = unpack((select(2, ...))) ---@type WindTools
 
 W.Changelog[405] = {
-	RELEASE_DATE = "TBD",
+	RELEASE_DATE = "2025/12/04",
 	IMPORTANT = {
 		["zhCN"] = {
 			"支持魔兽世界 11.2.7 版本.",
 			"最低支持的 ElvUI 版本提升到 14.04 测试版.",
 			"大幅更新西班牙语翻译, 感谢 Keralin",
+			"西班牙语翻译现已优化, 支持西班牙本土与拉丁美洲两种地区变体. 感谢 Keralin",
 		},
 		["zhTW"] = {
 			"支援魔獸世界 11.2.7 版本.",
 			"最低支援的 ElvUI 版本提升到 14.04 測試版.",
 			"大幅更新西班牙語翻譯, 感謝 Keralin",
+			"西班牙語翻譯現已優化, 支援西班牙本土與拉丁美洲兩種地區變體. 感謝 Keralin",
 		},
 		["enUS"] = {
 			"Support for WoW 11.2.7.",
 			"Minimum supported ElvUI version is now 14.04 test version.",
 			"Major update to Spanish translation, thanks to Keralin",
+			"Spanish translation is now optimized to support both Spain and Latin America variants. Thanks to Keralin",
 		},
 		["koKR"] = {
 			"WoW 11.2.7 버전을 지원합니다.",
 			"최소 지원 ElvUI 버전이 14.04 테스트 버전으로 업데이트되었습니다.",
 			"스페인어 번역이 대폭 업데이트되었습니다. Keralin에게 감사드립니다.",
+			"스페인어 번역이 스페인과 라틴 아메리카 변형을 모두 지원하도록 최적화되었습니다. Keralin에게 감사드립니다.",
 		},
 		["ruRU"] = {
 			"Поддержка WoW 11.2.7.",
 			"Минимальная поддерживаемая версия ElvUI теперь 14.04 тестовая версия.",
 			"Большое обновление испанского перевода, спасибо Keralin",
+			"Испанский перевод теперь оптимизирован для поддержки как испанского, так и латиноамериканского вариантов. Спасибо Keralin",
 		},
 	},
 	NEW = {

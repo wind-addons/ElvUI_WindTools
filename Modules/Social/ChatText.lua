@@ -727,19 +727,20 @@ end)
 
 -- From ElvUI Chat
 local function FlashTabIfNotShown(frame, info, chatType, chatGroup, chatTarget)
-	if
-		not frame:IsShown()
+	if frame:IsShown() then
+		return
+	end
+
+	local allowAlerts = (
+		(frame ~= _G.DEFAULT_CHAT_FRAME and info.flashTab)
+		or (frame == _G.DEFAULT_CHAT_FRAME and info.flashTabOnGeneral)
+	)
 		and (
-			(frame == _G.DEFAULT_CHAT_FRAME and info.flashTabOnGeneral)
-			or (frame ~= _G.DEFAULT_CHAT_FRAME and info.flashTab)
+			(chatType == "WHISPER" or chatType == "BN_WHISPER")
+			or (_G.CHAT_OPTIONS and not _G.CHAT_OPTIONS.HIDE_FRAME_ALERTS)
 		)
-	then
-		if
-			(not _G.CHAT_OPTIONS.HIDE_FRAME_ALERTS or chatType == "WHISPER" or chatType == "BN_WHISPER") --BN_WHISPER FIXME
-			and not _G.FCFManager_ShouldSuppressMessageFlash(frame, chatGroup, chatTarget)
-		then
-			_G.FCF_StartAlertFlash(frame)
-		end
+	if allowAlerts and not _G.FCFManager_ShouldSuppressMessageFlash(frame, chatGroup, chatTarget) then
+		_G.FCF_StartAlertFlash(frame)
 	end
 end
 
@@ -768,7 +769,7 @@ local function ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 	return chatFrame:AddChannel(C_ChatInfo_GetChannelShortcutForChannelID(channelID)) ~= nil
 end
 
-local function updateGuildPlayerCache(_, event)
+local function UpdateGuildPlayerCache(_, event)
 	if not (event == "PLAYER_ENTERING_WORLD" or event == "FORCE_UPDATE") then
 		return
 	end
@@ -783,7 +784,7 @@ local function updateGuildPlayerCache(_, event)
 	end
 end
 
-local function addSpaceForAsian(text, revert)
+local function AddSpaceForAsianText(text, revert)
 	if W.Locale == "zhCN" or W.Locale == "zhTW" or W.Locale == "koKR" then
 		return revert and " " .. text or text .. " "
 	end
@@ -1122,7 +1123,6 @@ function CT:ChatFrame_MessageEventHandler(
 				arg16,
 				arg17
 			)
-
 		if filtered then
 			return true
 		else
@@ -1462,12 +1462,12 @@ function CT:ChatFrame_MessageEventHandler(
 			local accessID = CH:GetAccessID(chatGroup, arg8)
 			local typeID = CH:GetAccessID(infoType, arg8, arg12)
 
-			if arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
+			if arg1 == "YOU_CHANGED" and GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
 				frame:UpdateDefaultChatTarget()
-				_G.ChatEdit_UpdateNewcomerEditBoxHint(frame.editBox)
+				frame.editBox:UpdateNewcomerEditBoxHint()
 			else
 				if arg1 == "YOU_LEFT" then
-					_G.ChatEdit_UpdateNewcomerEditBoxHint(frame.editBox, arg8)
+					frame.editBox:UpdateNewcomerEditBoxHint(arg8)
 				end
 
 				local globalstring
@@ -1553,6 +1553,7 @@ function CT:ChatFrame_MessageEventHandler(
 							end
 						end
 					)
+
 					return
 				else
 					local linkDisplayText = format(noBrackets and "%s" or "[%s]", arg2)
@@ -1630,6 +1631,7 @@ function CT:ChatFrame_MessageEventHandler(
 					arg16,
 					arg17
 				)
+
 				msgFormatter = function(msg) -- to translate the message on click [Show Message]
 					local body = CT:MessageFormatter(
 						frame,
@@ -1811,28 +1813,32 @@ function CT:MessageFormatter(
 		return
 	end
 
-	local showLink = 1 ---@type integer?
+	local linkSender = true
+	local isProtected = CH:MessageIsProtected(arg1)
 	local bossMonster = strsub(chatType, 1, 9) == "RAID_BOSS" or strsub(chatType, 1, 7) == "MONSTER"
 	if bossMonster then
-		showLink = nil
+		linkSender = nil
 
 		-- fix blizzard formatting errors from localization strings
-		arg1 = gsub(arg1, "(%d%s?%%)([^%%%a])", "%1%%%2") -- escape percentages that need it [broken since SL?]
-		arg1 = gsub(arg1, "(%d%s?%%)$", "%1%%") -- escape percentages on the end
-		arg1 = gsub(arg1, "^%%o", "%%s") -- replace %o to %s [broken in cata classic?]: "%o gular zila amanare rukadare." from "Cabal Zealot"
-	else
+		if not isProtected then
+			arg1 = gsub(arg1, "(%d%s?%%)([^%%%a])", "%1%%%2") -- escape percentages that need it [broken since SL?]
+			arg1 = gsub(arg1, "(%d%s?%%)$", "%1%%") -- escape percentages on the end
+			arg1 = gsub(arg1, "^%%o", "%%s") -- replace %o to %s [broken in cata classic?]: "%o gular zila amanare rukadare." from "Cabal Zealot"
+		end
+	elseif not isProtected then
 		arg1 = gsub(arg1, "%%", "%%%%") -- escape any % characters, as it may otherwise cause an 'invalid option in format' error
 	end
 
-	--Remove groups of many spaces
-	arg1 = RemoveExtraSpaces(arg1)
+	if not isProtected then
+		arg1 = RemoveExtraSpaces(arg1) -- Remove groups of many spaces
 
-	-- Search for icon links and replace them with texture links.
-	arg1 = CH:ChatFrame_ReplaceIconAndGroupExpressions(
-		arg1,
-		arg17,
-		not ChatFrameUtil_CanChatGroupPerformExpressionExpansion(chatGroup)
-	) -- If arg17 is true, don't convert to raid icons
+		-- Search for icon links and replace them with texture links.
+		arg1 = CH:ChatFrame_ReplaceIconAndGroupExpressions(
+			arg1,
+			arg17,
+			not ChatFrameUtil_CanChatGroupPerformExpressionExpansion(chatGroup)
+		) -- If arg17 is true, don't convert to raid icons
+	end
 
 	-- ElvUI: Get class colored name for BattleNet friend
 	if chatType == "BN_WHISPER" or chatType == "BN_WHISPER_INFORM" then
@@ -1891,25 +1897,23 @@ function CT:MessageFormatter(
 			playerLink = playerLinkDisplayText
 		end
 	elseif chatType == "BN_WHISPER" or chatType == "BN_WHISPER_INFORM" then
-		playerLink = GetBNPlayerLink(playerName, playerLinkDisplayText, bnetIDAccount, lineID, chatGroup, chatTarget)
+		playerLink = CH:GetBNPlayerLink(playerName, playerLinkDisplayText, bnetIDAccount, lineID, chatGroup, chatTarget)
 	else
-		playerLink = GetPlayerLink(playerName, playerLinkDisplayText, lineID, chatGroup, chatTarget)
+		playerLink = CH:GetPlayerLink(playerName, playerLinkDisplayText, lineID, chatGroup, chatTarget)
 	end
 
-	local message = arg1
-	if arg14 then --isMobile
-		message = ChatFrameUtil_GetMobileEmbeddedTexture(info.r, info.g, info.b) .. message
-	end
+	local isMobile = arg14 and ChatFrameUtil_GetMobileEmbeddedTexture(info.r, info.g, info.b)
+	local message = format("%s%s", isMobile or "", arg1)
 
 	-- Player Flags
 	local pflag = CH:GetPFlag(arg6, arg7, arg12)
-	if not bossMonster then
+	if not bossMonster and (not issecretvalue or not issecretvalue(arg12)) then
 		local chatIcon, pluginChatIcon =
 			specialChatIcons[arg12] or specialChatIcons[playerName], CH:GetPluginIcon(arg12, playerName)
 		if type(chatIcon) == "function" then
 			local icon, prettify, var1, var2, var3 = chatIcon()
-			if prettify and chatType ~= "GUILD_ITEM_LOOTED" and not CH:MessageIsProtected(message) then
-				if chatType == "TEXT_EMOTE" and not usingDifferentLanguage and (showLink and arg2 ~= "") then
+			if prettify and chatType ~= "GUILD_ITEM_LOOTED" and not isProtected then
+				if chatType == "TEXT_EMOTE" and not usingDifferentLanguage and (linkSender and arg2 ~= "") then
 					var1, var2, var3 =
 						strmatch(message, "^(.-)(" .. arg2 .. (realm and "%-" .. realm or "") .. ")(.-)$")
 				end
@@ -1953,47 +1957,24 @@ function CT:MessageFormatter(
 		end
 	end
 
+	local senderLink = linkSender and playerLink or arg2
 	if usingDifferentLanguage then
-		local languageHeader = "[" .. arg3 .. "] "
-		if showLink and arg2 ~= "" then
-			body = format(_G["CHAT_" .. chatType .. "_GET"] .. languageHeader .. message, pflag .. playerLink)
-		else
-			body = format(_G["CHAT_" .. chatType .. "_GET"] .. languageHeader .. message, pflag .. arg2)
-		end
+		body = format(_G["CHAT_" .. chatType .. "_GET"] .. "[%s] %s", pflag .. senderLink, arg3, message) -- arg3 is language header
+	elseif not isProtected and chatType == "GUILD_ITEM_LOOTED" then
+		body = gsub(message, "$s", senderLink, 1)
+	elseif not isProtected and realm and chatType == "TEXT_EMOTE" then
+		local classLink = playerLink
+			and (
+				info.colorNameByClass and gsub(playerLink, "(|h|c.-)|r|h$", "%1-" .. realm .. "|r|h")
+				or gsub(playerLink, "(|h.-)|h$", "%1-" .. realm .. "|h")
+			)
+		body = classLink and gsub(message, arg2 .. "%-" .. realm, pflag .. classLink, 1) or message
+	elseif chatType == "TEXT_EMOTE" then
+		body = ((not issecretvalue or not issecretvalue(arg2)) and arg2 ~= senderLink)
+				and gsub(message, arg2, senderLink, 1)
+			or message
 	else
-		if not showLink or arg2 == "" then
-			if chatType == "TEXT_EMOTE" then
-				body = message
-			else
-				body = format(_G["CHAT_" .. chatType .. "_GET"] .. message, pflag .. arg2, arg2)
-			end
-		else
-			if chatType == "EMOTE" then
-				body = format(_G["CHAT_" .. chatType .. "_GET"] .. message, pflag .. playerLink)
-			elseif chatType == "TEXT_EMOTE" and realm then
-				if info.colorNameByClass then
-					body = gsub(
-						message,
-						arg2 .. "%-" .. realm,
-						pflag .. gsub(playerLink, "(|h|c.-)|r|h$", "%1-" .. realm .. "|r|h"),
-						1
-					)
-				else
-					body = gsub(
-						message,
-						arg2 .. "%-" .. realm,
-						pflag .. gsub(playerLink, "(|h.-)|h$", "%1-" .. realm .. "|h"),
-						1
-					)
-				end
-			elseif chatType == "TEXT_EMOTE" then
-				body = gsub(message, arg2, pflag .. playerLink, 1)
-			elseif chatType == "GUILD_ITEM_LOOTED" then
-				body = gsub(message, "$s", pflag .. playerLink, 1)
-			else
-				body = format(_G["CHAT_" .. chatType .. "_GET"] .. message, pflag .. playerLink)
-			end
-		end
+		body = format(_G["CHAT_" .. chatType .. "_GET"] .. "%s", pflag .. senderLink, message)
 	end
 
 	-- Add Channel
@@ -2001,7 +1982,11 @@ function CT:MessageFormatter(
 		body = "|Hchannel:channel:" .. arg8 .. "|h[" .. ChatFrameUtil_ResolvePrefixedChannelName(arg4) .. "]|h " .. body
 	end
 
-	if (chatType ~= "EMOTE" and chatType ~= "TEXT_EMOTE") and (CH.db.shortChannels or CH.db.hideChannels) then
+	if
+		not isProtected
+		and (chatType ~= "EMOTE" and chatType ~= "TEXT_EMOTE")
+		and (CH.db.shortChannels or CH.db.hideChannels)
+	then
 		body = CH:HandleShortChannels(body, CH.db.hideChannels)
 	end
 
@@ -2162,13 +2147,13 @@ function CT:SendAchievementMessage()
 						message = gsub(
 							achievementMessageTemplate,
 							"%%player%%",
-							addSpaceForAsian(self:MayHaveBrackets(players[1]))
+							AddSpaceForAsianText(self:MayHaveBrackets(players[1]))
 						)
 					elseif #players > 1 then
 						message = gsub(
 							achievementMessageTemplateMultiplePlayers,
 							"%%players%%",
-							addSpaceForAsian(strjoin(", ", self:MayHaveBrackets(unpack(players))))
+							AddSpaceForAsianText(strjoin(", ", self:MayHaveBrackets(unpack(players))))
 						)
 					end
 
@@ -2176,7 +2161,7 @@ function CT:SendAchievementMessage()
 						message = gsub(
 							message,
 							"%%achievement%%",
-							addSpaceForAsian(strjoin(", ", unpack(achievementLinks)), true)
+							AddSpaceForAsianText(strjoin(", ", unpack(achievementLinks)), true)
 						)
 
 						message = select(2, W:GetModule("ChatLink"):Filter("", message))
@@ -2293,7 +2278,7 @@ function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
 		class = guildPlayerCache[name]
 		if not class then
 			self:Log("debug", "force update guild player cache")
-			updateGuildPlayerCache(nil, "FORCE_UPDATE")
+			UpdateGuildPlayerCache(nil, "FORCE_UPDATE")
 			class = guildPlayerCache[name]
 		end
 	end
@@ -2303,7 +2288,7 @@ function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
 		local coloredName =
 			C.StringWithClassColor(displayName, link and guildPlayerCache[link] or guildPlayerCache[name])
 
-		coloredName = addSpaceForAsian(self:MayHaveBrackets(coloredName))
+		coloredName = AddSpaceForAsianText(self:MayHaveBrackets(coloredName))
 		local classIcon = self.db.classIcon and F.GetClassIconStringWithStyle(class, CT.db.classIconStyle, 16, 16)
 		classIcon = classIcon and classIcon .. " " or ""
 
@@ -2422,7 +2407,7 @@ local function UpdateBattleNetFriendStatus(friendIndex)
 end
 
 function CT:PLAYER_ENTERING_WORLD(event)
-	updateGuildPlayerCache(nil, event)
+	UpdateGuildPlayerCache(nil, event)
 	for friendIndex = 1, BNGetNumFriends() do
 		UpdateBattleNetFriendStatus(friendIndex)
 	end
@@ -2481,7 +2466,7 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture, noRetry)
 			if playerName then
 				tinsert(
 					characterData.type == "online" and onlineCharacters or offlineCharacters,
-					addSpaceForAsian(playerName)
+					AddSpaceForAsianText(playerName)
 				)
 			end
 		end

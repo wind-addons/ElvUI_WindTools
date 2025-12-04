@@ -282,10 +282,11 @@ function ST:Initialize()
 	self.db = E.db.WT.social.smartTab
 	self.private = E.private.WT.social.smartTab
 
+	self:SecureHook("ChatEdit_CustomTabPressed", "TabPressed")
+
 	for _, frameName in ipairs(_G.CHAT_FRAMES) do
 		local chat = _G[frameName]
 		if chat and chat.editBox then
-			self:SecureHook(chat.editBox, "OnTabPressed", "TabPressed")
 			self:SecureHook(chat.editBox, "SecureTabPressed", "SecureTabPressed")
 		end
 	end

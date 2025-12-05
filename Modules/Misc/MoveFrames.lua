@@ -242,6 +242,39 @@ local BlizzardFramesOnDemand = {
 	["Blizzard_GuildRename"] = {
 		"GuildRenameFrame",
 	},
+	["Blizzard_HouseList"] = {
+		"HouseListFrame",
+	},
+	["Blizzard_HousingBulletinBoard"] = {
+		"HousingBulletinBoardFrame",
+		"HousingInviteResidentFrame",
+		"NeighborhoodChangeNameDialog",
+	},
+	["Blizzard_HousingCharter"] = {
+		"HousingCharterRequestSignatureDialog",
+	},
+	["Blizzard_HousingCornerstone"] = {
+		"HousingCornerstoneFrame",
+		"HousingCornerstoneHouseInfoFrame",
+		"HousingCornerstonePurchaseFrame",
+		"HousingCornerstoneVisitorFrame",
+		"ImportHouseConfirmationDialog",
+		"MoveHouseConfirmationDialog",
+	},
+	["Blizzard_HousingCreateNeighborhood"] = {
+		"HousingCreateCharterNeighborhoodConfirmationFrame",
+		"HousingCreateNeighborhoodCharterFrame",
+	},
+	["Blizzard_HousingDashboard"] = {
+		"HousingDashboardFrame",
+	},
+	["Blizzard_HousingHouseFinder"] = {
+		"HouseFinderFrame",
+	},
+	["Blizzard_HousingHouseSettings"] = {
+		"AbandonHouseConfirmationDialog",
+		"HousingHouseSettingsFrame",
+	},
 	["Blizzard_InspectUI"] = {
 		"InspectFrame",
 	},
@@ -259,6 +292,9 @@ local BlizzardFramesOnDemand = {
 	},
 	["Blizzard_ItemUpgradeUI"] = {
 		"ItemUpgradeFrame",
+	},
+	["Blizzard_Kiosk"] = {
+		"GameKioskSessionStartedDialog",
 	},
 	["Blizzard_MacroUI"] = {
 		"MacroFrame",

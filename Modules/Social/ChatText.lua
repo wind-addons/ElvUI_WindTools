@@ -1973,6 +1973,8 @@ function CT:MessageFormatter(
 		body = ((not issecretvalue or not issecretvalue(arg2)) and arg2 ~= senderLink)
 				and gsub(message, arg2, senderLink, 1)
 			or message
+	elseif strsub(chatType, -5) == "EMOTE" then
+		body = format(_G["CHAT_" .. chatType .. "_GET"] .. message, pflag .. senderLink)
 	else
 		body = format(_G["CHAT_" .. chatType .. "_GET"] .. "%s", pflag .. senderLink, message)
 	end

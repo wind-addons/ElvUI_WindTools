@@ -56,6 +56,9 @@ local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpeci
 local C_TooltipInfo_GetHyperlink = C_TooltipInfo.GetHyperlink
 local C_TradeSkillUI_GetItemCraftedQualityByItemInfo = C_TradeSkillUI.GetItemCraftedQualityByItemInfo
 local C_TradeSkillUI_GetItemReagentQualityByItemInfo = C_TradeSkillUI.GetItemReagentQualityByItemInfo
+local ChatFrameUtil_ActivateChat = ChatFrameUtil.ActivateChat
+local ChatFrameUtil_ChooseBoxForSend = ChatFrameUtil.ChooseBoxForSend
+local ChatFrameUtil_InsertLink = ChatFrameUtil.InsertLink
 
 local EMPTY = EMPTY
 local Enum_ItemClass = Enum.ItemClass
@@ -824,8 +827,8 @@ function I:CreatePanel(parent)
 
 		line:SetScript("OnDoubleClick", function(this)
 			if this.link then
-				_G.ChatEdit_ActivateChat(_G.ChatEdit_ChooseBoxForSend())
-				_G.ChatEdit_InsertLink(this.link)
+				ChatFrameUtil_ActivateChat(ChatFrameUtil_ChooseBoxForSend())
+				ChatFrameUtil_InsertLink(this.link)
 			end
 		end)
 	end

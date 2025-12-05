@@ -198,6 +198,8 @@ function RM:Initialize()
 		self:RegisterEvent("ADDON_LOADED")
 	end
 
+	MinimapBackdrop.StaticOverlayTexture:SetAlpha(0)
+
 	F.TaskManager:AfterLogin(self.SetUpdateHook, self)
 end
 

@@ -74,6 +74,7 @@ W.Changelog[405] = {
 			"[美化外观] 优化了地下城手册中首领按钮的高亮效果.",
 			"[美化外观] 优化了 TomTom 皮肤.",
 			"[美化外观] 优化了 Weakauras 皮肤.",
+			"[移动框体] 添加了对 11.2.7 版本新增框体的支持.",
 		},
 		["zhTW"] = {
 			"優化世界地圖迷霧去除可能引起的變量污染.",
@@ -82,6 +83,7 @@ W.Changelog[405] = {
 			"[美化外觀] 優化了地下城手冊中首領按鈕的高亮效果.",
 			"[美化外觀] 優化了 TomTom 皮膚.",
 			"[美化外觀] 優化了 Weakauras 皮膚.",
+			"[移動框架] 支援 11.2.7 版本新增框架.",
 		},
 		["enUS"] = {
 			"Optimize variable taint that may be caused by removing fog of war on the world map.",
@@ -90,6 +92,7 @@ W.Changelog[405] = {
 			"[Skins] Optimize the highlight effect of Boss buttons in the Encounter Journal.",
 			"[Skins] Optimize the TomTom skin.",
 			"[Skins] Optimize the Weakauras skin.",
+			"[Move Frames] Added support for new frames in 11.2.7.",
 		},
 		["koKR"] = {
 			"세계 지도에서 전쟁의 안개를 제거할 때 발생할 수 있는 변수 오염을 최적화했습니다.",
@@ -98,6 +101,7 @@ W.Changelog[405] = {
 			"[스킨] 던전 도감에서 보스 버튼의 강조 효과를 최적화했습니다.",
 			"[스킨] TomTom 스킨을 최적화했습니다.",
 			"[스킨] Weakauras 스킨을 최적화했습니다.",
+			"[프레임 이동] 11.2.7 버전의 새로운 프레임에 대한 지원이 추가되었습니다.",
 		},
 		["ruRU"] = {
 			"Оптимизация загрязнения переменных, которое может быть вызвано удалением тумана войны на карте мира.",
@@ -106,6 +110,7 @@ W.Changelog[405] = {
 			"[Скины] Оптимизирован эффект подсветки кнопок боссов в журнале подземелий.",
 			"[Скины] Оптимизирован скин TomTom.",
 			"[Скины] Оптимизирован скин Weakauras.",
+			"[Перемещение фреймов] Добавлена поддержка новых фреймов в версии 11.2.7.",
 		},
 	},
 }

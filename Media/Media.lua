@@ -603,16 +603,16 @@ do
 		LSM:Register("font", "LINE Seed (en)", MediaPath .. "Fonts/LineSeed.otf", region)
 		LSM:Register("font", "Montserrat (en)", MediaPath .. "Fonts/Montserrat.ttf", region)
 		LSM:Register("font", "Roadway (en)", MediaPath .. "Fonts/Roadway.ttf", region)
-		LSM:Register("font", "Homespun (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/Homespun.ttf", region)
+		LSM:Register("font", "Homespun (en)", "Interface/Addons/ElvUI/Game/Shared/Media/Fonts/Homespun.ttf", region)
 		LSM:Register(
 			"font",
 			"ContinuumMedium (en)",
 			"Interface/Addons/ElvUI/Core/Media/Fonts/ContinuumMedium.ttf",
 			region
 		)
-		LSM:Register("font", "Action Man (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/ActionMan.ttf", region)
-		LSM:Register("font", "Die Die Die (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/DieDieDie.ttf", region)
-		LSM:Register("font", "Expressway (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/Expressway.ttf", region)
+		LSM:Register("font", "Action Man (en)", "Interface/Addons/ElvUI/Game/Shared/Media/Fonts/ActionMan.ttf", region)
+		LSM:Register("font", "Die Die Die (en)", "Interface/Addons/ElvUI/Game/Shared/Media/Fonts/DieDieDie.ttf", region)
+		LSM:Register("font", "Expressway (en)", "Interface/Addons/ElvUI/Game/Shared/Media/Fonts/Expressway.ttf", region)
 		W.CompatibleFont = true
 	else
 		LSM:Register(

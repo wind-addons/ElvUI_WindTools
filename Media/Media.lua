@@ -607,7 +607,7 @@ do
 		LSM:Register(
 			"font",
 			"ContinuumMedium (en)",
-			"Interface/Addons/ElvUI/Core/Media/Fonts/ContinuumMedium.ttf",
+			"Interface/Addons/ElvUI/Game/Shared/Media/Fonts/ContinuumMedium.ttf",
 			region
 		)
 		LSM:Register("font", "Action Man (en)", "Interface/Addons/ElvUI/Game/Shared/Media/Fonts/ActionMan.ttf", region)

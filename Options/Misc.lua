@@ -1483,7 +1483,6 @@ options.gameBar = {
 			end,
 			set = function(info, value)
 				E.db.WT.misc.gameBar.friends[info[#info]] = value
-				GB:UpdateHomeButton()
 				GB:UpdateButtons()
 			end,
 			args = {
@@ -1501,19 +1500,19 @@ options.gameBar = {
 				},
 			},
 		},
-		home = {
+		hearthstone = {
 			order = 14,
 			type = "group",
-			name = L["Home"],
+			name = L["Hearthstone"],
 			disabled = function()
 				return not E.db.WT.misc.gameBar.enable
 			end,
 			get = function(info)
-				return E.db.WT.misc.gameBar.home[info[#info]]
+				return E.db.WT.misc.gameBar.hearthstone[info[#info]]
 			end,
 			set = function(info, value)
-				E.db.WT.misc.gameBar.home[info[#info]] = value
-				GB:UpdateHomeButton()
+				E.db.WT.misc.gameBar.hearthstone[info[#info]] = value
+				GB:UpdateHearthstoneButton()
 				GB:UpdateButtons()
 			end,
 			args = {},
@@ -1597,7 +1596,7 @@ do
 		}
 	end
 
-	options.gameBar.args.home.args.left = {
+	options.gameBar.args.hearthstone.args.left = {
 		order = 1,
 		type = "select",
 		name = L["Left Button"],
@@ -1611,7 +1610,7 @@ do
 		end,
 	}
 
-	options.gameBar.args.home.args.right = {
+	options.gameBar.args.hearthstone.args.right = {
 		order = 2,
 		type = "select",
 		name = L["Right Button"],

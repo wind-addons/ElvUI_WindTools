@@ -595,20 +595,20 @@ local ButtonTypes = {
 		end,
 		notification = true,
 	},
-	HOME = {
-		name = L["Home"],
-		icon = W.Media.Icons.barHome,
+	HEARTHSTONE = {
+		name = L["Hearthstone"],
+		icon = W.Media.Icons.barHearthstone,
 		item = {},
 		tooltips = function(button)
 			local function Update()
 				DT.tooltip:ClearLines()
-				DT.tooltip:SetText(L["Home"])
+				DT.tooltip:SetText(L["Hearthstone"])
 				DT.tooltip:AddLine("\n")
-				AddDoubleLineForItem(GB.db.home.left, LEFT_BUTTON_ICON)
+				AddDoubleLineForItem(GB.db.hearthstone.left, LEFT_BUTTON_ICON)
 				if PlayerIsTimerunning() then
 					AddDoubleLineForItem(250411, SCROLL_BUTTON_ICON)
 				end
-				AddDoubleLineForItem(GB.db.home.right, RIGHT_BUTTON_ICON)
+				AddDoubleLineForItem(GB.db.hearthstone.right, RIGHT_BUTTON_ICON)
 				DT.tooltip:Show()
 			end
 
@@ -620,6 +620,15 @@ local ButtonTypes = {
 				button.tooltipsUpdateTimer:Cancel()
 			end
 		end,
+	},
+	HOME = {
+		name = L["Home"],
+		icon = W.Media.Icons.barHome,
+		macro = {
+			LeftButton = "/script HousingFramesUtil.ToggleHousingDashboard()",
+		},
+		tooltips = L["Home"],
+
 	},
 	MISSION_REPORTS = {
 		name = L["Mission Reports"],
@@ -1179,12 +1188,12 @@ function GB:ConstructButton()
 	tinsert(self.buttons, button)
 end
 
-_G.WTGameBar_UpdateHomeButtons = function()
+_G.WTGameBar_UpdateHearthstoneButtons = function()
 	F.TaskManager:OutOfCombat(function()
-		for _, btn in pairs(GB.HomeButtons) do
-			if btn.type == "HOME" then
-				GB:UpdateHomeButtonMacro(btn, "left", ButtonTypes[btn.type].item.item1)
-				GB:UpdateHomeButtonMacro(btn, "right", ButtonTypes[btn.type].item.item2)
+		for _, btn in pairs(GB.HearthstoneButtons) do
+			if btn.type == "HEARTHSTONE" then
+				GB:UpdateHearthstoneButtonMacro(btn, "left", ButtonTypes[btn.type].item.item1)
+				GB:UpdateHearthstoneButtonMacro(btn, "right", ButtonTypes[btn.type].item.item2)
 			end
 		end
 	end)
@@ -1204,15 +1213,15 @@ function GB:UpdateButton(button, buttonType)
 
 	-- Click
 	if
-		buttonType == "HOME"
+		buttonType == "HEARTHSTONE"
 		and (config.item.item1 == L["Random Hearthstone"] or config.item.item2 == L["Random Hearthstone"])
 	then
 		button:SetAttribute("type*", "macro")
-		self:UpdateHomeButtonMacro(button, "left", config.item.item1)
-		self:UpdateHomeButtonMacro(button, "right", config.item.item2)
+		self:UpdateHearthstoneButtonMacro(button, "left", config.item.item1)
+		self:UpdateHearthstoneButtonMacro(button, "right", config.item.item2)
 		-- Legion Remix Hearthstone (250411)
 		button:SetAttribute("macrotext3", PlayerIsTimerunning() and "/use item:250411" or "")
-		tinsert(self.HomeButtons, button)
+		tinsert(self.HearthstoneButtons, button)
 	elseif config.macro then
 		button:SetAttribute("type*", "macro")
 		button:SetAttribute("macrotext1", config.macro.LeftButton or "")
@@ -1306,7 +1315,7 @@ function GB:ConstructButtons()
 end
 
 function GB:UpdateButtons()
-	self.HomeButtons = {}
+	self.HearthstoneButtons = {}
 
 	for i = 1, NUM_PANEL_BUTTONS do
 		self:UpdateButton(self.buttons[i], self.db.left[i])
@@ -1504,7 +1513,7 @@ function GB:ProfileUpdate()
 		self:UpdateMetadata()
 		if self.initialized then
 			self.bar:Show()
-			self:UpdateHomeButton()
+			self:UpdateHearthstoneButton()
 			self:UpdateTimeArea()
 			self:UpdateTime()
 			self:UpdateButtons()
@@ -1544,7 +1553,7 @@ function GB:UpdateGuildButton()
 	end
 end
 
-function GB:UpdateHomeButtonMacro(button, mouseButton, item)
+function GB:UpdateHearthstoneButtonMacro(button, mouseButton, item)
 	if not button or not mouseButton or not item or not availableHearthstones then
 		return
 	end
@@ -1565,7 +1574,7 @@ function GB:UpdateHomeButtonMacro(button, mouseButton, item)
 			else
 				randomIndex = 1
 			end
-			macro = format("/use item:%d\n/run _G.WTGameBar_UpdateHomeButtons()", availableHearthstones[randomIndex])
+			macro = format("/use item:%d\n/run _G.WTGameBar_UpdateHearthstoneButtons()", availableHearthstones[randomIndex])
 		else
 			macro = format('/run UIErrorsFrame:AddMessage("%s", RED_FONT_COLOR:GetRGBA())', L["No Hearthstone Found!"])
 		end
@@ -1574,11 +1583,11 @@ function GB:UpdateHomeButtonMacro(button, mouseButton, item)
 	button:SetAttribute(attribute, macro)
 end
 
-function GB:UpdateHomeButton()
-	local left = hearthstonesAndToysData[self.db.home.left]
-	local right = hearthstonesAndToysData[self.db.home.right]
+function GB:UpdateHearthstoneButton()
+	local left = hearthstonesAndToysData[self.db.hearthstone.left]
+	local right = hearthstonesAndToysData[self.db.hearthstone.right]
 
-	ButtonTypes.HOME.item = {
+	ButtonTypes.HEARTHSTONE.item = {
 		item1 = left and left.name,
 		item2 = right and right.name,
 	}
@@ -1638,7 +1647,7 @@ function GB:UpdateHearthStoneTable()
 
 		hearthstonesAndToysData[tostring(id)] = { name = item:GetItemName(), icon = item:GetItemIcon() }
 	end, function()
-		self:UpdateHomeButton()
+		self:UpdateHearthstoneButton()
 		if self.initialized then
 			self:UpdateButtons()
 		end

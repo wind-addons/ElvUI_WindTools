@@ -1410,7 +1410,7 @@ P.misc = {
 				style = "OUTLINE",
 			},
 		},
-		home = {
+		hearthstone = {
 			left = "6948",
 			right = "140192",
 		},
@@ -1436,9 +1436,9 @@ P.misc = {
 			[7] = "SCREENSHOT",
 		},
 		right = {
-			[1] = "HOME",
-			[2] = "ACHIEVEMENTS",
-			[3] = "MISSION_REPORTS",
+			[1] = "HEARTHSTONE",
+			[2] = "HOME",
+			[3] = "ACHIEVEMENTS",
 			[4] = "ENCOUNTER_JOURNAL",
 			[5] = "TOY_BOX",
 			[6] = "PET_JOURNAL",

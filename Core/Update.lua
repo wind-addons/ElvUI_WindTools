@@ -368,6 +368,13 @@ function W:UpdateScripts()
 		end
 	end
 
+	if profileVersion < 4.05 then
+		if E.db.WT and E.db.WT.gameBar and E.db.WT.gameBar.home then
+			E.db.WT.gameBar.hearthstone = E.db.WT.gameBar.home
+			E.db.WT.gameBar.home = nil
+		end
+	end
+
 	if not isFirstLine then
 		F.PrintGradientLine()
 	end

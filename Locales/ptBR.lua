@@ -722,6 +722,7 @@ L["Health"] = "Vida"
 L["Health Bar"] = "Barra de Vida"
 L["Health Bar Y-Offset"] = true
 L["Health Text Y-Offset"] = true
+L["Hearthstone"] = true
 L["Height"] = "Altura"
 L["Height Mode"] = true
 L["Height Percentage"] = true

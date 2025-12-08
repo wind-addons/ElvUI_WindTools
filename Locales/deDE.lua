@@ -722,6 +722,7 @@ L["Health"] = "Leben"
 L["Health Bar"] = "Lebensleiste"
 L["Health Bar Y-Offset"] = "Lebensleiste Y-Versatz"
 L["Health Text Y-Offset"] = "Lebenstext Y-Versatz"
+L["Hearthstone"] = true
 L["Height"] = "Höhe"
 L["Height Mode"] = "Höhenmodus"
 L["Height Percentage"] = "Höhe %"

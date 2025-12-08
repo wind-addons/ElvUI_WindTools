@@ -722,6 +722,7 @@ L["Health"] = "Vie"
 L["Health Bar"] = "Barre de vie"
 L["Health Bar Y-Offset"] = "Décalage Y de la barre de vie"
 L["Health Text Y-Offset"] = "Décalage Y du texte de vie"
+L["Hearthstone"] = true
 L["Height"] = "Hauteur"
 L["Height Mode"] = "Mode hauteur"
 L["Height Percentage"] = "Pourcentage de hauteur"

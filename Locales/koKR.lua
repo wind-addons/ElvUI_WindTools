@@ -722,6 +722,7 @@ L["Health"] = "체력"
 L["Health Bar"] = "체력바"
 L["Health Bar Y-Offset"] = "체력바 Y 좌표"
 L["Health Text Y-Offset"] = "체력 문자 Y 좌표"
+L["Hearthstone"] = true
 L["Height"] = "세로 길이"
 L["Height Mode"] = "높이 모드"
 L["Height Percentage"] = "높이 비율"

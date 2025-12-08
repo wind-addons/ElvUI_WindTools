@@ -722,6 +722,7 @@ L["Health"] = "Salud"
 L["Health Bar"] = "Barra de salud"
 L["Health Bar Y-Offset"] = "Desplazamiento Y de la Barra de Salud"
 L["Health Text Y-Offset"] = "Desplazamiento Y del texto de salud"
+L["Hearthstone"] = true
 L["Height"] = "Altura"
 L["Height Mode"] = "Modo de altura"
 L["Height Percentage"] = "Porcentaje de altura"

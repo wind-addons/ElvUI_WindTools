@@ -372,6 +372,7 @@ function W:UpdateScripts()
 		if E.db.WT and E.db.WT.gameBar and E.db.WT.gameBar.home then
 			E.db.WT.gameBar.hearthstone = E.db.WT.gameBar.home
 			E.db.WT.gameBar.home = nil
+			UpdateMessage(L["Game Bar"] .. ": " .. L["Update Database"], profileVersion)
 		end
 	end
 

@@ -77,6 +77,15 @@ function S:ReskinTooltip(tt)
 		tt.BottomOverlay:StripTextures()
 	end
 
+	local CompareHeader = tt.CompareHeader
+	if CompareHeader and not CompareHeader.__windSkin then
+		CompareHeader:SetTemplate("Transparent")
+		self:CreateShadow(CompareHeader)
+		F.Move(CompareHeader, 0, 2)
+		F.SetFont(CompareHeader.Label)
+		CompareHeader.__windSkin = true
+	end
+
 	if not self:IsHooked(tt, "Show") then
 		StyleTooltipWidgetContainer(tt)
 		self:SecureHook(tt, "Show", "StyleIconsInTooltip")

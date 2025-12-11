@@ -252,6 +252,7 @@ function S:SkinLegendaryItemAlert(frame)
 	if not frame or frame.__windSkin then
 		return
 	end
+
 	self:CreateBackdropShadow(frame)
 
 	frame.Icon:ClearAllPoints()
@@ -281,6 +282,7 @@ function S:SkinDigsiteCompleteAlert(frame)
 	if not frame or frame.__windSkin then
 		return
 	end
+
 	self:CreateBackdropShadow(frame)
 
 	F.SetFont(frame.Title)
@@ -311,6 +313,15 @@ function S:SkinRafRewardDeliveredAlert(frame)
 	frame.__windSkin = true
 end
 
+function S:SkinHousingItemEarnedAlert(frame)
+	if not frame or frame.__windSkin then
+		return
+	end
+
+	self:CreateBackdropShadow(frame)
+
+	frame.__windSkin = true
+end
 function S:SkinNewItemAlert(frame)
 	if not frame or frame.__windSkin then
 		return
@@ -443,6 +454,7 @@ function S:AlertFrames()
 	self:SecureHook(_G.HonorAwardedAlertSystem, "setUpFunction", "SkinMoneyWonAlert")
 	self:SecureHook(_G.EntitlementDeliveredAlertSystem, "setUpFunction", "SkinAlert")
 	self:SecureHook(_G.RafRewardDeliveredAlertSystem, "setUpFunction", "SkinRafRewardDeliveredAlert")
+	self:SecureHook(_G.HousingItemEarnedAlertFrameSystem, "setUpFunction", "SkinHousingItemEarnedAlert")
 
 	-- Professions
 	self:SecureHook(_G.DigsiteCompleteAlertSystem, "setUpFunction", "SkinDigsiteCompleteAlert")

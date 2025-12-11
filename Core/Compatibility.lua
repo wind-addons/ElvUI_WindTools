@@ -315,7 +315,7 @@ function W:CheckCompatibility()
 	CheckmMediaTag(
 		format("%s-%s", L["Tooltips"], L["Icon"]),
 		L["Tooltip Icons"],
-		"private.WT.tooltips.icon",
+		"private.WT.tooltips.titleIcon.enable",
 		"db.mMT.tooltip.enable"
 	)
 

@@ -702,6 +702,15 @@ local authorIcons = {
 	["Player-877-063EB5E7"] = windIcon, -- Tabimonk-回音山
 	["Player-877-063FCBC6"] = windIcon, -- Tabideath-回音山
 	["Player-877-063FCBF2"] = windIcon, -- Tabishaman-回音山
+	["Player-877-064192F7"] = windIcon, -- Tabidemon-回音山
+	["Player-877-0641A41C"] = windIcon, -- Tabilock-回音山
+	["Player-877-0641A424"] = windIcon, -- Tabihunter-回音山
+	["Player-877-0641A42C"] = windIcon, -- Tabiwarrior-回音山
+	["Player-877-0641A431"] = windIcon, -- Tabimage-回音山
+	["Player-877-0641A435"] = windIcon, -- Tabidruid-回音山
+	["Player-877-0641A43A"] = windIcon, -- Tabipriest-回音山
+	["Player-877-0641A43C"] = windIcon, -- Tabirogue-回音山
+	["Player-877-0641A443"] = windIcon, -- Tabipaladin-回音山
 	-- zhTW Server
 	["Player-963-04504559"] = windIcon, -- Tabidruid-暗影之月
 	["Player-963-0450457B"] = windIcon, -- Tabilock-暗影之月

@@ -275,6 +275,9 @@ local BlizzardFramesOnDemand = {
 		"AbandonHouseConfirmationDialog",
 		"HousingHouseSettingsFrame",
 	},
+	["Blizzard_HousingModelPreview"] = {
+		"HousingModelPreviewFrame",
+	},
 	["Blizzard_InspectUI"] = {
 		"InspectFrame",
 	},

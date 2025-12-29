@@ -68,6 +68,8 @@ local C_Item_GetItemCount = C_Item.GetItemCount
 local C_Timer_NewTicker = C_Timer.NewTicker
 local C_ToyBox_IsToyUsable = C_ToyBox.IsToyUsable
 local C_UI_Reload = C_UI.Reload
+local C_Housing_GetPlayerOwnedHouses = C_Housing.GetPlayerOwnedHouses
+local C_Housing_TeleportHome = C_Housing.TeleportHome
 
 local Enum_CovenantType = Enum.CovenantType
 local FollowerType_8_0 = Enum.GarrisonFollowerType.FollowerType_8_0_GarrisonFollower
@@ -84,6 +86,7 @@ local friendOnline = gsub(_G.ERR_FRIEND_ONLINE_SS, "\124Hplayer:%%s\124h%[%%s%]\
 local friendOffline = gsub(_G.ERR_FRIEND_OFFLINE_S, "%%s", "")
 
 GB.AnimationManager = { frame = nil, groups = nil }
+GB.playerHouseList = nil
 
 local hearthstones = {
 	6948, -- 爐石
@@ -624,11 +627,41 @@ local ButtonTypes = {
 	HOME = {
 		name = L["Home"],
 		icon = W.Media.Icons.barHome,
-		macro = {
-			LeftButton = "/script HousingFramesUtil.ToggleHousingDashboard()",
+		click = {
+			LeftButton = function()
+				if not InCombatLockdown() then
+					if not GB.playerHouseList or #GB.playerHouseList == 0 then
+						C_Housing_GetPlayerOwnedHouses()
+						_G.UIErrorsFrame:AddMessage("Requesting house data...", RED_FONT_COLOR:GetRGBA())
+						return
+					end
+					local house = GB.playerHouseList[1]
+					if house.neighborhoodGUID and house.houseGUID and house.plotID then
+						C_Housing_TeleportHome(house.neighborhoodGUID, house.houseGUID, house.plotID)
+					else
+						_G.UIErrorsFrame:AddMessage(
+							"Unable to teleport: House data incomplete",
+							RED_FONT_COLOR:GetRGBA()
+						)
+					end
+				else
+					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
+				end
+			end,
+			RightButton = function()
+				if not InCombatLockdown() then
+					_G.HousingFramesUtil.ToggleHousingDashboard()
+				else
+					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
+				end
+			end,
 		},
-		tooltips = L["Home"],
-
+		tooltips = {
+			L["Home"],
+			"\n",
+			LEFT_BUTTON_ICON .. " " .. "Teleport to Home",
+			RIGHT_BUTTON_ICON .. " " .. "Housing Dashboard",
+		},
 	},
 	MISSION_REPORTS = {
 		name = L["Mission Reports"],
@@ -1436,6 +1469,10 @@ function GB:PLAYER_ENTERING_WORLD()
 	end)
 end
 
+function GB:PLAYER_HOUSE_LIST_UPDATED(_, houseInfoList)
+	self.playerHouseList = houseInfoList
+end
+
 function GB:Initialize()
 	self.db = E.db.WT.misc.gameBar
 
@@ -1467,6 +1504,8 @@ function GB:Initialize()
 	self:RegisterEvent("NEW_TOY_ADDED")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 	self:RegisterEvent("COVENANT_CHOSEN", "UpdateHearthStoneTable")
+	self:RegisterEvent("PLAYER_HOUSE_LIST_UPDATED")
+	C_Housing_GetPlayerOwnedHouses()
 	self:SecureHook(_G.GuildMicroButton, "UpdateNotificationIcon", "UpdateGuildButton")
 	self.initialized = true
 end
@@ -1574,7 +1613,8 @@ function GB:UpdateHearthstoneButtonMacro(button, mouseButton, item)
 			else
 				randomIndex = 1
 			end
-			macro = format("/use item:%d\n/run _G.WTGameBar_UpdateHearthstoneButtons()", availableHearthstones[randomIndex])
+			macro =
+				format("/use item:%d\n/run _G.WTGameBar_UpdateHearthstoneButtons()", availableHearthstones[randomIndex])
 		else
 			macro = format('/run UIErrorsFrame:AddMessage("%s", RED_FONT_COLOR:GetRGBA())', L["No Hearthstone Found!"])
 		end

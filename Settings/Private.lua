@@ -660,6 +660,7 @@ V.skins = {
 		guild = true,
 		guildBank = true,
 		help = true,
+		housing = true,
 		inputMethodEditor = true,
 		inspect = true,
 		itemInteraction = true,

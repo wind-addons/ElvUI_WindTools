@@ -1417,6 +1417,11 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Help Frame"],
 		},
+		housing = {
+			order = 10,
+			type = "toggle",
+			name = L["Housing"],
+		},
 		inputMethodEditor = {
 			order = 10,
 			type = "toggle",

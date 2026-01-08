@@ -5,11 +5,10 @@ local LSM = E.Libs.LSM
 
 local _G = _G
 local pairs = pairs
-local select = select
 local tostring = tostring
 local type = type
 
-local EquipmentManager_UnpackLocation = EquipmentManager_UnpackLocation
+local EquipmentManager_GetLocationData = EquipmentManager_GetLocationData
 local Item = Item
 local ItemLocation = ItemLocation
 
@@ -90,13 +89,11 @@ function IL:FlyoutButton()
 			and type(button.location) == "number"
 			and not (button.location >= EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION)
 		then
-			local bags, voidStorage, slot, bag = select(3, EquipmentManager_UnpackLocation(button.location))
-			if not voidStorage then
-				if bags then
-					itemLocation = ItemLocation:CreateFromBagAndSlot(bag, slot)
-				else
-					itemLocation = ItemLocation:CreateFromEquipmentSlot(slot)
-				end
+			local locationData = EquipmentManager_GetLocationData(button.location)
+			if locationData.isBags then
+				itemLocation = ItemLocation:CreateFromBagAndSlot(locationData.bag, locationData.slot)
+			else
+				itemLocation = ItemLocation:CreateFromEquipmentSlot(locationData.slot)
 			end
 		end
 

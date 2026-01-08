@@ -67,7 +67,7 @@ function S:ReskinTooltip(tt)
 		return
 	end
 
-	self:CreateShadow(tt.NineSlice)
+	self:CreateShadow(tt)
 
 	if tt.TopOverlay then
 		tt.TopOverlay:StripTextures()

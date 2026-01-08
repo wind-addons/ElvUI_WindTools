@@ -271,6 +271,7 @@ ET.EventData = {
 					[4] = 1757134800, -- TW
 					[5] = 1757134800, -- CN
 					[72] = 1757134800, -- PTR
+					[90] = 1757134800, -- Midnight PTR
 				}
 
 				local region = GetCurrentRegion()
@@ -310,6 +311,7 @@ ET.EventData = {
 					[4] = 1757134800, -- TW
 					[5] = 1757134800, -- CN
 					[72] = 1757134800, -- PTR
+					[90] = 1757134800, -- Midnight PTR
 				}
 
 				local region = GetCurrentRegion()
@@ -462,7 +464,8 @@ ET.EventData = {
 					[3] = 1723262440, -- EU
 					[4] = 1723266040, -- TW
 					[5] = 1723266040, -- CN
-					[72] = 1675767600,
+					[72] = 1675767600, -- PTR
+					[90] = 1675767600, -- Midnight PTR
 				}
 
 				local region = GetCurrentRegion()
@@ -507,7 +510,8 @@ ET.EventData = {
 					[3] = 1676017800, -- EU
 					[4] = 1675767600, -- TW
 					[5] = 1675767600, -- CN
-					[72] = 1675767600,
+					[72] = 1675767600, -- PTR
+					[90] = 1675767600, -- Midnight PTR
 				}
 				local region = GetCurrentRegion()
 				-- TW is not a real region, so we need to check the client language if player in KR
@@ -549,7 +553,8 @@ ET.EventData = {
 					[3] = 1670774400, -- EU
 					[4] = 1670770800, -- TW
 					[5] = 1670770800, -- CN
-					[72] = 1670770800, -- TR
+					[72] = 1670770800, -- PTR
+					[90] = 1670770800, -- Midnight PTR
 				}
 				local region = GetCurrentRegion()
 				-- TW is not a real region, so we need to check the client language if player in KR
@@ -592,7 +597,8 @@ ET.EventData = {
 					[3] = 1683804640, -- EU
 					[4] = 1670704240, -- TW
 					[5] = 1670704240, -- CN
-					[72] = 1670702460, -- TR
+					[72] = 1670702460, -- PTR
+					[90] = 1670702460, -- Midnight PTR
 				}
 				local region = GetCurrentRegion()
 				-- TW is not a real region, so we need to check the client language if player in KR
@@ -634,7 +640,8 @@ ET.EventData = {
 					[3] = 1701828015, -- EU
 					[4] = 1701824400, -- TW
 					[5] = 1701824400, -- CN
-					[72] = 1701852315, -- TR
+					[72] = 1701852315, -- PTR
+					[90] = 1701852315, -- Midnight PTR
 				}
 				local region = GetCurrentRegion()
 				-- TW is not a real region, so we need to check the client language if player in KR
@@ -676,7 +683,8 @@ ET.EventData = {
 					[3] = 1701828010, -- EU
 					[4] = 1701828010, -- TW
 					[5] = 1701828010, -- CN
-					[72] = 1701828010, -- TR
+					[72] = 1701828010, -- PTR
+					[90] = 1701828010, -- Midnight PTR
 				}
 				local region = GetCurrentRegion()
 				-- TW is not a real region, so we need to check the client language if player in KR
@@ -719,7 +727,8 @@ ET.EventData = {
 					[3] = 1701826200, -- EU
 					[4] = 1701826200, -- TW
 					[5] = 1701826200, -- CN
-					[72] = 1701826200, -- TR
+					[72] = 1701826200, -- PTR
+					[90] = 1701826200, -- Midnight PTR
 				}
 				local region = GetCurrentRegion()
 				-- TW is not a real region, so we need to check the client language if player in KR
@@ -763,6 +772,7 @@ ET.EventData = {
 					[4] = 1762502400, -- TW
 					[5] = 1762502400, -- CN
 					[72] = 1762502400, -- PTR
+					[90] = 1762502400, -- Midnight PTR
 				}
 
 				local region = GetCurrentRegion()

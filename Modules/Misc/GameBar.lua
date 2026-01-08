@@ -63,13 +63,13 @@ local C_CVar_SetCVar = C_CVar.SetCVar
 local C_Covenants_GetActiveCovenantID = C_Covenants.GetActiveCovenantID
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
+local C_Housing_GetPlayerOwnedHouses = C_Housing.GetPlayerOwnedHouses
+local C_Housing_TeleportHome = C_Housing.TeleportHome
 local C_Item_GetItemCooldown = C_Item.GetItemCooldown
 local C_Item_GetItemCount = C_Item.GetItemCount
 local C_Timer_NewTicker = C_Timer.NewTicker
 local C_ToyBox_IsToyUsable = C_ToyBox.IsToyUsable
 local C_UI_Reload = C_UI.Reload
-local C_Housing_GetPlayerOwnedHouses = C_Housing.GetPlayerOwnedHouses
-local C_Housing_TeleportHome = C_Housing.TeleportHome
 
 local Enum_CovenantType = Enum.CovenantType
 local FollowerType_8_0 = Enum.GarrisonFollowerType.FollowerType_8_0_GarrisonFollower
@@ -640,7 +640,7 @@ local ButtonTypes = {
 						C_Housing_TeleportHome(house.neighborhoodGUID, house.houseGUID, house.plotID)
 					else
 						_G.UIErrorsFrame:AddMessage(
-							"Unable to teleport: House data incomplete",
+							L["Unable to teleport: House data incomplete"],
 							RED_FONT_COLOR:GetRGBA()
 						)
 					end
@@ -659,8 +659,8 @@ local ButtonTypes = {
 		tooltips = {
 			L["Home"],
 			"\n",
-			LEFT_BUTTON_ICON .. " " .. "Teleport to Home",
-			RIGHT_BUTTON_ICON .. " " .. "Housing Dashboard",
+			LEFT_BUTTON_ICON .. " " .. L["Teleport to Home"],
+			RIGHT_BUTTON_ICON .. " " .. L["Housing Dashboard"],
 		},
 	},
 	MISSION_REPORTS = {

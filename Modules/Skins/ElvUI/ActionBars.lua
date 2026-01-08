@@ -97,6 +97,10 @@ function S:ElvUI_ActionBar_LoadKeyBinder()
 end
 
 function S:ElvUI_ActionBars()
+	if true then -- TODO: Wait for ElvUI Action Bar
+		return
+	end
+
 	if not (E.private.actionbar.enable and E.private.WT.skins.elvui.enable) then
 		return
 	end

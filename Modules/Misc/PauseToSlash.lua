@@ -1,6 +1,9 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local M = W.Modules.Misc ---@class Misc
 
+local _G = _G
+local ipairs = ipairs
+
 local function UpdateEditBoxText(editBox, userInput)
 	local text = editBox:GetText()
 	if userInput and text == "、" then

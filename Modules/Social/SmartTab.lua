@@ -2,6 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local ST = W:NewModule("SmartTab", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
+local ipairs = ipairs
 local pairs = pairs
 local strsub = strsub
 local time = time
@@ -248,8 +249,8 @@ function ST:SecureTabPressed(frame)
 		frame:SetAttribute("tellTarget", nextTellTarget)
 	end
 
-	ACTIVE_CHAT_EDIT_BOX = frame
-	LAST_ACTIVE_CHAT_EDIT_BOX = frame
+	_G.ACTIVE_CHAT_EDIT_BOX = frame
+	_G.LAST_ACTIVE_CHAT_EDIT_BOX = frame
 
 	frame:UpdateHeader()
 end

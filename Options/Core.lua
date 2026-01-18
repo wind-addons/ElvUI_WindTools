@@ -1,5 +1,5 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable, PrivateDB, ProfileDB, GlobalDB
-local HexToRGB = W.Utilities.Color.HexToRGB
+local C = W.Utilities.Color
 local async = W.Utilities.Async
 
 local format = format
@@ -95,10 +95,10 @@ W.options = {
 	},
 }
 
-local r1, g1, b1 = HexToRGB("f0772f")
-local r2, g2, b2 = HexToRGB("f34a62")
-local r3, g3, b3 = HexToRGB("bb77ed")
-local r4, g4, b4 = HexToRGB("1cdce8")
+local r1, g1, b1 = C.HexToRGB("f0772f")
+local r2, g2, b2 = C.HexToRGB("f34a62")
+local r3, g3, b3 = C.HexToRGB("bb77ed")
+local r4, g4, b4 = C.HexToRGB("1cdce8")
 
 local color = {}
 
@@ -106,6 +106,8 @@ local color = {}
 gsub(E:TextGradient(strrep("Z", 14), r1, g1, b1, r2, g2, b2, r3, g3, b3, r4, g4, b4), "cff(......)Z", function(self)
 	color[#color + 1] = self
 end)
+
+W.FixingLabel = C.StringByTemplate(L["(Fixing)"], "rose-500") .. " "
 
 -- ElvUI_OptionsUI Callback
 function W:OptionsCallback()

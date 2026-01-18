@@ -55,6 +55,7 @@ L["'Absolute' mode means the height of the bar is fixed."] = "'부동' 모드는
 L["'Absolute' mode means the width of the bar is fixed."] = "'부동' 모드는 바의 너비가 고정되어 있음을 의미합니다."
 L["'Dynamic' mode will also add the height of header text."] = "'유동' 모드는 자동으로 상단 텍스트의 높이를 추가합니다."
 L["'Dynamic' mode will also add the width of header text."] = "'유동' 모드는 자동으로 상단 텍스트의 너비를 추가합니다."
+L["(Fixing)"] = true
 L["(e.g., 'in-quadratic' becomes 'out-quadratic' and vice versa)"] = "(예: 'in-quadratic'이 'out-quadratic'으로, 또는 그 반대로 바뀜)"
 L["1. Customize the font of Objective Tracker."] = "1. 퀘스트 추적기의 글꼴을 설정합니다."
 L["2. Add colorful progress text to the quest."] = "2. 퀘스트 진행도에 따른 색상을 추가합니다."

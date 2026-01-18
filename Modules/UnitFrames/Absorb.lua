@@ -272,6 +272,10 @@ end
 function A:Initialize()
 	self.db = E.db.WT.unitFrames.absorb
 
+	if true then -- TODO: Wait for ElvUI UnitFrames
+		return
+	end
+
 	if not self.db or not self.db.enable or self.initialized then
 		return
 	end

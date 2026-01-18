@@ -554,7 +554,7 @@ end
 
 options.classHelper = {
 	order = 4,
-	name = L["Class Helper"],
+	name = W.FixingLabel .. L["Class Helper"],
 	type = "group",
 	get = function(info)
 		return E.db.WT.combat.classHelper[info[#info]]

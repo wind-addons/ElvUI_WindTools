@@ -55,6 +55,7 @@ L["'Absolute' mode means the height of the bar is fixed."] = true
 L["'Absolute' mode means the width of the bar is fixed."] = true
 L["'Dynamic' mode will also add the height of header text."] = true
 L["'Dynamic' mode will also add the width of header text."] = true
+L["(Fixing)"] = true
 L["(e.g., 'in-quadratic' becomes 'out-quadratic' and vice versa)"] = true
 L["1. Customize the font of Objective Tracker."] = true
 L["2. Add colorful progress text to the quest."] = true

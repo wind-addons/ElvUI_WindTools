@@ -13,22 +13,6 @@ local pairs = pairs
 
 local hookFunctions = {
 	RefreshSpellCooldownInfo = ES.CooldownManager_RefreshSpellCooldownInfo,
-	OnSpellActivationOverlayGlowShowEvent = function(...)
-		if not S.db or not S.db.cooldownViewer.general.useBlizzardGlow then
-			return ES.CooldownManager_ShowGlowEvent(...)
-		end
-	end,
-	OnSpellActivationOverlayGlowHideEvent = function(...)
-		if not S.db or not S.db.cooldownViewer.general.useBlizzardGlow then
-			return ES.CooldownManager_HideGlowEvent(...)
-		end
-	end,
-	RefreshOverlayGlow = function(...)
-		if not S.db or not S.db.cooldownViewer.general.useBlizzardGlow then
-			return ES.CooldownManager_RefreshOverlayGlow(...)
-		end
-	end,
-	SetTimerShown = ES.CooldownManager_SetTimerShown,
 }
 
 function ES:CooldownManager_SkinItemFrame(frame)

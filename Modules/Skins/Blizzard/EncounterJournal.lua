@@ -47,6 +47,7 @@ function S:Blizzard_EncounterJournal()
 
 	-- Bottom tabs
 	local tabs = {
+		_G.EncounterJournalJourneysTab,
 		_G.EncounterJournalMonthlyActivitiesTab,
 		_G.EncounterJournalSuggestTab,
 		_G.EncounterJournalDungeonTab,

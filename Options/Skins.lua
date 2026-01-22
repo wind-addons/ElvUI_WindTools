@@ -1617,6 +1617,11 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Trainer"],
 		},
+		transmogrify = {
+			order = 10,
+			type = "toggle",
+			name = L["Transmogrify"],
+		},
 		tutorial = {
 			order = 10,
 			type = "toggle",

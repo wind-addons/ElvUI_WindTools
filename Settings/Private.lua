@@ -698,6 +698,7 @@ V.skins = {
 		tooltips = true,
 		trade = true,
 		trainer = true,
+		transmogrify = true,
 		tutorial = true,
 		uiErrors = true,
 		uiWidget = true,

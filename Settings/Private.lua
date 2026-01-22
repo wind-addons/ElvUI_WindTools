@@ -143,7 +143,7 @@ V.maps = {
 		reverseOrder = false,
 		orientation = "HORIZONTAL",
 		expansionLandingPage = false,
-		sortingPriority = "^Expansion, _BugSack, WeakAuras$, _Saved, _Wind",
+		sortingPriority = "^Expansion, _BugSack, _Saved, _Wind",
 	},
 }
 
@@ -321,7 +321,6 @@ V.skins = {
 	removeParchment = true,
 	merathilisUISkin = true,
 	shadow = true,
-	weakAurasShadow = true,
 	increasedSize = 0,
 	bigWigsSkin = {
 		queueTimer = {
@@ -574,7 +573,6 @@ V.skins = {
 		btWQuests = true,
 		bugSack = true,
 		collectionator = true,
-		hekili = true,
 		immersion = true,
 		legionRemixHelper = true,
 		manuscriptsJournal = true,
@@ -602,8 +600,6 @@ V.skins = {
 		tomCats = true,
 		tomTom = true,
 		warpDeplete = true,
-		weakAuras = true,
-		weakAurasOptions = true,
 		whisperPop = true,
 		worldQuestTab = true,
 	},

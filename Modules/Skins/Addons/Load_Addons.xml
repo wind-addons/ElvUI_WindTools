@@ -6,7 +6,6 @@
 	<Script file='BtWQuests.lua'/>
 	<Script file='BugSack.lua'/>
 	<Script file='Collectionator.lua'/>
-	<Script file='Hekili.lua'/>
 	<Script file='Immersion.lua'/>
 	<Script file='LegionRemixHelper.lua'/>
 	<Script file='ManuscriptsJournal.lua'/>
@@ -31,9 +30,6 @@
 	<Script file='TomCats.lua'/>
 	<Script file='TomTom.lua'/>
 	<Script file='WarpDeplete.lua'/>
-	<Script file='WeakAuras.lua'/>
-	<Script file='WeakAurasOptions.lua'/>
-	<Script file='WeakAurasProfiling.lua'/>
 	<Script file='WorldQuestTab.lua'/>
 	<Script file='WhisperPop.lua'/>
 </Ui>

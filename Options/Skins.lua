@@ -151,18 +151,8 @@ options.general = {
 					type = "toggle",
 					name = L["Enable"],
 				},
-				weakAurasShadow = {
-					order = 2,
-					type = "toggle",
-					name = L["WeakAuras Shadow"],
-					hidden = function()
-						return not E.private.WT.skins.enable
-							or not E.private.WT.skins.shadow
-							or not E.private.WT.skins.addons.weakAuras
-					end,
-				},
 				increasedSize = {
-					order = 3,
+					order = 2,
 					type = "range",
 					name = L["Increase Size"],
 					desc = L["Make shadow thicker."],
@@ -171,7 +161,7 @@ options.general = {
 					step = 1,
 				},
 				color = {
-					order = 4,
+					order = 3,
 					type = "color",
 					name = L["Shadow Color"],
 					hasAlpha = false,
@@ -2137,18 +2127,6 @@ options.addons = {
 			type = "toggle",
 			name = L["WarpDeplete"],
 			addonName = "WarpDeplete",
-		},
-		weakAuras = {
-			order = 10,
-			type = "toggle",
-			name = L["WeakAuras"],
-			addonName = "WeakAuras",
-		},
-		weakAurasOptions = {
-			order = 10,
-			type = "toggle",
-			name = L["WeakAuras Options"],
-			addonName = "WeakAuras",
 		},
 		whisperPop = {
 			order = 10,

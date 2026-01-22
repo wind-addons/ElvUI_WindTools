@@ -628,26 +628,7 @@ local ButtonTypes = {
 		name = L["Home"],
 		icon = W.Media.Icons.barHome,
 		click = {
-			LeftButton = function()
-				if not InCombatLockdown() then
-					if not GB.playerHouseList or #GB.playerHouseList == 0 then
-						C_Housing_GetPlayerOwnedHouses()
-						_G.UIErrorsFrame:AddMessage("Requesting house data...", RED_FONT_COLOR:GetRGBA())
-						return
-					end
-					local house = GB.playerHouseList[1]
-					if house.neighborhoodGUID and house.houseGUID and house.plotID then
-						C_Housing_TeleportHome(house.neighborhoodGUID, house.houseGUID, house.plotID)
-					else
-						_G.UIErrorsFrame:AddMessage(
-							L["Unable to teleport: House data incomplete"],
-							RED_FONT_COLOR:GetRGBA()
-						)
-					end
-				else
-					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
-				end
-			end,
+			LeftButton = E.noop,
 			RightButton = function()
 				if not InCombatLockdown() then
 					_G.HousingFramesUtil.ToggleHousingDashboard()
@@ -1173,6 +1154,10 @@ function GB:ButtonOnEnter(button)
 			button.tooltips(button)
 		end
 	end
+
+	if button.type == "HOME" then
+		GB:UpdateHouseAttributes(button)
+	end
 end
 
 function GB:ButtonOnLeave(button)
@@ -1267,6 +1252,11 @@ function GB:UpdateButton(button, buttonType)
 		end
 		button:SetAttribute("type*", "click")
 		button:SetAttribute("clickbutton", button)
+
+		if buttonType == "HOME" then
+			button:SetAttribute("type1", "teleporthome")
+			button:SetAttribute("type2", "click")
+		end
 	elseif config.item then
 		button:SetAttribute("type*", "item")
 		button:SetAttribute("item1", config.item.item1 or "")
@@ -1356,6 +1346,20 @@ function GB:UpdateButtons()
 	end
 
 	self:UpdateGuildButton()
+end
+
+function GB:UpdateHouseAttributes(button)
+	if not GB.playerHouseList or #GB.playerHouseList == 0 then
+		C_Housing_GetPlayerOwnedHouses()
+		return
+	end
+
+	local house = GB.playerHouseList[1]
+	if house.neighborhoodGUID and house.houseGUID and house.plotID then
+		button:SetAttribute("house-neighborhood-guid", house.neighborhoodGUID)
+		button:SetAttribute("house-guid", house.houseGUID)
+		button:SetAttribute("house-plot-id", house.plotID)
+	end
 end
 
 function GB:UpdateLayout()

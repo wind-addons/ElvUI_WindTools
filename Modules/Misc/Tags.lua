@@ -250,4 +250,4 @@ function M:Tags()
 	end
 end
 
-M:AddCallback("Tags")
+-- M:AddCallback("Tags") -- Wait for ElvUI Unitframe update

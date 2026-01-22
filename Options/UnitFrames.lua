@@ -111,7 +111,7 @@ options.quickFocus = {
 options.absorb = {
 	order = 2,
 	type = "group",
-	name = L["Absorb"],
+	name = W.FixingLabel .. L["Absorb"],
 	get = function(info)
 		return E.db.WT.unitFrames.absorb[info[#info]]
 	end,
@@ -141,6 +141,10 @@ options.absorb = {
 			type = "toggle",
 			name = L["Enable"],
 			width = "full",
+			get = function()
+				return false
+			end,
+			disabled = true, -- TODO: Wait for ElvUI UnitFrames
 		},
 		texture = {
 			order = 3,
@@ -357,7 +361,7 @@ end
 options.roleIcon = {
 	order = 3,
 	type = "group",
-	name = L["Role Icon"],
+	name = W.FixingLabel .. L["Role Icon"],
 	get = function(info)
 		return E.private.WT.unitFrames.roleIcon[info[#info]]
 	end,

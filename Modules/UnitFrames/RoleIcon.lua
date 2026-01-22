@@ -46,7 +46,12 @@ local RoleIconTextures = {
 }
 
 function RI:Initialize()
+	if true then -- TODO: Wait for ElvUI UnitFrames
+		return
+	end
+
 	self.db = E.private.WT.unitFrames.roleIcon
+
 	if not self.db or not self.db.enable then
 		return
 	end

@@ -55,6 +55,7 @@ L["'Absolute' mode means the height of the bar is fixed."] = "Le mode 'Absolu' s
 L["'Absolute' mode means the width of the bar is fixed."] = "Le mode 'Absolu' signifie que la largeur de la barre est fixe."
 L["'Dynamic' mode will also add the height of header text."] = "Le mode 'Dynamique' ajoutera également la hauteur du texte de l'en-tête."
 L["'Dynamic' mode will also add the width of header text."] = "Le mode 'Dynamique' ajoute également la largeur du texte de l'en-tête."
+L["(Fixing)"] = true
 L["(e.g., 'in-quadratic' becomes 'out-quadratic' and vice versa)"] = true
 L["1. Customize the font of Objective Tracker."] = "1. Personnalise la police du suivi des quêtes."
 L["2. Add colorful progress text to the quest."] = "2. Met le texte de progression des quêtes en couleur."

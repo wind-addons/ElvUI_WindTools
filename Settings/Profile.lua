@@ -298,20 +298,6 @@ P.announcement = {
 
 ---@class ProfileDB.combat
 P.combat = {
-	classHelper = {
-		enable = false,
-		deathStrikeEstimator = {
-			enable = false,
-			width = 4,
-			height = 30,
-			yOffset = 0,
-			sparkTexture = false,
-			texture = "ElvUI Blank",
-			color = { r = 1, g = 0.2, b = 0.2, a = 1 },
-			onlyInCombat = false,
-			hideIfTheBarOutside = false,
-		},
-	},
 	combatAlert = {
 		enable = true,
 		speed = 1,

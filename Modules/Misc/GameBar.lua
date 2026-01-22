@@ -64,7 +64,6 @@ local C_Covenants_GetActiveCovenantID = C_Covenants.GetActiveCovenantID
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
 local C_Housing_GetPlayerOwnedHouses = C_Housing.GetPlayerOwnedHouses
-local C_Housing_TeleportHome = C_Housing.TeleportHome
 local C_Item_GetItemCooldown = C_Item.GetItemCooldown
 local C_Item_GetItemCount = C_Item.GetItemCount
 local C_Timer_NewTicker = C_Timer.NewTicker

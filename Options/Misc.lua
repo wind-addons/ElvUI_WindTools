@@ -122,7 +122,7 @@ options.general = {
 		keybindTextAbove = {
 			order = 9,
 			type = "toggle",
-			name = L["Keybind Text Above"],
+			name = W.FixingLabel .. L["Keybind Text Above"],
 			desc = format(
 				"%s\n%s",
 				L["Show keybinds above the ElvUI cooldown and glow effect on the action buttons."],
@@ -2177,7 +2177,7 @@ options.spellActivationAlert = {
 options.cooldownTextOffset = {
 	order = 10,
 	type = "group",
-	name = L["Cooldown Text Offset"],
+	name = W.FixingLabel .. L["Cooldown Text Offset"],
 	get = function(info)
 		return E.db.WT.misc.cooldownTextOffset[info[#info]]
 	end,

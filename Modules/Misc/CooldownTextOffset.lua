@@ -35,4 +35,4 @@ function M:CooldownTextOffset()
 	hooksecurefunc(E, "CreateCooldownTimer", M.ElvUI_CreateCooldownTimer)
 end
 
-M:AddCallback("CooldownTextOffset")
+-- M:AddCallback("CooldownTextOffset")

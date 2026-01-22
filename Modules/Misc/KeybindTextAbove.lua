@@ -34,4 +34,4 @@ function M:KeybindTextAbove()
 	end
 end
 
-M:AddCallback("KeybindTextAbove")
+-- M:AddCallback("KeybindTextAbove")

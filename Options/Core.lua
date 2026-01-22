@@ -7,6 +7,8 @@ local gsub = gsub
 local pairs = pairs
 local strrep = strrep
 
+W.FixingLabel = C.StringByTemplate(L["(Fixing)"], "rose-500") .. " "
+
 -- All categories
 W.options = {
 	item = {
@@ -46,7 +48,7 @@ W.options = {
 	},
 	announcement = {
 		order = 106,
-		name = L["Announcement"],
+		name = W.FixingLabel .. L["Announcement"],
 		desc = L["Send something to game automatically."],
 		icon = W.Media.Icons.announcement,
 		args = {},
@@ -106,8 +108,6 @@ local color = {}
 gsub(E:TextGradient(strrep("Z", 14), r1, g1, b1, r2, g2, b2, r3, g3, b3, r4, g4, b4), "cff(......)Z", function(self)
 	color[#color + 1] = self
 end)
-
-W.FixingLabel = C.StringByTemplate(L["(Fixing)"], "rose-500") .. " "
 
 -- ElvUI_OptionsUI Callback
 function W:OptionsCallback()

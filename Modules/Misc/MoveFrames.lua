@@ -21,10 +21,12 @@ local BlizzardFrames = {
 	"CatalogShopFrame",
 	"ChatConfigFrame",
 	"CinematicFrame",
+	"ContainerFrame1",
 	"ContainerFrameCombinedBags",
 	"DestinyFrame",
 	"GameMenuFrame",
 	"GossipFrame",
+	"GroupLootContainer",
 	"GuildInviteFrame",
 	"GuildRegistrarFrame",
 	"HelpFrame",
@@ -35,6 +37,7 @@ local BlizzardFrames = {
 	"LootFrame",
 	"MerchantFrame",
 	"ModelPreviewFrame",
+	"PingSystemTutorial",
 	"PVEFrame",
 	"PVPReadyDialog",
 	"PetitionFrame",
@@ -58,7 +61,7 @@ local BlizzardFrames = {
 		"FriendsFrame.IgnoreListWindow",
 	},
 	["DressUpFrame"] = {
-		"DressUpFrame.OutfitDetailsPanel",
+		"DressUpFrame.CustomSetDetailsPanel",
 		"DressUpFrame.SetSelectionPanel",
 	},
 	["MailFrame"] = {
@@ -148,7 +151,6 @@ local BlizzardFramesOnDemand = {
 	},
 	["Blizzard_Collections"] = {
 		"CollectionsJournal",
-		"WardrobeFrame",
 	},
 	["Blizzard_Communities"] = {
 		"ClubFinderGuildFinderFrame.RequestToJoinFrame",
@@ -318,7 +320,6 @@ local BlizzardFramesOnDemand = {
 		"HeroTalentsSelectionDialog",
 		["PlayerSpellsFrame"] = {
 			"PlayerSpellsFrame.TalentsFrame.ButtonsParent",
-			"PlayerSpellsFrame.SpecFrame.DisabledOverlay",
 		},
 	},
 	["Blizzard_PlayerChoice"] = {
@@ -380,6 +381,9 @@ local BlizzardFramesOnDemand = {
 	},
 	["Blizzard_TrainerUI"] = {
 		"ClassTrainerFrame",
+	},
+	["Blizzard_Transmog"] = {
+		"TransmogFrame",
 	},
 	["Blizzard_UIPanels_Game"] = {
 		["CharacterFrame"] = {

@@ -11,7 +11,7 @@ function S:DressUpFrame()
 
 	self:CreateShadow(_G.DressUpFrame)
 	self:CreateShadow(_G.DressUpFrame.SetSelectionPanel)
-	self:CreateBackdropShadow(_G.DressUpFrame.OutfitDetailsPanel)
+	self:CreateBackdropShadow(_G.DressUpFrame.CustomSetDetailsPanel)
 
 	hooksecurefunc(_G.DressUpFrame.SetSelectionPanel.ScrollBox, "Update", function(box)
 		box:ForEachFrame(function(frame)

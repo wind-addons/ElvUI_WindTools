@@ -30,6 +30,6 @@
 	<Script file='TomCats.lua'/>
 	<Script file='TomTom.lua'/>
 	<Script file='WarpDeplete.lua'/>
-	<Script file='WorldQuestTab.lua'/>
+	<!-- <Script file='WorldQuestTab.lua'/> -->
 	<Script file='WhisperPop.lua'/>
 </Ui>

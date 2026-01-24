@@ -24,7 +24,7 @@ function S:Blizzard_Professions()
 		end
 	end
 
-	hooksecurefunc("ToggleProfessionsItemFlyout", function()
+	hooksecurefunc("OpenProfessionsItemFlyout", function()
 		local SchematicForm = _G.ProfessionsFrame.CraftingPage and _G.ProfessionsFrame.CraftingPage.SchematicForm
 		if SchematicForm then
 			for _, child in next, { SchematicForm:GetChildren() } do

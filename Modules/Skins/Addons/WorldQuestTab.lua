@@ -60,9 +60,8 @@ end
 
 local function reskinQuestContainer(container)
 	reskinContainer(container)
-	S:Proxy("HandleDropDownBox", container.SortDropdown)
-	S:Proxy("HandleButton", container.FilterDropdown, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, "right")
-	container.FilterBar:StripTextures()
+	S:Proxy("HandleDropDownBox", _G.FML) -- Monitor the name "FML"
+	S:Proxy("HandleButton", container.TopBar.FilterDropdown, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, "right")
 end
 
 local function reskinWhatsNew(container)

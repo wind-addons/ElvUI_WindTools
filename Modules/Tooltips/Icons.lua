@@ -170,20 +170,32 @@ function T:ReskinRewardIcon(tt)
 	end
 end
 
+-- Guard helper for SECRET unit tokens (Midnight 12.0)
+local function isSecretUnit(unit)
+	if E and E.IsSecretValue then
+		return E:IsSecretValue(unit)
+	end
+	-- Fallback: treat nil/empty as invalid in secure context
+	return not unit or unit == ""
+end
+
 function T:AddFactionIcon(tt, unit, guid)
-	if UnitIsPlayer(unit) then
-		local faction = UnitFactionGroup(unit)
-		if faction and faction ~= "Neutral" then
-			if not tt.factionFrame then
-				local f = tt:CreateTexture(nil, "OVERLAY")
-				f:Point("TOPRIGHT", 0, -5)
-				f:Size(35)
-				f:SetBlendMode("ADD")
-				tt.factionFrame = f
-			end
-			tt.factionFrame:SetTexture("Interface\\FriendsFrame\\PlusManz-" .. faction)
-			tt.factionFrame:SetAlpha(0.5)
+	-- Avoid passing SECRET unit tokens into UnitIsPlayer
+	if isSecretUnit(unit) or not UnitIsPlayer(unit) then
+		return
+	end
+
+	local faction = UnitFactionGroup(unit)
+	if faction and faction ~= "Neutral" then
+		if not tt.factionFrame then
+			local f = tt:CreateTexture(nil, "OVERLAY")
+			f:Point("TOPRIGHT", 0, -5)
+			f:Size(35)
+			f:SetBlendMode("ADD")
+			tt.factionFrame = f
 		end
+		tt.factionFrame:SetTexture("Interface\\FriendsFrame\\PlusManz-" .. faction)
+		tt.factionFrame:SetAlpha(0.5)
 	end
 end
 

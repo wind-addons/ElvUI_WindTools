@@ -123,7 +123,7 @@ function T:InspectInfo(tt, data, triedTimes)
 		end
 	end
 
-	if not unit or not data or not data.guid then
+	if not unit or not data or not data.guid or E:IsSecretValue(unit) then
 		return
 	end
 

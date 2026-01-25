@@ -1008,7 +1008,7 @@ function CT:CheckLFGRoles()
 end
 
 function CT:HandleName(nameString)
-	if not nameString or nameString == "" then
+	if not nameString or E:IsSecretValue(nameString) or nameString == "" then
 		return nameString
 	end
 
@@ -2269,7 +2269,7 @@ function CT:ElvUIChat_AchievementMessageHandler(event, frame, achievementMessage
 end
 
 function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
-	if not frame or not msg then
+	if not frame or not msg or E:IsSecretValue(msg) then
 		return
 	end
 

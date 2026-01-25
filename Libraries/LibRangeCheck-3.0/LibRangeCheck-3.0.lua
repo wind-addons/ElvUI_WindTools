@@ -4951,7 +4951,7 @@ function lib:activate()
     local frame = CreateFrame("Frame")
     self.frame = frame
 
-    if not (isMidnight or isTBC) then
+    if not (isMidnight or isTBC or isRetail) then
       frame:RegisterEvent("LEARNED_SPELL_IN_TAB")
     end
     frame:RegisterEvent("CHARACTER_POINTS_CHANGED")

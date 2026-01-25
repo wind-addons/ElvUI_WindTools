@@ -4,10 +4,12 @@ local cache = W.Utilities.Cache
 
 local format = format
 local gsub = gsub
+local pcall = pcall
 local strfind = strfind
 local strsub = strsub
 local tonumber = tonumber
 local tostring = tostring
+local type = type
 
 local DEFAULT_SIZE = 64
 local CROP_MARGIN = 5
@@ -19,179 +21,208 @@ local DEFAULT_BOTTOM = DEFAULT_SIZE - CROP_MARGIN
 
 ---@type Cache
 local textureStringCache = cache.New({
-	defaultTTL = 300, -- 5 minutes
-	maxLength = nil,
-	autoCleanup = true,
-	cleanupInterval = 60,
+    defaultTTL = 300, -- 5 minutes
+    maxLength = nil,
+    autoCleanup = true,
+    cleanupInterval = 60,
 })
 
 local function cacheTextureString(iconData, formattedString)
-	local result = format("|T%s|t", formattedString)
+    local result = format("|T%s|t", formattedString)
 
-	-- Cache both the iconData and formattedString keys to the same result
-	textureStringCache:Set(iconData, result)
-	if iconData ~= formattedString then
-		textureStringCache:Set(formattedString, result)
-	end
+    -- Cache both the iconData and formattedString keys to the same result
+    textureStringCache:Set(iconData, result)
+    if iconData ~= formattedString then
+        textureStringCache:Set(formattedString, result)
+    end
 
-	return result
+    return result
+end
+
+-- Safe string find that handles tainted/secret values in TWW
+local function SafeStrFind(str, pattern)
+    if type(str) ~= "string" then return nil end
+    local success, result = pcall(strfind, str, pattern)
+    if success then
+        return result
+    end
+    return nil
+end
+
+-- Safe gsub that handles tainted/secret values
+local function SafeGSub(str, pattern, repl)
+    if type(str) ~= "string" then return str end
+    local success, result = pcall(gsub, str, pattern, repl)
+    if success then
+        return result
+    end
+    return str
 end
 
 function S:StyleTextureString(text)
-	if not text or not strfind(text, "|T.+|t") then
-		return text
-	end
+    -- Early validation for nil and type check to handle TWW secret values
+    if text == nil or type(text) ~= "string" then
+        return text
+    end
 
-	return gsub(text, "|T([^|]+)|t", function(iconData)
-		local cachedValue = textureStringCache:Get(iconData)
-		if cachedValue then
-			return cachedValue
-		end
+    -- Use safe string operations to handle potential tainted values
+    if not SafeStrFind(text, "|T.+|t") then
+        return text
+    end
 
-		-- Skip if the id is not valid or the icon may come from other addons
-		local colonPos = strfind(iconData, ":")
-		local path = colonPos and strsub(iconData, 1, colonPos - 1) or iconData
+    return SafeGSub(text, "|T([^|]+)|t", function(iconData)
+        -- Validate iconData is a proper string
+        if type(iconData) ~= "string" then
+            return iconData
+        end
 
-		if strfind(path, "Addons") or (tonumber(path) and tonumber(path) <= 0) then
-			return cacheTextureString(iconData, iconData)
-		end
+        local cachedValue = textureStringCache:Get(iconData)
+        if cachedValue then
+            return cachedValue
+        end
 
-		-- Use the simplest logics for most cases
-		-- Case 1: |T<path>|t
-		if not colonPos then
-			return cacheTextureString(
-				iconData,
-				format(
-					"%s:16:16:0:0:%d:%d:%d:%d:%d:%d",
-					iconData,
-					DEFAULT_SIZE,
-					DEFAULT_SIZE,
-					DEFAULT_LEFT,
-					DEFAULT_RIGHT,
-					DEFAULT_TOP,
-					DEFAULT_BOTTOM
-				)
-			)
-		end
+        -- Skip if the id is not valid or the icon may come from other addons
+        local colonPos = strfind(iconData, ":")
+        local path = colonPos and strsub(iconData, 1, colonPos - 1) or iconData
+        if strfind(path, "Addons") or (tonumber(path) and tonumber(path) <= 0) then
+            return cacheTextureString(iconData, iconData)
+        end
 
-		local remaining = strsub(iconData, colonPos + 1)
+        -- Use the simplest logics for most cases
+        -- Case 1: |T|t
+        if not colonPos then
+            return cacheTextureString(
+                iconData,
+                format(
+                    "%s:16:16:0:0:%d:%d:%d:%d:%d:%d",
+                    iconData,
+                    DEFAULT_SIZE,
+                    DEFAULT_SIZE,
+                    DEFAULT_LEFT,
+                    DEFAULT_RIGHT,
+                    DEFAULT_TOP,
+                    DEFAULT_BOTTOM
+                )
+            )
+        end
 
-		-- Case 2: |T<path>:<height>|t
-		local heightNum = tonumber(remaining)
-		if heightNum and remaining == tostring(heightNum) then
-			return cacheTextureString(
-				iconData,
-				format(
-					"%s:%s:%s:0:0:%d:%d:%d:%d:%d:%d",
-					path,
-					remaining,
-					remaining,
-					DEFAULT_SIZE,
-					DEFAULT_SIZE,
-					DEFAULT_LEFT,
-					DEFAULT_RIGHT,
-					DEFAULT_TOP,
-					DEFAULT_BOTTOM
-				)
-			)
-		end
+        local remaining = strsub(iconData, colonPos + 1)
 
-		-- Case 3: |T<path>:<height>:<width>|t
-		local secondColon = strfind(remaining, ":")
-		if secondColon then
-			local height = remaining:sub(1, secondColon - 1)
-			local restAfterWidth = remaining:sub(secondColon + 1)
-			local thirdColon = strfind(restAfterWidth, ":")
+        -- Case 2: |T:|t
+        local heightNum = tonumber(remaining)
+        if heightNum and remaining == tostring(heightNum) then
+            return cacheTextureString(
+                iconData,
+                format(
+                    "%s:%s:%s:0:0:%d:%d:%d:%d:%d:%d",
+                    path,
+                    remaining,
+                    remaining,
+                    DEFAULT_SIZE,
+                    DEFAULT_SIZE,
+                    DEFAULT_LEFT,
+                    DEFAULT_RIGHT,
+                    DEFAULT_TOP,
+                    DEFAULT_BOTTOM
+                )
+            )
+        end
 
-			if not thirdColon then
-				local heightValue = tonumber(height)
-				local widthNum = tonumber(restAfterWidth)
-				if
-					heightValue
-					and widthNum
-					and height == tostring(heightValue)
-					and restAfterWidth == tostring(widthNum)
-				then
-					return cacheTextureString(
-						iconData,
-						format(
-							"%s:%s:%s:0:0:%d:%d:%d:%d:%d:%d",
-							path,
-							height,
-							restAfterWidth,
-							DEFAULT_SIZE,
-							DEFAULT_SIZE,
-							DEFAULT_LEFT,
-							DEFAULT_RIGHT,
-							DEFAULT_TOP,
-							DEFAULT_BOTTOM
-						)
-					)
-				end
-			end
-		end
+        -- Case 3: |T::|t
+        local secondColon = strfind(remaining, ":")
+        if secondColon then
+            local height = remaining:sub(1, secondColon - 1)
+            local restAfterWidth = remaining:sub(secondColon + 1)
+            local thirdColon = strfind(restAfterWidth, ":")
+            if not thirdColon then
+                local heightValue = tonumber(height)
+                local widthNum = tonumber(restAfterWidth)
+                if
+                    heightValue
+                    and widthNum
+                    and height == tostring(heightValue)
+                    and restAfterWidth == tostring(widthNum)
+                then
+                    return cacheTextureString(
+                        iconData,
+                        format(
+                            "%s:%s:%s:0:0:%d:%d:%d:%d:%d:%d",
+                            path,
+                            height,
+                            restAfterWidth,
+                            DEFAULT_SIZE,
+                            DEFAULT_SIZE,
+                            DEFAULT_LEFT,
+                            DEFAULT_RIGHT,
+                            DEFAULT_TOP,
+                            DEFAULT_BOTTOM
+                        )
+                    )
+                end
+            end
+        end
 
-		-- Complex cases
-		-- Docs: https://warcraft.wiki.gg/wiki/UI_escape_sequences
-		local parts = {}
-		local pos = 1
-		while pos <= #iconData do
-			local nextColon = strfind(iconData, ":", pos)
-			if nextColon then
-				parts[#parts + 1] = strsub(iconData, pos, nextColon - 1)
-				pos = nextColon + 1
-			else
-				parts[#parts + 1] = strsub(iconData, pos)
-				break
-			end
-		end
+        -- Complex cases
+        -- Docs: https://warcraft.wiki.gg/wiki/UI_escape_sequences
+        local parts = {}
+        local pos = 1
+        while pos <= #iconData do
+            local nextColon = strfind(iconData, ":", pos)
+            if nextColon then
+                parts[#parts + 1] = strsub(iconData, pos, nextColon - 1)
+                pos = nextColon + 1
+            else
+                parts[#parts + 1] = strsub(iconData, pos)
+                break
+            end
+        end
 
-		-- Extract texture parameters with defaults
-		local texturePath = parts[1] or iconData
-		local height = parts[2] or "0"
-		local width = parts[3] or ""
-		local offsetX = parts[4] or "0"
-		local offsetY = parts[5] or "0"
-		local texWidth = tonumber(parts[6]) or DEFAULT_SIZE
-		local texHeight = tonumber(parts[7]) or DEFAULT_SIZE
-		local left = tonumber(parts[8])
-		local right = tonumber(parts[9])
-		local top = tonumber(parts[10])
-		local bottom = tonumber(parts[11])
-		local r = parts[12] or ""
-		local g = parts[13] or ""
-		local b = parts[14] or ""
+        -- Extract texture parameters with defaults
+        local texturePath = parts[1] or iconData
+        local height = parts[2] or "0"
+        local width = parts[3] or ""
+        local offsetX = parts[4] or "0"
+        local offsetY = parts[5] or "0"
+        local texWidth = tonumber(parts[6]) or DEFAULT_SIZE
+        local texHeight = tonumber(parts[7]) or DEFAULT_SIZE
+        local left = tonumber(parts[8])
+        local right = tonumber(parts[9])
+        local top = tonumber(parts[10])
+        local bottom = tonumber(parts[11])
+        local r = parts[12] or ""
+        local g = parts[13] or ""
+        local b = parts[14] or ""
 
-		-- Check if already cropped and not showing the full texture
-		local alreadyCropped = left and right and top and bottom
-		local showingFullTexture = alreadyCropped
-			and (left == 0 and right == texWidth and top == 0 and bottom == texHeight and texWidth == texHeight)
-		local shouldApplyCropping = not alreadyCropped or showingFullTexture
+        -- Check if already cropped and not showing the full texture
+        local alreadyCropped = left and right and top and bottom
+        local showingFullTexture = alreadyCropped
+            and (left == 0 and right == texWidth and top == 0 and bottom == texHeight and texWidth == texHeight)
+        local shouldApplyCropping = not alreadyCropped or showingFullTexture
 
-		local afterLeft = shouldApplyCropping and (texWidth * MARGIN_RATIO) or left
-		local afterRight = shouldApplyCropping and (texWidth * (1 - MARGIN_RATIO)) or right
-		local afterTop = shouldApplyCropping and (texHeight * MARGIN_RATIO) or top
-		local afterBottom = shouldApplyCropping and (texHeight * (1 - MARGIN_RATIO)) or bottom
+        local afterLeft = shouldApplyCropping and (texWidth * MARGIN_RATIO) or left
+        local afterRight = shouldApplyCropping and (texWidth * (1 - MARGIN_RATIO)) or right
+        local afterTop = shouldApplyCropping and (texHeight * MARGIN_RATIO) or top
+        local afterBottom = shouldApplyCropping and (texHeight * (1 - MARGIN_RATIO)) or bottom
 
-		local result = format(
-			"%s:%s:%s:%s:%s:%d:%d:%.0f:%.0f:%.0f:%.0f",
-			texturePath,
-			height,
-			width,
-			offsetX,
-			offsetY,
-			texWidth,
-			texHeight,
-			afterLeft,
-			afterRight,
-			afterTop,
-			afterBottom
-		)
+        local result = format(
+            "%s:%s:%s:%s:%s:%d:%d:%.0f:%.0f:%.0f:%.0f",
+            texturePath,
+            height,
+            width,
+            offsetX,
+            offsetY,
+            texWidth,
+            texHeight,
+            afterLeft,
+            afterRight,
+            afterTop,
+            afterBottom
+        )
 
-		if r ~= "" and g ~= "" and b ~= "" then
-			result = result .. format(":%s:%s:%s", r, g, b)
-		end
+        if r ~= "" and g ~= "" and b ~= "" then
+            result = result .. format(":%s:%s:%s", r, g, b)
+        end
 
-		return cacheTextureString(iconData, result)
-	end)
+        return cacheTextureString(iconData, result)
+    end)
 end

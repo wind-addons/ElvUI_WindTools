@@ -12,6 +12,7 @@ local tContains = tContains
 local tInsertUnique = tInsertUnique
 local tonumber = tonumber
 local tostring = tostring
+local xpcall = xpcall
 
 local GetAchievementInfo = GetAchievementInfo
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
@@ -170,22 +171,57 @@ function T:ReskinRewardIcon(tt)
 	end
 end
 
--- Guard helper for SECRET unit tokens (Midnight 12.0)
-local function isSecretUnit(unit)
-	if E and E.IsSecretValue then
-		return E:IsSecretValue(unit)
-	end
-	-- Fallback: treat nil/empty as invalid in secure context
-	return not unit or unit == ""
+-- Safe wrapper for Unit* API calls in secure context (Midnight 12.0+)
+-- SECRET unit values cannot be passed to restricted Unit* functions
+-- Use xpcall to safely handle errors from tainted/secret value restrictions
+local function safeUnitIsPlayer(unit)
+	if not unit then return false end
+	local success, result = xpcall(UnitIsPlayer, function() return false end, unit)
+	return success and result or false
+end
+
+local function safeUnitFactionGroup(unit)
+	if not unit then return nil end
+	local success, result = xpcall(UnitFactionGroup, function() return nil end, unit)
+	return success and result or nil
+end
+
+local function safeUnitIsWildBattlePet(unit)
+	if not unit then return false end
+	local success, result = xpcall(UnitIsWildBattlePet, function() return false end, unit)
+	return success and result or false
+end
+
+local function safeUnitIsBattlePetCompanion(unit)
+	if not unit then return false end
+	local success, result = xpcall(UnitIsBattlePetCompanion, function() return false end, unit)
+	return success and result or false
+end
+
+local function safeUnitBattlePetType(unit)
+	if not unit then return nil end
+	local success, result = xpcall(UnitBattlePetType, function() return nil end, unit)
+	return success and result or nil
+end
+
+local function safeUnitIsBattlePet(unit)
+	if not unit then return false end
+	local success, result = xpcall(UnitIsBattlePet, function() return false end, unit)
+	return success and result or false
+end
+
+local function safeUnitBattlePetSpeciesID(unit)
+	if not unit then return nil end
+	local success, result = xpcall(UnitBattlePetSpeciesID, function() return nil end, unit)
+	return success and result or nil
 end
 
 function T:AddFactionIcon(tt, unit, guid)
-	-- Avoid passing SECRET unit tokens into UnitIsPlayer
-	if isSecretUnit(unit) or not UnitIsPlayer(unit) then
+	if not safeUnitIsPlayer(unit) then
 		return
 	end
 
-	local faction = UnitFactionGroup(unit)
+	local faction = safeUnitFactionGroup(unit)
 	if faction and faction ~= "Neutral" then
 		if not tt.factionFrame then
 			local f = tt:CreateTexture(nil, "OVERLAY")
@@ -206,15 +242,21 @@ function T:ClearFactionIcon(tt)
 end
 
 function T:AddPetIcon(tt, unit, guid)
-	if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
-		if not tt.petIcon then
-			local f = tt:CreateTexture(nil, "OVERLAY")
-			f:Point("TOPRIGHT", -5, -5)
-			f:Size(35)
-			f:SetBlendMode("ADD")
-			tt.petIcon = f
-		end
-		tt.petIcon:SetTexture("Interface\\PetBattles\\PetIcon-" .. PET_TYPE_SUFFIX[UnitBattlePetType(unit)])
+	if not safeUnitIsWildBattlePet(unit) and not safeUnitIsBattlePetCompanion(unit) then
+		return
+	end
+
+	if not tt.petIcon then
+		local f = tt:CreateTexture(nil, "OVERLAY")
+		f:Point("TOPRIGHT", -5, -5)
+		f:Size(35)
+		f:SetBlendMode("ADD")
+		tt.petIcon = f
+	end
+
+	local petType = safeUnitBattlePetType(unit)
+	if petType and PET_TYPE_SUFFIX[petType] then
+		tt.petIcon:SetTexture("Interface\\PetBattles\\PetIcon-" .. PET_TYPE_SUFFIX[petType])
 		tt.petIcon:SetTexCoord(0.188, 0.883, 0, 0.348)
 		tt.petIcon:SetAlpha(1)
 	end
@@ -227,11 +269,11 @@ function T:ClearPetIcon(tt)
 end
 
 function T:AddPetID(tt, unit, guid)
-	if not UnitIsBattlePet(unit) then
+	if not safeUnitIsBattlePet(unit) then
 		return
 	end
 
-	local speciesID = UnitBattlePetSpeciesID(unit)
+	local speciesID = safeUnitBattlePetSpeciesID(unit)
 	local speciesIDString = speciesID and C.StringWithRGB(tostring(speciesID), E.db.general.valuecolor)
 	if speciesIDString then
 		tt:AddDoubleLine(L["Pet ID"] .. ": ", speciesIDString or C.StringByTemplate(L["Unknown"], "gray-400"))

@@ -9,6 +9,7 @@ local KS = E.Libs.Keystone
 local select = select
 local strsplit = strsplit
 local tonumber = tonumber
+local xpcall = xpcall
 
 local Ambiguate = Ambiguate
 local GetInstanceInfo = GetInstanceInfo
@@ -39,6 +40,19 @@ KI.LibKeystoneInfo = {}
 ---@field level number?
 ---@field mapID number?
 KI.PlayerKeystone = {}
+
+-- Safe wrapper for UnitIsPlayer in secure/tainted contexts
+local function safeUnitIsPlayer(unit)
+	if not unit then
+		return false
+	end
+
+	local ok, result = xpcall(UnitIsPlayer, function()
+		return false
+	end, unit)
+
+	return ok and result or false
+end
 
 function KI:GetPlayerKeystoneLink()
 	for bagIndex = 0, NUM_BAG_SLOTS do
@@ -130,7 +144,7 @@ end)
 ---@param unit UnitToken
 ---@return KeystoneInfoData?
 function KI:UnitData(unit)
-	if not unit or not UnitIsPlayer(unit) then
+	if not unit or not safeUnitIsPlayer(unit) then
 		return
 	end
 

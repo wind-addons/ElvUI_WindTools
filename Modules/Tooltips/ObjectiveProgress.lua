@@ -26,8 +26,22 @@ local accuracy
 local icon1 = F.GetIconString(132147, 14)
 local icon2 = F.GetIconString(5926319, 14)
 
+-- Guard against SECRET values in secure tooltip context (Midnight 12.0)
+local function isSecretValue(value)
+	if E and E.IsSecretValue then
+		return E:IsSecretValue(value)
+	end
+	-- Fallback: SECRET values fail string conversion in secure context
+	return value == nil
+end
+
 local function addObjectiveProgress(tt, data)
 	if not tt or not tt == _G.GameTooltip and not tt.NumLines or tt:NumLines() == 0 then
+		return
+	end
+
+	-- Guard: data.guid may be SECRET in secure tooltip context; avoid string operations on it
+	if isSecretValue(data) or isSecretValue(data and data.guid) then
 		return
 	end
 

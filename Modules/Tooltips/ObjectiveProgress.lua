@@ -10,6 +10,7 @@ local select = select
 local strjoin = strjoin
 local strsplit = strsplit
 local tonumber = tonumber
+local pcall = pcall
 
 local GetInstanceInfo = GetInstanceInfo
 
@@ -26,13 +27,29 @@ local accuracy
 local icon1 = F.GetIconString(132147, 14)
 local icon2 = F.GetIconString(5926319, 14)
 
--- Guard against SECRET values in secure tooltip context (Midnight 12.0)
-local function isSecretValue(value)
-	if E and E.IsSecretValue then
-		return E:IsSecretValue(value)
+-- SafeExtractNPCID: Safely extract NPC ID from GUID in secure context
+-- Returns npcID or nil if extraction fails (due to secret values)
+local function safeExtractNPCID(guid)
+	if not guid then
+		return nil
 	end
-	-- Fallback: SECRET values fail string conversion in secure context
-	return value == nil
+
+	-- Attempt to extract from string GUID format
+	-- Format: Creature-0-MMM-ZZZZ-RRR-NNN, where NNN is the NPC ID
+	local success, npcIDStr = pcall(function()
+		return select(6, strsplit("-", guid))
+	end)
+
+	if not success or not npcIDStr then
+		return nil
+	end
+
+	local npcID = tonumber(npcIDStr)
+	if not npcID or npcID == 0 then
+		return nil
+	end
+
+	return npcID
 end
 
 local function addObjectiveProgress(tt, data)
@@ -40,18 +57,14 @@ local function addObjectiveProgress(tt, data)
 		return
 	end
 
-	-- Guard: data.guid may be SECRET in secure tooltip context; avoid string operations on it
-	if isSecretValue(data) or isSecretValue(data and data.guid) then
+	-- Guard: Safely extract NPC ID
+	-- The data.guid may be a SECRET value in secure tooltip context (Midnight 12.0+)
+	-- String operations on SECRET values will cause errors
+	local npcID = data and safeExtractNPCID(data.guid)
+
+	if not npcID then
 		return
 	end
-
-	local npcID = data and data.guid and select(6, strsplit("-", data.guid))
-
-	if not npcID or npcID == "" then
-		return
-	end
-
-	npcID = tonumber(npcID)
 
 	local weightsTable = OP:GetNPCWeightByCurrentQuests(npcID)
 	if weightsTable then

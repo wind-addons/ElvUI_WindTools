@@ -9,8 +9,6 @@ local pairs = pairs
 local strsplit = strsplit
 local tonumber = tonumber
 
-local PlayerIsTimerunning = PlayerIsTimerunning
-
 local cache = {
 	groupInfo = {},
 }
@@ -527,13 +525,6 @@ do
 		end
 	end
 end
-
-F.TaskManager:AfterLogin(function()
-	if PlayerIsTimerunning() then
-		-- Remove options for Legion Remix
-		options.progression.args.mythicPlus = nil
-	end
-end)
 
 options.keystone = {
 	order = 5,

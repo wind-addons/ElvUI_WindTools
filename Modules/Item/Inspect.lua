@@ -903,17 +903,6 @@ function I:ShowPanel(unit, parent, ilevel)
 		local line = frame.Lines[displayIndex]
 		local itemInfo = GetUnitSlotItemInfo(unit, slotInfo.index)
 
-		-- Legion Remix Temp Fix: Artifact weapon item level showing wrong value (13)
-		if
-			correctArtifactLevel
-			and itemInfo
-			and itemInfo.quality == Enum_ItemQuality.Artifact
-			and itemInfo.level == 13
-			and (slotInfo.index == INVSLOT_MAINHAND or slotInfo.index == INVSLOT_OFFHAND)
-		then
-			itemInfo.level = correctArtifactLevel
-		end
-
 		line.name = itemInfo and itemInfo.name
 		line.link = itemInfo and itemInfo.link
 		line.level = itemInfo and itemInfo.level

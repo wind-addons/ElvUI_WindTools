@@ -13,7 +13,6 @@ local GetCurrentRegion = GetCurrentRegion
 local GetProfessionInfo = GetProfessionInfo
 local GetProfessions = GetProfessions
 local GetServerTime = GetServerTime
-local PlayerIsTimerunning = PlayerIsTimerunning
 
 local C_Map_GetMapInfo = C_Map.GetMapInfo
 local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
@@ -61,7 +60,6 @@ ET.ColorPalette = {
 	bronze = { "amber-400", "yellow-700" },
 	running = { "teal-600", "emerald-400" },
 	radiantEchoes = { "sky-400", "yellow-100" },
-	legionAssaultRemix = { "lime-400", "lime-700" },
 	gray = { "neutral-400", "neutral-700" },
 	default = { "neutral-50", "neutral-200" },
 }
@@ -82,12 +80,9 @@ ET.ColorPalette = {
 ---|"TimeRiftThaldraszus"
 ---|"SuperBloom"
 ---|"BigDig"
----|"LegionAssaultRemix"
 
 ---@type EventKey[]
 ET.EventList = {
-	-- Legion Remix
-	"LegionAssaultRemix",
 	-- TWW
 	-- "ProfessionsWeeklyTWW",
 	"WeeklyTWW",
@@ -739,51 +734,6 @@ ET.EventData = {
 				return timestampTable[region]
 			end)(),
 			onClick = worldMapIDSetter(2024),
-			onClickHelpText = L["Click to show location"],
-		},
-	},
-	-- Legion
-	LegionAssaultRemix = {
-		dbKey = "legionAssaultRemix",
-		args = {
-			icon = 1371267,
-			type = "loopTimer",
-			hasWeeklyReward = false,
-			duration = 6 * 60 * 60,
-			interval = 14.5 * 60 * 60,
-			barColor = ET.ColorPalette.gray,
-			flash = true,
-			runningBarColor = ET.ColorPalette.legionAssaultRemix,
-			runningText = C.GradientStringByTemplate(L["Assaulting"], "pink-500", "rose-500"),
-			eventName = L["Legion Assault (Remix)"],
-			label = L["Legion Assault"],
-			location = C_Map_GetMapInfo(619).name,
-			filter = function(args)
-				if args.stopAlertIfNotRemixPlayer and not PlayerIsTimerunning() then
-					return false
-				end
-				return true
-			end,
-			startTimestamp = (function()
-				local timestampTable = {
-					[1] = 1762421400, -- NA
-					[2] = 1762502400, -- KR
-					[3] = 1762642800, -- EU
-					[4] = 1762502400, -- TW
-					[5] = 1762502400, -- CN
-					[72] = 1762502400, -- PTR
-					[90] = 1762502400, -- Midnight PTR
-				}
-
-				local region = GetCurrentRegion()
-				-- TW is not a real region, so we need to check the client language if player in KR
-				if region == 2 and W.Locale ~= "koKR" then
-					region = 4
-				end
-
-				return timestampTable[region]
-			end)(),
-			onClick = worldMapIDSetter(619),
 			onClickHelpText = L["Click to show location"],
 		},
 	},

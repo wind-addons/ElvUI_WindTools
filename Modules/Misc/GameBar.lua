@@ -42,7 +42,6 @@ local IsModifierKeyDown = IsModifierKeyDown
 local IsShiftKeyDown = IsShiftKeyDown
 local PlaySound = PlaySound
 local PlayerHasToy = PlayerHasToy
-local PlayerIsTimerunning = PlayerIsTimerunning
 local RegisterStateDriver = RegisterStateDriver
 local ResetCPUUsage = ResetCPUUsage
 local Screenshot = Screenshot
@@ -160,7 +159,6 @@ local hearthstoneAndToyIDList = {
 	140192, -- 達拉然爐石
 	141605, -- 飛行管理員的哨子
 	180817, -- 移轉暗語
-	250411, -- 時光奔走者的爐石 (Remix)
 	-- Engineering Wormholes
 	-- https://www.wowhead.com/items/name:Generator?filter=86:195;5:2;0:0
 	18984, -- 空間撕裂器 - 永望鎮
@@ -609,9 +607,6 @@ local ButtonTypes = {
 				DT.tooltip:SetText(L["Hearthstone"])
 				DT.tooltip:AddLine("\n")
 				AddDoubleLineForItem(GB.db.hearthstone.left, LEFT_BUTTON_ICON)
-				if PlayerIsTimerunning() then
-					AddDoubleLineForItem(250411, SCROLL_BUTTON_ICON)
-				end
 				AddDoubleLineForItem(GB.db.hearthstone.right, RIGHT_BUTTON_ICON)
 				DT.tooltip:Show()
 			end
@@ -1238,8 +1233,6 @@ function GB:UpdateButton(button, buttonType)
 		button:SetAttribute("type*", "macro")
 		self:UpdateHearthstoneButtonMacro(button, "left", config.item.item1)
 		self:UpdateHearthstoneButtonMacro(button, "right", config.item.item2)
-		-- Legion Remix Hearthstone (250411)
-		button:SetAttribute("macrotext3", PlayerIsTimerunning() and "/use item:250411" or "")
 		tinsert(self.HearthstoneButtons, button)
 	elseif config.macro then
 		button:SetAttribute("type*", "macro")

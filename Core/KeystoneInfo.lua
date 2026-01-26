@@ -15,7 +15,6 @@ local GetInstanceInfo = GetInstanceInfo
 local GetUnitName = GetUnitName
 local IsInGroup = IsInGroup
 local UnitIsPlayer = UnitIsPlayer
-local PlayerIsTimerunning = PlayerIsTimerunning
 
 local C_Container_GetContainerItemID = C_Container.GetContainerItemID
 local C_Container_GetContainerItemLink = C_Container.GetContainerItemLink
@@ -60,8 +59,11 @@ function KI:GetPlayerKeystone()
 		return nil, nil, nil
 	end
 
-	if not PlayerIsTimerunning() then
-		return C_MythicPlus_GetOwnedKeystoneChallengeMapID(), C_MythicPlus_GetOwnedKeystoneLevel(), link
+	local challengeMapID = C_MythicPlus_GetOwnedKeystoneChallengeMapID and C_MythicPlus_GetOwnedKeystoneChallengeMapID()
+	local level = C_MythicPlus_GetOwnedKeystoneLevel and C_MythicPlus_GetOwnedKeystoneLevel()
+
+	if challengeMapID and level and challengeMapID > 0 and level > 0 then
+		return challengeMapID, level, link
 	end
 
 	local challengeMapID, level = select(4, strsplit(":", link))

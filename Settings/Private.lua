@@ -574,7 +574,6 @@ V.skins = {
 		bugSack = true,
 		collectionator = true,
 		immersion = true,
-		legionRemixHelper = true,
 		manuscriptsJournal = true,
 		mountRoutePlanner = true,
 		meetingStone = true,

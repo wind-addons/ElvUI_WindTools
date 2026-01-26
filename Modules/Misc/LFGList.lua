@@ -38,7 +38,6 @@ local IsShiftKeyDown = IsShiftKeyDown
 local LFGListSearchPanel_Clear = LFGListSearchPanel_Clear
 local LFGListSearchPanel_DoSearch = LFGListSearchPanel_DoSearch
 local LFGListSearchPanel_SetCategory = LFGListSearchPanel_SetCategory
-local PlayerIsTimerunning = PlayerIsTimerunning
 local UnitClassBase = UnitClassBase
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitName = UnitName
@@ -137,14 +136,6 @@ for i = 1, 10 do
 end
 
 local affixAddedAtLevel = { 4, 7, 10, 12 }
-
-local legionRemixAffixes = {
-	{ id = 166 },
-	{ id = 167 },
-	{ id = 168 },
-	{ id = 169 },
-	{ id = 170 },
-}
 
 local availableSortMode = {
 	"DEFAULT",
@@ -590,8 +581,6 @@ function LL:UpdatePartyKeystoneFrame()
 		20 + (heightIncrement + self.db.partyKeystone.font.size) * #cache + self.db.partyKeystone.font.size
 	)
 	frame:Show()
-
-	self:RepositionPartyKeystoneInLegionRemix()
 end
 
 function LL:RequestKeystoneData()
@@ -686,7 +675,7 @@ function LL:InitializeRightPanel()
 		end
 	end)
 
-	local affixes = not PlayerIsTimerunning() and C_MythicPlus_GetCurrentAffixes() or legionRemixAffixes
+	local affixes = C_MythicPlus_GetCurrentAffixes()
 	Panel.Affixes = CreateFrame("Frame", nil, Panel)
 	Panel.Affixes:Height(AFFIX_ICON_SIZE)
 	Panel.Affixes:Point("TOPLEFT", Panel, "TOPLEFT", PANEL_PADDING, -PANEL_PADDING)
@@ -719,12 +708,8 @@ function LL:InitializeRightPanel()
 		for i = 1, #affixes do
 			local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixes[i].id)
 			_G.GameTooltip:AddLine(" ")
-			if not PlayerIsTimerunning() then
-				local level = affixAddedAtLevel[i] or 0
-				_G.GameTooltip:AddLine(format("%s (%d) %s", F.GetIconString(fileDataID, 16, 18, true), level, name))
-			else
-				_G.GameTooltip:AddLine(format("%s %s", F.GetIconString(fileDataID, 16, 18, true), name))
-			end
+			local level = affixAddedAtLevel[i] or 0
+			_G.GameTooltip:AddLine(format("%s (%d) %s", F.GetIconString(fileDataID, 16, 18, true), level, name))
 			_G.GameTooltip:AddLine(description, 1, 1, 1, true)
 		end
 		_G.GameTooltip:Show()
@@ -1119,11 +1104,6 @@ function LL:InitializeRightPanel()
 	VaultStatus:Height(32)
 	VaultStatus:SetTemplate()
 
-	-- Hide vault status in Timerunning mode
-	if PlayerIsTimerunning() then
-		VaultStatus:Hide()
-	end
-
 	addSetActive(VaultStatus)
 
 	VaultStatus.text = VaultStatus:CreateFontString(nil, "OVERLAY")
@@ -1233,14 +1213,8 @@ function LL:InitializeRightPanel()
 	Panel.VaultStatus = VaultStatus
 
 	local SortPanel = CreateFrame("Frame", nil, Panel)
-	-- In Timerunning mode, anchor to frame bottom instead of vaultStatus
-	if PlayerIsTimerunning() then
-		SortPanel:Point("BOTTOMLEFT", Panel, "BOTTOMLEFT", 10, 10)
-		SortPanel:Point("BOTTOMRIGHT", Panel, "BOTTOMRIGHT", -10, 10)
-	else
-		SortPanel:Point("BOTTOMLEFT", VaultStatus, "TOPLEFT", 0, 8)
-		SortPanel:Point("BOTTOMRIGHT", VaultStatus, "TOPRIGHT", 0, 8)
-	end
+	SortPanel:Point("BOTTOMLEFT", VaultStatus, "TOPLEFT", 0, 8)
+	SortPanel:Point("BOTTOMRIGHT", VaultStatus, "TOPRIGHT", 0, 8)
 	SortPanel:Height(32)
 
 	local SortModeButton = CreateFrame("Frame", nil, SortPanel)
@@ -1371,12 +1345,7 @@ function LL:InitializeRightPanel()
 	-- Quick Access Panel
 	local QuickAccessPanel = CreateFrame("Frame", nil, Panel)
 	QuickAccessPanel:Point("TOPLEFT", Panel.Affixes, "BOTTOMLEFT", 0, -10)
-	-- In Timerunning mode, anchor to frame bottom instead of vaultStatus
-	if PlayerIsTimerunning() then
-		QuickAccessPanel:Point("BOTTOMRIGHT", Panel, "BOTTOMRIGHT", -PANEL_PADDING, PANEL_PADDING)
-	else
-		QuickAccessPanel:Point("BOTTOMRIGHT", Panel.VaultStatus, "TOPRIGHT", 0, 10)
-	end
+	QuickAccessPanel:Point("BOTTOMRIGHT", Panel.VaultStatus, "TOPRIGHT", 0, 10)
 
 	-- Quick Access Title
 	local QuickAccessTitle = QuickAccessPanel:CreateFontString(nil, "OVERLAY")
@@ -1401,10 +1370,9 @@ function LL:InitializeRightPanel()
 		{ text = L["Custom"], categoryID = GROUP_FINDER_CUSTOM_CATEGORY, filters = 0, disableIfTimerunning = true },
 	}
 
-	local playerIsTimerunning = PlayerIsTimerunning()
 	local prevButton
 	for _, data in ipairs(buttonData) do
-		if not playerIsTimerunning or not data.disableIfTimerunning then
+		if not data.disableIfTimerunning then
 			local button = CreateFrame("Frame", nil, QuickAccessPanel)
 			if not prevButton then
 				button:Point("TOPLEFT", QuickAccessTitle, "BOTTOMLEFT")
@@ -1558,8 +1526,6 @@ function LL:UpdateRightPanel()
 
 	self.RightPanel:Show()
 	self:UpdateAdvancedFilters()
-
-	self:RepositionPartyKeystoneInLegionRemix()
 end
 
 function LL:LFGListEventHandler(event)
@@ -1627,12 +1593,8 @@ function LL:UpdateAdvancedFilters()
 	end
 
 	if numActiveMaps == 0 then
-		if PlayerIsTimerunning() then
-			tAppendAll(activities, timerunningGroups)
-		else
-			tAppendAll(activities, seasonGroups)
-			tAppendAll(activities, expansionGroups)
-		end
+		tAppendAll(activities, seasonGroups)
+		tAppendAll(activities, expansionGroups)
 	end
 
 	advFilters.activities = activities
@@ -1777,20 +1739,6 @@ function LL:Initialize()
 
 	E:Delay(2, self.RequestKeystoneData, self)
 	E:Delay(2, self.UpdatePartyKeystoneFrame, self)
-end
-
-function LL:RepositionPartyKeystoneInLegionRemix()
-	if self.partyKeystonePositionFixed or not self.RightPanel or not self.PartyKeystoneFrame then
-		return
-	end
-
-	if PlayerIsTimerunning() then
-		self.PartyKeystoneFrame:SetParent(self.RightPanel.QuickAccessPanel)
-		self.PartyKeystoneFrame:ClearAllPoints()
-		self.PartyKeystoneFrame:Point("BOTTOM")
-	end
-
-	self.partyKeystonePositionFixed = true
 end
 
 W:RegisterModule(LL:GetName())

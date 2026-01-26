@@ -13,6 +13,7 @@ local strmatch = strmatch
 local strsub = strsub
 local tinsert = tinsert
 local tonumber = tonumber
+local type = type
 local unpack = unpack
 local xpcall = xpcall
 
@@ -258,7 +259,7 @@ end
 
 do -- Midnight API Fix
 	local BackdropTemplateMixin_SetupTextureCoordinates = _G.BackdropTemplateMixin.SetupTextureCoordinates
-	function BackdropTemplateMixin:SetupTextureCoordinates(...)
+	function _G.BackdropTemplateMixin:SetupTextureCoordinates(...)
 		local enabled = E and E.global and E.global.WT and E.global.WT.core and E.global.WT.core.midnightAPIFix
 		if not enabled or E:NotSecretValue(self:GetWidth()) then
 			BackdropTemplateMixin_SetupTextureCoordinates(self, ...)
@@ -266,7 +267,7 @@ do -- Midnight API Fix
 	end
 
 	-- Fix from NDui
-	MoneyFrame_Update_OLD = MoneyFrame_Update
+	local MoneyFrame_Update_OLD = _G.MoneyFrame_Update
 
 	local function GetMoneyFrame(frameOrName)
 		local argType = type(frameOrName)
@@ -278,7 +279,7 @@ do -- Midnight API Fix
 		return nil
 	end
 
-	function MoneyFrame_Update(frameName, money, forceShow)
+	function _G.MoneyFrame_Update(frameName, money, forceShow)
 		local enabled = E and E.global and E.global.WT and E.global.WT.core and E.global.WT.core.midnightAPIFix
 		if not enabled then
 			MoneyFrame_Update_OLD(frameName, money, forceShow)
@@ -293,9 +294,9 @@ do -- Midnight API Fix
 	end
 
 	-- Fix from NDui
-	SetTooltipMoney_OLD = SetTooltipMoney
+	local SetTooltipMoney_OLD = _G.SetTooltipMoney
 
-	function SetTooltipMoney(frame, money, type, prefixText, suffixText)
+	function _G.SetTooltipMoney(frame, money, type, prefixText, suffixText)
 		local enabled = E and E.global and E.global.WT and E.global.WT.core and E.global.WT.core.midnightAPIFix
 		if not enabled then
 			SetTooltipMoney_OLD(frame, money, type, prefixText, suffixText)

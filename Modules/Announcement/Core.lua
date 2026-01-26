@@ -145,17 +145,20 @@ do
 end
 
 function A:IsGroupMember(name)
-	if name then
-		if UnitInParty(name) then
-			return 1
-		elseif UnitInRaid(name) then
-			return 2
-		elseif name == E.myname then
-			return 3
-		end
-	end
-
-	return false
+    if name and type(name) == "string" then
+        local success, inParty = pcall(UnitInParty, name)
+        if success and inParty then
+            return 1
+        end
+        local success2, inRaid = pcall(UnitInRaid, name)
+        if success2 and inRaid then
+            return 2
+        end
+        if name == E.myname then
+            return 3
+        end
+    end
+    return false
 end
 
 function A:Initialize()

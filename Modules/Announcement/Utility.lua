@@ -138,18 +138,14 @@ local function FormatMessage(message, name, id)
 end
 
 local function TryAnnounce(spellId, sourceName, id, list, type)
-	if not A.db or not A.db.utility then
-		return
-	end
-
-	local channelConfig = A.db.utility.channel
-	local spellConfig = (type and A.db.utility.spells[type]) or (id and A.db.utility.spells[tostring(id)])
-
-	if not spellConfig or not channelConfig then
-		return
-	end
-
-	if (id and spellId == id) or (type and list[spellId]) then
+    if not A.db or not A.db.utility then
+        return
+    end
+    
+    -- Validate spellId is a proper number (not a secret value)
+    if not spellId or type(spellId) ~= "number" then
+        return
+    end
 		if spellConfig.enable and (sourceName ~= E.myname or spellConfig.includePlayer) then
 			A:SendMessage(
 				FormatMessage(spellConfig.text, sourceName, spellId),

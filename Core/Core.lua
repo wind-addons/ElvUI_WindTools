@@ -256,6 +256,64 @@ function W:GameFixing()
 	end
 end
 
+do -- Midnight API Fix
+	local BackdropTemplateMixin_SetupTextureCoordinates = _G.BackdropTemplateMixin.SetupTextureCoordinates
+	function BackdropTemplateMixin:SetupTextureCoordinates(...)
+		local enabled = E and E.global and E.global.WT and E.global.WT.core and E.global.WT.core.midnightAPIFix
+		if not enabled or E:NotSecretValue(self:GetWidth()) then
+			BackdropTemplateMixin_SetupTextureCoordinates(self, ...)
+		end
+	end
+
+	-- Fix from NDui
+	MoneyFrame_Update_OLD = MoneyFrame_Update
+
+	local function GetMoneyFrame(frameOrName)
+		local argType = type(frameOrName)
+		if argType == "table" then
+			return frameOrName
+		elseif argType == "string" then
+			return _G[frameOrName]
+		end
+		return nil
+	end
+
+	function MoneyFrame_Update(frameName, money, forceShow)
+		local enabled = E and E.global and E.global.WT and E.global.WT.core and E.global.WT.core.midnightAPIFix
+		if not enabled then
+			MoneyFrame_Update_OLD(frameName, money, forceShow)
+			return
+		end
+
+		local frame = GetMoneyFrame(frameName)
+		if frame and frame.GoldButton and E:IsSecretValue(frame.GoldButton:GetWidth()) then
+			return
+		end
+		MoneyFrame_Update_OLD(frameName, money, forceShow)
+	end
+
+	-- Fix from NDui
+	SetTooltipMoney_OLD = SetTooltipMoney
+
+	function SetTooltipMoney(frame, money, type, prefixText, suffixText)
+		local enabled = E and E.global and E.global.WT and E.global.WT.core and E.global.WT.core.midnightAPIFix
+		if not enabled then
+			SetTooltipMoney_OLD(frame, money, type, prefixText, suffixText)
+			return
+		end
+
+		if not frame.shownMoneyFrames then
+			frame.shownMoneyFrames = 0
+		end
+		local moneyFrame = _G[frame:GetName() .. "MoneyFrame" .. frame.shownMoneyFrames + 1]
+		local moneyFrameWidth = moneyFrame and moneyFrame:GetWidth()
+		if E:IsSecretValue(moneyFrameWidth) then
+			return
+		end
+		SetTooltipMoney_OLD(frame, money, type, prefixText, suffixText)
+	end
+end
+
 function W:ADDON_LOADED(event, addOnName)
 	if addOnName ~= "Blizzard_EventTrace" then
 		return

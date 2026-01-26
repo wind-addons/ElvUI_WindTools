@@ -6,38 +6,27 @@ local S = W.Modules.Skins ---@class Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
-local pcall = pcall
 local type = type
-
--- Safe comparison that handles tainted/secret values
-local function SafeNotEqual(a, b)
-    if a == nil or b == nil then return false end
-    local success, result = pcall(function() return a ~= b end)
-    if success then
-        return result
-    end
-    return false
-end
 
 local function styleIconsInLine(line, text)
     if not line then
         return
     end
 
-    -- Get text with pcall protection for tainted values
-    local success, lineText = pcall(function() return line:GetText() end)
-    if not success then
+    -- Get text, checking for secret values first
+    local lineText = line:GetText()
+    if E:IsSecretValue(lineText) then
         return
     end
 
     text = text or lineText
 
-    -- Early exit if text is nil or not a string (handles secret values)
+    -- Early exit if text is nil or not a string
     if text == nil or type(text) ~= "string" then
         return
     end
 
-    -- Style the text with protection
+    -- Style the text
     local styledText = S:StyleTextureString(text)
 
     -- Validate styledText before comparison
@@ -45,9 +34,13 @@ local function styleIconsInLine(line, text)
         return
     end
 
-    -- Use safe comparison to handle any remaining tainted values
-    if SafeNotEqual(styledText, text) then
-        pcall(function() F.CallMethod(line, "SetText", styledText) end)
+    -- Check if styledText is a secret value before comparison
+    if E:IsSecretValue(styledText) then
+        return
+    end
+
+    if styledText ~= text then
+        F.CallMethod(line, "SetText", styledText)
     end
 end
 
@@ -68,70 +61,71 @@ local function StyleTooltipWidgetContainer(tt)
                 F.SetFont(frame.Text)
                 frame.Text:SetText(frame.Text:GetText())
             end
+
             frame.__windSkin = true
         end
     end
 end
 
-function S:StyleIconsInTooltip(tt)
-    if tt:IsForbidden() or not tt.NumLines or not E.db.general.cropIcon then
-        return
-    end
-
-    for i = 2, tt:NumLines() do
-        styleIconsInLine(_G[tt:GetName() .. "TextLeft" .. i])
-        styleIconsInLine(_G[tt:GetName() .. "TextRight" .. i])
-    end
-
-    for i = 1, 30 do
-        local texture = _G[tt:GetName() .. "Texture" .. i] ---@type Texture?
-        if texture and texture:IsShown() then
-            self:TryCropTexture(texture)
-        else
-            break
-        end
-    end
-end
-
----@param tt table GameTooltip like frame
 function S:ReskinTooltip(tt)
     if not tt or (tt == E.ScanTooltip or tt.IsEmbedded or not tt.NineSlice) or tt:IsForbidden() then
         return
     end
 
-    self:CreateShadow(tt)
-
-    if tt.TopOverlay then
-        tt.TopOverlay:StripTextures()
-    end
-
-    if tt.BottomOverlay then
-        tt.BottomOverlay:StripTextures()
-    end
-
-    local CompareHeader = tt.CompareHeader
-    if CompareHeader and not CompareHeader.__windSkin then
-        CompareHeader:SetTemplate("Transparent")
-        self:CreateShadow(CompareHeader)
-        F.Move(CompareHeader, 0, 2)
-        F.SetFont(CompareHeader.Label)
-        CompareHeader.__windSkin = true
-    end
-
-    if not self:IsHooked(tt, "Show") then
-        StyleTooltipWidgetContainer(tt)
-        self:SecureHook(tt, "Show", "StyleIconsInTooltip")
-    end
-end
-
-function S:TooltipFrames()
-    if not self:CheckDB("tooltip", "tooltips") then
+    if tt.__windSkin then
         return
     end
 
-    -- Tooltip list from ElvUI
+    -- Tooltip lines
+    for i = 1, tt:GetNumRegions() do
+        local region = select(i, tt:GetRegions())
+        if region:GetObjectType() == "FontString" then
+            F.InternalizeMethod(region, "SetText")
+            hooksecurefunc(region, "SetText", styleIconsInLine)
+            F.SetFont(region)
+        end
+    end
+
+    -- TextLeft and TextRight
+    for _, key in pairs { "TextLeft", "TextRight" } do
+        for i = 1, 50 do
+            local line = _G[tt:GetName() .. key .. i]
+            if line then
+                F.InternalizeMethod(line, "SetText")
+                hooksecurefunc(line, "SetText", styleIconsInLine)
+                F.SetFont(line)
+            end
+        end
+    end
+
+    tt.__windSkin = true
+end
+
+function S:Tooltips()
+    if not self:CheckDB("tooltips", "tooltipIcons") and not self:CheckDB("tooltips", "tooltipFont") then
+        return
+    end
+
     local tooltips = {
+        -- Blizzard
+        _G.GameTooltip,
         _G.ItemRefTooltip,
+        _G.ItemRefShoppingTooltip1,
+        _G.ItemRefShoppingTooltip2,
+        _G.AutoCompleteBox,
+        _G.FriendsTooltip,
+        _G.FloatingBattlePetTooltip,
+        _G.FloatingPetBattleAbilityTooltip,
+        _G.FloatingGarrisonFollowerAbilityTooltip,
+        _G.GarrisonFollowerAbilityWithoutCountersTooltip,
+        _G.IMECandidatesFrame,
+        _G.PetBattlePrimaryAbilityTooltip,
+        _G.PetBattlePrimaryUnitTooltip,
+        _G.QueueStatusFrame,
+        _G.QuestScrollFrame and _G.QuestScrollFrame.StoryTooltip,
+        _G.QuestScrollFrame and _G.QuestScrollFrame.CampaignTooltip,
+        _G.DropDownList1MenuBackdrop,
+        _G.DropDownList2MenuBackdrop,
         _G.ItemRefShoppingTooltip1,
         _G.ItemRefShoppingTooltip2,
         _G.FriendsTooltip,
@@ -174,5 +168,3 @@ function S:TooltipFrames()
         end
     end)
 end
-
-S:AddCallback("TooltipFrames")

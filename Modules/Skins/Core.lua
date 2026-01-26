@@ -207,6 +207,11 @@ do
 			return
 		end
 
+		        -- Check for tainted/secret values from secure execution context
+		        if E:IsSecretValue(r) or E:IsSecretValue(g) or E:IsSecretValue(b) then
+			            return
+			        end
+
 		if r == E.db.general.bordercolor.r and g == E.db.general.bordercolor.g and b == E.db.general.bordercolor.b then
 			S:UpdateShadowColor(shadow)
 		else

@@ -38,7 +38,7 @@ local function cacheTextureString(iconData, formattedString)
 end
 
 function S:StyleTextureString(text)
-	if not text or E:IsSecretValue(text) or not strfind(text, "|T.+|t") then
+	if not text or not strfind(text, "|T.+|t") then
 		return text
 	end
 

@@ -160,15 +160,18 @@ local function TryAnnounce(spellId, sourceName, id, list, type)
 end
 
 function A:Utility(event, sourceName, spellId)
-	local config = self.db.utility
-
-	if not config or not config.enable then
-		return
-	end
-
-	if InCombatLockdown() or not event or not spellId or not sourceName then
-		return
-	end
+    local config = self.db.utility
+    if not config or not config.enable then
+        return
+    end
+    
+    -- Validate spellId is a proper number (not a secret/tainted value)
+    if InCombatLockdown() or not event or not spellId or not sourceName then
+        return
+    end
+    if type(spellId) ~= "number" then
+        return
+    end
 
 	local groupStatus = self:IsGroupMember(sourceName)
 	if not groupStatus or groupStatus == 3 then

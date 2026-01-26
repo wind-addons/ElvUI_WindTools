@@ -130,7 +130,7 @@ end)
 ---@param unit UnitToken
 ---@return KeystoneInfoData?
 function KI:UnitData(unit)
-	if not unit or not UnitIsPlayer(unit) then
+	if not unit or E:IsSecretValue(unit) or not UnitIsPlayer(unit) then
 		return
 	end
 

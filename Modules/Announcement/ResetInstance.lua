@@ -66,7 +66,7 @@ function A:ResetInstanceUpdateIgnoreState(event, text)
 			end
 		end)
 	elseif event == "CHAT_MSG_SYSTEM" then
-		if text and (text == ERR_RAID_CONVERTED_TO_PARTY or text == ERR_PARTY_CONVERTED_TO_RAID) then
+		if text and (not E:IsSecretValue(text)) and (text == ERR_RAID_CONVERTED_TO_PARTY or text == ERR_PARTY_CONVERTED_TO_RAID) then
 			ignoreCondition.justChangedGroupType = t
 			E:Delay(1, function()
 				if ignoreCondition.justChangedGroupType == t then
@@ -80,7 +80,7 @@ end
 
 function A:ResetInstance(text)
 	local config = self.db.resetInstance
-	if not config or not config.enable then
+	if not config or not config.enable or E:IsSecretValue(text) then
 		return
 	end
 

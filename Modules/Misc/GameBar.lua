@@ -1468,7 +1468,6 @@ function GB:PLAYER_REGEN_DISABLED()
 		local button = self.buttons[i]
 
 		if button.type == "HOME" then
-			print(button:GetAttribute("house-guid"))
 			if not button:GetAttribute("house-guid") then
 				button:SetAttribute("type1", "click")
 			end

@@ -6,7 +6,6 @@ local _G = _G
 local assert = assert
 local next = next
 local pairs = pairs
-local pcall = pcall
 local select = select
 local strsplit = strsplit
 local tinsert = tinsert
@@ -31,36 +30,6 @@ T.modifierInspect = {}
 T.normalInspect = {}
 T.clearInspect = {}
 T.eventCallback = {}
-
--- Safe wrapper for UnitIsPlayer to handle tainted/secret values in TWW
-local function SafeUnitIsPlayer(unit)
-    if not unit then return false end
-    local success, result = pcall(UnitIsPlayer, unit)
-    if success then
-        return result
-    end
-    return false
-end
-
--- Safe wrapper for CanInspect to handle tainted/secret values
-local function SafeCanInspect(unit)
-    if not unit then return false end
-    local success, result = pcall(CanInspect, unit)
-    if success then
-        return result
-    end
-    return false
-end
-
--- Safe wrapper for UnitClass to handle tainted/secret values
-local function SafeUnitClass(unit)
-    if not unit then return nil, nil end
-    local success, name, class = pcall(UnitClass, unit)
-    if success then
-        return name, class
-    end
-    return nil, nil
-end
 
 function T:AddCallback(name, func)
     tinsert(self.load, func or self[name])
@@ -149,7 +118,8 @@ function T:InspectInfo(tt, data, triedTimes)
         end
     end
 
-    if not unit or not data or not data.guid then
+    -- Check for secret/tainted unit values (TWW fix)
+    if not unit or not data or not data.guid or E:IsSecretValue(unit) then
         return
     end
 
@@ -158,24 +128,24 @@ function T:InspectInfo(tt, data, triedTimes)
         xpcall(func, F.Developer.ThrowError, self, tt, unit, data.guid)
     end
 
-    -- General - use safe wrappers to handle TWW tainted/secret values
+    -- General
     local inCombatLockdown = InCombatLockdown()
     local isShiftKeyDown = IsShiftKeyDown()
-    local isPlayerUnit = SafeUnitIsPlayer(unit)
+    local isPlayerUnit = UnitIsPlayer(unit)
     local isInspecting = _G.InspectPaperDollFrame and _G.InspectPaperDollFrame:IsShown()
 
     -- Item Level
     local itemLevelAvailable = isPlayerUnit and not inCombatLockdown and ET.db.inspectDataEnable
     if self.profiledb.elvUITweaks.forceItemLevel and not isInspecting then
         if not isShiftKeyDown and itemLevelAvailable and not tt.ItemLevelShown then
-            local _, class = SafeUnitClass(unit)
+            local _, class = UnitClass(unit)
             local color = class and E:ClassColor(class) or RAID_CLASS_COLORS_PRIEST
             ET:AddInspectInfo(tt, unit, 0, color.r, color.g, color.b)
         end
     end
 
-    -- Modifier callbacks pre-check - use safe wrapper
-    if not self:CheckModifier() or not SafeCanInspect(unit) then
+    -- Modifier callbacks pre-check
+    if not self:CheckModifier() or not CanInspect(unit) then
         return
     end
 

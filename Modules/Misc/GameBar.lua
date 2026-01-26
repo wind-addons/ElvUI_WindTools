@@ -624,7 +624,9 @@ local ButtonTypes = {
 		name = L["Home"],
 		icon = W.Media.Icons.barHome,
 		click = {
-			LeftButton = E.noop,
+			LeftButton = function()
+				_G.UIErrorsFrame:AddMessage(L["House data cannot be updated in combat."], RED_FONT_COLOR:GetRGBA())
+			end,
 			RightButton = function()
 				if not InCombatLockdown() then
 					_G.HousingFramesUtil.ToggleHousingDashboard()
@@ -1151,8 +1153,8 @@ function GB:ButtonOnEnter(button)
 		end
 	end
 
-	if button.type == "HOME" then
-		GB:UpdateHouseAttributes(button)
+	if button.type == "HOME" and not InCombatLockdown() then
+		self:UpdateHouseAttributes(button)
 	end
 end
 
@@ -1453,17 +1455,40 @@ function GB:NEW_TOY_ADDED(_, toyID)
 end
 
 function GB:PLAYER_REGEN_ENABLED()
-	self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-	self:ProfileUpdate()
+	for i = 1, 2 * NUM_PANEL_BUTTONS do
+		local button = self.buttons[i]
+		if button.type == "HOME" then
+			button:SetAttribute("type1", "teleporthome")
+		end
+	end
+end
+
+function GB:PLAYER_REGEN_DISABLED()
+	for i = 1, 2 * NUM_PANEL_BUTTONS do
+		local button = self.buttons[i]
+
+		if button.type == "HOME" then
+			print(button:GetAttribute("house-guid"))
+			if not button:GetAttribute("house-guid") then
+				button:SetAttribute("type1", "click")
+			end
+		end
+	end
 end
 
 function GB:PLAYER_ENTERING_WORLD()
 	E:Delay(1, function()
-		if InCombatLockdown() then
-			self:RegisterEvent("PLAYER_REGEN_ENABLED")
-		else
+		F.TaskManager:OutOfCombat(function()
 			self:ProfileUpdate()
-		end
+
+			-- Try update house attributes once after entering world
+			for i = 1, 2 * NUM_PANEL_BUTTONS do
+				local button = self.buttons[i]
+				if button.type == "HOME" then
+					self:UpdateHouseAttributes(button)
+				end
+			end
+		end)
 	end)
 end
 
@@ -1479,7 +1504,9 @@ function GB:Initialize()
 	end
 
 	if InCombatLockdown() then
-		self:RegisterEvent("PLAYER_REGEN_ENABLED")
+		F.TaskManager:OutOfCombat(function()
+			self:Initialize()
+		end)
 		return
 	end
 
@@ -1501,6 +1528,8 @@ function GB:Initialize()
 	self:UpdateBar()
 	self:RegisterEvent("NEW_TOY_ADDED")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("COVENANT_CHOSEN", "UpdateHearthStoneTable")
 	self:RegisterEvent("PLAYER_HOUSE_LIST_UPDATED")
 	C_Housing_GetPlayerOwnedHouses()
@@ -1557,12 +1586,9 @@ function GB:ProfileUpdate()
 			self:UpdateLayout()
 			self:UpdateBar()
 		else
-			if InCombatLockdown() then
-				self:RegisterEvent("PLAYER_REGEN_ENABLED")
-				return
-			else
+			F.TaskManager:OutOfCombat(function()
 				self:Initialize()
-			end
+			end)
 		end
 	else
 		if self.initialized then

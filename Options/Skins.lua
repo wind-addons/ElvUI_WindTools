@@ -1095,20 +1095,15 @@ options.cooldownViewer = {
 					max = 2,
 					step = 0.01,
 				},
-				smooth = {
-					order = 5,
-					type = "toggle",
-					name = L["Smooth Bars"],
-				},
 				barTexture = {
-					order = 6,
+					order = 5,
 					type = "select",
 					dialogControl = "LSM30_Statusbar",
 					name = L["Bar Texture"],
 					values = LSM:HashTable("statusbar"),
 				},
 				colorLeft = {
-					order = 7,
+					order = 6,
 					type = "color",
 					name = L["Left Color"],
 					hasAlpha = true,
@@ -1123,7 +1118,7 @@ options.cooldownViewer = {
 					end,
 				},
 				colorRight = {
-					order = 8,
+					order = 7,
 					type = "color",
 					name = L["Right Color"],
 					hasAlpha = true,

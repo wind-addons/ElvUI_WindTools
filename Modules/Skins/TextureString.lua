@@ -4,12 +4,10 @@ local cache = W.Utilities.Cache
 
 local format = format
 local gsub = gsub
-local pcall = pcall
 local strfind = strfind
 local strsub = strsub
 local tonumber = tonumber
 local tostring = tostring
-local type = type
 
 local DEFAULT_SIZE = 64
 local CROP_MARGIN = 5
@@ -39,43 +37,13 @@ local function cacheTextureString(iconData, formattedString)
     return result
 end
 
--- Safe string find that handles tainted/secret values in TWW
-local function SafeStrFind(str, pattern)
-    if type(str) ~= "string" then return nil end
-    local success, result = pcall(strfind, str, pattern)
-    if success then
-        return result
-    end
-    return nil
-end
-
--- Safe gsub that handles tainted/secret values
-local function SafeGSub(str, pattern, repl)
-    if type(str) ~= "string" then return str end
-    local success, result = pcall(gsub, str, pattern, repl)
-    if success then
-        return result
-    end
-    return str
-end
-
 function S:StyleTextureString(text)
-    -- Early validation for nil and type check to handle TWW secret values
-    if text == nil or type(text) ~= "string" then
+    -- Check for secret/tainted values (TWW fix)
+    if not text or E:IsSecretValue(text) or not strfind(text, "|T.+|t") then
         return text
     end
 
-    -- Use safe string operations to handle potential tainted values
-    if not SafeStrFind(text, "|T.+|t") then
-        return text
-    end
-
-    return SafeGSub(text, "|T([^|]+)|t", function(iconData)
-        -- Validate iconData is a proper string
-        if type(iconData) ~= "string" then
-            return iconData
-        end
-
+    return gsub(text, "|T([^|]+)|t", function(iconData)
         local cachedValue = textureStringCache:Get(iconData)
         if cachedValue then
             return cachedValue

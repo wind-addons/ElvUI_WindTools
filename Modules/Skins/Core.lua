@@ -203,11 +203,7 @@ do
 	---@param g number? Green color component
 	---@param b number? Blue color component
 	local function colorCallback(shadow, r, g, b)
-		if not r or not g or not b then
-			return
-		end
-
-		if E:IsSecretValue(r) or E:IsSecretValue(g) or E:IsSecretValue(b) then
+		if not r or not g or not b or E:IsSecretValue(r) or E:IsSecretValue(g) or E:IsSecretValue(b) then
 			return
 		end
 

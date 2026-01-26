@@ -61,7 +61,22 @@ end
 local function reskinQuestContainer(container)
 	reskinContainer(container)
 	S:Proxy("HandleDropDownBox", _G.FML) -- Monitor the name "FML"
-	S:Proxy("HandleButton", container.TopBar.FilterDropdown, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, "right")
+	S:Proxy(
+		"HandleButton",
+		container.TopBar.FilterDropdown,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		true,
+		"right"
+	)
 end
 
 local function reskinWhatsNew(container)

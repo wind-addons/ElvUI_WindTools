@@ -528,7 +528,9 @@ local ButtonTypes = {
 		},
 		eventHandler = function(button, event, message)
 			if event == "CHAT_MSG_SYSTEM" then
-				if E:IsSecretValue(message) or not (strfind(message, friendOnline) or strfind(message, friendOffline)) then
+				if
+					E:IsSecretValue(message) or not (strfind(message, friendOnline) or strfind(message, friendOffline))
+				then
 					return
 				end
 			end

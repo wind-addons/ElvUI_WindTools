@@ -10,6 +10,7 @@ G.core = {
 	advancedCLEUEventTrace = false,
 	fixSetPassThroughButtons = true,
 	loginMessage = true,
+	midnightAPIFix = true,
 }
 
 G.developer = {

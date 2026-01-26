@@ -76,11 +76,11 @@ local IgnoreList = {
 local TexCoordIgnoreList = {
 	["Narci_MinimapButton"] = true,
 	["ZygorGuidesViewerMapIcon"] = true,
-	["LibDBIcon10_IRememberYou"] = true
+	["LibDBIcon10_IRememberYou"] = true,
 }
 
 local LibDBTextureIgnore = {
-	["LibDBIcon10_IRememberYou"] = true
+	["LibDBIcon10_IRememberYou"] = true,
 }
 
 local whiteList = {}

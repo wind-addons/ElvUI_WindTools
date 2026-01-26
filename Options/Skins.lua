@@ -553,12 +553,13 @@ options.cooldownViewer = {
 					type = "toggle",
 					name = L["Shadow"] .. " - " .. L["Icon"],
 				},
-				useBlizzardGlow = {
-					order = 3,
-					type = "toggle",
-					name = L["Use Blizzard Glow"],
-					desc = L["Disable ElvUI's LibCustomGlow for fixing cooldown animations."],
-				},
+				-- TODO: disable for now
+				-- useBlizzardGlow = {
+				-- 	order = 3,
+				-- 	type = "toggle",
+				-- 	name = L["Use Blizzard Glow"],
+				-- 	desc = L["Disable ElvUI's LibCustomGlow for fixing cooldown animations."],
+				-- },
 			},
 		},
 		essential = {
@@ -1086,29 +1087,15 @@ options.cooldownViewer = {
 					max = 2000,
 					step = 1,
 				},
-				iconHeightRatio = {
-					order = 4,
-					type = "range",
-					name = L["Icon Height Ratio"],
-					desc = L["Set the height ratio of icons inside Cooldown Viewer."],
-					min = 0.1,
-					max = 2,
-					step = 0.01,
-				},
-				smooth = {
-					order = 5,
-					type = "toggle",
-					name = L["Smooth Bars"],
-				},
 				barTexture = {
-					order = 6,
+					order = 4,
 					type = "select",
 					dialogControl = "LSM30_Statusbar",
 					name = L["Bar Texture"],
 					values = LSM:HashTable("statusbar"),
 				},
 				colorLeft = {
-					order = 7,
+					order = 5,
 					type = "color",
 					name = L["Left Color"],
 					hasAlpha = true,
@@ -1123,7 +1110,7 @@ options.cooldownViewer = {
 					end,
 				},
 				colorRight = {
-					order = 8,
+					order = 6,
 					type = "color",
 					name = L["Right Color"],
 					hasAlpha = true,
@@ -1960,12 +1947,6 @@ options.addons = {
 			name = L["Immersion"],
 			addonName = "Immersion",
 			addonskinsKey = "Immersion",
-		},
-		legionRemixHelper = {
-			order = 10,
-			type = "toggle",
-			name = L["Legion Remix Helper"],
-			addonName = "LegionRemixHelper",
 		},
 		manuscriptsJournal = {
 			order = 10,

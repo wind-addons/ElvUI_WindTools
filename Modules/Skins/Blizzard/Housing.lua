@@ -125,7 +125,7 @@ function S:Blizzard_HouseEditor()
 		return
 	end
 
-    local StorageButton = EditorFrame.StorageButton
+	local StorageButton = EditorFrame.StorageButton
 	if StorageButton then
 		self:CreateShadow(StorageButton)
 		StorageButton:NudgePoint(2)
@@ -140,7 +140,7 @@ function S:Blizzard_HouseEditor()
 
 		if StoragePanel.CollapseButton then
 			self:CreateShadow(StoragePanel.CollapseButton)
-            StoragePanel.CollapseButton:NudgePoint(2)
+			StoragePanel.CollapseButton:NudgePoint(2)
 		end
 	end
 

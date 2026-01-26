@@ -106,6 +106,11 @@ function A:GROUP_ROSTER_UPDATE()
 end
 
 function A:UNIT_SPELLCAST_SUCCEEDED(event, unitTarget, _, spellId)
+	-- TODO: check the new event returns
+	if spellId and E:IsSecretValue(spellId) then
+		return
+	end
+
 	self:Utility(event, UnitName(unitTarget), spellId)
 end
 

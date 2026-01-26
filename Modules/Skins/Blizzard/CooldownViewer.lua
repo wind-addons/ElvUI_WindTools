@@ -134,10 +134,6 @@ function S:CooldownManager_AcquireItemFrame(container, frame)
 			)
 			statusBarTex:ClearTextureSlice()
 			statusBarTex:SetTextureSliceMode(0)
-
-			if self.db.cooldownViewer.buffBar.smooth then
-				E:SetSmoothing(Bar, true)
-			end
 		end
 	else
 		return

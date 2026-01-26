@@ -42,7 +42,6 @@ local IsModifierKeyDown = IsModifierKeyDown
 local IsShiftKeyDown = IsShiftKeyDown
 local PlaySound = PlaySound
 local PlayerHasToy = PlayerHasToy
-local PlayerIsTimerunning = PlayerIsTimerunning
 local RegisterStateDriver = RegisterStateDriver
 local ResetCPUUsage = ResetCPUUsage
 local Screenshot = Screenshot
@@ -160,7 +159,6 @@ local hearthstoneAndToyIDList = {
 	140192, -- 達拉然爐石
 	141605, -- 飛行管理員的哨子
 	180817, -- 移轉暗語
-	250411, -- 時光奔走者的爐石 (Remix)
 	-- Engineering Wormholes
 	-- https://www.wowhead.com/items/name:Generator?filter=86:195;5:2;0:0
 	18984, -- 空間撕裂器 - 永望鎮
@@ -528,7 +526,9 @@ local ButtonTypes = {
 		},
 		eventHandler = function(button, event, message)
 			if event == "CHAT_MSG_SYSTEM" then
-				if not (strfind(message, friendOnline) or strfind(message, friendOffline)) then
+				if
+					E:IsSecretValue(message) or not (strfind(message, friendOnline) or strfind(message, friendOffline))
+				then
 					return
 				end
 			end
@@ -607,9 +607,6 @@ local ButtonTypes = {
 				DT.tooltip:SetText(L["Hearthstone"])
 				DT.tooltip:AddLine("\n")
 				AddDoubleLineForItem(GB.db.hearthstone.left, LEFT_BUTTON_ICON)
-				if PlayerIsTimerunning() then
-					AddDoubleLineForItem(250411, SCROLL_BUTTON_ICON)
-				end
 				AddDoubleLineForItem(GB.db.hearthstone.right, RIGHT_BUTTON_ICON)
 				DT.tooltip:Show()
 			end
@@ -627,7 +624,9 @@ local ButtonTypes = {
 		name = L["Home"],
 		icon = W.Media.Icons.barHome,
 		click = {
-			LeftButton = E.noop,
+			LeftButton = function()
+				_G.UIErrorsFrame:AddMessage(L["House data cannot be updated in combat."], RED_FONT_COLOR:GetRGBA())
+			end,
 			RightButton = function()
 				if not InCombatLockdown() then
 					_G.HousingFramesUtil.ToggleHousingDashboard()
@@ -1154,8 +1153,8 @@ function GB:ButtonOnEnter(button)
 		end
 	end
 
-	if button.type == "HOME" then
-		GB:UpdateHouseAttributes(button)
+	if button.type == "HOME" and not InCombatLockdown() then
+		self:UpdateHouseAttributes(button)
 	end
 end
 
@@ -1236,8 +1235,6 @@ function GB:UpdateButton(button, buttonType)
 		button:SetAttribute("type*", "macro")
 		self:UpdateHearthstoneButtonMacro(button, "left", config.item.item1)
 		self:UpdateHearthstoneButtonMacro(button, "right", config.item.item2)
-		-- Legion Remix Hearthstone (250411)
-		button:SetAttribute("macrotext3", PlayerIsTimerunning() and "/use item:250411" or "")
 		tinsert(self.HearthstoneButtons, button)
 	elseif config.macro then
 		button:SetAttribute("type*", "macro")
@@ -1458,17 +1455,39 @@ function GB:NEW_TOY_ADDED(_, toyID)
 end
 
 function GB:PLAYER_REGEN_ENABLED()
-	self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-	self:ProfileUpdate()
+	for i = 1, 2 * NUM_PANEL_BUTTONS do
+		local button = self.buttons[i]
+		if button.type == "HOME" then
+			button:SetAttribute("type1", "teleporthome")
+		end
+	end
+end
+
+function GB:PLAYER_REGEN_DISABLED()
+	for i = 1, 2 * NUM_PANEL_BUTTONS do
+		local button = self.buttons[i]
+
+		if button.type == "HOME" then
+			if not button:GetAttribute("house-guid") then
+				button:SetAttribute("type1", "click")
+			end
+		end
+	end
 end
 
 function GB:PLAYER_ENTERING_WORLD()
 	E:Delay(1, function()
-		if InCombatLockdown() then
-			self:RegisterEvent("PLAYER_REGEN_ENABLED")
-		else
+		F.TaskManager:OutOfCombat(function()
 			self:ProfileUpdate()
-		end
+
+			-- Try update house attributes once after entering world
+			for i = 1, 2 * NUM_PANEL_BUTTONS do
+				local button = self.buttons[i]
+				if button.type == "HOME" then
+					self:UpdateHouseAttributes(button)
+				end
+			end
+		end)
 	end)
 end
 
@@ -1484,7 +1503,9 @@ function GB:Initialize()
 	end
 
 	if InCombatLockdown() then
-		self:RegisterEvent("PLAYER_REGEN_ENABLED")
+		F.TaskManager:OutOfCombat(function()
+			self:Initialize()
+		end)
 		return
 	end
 
@@ -1506,6 +1527,8 @@ function GB:Initialize()
 	self:UpdateBar()
 	self:RegisterEvent("NEW_TOY_ADDED")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("COVENANT_CHOSEN", "UpdateHearthStoneTable")
 	self:RegisterEvent("PLAYER_HOUSE_LIST_UPDATED")
 	C_Housing_GetPlayerOwnedHouses()
@@ -1562,12 +1585,9 @@ function GB:ProfileUpdate()
 			self:UpdateLayout()
 			self:UpdateBar()
 		else
-			if InCombatLockdown() then
-				self:RegisterEvent("PLAYER_REGEN_ENABLED")
-				return
-			else
+			F.TaskManager:OutOfCombat(function()
 				self:Initialize()
-			end
+			end)
 		end
 	else
 		if self.initialized then

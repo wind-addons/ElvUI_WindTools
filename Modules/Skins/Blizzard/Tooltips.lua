@@ -13,6 +13,10 @@ local function styleIconsInLine(line, text)
 	end
 
 	text = text or line:GetText()
+	if not text or E:IsSecretValue(text) then
+		return
+	end
+
 	local styledText = S:StyleTextureString(text)
 	if styledText and styledText ~= text then
 		F.CallMethod(line, "SetText", styledText)

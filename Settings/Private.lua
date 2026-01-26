@@ -502,7 +502,7 @@ V.skins = {
 	cooldownViewer = {
 		enable = true,
 		general = {
-			useBlizzardGlow = true,
+			-- useBlizzardGlow = true,
 			iconShadow = true,
 			barShadow = true,
 		},
@@ -558,7 +558,6 @@ V.skins = {
 			enable = true,
 			frameStrata = "MEDIUM",
 			frameLevel = 1,
-			smooth = true,
 			barTexture = "WindTools Glow",
 			colorLeft = { r = 0.32941, g = 0.52157, b = 0.93333, a = 1 },
 			colorRight = { r = 0.25882, g = 0.84314, b = 0.86667, a = 1 },
@@ -574,7 +573,6 @@ V.skins = {
 		bugSack = true,
 		collectionator = true,
 		immersion = true,
-		legionRemixHelper = true,
 		manuscriptsJournal = true,
 		mountRoutePlanner = true,
 		meetingStone = true,

@@ -29036,7 +29036,6 @@ read_globals = {
 	"TogglePetAutocast",
 	"TogglePlayerSpellsFrame",
 	"ToggleProfessionsBook",
-	"ToggleProfessionsItemFlyout",
 	"ToggleQuestLog",
 	"ToggleQuickJoinPanel",
 	"ToggleRafPanel",

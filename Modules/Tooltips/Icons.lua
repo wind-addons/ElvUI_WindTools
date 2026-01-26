@@ -100,7 +100,7 @@ local iconFunctions = {
 	end,
 }
 
-local function setTooltipIcon(tt, data, type)
+local function SetTooltipIcon(tt, data, type)
 	local icon = iconFunctions[type] and iconFunctions[type](data)
 	local title = data.lines and data.lines[1] and data.lines[1].leftText
 	local iconDB = E.private.WT.tooltips.titleIcon
@@ -112,7 +112,7 @@ local function setTooltipIcon(tt, data, type)
 	for i = 1, 3 do
 		local row = _G[tt:GetName() .. "TextLeft" .. i]
 		local existingText = row and row:GetText()
-		if existingText and strfind(existingText, title, 1, true) then
+		if existingText and E:NotSecretValue(existingText) and strfind(existingText, title, 1, true) then
 			if iconString and existingText and not strfind(existingText, "^|T") then
 				row:SetText(iconString .. " " .. existingText)
 			end
@@ -121,45 +121,13 @@ local function setTooltipIcon(tt, data, type)
 	end
 end
 
-local function alignShoppingTooltip(tt)
-	if not tt or not tt.GetNumPoints or tt:GetNumPoints() < 2 or not F.IsMethodInternalized(tt, "SetPoint") then
-		return
-	end
-
-	local shoppingTooltip1 = _G.ShoppingTooltip1
-	local shoppingTooltip2 = _G.ShoppingTooltip2
-
-	local point, anchorFrame = shoppingTooltip1:GetPoint(2)
-	if shoppingTooltip2:IsShown() then
-		if point == "TOP" then
-			shoppingTooltip1:ClearAllPoints()
-			shoppingTooltip2:ClearAllPoints()
-			F.CallMethod(shoppingTooltip1, "SetPoint", "TOPLEFT", anchorFrame, "TOPRIGHT", 3, 0)
-			F.CallMethod(shoppingTooltip2, "SetPoint", "TOPLEFT", shoppingTooltip1, "TOPRIGHT", 3, 0)
-		elseif point == "RIGHT" then
-			shoppingTooltip1:ClearAllPoints()
-			shoppingTooltip2:ClearAllPoints()
-			F.CallMethod(shoppingTooltip1, "SetPoint", "TOPRIGHT", anchorFrame, "TOPLEFT", -3, 0)
-			F.CallMethod(shoppingTooltip2, "SetPoint", "TOPRIGHT", shoppingTooltip1, "TOPLEFT", -3, 0)
-		end
-	else
-		if point == "LEFT" then
-			shoppingTooltip1:ClearAllPoints()
-			F.CallMethod(shoppingTooltip1, "SetPoint", "TOPLEFT", anchorFrame, "TOPRIGHT", 3, 0)
-		elseif point == "RIGHT" then
-			shoppingTooltip1:ClearAllPoints()
-			F.CallMethod(shoppingTooltip1, "SetPoint", "TOPRIGHT", anchorFrame, "TOPLEFT", -3, 0)
-		end
-	end
-end
-
-local function handle(type)
+local function Handle(type)
 	TooltipDataProcessor_AddTooltipPostCall(type, function(tt, data)
 		if not data or not data.id or not data.lines or not tt.GetName or not tContains(tooltips, tt:GetName()) then
 			return
 		end
 
-		setTooltipIcon(tt, data, type)
+		SetTooltipIcon(tt, data, type)
 	end)
 end
 
@@ -229,11 +197,10 @@ end
 function T:Icons()
 	if E.private.WT.tooltips.titleIcon.enable then
 		for _type in pairs(iconFunctions) do
-			handle(_type)
+			Handle(_type)
 		end
 
 		F.InternalizeMethod(_G.ShoppingTooltip1, "SetPoint")
-		hooksecurefunc(_G.ShoppingTooltip1, "SetPoint", alignShoppingTooltip)
 
 		self:ReskinRewardIcon(_G.GameTooltip.ItemTooltip)
 		self:ReskinRewardIcon(_G.EmbeddedItemTooltip.ItemTooltip)

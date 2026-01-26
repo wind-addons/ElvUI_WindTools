@@ -25,7 +25,6 @@ local GetTime = GetTime
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
 local MuteSoundFile = MuteSoundFile
-local PlayerIsTimerunning = PlayerIsTimerunning
 local SetAchievementComparisonUnit = SetAchievementComparisonUnit
 local UnitExists = UnitExists
 local UnitGUID = UnitGUID
@@ -272,10 +271,6 @@ local function SetProgressionInfo(tt, guid)
 				break
 			end
 		end
-	end
-
-	if PlayerIsTimerunning() then
-		displayMythicPlus = false
 	end
 
 	if db.mythicPlus.enable and cache[guid].info.mythicPlus and displayMythicPlus then

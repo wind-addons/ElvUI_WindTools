@@ -145,17 +145,17 @@ do
 end
 
 function A:IsGroupMember(name)
-	if name then
-		if UnitInParty(name) then
-			return 1
-		elseif UnitInRaid(name) then
-			return 2
-		elseif name == E.myname then
-			return 3
-		end
+	if not name or E:IsSecretValue(name) then
+		return false
 	end
 
-	return false
+	if UnitInParty(name) then
+		return 1
+	elseif UnitInRaid(name) then
+		return 2
+	elseif name == E.myname then
+		return 3
+	end
 end
 
 function A:Initialize()

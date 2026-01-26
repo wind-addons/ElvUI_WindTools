@@ -561,12 +561,7 @@ function MF:HandleAddon(_, addon)
 
 	-- fix from BlizzMove
 	F.TaskManager:OutOfCombat(function()
-		if addon == "Blizzard_Collections" then
-			local checkbox = _G.WardrobeTransmogFrame.ToggleSecondaryAppearanceCheckbox
-			checkbox.Label:ClearAllPoints()
-			checkbox.Label:Point("LEFT", checkbox, "RIGHT", 2, 1)
-			checkbox.Label:Point("RIGHT", checkbox, "RIGHT", 160, 1)
-		elseif addon == "Blizzard_EncounterJournal" then
+		if addon == "Blizzard_EncounterJournal" then
 			local replacement = function(rewardFrame)
 				if rewardFrame.data then
 					_G.EncounterJournalTooltip:ClearAllPoints()

@@ -337,9 +337,10 @@ do --this can save some main file locals
 			z["Player-5813-0301DEC1"] = itsSimpy -- Warlock: Yubi
 			-- Simpy Era (5149: Mankrik)
 			z["Player-5149-04172B76"] = itsSimpy -- Warlock: Simpy
-			-- Simpy Anniversary (6103: Dreamscythe)
-			z["Player-6103-02A886D5"] = itsSimpy -- Warlock: Simpy
-			z["Player-6103-0301DECC"] = itsSimpy -- Priest: Hunie
+		elseif E.TBC then
+			-- Simpy TBC Anniversary (6064: Dreamscythe)
+			z["Player-6064-02A886D5"] = itsSimpy -- Warlock: Simpy
+			z["Player-6064-0301DECC"] = itsSimpy -- Priest: Hunie
 		elseif E.Mists then
 			-- Simpy (4385: Pagle)
 			z["Player-4385-05E5F6DF"] = itsSimpy -- Shaman:	Kybi
@@ -505,11 +506,6 @@ do --this can save some main file locals
 		end
 	elseif portal == "EU" then
 		if E.Classic then
-			-- Luckyone Anniversary (6112: Spineshatter EU)
-			z["Player-6112-028A3A6D"] = ElvGreen -- [Horde] Hunter
-			z["Player-6112-02A2F754"] = ElvGreen -- [Horde] Priest
-			z["Player-6112-02A39E0E"] = ElvGreen -- [Horde] Warlock
-			z["Player-6112-02BBE8AB"] = ElvGreen -- [Horde] Hunter 2
 			-- Luckyone Seasonal (5827: Living Flame EU)
 			z["Player-5827-0273D732"] = ElvGreen -- [Alliance] Hunter
 			z["Player-5827-0273D63E"] = ElvGreen -- [Alliance] Paladin
@@ -528,6 +524,12 @@ do --this can save some main file locals
 			-- Luckyone Classic Era (5233: Firemaw)
 			z["Player-5233-01D22A72"] = ElvGreen -- [Horde] Hunter: Unluckyone
 			z["Player-5233-01D27011"] = ElvGreen -- [Horde] Druid: Luckydruid
+		elseif E.TBC then
+			-- Luckyone Anniversary (6412: Spineshatter EU)
+			z["Player-6412-028A3A6D"] = ElvGreen -- [Horde] Hunter
+			z["Player-6412-0336641F"] = ElvGreen -- [Horde] Priest
+			z["Player-6412-02A39E0E"] = ElvGreen -- [Horde] Warlock
+			z["Player-6412-02BBE8AB"] = ElvGreen -- [Horde] Hunter 2
 		elseif E.Mists then
 			-- Luckyone (Horde: Garalon, Alliance: Shek'zeer)
 			z["Player-4454-060E2FD9"] = ElvGreen -- [Horde] Mage
@@ -572,6 +574,7 @@ do --this can save some main file locals
 			z["Player-1598-0F5E4639"] = ElvGreen -- [Alliance] Druid: Luckyone
 			z["Player-1598-0F3E51B0"] = ElvGreen -- [Alliance] Druid: Luckydruid
 			z["Player-1598-0FB03F89"] = ElvGreen -- [Alliance] Monk
+			z["Player-1598-0FBCD9A2"] = ElvGreen -- [Alliance] DH
 			z["Player-1598-0F46FF5A"] = ElvGreen -- [Horde] Evoker
 			z["Player-1598-0F92E2B9"] = ElvGreen -- [Horde] Evoker 2
 			z["Player-1598-0BFF3341"] = ElvGreen -- [Horde] DH
@@ -585,7 +588,6 @@ do --this can save some main file locals
 			z["Player-1598-0BF8013A"] = ElvGreen -- [Horde] Warrior
 			z["Player-1598-0BF56103"] = ElvGreen -- [Horde] Shaman
 			z["Player-1598-0F87B5AA"] = ElvGreen -- [Alliance] Priest
-			z["Taylorswift-LaughingSkull"] = ElvGreen -- [Alliance] Legion Remix
 			-- Sneaky Darth
 			z["Player-1925-05F494A6"] = ElvPurple
 			z["Player-1925-05F495A1"] = ElvPurple
@@ -760,7 +762,6 @@ local function ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 	-- Minor hack, because chat channel filtering is backed by the client, but driven entirely from Lua.
 	-- This solves the issue of Guides abdicating their status, and then re-applying in the same game session, unless ChatFrame_AddChannel
 	-- is called, the channel filter will be off even though it's still enabled in the client, since abdication removes the chat channel and its config.
-
 	-- Only add to default (since multiple chat frames receive the event and we don't want to add to others)
 	if chatFrame ~= _G.DEFAULT_CHAT_FRAME then
 		return false
@@ -1072,7 +1073,7 @@ function CT:ChatFrame_MessageEventHandler(
 		notChatHistory = true
 	end
 
-	local isProtected = issecretvalue and issecretvalue(arg2)
+	local isProtected = E:IsSecretValue(arg2)
 
 	if _G.TextToSpeechFrame_MessageEventHandler and notChatHistory then
 		_G.TextToSpeechFrame_MessageEventHandler(
@@ -1473,7 +1474,12 @@ function CT:ChatFrame_MessageEventHandler(
 			local typeID = CH:GetAccessID(infoType, arg8, arg12)
 
 			if arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
-				_G.ChatFrame_UpdateDefaultChatTarget(frame)
+				if frame.UpdateDefaultChatTarget then
+					frame:UpdateDefaultChatTarget()
+				else
+					_G.ChatFrame_UpdateDefaultChatTarget(frame)
+				end
+
 				frame.editBox:UpdateNewcomerEditBoxHint()
 			else
 				if arg1 == "YOU_LEFT" then

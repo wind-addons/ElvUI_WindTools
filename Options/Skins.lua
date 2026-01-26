@@ -553,12 +553,13 @@ options.cooldownViewer = {
 					type = "toggle",
 					name = L["Shadow"] .. " - " .. L["Icon"],
 				},
-				useBlizzardGlow = {
-					order = 3,
-					type = "toggle",
-					name = L["Use Blizzard Glow"],
-					desc = L["Disable ElvUI's LibCustomGlow for fixing cooldown animations."],
-				},
+				-- TODO: disable for now
+				-- useBlizzardGlow = {
+				-- 	order = 3,
+				-- 	type = "toggle",
+				-- 	name = L["Use Blizzard Glow"],
+				-- 	desc = L["Disable ElvUI's LibCustomGlow for fixing cooldown animations."],
+				-- },
 			},
 		},
 		essential = {

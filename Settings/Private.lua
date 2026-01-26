@@ -502,7 +502,7 @@ V.skins = {
 	cooldownViewer = {
 		enable = true,
 		general = {
-			useBlizzardGlow = true,
+			-- useBlizzardGlow = true,
 			iconShadow = true,
 			barShadow = true,
 		},

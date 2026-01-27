@@ -96,18 +96,20 @@ options.quickFocus = {
 			},
 		},
 		safeMark = {
-			order = 8,
+			order = 7,
 			type = "toggle",
 			name = L["Safe Mark"],
-			desc = L["Only set the raid marker on castable targets."]
-				.. "\n\n"
-				.. L["However, this will cause the marker not being set on some NPCs or objects."],
+			desc = format(
+				"%s\n\n%s",
+				L["Only set raid markers on castable targets to prevent 'invalid target' errors by avoiding enemy players."],
+				L["Note: This may prevent auto-marking certain NPCs or objects."]
+			),
 			disabled = function()
 				return not E.private.WT.unitFrames.quickFocus.enable or not E.private.WT.unitFrames.quickFocus.setMark
 			end,
 		},
 		notice = {
-			order = 7,
+			order = 8,
 			type = "description",
 			name = format(
 				"%s %s",

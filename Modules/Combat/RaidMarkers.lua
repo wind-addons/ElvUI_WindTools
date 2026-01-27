@@ -274,35 +274,18 @@ function RM:CreateButtons()
 		elseif i == 9 then -- Clear All
 			tex:SetTexture("Interface\\BUTTONS\\UI-GroupLoot-Pass-Up")
 
-			button:SetAttribute("type", "click")
+			button:ClearAttribute("marker")
+			local prefix = strlower(RM.modifierString)
 			if not self.db.inverse then
-				button:SetScript("OnClick", function()
-					if _G[format("Is%sKeyDown", RM.modifierString)]() then
-						ClearRaidMarker()
-					else
-						local now = GetTime()
-						if now - lastClear > 1 then -- limiting
-							lastClear = now
-							for j = 8, 0, -1 do
-								E:Delay((8 - j) * 0.34, SetRaidTarget, "player", j)
-							end
-						end
-					end
-				end)
+				button:SetAttribute(prefix .. "-type*", "worldmarker")
+				button:SetAttribute(prefix .. "-action*", "clear")
+				button:SetAttribute("type*", "raidtarget")
+				button:SetAttribute("action", "clear-all")
 			else
-				button:SetScript("OnClick", function(btn)
-					if _G[format("Is%sKeyDown", RM.modifierString)]() then
-						local now = GetTime()
-						if now - lastClear > 1 then -- limiting
-							lastClear = now
-							for j = 8, 0, -1 do
-								E:Delay((8 - j) * 0.34, SetRaidTarget, "player", j)
-							end
-						end
-					else
-						ClearRaidMarker()
-					end
-				end)
+				button:SetAttribute(prefix .. "-type*", "raidtarget")
+				button:SetAttribute(prefix .. "-action*", "clear-all")
+				button:SetAttribute("type*", "worldmarker")
+				button:SetAttribute("action", "clear")
 			end
 		elseif i == 10 then -- Ready Check & Combat Log
 			tex:SetTexture("Interface\\RaidFrame\\ReadyCheck-Ready")
@@ -351,7 +334,7 @@ function RM:CreateButtons()
 			if not self.db.inverse then
 				tooltipText = format(
 					"%s\n%s",
-					L["Click to clear all marks."] .. " " .. C.StringByTemplate(L["takes 3s"], "teal-400"),
+					L["Click to clear all marks."],
 					format(L["%s + Click to remove all worldmarkers."], RM.modifierString)
 				)
 			else

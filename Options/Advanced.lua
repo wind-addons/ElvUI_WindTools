@@ -86,22 +86,8 @@ options.gameFix = {
 			end,
 			width = 2,
 		},
-		advancedCLEUEventTrace = {
-			order = 2,
-			type = "toggle",
-			name = L["Advanced CLEU Event Trace"],
-			desc = L["Enhanced Combat Log Events in /etrace frame."],
-			get = function(info)
-				return E.global.WT.core.advancedCLEUEventTrace
-			end,
-			set = function(info, value)
-				E.global.WT.core.advancedCLEUEventTrace = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
-			width = 2,
-		},
 		fixSetPassThroughButtons = {
-			order = 3,
+			order = 2,
 			type = "toggle",
 			name = L["Fix SetPassThroughButtons"],
 			desc = L["Fix the issue that sometimes SetPassThroughButtons got tainted."],
@@ -115,7 +101,7 @@ options.gameFix = {
 			width = 2,
 		},
 		midnightAPIFix = {
-			order = 4,
+			order = 3,
 			type = "toggle",
 			name = L["Midnight API Fix"],
 			desc = L["Fix the issues caused by Blizzard."],

@@ -17,8 +17,6 @@ local type = type
 local unpack = unpack
 local xpcall = xpcall
 
-local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
-local GetCurrentCombatTextEventInfo = GetCurrentCombatTextEventInfo
 local InCombatLockdown = InCombatLockdown
 
 local C_PartyInfo_InviteUnit = C_PartyInfo.InviteUnit
@@ -216,22 +214,6 @@ function W:ChangelogReadAlert()
 	end
 end
 
-function W:EventTraceLogEvent(trace, event, ...)
-	if event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "COMBAT_LOG_EVENT" then
-		self.hooks[_G.EventTrace].LogEvent(trace, event, CombatLogGetCurrentEventInfo())
-	elseif event == "COMBAT_TEXT_UPDATE" then
-		self.hooks[_G.EventTrace].LogEvent(trace, event, (...), GetCurrentCombatTextEventInfo())
-	else
-		self.hooks[_G.EventTrace].LogEvent(trace, event, ...)
-	end
-end
-
-function W:TryReplaceEventTraceLogEvent()
-	if _G.EventTrace and _G.EventTrace.LogEvent and not self:IsHooked(_G.EventTrace, "LogEvent") then
-		W:RawHook(_G.EventTrace, "LogEvent", "EventTraceLogEvent", true)
-	end
-end
-
 function W:GameFixing()
 	if E.global.WT.core.cvarAlert then
 		self:RegisterEvent("CVAR_UPDATE", function(_, cvar, value)
@@ -239,14 +221,6 @@ function W:GameFixing()
 				E:StaticPopup_Show("WINDTOOLS_BUTTON_FIX_RELOAD")
 			end
 		end)
-	end
-
-	if E.global.WT.core.advancedCLEUEventTrace then
-		if _G.EventTrace then
-			self:TryReplaceEventTraceLogEvent()
-		else
-			self:RegisterEvent("ADDON_LOADED")
-		end
 	end
 
 	if E.global.WT.core.fixSetPassThroughButtons then
@@ -312,17 +286,5 @@ do -- Midnight API Fix
 			return
 		end
 		SetTooltipMoney_OLD(frame, money, type, prefixText, suffixText)
-	end
-end
-
-function W:ADDON_LOADED(event, addOnName)
-	if addOnName ~= "Blizzard_EventTrace" then
-		return
-	end
-
-	self:UnregisterEvent("ADDON_LOADED")
-
-	if E.global.WT.core.advancedCLEUEventTrace then
-		self:TryReplaceEventTraceLogEvent()
 	end
 end

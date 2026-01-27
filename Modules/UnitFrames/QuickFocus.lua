@@ -93,14 +93,7 @@ end
 function QF:GetMacroText()
 	local macroText = "/focus mouseover"
 	if self.db.setMark and self.db.markNumber and self.db.markNumber >= 1 and self.db.markNumber <= 8 then
-		local extra = strjoin(
-			" ",
-			"/run",
-			'local u,f="mouseover",UnitFactionGroup;',
-			format('if(not UnitIsPlayer(u)or f(u)==f("player"))and GetRaidTargetIndex(u)~=%d then', self.db.markNumber),
-			format('SetRaidTarget("focus",%d)', self.db.markNumber),
-			"end"
-		)
+		local extra = strjoin("\n", "/tm [@focus,exists] 0", "/tm [@focus,exists] " .. self.db.markNumber)
 		return macroText .. "\n" .. extra
 	end
 

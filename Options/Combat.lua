@@ -5,9 +5,8 @@ local RM = W:GetModule("RaidMarkers")
 local QK = W:GetModule("QuickKeystone")
 
 local format = format
-local select = select
 
-local UnitClass = UnitClass
+local Constants_PartyCountdownConstants_MaxCountdownSeconds = Constants.PartyCountdownConstants.MaxCountdownSeconds
 
 local options = W.options.combat.args
 
@@ -193,7 +192,7 @@ options.raidMarkers = {
 					name = L["Count Down Time"],
 					desc = L["Count down time in seconds."],
 					min = 1,
-					max = 30,
+					max = Constants_PartyCountdownConstants_MaxCountdownSeconds,
 					step = 1,
 				},
 			},

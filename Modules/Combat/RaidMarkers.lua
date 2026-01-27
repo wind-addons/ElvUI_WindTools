@@ -11,17 +11,12 @@ local format = format
 local gsub = gsub
 local strupper = strupper
 
-local ClearRaidMarker = ClearRaidMarker
 local CreateFrame = CreateFrame
-local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
 local RegisterStateDriver = RegisterStateDriver
-local SetRaidTarget = SetRaidTarget
 local UnregisterStateDriver = UnregisterStateDriver
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-
-local lastClear = 0
 
 local TargetToWorld = {
 	[1] = 5,
@@ -240,7 +235,7 @@ function RM:UpdateCountDownButton()
 		button:SetAttribute("macrotext2", "/dbm pull 0")
 	else
 		button:SetAttribute("macrotext1", _G.SLASH_COUNTDOWN1 .. " " .. self.db.countDownTime)
-		button:SetAttribute("macrotext2", _G.SLASH_COUNTDOWN1 .. " " .. -1)
+		button:SetAttribute("macrotext1", _G.SLASH_COUNTDOWN1 .. " " .. 0)
 	end
 end
 
@@ -304,7 +299,7 @@ function RM:CreateButtons()
 				button:SetAttribute("macrotext2", "/dbm pull 0")
 			else
 				button:SetAttribute("macrotext1", _G.SLASH_COUNTDOWN1 .. " " .. self.db.countDownTime)
-				button:SetAttribute("macrotext2", _G.SLASH_COUNTDOWN1 .. " " .. -1)
+				button:SetAttribute("macrotext2", _G.SLASH_COUNTDOWN1 .. " " .. 0)
 			end
 		end
 

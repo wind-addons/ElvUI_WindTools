@@ -35,6 +35,7 @@ local GetInspectSpecialization = GetInspectSpecialization
 local GetInventoryItemLink = GetInventoryItemLink
 local GetServerExpansionLevel = GetServerExpansionLevel
 local GetSpecializationInfoByID = GetSpecializationInfoByID
+local ItemLocation = ItemLocation
 local Mixin = Mixin
 local SetPortraitTexture = SetPortraitTexture
 local UnitClass = UnitClass
@@ -314,7 +315,7 @@ function circleIconPrototype:AsEnchant(data)
 end
 
 ---Applies the texture and border color to the circle icon
----@param texture string|number The texture path or texture ID
+---@param texture number|string The texture path or texture ID
 ---@param quality Enum.ItemQuality? The item quality for the border color
 ---@param colorTemplate ColorTemplate? The color template for the border
 ---@param craftingTier number? The crafting quality level for the overlay
@@ -537,7 +538,11 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 	local itemName, _, itemQuality, _, _, itemType, itemSubType, _, _, itemTexture, _, itemClassID, _, _, expansionID, setID, isCraftingReagent =
 		C_Item_GetItemInfo(link)
 
-	local actualItemLevel = C_Item_GetDetailedItemLevelInfo(link)
+	local itemLocation = ItemLocation:CreateFromEquipmentSlot(slotIndex) --[[@as ItemLocation]]
+	local actualItemLevel = C_Item.GetCurrentItemLevel(itemLocation)
+	if not actualItemLevel or actualItemLevel <= 0 then
+		actualItemLevel = C_Item_GetDetailedItemLevelInfo(link)
+	end
 
 	local craftingAtlas ---@type string?
 	local cleanLink = gsub(link, "|h%[(.+)%]|h", function(raw)
@@ -636,7 +641,7 @@ end
 ---@field itemLevel number
 
 ---Collects unit statistics for comparison
----@param unit UnitToken The unit to collect stats from
+---@param unit string The unit to collect stats from
 ---@param itemLevel number? The item level of the unit
 ---@return UnitStatistics stats Table containing all collected statistics
 local function GetUnitStats(unit, itemLevel)

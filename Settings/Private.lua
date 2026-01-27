@@ -777,6 +777,7 @@ V.unitFrames = {
 		modifier = "shift",
 		button = "BUTTON1",
 		setMark = false,
+		safeMark = false,
 		markNumber = 3,
 	},
 	roleIcon = {

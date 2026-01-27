@@ -2,12 +2,12 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local UF = E:GetModule("UnitFrames")
 local QF = W:NewModule("QuickFocus", "AceHook-3.0", "AceEvent-3.0")
 
-local format = format
 local next = next
 local pairs = pairs
 local strjoin = strjoin
 local strmatch = strmatch
 local strsub = strsub
+local tAppendAll = tAppendAll
 
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
@@ -91,13 +91,23 @@ function QF:WaitUnitframesLoad(triedTimes)
 end
 
 function QF:GetMacroText()
-	local macroText = "/focus mouseover"
+	local lines = { "/focus mouseover" }
+
 	if self.db.setMark and self.db.markNumber and self.db.markNumber >= 1 and self.db.markNumber <= 8 then
-		local extra = strjoin("\n", "/tm [@focus,exists] 0", "/tm [@focus,exists] " .. self.db.markNumber)
-		return macroText .. "\n" .. extra
+		if self.db.safeMark then
+			tAppendAll(lines, {
+				"/tm [@focus,exists,help][@focus,exists,harm] 0",
+				"/tm [@focus,exists,help][@focus,exists,harm] " .. self.db.markNumber,
+			})
+		else
+			tAppendAll(lines, {
+				"/tm [@focus,exists] 0",
+				"/tm [@focus,exists] " .. self.db.markNumber,
+			})
+		end
 	end
 
-	return macroText
+	return strjoin("\n", unpack(lines))
 end
 
 function QF:Initialize()

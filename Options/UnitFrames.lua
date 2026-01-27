@@ -95,6 +95,17 @@ options.quickFocus = {
 				[8] = F.GetIconString("Interface\\TargetingFrame\\UI-RaidTargetingIcon_8"),
 			},
 		},
+		safeMark = {
+			order = 8,
+			type = "toggle",
+			name = L["Safe Mark"],
+			desc = L["Only set the raid marker on castable targets."]
+				.. "\n\n"
+				.. L["However, this will cause the marker not being set on some NPCs or objects."],
+			disabled = function()
+				return not E.private.WT.unitFrames.quickFocus.enable or not E.private.WT.unitFrames.quickFocus.setMark
+			end,
+		},
 		notice = {
 			order = 7,
 			type = "description",

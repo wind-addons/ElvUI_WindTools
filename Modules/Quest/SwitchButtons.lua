@@ -94,6 +94,9 @@ function SB:UpdateLayout()
 			self:CreateButton(L["[ABBR] Announcement"], L["Announce your quest progress to other players."])
 		self.bar.announcement:SetScript("OnClick", function()
 			E.db.WT.announcement.quest.paused = not self.bar.announcement:GetChecked()
+			if not E.db.WT.announcement.quest.enable and self.bar.announcement:GetChecked() then
+				E.db.WT.announcement.quest.enable = true
+			end
 		end)
 	end
 

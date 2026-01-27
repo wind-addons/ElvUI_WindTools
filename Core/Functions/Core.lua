@@ -30,7 +30,7 @@ local PlaySoundFile = PlaySoundFile
 ---@cast F Functions
 
 ---Set font style from database settings
----@param text FontString The FontString object to modify
+---@param text FontString|SimpleFontString The FontString object to modify
 ---@param db table Font style database containing name, size, and style
 function F.SetFontWithDB(text, db)
 	if not text or not text.GetFont then
@@ -49,7 +49,7 @@ function F.SetFontWithDB(text, db)
 end
 
 ---Set font color from database settings
----@param text FontString The FontString object to modify
+---@param text FontString|SimpleFontString The FontString object to modify
 ---@param db table Font color database containing r, g, b, a values
 function F.SetFontColorWithDB(text, db)
 	if not text or not text.GetFont then
@@ -65,7 +65,7 @@ function F.SetFontColorWithDB(text, db)
 end
 
 ---Change font outline style to OUTLINE and remove shadow
----@param text FontString The FontString object to modify
+---@param text FontString|SimpleFontString The FontString object to modify
 ---@param font string? Font path or name (optional)
 ---@param size number|string? Font size or size change amount as string (optional)
 ---@param style string? Font outline style. (optional, default is "OUTLINE")

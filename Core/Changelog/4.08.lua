@@ -67,7 +67,7 @@ W.Changelog[408] = {
 			"[Quick Focus] Improved the logic of focus switching, fixed the automatic marking feature.",
 			"[Skins] Fixed some issues related to Cooldown Manager.",
 			"[World Map] Updated map fog of war data for 12.0.",
-			"[Chat Text] Synchronized the latest changes in ElvUI chat, fixed some
+			"[Chat Text] Synchronized the latest changes in ElvUI chat, fixed some errors.",
 		},
 		["koKR"] = {
 			"[공격대 징표] 지우기 버튼 및 카운트다운 중지 기능이 수정되었습니다.",

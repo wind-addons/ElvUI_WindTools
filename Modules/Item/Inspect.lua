@@ -45,6 +45,7 @@ local UnitLevel = UnitLevel
 local UnitName = UnitName
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+local C_Item_GetCurrentItemLevel = C_Item.GetCurrentItemLevel
 local C_Item_GetDetailedItemLevelInfo = C_Item.GetDetailedItemLevelInfo
 local C_Item_GetItemGem = C_Item.GetItemGem
 local C_Item_GetItemInfo = C_Item.GetItemInfo
@@ -539,7 +540,7 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 		C_Item_GetItemInfo(link)
 
 	local itemLocation = ItemLocation:CreateFromEquipmentSlot(slotIndex) --[[@as ItemLocation]]
-	local actualItemLevel = C_Item.GetCurrentItemLevel(itemLocation)
+	local actualItemLevel = C_Item_GetCurrentItemLevel(itemLocation)
 	if not actualItemLevel or actualItemLevel <= 0 then
 		actualItemLevel = C_Item_GetDetailedItemLevelInfo(link)
 	end

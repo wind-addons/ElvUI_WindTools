@@ -10,6 +10,7 @@ local abs = abs
 local format = format
 local gsub = gsub
 local strupper = strupper
+local strlower = strlower
 
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown

@@ -1516,76 +1516,94 @@ function CT:ChatFrame_MessageEventHandler(
 				)
 			end
 		elseif chatType == "BN_INLINE_TOAST_ALERT" then
-			local globalstring = _G["BN_INLINE_TOAST_" .. arg1]
-			if not globalstring then
-				GMError(format("Missing global string for %q", "BN_INLINE_TOAST_" .. arg1))
-				return
-			end
+			if E:NotSecretValue(arg1) then
+				local globalstring = _G["BN_INLINE_TOAST_" .. arg1]
+				if not globalstring then
+					GMError(format("Missing global string for %q", "BN_INLINE_TOAST_" .. arg1))
+					return
+				end
 
-			local message
-			if arg1 == "FRIEND_REQUEST" then
-				message = globalstring
-			elseif arg1 == "FRIEND_PENDING" then
-				message = format(_G.BN_INLINE_TOAST_FRIEND_PENDING, BNGetNumFriendInvites())
-			elseif arg1 == "FRIEND_REMOVED" or arg1 == "BATTLETAG_FRIEND_REMOVED" then
-				message = format(globalstring, arg2)
-			elseif arg1 == "FRIEND_ONLINE" or arg1 == "FRIEND_OFFLINE" then
-				local accountInfo = C_BattleNet_GetAccountInfoByID(arg13)
-				local gameInfo = accountInfo and accountInfo.gameAccountInfo
-				if gameInfo and gameInfo.clientProgram and gameInfo.clientProgram ~= "" then
-					C_Texture_GetTitleIconTexture(
-						gameInfo.clientProgram,
-						TitleIconVersion_Small,
-						function(success, texture)
-							if success then
-								local charName = _G.BNet_GetValidatedCharacterNameWithClientEmbeddedTexture(
-									gameInfo.characterName,
-									accountInfo.battleTag,
-									texture,
-									32,
-									32,
-									10
-								)
-								local linkDisplayText = format(noBrackets and "%s (%s)" or "[%s] (%s)", arg2, charName)
-								local playerLink = CH:GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
-								frame:AddMessage(
-									format(globalstring, playerLink),
-									info.r,
-									info.g,
-									info.b,
-									info.id,
-									nil,
-									nil,
-									nil,
-									nil,
-									nil,
-									isHistory,
-									historyTime
-								)
+				local message
+				if arg1 == "FRIEND_REQUEST" then
+					message = globalstring
+				elseif arg1 == "FRIEND_PENDING" then
+					message = format(_G.BN_INLINE_TOAST_FRIEND_PENDING, BNGetNumFriendInvites())
+				elseif arg1 == "FRIEND_REMOVED" or arg1 == "BATTLETAG_FRIEND_REMOVED" then
+					message = format(globalstring, arg2)
+				elseif arg1 == "FRIEND_ONLINE" or arg1 == "FRIEND_OFFLINE" then
+					local accountInfo = C_BattleNet_GetAccountInfoByID(arg13)
+					local gameInfo = accountInfo and accountInfo.gameAccountInfo
+					if gameInfo and gameInfo.clientProgram and gameInfo.clientProgram ~= "" then
+						C_Texture_GetTitleIconTexture(
+							gameInfo.clientProgram,
+							TitleIconVersion_Small,
+							function(success, texture)
+								if success then
+									local charName = _G.BNet_GetValidatedCharacterNameWithClientEmbeddedTexture(
+										gameInfo.characterName,
+										accountInfo.battleTag,
+										texture,
+										32,
+										32,
+										10
+									)
+									local linkDisplayText =
+										format(noBrackets and "%s (%s)" or "[%s] (%s)", arg2, charName)
+									local playerLink =
+										CH:GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
+									frame:AddMessage(
+										format(globalstring, playerLink),
+										info.r,
+										info.g,
+										info.b,
+										info.id,
+										nil,
+										nil,
+										nil,
+										nil,
+										nil,
+										isHistory,
+										historyTime
+									)
 
-								if notChatHistory then
-									FlashTabIfNotShown(frame, info, chatType, chatGroup, chatTarget)
+									if notChatHistory then
+										FlashTabIfNotShown(frame, info, chatType, chatGroup, chatTarget)
+									end
 								end
 							end
-						end
-					)
+						)
 
-					return
+						return
+					else
+						local linkDisplayText = format(noBrackets and "%s" or "[%s]", arg2)
+						local playerLink = CH:GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
+						message = format(globalstring, playerLink)
+					end
 				else
 					local linkDisplayText = format(noBrackets and "%s" or "[%s]", arg2)
 					local playerLink = CH:GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
 					message = format(globalstring, playerLink)
 				end
-			else
-				local linkDisplayText = format(noBrackets and "%s" or "[%s]", arg2)
-				local playerLink = CH:GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
-				message = format(globalstring, playerLink)
-			end
 
-			frame:AddMessage(message, info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)
+				frame:AddMessage(
+					message,
+					info.r,
+					info.g,
+					info.b,
+					info.id,
+					nil,
+					nil,
+					nil,
+					nil,
+					nil,
+					isHistory,
+					historyTime
+				)
+			end
 		elseif chatType == "BN_INLINE_TOAST_BROADCAST" then
-			if arg1 ~= "" then
+			if E:NotSecretValue(arg1) and arg1 ~= "" then
 				arg1 = RemoveNewlines(RemoveExtraSpaces(arg1))
+
 				local linkDisplayText = format(noBrackets and "%s" or "[%s]", arg2)
 				local playerLink = CH:GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
 				frame:AddMessage(
@@ -1604,7 +1622,7 @@ function CT:ChatFrame_MessageEventHandler(
 				)
 			end
 		elseif chatType == "BN_INLINE_TOAST_BROADCAST_INFORM" then
-			if arg1 ~= "" then
+			if E:NotSecretValue(arg1) and arg1 ~= "" then
 				frame:AddMessage(
 					_G.BN_INLINE_TOAST_BROADCAST_INFORM,
 					info.r,

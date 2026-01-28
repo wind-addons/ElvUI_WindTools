@@ -539,17 +539,17 @@ end
 
 ---Create a ColorMixin object from a color table
 ---@param colorTable table Color table with r, g, b, a values
----@return ColorMixin color The created color object
+---@return colorRGBA color The created color object
 function W.Utilities.Color.CreateColorFromTable(colorTable)
-	return CreateColor(colorTable.r, colorTable.g, colorTable.b, colorTable.a)
+	return CreateColor(colorTable.r, colorTable.g, colorTable.b, colorTable.a) --[[@as colorRGBA ]]
 end
 
 ---Create a ColorMixin object from predefined color template
 ---@param template ColorTemplate The color template name
----@return ColorMixin color The created color object
+---@return colorRGBA color The created color object
 function W.Utilities.Color.CreateColorFromTemplate(template)
 	local r, g, b = W.Utilities.Color.ExtractRGBFromTemplate(template)
-	return CreateColor(r, g, b, 1)
+	return CreateColor(r, g, b, 1) --[[@as colorRGBA ]]
 end
 
 ---Get RGB values from predefined color template

@@ -1837,6 +1837,12 @@ options.smartTab = {
 					type = "toggle",
 					name = L["Officer"],
 				},
+				world = {
+					order = 5,
+					type = "toggle",
+					name = L["World"],
+					desc = format(L["Include world channel configured in %s in tab cycle."], L["Chat Bar"]),
+				},
 			},
 		},
 		whisperSetting = {

@@ -338,6 +338,25 @@ function CB:DisableButton(name)
 	end
 end
 
+---Get the world channel ID based on user configuration
+---@return number channelID The world channel ID, or 0 if not found
+function CB:GetWorldChannelID()
+	if not self.db.enable or not self.db.channels.world.enable then
+		return 0
+	end
+
+	local db = self.db.channels.world
+	local config = GetBestWorldChannelConfig(db.config)
+
+	if not config or not config.name or config.name == "" then
+		return 0
+	end
+
+	local channelID = GetChannelName(config.name)
+
+	return channelID
+end
+
 function CB:UpdateBar()
 	if not self.bar then
 		return
@@ -391,20 +410,20 @@ function CB:UpdateBar()
 			self:DisableButton("WORLD")
 		else
 			local chatFunc = function(_, mouseButton)
-				local channelId = GetChannelName(config.name)
+				local channelID = GetChannelName(config.name)
 				if mouseButton == "LeftButton" then
 					local autoJoined = false
-					if channelId == 0 and config.autoJoin then
+					if channelID == 0 and config.autoJoin then
 						JoinPermanentChannel(config.name)
 						DefaultChatFrame:AddChannel(config.name)
-						channelId = GetChannelName(config.name)
+						channelID = GetChannelName(config.name)
 						autoJoined = true
 					end
-					if channelId == 0 then
+					if channelID == 0 then
 						return
 					end
 					local currentText = DefaultChatFrame.editBox:GetText()
-					local command = format("/%s ", channelId)
+					local command = format("/%s ", channelID)
 					if autoJoined then
 						-- If the channel is just joined, delay a bit to let the server process it
 						E:Delay(0.5, ChatFrameUtil_OpenChat, command .. currentText, DefaultChatFrame)
@@ -412,7 +431,7 @@ function CB:UpdateBar()
 						ChatFrameUtil_OpenChat(command .. currentText, DefaultChatFrame)
 					end
 				elseif mouseButton == "RightButton" then
-					if channelId == 0 then
+					if channelID == 0 then
 						JoinPermanentChannel(config.name)
 						DefaultChatFrame:AddChannel(config.name)
 					else

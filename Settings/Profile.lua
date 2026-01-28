@@ -1072,6 +1072,7 @@ P.social = {
 		battleground = false,
 		raidWarning = false,
 		officer = false,
+		world = false,
 		historyLimit = 10,
 	},
 }

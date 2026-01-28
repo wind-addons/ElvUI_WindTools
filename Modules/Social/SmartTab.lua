@@ -1,16 +1,19 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
+local CB = W:GetModule("ChatBar") ---@class ChatBar
 local ST = W:NewModule("SmartTab", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
 local ipairs = ipairs
 local pairs = pairs
 local strsub = strsub
+local tAppendAll = tAppendAll
 local time = time
 local tostring = tostring
 local unpack = unpack
 local wipe = wipe
 
 local Ambiguate = Ambiguate
+local CopyTable = CopyTable
 local IsEveryoneAssistant = IsEveryoneAssistant
 local IsInGroup = IsInGroup
 local IsInGuild = IsInGuild
@@ -34,21 +37,14 @@ local ChannelList = {
 	"BATTLEGROUND",
 	"GUILD",
 	"OFFICER",
+	"CHATBAR_WORLD",
 }
 
-local ChannelListWithWhisper = {
-	"SAY",
-	"YELL",
-	"PARTY",
-	"INSTANCE_CHAT",
-	"RAID",
-	"RAID_WARNING",
-	"BATTLEGROUND",
-	"GUILD",
-	"OFFICER",
+local ChannelListWithWhisper = CopyTable(ChannelList)
+tAppendAll(ChannelListWithWhisper, {
 	"WHISPER",
 	"BN_WHISPER",
-}
+})
 
 local NumberOfChannelList = #ChannelList
 local NumberOfChannelListWithWhisper = #ChannelListWithWhisper
@@ -57,28 +53,30 @@ local IndexOfChannelListWithWhisper = tInvert(ChannelListWithWhisper)
 
 local nextChatType, nextTellTarget
 
-function ST:CheckAvailability(type)
-	if type == "YELL" then
+function ST:CheckAvailability(chatType)
+	if chatType == "YELL" then
 		return self.db.yell
-	elseif type == "PARTY" then
+	elseif chatType == "PARTY" then
 		return IsInGroup(LE_PARTY_CATEGORY_HOME)
-	elseif type == "INSTANCE_CHAT" then
+	elseif chatType == "INSTANCE_CHAT" then
 		return IsInGroup(LE_PARTY_CATEGORY_INSTANCE)
-	elseif type == "RAID" then
+	elseif chatType == "RAID" then
 		return IsInRaid()
-	elseif type == "RAID_WARNING" then
+	elseif chatType == "RAID_WARNING" then
 		if self.db.raidWarning and IsInRaid() then
 			if UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or IsEveryoneAssistant() then
 				return true
 			end
 		end
 		return false
-	elseif type == "BATTLEGROUND" then
+	elseif chatType == "BATTLEGROUND" then
 		return self.db.battleground and UnitInBattleground("player")
-	elseif type == "GUILD" then
+	elseif chatType == "GUILD" then
 		return IsInGuild()
-	elseif type == "OFFICER" then
+	elseif chatType == "OFFICER" then
 		return self.db.officer and IsInGuild() and C_GuildInfo_IsGuildOfficer()
+	elseif chatType == "CHATBAR_WORLD" then
+		return self.db.world
 	end
 
 	return true
@@ -171,7 +169,7 @@ function ST:GetNext(chatType, currentTarget)
 	local newChatType, newTarget, nextIndex
 
 	if chatType == "CHANNEL" then
-		chatType = "SAY"
+		return "SAY"
 	end
 
 	if self.db.whisperCycle then
@@ -184,40 +182,38 @@ function ST:GetNext(chatType, currentTarget)
 				if newChatType == "NONE" then
 					newChatType = chatType
 					newTarget = currentTarget
-					_G.UIErrorsFrame:AddMessage(L["There is no more whisper targets"], 1, 0, 0)
+					_G.UIErrorsFrame:AddMessage(L["There is no more whisper targets"], RED_FONT_COLOR:GetRGBA())
 				end
 			end
 		else
 			-- Regular channel change
 			nextIndex = IndexOfChannelList[chatType] % NumberOfChannelList + 1
-			while not ST:CheckAvailability(ChannelList[nextIndex]) do
+			while not self:CheckAvailability(ChannelList[nextIndex]) do
 				nextIndex = nextIndex % NumberOfChannelList + 1
 			end
 			newChatType = ChannelListWithWhisper[nextIndex]
 		end
+	elseif chatType == "WHISPER" or chatType == "BN_WHISPER" then
+		-- If currently in whisper, directly find the next whisper target
+		newChatType, newTarget = self:GetNextWhisper(currentTarget)
+		if newChatType == "NONE" then
+			-- If the current user is already the last in the whisper cycle or there are no whisper history targets, jump to say
+			newChatType = ChannelListWithWhisper[1]
+		end
 	else
-		if chatType == "WHISPER" or chatType == "BN_WHISPER" then
-			-- If currently in whisper, directly find the next whisper target
+		-- Regular channel cycle
+		nextIndex = IndexOfChannelListWithWhisper[chatType] % NumberOfChannelListWithWhisper + 1
+		while not self:CheckAvailability(ChannelListWithWhisper[nextIndex]) do
+			nextIndex = nextIndex % NumberOfChannelListWithWhisper + 1
+		end
+		-- Once cycling to the whisper part, special handling is performed
+		newChatType = ChannelListWithWhisper[nextIndex]
+		if newChatType == "WHISPER" or newChatType == "BN_WHISPER" then
+			-- Find the next whisper target
 			newChatType, newTarget = self:GetNextWhisper(currentTarget)
 			if newChatType == "NONE" then
 				-- If the current user is already the last in the whisper cycle or there are no whisper history targets, jump to say
 				newChatType = ChannelListWithWhisper[1]
-			end
-		else
-			-- Regular channel cycle
-			nextIndex = IndexOfChannelListWithWhisper[chatType] % NumberOfChannelListWithWhisper + 1
-			while not ST:CheckAvailability(ChannelListWithWhisper[nextIndex]) do
-				nextIndex = nextIndex % NumberOfChannelListWithWhisper + 1
-			end
-			-- Once cycling to the whisper part, special handling is performed
-			newChatType = ChannelListWithWhisper[nextIndex]
-			if newChatType == "WHISPER" or newChatType == "BN_WHISPER" then
-				-- Find the next whisper target
-				newChatType, newTarget = self:GetNextWhisper(currentTarget)
-				if newChatType == "NONE" then
-					-- If the current user is already the last in the whisper cycle or there are no whisper history targets, jump to say
-					newChatType = ChannelListWithWhisper[1]
-				end
 			end
 		end
 	end
@@ -235,12 +231,23 @@ function ST:TabPressed(frame)
 	end
 
 	nextChatType, nextTellTarget = nil, nil
-	nextChatType, nextTellTarget = ST:GetNext(frame:GetAttribute("chatType"), frame:GetAttribute("tellTarget"))
+	nextChatType, nextTellTarget = self:GetNext(frame:GetAttribute("chatType"), frame:GetAttribute("tellTarget"))
 end
 
 function ST:SecureTabPressed(frame)
 	if not self.db.enable then
 		return
+	end
+
+	if nextChatType == "CHATBAR_WORLD" then
+		local worldChannelID = CB:GetWorldChannelID()
+		if worldChannelID > 0 then
+			frame:SetAttribute("channelTarget", worldChannelID)
+			nextChatType = "CHANNEL"
+		else
+			-- If the world channel is not available, skip to the next channel
+			nextChatType, nextTellTarget = self:GetNext(nextChatType, nextTellTarget)
+		end
 	end
 
 	frame:SetAttribute("chatType", nextChatType)

@@ -19,6 +19,7 @@ local UnitPower = UnitPower
 local UnitPowerPercent = UnitPowerPercent
 local UnitPowerType = UnitPowerType
 
+local C_StringUtil_TruncateWhenZero = C_StringUtil.TruncateWhenZero
 local CurveConstants_ScaleTo100 = CurveConstants.ScaleTo100
 
 local function GetClassColorString(class)
@@ -31,7 +32,7 @@ function M:Tags()
 		return
 	end
 
-	-- Health Percent Tags
+	-- Health Percentage
 	E:AddTag("perhp1f", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 		return format("%.1f", UnitHealthPercent(unit, true, CurveConstants_ScaleTo100) --[[@as number]])
 	end)
@@ -42,6 +43,15 @@ function M:Tags()
 
 	E:AddTag("perhp3f", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 		return format("%.3f", UnitHealthPercent(unit, true, CurveConstants_ScaleTo100) --[[@as number]])
+	end)
+
+	-- Absorbs autohide
+	E:AddTag("absorbs-autohide", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+		return C_StringUtil_TruncateWhenZero(UnitGetTotalAbsorbs(unit))
+	end)
+
+	E:AddTag("healabsorbs-autohide", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+		return C_StringUtil_TruncateWhenZero(UnitGetTotalAbsorbs(unit))
 	end)
 
 	-- Range

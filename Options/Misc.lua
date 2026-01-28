@@ -725,23 +725,39 @@ do
 	examples.health = {
 		order = 1,
 		name = L["Health"],
-		noStatusNoSign1 = {
+		float1 = {
 			order = 1,
 			tag = "[perhp1f]",
 			text = L["The percentage of health without percent sign and status"]
 				.. format(" (%s = 1)", L["Decimal Length"]),
 		},
-		noStatusNoSign2 = {
+		float2 = {
 			order = 2,
 			tag = "[perhp2f]",
 			text = L["The percentage of health without percent sign and status"]
 				.. format(" (%s = 2)", L["Decimal Length"]),
 		},
-		noStatusNoSign3 = {
+		float3 = {
 			order = 3,
 			tag = "[perhp3f]",
 			text = L["The percentage of health without percent sign and status"]
 				.. format(" (%s = 3)", L["Decimal Length"]),
+		},
+		absorbsAutohide = {
+			order = 4,
+			tag = "[absorbs-autohide]",
+			text = format(
+				L["Just like %s, but it will be hidden when the amount is zero."],
+				C.StringByTemplate("[absorbs]", "sky-500")
+			),
+		},
+		healabsorbsAutohide = {
+			order = 5,
+			tag = "[healabsorbs-autohide]",
+			text = format(
+				L["Just like %s, but it will be hidden when the amount is zero."],
+				C.StringByTemplate("[healabsorbs]", "sky-500")
+			),
 		},
 	}
 

@@ -194,6 +194,24 @@ W.CurrentTierSetTable = {
 	[1931] = true,
 }
 
+-- Midnight
+-- https://www.wowhead.com/item-sets/max-level:220/min-req-level:90?filter=13;12;0
+-- W.CurrentTierSetTable = {
+-- 	[1978] = true,
+-- 	[1979] = true,
+-- 	[1980] = true,
+-- 	[1981] = true,
+-- 	[1982] = true,
+-- 	[1983] = true,
+-- 	[1984] = true,
+-- 	[1985] = true,
+-- 	[1986] = true,
+-- 	[1987] = true,
+-- 	[1988] = true,
+-- 	[1989] = true,
+-- 	[1990] = true,
+-- }
+
 ---@type table<number, true>
 W.CurrentTierSetItemIDTable = {}
 

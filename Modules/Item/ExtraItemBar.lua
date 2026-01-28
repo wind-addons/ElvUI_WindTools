@@ -560,8 +560,8 @@ function EB:UpdateBar(id)
 
 	for _, module in ipairs({ strsplit("[, ]", barDB.include) }) do
 		if buttonID <= barDB.numButtons then
-			if self.moduleList[module] then
-				addNormalButtons(self.moduleList[module])
+			if self.ModuleList[module] then
+				addNormalButtons(self.ModuleList[module])
 			elseif module == "QUEST" then -- Quest Items
 				for _, data in pairs(questItemList) do
 					addNormalButton(data.itemID)

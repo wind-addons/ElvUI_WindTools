@@ -1552,6 +1552,44 @@ local openableItems = {
 	250975, -- 地狱召唤者宝箱
 	252656, -- 卡雷什科考队补给
 	255676, -- 相位潜者的箱子
+	-- Midnight
+	-- https://www.wowhead.com/items/miscellaneous?filter=11:166;1:12;0:0
+	242650, -- 一箱岩石 (1)
+	245644, -- 一箱岩石 (2)
+	245647, -- 宝石鱼群 (1)
+	245648, -- 宝石鱼群 (2)
+	245650, -- 草药花束 (1)
+	245651, -- 草药花束 (2)
+	246585, -- 工匠商盟支出
+	250116, -- 奎尔萨拉斯宝物箱
+	250117, -- 奎尔萨拉斯宝物箱
+	250750, -- 一袋发芽的剪材
+	250753, -- 一袋开裂的矿屑
+	250754, -- 一袋狂野的皮料
+	250755, -- 一袋神秘的磨粉
+	251286, -- 一捆石化之根
+	251287, -- 一大捆石化之根
+	251321, -- 一堆永歌矿石
+	251322, -- 萨拉斯制皮匠的口袋
+	251324, -- 一篮永歌草药
+	251326, -- 萨拉斯附魔师的手袋
+	251327, -- 萨拉斯裁缝的手提包
+	251970, -- 满溢的阿曼尼宝箱
+	255428, -- 托尔巴尼的药物袋
+	256055, -- 满溢的哈籁提宝库
+	258839, -- 隐匿的图鉴
+	259086, -- 虚触的协作包裹
+	259334, -- 满溢的奇点特勤宝库
+	260173, -- 结晶的黎明之光法力熔剂
+	262432, -- 风化的保险箱
+	262635, -- 一箱地下堡行者的宝藏
+	263400, -- 一箱地下堡行者的宝藏
+	263433, -- 满溢的银月城宝箱
+	263934, -- 一箱黄金
+	264470, -- 灰缚贡品
+	264475, -- 幽影锡矿保险箱
+	264587, -- 安妮的饰品袋
+	267299, -- 屠戮角斗财宝
 }
 
 local professionItems = {
@@ -2096,7 +2134,7 @@ local holidayRewards = {
 	243293, -- 一包美酒节商品
 }
 
-local function createList(base, ...)
+local function CreateList(base, ...)
 	local list = {}
 	for _, key in pairs({ ... }) do
 		local items = base[key]
@@ -2112,28 +2150,26 @@ local function createList(base, ...)
 	return sorted
 end
 
-EB.moduleList = {
-	["POTION"] = createList(potions, "general", "legacy", "sl", "df", "tww"),
-	["POTIONSL"] = createList(potions, "general", "sl"),
-	["POTIONDF"] = createList(potions, "general", "df"),
-	["POTIONTWW"] = createList(potions, "general", "tww"),
-	["FLASK"] = createList(flasks, "legacy", "sl", "df", "tww"),
-	["FLASKSL"] = createList(flasks, "sl"),
-	["FLASKDF"] = createList(flasks, "df"),
-	["FLASKTWW"] = createList(flasks, "tww"),
-	["RUNE"] = createList(runes, "df", "tww"),
-	["RUNEDF"] = createList(runes, "df"),
-	["RUNETWW"] = createList(runes, "tww"),
-	["VANTUS"] = createList(vantus, "df", "tww"),
-	["VANTUSTWW"] = createList(vantus, "tww"),
-	["FOOD"] = createList(foods, "crafted_sl", "crafted_df", "crafted_tww"),
-	["FOODSL"] = createList(foods, "crafted_sl"),
-	["FOODDF"] = createList(foods, "crafted_df"),
-	["FOODTWW"] = createList(foods, "crafted_tww"),
-	["FOODVENDOR"] = createList(foods, "vendor"),
-	["MAGEFOOD"] = createList(foods, "mage"),
-	["FISHING"] = createList(fishings, "general", "tww"),
-	["FISHINGTWW"] = createList(fishings, "tww"),
+EB.ModuleList = {
+	["POTION"] = CreateList(potions, "general", "legacy", "sl", "df", "tww", "mn"),
+	["POTIONTWW"] = CreateList(potions, "general", "tww"),
+	["POTIONMN"] = CreateList(potions, "general", "mn"),
+	["FLASK"] = CreateList(flasks, "legacy", "sl", "df", "tww", "mn"),
+	["FLASKTWW"] = CreateList(flasks, "tww"),
+	["FLASKMN"] = CreateList(flasks, "mn"),
+	["RUNE"] = CreateList(runes, "df", "tww", "mn"),
+	["RUNETWW"] = CreateList(runes, "tww"),
+	["RUNEMN"] = CreateList(runes, "mn"),
+	["VANTUS"] = CreateList(vantus, "df", "tww", "mn"),
+	["VANTUSTWW"] = CreateList(vantus, "tww"),
+	["VANTUSMN"] = CreateList(vantus, "mn"),
+	["FOOD"] = CreateList(foods, "crafted_sl", "crafted_df", "crafted_tww", "crafted_mn"),
+	["FOODTWW"] = CreateList(foods, "crafted_tww"),
+	["FOODMN"] = CreateList(foods, "crafted_mn"),
+	["FOODVENDOR"] = CreateList(foods, "vendor"),
+	["MAGEFOOD"] = CreateList(foods, "mage"),
+	["FISHING"] = CreateList(fishings, "general", "tww"),
+	["FISHINGTWW"] = CreateList(fishings, "tww"),
 	["BANNER"] = banners,
 	["UTILITY"] = utilities,
 	["OPENABLE"] = openableItems,

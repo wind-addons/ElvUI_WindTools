@@ -473,7 +473,7 @@ P.item = {
 					b = 1,
 				},
 			},
-			include = "POTIONTWW,FLASKTWW,VANTUSTWW,UTILITY",
+			include = "POTIONMN,FLASKMN,VANTUSMN,POTIONTWW,FLASKTWW,VANTUSTWW,UTILITY",
 		},
 		bar3 = {
 			enable = true,
@@ -521,7 +521,7 @@ P.item = {
 					b = 1,
 				},
 			},
-			include = "MAGEFOOD,FOODVENDOR,FOODTWW,RUNETWW,CUSTOM",
+			include = "MAGEFOOD,FOODVENDOR,FOODMN,FOODTWW,RUNEMN,RUNETWW,CUSTOM",
 		},
 		bar4 = {
 			enable = false,

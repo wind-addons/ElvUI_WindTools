@@ -82,39 +82,19 @@ W.OldInstances = {
 }
 
 W.MythicPlusSeasonAchievementData = {
-	[20525] = { sortIndex = 1, abbr = L["[ABBR] The War Within Keystone Master: Season One"] },
-	[20526] = { sortIndex = 2, abbr = L["[ABBR] The War Within Keystone Hero: Season One"] },
-	[41533] = { sortIndex = 3, abbr = L["[ABBR] The War Within Keystone Master: Season Two"] },
-	[40952] = { sortIndex = 4, abbr = L["[ABBR] The War Within Keystone Hero: Season Two"] },
-	[41973] = { sortIndex = 5, abbr = L["[ABBR] The War Within Keystone Master: Season Three"] },
-	[42171] = { sortIndex = 6, abbr = L["[ABBR] The War Within Keystone Hero: Season Three"] },
-	[42172] = { sortIndex = 7, abbr = L["[ABBR] The War Within Keystone Legend: Season Three"] },
+	[61256] = { sortIndex = 1, abbr = L["[ABBR] Midnight Keystone Master: Season One"] },
+	[61257] = { sortIndex = 2, abbr = L["[ABBR] Midnight Keystone Hero: Season One"] },
+	[61258] = { sortIndex = 3, abbr = L["[ABBR] Midnight Keystone Legend: Season One"] },
+	[41973] = { sortIndex = 4, abbr = L["[ABBR] The War Within Keystone Master: Season Three"] },
+	[42171] = { sortIndex = 5, abbr = L["[ABBR] The War Within Keystone Hero: Season Three"] },
+	[42172] = { sortIndex = 6, abbr = L["[ABBR] The War Within Keystone Legend: Season Three"] },
 }
 
--- https://www.wowhead.com/achievements/character-statistics/dungeons-and-raids/the-war-within/
--- var a=""; document.querySelectorAll("tbody.clickable > tr a.listview-cleartext").forEach((h) => a+=h.href.match(/achievement=([0-9]*)/)[1]+',');console.log(a);
--- ID: https://wago.tools/db2/LFGDungeons?filter%5BTypeID%5D=2&filter%5BSubtype%5D=2&page=5
+-- https://www.wowhead.com/achievements/character-statistics/dungeons-and-raids/midnight/
+-- Search for the instance name, then run this in the browser console to get the achievement IDs
+-- (function(){ const groups = {1:[], 2:[], 3:[], 4:[]}; document.querySelectorAll("tbody.clickable > tr a.listview-cleartext").forEach(h => { const id = h.href.match(/achievement=([0-9]*)/)[1]; const txt = h.innerText; const group = txt.includes("(Normal") ? 2 : txt.includes("(Heroic") ? 3 : txt.includes("(Mythic") ? 4 : 1; groups[group].push(id); }); console.log(`achievements = {\n  { ${groups[1].join(', ')} },\n  { ${groups[2].join(', ')} },\n  { ${groups[3].join(', ')} },\n  { ${groups[4].join(', ')} },\n},`); })();
+-- ID and Texture: https://wago.tools/db2/LFGDungeons?filter%5BTypeID%5D=2&filter%5BSubtype%5D=2&page=5
 W.RaidData = {
-	[2645] = {
-		abbr = L["[ABBR] Nerub-ar Palace"],
-		tex = 5779391,
-		achievements = {
-			{ 40267, 40271, 40275, 40279, 40283, 40287, 40291, 40295 },
-			{ 40268, 40272, 40276, 40280, 40284, 40288, 40292, 40296 },
-			{ 40269, 40273, 40277, 40281, 40285, 40289, 40293, 40297 },
-			{ 40270, 40274, 40278, 40282, 40286, 40290, 40294, 40298 },
-		},
-	},
-	[2779] = {
-		abbr = L["[ABBR] Liberation of Undermine"],
-		tex = 6422371,
-		achievements = {
-			{ 41299, 41303, 41307, 41311, 41315, 41319, 41323, 41327 },
-			{ 41300, 41304, 41308, 41312, 41316, 41320, 41324, 41328 },
-			{ 41301, 41305, 41309, 41313, 41317, 41321, 41325, 41329 },
-			{ 41302, 41306, 41310, 41314, 41318, 41322, 41326, 41330 },
-		},
-	},
 	[2805] = {
 		abbr = L["[ABBR] Manaforge Omega"],
 		tex = 7049159,
@@ -124,6 +104,36 @@ W.RaidData = {
 			{ 41634, 41638, 41642, 41646, 41650, 41654, 41658, 41662 },
 			{ 41635, 41639, 41643, 41647, 41651, 41655, 41659, 41663 },
 			{ 41636, 41640, 41644, 41648, 41652, 41656, 41660, 41664 },
+		},
+	},
+	[3094] = {
+		abbr = L["[ABBR] The Voidspire"],
+		tex = 7507136,
+		achievements = {
+			{ 61288, 61292, 61284, 61280, 61296, 61276 },
+			{ 61297, 61281, 61277, 61293, 61289, 61285 },
+			{ 61278, 61290, 61298, 61282, 61294, 61286 },
+			{ 61279, 61295, 61299, 61287, 61283, 61291 },
+		},
+	},
+	[3095] = {
+		abbr = L["[ABBR] March on Quel'Danas"],
+		tex = 7480127,
+		achievements = {
+			{ 61300, 61304 },
+			{ 61305, 61301 },
+			{ 61302, 61306 },
+			{ 61307, 61303 },
+		},
+	},
+	[3165] = {
+		abbr = L["[ABBR] Dreamrift"],
+		tex = 7570496,
+		achievements = {
+			{ 61474 },
+			{ 61475 },
+			{ 61476 },
+			{ 61477 },
 		},
 	},
 }

@@ -754,7 +754,7 @@ V.tooltips = {
 		header = "TEXTURE",
 		raid = configTable({ enable = true }, W.RaidData),
 		specialAchievement = configTable(
-			{ enable = true, [20525] = false, [20526] = false },
+			{ enable = true, [61256] = false, [61257] = false, [61258] = false }, -- TODO: Update default ids after midnight
 			W.MythicPlusSeasonAchievementData
 		),
 		mythicPlus = configTable({ enable = true, markHighestScore = true, showNoRecord = true }, W.MythicPlusMapData),

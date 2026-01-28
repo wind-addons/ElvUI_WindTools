@@ -100,7 +100,7 @@ function T:CheckModifier()
 end
 
 function T:InspectInfo(tt, data, triedTimes)
-	if tt ~= GameTooltip or (tt.IsForbidden and tt:IsForbidden()) or (ET.db and not ET.db.visibility) then
+	if (tt.IsForbidden and tt:IsForbidden()) or tt ~= GameTooltip or (ET.db and not ET.db.visibility) then
 		return
 	end
 

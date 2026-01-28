@@ -6,46 +6,24 @@ local floor = floor
 local format = format
 local pairs = pairs
 local select = select
-local strlen = strlen
 local strlower = strlower
-local strsub = strsub
 
 local GetClassColor = GetClassColor
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
 local UnitClass = UnitClass
-local UnitGetTotalAbsorbs = UnitGetTotalAbsorbs
-local UnitHealth = UnitHealth
-local UnitHealthMax = UnitHealthMax
+local UnitHealthPercent = UnitHealthPercent
 local UnitIsConnected = UnitIsConnected
 local UnitIsUnit = UnitIsUnit
 local UnitPower = UnitPower
-local UnitPowerMax = UnitPowerMax
+local UnitPowerPercent = UnitPowerPercent
+local UnitPowerType = UnitPowerType
+
+local CurveConstants_ScaleTo100 = CurveConstants.ScaleTo100
 
 local function GetClassColorString(class)
 	local hexString = select(4, GetClassColor(class))
 	return "|c" .. hexString
-end
-
-local function GetHealthPercent(unit, formatString)
-	local healthMax = UnitHealthMax(unit)
-	if healthMax == 0 then
-		return ""
-	end
-
-	return format(formatString, UnitHealth(unit) / healthMax * 100)
-end
-
-local function GetAbsorbPercent(unit, formatString)
-	local healthMax = UnitHealthMax(unit)
-	if healthMax == 0 then
-		return ""
-	end
-
-	local absorb = UnitGetTotalAbsorbs(unit) or 0
-	if absorb ~= 0 then
-		return format(formatString, absorb / healthMax * 100)
-	end
 end
 
 function M:Tags()
@@ -53,60 +31,20 @@ function M:Tags()
 		return
 	end
 
-	E:AddTag("absorbs-long", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
-		local absorb = UnitGetTotalAbsorbs(unit) or 0
-		return absorb ~= 0 and absorb or ""
+	-- Health Percent Tags
+	E:AddTag("perhp1f", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+		return format("%.1f", UnitHealthPercent(unit, true, CurveConstants_ScaleTo100) --[[@as number]])
 	end)
 
-	E:AddTag("absorbs:percent-0", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
-		local absorb = UnitGetTotalAbsorbs(unit) or 0
-		if absorb ~= 0 then
-			return GetAbsorbPercent(unit, "%d%%")
-		end
+	E:AddTag("perhp2f", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+		return format("%.2f", UnitHealthPercent(unit, true, CurveConstants_ScaleTo100) --[[@as number]])
 	end)
 
-	E:AddTag("absorbs:percent-1", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
-		local absorb = UnitGetTotalAbsorbs(unit) or 0
-		if absorb ~= 0 then
-			return GetAbsorbPercent(unit, "%.1f%%")
-		end
+	E:AddTag("perhp3f", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+		return format("%.3f", UnitHealthPercent(unit, true, CurveConstants_ScaleTo100) --[[@as number]])
 	end)
 
-	E:AddTag("absorbs:percent-2", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
-		local absorb = UnitGetTotalAbsorbs(unit) or 0
-		if absorb ~= 0 then
-			return GetAbsorbPercent(unit, "%.2f%%")
-		end
-	end)
-
-	E:AddTag("absorbs:percent-3", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
-		local absorb = UnitGetTotalAbsorbs(unit) or 0
-		if absorb ~= 0 then
-			return GetAbsorbPercent(unit, "%.3f%%")
-		end
-	end)
-
-	E:AddTag("absorbs:percent-nosign-0", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
-		local absorb = UnitGetTotalAbsorbs(unit) or 0
-		if absorb ~= 0 then
-			return GetAbsorbPercent(unit, "%d")
-		end
-	end)
-
-	E:AddTag("absorbs:percent-nosign-1", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
-		local absorb = UnitGetTotalAbsorbs(unit) or 0
-		if absorb ~= 0 then
-			return GetAbsorbPercent(unit, "%.1f")
-		end
-	end)
-
-	E:AddTag("absorbs:percent-nosign-2", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
-		local absorb = UnitGetTotalAbsorbs(unit) or 0
-		if absorb ~= 0 then
-			return GetAbsorbPercent(unit, "%.2f")
-		end
-	end)
-
+	-- Range
 	E:AddTag("range", 0.1, function(unit)
 		if UnitIsConnected(unit) and not UnitIsUnit(unit, "player") then
 			local minRange, maxRange = RangeCheck:GetRange(unit, true)
@@ -121,7 +59,24 @@ function M:Tags()
 		end
 	end)
 
-	-- Class Color Tags
+	-- Smart power
+	E:AddTag("smart-power", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER", function(unit)
+		if UnitPowerType(unit) == Enum.PowerType.Mana then
+			return format("%d%%", UnitPowerPercent(unit, nil, true, CurveConstants_ScaleTo100) --[[@as number]])
+		end
+
+		return UnitPower(unit)
+	end)
+
+	E:AddTag("smart-power-nosign", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER", function(unit)
+		if UnitPowerType(unit) == Enum.PowerType.Mana then
+			return format("%d", UnitPowerPercent(unit, nil, true, CurveConstants_ScaleTo100) --[[@as number]])
+		end
+
+		return UnitPower(unit)
+	end)
+
+	-- Class Color Color Prefixes
 	E:AddTag("classcolor:player", 1e10, function()
 		return GetClassColorString(E.myclass)
 	end)
@@ -133,104 +88,6 @@ function M:Tags()
 			return GetClassColorString(upperText)
 		end)
 	end
-
-	-- ElvUI health tags without %
-	E:AddTag("health:percent-nosign", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-		local originalString = E.oUF.Tags.Methods["health:percent"](unit)
-		local length = strlen(originalString)
-		if strsub(originalString, length, length) == "%" then
-			return strsub(originalString, 1, length - 1)
-		else
-			return originalString
-		end
-	end)
-
-	E:AddTag("health:percent-nostatus-nosign", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-		local originalString = E.oUF.Tags.Methods["health:percent-nostatus"](unit)
-		local length = strlen(originalString)
-		if strsub(originalString, length, length) == "%" then
-			return strsub(originalString, 1, length - 1)
-		else
-			return originalString
-		end
-	end)
-
-	-- Custom Decimal Length Health Tags
-	E:AddTag("health:percent-nostatus-0", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-		return GetHealthPercent(unit, "%d%%")
-	end)
-
-	E:AddTag("health:percent-nostatus-1", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-		return GetHealthPercent(unit, "%.1f%%")
-	end)
-
-	E:AddTag("health:percent-nostatus-2", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-		return GetHealthPercent(unit, "%.2f%%")
-	end)
-
-	E:AddTag("health:percent-nostatus-3", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-		return GetHealthPercent(unit, "%.3f%%")
-	end)
-
-	E:AddTag("health:percent-nostatus-nosign-0", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-		return GetHealthPercent(unit, "%d")
-	end)
-
-	E:AddTag("health:percent-nostatus-nosign-1", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-		return GetHealthPercent(unit, "%.1f")
-	end)
-
-	E:AddTag("health:percent-nostatus-nosign-2", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-		return GetHealthPercent(unit, "%.2f")
-	end)
-
-	E:AddTag("health:percent-nostatus-nosign-3", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-		return GetHealthPercent(unit, "%.3f")
-	end)
-
-	E:AddTag("power:percent-nosign", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER", function(unit)
-		local originalString = E.oUF.Tags.Methods["power:percent"](unit)
-		if originalString then
-			local length = strlen(originalString)
-			if strsub(originalString, length, length) == "%" then
-				return strsub(originalString, 1, length - 1)
-			else
-				return originalString
-			end
-		end
-	end)
-
-	-- Smart power
-	E:AddTag("smart-power", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER", function(unit)
-		local maxPower = UnitPowerMax(unit)
-		local currentPower = UnitPower(unit)
-
-		if not currentPower then
-			return ""
-		end
-
-		if not maxPower or maxPower < 1000 then
-			return currentPower
-		else
-			return currentPower and format("%d%%", floor(currentPower / maxPower * 100 + 0.5))
-		end
-	end)
-
-	-- Smart power without %
-	E:AddTag("smart-power-nosign", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER", function(unit)
-		local maxPower = UnitPowerMax(unit)
-		local currentPower = UnitPower(unit)
-
-		if not currentPower then
-			return ""
-		end
-
-		if not maxPower or maxPower < 1000 then
-			return currentPower
-		else
-			return currentPower and format("%d", floor(currentPower / maxPower * 100 + 0.5))
-		end
-	end)
 
 	-- Class Icons
 	for _, style in pairs(F.GetClassIconStyleList()) do
@@ -250,4 +107,4 @@ function M:Tags()
 	end
 end
 
--- M:AddCallback("Tags") -- Wait for ElvUI Unitframe update
+M:AddCallback("Tags")

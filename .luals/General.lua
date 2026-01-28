@@ -9,3 +9,8 @@
 ---@field a number
 
 ---@alias AnchorPoint "TOPLEFT"|"TOP"|"TOPRIGHT"|"LEFT"|"CENTER"|"RIGHT"|"BOTTOMLEFT"|"BOTTOM"|"BOTTOMRIGHT"
+
+--- Midnight APIs
+---@class LuaCurveObjectBase
+---@class LuaCurveObject : LuaCurveObjectBase
+---@class AbbreviateConfig

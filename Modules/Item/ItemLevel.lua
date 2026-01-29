@@ -98,7 +98,7 @@ function IL:FlyoutButton()
 		end
 
 		if itemLocation then
-			RefreshItemLevel(button.itemLevel, self.db.flyout, itemLocation)
+			RefreshItemLevel(button.itemLevel, self.db.flyout, itemLocation --[[@as ItemLocation]])
 		else
 			button.itemLevel:SetText("")
 		end

@@ -3,10 +3,11 @@ local options = W.options.unitFrames.args
 local LSM = E.Libs.LSM
 local C = W.Utilities.Color
 
-local A = W:GetModule("Absorb")
+local A = W:GetModule("Absorb") ---@class Absorb
 local CT = W:GetModule("ChatText")
 
 local format = format
+local pairs = pairs
 
 options.quickFocus = {
 	order = 1,
@@ -124,7 +125,7 @@ options.quickFocus = {
 options.absorb = {
 	order = 2,
 	type = "group",
-	name = W.FixingLabel .. L["Absorb"],
+	name = L["Absorb"],
 	get = function(info)
 		return E.db.WT.unitFrames.absorb[info[#info]]
 	end,
@@ -154,10 +155,6 @@ options.absorb = {
 			type = "toggle",
 			name = L["Enable"],
 			width = "full",
-			get = function()
-				return false
-			end,
-			disabled = true, -- TODO: Wait for ElvUI UnitFrames
 		},
 		texture = {
 			order = 3,
@@ -218,7 +215,7 @@ options.absorb = {
 					order = 1,
 					type = "toggle",
 					name = L["Blizzard Over Absorb Glow"],
-					desc = L["Add a glow in the end of health bars to indicate the over absorb."],
+					desc = W.FixingLabel .. L["Add a glow in the end of health bars to indicate the over absorb."],
 					width = 1.5,
 				},
 				blizzardAbsorbOverlay = {
@@ -271,9 +268,13 @@ options.absorb = {
 						C.StringWithRGB(L["Overflow"], E.db.general.valuecolor)
 					),
 					func = function(info)
-						A:ChangeDB(function(db)
-							db.absorbStyle = "OVERFLOW"
-						end)
+						for key in pairs(E.db.unitframe.units) do
+							local db = E.db.unitframe.units[key].healPrediction
+							if db and db.absorbStyle then
+								db.absorbStyle = "OVERFLOW"
+							end
+						end
+						E.UnitFrames:Update_AllFrames()
 					end,
 					width = 1.7,
 				},
@@ -284,10 +285,14 @@ options.absorb = {
 						L["Set All Absorb Style to %s"],
 						C.StringWithRGB(L["Auto Height"], E.db.general.valuecolor)
 					),
-					func = function(info)
-						A:ChangeDB(function(db)
-							db.height = -1
-						end)
+					func = function()
+						for key in pairs(E.db.unitframe.units) do
+							local db = E.db.unitframe.units[key].healPrediction
+							if db and db.height then
+								db.height = -1
+							end
+						end
+						E.UnitFrames:Update_AllFrames()
 					end,
 					width = 1.7,
 				},
@@ -296,7 +301,7 @@ options.absorb = {
 					type = "execute",
 					name = format(L["%s style absorb color"], W.Title),
 					desc = L["Change the color of the absorb bar."],
-					func = function(info)
+					func = function()
 						E.db.unitframe.colors.healPrediction.absorbs = { r = 0.06, g = 0.83, b = 1, a = 1 }
 						E.db.unitframe.colors.healPrediction.overabsorbs = { r = 0.06, g = 0.83, b = 1, a = 1 }
 					end,
@@ -310,7 +315,7 @@ options.absorb = {
 						C.StringWithRGB(L["Max Overflow"], E.db.general.valuecolor),
 						C.StringWithRGB("0", E.db.general.valuecolor)
 					),
-					func = function(info)
+					func = function()
 						E.db.unitframe.colors.healPrediction.maxOverflow = 0
 					end,
 					width = 1.7,
@@ -374,7 +379,7 @@ end
 options.roleIcon = {
 	order = 3,
 	type = "group",
-	name = W.FixingLabel .. L["Role Icon"],
+	name = L["Role Icon"],
 	get = function(info)
 		return E.private.WT.unitFrames.roleIcon[info[#info]]
 	end,

@@ -799,6 +799,16 @@ options.reset = {
 						end)
 					end,
 				},
+				tags = {
+					order = 4,
+					type = "execute",
+					name = L["Tags"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Tags"], nil, function()
+							E.private.WT.unitFrames.tags = V.unitFrames.tags
+						end)
+					end,
+				},
 			},
 		},
 		skins = {
@@ -953,16 +963,6 @@ options.reset = {
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Mute"], nil, function()
 							E.private.WT.misc.mute = V.misc.mute
-						end)
-					end,
-				},
-				tags = {
-					order = 4,
-					type = "execute",
-					name = L["Tags"],
-					func = function()
-						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Tags"], nil, function()
-							E.private.WT.misc.tags = V.misc.tags
 						end)
 					end,
 				},

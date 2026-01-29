@@ -1080,838 +1080,870 @@ options.eventTracker = {
 				ET:ProfileUpdate()
 			end,
 		},
-		style = {
-			order = 3,
+		panel = {
+			order = 10,
 			type = "group",
-			inline = true,
-			name = L["Style"],
+			inline = false,
+			name = L["Panel"],
 			args = {
-				backdrop = {
+				style = {
 					order = 1,
-					type = "toggle",
-					name = L["Backdrop"],
-					desc = L["Show a backdrop of the trackers."],
+					type = "group",
+					inline = true,
+					name = L["Style"],
+					args = {
+						backdrop = {
+							order = 1,
+							type = "toggle",
+							name = L["Backdrop"],
+							desc = L["Show a backdrop of the trackers."],
+						},
+						backdropYOffset = {
+							order = 2,
+							type = "range",
+							name = L["Y-Offset"],
+							desc = L["The Y-Offset of the backdrop."],
+							min = -20,
+							max = 20,
+							step = 1,
+						},
+						backdropSpacing = {
+							order = 3,
+							type = "range",
+							name = L["Backdrop Spacing"],
+							desc = L["The spacing between the backdrop and the trackers."],
+							min = -10,
+							max = 20,
+							step = 1,
+						},
+						trackerWidth = {
+							order = 4,
+							type = "range",
+							name = L["Width"],
+							desc = L["The width of the tracker."],
+							min = 50,
+							max = 500,
+							step = 1,
+						},
+						trackerHeight = {
+							order = 5,
+							type = "range",
+							name = L["Height"],
+							desc = L["The height of the tracker."],
+							min = 2,
+							max = 100,
+							step = 1,
+						},
+						trackerHorizontalSpacing = {
+							order = 6,
+							type = "range",
+							name = L["Horizontal Spacing"],
+							desc = L["The spacing between trackers."],
+							min = -20,
+							max = 20,
+							step = 1,
+						},
+						trackerVerticalSpacing = {
+							order = 7,
+							type = "range",
+							name = L["Vertical Spacing"],
+							desc = L["The spacing between the tracker and the world map."],
+							min = -20,
+							max = 20,
+							step = 1,
+						},
+					},
 				},
-				backdropYOffset = {
+				font = {
 					order = 2,
-					type = "range",
-					name = L["Y-Offset"],
-					desc = L["The Y-Offset of the backdrop."],
-					min = -20,
-					max = 20,
-					step = 1,
-				},
-				backdropSpacing = {
-					order = 3,
-					type = "range",
-					name = L["Backdrop Spacing"],
-					desc = L["The spacing between the backdrop and the trackers."],
-					min = -10,
-					max = 20,
-					step = 1,
-				},
-				trackerWidth = {
-					order = 4,
-					type = "range",
-					name = L["Width"],
-					desc = L["The width of the tracker."],
-					min = 50,
-					max = 500,
-					step = 1,
-				},
-				trackerHeight = {
-					order = 5,
-					type = "range",
-					name = L["Height"],
-					desc = L["The height of the tracker."],
-					min = 2,
-					max = 100,
-					step = 1,
-				},
-				trackerHorizontalSpacing = {
-					order = 6,
-					type = "range",
-					name = L["Horizontal Spacing"],
-					desc = L["The spacing between trackers."],
-					min = -20,
-					max = 20,
-					step = 1,
-				},
-				trackerVerticalSpacing = {
-					order = 7,
-					type = "range",
-					name = L["Vertical Spacing"],
-					desc = L["The spacing between the tracker and the world map."],
-					min = -20,
-					max = 20,
-					step = 1,
-				},
-			},
-		},
-		font = {
-			order = 4,
-			type = "group",
-			inline = true,
-			name = L["Font"],
-			get = function(info)
-				return E.db.WT.maps.eventTracker.font[info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.eventTracker.font[info[#info]] = value
-				ET:ProfileUpdate()
-			end,
-			args = {
-				name = {
-					order = 1,
-					type = "select",
-					dialogControl = "LSM30_Font",
+					type = "group",
+					inline = true,
 					name = L["Font"],
-					values = LSM:HashTable("font"),
-				},
-				scale = {
-					order = 2,
-					type = "range",
-					name = L["Scale"],
-					min = 0.1,
-					max = 5,
-					step = 0.01,
-				},
-				outline = {
-					order = 3,
-					type = "select",
-					name = L["Outline"],
-					values = {
-						NONE = L["None"],
-						OUTLINE = L["Outline"],
-						THICKOUTLINE = L["Thick"],
-						SHADOW = L["|cff888888Shadow|r"],
-						SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
-						SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
-						MONOCHROME = L["|cFFAAAAAAMono|r"],
-						MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
-						MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+					get = function(info)
+						return E.db.WT.maps.eventTracker.font[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.maps.eventTracker.font[info[#info]] = value
+						ET:ProfileUpdate()
+					end,
+					args = {
+						name = {
+							order = 1,
+							type = "select",
+							dialogControl = "LSM30_Font",
+							name = L["Font"],
+							values = LSM:HashTable("font"),
+						},
+						scale = {
+							order = 2,
+							type = "range",
+							name = L["Scale"],
+							min = 0.1,
+							max = 5,
+							step = 0.01,
+						},
+						outline = {
+							order = 3,
+							type = "select",
+							name = L["Outline"],
+							values = {
+								NONE = L["None"],
+								OUTLINE = L["Outline"],
+								THICKOUTLINE = L["Thick"],
+								SHADOW = L["|cff888888Shadow|r"],
+								SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+								SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+								MONOCHROME = L["|cFFAAAAAAMono|r"],
+								MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+								MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+							},
+						},
 					},
 				},
 			},
 		},
-		weeklyTWW = {
-			order = 12,
+		mn = {
+			order = 20,
 			type = "group",
-			inline = true,
-			name = format("%s (%s)", L["Weekly Quest"], L["[ABBR] The War Within"]),
-			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
-				ET:ProfileUpdate()
-			end,
+			name = C.StringByTemplate(L["Midnight"], "indigo-600"),
+			hidden = true, -- TODO: implement midnight event tracker
 			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				desaturate = {
-					order = 2,
-					type = "toggle",
-					name = L["Desaturate"],
-					desc = L["Desaturate icon if the event is completed in this week."],
-				},
+				-- Placeholder for future Midnight event tracker options
 			},
 		},
-		ecologicalSuccession = {
-			order = 12,
-			type = "group",
-			inline = true,
-			name = L["Ecological Succession"],
-			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
-				ET:ProfileUpdate()
-			end,
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				desaturate = {
-					order = 2,
-					type = "toggle",
-					name = L["Desaturate"],
-					desc = L["Desaturate icon if the event is completed in this week."],
-				},
-			},
-		},
-		nightFall = {
-			order = 13,
-			type = "group",
-			inline = true,
-			name = L["Nightfall"],
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				desaturate = {
-					order = 2,
-					type = "toggle",
-					name = L["Desaturate"],
-					desc = L["Desaturate icon if the event is completed in this week."],
-				},
-				alert = {
-					order = 3,
-					type = "toggle",
-					name = L["Alert"],
-				},
-				sound = {
-					order = 4,
-					type = "toggle",
-					name = L["Alert Sound"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-					desc = L["Play sound when the alert is triggered."],
-				},
-				soundFile = {
-					order = 5,
-					type = "select",
-					dialogControl = "LSM30_Sound",
-					name = L["Sound File"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
-					end,
-					values = LSM:HashTable("sound"),
-				},
-				second = {
-					order = 6,
-					type = "range",
-					name = L["Alert Second"],
-					desc = L["Alert will be triggered when the remaining time is less than the set value."],
-					min = 0,
-					max = 3600,
-					step = 1,
-				},
-				stopAlertIfCompleted = {
-					order = 7,
-					type = "toggle",
-					name = L["Stop Alert if Completed"],
-					desc = L["Stop alert when the event is completed in this week."],
-					width = 1.5,
-				},
-			},
-		},
-		theaterTroupe = {
-			order = 14,
-			type = "group",
-			inline = true,
-			name = L["Theater Troupe"],
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				desaturate = {
-					order = 2,
-					type = "toggle",
-					name = L["Desaturate"],
-					desc = L["Desaturate icon if the event is completed in this week."],
-				},
-				alert = {
-					order = 3,
-					type = "toggle",
-					name = L["Alert"],
-				},
-				sound = {
-					order = 4,
-					type = "toggle",
-					name = L["Alert Sound"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-					desc = L["Play sound when the alert is triggered."],
-				},
-				soundFile = {
-					order = 5,
-					type = "select",
-					dialogControl = "LSM30_Sound",
-					name = L["Sound File"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
-					end,
-					values = LSM:HashTable("sound"),
-				},
-				second = {
-					order = 6,
-					type = "range",
-					name = L["Alert Second"],
-					desc = L["Alert will be triggered when the remaining time is less than the set value."],
-					min = 0,
-					max = 3600,
-					step = 1,
-				},
-				stopAlertIfCompleted = {
-					order = 7,
-					type = "toggle",
-					name = L["Stop Alert if Completed"],
-					desc = L["Stop alert when the event is completed in this week."],
-					width = 1.5,
-				},
-			},
-		},
-		ringingDeeps = {
-			order = 15,
-			type = "group",
-			inline = true,
-			name = L["Ringing Deeps"],
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				desaturate = {
-					order = 2,
-					type = "toggle",
-					name = L["Desaturate"],
-					desc = L["Desaturate icon if the event is completed in this week."],
-				},
-			},
-		},
-		spreadingTheLight = {
-			order = 16,
-			type = "group",
-			inline = true,
-			name = L["Spreading The Light"],
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				desaturate = {
-					order = 2,
-					type = "toggle",
-					name = L["Desaturate"],
-					desc = L["Desaturate icon if the event is completed in this week."],
-				},
-			},
-		},
-		underworldOperative = {
-			order = 17,
-			type = "group",
-			inline = true,
-			name = L["Underworld Operative"],
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				desaturate = {
-					order = 2,
-					type = "toggle",
-					name = L["Desaturate"],
-					desc = L["Desaturate icon if the event is completed in this week."],
-				},
-			},
-		},
-		radiantEchoes = {
+		tww = {
 			order = 21,
 			type = "group",
-			inline = true,
-			name = L["Radiant Echoes"],
+			name = C.StringByTemplate(L["The War Within"], "orange-600"),
 			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				desaturate = {
-					order = 2,
-					type = "toggle",
-					name = L["Desaturate"],
-					desc = L["Desaturate icon if the event is completed in this week."],
-				},
-				alert = {
-					order = 3,
-					type = "toggle",
-					name = L["Alert"],
-				},
-				sound = {
-					order = 4,
-					type = "toggle",
-					name = L["Alert Sound"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+				weeklyTWW = {
+					order = 12,
+					type = "group",
+					inline = true,
+					name = L["Weekly Quest"],
+					get = function(info)
+						return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
 					end,
-					desc = L["Play sound when the alert is triggered."],
-				},
-				soundFile = {
-					order = 5,
-					type = "select",
-					dialogControl = "LSM30_Sound",
-					name = L["Sound File"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+					set = function(info, value)
+						E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
+						ET:ProfileUpdate()
 					end,
-					values = LSM:HashTable("sound"),
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						desaturate = {
+							order = 2,
+							type = "toggle",
+							name = L["Desaturate"],
+							desc = L["Desaturate icon if the event is completed in this week."],
+						},
+					},
 				},
-				second = {
-					order = 6,
-					type = "range",
-					name = L["Alert Second"],
-					desc = L["Alert will be triggered when the remaining time is less than the set value."],
-					min = 0,
-					max = 3600,
-					step = 1,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+				ecologicalSuccession = {
+					order = 12,
+					type = "group",
+					inline = true,
+					name = L["Ecological Succession"],
+					get = function(info)
+						return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
 					end,
+					set = function(info, value)
+						E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
+						ET:ProfileUpdate()
+					end,
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						desaturate = {
+							order = 2,
+							type = "toggle",
+							name = L["Desaturate"],
+							desc = L["Desaturate icon if the event is completed in this week."],
+						},
+					},
 				},
-				stopAlertIfCompleted = {
-					order = 7,
-					type = "toggle",
-					name = L["Stop Alert if Completed"],
-					desc = L["Stop alert when the event is completed in this week."],
-					width = 1.5,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
+				nightFall = {
+					order = 13,
+					type = "group",
+					inline = true,
+					name = L["Nightfall"],
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						desaturate = {
+							order = 2,
+							type = "toggle",
+							name = L["Desaturate"],
+							desc = L["Desaturate icon if the event is completed in this week."],
+						},
+						alert = {
+							order = 3,
+							type = "toggle",
+							name = L["Alert"],
+						},
+						sound = {
+							order = 4,
+							type = "toggle",
+							name = L["Alert Sound"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+							desc = L["Play sound when the alert is triggered."],
+						},
+						soundFile = {
+							order = 5,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound File"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+									or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+							end,
+							values = LSM:HashTable("sound"),
+						},
+						second = {
+							order = 6,
+							type = "range",
+							name = L["Alert Second"],
+							desc = L["Alert will be triggered when the remaining time is less than the set value."],
+							min = 0,
+							max = 3600,
+							step = 1,
+						},
+						stopAlertIfCompleted = {
+							order = 7,
+							type = "toggle",
+							name = L["Stop Alert if Completed"],
+							desc = L["Stop alert when the event is completed in this week."],
+							width = 1.5,
+						},
+					},
 				},
-				stopAlertIfPlayerNotEnteredDragonlands = {
-					order = 8,
-					type = "toggle",
-					name = L["Only DF Character"],
-					desc = L["Stop alert when the player has not entered Dragonlands yet."],
-					width = 1.5,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
+				theaterTroupe = {
+					order = 14,
+					type = "group",
+					inline = true,
+					name = L["Theater Troupe"],
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						desaturate = {
+							order = 2,
+							type = "toggle",
+							name = L["Desaturate"],
+							desc = L["Desaturate icon if the event is completed in this week."],
+						},
+						alert = {
+							order = 3,
+							type = "toggle",
+							name = L["Alert"],
+						},
+						sound = {
+							order = 4,
+							type = "toggle",
+							name = L["Alert Sound"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+							desc = L["Play sound when the alert is triggered."],
+						},
+						soundFile = {
+							order = 5,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound File"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+									or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+							end,
+							values = LSM:HashTable("sound"),
+						},
+						second = {
+							order = 6,
+							type = "range",
+							name = L["Alert Second"],
+							desc = L["Alert will be triggered when the remaining time is less than the set value."],
+							min = 0,
+							max = 3600,
+							step = 1,
+						},
+						stopAlertIfCompleted = {
+							order = 7,
+							type = "toggle",
+							name = L["Stop Alert if Completed"],
+							desc = L["Stop alert when the event is completed in this week."],
+							width = 1.5,
+						},
+					},
+				},
+				ringingDeeps = {
+					order = 15,
+					type = "group",
+					inline = true,
+					name = L["Ringing Deeps"],
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						desaturate = {
+							order = 2,
+							type = "toggle",
+							name = L["Desaturate"],
+							desc = L["Desaturate icon if the event is completed in this week."],
+						},
+					},
+				},
+				spreadingTheLight = {
+					order = 16,
+					type = "group",
+					inline = true,
+					name = L["Spreading The Light"],
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						desaturate = {
+							order = 2,
+							type = "toggle",
+							name = L["Desaturate"],
+							desc = L["Desaturate icon if the event is completed in this week."],
+						},
+					},
+				},
+				underworldOperative = {
+					order = 17,
+					type = "group",
+					inline = true,
+					name = L["Underworld Operative"],
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						desaturate = {
+							order = 2,
+							type = "toggle",
+							name = L["Desaturate"],
+							desc = L["Desaturate icon if the event is completed in this week."],
+						},
+					},
+				},
+				radiantEchoes = {
+					order = 21,
+					type = "group",
+					inline = true,
+					name = L["Radiant Echoes"],
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						desaturate = {
+							order = 2,
+							type = "toggle",
+							name = L["Desaturate"],
+							desc = L["Desaturate icon if the event is completed in this week."],
+						},
+						alert = {
+							order = 3,
+							type = "toggle",
+							name = L["Alert"],
+						},
+						sound = {
+							order = 4,
+							type = "toggle",
+							name = L["Alert Sound"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+							desc = L["Play sound when the alert is triggered."],
+						},
+						soundFile = {
+							order = 5,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound File"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+									or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+							end,
+							values = LSM:HashTable("sound"),
+						},
+						second = {
+							order = 6,
+							type = "range",
+							name = L["Alert Second"],
+							desc = L["Alert will be triggered when the remaining time is less than the set value."],
+							min = 0,
+							max = 3600,
+							step = 1,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+						stopAlertIfCompleted = {
+							order = 7,
+							type = "toggle",
+							name = L["Stop Alert if Completed"],
+							desc = L["Stop alert when the event is completed in this week."],
+							width = 1.5,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+						stopAlertIfPlayerNotEnteredDragonlands = {
+							order = 8,
+							type = "toggle",
+							name = L["Only DF Character"],
+							desc = L["Stop alert when the player has not entered Dragonlands yet."],
+							width = 1.5,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+					},
 				},
 			},
 		},
-		bigDig = {
+		df = {
 			order = 22,
 			type = "group",
-			inline = true,
-			name = L["The Big Dig"],
+			name = C.StringByTemplate(L["Dragonflight"], "red-600"),
 			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
+				bigDig = {
+					order = 22,
+					type = "group",
+					inline = true,
+					name = L["The Big Dig"],
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						alert = {
+							order = 2,
+							type = "toggle",
+							name = L["Alert"],
+						},
+						sound = {
+							order = 3,
+							type = "toggle",
+							name = L["Alert Sound"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+							desc = L["Play sound when the alert is triggered."],
+						},
+						soundFile = {
+							order = 4,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound File"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+									or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+							end,
+							values = LSM:HashTable("sound"),
+						},
+						second = {
+							order = 5,
+							type = "range",
+							name = L["Alert Second"],
+							desc = L["Alert will be triggered when the remaining time is less than the set value."],
+							min = 0,
+							max = 3600,
+							step = 1,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+						stopAlertIfPlayerNotEnteredDragonlands = {
+							order = 6,
+							type = "toggle",
+							name = L["Only DF Character"],
+							desc = L["Stop alert when the player has not entered Dragonlands yet."],
+							width = 1.5,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+					},
 				},
-				alert = {
-					order = 2,
-					type = "toggle",
-					name = L["Alert"],
+				superBloom = {
+					order = 23,
+					type = "group",
+					inline = true,
+					name = L["Superbloom"],
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						alert = {
+							order = 2,
+							type = "toggle",
+							name = L["Alert"],
+						},
+						sound = {
+							order = 3,
+							type = "toggle",
+							name = L["Alert Sound"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+							desc = L["Play sound when the alert is triggered."],
+						},
+						soundFile = {
+							order = 4,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound File"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+									or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+							end,
+							values = LSM:HashTable("sound"),
+						},
+						second = {
+							order = 5,
+							type = "range",
+							name = L["Alert Second"],
+							desc = L["Alert will be triggered when the remaining time is less than the set value."],
+							min = 0,
+							max = 3600,
+							step = 1,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+						stopAlertIfPlayerNotEnteredDragonlands = {
+							order = 6,
+							type = "toggle",
+							name = L["Only DF Character"],
+							desc = L["Stop alert when the player has not entered Dragonlands yet."],
+							width = 1.5,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+					},
 				},
-				sound = {
-					order = 3,
-					type = "toggle",
-					name = L["Alert Sound"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-					desc = L["Play sound when the alert is triggered."],
+				timeRiftThaldraszus = {
+					order = 24,
+					type = "group",
+					inline = true,
+					name = L["Time Rift Thaldraszus"],
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						alert = {
+							order = 2,
+							type = "toggle",
+							name = L["Alert"],
+						},
+						sound = {
+							order = 3,
+							type = "toggle",
+							name = L["Alert Sound"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+							desc = L["Play sound when the alert is triggered."],
+						},
+						soundFile = {
+							order = 4,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound File"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+									or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+							end,
+							values = LSM:HashTable("sound"),
+						},
+						second = {
+							order = 5,
+							type = "range",
+							name = L["Alert Second"],
+							desc = L["Alert will be triggered when the remaining time is less than the set value."],
+							min = 0,
+							max = 3600,
+							step = 1,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+						stopAlertIfPlayerNotEnteredDragonlands = {
+							order = 6,
+							type = "toggle",
+							name = L["Only DF Character"],
+							desc = L["Stop alert when the player has not entered Dragonlands yet."],
+							width = 1.5,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+					},
 				},
-				soundFile = {
-					order = 4,
-					type = "select",
-					dialogControl = "LSM30_Sound",
-					name = L["Sound File"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
-					end,
-					values = LSM:HashTable("sound"),
+				researchersUnderFire = {
+					order = 25,
+					type = "group",
+					inline = true,
+					name = L["Researchers Under Fire"],
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						desaturate = {
+							order = 2,
+							type = "toggle",
+							name = L["Desaturate"],
+							desc = L["Desaturate icon if the event is completed in this week."],
+						},
+						alert = {
+							order = 3,
+							type = "toggle",
+							name = L["Alert"],
+						},
+						sound = {
+							order = 4,
+							type = "toggle",
+							name = L["Alert Sound"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+							desc = L["Play sound when the alert is triggered."],
+						},
+						soundFile = {
+							order = 5,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound File"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+									or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+							end,
+							values = LSM:HashTable("sound"),
+						},
+						second = {
+							order = 6,
+							type = "range",
+							name = L["Alert Second"],
+							desc = L["Alert will be triggered when the remaining time is less than the set value."],
+							min = 0,
+							max = 3600,
+							step = 1,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+						stopAlertIfCompleted = {
+							order = 7,
+							type = "toggle",
+							name = L["Stop Alert if Completed"],
+							desc = L["Stop alert when the event is completed in this week."],
+							width = 1.5,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+						stopAlertIfPlayerNotEnteredDragonlands = {
+							order = 8,
+							type = "toggle",
+							name = L["Only DF Character"],
+							desc = L["Stop alert when the player has not entered Dragonlands yet."],
+							width = 1.5,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+					},
 				},
-				second = {
-					order = 5,
-					type = "range",
-					name = L["Alert Second"],
-					desc = L["Alert will be triggered when the remaining time is less than the set value."],
-					min = 0,
-					max = 3600,
-					step = 1,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
+				siegeOnDragonbaneKeep = {
+					order = 26,
+					type = "group",
+					inline = true,
+					name = L["Siege On Dragonbane Keep"],
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						desaturate = {
+							order = 2,
+							type = "toggle",
+							name = L["Desaturate"],
+							desc = L["Desaturate icon if the event is completed in this week."],
+						},
+						alert = {
+							order = 3,
+							type = "toggle",
+							name = L["Alert"],
+						},
+						sound = {
+							order = 4,
+							type = "toggle",
+							name = L["Alert Sound"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+							desc = L["Play sound when the alert is triggered."],
+						},
+						soundFile = {
+							order = 5,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound File"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+									or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+							end,
+							values = LSM:HashTable("sound"),
+						},
+						second = {
+							order = 6,
+							type = "range",
+							name = L["Alert Second"],
+							desc = L["Alert will be triggered when the remaining time is less than the set value."],
+							min = 0,
+							max = 3600,
+							step = 1,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+						stopAlertIfCompleted = {
+							order = 7,
+							type = "toggle",
+							name = L["Stop Alert if Completed"],
+							desc = L["Stop alert when the event is completed in this week."],
+							width = 1.5,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+						stopAlertIfPlayerNotEnteredDragonlands = {
+							order = 8,
+							type = "toggle",
+							name = L["Only DF Character"],
+							desc = L["Stop alert when the player has not entered Dragonlands yet."],
+							width = 1.5,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+					},
 				},
-				stopAlertIfPlayerNotEnteredDragonlands = {
-					order = 6,
-					type = "toggle",
-					name = L["Only DF Character"],
-					desc = L["Stop alert when the player has not entered Dragonlands yet."],
-					width = 1.5,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-			},
-		},
-		superBloom = {
-			order = 23,
-			type = "group",
-			inline = true,
-			name = L["Superbloom"],
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				alert = {
-					order = 2,
-					type = "toggle",
-					name = L["Alert"],
-				},
-				sound = {
-					order = 3,
-					type = "toggle",
-					name = L["Alert Sound"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-					desc = L["Play sound when the alert is triggered."],
-				},
-				soundFile = {
-					order = 4,
-					type = "select",
-					dialogControl = "LSM30_Sound",
-					name = L["Sound File"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
-					end,
-					values = LSM:HashTable("sound"),
-				},
-				second = {
-					order = 5,
-					type = "range",
-					name = L["Alert Second"],
-					desc = L["Alert will be triggered when the remaining time is less than the set value."],
-					min = 0,
-					max = 3600,
-					step = 1,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-				stopAlertIfPlayerNotEnteredDragonlands = {
-					order = 6,
-					type = "toggle",
-					name = L["Only DF Character"],
-					desc = L["Stop alert when the player has not entered Dragonlands yet."],
-					width = 1.5,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-			},
-		},
-		timeRiftThaldraszus = {
-			order = 24,
-			type = "group",
-			inline = true,
-			name = L["Time Rift Thaldraszus"],
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				alert = {
-					order = 2,
-					type = "toggle",
-					name = L["Alert"],
-				},
-				sound = {
-					order = 3,
-					type = "toggle",
-					name = L["Alert Sound"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-					desc = L["Play sound when the alert is triggered."],
-				},
-				soundFile = {
-					order = 4,
-					type = "select",
-					dialogControl = "LSM30_Sound",
-					name = L["Sound File"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
-					end,
-					values = LSM:HashTable("sound"),
-				},
-				second = {
-					order = 5,
-					type = "range",
-					name = L["Alert Second"],
-					desc = L["Alert will be triggered when the remaining time is less than the set value."],
-					min = 0,
-					max = 3600,
-					step = 1,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-				stopAlertIfPlayerNotEnteredDragonlands = {
-					order = 6,
-					type = "toggle",
-					name = L["Only DF Character"],
-					desc = L["Stop alert when the player has not entered Dragonlands yet."],
-					width = 1.5,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-			},
-		},
-		researchersUnderFire = {
-			order = 25,
-			type = "group",
-			inline = true,
-			name = L["Researchers Under Fire"],
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				desaturate = {
-					order = 2,
-					type = "toggle",
-					name = L["Desaturate"],
-					desc = L["Desaturate icon if the event is completed in this week."],
-				},
-				alert = {
-					order = 3,
-					type = "toggle",
-					name = L["Alert"],
-				},
-				sound = {
-					order = 4,
-					type = "toggle",
-					name = L["Alert Sound"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-					desc = L["Play sound when the alert is triggered."],
-				},
-				soundFile = {
-					order = 5,
-					type = "select",
-					dialogControl = "LSM30_Sound",
-					name = L["Sound File"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
-					end,
-					values = LSM:HashTable("sound"),
-				},
-				second = {
-					order = 6,
-					type = "range",
-					name = L["Alert Second"],
-					desc = L["Alert will be triggered when the remaining time is less than the set value."],
-					min = 0,
-					max = 3600,
-					step = 1,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-				stopAlertIfCompleted = {
-					order = 7,
-					type = "toggle",
-					name = L["Stop Alert if Completed"],
-					desc = L["Stop alert when the event is completed in this week."],
-					width = 1.5,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-				stopAlertIfPlayerNotEnteredDragonlands = {
-					order = 8,
-					type = "toggle",
-					name = L["Only DF Character"],
-					desc = L["Stop alert when the player has not entered Dragonlands yet."],
-					width = 1.5,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-			},
-		},
-		siegeOnDragonbaneKeep = {
-			order = 26,
-			type = "group",
-			inline = true,
-			name = L["Siege On Dragonbane Keep"],
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				desaturate = {
-					order = 2,
-					type = "toggle",
-					name = L["Desaturate"],
-					desc = L["Desaturate icon if the event is completed in this week."],
-				},
-				alert = {
-					order = 3,
-					type = "toggle",
-					name = L["Alert"],
-				},
-				sound = {
-					order = 4,
-					type = "toggle",
-					name = L["Alert Sound"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-					desc = L["Play sound when the alert is triggered."],
-				},
-				soundFile = {
-					order = 5,
-					type = "select",
-					dialogControl = "LSM30_Sound",
-					name = L["Sound File"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
-					end,
-					values = LSM:HashTable("sound"),
-				},
-				second = {
-					order = 6,
-					type = "range",
-					name = L["Alert Second"],
-					desc = L["Alert will be triggered when the remaining time is less than the set value."],
-					min = 0,
-					max = 3600,
-					step = 1,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-				stopAlertIfCompleted = {
-					order = 7,
-					type = "toggle",
-					name = L["Stop Alert if Completed"],
-					desc = L["Stop alert when the event is completed in this week."],
-					width = 1.5,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-				stopAlertIfPlayerNotEnteredDragonlands = {
-					order = 8,
-					type = "toggle",
-					name = L["Only DF Character"],
-					desc = L["Stop alert when the player has not entered Dragonlands yet."],
-					width = 1.5,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-			},
-		},
-		communityFeast = {
-			order = 27,
-			type = "group",
-			inline = true,
-			name = L["Community Feast"],
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				desaturate = {
-					order = 2,
-					type = "toggle",
-					name = L["Desaturate"],
-					desc = L["Desaturate icon if the event is completed in this week."],
-				},
-				alert = {
-					order = 3,
-					type = "toggle",
-					name = L["Alert"],
-				},
-				sound = {
-					order = 4,
-					type = "toggle",
-					name = L["Alert Sound"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-					desc = L["Play sound when the alert is triggered."],
-				},
-				soundFile = {
-					order = 5,
-					type = "select",
-					dialogControl = "LSM30_Sound",
-					name = L["Sound File"],
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
-					end,
-					values = LSM:HashTable("sound"),
-				},
-				second = {
-					order = 6,
-					type = "range",
-					name = L["Alert Second"],
-					desc = L["Alert will be triggered when the remaining time is less than the set value."],
-					min = 0,
-					max = 3600,
-					step = 1,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-				stopAlertIfCompleted = {
-					order = 7,
-					type = "toggle",
-					name = L["Stop Alert if Completed"],
-					desc = L["Stop alert when the event is completed in this week."],
-					width = 1.5,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
-				},
-				stopAlertIfPlayerNotEnteredDragonlands = {
-					order = 8,
-					type = "toggle",
-					name = L["Only DF Character"],
-					desc = L["Stop alert when the player has not entered Dragonlands yet."],
-					width = 1.5,
-					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-					end,
+				communityFeast = {
+					order = 27,
+					type = "group",
+					inline = true,
+					name = L["Community Feast"],
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						desaturate = {
+							order = 2,
+							type = "toggle",
+							name = L["Desaturate"],
+							desc = L["Desaturate icon if the event is completed in this week."],
+						},
+						alert = {
+							order = 3,
+							type = "toggle",
+							name = L["Alert"],
+						},
+						sound = {
+							order = 4,
+							type = "toggle",
+							name = L["Alert Sound"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+							desc = L["Play sound when the alert is triggered."],
+						},
+						soundFile = {
+							order = 5,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound File"],
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+									or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+							end,
+							values = LSM:HashTable("sound"),
+						},
+						second = {
+							order = 6,
+							type = "range",
+							name = L["Alert Second"],
+							desc = L["Alert will be triggered when the remaining time is less than the set value."],
+							min = 0,
+							max = 3600,
+							step = 1,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+						stopAlertIfCompleted = {
+							order = 7,
+							type = "toggle",
+							name = L["Stop Alert if Completed"],
+							desc = L["Stop alert when the event is completed in this week."],
+							width = 1.5,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+						stopAlertIfPlayerNotEnteredDragonlands = {
+							order = 8,
+							type = "toggle",
+							name = L["Only DF Character"],
+							desc = L["Stop alert when the player has not entered Dragonlands yet."],
+							width = 1.5,
+							hidden = function(info)
+								return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							end,
+						},
+					},
 				},
 			},
 		},
 	},
 }
 
-for eventName, eventOptions in pairs(options.eventTracker.args) do
-	if eventName ~= "desc" and eventName ~= "enable" and eventName ~= "style" and eventName ~= "font" then
+for _, expansionID in pairs({ "mn", "tww", "df" }) do
+	for _, eventOptions in pairs(options.eventTracker.args[expansionID].args) do
+		options.eventTracker.args[expansionID].inline = false
 		for arg in pairs(eventOptions.args) do
 			if arg ~= "enable" then
 				eventOptions.args[arg].hidden = function(info)

@@ -18,9 +18,12 @@ local UnitIsUnit = UnitIsUnit
 local UnitPower = UnitPower
 local UnitPowerPercent = UnitPowerPercent
 local UnitPowerType = UnitPowerType
+local UnitGetTotalAbsorbs = UnitGetTotalAbsorbs
 
 local C_StringUtil_TruncateWhenZero = C_StringUtil.TruncateWhenZero
 local CurveConstants_ScaleTo100 = CurveConstants.ScaleTo100
+local Enum_PowerType_Mana = Enum.PowerType.Mana
+local RED_FONT_COLOR = RED_FONT_COLOR
 
 local function GetClassColorString(class)
 	local hexString = select(4, GetClassColor(class))
@@ -71,7 +74,7 @@ function M:Tags()
 
 	-- Smart power
 	E:AddTag("smart-power", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER", function(unit)
-		if UnitPowerType(unit) == Enum.PowerType.Mana then
+		if UnitPowerType(unit) == Enum_PowerType_Mana then
 			return format("%d%%", UnitPowerPercent(unit, nil, true, CurveConstants_ScaleTo100) --[[@as number]])
 		end
 
@@ -79,7 +82,7 @@ function M:Tags()
 	end)
 
 	E:AddTag("smart-power-nosign", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER", function(unit)
-		if UnitPowerType(unit) == Enum.PowerType.Mana then
+		if UnitPowerType(unit) == Enum_PowerType_Mana then
 			return format("%d", UnitPowerPercent(unit, nil, true, CurveConstants_ScaleTo100) --[[@as number]])
 		end
 

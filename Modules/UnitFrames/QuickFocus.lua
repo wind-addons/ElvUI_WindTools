@@ -8,6 +8,7 @@ local strjoin = strjoin
 local strmatch = strmatch
 local strsub = strsub
 local tAppendAll = tAppendAll
+local unpack = unpack
 
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown

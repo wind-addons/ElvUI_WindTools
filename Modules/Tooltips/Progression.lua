@@ -2,6 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local ET = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips
 local Async = W.Utilities.Async
+local C = W.Utilities.Color
 
 local _G = _G
 local format = format
@@ -92,12 +93,16 @@ local function GetBossKillTimes(guid, achievementID)
 end
 
 local function UpdateSpecialAchievement(guid, id, completed, month, day, year)
-	local completedString = "|cff888888" .. L["Not Completed"] .. "|r"
+	local completedString
+
 	if completed then
 		completedString = gsub(L["%month%-%day%-%year%"], "%%year%%", 2000 + year)
 		completedString = gsub(completedString, "%%month%%", month)
 		completedString = gsub(completedString, "%%day%%", day)
+	elseif not E.private.WT.tooltips.progression.specialAchievement.onlyCompleted then
+		completedString = C.StringByTemplate(L["Not Completed"], "neutral-500")
 	end
+
 	cache[guid].info.special[id] = completedString
 end
 

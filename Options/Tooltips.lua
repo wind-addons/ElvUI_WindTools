@@ -415,6 +415,24 @@ options.progression = {
 						return not E.private.WT.tooltips.progression.enable
 					end,
 				},
+				onlyCompleted = {
+					order = 2,
+					type = "toggle",
+					name = L["Only Show Completed"],
+					desc = L["Only show the completed special achievements in the tooltip."],
+					get = function(info)
+						return E.private.WT.tooltips.progression.specialAchievement.onlyCompleted
+					end,
+					set = function(info, value)
+						E.private.WT.tooltips.progression.specialAchievement.onlyCompleted = value
+					end,
+					disabled = function()
+						return not (
+							E.private.WT.tooltips.progression.enable
+							and E.private.WT.tooltips.progression.specialAchievement.enable
+						)
+					end,
+				},
 			},
 		},
 		raid = {

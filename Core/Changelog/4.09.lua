@@ -9,6 +9,7 @@ W.Changelog[409] = {
 			"[标签] 完全重构了标签模块, 并移动到了单位框体分类. 你可以在 [单位框体] - [标签] 中找到新的可适用于新版 ElvUI 单位框体的标签.",
 			"[吸收] 该模块现在支持最新版 ElvUI 单位框体, 但是由于暴雪 API 的问题, 溢出时的发光目前无法正确显示.",
 			"[单位框体] 该模块现在支持最新版 ElvUI 单位框体.",
+			"[其他] - [快捷键文字置顶] 该功能现在支持最新版 ElvUI 动作条.",
 		},
 		["zhTW"] = {
 			"繼續優化至暗之夜API改動帶來的相容性問題.",
@@ -16,6 +17,7 @@ W.Changelog[409] = {
 			"[標籤] 完全重構了標籤模組, 並移動到了單位框架分類. 你可以在 [單位框架] - [標籤] 中找到新的可適用於新版 ElvUI 單位框體的標籤.",
 			"[吸收] 該模組現在支援最新版 ElvUI 單位框架, 但是由於暴雪 API 的問題, 溢出時的發光目前無法正確顯示.",
 			"[單位框架] 該模組現在支援最新版 ElvUI 單位框架.",
+			"[其他] - [按鍵綁定文字置頂] 該功能現在支援最新版 ElvUI 快捷列.",
 		},
 		["enUS"] = {
 			"Continued to optimize compatibility issues caused by Midnight API changes.",
@@ -23,6 +25,7 @@ W.Changelog[409] = {
 			"[Tags] Completely rebuilt the module, and move it to the Unit Frames category. You can find the new tags applicable to the new ElvUI unit frames in [Unit Frames] - [Tags].",
 			"[Absorb] This module now supports the latest ElvUI unit frames, but due to Blizzard API issues, the glow on overflow cannot be displayed correctly at the moment.",
 			"[Unit Frames] This module now supports the latest ElvUI unit frames.",
+			"[Misc] - [Keybind Text Above] This feature now supports the latest ElvUI action bars.",
 		},
 		["koKR"] = {
 			"미드나이트 API 변경으로 인한 호환성 문제를 지속적으로 최적화했습니다.",
@@ -30,6 +33,7 @@ W.Changelog[409] = {
 			"[태그] 모듈이 완전히 재구성되었으며, 유닛 프레임 범주로 이동되었습니다. 새로운 ElvUI 유닛 프레임에 적용할 수 있는 새로운 태그는 [유닛 프레임] - [태그]에서 찾을 수 있습니다.",
 			"[흡수] 이 모듈은 이제 최신 ElvUI 유닛 프레임을 지원하지만, 블리자드 API 문제로 인해 현재 오버플로 시 글로우가 올바르게 표시되지 않습니다.",
 			"[유닛 프레임] 이 모듈은 이제 최신 ElvUI 유닛 프레임을 지원합니다.",
+			"[기타] - [단축키 텍스트 위] 이 기능은 이제 최신 ElvUI 행동 막대를 지원합니다.",
 		},
 		["ruRU"] = {
 			"Продолжена оптимизация проблем совместимости, вызванных изменениями API Полуночи.",
@@ -37,6 +41,7 @@ W.Changelog[409] = {
 			"[Теги] Модуль был полностью перестроен, и перемещен в категорию Юнит-Фреймы. Новые теги, применимые к новым юнит-фреймам ElvUI, можно найти в разделе [Юнит-Фреймы] - [Теги].",
 			"[Поглощение] Этот модуль теперь поддерживает последние юнит-фреймы ElvUI, но из-за проблем с API Blizzard свечение при переполнении в данный момент не может отображаться правильно.",
 			"[Юнит-Фреймы] Этот модуль теперь поддерживает последние юнит-фреймы ElvUI.",
+			"[Разное] - [Текст привязки клавиш сверху] Эта функция теперь поддерживает последние панели действий ElvUI.",
 		},
 	},
 	NEW = {
@@ -64,6 +69,7 @@ W.Changelog[409] = {
 			"[进度] 移除了地心之战 S1, S2 的赛季成就数据, 加入了至暗之夜 S1 赛季成就数据.",
 			"[进度] 移除了地心之战除欧米伽以外所有的旧 Raid 进度数据, 加入了至暗之夜 3 个新 Raid 数据.",
 			"[快速焦点] 现在会正确使用设定中的鼠标按钮.",
+			"[事件追踪器] 考虑到之后更多的事件, 优化了事件追踪器的设置界面, 现在可以按照资料片来管理事件显示.",
 		},
 		["zhTW"] = {
 			"[世界地圖] 迷霧移除功能現在支援至暗之夜地圖.",
@@ -72,6 +78,7 @@ W.Changelog[409] = {
 			"[進度] 移除了地心之戰 S1, S2 的賽季成就數據, 加入了至暗之夜 S1 賽季成就數據.",
 			"[進度] 移除了地心之戰除歐米伽以外所有的舊 Raid 進度數據, 加入了至暗之夜 3 個新 Raid 數據.",
 			"[快速焦點] 現在會正確使用設定中的滑鼠按鍵.",
+			"[事件追蹤器] 考慮到之後更多的事件, 優化了事件追蹤器的設置介面, 現在可以按照資料片來管理事件顯示.",
 		},
 		["enUS"] = {
 			"[World Map] The fog removal feature now supports the Midnight map.",
@@ -80,6 +87,7 @@ W.Changelog[409] = {
 			"[Progress] Removed season achievement data for The War Within S1 and S2, and added season achievement data for Midnight S1.",
 			"[Progress] Removed all old raid progress data from The War Within except for Omega, and added data for 3 new raids from Midnight.",
 			"[Quick Focus] Now correctly uses the mouse button set in the settings.",
+			"[Event Tracker] Considering more events in the future, optimized the settings interface of the event tracker, now you can manage event display by expansion.",
 		},
 		["koKR"] = {
 			"[세계 지도] 안개 제거 기능이 이제 미드나이트 지도를 지원합니다.",
@@ -88,6 +96,7 @@ W.Changelog[409] = {
 			"[진행 상황] '내부의 전쟁' S1 및 S2의 시즌 업적 데이터를 제거하고 '미드나이트' S1의 시즌 업적 데이터를 추가했습니다.",
 			"[진행 상황] '내부의 전쟁'에서 오메가를 제외한 모든 이전 공격대 진행 데이터를 제거하고 '미드나이트'의 3개의 새로운 공격대 데이터를 추가했습니다.",
 			"[빠른 집중] 이제 설정에서 설정한 마우스 버튼을 올바르게 사용합니다.",
+			"[이벤트 추적기] 향후 더 많은 이벤트를 고려하여 이벤트 추적기의 설정 인터페이스를 최적화했으며 이제 확장별로 이벤트 표시를 관리할 수 있습니다.",
 		},
 		["ruRU"] = {
 			"[Карта мира] Функция удаления тумана теперь поддерживает карту Полуночи.",
@@ -96,6 +105,7 @@ W.Changelog[409] = {
 			"[Прогресс] Удалены данные о достижениях сезона для Войны внутри S1 и S2, добавлены данные о достижениях сезона для Полуночи S1.",
 			"[Прогресс] Удалены все старые данные о прогрессе рейдов из Войны внутри, кроме Омеги, добавлены данные о 3 новых рейдах из Полуночи.",
 			"[Быстрый фокус] Теперь правильно используется кнопка мыши, установленная в настройках.",
+			"[Трекер событий] С учетом большего количества событий в будущем оптимизирован интерфейс настроек трекера событий, теперь вы можете управлять отображением событий по расширениям.",
 		},
 	},
 }

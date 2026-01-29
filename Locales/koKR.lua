@@ -239,6 +239,7 @@ L["Automatically scan achievements when certain events occur."] = "특정 이벤
 L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100%)"] = "자동으로 최적의 자원 형식을 선택합니다 (예 : 도적은 120, 마법사는 100%)."
 L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100)"] = "자동으로 최적의 자원 형식을 선택합니다 (예 : 도적은 120, 마법사는 100)."
 L["Automation"] = "자동화"
+L["Available Tags"] = "사용 가능한 태그"
 L["Avoid Reload in Combat"] = "전투 중 UI 새로고침 방지"
 L["Azerite"] = "아제라이트"
 L["Azerite Essence"] = "아제라이트 정수"

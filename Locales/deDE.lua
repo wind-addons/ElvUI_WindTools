@@ -239,6 +239,7 @@ L["Automatically scan achievements when certain events occur."] = "Automatische 
 L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100%)"] = "Wähle automatisch das beste Energieformat aus (z.B. Schurke is 120, Magier is 100%)"
 L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100)"] = "Wähle automatisch das beste Energieformat aus (z.B. Schurke is 120, Magier is 100)"
 L["Automation"] = "Automatisierung"
+L["Available Tags"] = "Verfügbare Tags"
 L["Avoid Reload in Combat"] = "Vermeidet das Neuladen im Kampf"
 L["Azerite"] = "Azerit"
 L["Azerite Essence"] = "Azeritessenz"

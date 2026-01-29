@@ -239,6 +239,7 @@ L["Automatically scan achievements when certain events occur."] = true
 L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100%)"] = true
 L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100)"] = true
 L["Automation"] = true
+L["Available Tags"] = true
 L["Avoid Reload in Combat"] = true
 L["Azerite"] = true
 L["Azerite Essence"] = true

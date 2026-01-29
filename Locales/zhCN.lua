@@ -239,6 +239,7 @@ L["Automatically scan achievements when certain events occur."] = "在特定事�
 L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100%)"] = "自动选择最佳的能量格式 (例: 潜行者是 120, 法师是 100%)"
 L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100)"] = "自动选择最佳的能量格式 (例: 潜行者是 120, 法师是 100)"
 L["Automation"] = "自动化"
+L["Available Tags"] = "可用的文字格式"
 L["Avoid Reload in Combat"] = "避免战斗中重载"
 L["Azerite"] = "艾泽里特"
 L["Azerite Essence"] = "艾泽拉斯之心特质"

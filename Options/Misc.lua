@@ -122,7 +122,7 @@ options.general = {
 		keybindTextAbove = {
 			order = 9,
 			type = "toggle",
-			name = W.FixingLabel .. L["Keybind Text Above"],
+			name = L["Keybind Text Above"],
 			desc = format(
 				"%s\n%s",
 				L["Show keybinds above the ElvUI cooldown and glow effect on the action buttons."],

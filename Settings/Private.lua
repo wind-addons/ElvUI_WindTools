@@ -154,7 +154,6 @@ V.misc = {
 	pauseToSlash = true,
 	skipCutScene = false,
 	onlyStopWatched = true,
-	tags = true,
 	keybindTextAbove = false,
 	guildNewsItemLevel = true,
 	addCNFilter = false,
@@ -783,5 +782,8 @@ V.unitFrames = {
 	roleIcon = {
 		enable = true,
 		roleIconStyle = "SUNUI",
+	},
+	tags = {
+		enable = true,
 	},
 }

@@ -20,7 +20,6 @@
 	<Script file='PauseToSlash.lua'/>
 	<Script file='ReshiiWrapsUpgrade.lua'/>
 	<Script file='SkipCutScene.lua'/>
-	<Script file='Tags.lua'/>
 	<!-- Others -->
 	<Script file='Automation.lua'/>
 	<Script file='LFGList.lua'/>

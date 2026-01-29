@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local M = W.Modules.Misc ---@class Misc
+local Tags = W:NewModule("Tags") ---@class Tags: AceModule
 local RangeCheck = E.Libs.RangeCheck
 
 local floor = floor
@@ -23,15 +23,14 @@ local UnitGetTotalAbsorbs = UnitGetTotalAbsorbs
 local C_StringUtil_TruncateWhenZero = C_StringUtil.TruncateWhenZero
 local CurveConstants_ScaleTo100 = CurveConstants.ScaleTo100
 local Enum_PowerType_Mana = Enum.PowerType.Mana
-local RED_FONT_COLOR = RED_FONT_COLOR
 
 local function GetClassColorString(class)
 	local hexString = select(4, GetClassColor(class))
 	return "|c" .. hexString
 end
 
-function M:Tags()
-	if not E.private.WT.misc.tags then
+function Tags:Initialize()
+	if not E.private.WT.unitFrames.tags.enable then
 		return
 	end
 
@@ -120,4 +119,4 @@ function M:Tags()
 	end
 end
 
-M:AddCallback("Tags")
+W:RegisterModule(Tags:GetName())

@@ -2,4 +2,5 @@
 	<Script file='Absorb.lua'/>
 	<Script file='QuickFocus.lua'/>
 	<Script file='RoleIcon.lua'/>
+	<Script file='Tags.lua'/>
 </Ui>

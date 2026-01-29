@@ -426,3 +426,221 @@ options.roleIcon = {
 		},
 	},
 }
+
+options.tags = {
+	order = 99,
+	type = "group",
+	name = L["Tags"],
+	get = function(info)
+		return E.private.WT.unitFrames.tags[info[#info]]
+	end,
+	set = function(info, value)
+		E.private.WT.unitFrames.tags[info[#info]] = value
+		E:StaticPopup_Show("PRIVATE_RL")
+	end,
+	args = {
+		desc = {
+			order = 1,
+			type = "group",
+			inline = true,
+			name = L["Description"],
+			args = {
+				feature = {
+					order = 1,
+					type = "description",
+					name = L["Add more oUF tags. You can use them on UnitFrames configuration."],
+					fontSize = "medium",
+				},
+			},
+		},
+		enable = {
+			order = 2,
+			type = "toggle",
+			name = L["Enable"],
+			width = "full",
+		},
+		availableTags = {
+			order = 3,
+			type = "header",
+			name = L["Available Tags"],
+		}
+	},
+}
+
+do
+	local examples = {}
+
+	examples.health = {
+		order = 10,
+		name = L["Health"],
+		float1 = {
+			order = 1,
+			tag = "[perhp1f]",
+			text = L["The percentage of health without percent sign and status"]
+				.. format(" (%s = 1)", L["Decimal Length"]),
+		},
+		float2 = {
+			order = 2,
+			tag = "[perhp2f]",
+			text = L["The percentage of health without percent sign and status"]
+				.. format(" (%s = 2)", L["Decimal Length"]),
+		},
+		float3 = {
+			order = 3,
+			tag = "[perhp3f]",
+			text = L["The percentage of health without percent sign and status"]
+				.. format(" (%s = 3)", L["Decimal Length"]),
+		},
+		absorbsAutohide = {
+			order = 4,
+			tag = "[absorbs-autohide]",
+			text = format(
+				L["Just like %s, but it will be hidden when the amount is zero."],
+				C.StringByTemplate("[absorbs]", "sky-500")
+			),
+		},
+		healabsorbsAutohide = {
+			order = 5,
+			tag = "[healabsorbs-autohide]",
+			text = format(
+				L["Just like %s, but it will be hidden when the amount is zero."],
+				C.StringByTemplate("[healabsorbs]", "sky-500")
+			),
+		},
+	}
+
+	examples.power = {
+		order = 11,
+		name = L["Power"],
+		smart = {
+			tag = "[smart-power]",
+			text = L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100%)"],
+		},
+		smartNoSign = {
+			tag = "[smart-power-nosign]",
+			text = L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100)"],
+		},
+	}
+
+	examples.range = {
+		order = 12,
+		name = L["Range"],
+		normal = {
+			tag = "[range]",
+			text = L["Range"],
+		},
+		expectation = {
+			tag = "[range:expectation]",
+			text = L["Range Expectation"],
+		},
+	}
+
+	examples.color = {
+		order = 13,
+		name = L["Color"],
+		player = {
+			order = 0,
+			tag = "[classcolor:player]",
+			text = L["The color of the player's class"],
+		},
+	}
+
+	---@type table<ClassFile, string>
+	local classNames = {
+		WARRIOR = L["Warrior"],
+		PALADIN = L["Paladin"],
+		HUNTER = L["Hunter"],
+		ROGUE = L["Rogue"],
+		PRIEST = L["Priest"],
+		DEATHKNIGHT = L["Deathknight"],
+		SHAMAN = L["Shaman"],
+		MAGE = L["Mage"],
+		WARLOCK = L["Warlock"],
+		MONK = L["Monk"],
+		DRUID = L["Druid"],
+		DEMONHUNTER = L["Demonhunter"],
+		EVOKER = L["Evoker"],
+	}
+
+	for i = 1, GetNumClasses() do
+		local classFile = select(2, GetClassInfo(i))
+		examples.color[classFile] = {
+			order = i,
+			tag = format("[classcolor:%s]", strlower(classFile)),
+			text = format(L["The color of %s"], C.StringWithClassColor(classNames[classFile], classFile)),
+		}
+	end
+
+	for index, style in pairs(F.GetClassIconStyleList()) do
+		examples["classIcon_" .. style] = {
+			order = 20 + index,
+			name = L["Class Icon"] .. " - " .. style,
+			["PLAYER_ICON"] = {
+				order = 1,
+				type = "description",
+				image = function()
+					return F.GetClassIconWithStyle(E.myclass, style), 64, 64
+				end,
+				width = 1,
+			},
+			["PLAYER_TAG"] = {
+				order = 2,
+				text = L["The class icon of the player's class"],
+				tag = "[classicon-" .. style .. "]",
+				width = 1.5,
+			},
+		}
+
+		for i = 1, GetNumClasses() do
+			local classFile = select(2, GetClassInfo(i))
+			examples["classIcon_" .. style][classFile .. "_ALIGN"] = {
+				order = 3 * i,
+				type = "description",
+			}
+			examples["classIcon_" .. style][classFile .. "_ICON"] = {
+				order = 3 * i + 1,
+				type = "description",
+				image = function()
+					return F.GetClassIconWithStyle(classFile, style), 64, 64
+				end,
+				width = 1,
+			}
+			examples["classIcon_" .. style][classFile .. "_TAG"] = {
+				order = 3 * i + 2,
+				text = C.StringWithClassColor(classNames[classFile], classFile),
+				tag = "[classicon-" .. style .. ":" .. strlower(classFile) .. "]",
+				width = 1.5,
+			}
+		end
+	end
+
+	for cat, catTable in pairs(examples) do
+		options.tags.args[cat] = {
+			order = catTable.order,
+			type = "group",
+			name = catTable.name,
+			inline = false,
+			args = {},
+		}
+
+		local subIndex = 1
+		for key, data in pairs(catTable) do
+			if key ~= "name" and key ~= "order" then
+				options.tags.args[cat].args[key] = {
+					order = data.order or subIndex,
+					type = data.type or "input",
+					width = data.width or "full",
+					name = data.text or "",
+					get = function()
+						return data.tag
+					end,
+				}
+
+				if data.image then
+					options.tags.args[cat].args[key].image = data.image
+				end
+				subIndex = subIndex + 1
+			end
+		end
+	end
+end

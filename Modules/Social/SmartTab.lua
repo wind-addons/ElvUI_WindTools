@@ -26,6 +26,7 @@ local C_GuildInfo_IsGuildOfficer = C_GuildInfo.IsGuildOfficer
 
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
+local RED_FONT_COLOR = RED_FONT_COLOR
 
 local ChannelList = {
 	"SAY",

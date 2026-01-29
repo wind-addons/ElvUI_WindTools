@@ -117,7 +117,7 @@ function QF:Initialize()
 	end
 
 	local button = CreateFrame("Button", "WTQuickFocusButton", E.UIParent, "SecureActionButtonTemplate")
-	button:SetAttribute("type1", "macro")
+	button:SetAttribute("type" .. strsub(self.db.button, 7, 7), "macro")
 	button:SetAttribute("macrotext", self:GetMacroText())
 	button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
 	SetOverrideBindingClick(button, true, self.db.modifier .. "-" .. self.db.button, "WTQuickFocusButton")

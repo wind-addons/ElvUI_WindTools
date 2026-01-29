@@ -82,12 +82,13 @@ W.OldInstances = {
 }
 
 W.MythicPlusSeasonAchievementData = {
-	[61256] = { sortIndex = 1, abbr = L["[ABBR] Midnight Keystone Master: Season One"] },
+	[61258] = { sortIndex = 1, abbr = L["[ABBR] Midnight Keystone Legend: Season One"] },
 	[61257] = { sortIndex = 2, abbr = L["[ABBR] Midnight Keystone Hero: Season One"] },
-	[61258] = { sortIndex = 3, abbr = L["[ABBR] Midnight Keystone Legend: Season One"] },
-	[41973] = { sortIndex = 4, abbr = L["[ABBR] The War Within Keystone Master: Season Three"] },
-	[42171] = { sortIndex = 5, abbr = L["[ABBR] The War Within Keystone Hero: Season Three"] },
-	[42172] = { sortIndex = 6, abbr = L["[ABBR] The War Within Keystone Legend: Season Three"] },
+	[61256] = { sortIndex = 3, abbr = L["[ABBR] Midnight Keystone Master: Season One"] },
+	[40954] = { sortIndex = 4, abbr = L["[ABBR] Enterprising Hero: The War Within Season Two"] },
+	[42172] = { sortIndex = 5, abbr = L["[ABBR] The War Within Keystone Legend: Season Three"] },
+	[42171] = { sortIndex = 6, abbr = L["[ABBR] The War Within Keystone Hero: Season Three"] },
+	[41973] = { sortIndex = 7, abbr = L["[ABBR] The War Within Keystone Master: Season Three"] },
 }
 
 -- https://www.wowhead.com/achievements/character-statistics/dungeons-and-raids/midnight/

@@ -539,8 +539,18 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 	local itemName, _, itemQuality, _, _, itemType, itemSubType, _, _, itemTexture, _, itemClassID, _, _, expansionID, setID, isCraftingReagent =
 		C_Item_GetItemInfo(link)
 
-	local itemLocation = ItemLocation:CreateFromEquipmentSlot(slotIndex) --[[@as ItemLocation]]
-	local actualItemLevel = C_Item_GetCurrentItemLevel(itemLocation)
+	local actualItemLevel
+
+	if E:NotSecretValue(unit) and unit == "player" then
+		local itemLocation = ItemLocation:CreateFromEquipmentSlot(slotIndex) --[[@as ItemLocation]]
+		actualItemLevel = C_Item_GetCurrentItemLevel(itemLocation)
+	end
+
+	local slotInfo = E:GetGearSlotInfo(unit, slotIndex)
+	if type(slotInfo) == "table" and type(slotInfo.iLvl) == 'number' then
+		actualItemLevel = slotInfo.iLvl
+	end
+
 	if not actualItemLevel or actualItemLevel <= 0 then
 		actualItemLevel = C_Item_GetDetailedItemLevelInfo(link)
 	end

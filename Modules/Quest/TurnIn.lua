@@ -326,7 +326,8 @@ function TI:EnableOnQuestID(questID, context)
 end
 
 function TI:GetNPCID(unit)
-	return tonumber(strmatch(UnitGUID(unit or "npc") or "", "Creature%-.-%-.-%-.-%-.-%-(.-)%-"))
+	local guid = UnitGUID(unit or "npc")
+	return tonumber(strmatch(E:NotSecretValue(guid) and guid or "", "Creature%-.-%-.-%-.-%-.-%-(.-)%-"))
 end
 
 do

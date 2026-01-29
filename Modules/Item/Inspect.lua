@@ -878,33 +878,6 @@ function I:ShowPanel(unit, parent, ilevel)
 
 	local maxLabelTextWidth, maxItemLevelTextWidth, maxItemNameTextWidth = 30, 0, 0
 
-	-- Artifact weapon item levels
-	local artifactMainHandItemLevel ---@type number?
-	local artifactOffHandItemLevel ---@type number?
-
-	for _, slotInfo in ipairs(DISPLAY_SLOTS) do
-		if slotInfo.index == INVSLOT_MAINHAND or slotInfo.index == INVSLOT_OFFHAND then
-			local itemInfo = GetUnitSlotItemInfo(unit, slotInfo.index)
-			if itemInfo and itemInfo.quality == Enum_ItemQuality.Artifact then
-				if slotInfo.index == INVSLOT_MAINHAND then
-					artifactMainHandItemLevel = itemInfo.level
-				else
-					artifactOffHandItemLevel = itemInfo.level
-				end
-			end
-		end
-	end
-
-	-- Determine correct artifact level: use the non-13 value if one exists
-	local correctArtifactLevel ---@type number?
-	if artifactMainHandItemLevel and artifactOffHandItemLevel then
-		if artifactMainHandItemLevel == 13 and artifactOffHandItemLevel ~= 13 then
-			correctArtifactLevel = artifactOffHandItemLevel
-		elseif artifactOffHandItemLevel == 13 and artifactMainHandItemLevel ~= 13 then
-			correctArtifactLevel = artifactMainHandItemLevel
-		end
-	end
-
 	for displayIndex, slotInfo in ipairs(DISPLAY_SLOTS) do
 		local line = frame.Lines[displayIndex]
 		local itemInfo = GetUnitSlotItemInfo(unit, slotInfo.index)

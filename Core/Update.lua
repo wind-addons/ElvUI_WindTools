@@ -376,6 +376,36 @@ function W:UpdateScripts()
 		end
 	end
 
+	if profileVersion < 4.09 and E.db.WT then
+		if E.db.WT.misc then
+			E.db.WT.misc.cooldownTextOffset = nil
+			UpdateMessage(L["Misc"] .. ": " .. L["Database cleanup"], profileVersion)
+		end
+	end
+
+	if privateVersion < 4.09 and E.private.WT then
+		if E.private.WT.misc and E.private.WT.misc.tags ~= nil then
+			E.private.WT.unitFrames.tags.enable = E.private.WT.misc.tags
+			E.private.WT.misc.tags = nil
+			UpdateMessage(L["Tags"] .. ": " .. L["Update Database"], privateVersion)
+		end
+
+		if E.private.WT.misc and E.private.WT.misc.cooldownTextOffset ~= nil then
+			E.private.WT.misc.cooldownTextOffset = nil
+			UpdateMessage(L["Misc"] .. ": " .. L["Database cleanup"], privateVersion)
+		end
+
+		if
+			E.private.WT.tooltips
+			and E.private.WT.tooltips.progression
+			and E.private.WT.tooltips.progression.specialAchievement
+		then
+			E.private.WT.tooltips.progression.specialAchievement[20525] = nil
+			E.private.WT.tooltips.progression.specialAchievement[20526] = nil
+			UpdateMessage(L["Progression"] .. ": " .. L["Update Database"], privateVersion)
+		end
+	end
+
 	if not isFirstLine then
 		F.PrintGradientLine()
 	end

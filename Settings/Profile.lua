@@ -1426,12 +1426,6 @@ P.misc = {
 		acceptCombatResurrect = false,
 		confirmSummon = false,
 	},
-	---@class ProfileDB.misc.cooldownTextOffset
-	cooldownTextOffset = {
-		enable = false,
-		offsetX = 0,
-		offsetY = 0,
-	},
 	---@class ProfileDB.misc.keybindAlias
 	keybindAlias = {
 		enable = false,

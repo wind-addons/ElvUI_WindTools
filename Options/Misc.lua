@@ -1892,65 +1892,6 @@ options.spellActivationAlert = {
 	},
 }
 
-options.cooldownTextOffset = {
-	order = 10,
-	type = "group",
-	name = W.FixingLabel .. L["Cooldown Text Offset"],
-	get = function(info)
-		return E.db.WT.misc.cooldownTextOffset[info[#info]]
-	end,
-	set = function(info, value)
-		E.db.WT.misc.cooldownTextOffset[info[#info]] = value
-		M:UpdateCooldownTextOffset()
-	end,
-	disabled = function()
-		return not E.db.cooldown.enable
-	end,
-	args = {
-		desc = {
-			order = 1,
-			type = "group",
-			inline = true,
-			name = L["Description"],
-			args = {
-				feature = {
-					order = 1,
-					type = "description",
-					name = L["Customize the ElvUI cooldown text offset."],
-					fontSize = "medium",
-				},
-			},
-		},
-		enable = {
-			order = 2,
-			type = "toggle",
-			name = L["Enable"],
-		},
-		offsetX = {
-			order = 3,
-			type = "range",
-			name = L["X-Offset"],
-			min = -100,
-			max = 100,
-			step = 1,
-			disabled = function()
-				return not E.db.WT.misc.cooldownTextOffset.enable
-			end,
-		},
-		offsetY = {
-			order = 4,
-			type = "range",
-			name = L["Y-Offset"],
-			min = -100,
-			max = 100,
-			step = 1,
-			disabled = function()
-				return not E.db.WT.misc.cooldownTextOffset.enable
-			end,
-		},
-	},
-}
-
 local selected, fromHotKey, toHotKey = nil, nil, nil
 
 options.keybindAlias = {

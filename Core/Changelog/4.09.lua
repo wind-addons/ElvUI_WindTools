@@ -11,6 +11,7 @@ W.Changelog[409] = {
 			"[吸收] 该模块现在支持最新版 ElvUI 单位框体.",
 			"[单位框体] 该模块现在支持最新版 ElvUI 单位框体.",
 			"[其他] - [快捷键文字置顶] 该功能现在支持最新版 ElvUI 动作条.",
+			"[其他] - [CVars 编辑器] 清理了旧 CVars 选项, 并新增了一些常用的新 CVars 参数选项.",
 		},
 		["zhTW"] = {
 			"繼續優化至暗之夜API改動帶來的相容性問題.",
@@ -20,6 +21,7 @@ W.Changelog[409] = {
 			"[吸收] 該模組現在支援最新版 ElvUI 單位框架",
 			"[單位框架] 該模組現在支援最新版 ElvUI 單位框架.",
 			"[其他] - [按鍵綁定文字置頂] 該功能現在支援最新版 ElvUI 快捷列.",
+			"[其他] - [CVars 編輯器] 清理了舊 CVars 選項, 並新增了一些常用的新 CVars 參數選項.",
 		},
 		["enUS"] = {
 			"Continued to optimize compatibility issues caused by Midnight API changes.",
@@ -29,6 +31,7 @@ W.Changelog[409] = {
 			"[Absorb] This module now supports the latest ElvUI unit frames.",
 			"[Unit Frames] This module now supports the latest ElvUI unit frames.",
 			"[Misc] - [Keybind Text Above] This feature now supports the latest ElvUI action bars.",
+			"[Misc] - [CVars Editor] Cleaned up old CVars options and added some commonly used new CVars parameter options.",
 		},
 		["koKR"] = {
 			"미드나이트 API 변경으로 인한 호환성 문제를 지속적으로 최적화했습니다.",
@@ -38,6 +41,7 @@ W.Changelog[409] = {
 			"[흡수] 이 모듈은 이제 최신 ElvUI 유닛 프레임을 지원합니다.",
 			"[유닛 프레임] 이 모듈은 이제 최신 ElvUI 유닛 프레임을 지원합니다.",
 			"[기타] - [단축키 텍스트 위] 이 기능은 이제 최신 ElvUI 행동 막대를 지원합니다.",
+			"[기타] - [CVars 편집기] 이전 CVars 옵션을 정리하고 일반적으로 사용되는 새로운 CVars 매개변수 옵션을 추가했습니다.",
 		},
 		["ruRU"] = {
 			"Продолжена оптимизация проблем совместимости, вызванных изменениями API Полуночи.",
@@ -47,6 +51,7 @@ W.Changelog[409] = {
 			"[Поглощение] Этот модуль теперь поддерживает последние юнит-фреймы ElvUI.",
 			"[Юнит-Фреймы] Этот модуль теперь поддерживает последние юнит-фреймы ElvUI.",
 			"[Разное] - [Текст привязки клавиш сверху] Эта функция теперь поддерживает последние панели действий ElvUI.",
+			"[Разное] - [Редактор CVars] Были очищены старые параметры CVars и добавлены некоторые часто используемые новые параметры CVars.",
 		},
 	},
 	NEW = {

@@ -26,7 +26,7 @@ function M:KeybindTextAbove()
 
 	hooksecurefunc(E, "RegisterCooldown", function(_, cooldown)
 		local button = cooldown:GetParent()
-		if button and AB.handledbuttons[button] then
+		if E:NotSecretValue(button) and button and AB.handledbuttons[button] then
 			ReplaceHotKeyParent(button)
 		end
 	end)

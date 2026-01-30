@@ -4,7 +4,8 @@ W.Changelog[409] = {
 	RELEASE_DATE = "2026/01/30",
 	IMPORTANT = {
 		["zhCN"] = {
-			"继续优化至暗之夜API改动带来的兼容性问题.",
+			"继续优化至暗之夜 API 改动带来的兼容性问题.",
+			"[高级] - [至暗之夜 API 修复] 由于暴雪已经修复了 MoneyFrame 相关错误, 移除了相关的修复补丁.",
 			"[高级] 由于暴雪API改动, 功能不再能够实现, 移除了战斗日志增强功能.",
 			"[其他] - [冷却文字偏移] 由于 ElvUI 新的冷却文字已经支持偏移功能, 移除了该功能模块.",
 			"[标签] 完全重构了标签模块, 并移动到了单位框体分类. 你可以在 [单位框体] - [标签] 中找到新的可适用于新版 ElvUI 单位框体的标签.",
@@ -14,7 +15,8 @@ W.Changelog[409] = {
 			"[其他] - [CVars 编辑器] 清理了旧 CVars 选项, 并新增了一些常用的新 CVars 参数选项.",
 		},
 		["zhTW"] = {
-			"繼續優化至暗之夜API改動帶來的相容性問題.",
+			"繼續優化至暗之夜 API 改動帶來的相容性問題.",
+			"[高級] - [至暗之夜 API 修復] 由於暴雪已經修復了 MoneyFrame 相關錯誤, 移除了相關的修復補丁.",
 			"[進階] 由於暴雪API改動, 功能不再能夠實現, 移除了戰鬥日誌增強功能.",
 			"[其他] - [冷卻文字偏移] 由於 ElvUI 新的冷卻文字已經支援偏移功能, 移除了該功能模組.",
 			"[標籤] 完全重構了標籤模組, 並移動到了單位框架分類. 你可以在 [單位框架] - [標籤] 中找到新的可適用於新版 ElvUI 單位框體的標籤.",
@@ -25,6 +27,7 @@ W.Changelog[409] = {
 		},
 		["enUS"] = {
 			"Continued to optimize compatibility issues caused by Midnight API changes.",
+			"[Advanced] - [Midnight API Fixes] Since Blizzard has fixed the MoneyFrame related bugs, the related fix patches have been removed.",
 			"[Advanced] The combat log enhancement feature has been removed due to Blizzard API changes making the feature no longer feasible.",
 			"[Misc] - [Cooldown Text Offset] This feature module has been removed as the new ElvUI cooldown text already supports offset functionality.",
 			"[Tags] Completely rebuilt the module, and move it to the Unit Frames category. You can find the new tags applicable to the new ElvUI unit frames in [Unit Frames] - [Tags].",
@@ -35,6 +38,7 @@ W.Changelog[409] = {
 		},
 		["koKR"] = {
 			"미드나이트 API 변경으로 인한 호환성 문제를 지속적으로 최적화했습니다.",
+			"[고급] - [미드나이트 API 수정] 블리자드가 MoneyFrame 관련 버그를 수정했으므로 관련 수정 패치를 제거했습니다.",
 			"[고급] 전투 로그 향상 기능은 블리자드 API 변경으로 인해 더 이상 실행할 수 없게 되어 제거되었습니다.",
 			"[기타] - [재사용 대기시간 텍스트 오프셋] 새로운 ElvUI 재사용 대기시간 텍스트가 이미 오프셋 기능을 지원하므로 이 기능 모듈이 제거되었습니다.",
 			"[태그] 모듈이 완전히 재구성되었으며, 유닛 프레임 범주로 이동되었습니다. 새로운 ElvUI 유닛 프레임에 적용할 수 있는 새로운 태그는 [유닛 프레임] - [태그]에서 찾을 수 있습니다.",
@@ -45,6 +49,7 @@ W.Changelog[409] = {
 		},
 		["ruRU"] = {
 			"Продолжена оптимизация проблем совместимости, вызванных изменениями API Полуночи.",
+			"[Расширенные] - [Исправления API Полуночи] Поскольку Blizzard исправила связанные с MoneyFrame ошибки, соответствующие исправляющие патчи были удалены.",
 			"[Расширенные] Функция улучшения журнала боевых действий была удалена из-за изменений API Blizzard, которые сделали эту функцию невозможной.",
 			"[Разное] - [Смещение текста перезарядки] Этот модуль функции был удален, поскольку новый текст перезарядки ElvUI уже поддерживает функцию смещения.",
 			"[Теги] Модуль был полностью перестроен, и перемещен в категорию Юнит-Фреймы. Новые теги, применимые к новым юнит-фреймам ElvUI, можно найти в разделе [Юнит-Фреймы] - [Теги].",

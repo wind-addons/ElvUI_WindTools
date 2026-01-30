@@ -14,6 +14,8 @@ ignore:
   - .styluaignore
   - .vscode/*
   - Core/Changelog/_template.lua
+  - Core/Changelog/Previous/v2/*
+  - Core/Changelog/Previous/v3/*
   - README*.md
   - Title.svg
   - generate_changelog.py

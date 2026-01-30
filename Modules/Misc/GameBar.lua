@@ -1227,6 +1227,8 @@ function GB:UpdateButton(button, buttonType)
 	button.tooltips = config.tooltips
 	button.tooltipsLeave = config.tooltipsLeave
 
+	button:ClearAttributes()
+
 	-- Click
 	if
 		buttonType == "HEARTHSTONE"

@@ -68,7 +68,6 @@ Português，Italiano
 1. **團隊標記**：提供可自訂的標記列，包含世界標記、骷髏/叉、準備確認、拉怪倒數與清除標記；可調整按鈕尺寸、間距、背景、快捷鍵與顯示條件（隊伍/團隊/單人）。
 2. **戰鬥提醒**：進出戰鬥時顯示可自訂的動畫與特效，以及尺寸、速度與顏色調整。
 3. **快速鑰石**：打開傳奇鑰石介面時，自動放入背包中的鑰石。
-4. **職業助手**：為各職業提供專屬實用功能：死亡騎士（死亡打擊治療量預估）。
 
 ### 地圖
 
@@ -124,6 +123,7 @@ Português，Italiano
 1. **快速焦點**：透過修飾鍵搭配滑鼠左右鍵/中鍵，在任何單位框架上快速設定焦點。
 2. **吸收**：自訂 ElvUI 吸收條材質，並於生命條末端加入暴雪風格的火花效果，可調整尺寸、顏色與偏移。
 3. **職責圖標**：在所有單位框架套用多組職責圖示主題（FFXIV、PhilMod、Hexagon、ElvUI、SunUI、LynUI、ElvUI Old、Blizzard）。
+4. **標籤**：為 ElvUI 新增自訂標籤，包括距離、無符號血量/能量、職業色與圖示等。
 
 ### 皮膚
 
@@ -139,34 +139,30 @@ Português，Italiano
 10. **BtWQuests 皮膚**: 為 BtWQuests 應用 ElvUI 皮膚
 11. **BugSack 皮膚**: 為 BugSack 應用 ElvUI 皮膚
 12. **Collectionator 皮膚**: 為 Collectionator 應用 ElvUI 皮膚
-13. **Hekili 皮膚**: 為 Hekili 應用 ElvUI 皮膚
-14. **Immersion 皮膚**: 為 Immersion 應用 ElvUI 皮膚
-15. **Legion Remix Helper 皮膚**: 為 Legion Remix Helper 應用 ElvUI 皮膚
-16. **Manuscripts Journal 皮膚**: 為 Manuscripts Journal 應用 ElvUI 皮膚
-17. **Mount Route Planner 皮膚**: 為 Mount Route Planner 應用 ElvUI 皮膚
-18. **MultiLanguage 皮膚**: 為 MultiLanguage 應用 ElvUI 皮膚
-19. **Myslot 皮膚**: 為 Myslot 應用 ElvUI 皮膚
-20. **Mythic Dungeon Tools 皮膚**: 為 Mythic Dungeon Tools 應用 ElvUI 皮膚
-21. **OmniCD 皮膚**: 為 OmniCD 的設定界面、圖示、額外條和狀態條應用 ElvUI 皮膚
-22. **Paragon Reputation 皮膚**: 為 Paragon Reputation 應用 ElvUI 皮膚
-23. **Plumber 皮膚**: 為 Plumber 應用 ElvUI 皮膚
-24. **Postal 皮膚**: 為 Postal 的常規按鍵及快速附加按鍵應用 ElvUI 皮膚
-25. **Premade Groups Filter 皮膚**: 為 Premade Groups Filter 應用 ElvUI 皮膚
-26. **RaiderIO 皮膚**: 為 RaiderIO 應用 ElvUI 皮膚
-27. **RareScanner 皮膚**: 為 RareScanner 應用 ElvUI 皮膚
-28. **Rematch 皮膚**: 為 Rematch 應用 ElvUI 皮膚
-29. **SilverDragon 皮膚**: 為 SilverDragon 應用 ElvUI 皮膚
-30. **Simple Addon Manager 皮膚**: 為 Simple Addon Manager 應用 ElvUI 皮膚
-31. **Simulationcraft 皮膚**: 為 Simulationcraft 應用 ElvUI 皮膚
-32. **Talent Loadouts Ex 皮膚**: 為 Talent Loadouts Ex 應用 ElvUI 皮膚
-33. **TinyInspect 皮膚**: 為 TinyInspect 應用 ElvUI 皮膚
-34. **TomCat's Tours 皮膚**: 為 TomCat's Tours 的浮動提示和標題重新應用皮膚
-35. **TomTom 皮膚**: 為 TomTom 應用 ElvUI 皮膚
-36. **WarpDeplete 皮膚**: 為 WarpDeplete 的條重新應用皮膚
-37. **WeakAuras 皮膚**: 為 WeakAuras 應用 ElvUI 皮膚
-38. **WeakAuras 選項皮膚**: 為 WeakAuras 選項應用 ElvUI 皮膚
-39. **WhisperPop 皮膚**: 為 WhisperPop 應用 ElvUI 皮膚
-40. **World Quest Tab 皮膚**: 為 World Quest Tab 標籤頁和設置應用 ElvUI 皮膚
+13. **Immersion 皮膚**: 為 Immersion 應用 ElvUI 皮膚
+14. **Manuscripts Journal 皮膚**: 為 Manuscripts Journal 應用 ElvUI 皮膚
+15. **Mount Route Planner 皮膚**: 為 Mount Route Planner 應用 ElvUI 皮膚
+16. **MultiLanguage 皮膚**: 為 MultiLanguage 應用 ElvUI 皮膚
+17. **Myslot 皮膚**: 為 Myslot 應用 ElvUI 皮膚
+18. **Mythic Dungeon Tools 皮膚**: 為 Mythic Dungeon Tools 應用 ElvUI 皮膚
+19. **OmniCD 皮膚**: 為 OmniCD 的設定界面、圖示、額外條和狀態條應用 ElvUI 皮膚
+20. **Paragon Reputation 皮膚**: 為 Paragon Reputation 應用 ElvUI 皮膚
+21. **Plumber 皮膚**: 為 Plumber 應用 ElvUI 皮膚
+22. **Postal 皮膚**: 為 Postal 的常規按鍵及快速附加按鍵應用 ElvUI 皮膚
+23. **Premade Groups Filter 皮膚**: 為 Premade Groups Filter 應用 ElvUI 皮膚
+24. **RaiderIO 皮膚**: 為 RaiderIO 應用 ElvUI 皮膚
+26. **RareScanner 皮膚**: 為 RareScanner 應用 ElvUI 皮膚
+27. **Rematch 皮膚**: 為 Rematch 應用 ElvUI 皮膚
+28. **SilverDragon 皮膚**: 為 SilverDragon 應用 ElvUI 皮膚
+29. **Simple Addon Manager 皮膚**: 為 Simple Addon Manager 應用 ElvUI 皮膚
+30. **Simulationcraft 皮膚**: 為 Simulationcraft 應用 ElvUI 皮膚
+31. **Talent Loadouts Ex 皮膚**: 為 Talent Loadouts Ex 應用 ElvUI 皮膚
+32. **TinyInspect 皮膚**: 為 TinyInspect 應用 ElvUI 皮膚
+33. **TomCat's Tours 皮膚**: 為 TomCat's Tours 的浮動提示和標題重新應用皮膚
+34. **TomTom 皮膚**: 為 TomTom 應用 ElvUI 皮膚
+35. **WarpDeplete 皮膚**: 為 WarpDeplete 的條重新應用皮膚
+36. **WhisperPop 皮膚**: 為 WhisperPop 應用 ElvUI 皮膚
+37. **World Quest Tab 皮膚**: 為 World Quest Tab 標籤頁和設置應用 ElvUI 皮膚
 
 ### 其他
 
@@ -175,7 +171,6 @@ Português，Italiano
 3. **靜音**：依列表靜音惱人音效，並可用快捷鍵立即停止全部聲音。
 4. **頓號轉斜線**：將中文標點（、）自動轉為「/」，加快輸入指令。
 5. **關閉特寫**：停用暴雪特寫框架。
-6. **標籤**：為 ElvUI 新增自訂標籤，包括距離、無符號血量/能量、職業色與圖示等。
 7. **遊戲條**：現代化系統狀態列，提供首頁、公會、好友、日曆、音量、系統、靜音、設定、遊戲選單等按鈕，可左右分佈，顯示時間/延遲並支援字體、顏色、背景、提示與戰鬥模式自動隱藏。
 8. **跳過過場動畫**：自動略過多數過場動畫，按下修飾鍵可暫時停用，並可設定副本內行為。
 9. **預組列表**：為預組清單加入職業顏色條、更大的職業圖示與額外成員資訊。
@@ -187,6 +182,6 @@ Português，Italiano
 15. **按鍵在冷卻上方**：讓快捷鍵文字顯示在 ElvUI 冷卻動畫上方，更清晰易懂。
 16. **公會新聞裝等**：在公會新聞中顯示裝備物品等級。
 17. **自訂按鍵別名**：為快捷鍵顯示自訂名稱（例如將「BUTTON1」改為「左鍵」）。
-18. **冷卻文字偏移**：分別調整動作條、單位框架與姓名板的冷卻文字偏移。
-19. **退出相位深潛**：提供按鈕讓玩家快速離開相位深潛區域。
+18. **退出相位深潛**：提供按鈕讓玩家快速離開相位深潛區域。
+19. **法術觸發提示**：自訂法術觸發提示的位置與縮放（觸發特效）。
 20. **瑞西纏帶升級**：滑鼠中鍵點擊瑞西纏帶即可開啟升級選單。

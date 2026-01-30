@@ -68,7 +68,6 @@ Português，Italiano
 1. **团队标记**：提供可自定义的标记条，包含世界标记、骷髅/叉、准备就绪确认、拉怪倒计时与清除标记；可调按钮大小、间距、背景、快捷键与显示条件（队伍/团队/单人）。
 2. **战斗提醒**：在进入或离开战斗时播放可自定义的动画与屏幕效果，支持尺寸、速度与颜色调节。
 3. **快速钥石**：打开史诗钥石界面时自动插入背包中的钥石。
-4. **职业助手**：为每个职业提供专属工具：死亡骑士（灵打治疗量预估）。
 
 ### 地图
 
@@ -124,6 +123,7 @@ Português，Italiano
 1. **快速焦点**：通过组合修饰键与鼠标左右键/中键，在任意单位框体上快速设置焦点。
 2. **吸收**：自定义 ElvUI 吸收条材质，并在生命条末端添加暴雪风格的吸收火花，支持调节尺寸、颜色与偏移。
 3. **职责图标**：在所有单位框体上应用多套职责图标主题（FFXIV、PhilMod、Hexagon、ElvUI、SunUI、LynUI、ElvUI Old、Blizzard）。
+4. **标签**：为 ElvUI 增加距离、无符号生命/能量、职业色、图标等自定义标签。
 
 ### 皮肤
 
@@ -139,34 +139,30 @@ Português，Italiano
 10. **BtWQuests 皮肤**: 为 BtWQuests 应用 ElvUI 皮肤
 11. **BugSack 皮肤**: 为 BugSack 应用 ElvUI 皮肤
 12. **Collectionator 皮肤**: 为 Collectionator 应用 ElvUI 皮肤
-13. **Hekili 皮肤**: 为 Hekili 应用 ElvUI 皮肤
-14. **Immersion 皮肤**: 为 Immersion 应用 ElvUI 皮肤
-15. **Legion Remix Helper 皮肤**: 为 Legion Remix Helper 应用 ElvUI 皮肤
-16. **Manuscripts Journal 皮肤**: 为 Manuscripts Journal 应用 ElvUI 皮肤
-17. **Mount Route Planner 皮肤**: 为 Mount Route Planner 应用 ElvUI 皮肤
-18. **MultiLanguage 皮肤**: 为 MultiLanguage 应用 ElvUI 皮肤
-19. **Myslot 皮肤**: 为 Myslot 应用 ElvUI 皮肤
-20. **Mythic Dungeon Tools 皮肤**: 为 Mythic Dungeon Tools 应用 ElvUI 皮肤
-21. **OmniCD 皮肤**: 为 OmniCD 的设定界面、图标、额外条和状态条应用 ElvUI 皮肤
-22. **Paragon Reputation 皮肤**: 为 Paragon Reputation 应用 ElvUI 皮肤
-23. **Plumber 皮肤**: 为 Plumber 应用 ElvUI 皮肤
-24. **Postal 皮肤**: 为 Postal 的常规按钮和快速附加按钮应用 ElvUI 皮肤
-25. **Premade Groups Filter 皮肤**: 为 Premade Groups Filter 应用 ElvUI 皮肤
-26. **RaiderIO 皮肤**: 为 RaiderIO 应用 ElvUI 皮肤
-27. **RareScanner 皮肤**: 为 RareScanner 应用 ElvUI 皮肤
-28. **Rematch 皮肤**: 为 Rematch 应用 ElvUI 皮肤
-29. **SilverDragon 皮肤**: 为 SilverDragon 应用 ElvUI 皮肤
-30. **Simple Addon Manager 皮肤**: 为 Simple Addon Manager 应用 ElvUI 皮肤
-31. **Simulationcraft 皮肤**: 为 Simulationcraft 应用 ElvUI 皮肤
-32. **Talent Loadouts Ex 皮肤**: 为 Talent Loadouts Ex 应用 ElvUI 皮肤
-33. **TinyInspect 皮肤**: 为 TinyInspect 应用 ElvUI 皮肤
-34. **TomCat's Tours 皮肤**: 为 TomCat's Tours 的鼠标提示和标题重新应用皮肤
-35. **TomTom 皮肤**: 为 TomTom 应用 ElvUI 皮肤
-36. **WarpDeplete 皮肤**: 为 WarpDeplete 的条重新应用皮肤
-37. **WeakAuras 皮肤**: 为 WeakAuras 应用 ElvUI 皮肤
-38. **WeakAuras 选项皮肤**: 为 WeakAuras 选项应用 ElvUI 皮肤
-39. **WhisperPop 皮肤**: 为 WhisperPop 应用 ElvUI 皮肤
-40. **World Quest Tab 皮肤**: 为 World Quest Tab 的标签页和设置界面应用 ElvUI 皮肤
+13. **Immersion 皮肤**: 为 Immersion 应用 ElvUI 皮肤
+14. **Manuscripts Journal 皮肤**: 为 Manuscripts Journal 应用 ElvUI 皮肤
+15. **Mount Route Planner 皮肤**: 为 Mount Route Planner 应用 ElvUI 皮肤
+16. **MultiLanguage 皮肤**: 为 MultiLanguage 应用 ElvUI 皮肤
+17. **Myslot 皮肤**: 为 Myslot 应用 ElvUI 皮肤
+18. **Mythic Dungeon Tools 皮肤**: 为 Mythic Dungeon Tools 应用 ElvUI 皮肤
+19. **OmniCD 皮肤**: 为 OmniCD 的设定界面、图标、额外条和状态条应用 ElvUI 皮肤
+20. **Paragon Reputation 皮肤**: 为 Paragon Reputation 应用 ElvUI 皮肤
+21. **Plumber 皮肤**: 为 Plumber 应用 ElvUI 皮肤
+22. **Postal 皮肤**: 为 Postal 的常规按钮和快速附加按钮应用 ElvUI 皮肤
+23. **Premade Groups Filter 皮肤**: 为 Premade Groups Filter 应用 ElvUI 皮肤
+24. **RaiderIO 皮肤**: 为 RaiderIO 应用 ElvUI 皮肤
+26. **RareScanner 皮肤**: 为 RareScanner 应用 ElvUI 皮肤
+27. **Rematch 皮肤**: 为 Rematch 应用 ElvUI 皮肤
+28. **SilverDragon 皮肤**: 为 SilverDragon 应用 ElvUI 皮肤
+29. **Simple Addon Manager 皮肤**: 为 Simple Addon Manager 应用 ElvUI 皮肤
+30. **Simulationcraft 皮肤**: 为 Simulationcraft 应用 ElvUI 皮肤
+31. **Talent Loadouts Ex 皮肤**: 为 Talent Loadouts Ex 应用 ElvUI 皮肤
+32. **TinyInspect 皮肤**: 为 TinyInspect 应用 ElvUI 皮肤
+33. **TomCat's Tours 皮肤**: 为 TomCat's Tours 的鼠标提示和标题重新应用皮肤
+34. **TomTom 皮肤**: 为 TomTom 应用 ElvUI 皮肤
+35. **WarpDeplete 皮肤**: 为 WarpDeplete 的条重新应用皮肤
+36. **WhisperPop 皮肤**: 为 WhisperPop 应用 ElvUI 皮肤
+37. **World Quest Tab 皮肤**: 为 World Quest Tab 的标签页和设置界面应用 ElvUI 皮肤
 
 ### 其他
 
@@ -175,7 +171,6 @@ Português，Italiano
 3. **静音**：按列表静音恼人音效，并提供一键停止全部声音的快捷键。
 4. **顿号转斜杠**：自动把中文符号（、）转为斜杠“/”，方便输入命令。
 5. **关闭特写**：禁用暴雪特写框体。
-6. **标签**：为 ElvUI 增加距离、无符号生命/能量、职业色、图标等自定义标签。
 7. **游戏条**：现代化系统状态条，提供主页、公会、好友、日历、音量、系统、静音、设置、游戏菜单按钮，可自由放置左右两侧，显示时间/延迟并支持字体、颜色、背景、鼠标提示及战斗模式自动隐藏。
 8. **跳过过场动画**：自动跳过大部分过场动画，按下修饰键可暂时禁用，并可设置副本内行为。
 9. **预组列表**：为预组队列添加职业颜色条、更大的职业图标与额外成员信息。
@@ -186,7 +181,7 @@ Português，Italiano
 14. **隐藏制造者**：隐藏鼠标提示中的制造者姓名。
 15. **键位在冷却上方**：让快捷键文字显示在 ElvUI 冷却动画之上，更易识别。
 16. **公会新闻装等**：在公会新闻中显示装备物品等级。
-17. **自定义快捷键别名**：为快捷键创建自定义显示名称（如将“BUTTON1”显示为“左键”）。
-18. **冷却文字偏移**：分别调节动作条、单位框体与姓名板上的冷却文字偏移。
-19. **退出相位潜行**：通过按钮快速离开相位潜行区域。
+17. **自定义快捷键别名**：为快捷键创建自定义显示名称（如将"BUTTON1"显示为"左键"）。
+18. **退出相位潜行**：通过按钮快速离开相位潜行区域。
+19. **法术触发提醒**：自定义法术触发提醒的位置与缩放（触发特效）。
 20. **雷什裹布升级**：鼠标中键点击雷什裹布即可打开升级菜单。

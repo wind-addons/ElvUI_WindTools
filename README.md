@@ -70,7 +70,6 @@ Português, Italiano
 1. **Raid Markers**: Add customizable raid marker bar with world markers, skull/cross markers, ready check, pull countdown, and clear markers; supports button size, spacing, backdrop, keybinds, and visibility options (party/raid/solo).
 2. **Combat Alert**: Display customizable animations and screen effects when entering/leaving combat; adjust size, speed, and color.
 3. **Quick Keystone**: Automatically place Mythic Keystone from bags into font when the UI opens.
-4. **Class Helper**: Class-specific utility modules - Death Knight (Death Strike heal estimator).
 
 ### Map
 
@@ -126,6 +125,7 @@ Português, Italiano
 1. **Quick Focus**: Set focus to mouseover unit using customizable modifier keys (Alt/Ctrl/Shift) + left/right/middle mouse click combinations; works on all unit frames.
 2. **Absorb**: Customize ElvUI absorb bar texture and add Blizzard-style absorb spark to health bar end; customize spark size, color, and offset.
 3. **Role Icon**: Change role icon pack (8 styles: FFXIV, PhilMod, Hexagon, ElvUI, SunUI, LynUI, ElvUI Old, Blizzard); applies to all unit frames with role icons.
+4. **Tags**: Add custom ElvUI tags including range display, health/power without signs, class colors, and icons.
 
 ### Skins
 
@@ -141,34 +141,30 @@ Português, Italiano
 10. **BtWQuests Skin**: Apply ElvUI skin for BtWQuests.
 11. **BugSack Skin**: Apply ElvUI skin for BugSack.
 12. **Collectionator Skin**: Apply ElvUI skin for Collectionator.
-13. **Hekili Skin**: Apply ElvUI skin for Hekili.
-14. **Immersion Skin**: Apply ElvUI skin for Immersion.
-15. **Legion Remix Helper Skin**: Apply ElvUI skin for Legion Remix Helper.
-16. **Manuscripts Journal Skin**: Apply ElvUI skin for Manuscripts Journal.
-17. **Mount Route Planner Skin**: Apply ElvUI skin for Mount Route Planner.
-18. **MultiLanguage Skin**: Apply ElvUI skin for MultiLanguage.
-19. **Myslot Skin**: Apply ElvUI skin for Myslot.
-20. **Mythic Dungeon Tools Skin**: Apply ElvUI skin for Mythic Dungeon Tools.
-21. **OmniCD Skin**: Apply ElvUI skin for OmniCD Config GUI, icons, extra bars, and status bars.
-22. **Paragon Reputation Skin**: Apply ElvUI skin for Paragon Reputation.
-23. **Plumber Skin**: Apply ElvUI skin for Plumber.
-24. **Postal Skin**: Apply ElvUI skin for Postal normal buttons and quick attach buttons.
-25. **Premade Groups Filter Skin**: Apply ElvUI skin for Premade Groups Filter.
-26. **RaiderIO Skin**: Apply ElvUI skin for RaiderIO.
-27. **RareScanner Skin**: Apply ElvUI skin for RareScanner.
-28. **Rematch Skin**: Apply ElvUI skin for Rematch.
-29. **SilverDragon Skin**: Apply ElvUI skin for SilverDragon.
-30. **Simple Addon Manager Skin**: Apply ElvUI skin for Simple Addon Manager.
-31. **Simulationcraft Skin**: Apply ElvUI skin for Simulationcraft.
-32. **Talent Loadouts Ex Skin**: Apply ElvUI skin for Talent Loadouts Ex.
-33. **TinyInspect Skin**: Apply ElvUI skin for TinyInspect.
-34. **TomCat's Tours Skin**: Reskin the tooltip and header of TomCat's Tours.
-35. **TomTom Skin**: Apply ElvUI skin for TomTom.
-36. **WarpDeplete Skin**: Reskin the bars in WarpDeplete.
-37. **WeakAuras Skin**: Apply ElvUI skins for WeakAuras.
-38. **WeakAuras Options Skin**: Apply ElvUI skins for WeakAuras Options.
-39. **WhisperPop Skin**: Apply ElvUI skin for WhisperPop.
-40. **World Quest Tab Skin**: Apply ElvUI skin for World Quest Tab tabs and settings.
+13. **Immersion Skin**: Apply ElvUI skin for Immersion.
+14. **Manuscripts Journal Skin**: Apply ElvUI skin for Manuscripts Journal.
+15. **Mount Route Planner Skin**: Apply ElvUI skin for Mount Route Planner.
+16. **MultiLanguage Skin**: Apply ElvUI skin for MultiLanguage.
+17. **Myslot Skin**: Apply ElvUI skin for Myslot.
+18. **Mythic Dungeon Tools Skin**: Apply ElvUI skin for Mythic Dungeon Tools.
+19. **OmniCD Skin**: Apply ElvUI skin for OmniCD Config GUI, icons, extra bars, and status bars.
+20. **Paragon Reputation Skin**: Apply ElvUI skin for Paragon Reputation.
+21. **Plumber Skin**: Apply ElvUI skin for Plumber.
+22. **Postal Skin**: Apply ElvUI skin for Postal normal buttons and quick attach buttons.
+23. **Premade Groups Filter Skin**: Apply ElvUI skin for Premade Groups Filter.
+24. **RaiderIO Skin**: Apply ElvUI skin for RaiderIO.
+26. **RareScanner Skin**: Apply ElvUI skin for RareScanner.
+27. **Rematch Skin**: Apply ElvUI skin for Rematch.
+28. **SilverDragon Skin**: Apply ElvUI skin for SilverDragon.
+29. **Simple Addon Manager Skin**: Apply ElvUI skin for Simple Addon Manager.
+30. **Simulationcraft Skin**: Apply ElvUI skin for Simulationcraft.
+31. **Talent Loadouts Ex Skin**: Apply ElvUI skin for Talent Loadouts Ex.
+32. **TinyInspect Skin**: Apply ElvUI skin for TinyInspect.
+33. **TomCat's Tours Skin**: Reskin the tooltip and header of TomCat's Tours.
+34. **TomTom Skin**: Apply ElvUI skin for TomTom.
+35. **WarpDeplete Skin**: Reskin the bars in WarpDeplete.
+36. **WhisperPop Skin**: Apply ElvUI skin for WhisperPop.
+37. **World Quest Tab Skin**: Apply ElvUI skin for World Quest Tab tabs and settings.
 
 ### Misc
 
@@ -177,7 +173,6 @@ Português, Italiano
 3. **Mute**: Mute annoying sound effects with customizable lists and instant stop all sounds hotkey.
 4. **Pause to Slash**: Convert CJK pause symbols (、) to slash (/) for easier slash command input.
 5. **Disable Talking Head**: Disable the talking head frame.
-6. **Tags**: Add custom ElvUI tags including range display, health/power without signs, class colors, and icons.
 7. **Game Bar**: Modern system status bar with customizable buttons (Home, Guild, Friend, Calendar, Volume, System, Mute, Config, Game Menu) positioned left/right; time/latency display; custom fonts, colors, backdrop, and tooltips; supports normal/combat modes with auto-hide.
 8. **Skip Cut Scene**: Skip most cutscenes automatically; hold modifier key to watch; option to disable in instances/raids.
 9. **LFG List**: Enhance Premade Groups list with class-colored bars, larger class icons, and additional member information.
@@ -189,6 +184,6 @@ Português, Italiano
 15. **HotKey Above CD**: Display hotkey text above ElvUI cooldown spirals for better visibility.
 16. **Guild News Item Level**: Show item level in guild news feed.
 17. **Custom Hotkey Alias**: Create custom aliases for key bindings (e.g., change "BUTTON1" to "L").
-18. **Cooldown Text Offset**: Customize X/Y offset of ElvUI cooldown text on action bars, unit frames, and nameplates.
-19. **Exit Phase Diving**: Add a button to quickly exit phased diving areas.
-20. **Spell Activation Alert**: Customize position and scale of spell activation alerts (proc overlays).
+18. **Exit Phase Diving**: Add a button to quickly exit phased diving areas.
+19. **Spell Activation Alert**: Customize position and scale of spell activation alerts (proc overlays).
+20. **Reshii Wraps Upgrade**: Middle-click Reshii Wraps to open the upgrade menu.

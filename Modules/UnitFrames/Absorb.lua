@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local A = W:NewModule("Absorb", "AceHook-3.0", "AceEvent-3.0") ---@class Absorb: AceModule, AceHook-3.0, AceEvent-3.0
+local A = W:NewModule("Absorb", "AceHook-3.0") ---@class Absorb: AceModule, AceHook-3.0, AceEvent-3.0
 local LSM = E.Libs.LSM
 local UF = E.UnitFrames
 
@@ -52,7 +52,7 @@ function A:SetTexture_HealComm(module, obj, texture)
 			glow:SetBlendMode("ADD")
 			glow:SetWidth(16)
 			obj.__shieldGlow = glow
-			obj.overHealAbsorbIndicator = obj.__shieldGlow -- Let oUF change the alpha
+			obj.overDamageAbsorbIndicator = obj.__shieldGlow -- Let oUF change the alpha
 		end
 
 		local isHorizontal = obj.health:GetOrientation() == "HORIZONTAL"
@@ -97,7 +97,6 @@ end
 
 function A:ProfileUpdate()
 	self:Initialize()
-
 	UF:Update_AllFrames()
 end
 

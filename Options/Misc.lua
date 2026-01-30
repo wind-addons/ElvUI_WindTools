@@ -283,23 +283,67 @@ options.cvars = {
 				},
 			},
 		},
+		general = {
+			order = 10,
+			type = "group",
+			inline = true,
+			name = L["General"],
+			args = {
+				alwaysCompareItems = {
+					order = 1,
+					type = "toggle",
+					name = L["Auto Compare"],
+					desc = L["Always compare items when hovering over them."],
+				},
+				screenshotQuality = {
+					order = 2,
+					type = "range",
+					name = L["Screenshot Quality"],
+					get = function(info)
+						return tonumber(C_CVar_GetCVar(info[#info]))
+					end,
+					set = function(info, value)
+						return C_CVar_SetCVar(info[#info], value)
+					end,
+					min = 1,
+					max = 10,
+					step = 1,
+				},
+				screenshotFormat = {
+					order = 3,
+					type = "select",
+					name = L["Screenshot Format"],
+					get = function(info)
+						return C_CVar_GetCVar(info[#info])
+					end,
+					set = function(info, value)
+						return C_CVar_SetCVar(info[#info], value)
+					end,
+					values = {
+						["jpeg"] = "JPG",
+						["png"] = "PNG",
+						["tga"] = "TGA",
+					},
+				},
+			},
+		},
 		combat = {
-			order = 2,
+			order = 11,
 			type = "group",
 			inline = true,
 			name = L["Combat"],
 			args = {
-				floatingCombatTextCombatDamage = {
+				floatingCombatTextCombatDamage_v2 = {
 					order = 1,
 					type = "toggle",
 					name = L["Floating Damage Text"],
 				},
-				floatingCombatTextCombatHealing = {
+				floatingCombatTextCombatHealing_v2 = {
 					order = 2,
 					type = "toggle",
 					name = L["Floating Healing Text"],
 				},
-				WorldTextScale = {
+				WorldTextScale_v2 = {
 					order = 3,
 					type = "range",
 					name = L["Floating Text Scale"],
@@ -327,10 +371,24 @@ options.cvars = {
 					max = 400,
 					step = 1,
 				},
+				cameraDistanceMaxZoomFactor = {
+					order = 5,
+					type = "range",
+					name = L["Camera Max Zoom"],
+					get = function(info)
+						return tonumber(C_CVar_GetCVar(info[#info]))
+					end,
+					set = function(info, value)
+						return C_CVar_SetCVar(info[#info], value)
+					end,
+					min = 1,
+					max = 2.6,
+					step = 0.01,
+				},
 			},
 		},
 		visualEffect = {
-			order = 3,
+			order = 12,
 			type = "group",
 			inline = true,
 			name = L["Visual Effect"],
@@ -352,11 +410,11 @@ options.cvars = {
 				},
 			},
 		},
-		mouse = {
-			order = 4,
+		control = {
+			order = 13,
 			type = "group",
 			inline = true,
-			name = L["Mouse"],
+			name = L["Control"],
 			args = {
 				rawMouseEnable = {
 					order = 1,
@@ -364,79 +422,27 @@ options.cvars = {
 					name = L["Raw Mouse"],
 					desc = L["It will fix the problem if your cursor has abnormal movement."],
 				},
-				rawMouseAccelerationEnable = {
+				mouseAcceleration = {
 					order = 2,
-					type = "toggle",
-					name = L["Raw Mouse Acceleration"],
-					desc = L["Changes the rate at which your mouse pointer moves based on the speed you are moving the mouse."],
+					type = "select",
+					name = L["Acceleration Type"],
+					get = function(info)
+						return C_CVar_GetCVar(info[#info])
+					end,
+					set = function(info, value)
+						return C_CVar_SetCVar(info[#info], value)
+					end,
+					values = {
+						["-1"] = L["System Default"],
+						["0"] = L["Disable"],
+						["1"] = L["Raw Mouse Acceleration"],
+					},
 				},
-			},
-		},
-		nameplate = {
-			order = 5,
-			type = "group",
-			inline = true,
-			name = L["Nameplate"],
-			args = {
-				tip = {
-					order = 1,
-					type = "description",
-					name = format(
-						"%s\n- %s %s\n- %s %s\n- %s %s",
-						L["To enable the name of friendly player in instances, you can set as following:"],
-						L["Friendly Player Name"],
-						C.StringByTemplate(L["On"], "emerald-400"),
-						L["Nameplate Only Names"],
-						C.StringByTemplate(L["On"], "emerald-400"),
-						L["Debuff on Friendly Nameplates"],
-						C.StringByTemplate(L["Off"], "rose-500")
-					),
-				},
-				UnitNameFriendlyPlayerName = {
-					order = 2,
-					type = "toggle",
-					width = 1.5,
-					name = L["Friendly Player Name"],
-					desc = L["Show friendly players' names in the game world."],
-				},
-				nameplateShowOnlyNames = {
+				ActionButtonUseKeyDown = {
 					order = 3,
 					type = "toggle",
-					width = 1.5,
-					name = L["Nameplate Only Names"],
-					desc = L["Disable the health bar of nameplate."],
-				},
-				nameplateShowDebuffsOnFriendly = {
-					order = 4,
-					type = "toggle",
-					width = 1.5,
-					name = L["Debuff on Friendly Nameplates"],
-				},
-				nameplateMotion = {
-					order = 5,
-					type = "toggle",
-					width = 1.5,
-					name = L["Stack Nameplates"],
-				},
-			},
-		},
-		misc = {
-			order = 6,
-			type = "group",
-			inline = true,
-			name = L["Misc"],
-			args = {
-				alwaysCompareItems = {
-					order = 1,
-					type = "toggle",
-					name = L["Auto Compare"],
-					width = 1.5,
-				},
-				autoOpenLootHistory = {
-					order = 2,
-					type = "toggle",
-					name = L["Auto Open Loot History"],
-					width = 1.5,
+					name = L["Action on keydown"],
+					desc = L["Trigger the action when pressing the key down rather than releasing it."],
 				},
 			},
 		},

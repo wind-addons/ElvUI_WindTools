@@ -763,7 +763,7 @@ V.tooltips = {
 		header = "TEXTURE",
 		raid = configTable({ enable = true }, W.RaidData),
 		specialAchievement = achievementConfigTable(
-			{ enable = true, onlyCompleted = true, sortMode = "EXPANSION" },
+			{ enable = true, onlyCompleted = true, sortBy = "EXPANSION" },
 			W.MythicPlusSeasonAchievementData
 		),
 		mythicPlus = configTable({ enable = true, markHighestScore = true, showNoRecord = true }, W.MythicPlusMapData),

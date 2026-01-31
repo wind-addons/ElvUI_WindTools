@@ -433,19 +433,19 @@ options.progression = {
 						)
 					end,
 				},
-				sortMode = {
+				sortBy = {
 					order = 3,
 					type = "select",
-					name = L["Sort Mode"],
+					name = L["Sort By"],
 					values = {
 						DIFFICULTY = L["Difficulty"],
 						EXPANSION = L["Expansion"],
 					},
 					get = function(info)
-						return E.private.WT.tooltips.progression.specialAchievement.sortMode
+						return E.private.WT.tooltips.progression.specialAchievement.sortBy
 					end,
 					set = function(info, value)
-						E.private.WT.tooltips.progression.specialAchievement.sortMode = value
+						E.private.WT.tooltips.progression.specialAchievement.sortBy = value
 					end,
 					disabled = function()
 						return not (

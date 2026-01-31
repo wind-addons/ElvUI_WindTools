@@ -212,7 +212,7 @@ local function SetProgressionInfo(tt, guid)
 		end
 
 		sort(lines, function(a, b)
-			local isDiff = db.specialAchievement.sortMode == "DIFFICULTY"
+			local isDiff = db.specialAchievement.sortBy == "DIFFICULTY"
 
 			local primary = isDiff and (a[1] > b[1]) or (a[2] < b[2])
 			local secondary = isDiff and (a[2] < b[2]) or (a[1] > b[1])

@@ -15,20 +15,11 @@ function S:LootFrame()
 	F.SetFont(_G.BonusRollFrame.PromptFrame.InfoFrame.Label)
 
 	self:CreateShadow(_G.GroupLootHistoryFrame)
-	_G.GroupLootHistoryFrame:Width(300)
 
 	local ResizeButton = _G.GroupLootHistoryFrame.ResizeButton
 	if ResizeButton then
 		ResizeButton:SetTemplate("Transparent")
 		self:CreateShadow(ResizeButton)
-		ResizeButton:Width(300)
-	end
-
-	local ScrollBox = _G.GroupLootHistoryFrame.ScrollBox
-	if ScrollBox then
-		ScrollBox:ClearAllPoints()
-		ScrollBox:Point("TOPLEFT", _G.GroupLootHistoryFrame, "TOPLEFT", 6, -90)
-		ScrollBox:Point("BOTTOMRIGHT", _G.GroupLootHistoryFrame, "BOTTOMRIGHT", -23, 5)
 	end
 
 	local Timer = _G.GroupLootHistoryFrame.Timer

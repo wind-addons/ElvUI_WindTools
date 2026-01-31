@@ -101,6 +101,10 @@ local iconFunctions = {
 }
 
 local function SetTooltipIcon(tt, data, type)
+	if E:IsSecretValue(data.lines) or E:IsSecretValue(data.lines[1]) or E:IsSecretValue(data.lines[1].leftText) then
+		return
+	end
+
 	local icon = iconFunctions[type] and iconFunctions[type](data)
 	local title = data.lines and data.lines[1] and data.lines[1].leftText
 	local iconDB = E.private.WT.tooltips.titleIcon
@@ -123,7 +127,9 @@ end
 
 local function Handle(type)
 	TooltipDataProcessor_AddTooltipPostCall(type, function(tt, data)
-		if not data or not data.id or not data.lines or not tt.GetName or not tContains(tooltips, tt:GetName()) then
+		local name = tt.GetName and tt:GetName()
+
+		if not data or not data.id or not data.lines or E:IsSecretValue(name) or not tContains(tooltips, name) then
 			return
 		end
 

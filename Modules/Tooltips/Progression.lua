@@ -212,14 +212,20 @@ local function SetProgressionInfo(tt, guid)
 		end
 
 		sort(lines, function(a, b)
-			local isDiff = db.specialAchievement.sortBy == "DIFFICULTY"
-
-			local primary = isDiff and (a[1] > b[1]) or (a[2] < b[2])
-			local secondary = isDiff and (a[2] < b[2]) or (a[1] > b[1])
-			local tie = isDiff and (a[1] == b[1]) or (a[2] == b[2])
-
-			return tie and secondary or primary
+			if db.specialAchievement.sortBy == "DIFFICULTY" then
+				if a[1] == b[1] then
+					return a[2] < b[2]
+				end
+				return a[1] > b[1]
+			else -- EXPANSION
+				if a[2] == b[2] then
+					return a[1] > b[1]
+				end
+				return a[2] < b[2]
+			end
 		end)
+
+		F.Developer.DevTool(lines, "Progression Special Achievement Lines")
 
 		for _, line in ipairs(lines) do
 			tt:AddDoubleLine(line[3], line[4], nil, nil, nil, 1, 1, 1)

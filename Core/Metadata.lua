@@ -81,27 +81,27 @@ W.OldInstances = {
 	L["[ABBR] Vault of the Wardens"],
 }
 
----@type table<number, { id: number, priority: number, abbr: string, name: string, tex: number, idString: string }>
+---@type table<number, { id: number, difficulty: number, abbr: string, name: string, tex: number, idString: string }>
 W.MythicPlusSeasonAchievementData = {
-	{ on = true, id = 61258, priority = 3, abbr = L["[ABBR] Midnight Keystone Legend: Season One"] },
-	{ on = true, id = 61257, priority = 2, abbr = L["[ABBR] Midnight Keystone Hero: Season One"] },
-	{ on = true, id = 61256, priority = 1, abbr = L["[ABBR] Midnight Keystone Master: Season One"] },
-	{ on = true, id = 42172, priority = 3, abbr = L["[ABBR] The War Within Keystone Legend: Season Three"] },
-	{ on = true, id = 42171, priority = 2, abbr = L["[ABBR] The War Within Keystone Hero: Season Three"] },
-	{ on = true, id = 41973, priority = 1, abbr = L["[ABBR] The War Within Keystone Master: Season Three"] },
-	{ on = true, id = 40954, priority = 4, abbr = L["[ABBR] Enterprising Hero: The War Within Season Two"] },
-	{ on = false, id = 40952, priority = 2, abbr = L["[ABBR] The War Within Keystone Hero: Season Two"] },
-	{ on = false, id = 41533, priority = 1, abbr = L["[ABBR] The War Within Keystone Master: Season Two"] },
-	{ on = false, id = 20526, priority = 2, abbr = L["[ABBR] The War Within Keystone Hero: Season One"] },
-	{ on = false, id = 20525, priority = 1, abbr = L["[ABBR] The War Within Keystone Master: Season One"] },
-	{ on = false, id = 19783, priority = 2, abbr = L["[ABBR] Dragonflight Keystone Hero: Season Four"] },
-	{ on = false, id = 19782, priority = 1, abbr = L["[ABBR] Dragonflight Keystone Master: Season Four"] },
-	{ on = false, id = 19012, priority = 2, abbr = L["[ABBR] Dragonflight Keystone Hero: Season Three"] },
-	{ on = false, id = 19011, priority = 1, abbr = L["[ABBR] Dragonflight Keystone Master: Season Three"] },
-	{ on = false, id = 17845, priority = 2, abbr = L["[ABBR] Dragonflight Keystone Hero: Season Two"] },
-	{ on = false, id = 17844, priority = 1, abbr = L["[ABBR] Dragonflight Keystone Master: Season Two"] },
-	{ on = false, id = 16650, priority = 2, abbr = L["[ABBR] Dragonflight Keystone Hero: Season One"] },
-	{ on = false, id = 16649, priority = 1, abbr = L["[ABBR] Dragonflight Keystone Master: Season One"] },
+	{ on = true, id = 61258, difficulty = 3, abbr = L["[ABBR] Midnight Keystone Legend: Season One"] },
+	{ on = true, id = 61257, difficulty = 2, abbr = L["[ABBR] Midnight Keystone Hero: Season One"] },
+	{ on = true, id = 61256, difficulty = 1, abbr = L["[ABBR] Midnight Keystone Master: Season One"] },
+	{ on = true, id = 42172, difficulty = 3, abbr = L["[ABBR] The War Within Keystone Legend: Season Three"] },
+	{ on = true, id = 42171, difficulty = 2, abbr = L["[ABBR] The War Within Keystone Hero: Season Three"] },
+	{ on = true, id = 41973, difficulty = 1, abbr = L["[ABBR] The War Within Keystone Master: Season Three"] },
+	{ on = true, id = 40954, difficulty = 4, abbr = L["[ABBR] Enterprising Hero: The War Within Season Two"] },
+	{ on = false, id = 40952, difficulty = 2, abbr = L["[ABBR] The War Within Keystone Hero: Season Two"] },
+	{ on = false, id = 41533, difficulty = 1, abbr = L["[ABBR] The War Within Keystone Master: Season Two"] },
+	{ on = false, id = 20526, difficulty = 2, abbr = L["[ABBR] The War Within Keystone Hero: Season One"] },
+	{ on = false, id = 20525, difficulty = 1, abbr = L["[ABBR] The War Within Keystone Master: Season One"] },
+	{ on = false, id = 19783, difficulty = 2, abbr = L["[ABBR] Dragonflight Keystone Hero: Season Four"] },
+	{ on = false, id = 19782, difficulty = 1, abbr = L["[ABBR] Dragonflight Keystone Master: Season Four"] },
+	{ on = false, id = 19012, difficulty = 2, abbr = L["[ABBR] Dragonflight Keystone Hero: Season Three"] },
+	{ on = false, id = 19011, difficulty = 1, abbr = L["[ABBR] Dragonflight Keystone Master: Season Three"] },
+	{ on = false, id = 17845, difficulty = 2, abbr = L["[ABBR] Dragonflight Keystone Hero: Season Two"] },
+	{ on = false, id = 17844, difficulty = 1, abbr = L["[ABBR] Dragonflight Keystone Master: Season Two"] },
+	{ on = false, id = 16650, difficulty = 2, abbr = L["[ABBR] Dragonflight Keystone Hero: Season One"] },
+	{ on = false, id = 16649, difficulty = 1, abbr = L["[ABBR] Dragonflight Keystone Master: Season One"] },
 }
 
 -- https://www.wowhead.com/achievements/character-statistics/dungeons-and-raids/midnight/

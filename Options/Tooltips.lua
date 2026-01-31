@@ -425,6 +425,7 @@ options.progression = {
 					end,
 					set = function(info, value)
 						E.private.WT.tooltips.progression.specialAchievement.onlyCompleted = value
+						E:StaticPopup_Show("PRIVATE_RL")
 					end,
 					disabled = function()
 						return not (

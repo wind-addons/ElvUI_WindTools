@@ -81,7 +81,7 @@ local function OnAchievementShow(frame)
 	end)
 end
 
-local function SortTableWithID(tbl)
+local function SortTableByFirstElement(tbl)
 	sort(tbl, function(a, b)
 		return a[1] < b[1]
 	end)
@@ -116,15 +116,15 @@ local function UpdateProgression(guid, unit)
 	-- Achievements
 	if db.specialAchievement.enable then
 		cache[guid].info.special = {}
-		for id in pairs(W.MythicPlusSeasonAchievementData) do
-			if db.specialAchievement[id] then
+		for _, aData in ipairs(W.MythicPlusSeasonAchievementData) do
+			if db.specialAchievement[aData.id] then
 				if guid == E.myguid then
-					Async.WithAchievementID(id, function(data)
-						UpdateSpecialAchievement(guid, id, data[4], data[5], data[6], data[7])
+					Async.WithAchievementID(aData.id, function(data)
+						UpdateSpecialAchievement(guid, aData.id, data[4], data[5], data[6], data[7])
 					end)
 				else
 					inspectHistory[guid] = GetTime()
-					UpdateSpecialAchievement(guid, id, GetAchievementComparisonInfo(id))
+					UpdateSpecialAchievement(guid, aData.id, GetAchievementComparisonInfo(aData.id))
 				end
 			end
 		end
@@ -199,25 +199,36 @@ local function SetProgressionInfo(tt, guid)
 
 		local lines = {}
 
-		for id, data in pairs(W.MythicPlusSeasonAchievementData) do
-			if db.specialAchievement[id] then
-				local left = format(
-					"%s %s",
-					F.GetIconString(data.tex, ET.db.textFontSize, ET.db.textFontSize + 3, true),
-					data.abbr
-				)
-				local right = cache[guid].info.special[id]
+		for index, entry in ipairs(W.MythicPlusSeasonAchievementData) do
+			if db.specialAchievement[entry.id] then
+				local iconString = F.GetIconString(entry.tex, ET.db.textFontSize, ET.db.textFontSize + 3, true)
+				local left = format("%s %s", iconString, entry.abbr)
+				local right = cache[guid].info.special[entry.id]
 
 				if right then
-					tinsert(lines, { data.sortIndex, left, right })
+					tinsert(lines, { entry.difficulty, index, left, right })
 				end
 			end
 		end
 
-		SortTableWithID(lines)
+		sort(lines, function(a, b)
+			if db.specialAchievement.sortBy == "DIFFICULTY" then
+				if a[1] == b[1] then
+					return a[2] < b[2]
+				end
+				return a[1] > b[1]
+			else -- EXPANSION
+				if a[2] == b[2] then
+					return a[1] > b[1]
+				end
+				return a[2] < b[2]
+			end
+		end)
+
+		F.Developer.DevTool(lines, "Progression Special Achievement Lines")
 
 		for _, line in ipairs(lines) do
-			tt:AddDoubleLine(line[2], line[3], nil, nil, nil, 1, 1, 1)
+			tt:AddDoubleLine(line[3], line[4], nil, nil, nil, 1, 1, 1)
 		end
 	end
 
@@ -256,7 +267,7 @@ local function SetProgressionInfo(tt, guid)
 			end
 		end
 
-		SortTableWithID(lines)
+		SortTableByFirstElement(lines)
 
 		for _, line in ipairs(lines) do
 			for _, group in ipairs(line[2]) do
@@ -312,7 +323,7 @@ local function SetProgressionInfo(tt, guid)
 			end
 		end
 
-		SortTableWithID(lines)
+		SortTableByFirstElement(lines)
 
 		for _, line in ipairs(lines) do
 			tt:AddDoubleLine(line[2], line[3], nil, nil, nil, 1, 1, 1)

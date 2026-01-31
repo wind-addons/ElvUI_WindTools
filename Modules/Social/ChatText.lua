@@ -1187,7 +1187,7 @@ function CT:ChatFrame_MessageEventHandler(
 			or (
 				(strsub(chatType, 1, 7) == "CHANNEL")
 				and (chatType ~= "CHANNEL_LIST")
-				and ((arg1 ~= "INVITE") or (chatType ~= "CHANNEL_NOTICE_USER"))
+				and ((E:NotSecretValue(arg1) and arg1 ~= "INVITE") or (chatType ~= "CHANNEL_NOTICE_USER"))
 			)
 		then
 			if arg1 == "WRONG_PASSWORD" then

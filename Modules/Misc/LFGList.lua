@@ -1276,7 +1276,7 @@ function LL:InitializeRightPanel()
 	SortByButton.title = SortByButton:CreateFontString(nil, "OVERLAY")
 	SortByButton.title:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
 	SortByButton.title:Point("CENTER", SortByButton, "TOP", 0, 0)
-	SortByButton.title:SetText(F.GetWindStyleText(L["Sort by"]))
+	SortByButton.title:SetText(F.GetWindStyleText(L["Sort By"]))
 	SortByButton.title:Hide()
 
 	SortByButton:SetScript("OnEnter", function(btn)

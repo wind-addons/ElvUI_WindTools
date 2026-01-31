@@ -81,14 +81,27 @@ W.OldInstances = {
 	L["[ABBR] Vault of the Wardens"],
 }
 
+---@type table<number, { id: number, difficulty: number, abbr: string, name: string, tex: number, idString: string }>
 W.MythicPlusSeasonAchievementData = {
-	[61258] = { sortIndex = 1, abbr = L["[ABBR] Midnight Keystone Legend: Season One"] },
-	[61257] = { sortIndex = 2, abbr = L["[ABBR] Midnight Keystone Hero: Season One"] },
-	[61256] = { sortIndex = 3, abbr = L["[ABBR] Midnight Keystone Master: Season One"] },
-	[40954] = { sortIndex = 4, abbr = L["[ABBR] Enterprising Hero: The War Within Season Two"] },
-	[42172] = { sortIndex = 5, abbr = L["[ABBR] The War Within Keystone Legend: Season Three"] },
-	[42171] = { sortIndex = 6, abbr = L["[ABBR] The War Within Keystone Hero: Season Three"] },
-	[41973] = { sortIndex = 7, abbr = L["[ABBR] The War Within Keystone Master: Season Three"] },
+	{ on = true, id = 61258, difficulty = 3, abbr = L["[ABBR] Midnight Keystone Legend: Season One"] },
+	{ on = true, id = 61257, difficulty = 2, abbr = L["[ABBR] Midnight Keystone Hero: Season One"] },
+	{ on = true, id = 61256, difficulty = 1, abbr = L["[ABBR] Midnight Keystone Master: Season One"] },
+	{ on = true, id = 42172, difficulty = 3, abbr = L["[ABBR] The War Within Keystone Legend: Season Three"] },
+	{ on = true, id = 42171, difficulty = 2, abbr = L["[ABBR] The War Within Keystone Hero: Season Three"] },
+	{ on = true, id = 41973, difficulty = 1, abbr = L["[ABBR] The War Within Keystone Master: Season Three"] },
+	{ on = true, id = 40954, difficulty = 4, abbr = L["[ABBR] Enterprising Hero: The War Within Season Two"] },
+	{ on = false, id = 40952, difficulty = 2, abbr = L["[ABBR] The War Within Keystone Hero: Season Two"] },
+	{ on = false, id = 41533, difficulty = 1, abbr = L["[ABBR] The War Within Keystone Master: Season Two"] },
+	{ on = false, id = 20526, difficulty = 2, abbr = L["[ABBR] The War Within Keystone Hero: Season One"] },
+	{ on = false, id = 20525, difficulty = 1, abbr = L["[ABBR] The War Within Keystone Master: Season One"] },
+	{ on = false, id = 19783, difficulty = 2, abbr = L["[ABBR] Dragonflight Keystone Hero: Season Four"] },
+	{ on = false, id = 19782, difficulty = 1, abbr = L["[ABBR] Dragonflight Keystone Master: Season Four"] },
+	{ on = false, id = 19012, difficulty = 2, abbr = L["[ABBR] Dragonflight Keystone Hero: Season Three"] },
+	{ on = false, id = 19011, difficulty = 1, abbr = L["[ABBR] Dragonflight Keystone Master: Season Three"] },
+	{ on = false, id = 17845, difficulty = 2, abbr = L["[ABBR] Dragonflight Keystone Hero: Season Two"] },
+	{ on = false, id = 17844, difficulty = 1, abbr = L["[ABBR] Dragonflight Keystone Master: Season Two"] },
+	{ on = false, id = 16650, difficulty = 2, abbr = L["[ABBR] Dragonflight Keystone Hero: Season One"] },
+	{ on = false, id = 16649, difficulty = 1, abbr = L["[ABBR] Dragonflight Keystone Master: Season One"] },
 }
 
 -- https://www.wowhead.com/achievements/character-statistics/dungeons-and-raids/midnight/
@@ -1284,11 +1297,9 @@ function W:InitializeMetadata()
 		-- end)
 	end
 
-	for id in pairs(W.MythicPlusSeasonAchievementData) do
-		W.Utilities.Async.WithAchievementID(id, function(data)
-			W.MythicPlusSeasonAchievementData[id].name = data[2]
-			W.MythicPlusSeasonAchievementData[id].tex = data[10]
-			W.MythicPlusSeasonAchievementData[id].idString = tostring(id)
+	for _, entry in pairs(W.MythicPlusSeasonAchievementData) do
+		W.Utilities.Async.WithAchievementID(entry.id, function(data)
+			entry.name, entry.tex, entry.idString = data[2], data[10], tostring(entry.id)
 		end)
 	end
 

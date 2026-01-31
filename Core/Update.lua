@@ -394,16 +394,6 @@ function W:UpdateScripts()
 			E.private.WT.misc.cooldownTextOffset = nil
 			UpdateMessage(L["Misc"] .. ": " .. L["Database cleanup"], privateVersion)
 		end
-
-		if
-			E.private.WT.tooltips
-			and E.private.WT.tooltips.progression
-			and E.private.WT.tooltips.progression.specialAchievement
-		then
-			E.private.WT.tooltips.progression.specialAchievement[20525] = nil
-			E.private.WT.tooltips.progression.specialAchievement[20526] = nil
-			UpdateMessage(L["Progression"] .. ": " .. L["Update Database"], privateVersion)
-		end
 	end
 
 	if not isFirstLine then

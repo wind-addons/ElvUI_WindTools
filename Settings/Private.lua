@@ -25,6 +25,16 @@ local function configTable(t, sourceMetadata)
 	return t
 end
 
+local function achievementConfigTable(t, sourceMetadata)
+	for _, data in pairs(sourceMetadata) do
+		if t[data.id] == nil and data.on then
+			t[data.id] = true
+		end
+	end
+
+	return t
+end
+
 ---@class PrivateDB.combat
 V.combat = {}
 
@@ -752,8 +762,8 @@ V.tooltips = {
 		disableInCombat = true,
 		header = "TEXTURE",
 		raid = configTable({ enable = true }, W.RaidData),
-		specialAchievement = configTable(
-			{ enable = true, onlyCompleted = true, [61256] = false, [61257] = false, [61258] = false }, -- TODO: Update default ids after midnight
+		specialAchievement = achievementConfigTable(
+			{ enable = true, onlyCompleted = true, sortMode = "EXPANSION" },
 			W.MythicPlusSeasonAchievementData
 		),
 		mythicPlus = configTable({ enable = true, markHighestScore = true, showNoRecord = true }, W.MythicPlusMapData),

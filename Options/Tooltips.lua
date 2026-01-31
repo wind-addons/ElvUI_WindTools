@@ -433,6 +433,33 @@ options.progression = {
 						)
 					end,
 				},
+				sortMode = {
+					order = 3,
+					type = "select",
+					name = L["Sort Mode"],
+					values = {
+						DIFFICULTY = L["Difficulty"],
+						EXPANSION = L["Expansion"],
+					},
+					get = function(info)
+						return E.private.WT.tooltips.progression.specialAchievement.sortMode
+					end,
+					set = function(info, value)
+						E.private.WT.tooltips.progression.specialAchievement.sortMode = value
+					end,
+					disabled = function()
+						return not (
+							E.private.WT.tooltips.progression.enable
+							and E.private.WT.tooltips.progression.specialAchievement.enable
+						)
+					end,
+				},
+				divider = {
+					order = 4,
+					type = "description",
+					name = " ",
+					width = "full",
+				},
 			},
 		},
 		raid = {
@@ -524,9 +551,22 @@ options.progression = {
 
 do
 	for _, config in ipairs({
-		{ target = "specialAchievement", data = W.MythicPlusSeasonAchievementData },
-		{ target = "raid", data = W.RaidData },
-		{ target = "mythicPlus.args.instances", data = W.MythicPlusMapData },
+		{
+			target = "specialAchievement",
+			data = (function()
+				local result = {}
+				for _, data in pairs(W.MythicPlusSeasonAchievementData) do
+					result[data.id] = data
+				end
+				return result
+			end)(),
+			order = function(id)
+				return 1e8 - id
+			end,
+			width = 2.5,
+		},
+		{ target = "raid", data = W.RaidData, order = tonumber },
+		{ target = "mythicPlus.args.instances", data = W.MythicPlusMapData, order = tonumber },
 	}) do
 		local target = options.progression.args
 		for _, key in ipairs({ strsplit(".", config.target) }) do
@@ -535,10 +575,10 @@ do
 
 		for id, data in pairs(config.data) do
 			target.args[data.idString] = {
-				order = id,
+				order = config.order(id),
 				type = "toggle",
 				name = format("|T%s:16:18:0:0:64:64:4:60:7:57:255:255:255|t %s", data.tex, data.name),
-				width = "full",
+				width = config.width or "full",
 			}
 		end
 	end

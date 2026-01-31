@@ -33,7 +33,7 @@ function RM:SetHereBeDragonsPinShown(pin, isShown)
 end
 
 function RM:HereBeDragonsPinsFix()
-	if self.hereBeDragonsPinsFixed or not self.db.fixHereBeDragons then
+	if self.hereBeDragonsPinsFixed or not self.db or not self.db.fixHereBeDragons then
 		return
 	end
 

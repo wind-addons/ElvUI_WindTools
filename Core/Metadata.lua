@@ -1305,7 +1305,7 @@ function W:InitializeMetadata()
 
 	for _, entry in pairs(W.MythicPlusSeasonAchievementData) do
 		W.Utilities.Async.WithAchievementID(entry.id, function(data)
-			entry.name, entry.tex, entry.idString = data[2], data[10], tostring(entry.id)
+			entry.name, entry.tex, entry.idString, entry.desc = data[2], data[10], tostring(entry.id), data[8]
 		end)
 	end
 

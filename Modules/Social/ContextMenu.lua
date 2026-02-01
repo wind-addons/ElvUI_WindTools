@@ -34,6 +34,7 @@ local C_ChatInfo_SendChatMessage = C_ChatInfo.SendChatMessage
 local UnitClass = UnitClass
 local UnitHealthMax = UnitHealthMax
 local UnitPlayerControlled = UnitPlayerControlled
+local IsShiftKeyDown = IsShiftKeyDown
 
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
@@ -455,7 +456,7 @@ function CM:GetAvailableButtonTypes(contextData)
 end
 
 function CM:ModifyMenu(_, rootDescription, contextData)
-	if not self.db.enable then
+	if not self.db.enable or not IsShiftKeyDown() then
 		return
 	end
 

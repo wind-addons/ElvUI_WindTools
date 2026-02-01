@@ -1307,7 +1307,18 @@ options.contextMenu = {
 				feature = {
 					order = 1,
 					type = "description",
-					name = L["Add features to pop-up menu without taint."],
+					name = format(
+						"%s\n\n%s\n%s",
+						L["Add features to context menu based on menu types."],
+						C.StringByTemplate(
+							L["Because of Blizzard 'Visit Home' button taint issue, the additional options only will be added when you pressing Shift key while right-clicking."],
+							"amber-500"
+						),
+						C.StringByTemplate(
+							format(L["Do not click 'Visit Home' button when %s options are shown."], W.Title),
+							"rose-500"
+						)
+					),
 					fontSize = "medium",
 				},
 			},

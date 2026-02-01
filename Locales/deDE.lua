@@ -1527,6 +1527,7 @@ L["The amount of buttons to display per row."] = "Die Anzahl der Tasten, die pro
 L["The animation speed."] = "Die Animationsgeschwindigkeit."
 L["The argument is invalid."] = "Das Argument ist ungültig."
 L["The argument is needed."] = "Das Argument ist notwendig."
+L["The class icon of %s"] = true
 L["The class icon of the player's class"] = "Das Klassensymbol der Klasse des Spielers"
 L["The color of %s"] = "Die Farbe von %s"
 L["The color of the player's class"] = "Die Farbe der Spielerklasse"

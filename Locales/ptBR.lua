@@ -1527,6 +1527,7 @@ L["The amount of buttons to display per row."] = "Quantidade de botões a serem 
 L["The animation speed."] = true
 L["The argument is invalid."] = true
 L["The argument is needed."] = true
+L["The class icon of %s"] = true
 L["The class icon of the player's class"] = true
 L["The color of %s"] = true
 L["The color of the player's class"] = true

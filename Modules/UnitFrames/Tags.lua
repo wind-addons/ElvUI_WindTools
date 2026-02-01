@@ -1,6 +1,7 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local Tags = W:NewModule("Tags") ---@class Tags: AceModule
 local RangeCheck = E.Libs.RangeCheck
+local C = W.Utilities.Color
 
 local floor = floor
 local format = format
@@ -27,6 +28,124 @@ local Enum_PowerType_Mana = Enum.PowerType.Mana
 local function GetClassColorString(class)
 	local hexString = select(4, GetClassColor(class))
 	return "|c" .. hexString
+end
+
+function Tags:AddTagInfo()
+	local info = {
+		perhp1f = {
+			category = F.GetWindStyleText(L["Health"]),
+			description = format(
+				L["The percentage of health without percent sign and status"] .. " (%s = 1)",
+				L["Decimal Length"]
+			),
+			order = 1,
+		},
+		perhp2f = {
+			category = F.GetWindStyleText(L["Health"]),
+			description = format(
+				L["The percentage of health without percent sign and status"] .. " (%s = 2)",
+				L["Decimal Length"]
+			),
+			order = 2,
+		},
+		perhp3f = {
+			category = F.GetWindStyleText(L["Health"]),
+			description = format(
+				L["The percentage of health without percent sign and status"] .. " (%s = 3)",
+				L["Decimal Length"]
+			),
+			order = 3,
+		},
+		["absorbs-autohide"] = {
+			category = F.GetWindStyleText(L["Health"]),
+			description = format(
+				L["Just like %s, but it will be hidden when the amount is zero."],
+				F.GetWindStyleText("[absorbs]")
+			),
+			order = 4,
+		},
+		["healabsorbs-autohide"] = {
+			category = F.GetWindStyleText(L["Health"]),
+			description = format(
+				L["Just like %s, but it will be hidden when the amount is zero."],
+				F.GetWindStyleText("[healabsorbs]")
+			),
+			order = 5,
+		},
+		["smart-power"] = {
+			category = F.GetWindStyleText(L["Power"]),
+			description = L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100%)"],
+			order = 1,
+		},
+		["smart-power-nosign"] = {
+			category = F.GetWindStyleText(L["Power"]),
+			description = L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100)"],
+			order = 2,
+		},
+		range = {
+			category = F.GetWindStyleText(L["Range"]),
+			description = L["Range"],
+			order = 1,
+		},
+		["range:expectation"] = {
+			category = F.GetWindStyleText(L["Range"]),
+			description = L["Range Expectation"],
+			order = 2,
+		},
+		["classcolor:player"] = {
+			category = F.GetWindStyleText(L["Color"]),
+			description = L["The color of the player's class"],
+			order = 0,
+		},
+	}
+
+	---@type table<ClassFile, string>
+	local classNames = {
+		WARRIOR = L["Warrior"],
+		PALADIN = L["Paladin"],
+		HUNTER = L["Hunter"],
+		ROGUE = L["Rogue"],
+		PRIEST = L["Priest"],
+		DEATHKNIGHT = L["Deathknight"],
+		SHAMAN = L["Shaman"],
+		MAGE = L["Mage"],
+		WARLOCK = L["Warlock"],
+		MONK = L["Monk"],
+		DRUID = L["Druid"],
+		DEMONHUNTER = L["Demonhunter"],
+		EVOKER = L["Evoker"],
+	}
+
+	for i = 1, GetNumClasses() do
+		local classFile = select(2, GetClassInfo(i))
+		info["classcolor:" .. strlower(classFile)] = {
+			category = F.GetWindStyleText(L["Color"]),
+			description = format(L["The color of %s"], C.StringWithClassColor(classNames[classFile], classFile)),
+			order = i,
+		}
+	end
+
+	for _, style in pairs(F.GetClassIconStyleList()) do
+		info["classicon-" .. style] = {
+			category = F.GetWindStyleText(L["Class Icon"]) .. " - " .. style,
+			description = L["The class icon of the player's class"],
+		}
+
+		for i = 1, GetNumClasses() do
+			local classFile = select(2, GetClassInfo(i))
+			info["classicon-" .. style .. ":" .. strlower(classFile)] = {
+				category = F.GetWindStyleText(L["Class Icon"]) .. " - " .. style,
+				description = format(
+					L["The class icon of %s"],
+					C.StringWithClassColor(classNames[classFile], classFile)
+				),
+			}
+		end
+	end
+
+	for tagName, tagInfo in pairs(info) do
+		E:AddTagInfo(tagName, tagInfo.category, tagInfo.description, tagInfo.order, tagInfo.hidden)
+	end
 end
 
 function Tags:Initialize()
@@ -117,6 +236,8 @@ function Tags:Initialize()
 			end
 		end
 	end
+
+	self:AddTagInfo()
 end
 
 W:RegisterModule(Tags:GetName())

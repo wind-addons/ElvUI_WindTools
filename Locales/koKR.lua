@@ -1527,6 +1527,7 @@ L["The amount of buttons to display per row."] = "행당 표시할 버튼 수입
 L["The animation speed."] = "애니메이션 속도입니다."
 L["The argument is invalid."] = "잘못된 인수입니다."
 L["The argument is needed."] = "매개변수는 필수 항목입니다."
+L["The class icon of %s"] = true
 L["The class icon of the player's class"] = "플레이어 직업의 직업 아이콘"
 L["The color of %s"] = "%s의 색상"
 L["The color of the player's class"] = "플레이어의 클래스 색상"

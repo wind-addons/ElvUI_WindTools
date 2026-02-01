@@ -1527,6 +1527,7 @@ L["The amount of buttons to display per row."] = "Количество кноп�
 L["The animation speed."] = "Скорость анимации."
 L["The argument is invalid."] = "Аргумент недействителен."
 L["The argument is needed."] = "Необходим аргумент."
+L["The class icon of %s"] = true
 L["The class icon of the player's class"] = "Значок класса игрока"
 L["The color of %s"] = "Цвет %s"
 L["The color of the player's class"] = "Цвет класса игрока"

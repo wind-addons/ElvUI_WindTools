@@ -1527,6 +1527,7 @@ L["The amount of buttons to display per row."] = "每行显示多少个按钮数
 L["The animation speed."] = "动画速度."
 L["The argument is invalid."] = "参数无效."
 L["The argument is needed."] = "需要参数."
+L["The class icon of %s"] = " %s 的职业图标"
 L["The class icon of the player's class"] = "玩家职业图标"
 L["The color of %s"] = "%s 颜色"
 L["The color of the player's class"] = "玩家职业色"

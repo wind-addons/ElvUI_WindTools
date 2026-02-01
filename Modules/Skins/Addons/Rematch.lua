@@ -581,7 +581,12 @@ local function ReskinLoadedTargetPanel(frame, petsPanel, targetsPanel)
 	frame:ClearAllPoints()
 	frame:Point("TOPLEFT", petsPanel, "TOPRIGHT", 3, -1)
 	frame:Point("BOTTOMRIGHT", targetsPanel, "BOTTOMLEFT", -3, -75)
-	ReskinButton(frame.BigLoadSaveButton)
+	if frame.BigLoadSaveButton then
+		ReskinButton(frame.BigLoadSaveButton)
+	end
+	if frame.MediumLoadButton then
+		ReskinButton(frame.MediumLoadButton)
+	end
 
 	frame.titleBackdrop = frame:CreateTexture(nil, "ARTWORK")
 	frame.titleBackdrop:Point("TOPLEFT", frame, "TOPLEFT", 1, -1)

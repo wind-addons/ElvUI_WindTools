@@ -48,7 +48,6 @@ local Screenshot = Screenshot
 local ShowUIPanel = ShowUIPanel
 local ToggleCalendar = ToggleCalendar
 local ToggleCharacter = ToggleCharacter
-local ToggleFriendsFrame = ToggleFriendsFrame
 local ToggleTimeManager = ToggleTimeManager
 local UnregisterStateDriver = UnregisterStateDriver
 
@@ -476,14 +475,8 @@ local ButtonTypes = {
 	FRIENDS = {
 		name = L["Friend List"],
 		icon = W.Media.Icons.barFriends,
-		click = {
-			LeftButton = function()
-				if not InCombatLockdown() then
-					ToggleFriendsFrame()
-				else
-					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
-				end
-			end,
+		macro = {
+			LeftButton = "/friends",
 		},
 		additionalText = function()
 			local numBNOnline, numWoWOnline = 0, 0

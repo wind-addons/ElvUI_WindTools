@@ -479,7 +479,7 @@ local ButtonTypes = {
 		click = {
 			LeftButton = function()
 				if not InCombatLockdown() then
-					ToggleFriendsFrame(1)
+					ToggleFriendsFrame()
 				else
 					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
 				end

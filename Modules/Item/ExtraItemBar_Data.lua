@@ -2152,9 +2152,16 @@ end
 
 EB.ModuleList = {
 	["POTION"] = CreateList(potions, "general", "legacy", "sl", "df", "tww", "mn"),
-	["POTIONTWW"] = CreateList(potions, "general", "tww"),
-	["POTIONMN"] = CreateList(potions, "general", "mn"),
+	["POTIONGN"] = CreateList(potions, "general"),
+	["POTIONLEG"] = CreateList(potions, "legacy"),
+	["POTIONSL"] = CreateList(potions, "sl"),
+	["POTIONDF"] = CreateList(potions, "df"),
+	["POTIONTWW"] = CreateList(potions, "tww"),
+	["POTIONMN"] = CreateList(potions, "mn"),
 	["FLASK"] = CreateList(flasks, "legacy", "sl", "df", "tww", "mn"),
+	["FLASKLEG"] = CreateList(flasks, "legacy"),
+	["FLASKSL"] = CreateList(flasks, "sl"),
+	["FLASKDF"] = CreateList(flasks, "df"),
 	["FLASKTWW"] = CreateList(flasks, "tww"),
 	["FLASKMN"] = CreateList(flasks, "mn"),
 	["RUNE"] = CreateList(runes, "df", "tww", "mn"),

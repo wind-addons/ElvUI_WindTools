@@ -22,8 +22,7 @@ local InCombatLockdown = InCombatLockdown
 local C_PartyInfo_InviteUnit = C_PartyInfo.InviteUnit
 local C_UI_Reload = C_UI.Reload
 
----@diagnostic disable-next-line: undefined-field
-local ACCEPT, CANCEL = _G.ACCEPT, _G.CANCEL
+local ACCEPT, CANCEL = ACCEPT, CANCEL
 
 ---@cast F Functions
 

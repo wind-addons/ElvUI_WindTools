@@ -96,6 +96,8 @@
     "WAISTSLOT",
     "WRISTSLOT",
     "issecretvalue",
+    "ACCEPT",
+    "CANCEL"
   ],
   "diagnostics.disable": [
     "inject-field",

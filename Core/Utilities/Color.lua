@@ -1,5 +1,5 @@
 local W ---@class WindTools
-local F, E ---@type Functions ElvUI
+local F, E ---@type Functions, ElvUI
 W, F, E = unpack((select(2, ...)))
 
 local format = format

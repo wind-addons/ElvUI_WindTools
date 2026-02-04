@@ -547,7 +547,7 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 	end
 
 	local slotInfo = E:GetGearSlotInfo(unit, slotIndex)
-	if type(slotInfo) == "table" and type(slotInfo.iLvl) == 'number' then
+	if type(slotInfo) == "table" and type(slotInfo.iLvl) == "number" then
 		actualItemLevel = slotInfo.iLvl
 	end
 

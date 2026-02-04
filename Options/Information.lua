@@ -27,6 +27,7 @@ local donators = {
 		"喵仙人Meowcactus",
 		"Fakewings",
 		"向宁",
+		"mrmrssmith",
 		"Leon",
 		"怪兽",
 		"esby_lan",

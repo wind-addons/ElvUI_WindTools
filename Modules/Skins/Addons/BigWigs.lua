@@ -11,7 +11,7 @@ local pcall = pcall
 local tinsert = tinsert
 local tremove = tremove
 local unpack = unpack
-
+local issecretvalue = issecretvalue
 local CreateFrame = CreateFrame
 
 local pool = {
@@ -79,7 +79,15 @@ local function applyPoints(object, points)
 	object:ClearAllPoints()
 	for i = 1, #points do
 		local point, relativeTo, relativePoint, xOfs, yOfs = unpack(points[i])
-		object:Point(point, relativeTo, relativePoint, xOfs, yOfs)
+		if type(point) == "string" and not issecretvalue(point) then
+			if relativePoint and (type(relativePoint) ~= "string" or issecretvalue(relativePoint)) then
+				relativePoint = nil
+			end
+			if relativeTo and type(relativeTo) ~= "table" then
+				relativeTo = nil
+			end
+			object:Point(point, relativeTo, relativePoint, xOfs, yOfs)
+		end
 	end
 end
 
@@ -112,9 +120,9 @@ local function modifyStyle(frame)
 
 	local spark = frame:Get("bigwigs:windtools:spark")
 
-	if spark then
-		spark:Size(4, frame.candyBarBar:GetHeight() * 2)
-		spark:SetShown(db.spark)
+	local barHeight = frame.candyBarBar:GetHeight()
+	if not issecretvalue(barHeight) then
+		spark:Size(4, barHeight * 2)
 	end
 end
 

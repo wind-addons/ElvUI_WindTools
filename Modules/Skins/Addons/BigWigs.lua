@@ -5,13 +5,13 @@ local OF = W.Utilities.ObjectFinder
 
 local _G = _G
 local format = format
+local math_pi = math.pi
 local next = next
-local pairs = pairs
 local pcall = pcall
 local tinsert = tinsert
 local tremove = tremove
 local unpack = unpack
-local issecretvalue = issecretvalue
+
 local CreateFrame = CreateFrame
 
 local pool = {
@@ -79,8 +79,8 @@ local function applyPoints(object, points)
 	object:ClearAllPoints()
 	for i = 1, #points do
 		local point, relativeTo, relativePoint, xOfs, yOfs = unpack(points[i])
-		if type(point) == "string" and not issecretvalue(point) then
-			if relativePoint and (type(relativePoint) ~= "string" or issecretvalue(relativePoint)) then
+		if type(point) == "string" and E:NotSecretValue(point) then
+			if relativePoint and (type(relativePoint) ~= "string" or E:IsNotSecretValue(relativePoint)) then
 				relativePoint = nil
 			end
 			if relativeTo and type(relativeTo) ~= "table" then
@@ -368,6 +368,28 @@ function S:BigWigs_Keystone()
 		for _, child in next, { frame:GetChildren() } do
 			if child.ScrollBar then
 				self:Proxy("HandleTrimScrollBar", child.ScrollBar)
+			elseif
+				child.IsMouseEnabled
+				and child:IsMouseEnabled()
+				and child:GetScript("OnMouseDown")
+				and child:GetNumRegions() == 1
+			then
+				-- Drag
+				local tex = child:GetRegions()
+				if
+					tex
+					and tex.GetObjectType
+					and tex:GetObjectType() == "Texture"
+					and S:IsTexturePathEqual(tex --[[@as Texture]], [[Interface\AddOns\BigWigs\Media\Icons\draghandle]])
+				then
+					tex:SetTexture(E.Media.Textures.ArrowUp)
+					tex:SetVertexColor(C.ExtractRGBAFromTemplate("neutral-50"))
+					tex:SetTexCoord(0, 1, 0, 1)
+					tex:SetRotation(math_pi * 1.25)
+					tex:SetAllPoints()
+				end
+
+				child:NudgePoint(1, -2)
 			end
 		end
 

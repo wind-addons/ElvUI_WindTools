@@ -17,9 +17,16 @@ local tContains = tContains
 W.Media = {
 	Icons = {},
 	Textures = {},
+	RoleIcons = {
+		DEFAULT = {
+			TANK = E.Media.Textures.Tank,
+			HEALER = E.Media.Textures.Healer,
+			DAMAGER = E.Media.Textures.DPS,
+		},
+	},
 }
 
-local MediaPath = "Interface\\Addons\\ElvUI_WindTools\\Media\\"
+local MediaPath = [[Interface\Addons\ElvUI_WindTools\Media\]]
 
 do
 	local cuttedIconTemplate = "|T%s:%d:%d:0:0:64:64:5:59:5:59|t"
@@ -227,6 +234,16 @@ end
 ---@param type string The media type ("Icons" or "Textures")
 local function AddMedia(name, file, type)
 	W.Media[type][name] = MediaPath .. type .. "/" .. file
+end
+
+---Pack role icon into media registry
+---@param pack string The role icon style pack name
+local function AddRoleIconPack(pack)
+	W.Media.RoleIcons[strupper(pack)] = {
+		TANK = MediaPath .. "RoleIcons/" .. pack .. "/Tank.tga",
+		HEALER = MediaPath .. "RoleIcons/" .. pack .. "/Healer.tga",
+		DAMAGER = MediaPath .. "RoleIcons/" .. pack .. "/DPS.tga",
+	}
 end
 
 ---Custom header texture system
@@ -497,34 +514,6 @@ AddMedia("accept", "Accept.tga", "Icons")
 AddMedia("donateKofi", "Ko-fi.tga", "Icons")
 AddMedia("donateAiFaDian", "AiFaDian.tga", "Icons")
 
-AddMedia("ffxivTank", "FFXIV/Tank.tga", "Icons")
-AddMedia("ffxivDPS", "FFXIV/DPS.tga", "Icons")
-AddMedia("ffxivHealer", "FFXIV/Healer.tga", "Icons")
-
-AddMedia("philModTank", "PhilMod/Tank.tga", "Icons")
-AddMedia("philModDPS", "PhilMod/DPS.tga", "Icons")
-AddMedia("philModHealer", "PhilMod/Healer.tga", "Icons")
-
-AddMedia("hexagonTank", "Hexagon/Tank.tga", "Icons")
-AddMedia("hexagonDPS", "Hexagon/DPS.tga", "Icons")
-AddMedia("hexagonHealer", "Hexagon/Healer.tga", "Icons")
-
-AddMedia("sunUITank", "SunUI/Tank.tga", "Icons")
-AddMedia("sunUIDPS", "SunUI/DPS.tga", "Icons")
-AddMedia("sunUIHealer", "SunUI/Healer.tga", "Icons")
-
-AddMedia("lynUITank", "LynUI/Tank.tga", "Icons")
-AddMedia("lynUIDPS", "LynUI/DPS.tga", "Icons")
-AddMedia("lynUIHealer", "LynUI/Healer.tga", "Icons")
-
-AddMedia("elvUIOldTank", "ElvUI_Old/Tank.tga", "Icons")
-AddMedia("elvUIOldDPS", "ElvUI_Old/DPS.tga", "Icons")
-AddMedia("elvUIOldHealer", "ElvUI_Old/Healer.tga", "Icons")
-
-AddMedia("blizzardTank", "Blizzard/Tank.tga", "Icons")
-AddMedia("blizzardDPS", "Blizzard/DPS.tga", "Icons")
-AddMedia("blizzardHealer", "Blizzard/Healer.tga", "Icons")
-
 AddMedia("announcement", "Categories/Announcement.tga", "Icons")
 AddMedia("advanced", "Categories/Advanced.tga", "Icons")
 AddMedia("social", "Categories/Social.tga", "Icons")
@@ -594,6 +583,14 @@ AddMedia("round", "round.png", "Textures")
 AddMedia("inspectGemBG", "InspectGemBG.blp", "Textures")
 AddMedia("exchange", "Exchange.tga", "Textures")
 AddMedia("illMurloc1", "Illustration/Murloc1.tga", "Textures")
+
+AddRoleIconPack("FFXIV")
+AddRoleIconPack("PhilMod")
+AddRoleIconPack("Hexagon")
+AddRoleIconPack("SunUI")
+AddRoleIconPack("LynUI")
+AddRoleIconPack("ElvUI_Old")
+AddRoleIconPack("Blizzard")
 
 do
 	local locale = GetLocale()

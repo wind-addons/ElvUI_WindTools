@@ -903,54 +903,28 @@ options.chatLink = {
 }
 
 local SampleStrings = {}
+
 do
 	local icons = ""
-	icons = icons .. E:TextureString(W.Media.Icons.ffxivTank, ":16:16") .. " "
-	icons = icons .. E:TextureString(W.Media.Icons.ffxivHealer, ":16:16") .. " "
-	icons = icons .. E:TextureString(W.Media.Icons.ffxivDPS, ":16:16")
-	SampleStrings.ffxiv = icons
-
-	icons = ""
-	icons = icons .. E:TextureString(W.Media.Icons.philModTank, ":16:16") .. " "
-	icons = icons .. E:TextureString(W.Media.Icons.philModHealer, ":16:16") .. " "
-	icons = icons .. E:TextureString(W.Media.Icons.philModDPS, ":16:16")
-	SampleStrings.philMod = icons
-
-	icons = ""
-	icons = icons .. E:TextureString(W.Media.Icons.hexagonTank, ":16:16") .. " "
-	icons = icons .. E:TextureString(W.Media.Icons.hexagonHealer, ":16:16") .. " "
-	icons = icons .. E:TextureString(W.Media.Icons.hexagonDPS, ":16:16")
-	SampleStrings.hexagon = icons
+	icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.Tank, ":16:16:0:0:64:64:2:56:2:56") .. " "
+	icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.Healer, ":16:16:0:0:64:64:2:56:2:56") .. " "
+	icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.DPS, ":16:16")
+	SampleStrings.ELVUI = icons
 
 	icons = ""
 	icons = icons .. CT.cache.blizzardRoleIcons.Tank .. " "
 	icons = icons .. CT.cache.blizzardRoleIcons.Healer .. " "
 	icons = icons .. CT.cache.blizzardRoleIcons.DPS
-	SampleStrings.blizzard = icons
+	SampleStrings.BLIZZARD = icons
 
-	icons = ""
-	icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.Tank, ":16:16:0:0:64:64:2:56:2:56") .. " "
-	icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.Healer, ":16:16:0:0:64:64:2:56:2:56") .. " "
-	icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.DPS, ":16:16")
-	SampleStrings.elvui = icons
+	for _, pack in ipairs({ "FFXIV", "PHILMOD", "HEXAGON", "SUNUI", "LYNUI", "ELVUI_OLD", "DEFAULT" }) do
+		icons = ""
 
-	icons = ""
-	icons = icons .. E:TextureString(W.Media.Icons.sunUITank, ":16:16") .. " "
-	icons = icons .. E:TextureString(W.Media.Icons.sunUIHealer, ":16:16") .. " "
-	icons = icons .. E:TextureString(W.Media.Icons.sunUIDPS, ":16:16")
-	SampleStrings.sunui = icons
-
-	icons = ""
-	icons = icons .. E:TextureString(W.Media.Icons.lynUITank, ":16:16") .. " "
-	icons = icons .. E:TextureString(W.Media.Icons.lynUIHealer, ":16:16") .. " "
-	icons = icons .. E:TextureString(W.Media.Icons.lynUIDPS, ":16:16")
-	SampleStrings.lynui = icons
-
-	icons = ""
-	icons = icons .. E:TextureString(W.Media.Icons.elvUIOldTank, ":16:16") .. " "
-	icons = icons .. E:TextureString(W.Media.Icons.elvUIOldHealer, ":16:16") .. " "
-	icons = icons .. E:TextureString(W.Media.Icons.elvUIOldDPS, ":16:16")
-	SampleStrings.elvui_old = icons
+		icons = icons .. E:TextureString(W.Media.RoleIcons[pack].TANK, ":16:16") .. " "
+		icons = icons .. E:TextureString(W.Media.RoleIcons[pack].HEALER, ":16:16") .. " "
+		icons = icons .. E:TextureString(W.Media.RoleIcons[pack].DAMAGER, ":16:16")
+		SampleStrings[pack] = icons
+	end
 end
 
 do
@@ -1148,14 +1122,14 @@ do
 						name = L["Role Icon Style"],
 						desc = L["Change the icons that indicate the role."],
 						values = {
-							HEXAGON = SampleStrings.hexagon,
-							PHILMOD = SampleStrings.philMod,
-							FFXIV = SampleStrings.ffxiv,
-							SUNUI = SampleStrings.sunui,
-							LYNUI = SampleStrings.lynui,
-							BLIZZARD = SampleStrings.blizzard,
-							ELVUI_OLD = SampleStrings.elvui_old,
-							DEFAULT = SampleStrings.elvui,
+							HEXAGON = SampleStrings.HEXAGON,
+							PHILMOD = SampleStrings.PHILMOD,
+							FFXIV = SampleStrings.FFXIV,
+							SUNUI = SampleStrings.SUNUI,
+							LYNUI = SampleStrings.LYNUI,
+							BLIZZARD = SampleStrings.BLIZZARD,
+							ELVUI_OLD = SampleStrings.ELVUI_OLD,
+							DEFAULT = SampleStrings.DEFAULT,
 						},
 					},
 					roleIconSize = {

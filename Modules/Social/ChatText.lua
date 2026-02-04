@@ -814,57 +814,7 @@ function CT:UpdateRoleIcons()
 		sizeString = sizeString and (sizeString .. ":0:0:64:64:2:62:0:58")
 	end
 
-	if pack == "FFXIV" then
-		roleIcons = {
-			TANK = E:TextureString(W.Media.Icons.ffxivTank, sizeString),
-			HEALER = E:TextureString(W.Media.Icons.ffxivHealer, sizeString),
-			DAMAGER = E:TextureString(W.Media.Icons.ffxivDPS, sizeString),
-		}
-
-		_G.INLINE_TANK_ICON = roleIcons.TANK
-		_G.INLINE_HEALER_ICON = roleIcons.HEALER
-		_G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
-	elseif pack == "HEXAGON" then
-		roleIcons = {
-			TANK = E:TextureString(W.Media.Icons.hexagonTank, sizeString),
-			HEALER = E:TextureString(W.Media.Icons.hexagonHealer, sizeString),
-			DAMAGER = E:TextureString(W.Media.Icons.hexagonDPS, sizeString),
-		}
-
-		_G.INLINE_TANK_ICON = roleIcons.TANK
-		_G.INLINE_HEALER_ICON = roleIcons.HEALER
-		_G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
-	elseif pack == "SUNUI" then
-		roleIcons = {
-			TANK = E:TextureString(W.Media.Icons.sunUITank, sizeString),
-			HEALER = E:TextureString(W.Media.Icons.sunUIHealer, sizeString),
-			DAMAGER = E:TextureString(W.Media.Icons.sunUIDPS, sizeString),
-		}
-
-		_G.INLINE_TANK_ICON = roleIcons.TANK
-		_G.INLINE_HEALER_ICON = roleIcons.HEALER
-		_G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
-	elseif pack == "LYNUI" then
-		roleIcons = {
-			TANK = E:TextureString(W.Media.Icons.lynUITank, sizeString),
-			HEALER = E:TextureString(W.Media.Icons.lynUIHealer, sizeString),
-			DAMAGER = E:TextureString(W.Media.Icons.lynUIDPS, sizeString),
-		}
-
-		_G.INLINE_TANK_ICON = roleIcons.TANK
-		_G.INLINE_HEALER_ICON = roleIcons.HEALER
-		_G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
-	elseif pack == "ELVUI_OLD" then
-		roleIcons = {
-			TANK = E:TextureString(W.Media.Icons.elvUIOldTank, sizeString),
-			HEALER = E:TextureString(W.Media.Icons.elvUIOldHealer, sizeString),
-			DAMAGER = E:TextureString(W.Media.Icons.elvUIOldDPS, sizeString),
-		}
-
-		_G.INLINE_TANK_ICON = roleIcons.TANK
-		_G.INLINE_HEALER_ICON = roleIcons.HEALER
-		_G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
-	elseif pack == "DEFAULT" then
+	if pack == "DEFAULT" then
 		roleIcons = {
 			TANK = E:TextureString(CT.cache.elvuiRoleIconsPath.Tank, sizeString .. ":0:0:64:64:2:56:2:56"),
 			HEALER = E:TextureString(CT.cache.elvuiRoleIconsPath.Healer, sizeString .. ":0:0:64:64:2:56:2:56"),
@@ -884,11 +834,11 @@ function CT:UpdateRoleIcons()
 		_G.INLINE_TANK_ICON = CT.cache.blizzardRoleIcons.Tank
 		_G.INLINE_HEALER_ICON = CT.cache.blizzardRoleIcons.Healer
 		_G.INLINE_DAMAGER_ICON = CT.cache.blizzardRoleIcons.DPS
-	elseif pack == "PHILMOD" then
+	else
 		roleIcons = {
-			TANK = E:TextureString(W.Media.Icons.philModTank, sizeString),
-			HEALER = E:TextureString(W.Media.Icons.philModHealer, sizeString),
-			DAMAGER = E:TextureString(W.Media.Icons.philModDPS, sizeString),
+			TANK = E:TextureString(W.Media.RoleIcons[pack].TANK, sizeString),
+			HEALER = E:TextureString(W.Media.RoleIcons[pack].HEALER, sizeString),
+			DAMAGER = E:TextureString(W.Media.RoleIcons[pack].DAMAGER, sizeString),
 		}
 
 		_G.INLINE_TANK_ICON = roleIcons.TANK

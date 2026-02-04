@@ -85,48 +85,6 @@ local expansionGroups = C_LFGList_GetAvailableActivityGroups(
 	GROUP_FINDER_CATEGORY_ID_DUNGEONS,
 	bit.bor(Enum_LFGListFilter.CurrentExpansion, Enum_LFGListFilter.NotCurrentSeason, Enum_LFGListFilter.PvE)
 )
-local timerunningGroups = C_LFGList_GetAvailableActivityGroups(
-	GROUP_FINDER_CATEGORY_ID_DUNGEONS,
-	bit.bor(Enum_LFGListFilter.Timerunning, Enum_LFGListFilter.PvE)
-)
-
-local RoleIconTextures = {
-	PHILMOD = {
-		TANK = W.Media.Icons.philModTank,
-		HEALER = W.Media.Icons.philModHealer,
-		DAMAGER = W.Media.Icons.philModDPS,
-	},
-	FFXIV = {
-		TANK = W.Media.Icons.ffxivTank,
-		HEALER = W.Media.Icons.ffxivHealer,
-		DAMAGER = W.Media.Icons.ffxivDPS,
-	},
-	HEXAGON = {
-		TANK = W.Media.Icons.hexagonTank,
-		HEALER = W.Media.Icons.hexagonHealer,
-		DAMAGER = W.Media.Icons.hexagonDPS,
-	},
-	SUNUI = {
-		TANK = W.Media.Icons.sunUITank,
-		HEALER = W.Media.Icons.sunUIHealer,
-		DAMAGER = W.Media.Icons.sunUIDPS,
-	},
-	LYNUI = {
-		TANK = W.Media.Icons.lynUITank,
-		HEALER = W.Media.Icons.lynUIHealer,
-		DAMAGER = W.Media.Icons.lynUIDPS,
-	},
-	ELVUI_OLD = {
-		TANK = W.Media.Icons.elvUIOldTank,
-		HEALER = W.Media.Icons.elvUIOldHealer,
-		DAMAGER = W.Media.Icons.elvUIOldDPS,
-	},
-	DEFAULT = {
-		TANK = E.Media.Textures.Tank,
-		HEALER = E.Media.Textures.Healer,
-		DAMAGER = E.Media.Textures.DPS,
-	},
-}
 
 local vaultItemLevel = {}
 
@@ -252,7 +210,7 @@ function LL:ReskinIcon(parent, icon, role, data)
 				icon:SetTexture(tex)
 				icon:SetTexCoords()
 			else
-				icon:SetTexture(RoleIconTextures[pack][role])
+				icon:SetTexture(W.Media.RoleIcons[pack][role])
 				icon:SetTexCoord(0, 1, 0, 1)
 			end
 		end

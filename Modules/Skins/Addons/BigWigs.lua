@@ -14,6 +14,8 @@ local unpack = unpack
 
 local CreateFrame = CreateFrame
 
+local Enum_StatusBarInterpolation = Enum.StatusBarInterpolation
+
 local pool = {
 	spark = {},
 	backdrops = {},
@@ -80,7 +82,7 @@ local function applyPoints(object, points)
 	for i = 1, #points do
 		local point, relativeTo, relativePoint, xOfs, yOfs = unpack(points[i])
 		if type(point) == "string" and E:NotSecretValue(point) then
-			if relativePoint and (type(relativePoint) ~= "string" or E:IsNotSecretValue(relativePoint)) then
+			if relativePoint and (type(relativePoint) ~= "string" or E:IsSecretValue(relativePoint)) then
 				relativePoint = nil
 			end
 			if relativeTo and type(relativeTo) ~= "table" then
@@ -96,7 +98,8 @@ local function modifyStyle(frame)
 
 	local db = emphasized and E.private.WT.skins.bigWigsSkin.emphasizedBar or E.private.WT.skins.bigWigsSkin.normalBar
 
-	E:SetSmoothing(frame.candyBarBar, db.smooth)
+	frame.candyBarBar.smoothing = (db.smooth and Enum_StatusBarInterpolation.ExponentialEaseOut)
+		or Enum_StatusBarInterpolation.Immediate
 
 	local barColor = frame:Get("bigwigs:windtools:barcolor")
 
@@ -304,7 +307,8 @@ function S:BigWigs_QueueTimer()
 				frame:CreateBackdrop("Transparent")
 				self:CreateBackdropShadow(frame)
 
-				E:SetSmoothing(frame, db.smooth)
+				frame.smoothing = (db.smooth and Enum_StatusBarInterpolation.ExponentialEaseOut)
+					or Enum_StatusBarInterpolation.Immediate
 
 				local statusBarTexture = frame:GetStatusBarTexture()
 				statusBarTexture:SetGradient(

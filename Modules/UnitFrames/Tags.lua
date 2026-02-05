@@ -13,13 +13,14 @@ local GetClassColor = GetClassColor
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
 local UnitClass = UnitClass
+local UnitGetTotalAbsorbs = UnitGetTotalAbsorbs
+local UnitGetTotalHealAbsorbs = UnitGetTotalHealAbsorbs
 local UnitHealthPercent = UnitHealthPercent
 local UnitIsConnected = UnitIsConnected
 local UnitIsUnit = UnitIsUnit
 local UnitPower = UnitPower
 local UnitPowerPercent = UnitPowerPercent
 local UnitPowerType = UnitPowerType
-local UnitGetTotalAbsorbs = UnitGetTotalAbsorbs
 
 local C_StringUtil_TruncateWhenZero = C_StringUtil.TruncateWhenZero
 local CurveConstants_ScaleTo100 = CurveConstants.ScaleTo100
@@ -172,7 +173,7 @@ function Tags:Initialize()
 	end)
 
 	E:AddTag("healabsorbs-autohide", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
-		return C_StringUtil_TruncateWhenZero(UnitGetTotalAbsorbs(unit))
+		return C_StringUtil_TruncateWhenZero(UnitGetTotalHealAbsorbs(unit))
 	end)
 
 	-- Range

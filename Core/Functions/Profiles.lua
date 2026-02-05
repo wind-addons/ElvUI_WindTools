@@ -1,6 +1,6 @@
 local F ---@class Functions
 local W, E, V, P ---@type WindTools, ElvUI, ProfileDB, PrivateDB
-W, F, E, V, P = unpack((select(2, ...)))
+W, F, E, L, V, P = unpack((select(2, ...)))
 local D = E:GetModule("Distributor")
 local LibDeflate = E.Libs.Deflate
 
@@ -14,14 +14,7 @@ F.Profiles = {}
 
 ---@type table Generated keys configuration for profile data
 local generatedKeys = {
-	profile = {
-		item = {
-			extraItemsBar = {
-				customList = true,
-				blackList = true,
-			},
-		},
-	},
+	profile = {},
 	private = {},
 }
 
@@ -74,8 +67,8 @@ function F.Profiles.GetOutputString(profile, private)
 
 	local privateData = {}
 	if private then
-		privateData = E:CopyTable(privateData, E.private.WT, generatedKeys.private)
-		privateData = E:RemoveTableDuplicates(privateData, V)
+		privateData = E:CopyTable(privateData, E.private.WT)
+		privateData = E:RemoveTableDuplicates(privateData, V, generatedKeys.private)
 	end
 
 	return F.Profiles.GenerateString(profileData) .. "{}" .. F.Profiles.GenerateString(privateData)

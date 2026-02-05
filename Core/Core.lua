@@ -13,7 +13,6 @@ local strmatch = strmatch
 local strsub = strsub
 local tinsert = tinsert
 local tonumber = tonumber
-local type = type
 local unpack = unpack
 local xpcall = xpcall
 
@@ -235,6 +234,7 @@ do -- Midnight API Fix
 	function _G.BackdropTemplateMixin:SetupTextureCoordinates(...)
 		local enabled = E and E.global and E.global.WT and E.global.WT.core and E.global.WT.core.midnightAPIFix
 		if not enabled or E:NotSecretValue(self:GetWidth()) then
+			---@diagnostic disable-next-line: redundant-parameter
 			BackdropTemplateMixin_SetupTextureCoordinates(self, ...)
 		end
 	end

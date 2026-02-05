@@ -27,6 +27,7 @@
 	<Script file='CovenantRenown.lua'/>
 	<Script file='CovenantPreview.lua'/>
 	<Script file='CovenantSanctum.lua'/>
+	<Script file='DamageMeter.lua'/>
 	<Script file='DebugTools.lua'/>
 	<Script file='Delves.lua'/>
 	<Script file='DressingRoom.lua'/>

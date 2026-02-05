@@ -3,11 +3,21 @@ local W = unpack((select(2, ...))) ---@type WindTools
 W.Changelog[410] = {
 	RELEASE_DATE = "2026/02/05",
 	IMPORTANT = {
-		["zhCN"] = {},
-		["zhTW"] = {},
-		["enUS"] = {},
-		["koKR"] = {},
-		["ruRU"] = {},
+		["zhCN"] = {
+			"[高级] - [配置文件] 修复了导出和导入字符串未正确全部配置的问题.",
+		},
+		["zhTW"] = {
+			"[高級] - [配置文件] 修復了導出和導入字符串未正確全部配置的問題.",
+		},
+		["enUS"] = {
+			"[Advanced] - [Profiles] Fixed an issue where export and import strings did not correctly include all configurations.",
+		},
+		["koKR"] = {
+			"[고급] - [프로필] 내보내기 및 가져오기 문자열에 모든 구성이 올바르게 포함되지 않는 문제를 수정했습니다.",
+		},
+		["ruRU"] = {
+			"[Продвинутый] - [Профили] Исправлена ошибка, из-за которой строки экспорта и импорта не включали все настройки.",
+		},
 	},
 	NEW = {
 		["zhCN"] = {

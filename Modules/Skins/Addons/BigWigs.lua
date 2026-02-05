@@ -10,6 +10,7 @@ local next = next
 local pcall = pcall
 local tinsert = tinsert
 local tremove = tremove
+local type = type
 local unpack = unpack
 
 local CreateFrame = CreateFrame
@@ -81,7 +82,7 @@ local function applyPoints(object, points)
 	object:ClearAllPoints()
 	for i = 1, #points do
 		local point, relativeTo, relativePoint, xOfs, yOfs = unpack(points[i])
-		if type(point) == "string" and E:NotSecretValue(point) then
+		if E:NotSecretValue(point) and type(point) == "string" then
 			if relativePoint and (type(relativePoint) ~= "string" or E:IsSecretValue(relativePoint)) then
 				relativePoint = nil
 			end
@@ -124,7 +125,7 @@ local function modifyStyle(frame)
 	local spark = frame:Get("bigwigs:windtools:spark")
 
 	local barHeight = frame.candyBarBar:GetHeight()
-	if not issecretvalue(barHeight) then
+	if E:NotSecretValue(barHeight) then
 		spark:Size(4, barHeight * 2)
 	end
 end

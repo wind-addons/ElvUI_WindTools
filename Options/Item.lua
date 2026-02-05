@@ -22,6 +22,7 @@ local strrep = strrep
 local tconcat = table.concat
 local tinsert = tinsert
 local tonumber = tonumber
+local tostring = tostring
 local tremove = tremove
 local unpack = unpack
 

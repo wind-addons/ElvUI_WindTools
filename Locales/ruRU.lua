@@ -469,6 +469,7 @@ L["DPS"] = "УВС"
 L["Daily"] = "Ежедневный"
 L["Daily Quest at %s"] = "Ежедневный квест в %s"
 L["Daily quest label"] = "Ярлык ежедневного задания"
+L["Damage Meter"] = true
 L["Dark Moon"] = "Ярмарка Новолуния"
 L["Data Bars"] = "Панели данных"
 L["Data Panels"] = "Панели информации"

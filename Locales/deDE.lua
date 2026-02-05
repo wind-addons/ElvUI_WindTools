@@ -469,6 +469,7 @@ L["DPS"] = "DPS"
 L["Daily"] = "Täglich"
 L["Daily Quest at %s"] = "Tägliche Quest at %s"
 L["Daily quest label"] = "Tägliches Quest Bezeichnung"
+L["Damage Meter"] = true
 L["Dark Moon"] = "Dunkelmond"
 L["Data Bars"] = "Datenleisten"
 L["Data Panels"] = "Datenfenster"

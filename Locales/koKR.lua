@@ -469,6 +469,7 @@ L["DPS"] = "딜러"
 L["Daily"] = "일일"
 L["Daily Quest at %s"] = "일일퀘스트 : %s"
 L["Daily quest label"] = "일일 퀘스트 태그"
+L["Damage Meter"] = true
 L["Dark Moon"] = "다크문"
 L["Data Bars"] = "정보 막대"
 L["Data Panels"] = "정보 패널"

@@ -1,7 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<!-- Core -->
 	<Script file='Core.lua'/>
-	<Script file='Authority.lua'/>
 	<Script file='Events.lua'/>
 	<!-- Submodule -->
 	<Script file='Goodbye.lua'/>

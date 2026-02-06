@@ -17,6 +17,7 @@ local donators = {
 		"DakJaniels",
 	}, ", "),
 	patreon = C.StringByTemplate("Ko-fi / Patreon" .. ": ", "blue-500") .. tconcat({
+		"Ell",
 		"Dlarge",
 		"KK",
 		"paroxp",

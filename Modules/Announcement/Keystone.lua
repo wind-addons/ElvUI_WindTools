@@ -23,7 +23,7 @@ function A:KeystoneLink(event, text)
 		return
 	end
 
-	if E:IsSecretValue(text) or strlower(text) ~= "!keys" then
+	if E:IsSecretValue(text) or not text or strlower(text) ~= "!keys" then
 		return
 	end
 

@@ -15,7 +15,6 @@ A.EventList = {
 	"CHAT_MSG_PARTY",
 	"CHAT_MSG_PARTY_LEADER",
 	"CHAT_MSG_SYSTEM",
-	-- "COMBAT_LOG_EVENT_UNFILTERED", -- TODO: Update the item use logic
 	"GROUP_ROSTER_UPDATE",
 	"LFG_COMPLETION_REWARD",
 	"PARTY_LEADER_CHANGED",
@@ -52,33 +51,6 @@ function A:SCENARIO_COMPLETED(_, questID)
 	-- Only say goodbye when in a LFG group
 	if questID and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and UnitName("party1") then
 		self:Goodbye()
-	end
-end
-
-function A:COMBAT_LOG_EVENT_UNFILTERED()
-	-- https://wow.gamepedia.com/COMBAT_LOG_EVENT#Base_Parameters
-	local timestamp, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId, _, _, extraSpellId =
-		CombatLogGetCurrentEventInfo()
-
-	if event == "SPELL_CAST_SUCCESS" then
-		self:ThreatTransfer(sourceGUID, sourceName, destGUID, destName, spellId)
-		self:CombatResurrection(sourceGUID, sourceName, destName, spellId)
-		self:Utility(event, sourceName, spellId)
-		self:Thanks(sourceGUID, sourceName, destGUID, destName, spellId)
-	elseif event == "SPELL_SUMMON" then
-		self:Utility(event, sourceName, spellId)
-	elseif event == "SPELL_CREATE" then
-		self:Utility(event, sourceName, spellId)
-	elseif event == "SPELL_INTERRUPT" then
-		self:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
-	elseif event == "SPELL_AURA_APPLIED" then
-		self:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
-	elseif event == "SPELL_MISSED" then
-		self:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
-	elseif event == "SPELL_DISPEL" then
-		self:Dispel(sourceGUID, sourceName, destName, spellId, extraSpellId)
-	elseif event == "SPELL_STOLEN" then
-		self:Dispel(sourceGUID, sourceName, destName, spellId, extraSpellId)
 	end
 end
 

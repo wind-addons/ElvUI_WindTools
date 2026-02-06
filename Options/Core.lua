@@ -7,8 +7,6 @@ local gsub = gsub
 local pairs = pairs
 local strrep = strrep
 
-W.FixingLabel = C.StringByTemplate(L["(Fixing)"], "rose-500") .. " "
-
 -- All categories
 W.options = {
 	item = {
@@ -48,7 +46,7 @@ W.options = {
 	},
 	announcement = {
 		order = 106,
-		name = W.FixingLabel .. L["Announcement"],
+		name = L["Announcement"],
 		desc = L["Send something to game automatically."],
 		icon = W.Media.Icons.announcement,
 		args = {},

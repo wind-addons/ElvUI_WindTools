@@ -25,7 +25,7 @@ function S:Blizzard_DamageMeter()
 	end
 
 	self:SecureHook(_G.DamageMeter, "SetupSessionWindow", "DamageMeter_SetupSessionWindow")
-    S:DamageMeter_SetupSessionWindow()
+	S:DamageMeter_SetupSessionWindow()
 end
 
 S:AddCallbackForAddon("Blizzard_DamageMeter")

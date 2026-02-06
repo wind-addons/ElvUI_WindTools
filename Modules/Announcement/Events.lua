@@ -58,7 +58,6 @@ function A:CHALLENGE_MODE_COMPLETED()
 	self:Goodbye()
 end
 
-
 function A:UNIT_SPELLCAST_SUCCEEDED(event, unitTarget, _, spellId)
 	-- TODO: check the new event returns
 	if spellId and E:IsSecretValue(spellId) then

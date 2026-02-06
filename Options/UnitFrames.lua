@@ -215,7 +215,7 @@ options.absorb = {
 					order = 1,
 					type = "toggle",
 					name = L["Blizzard Over Absorb Glow"],
-					desc = W.FixingLabel .. L["Add a glow in the end of health bars to indicate the over absorb."],
+					desc = L["Add a glow in the end of health bars to indicate the over absorb."],
 					width = 1.5,
 				},
 				blizzardAbsorbOverlay = {

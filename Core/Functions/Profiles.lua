@@ -1,5 +1,5 @@
 local F ---@class Functions
-local W, F, E, L, V, G ---@type WindTools, Functions, ElvUI, LocaleTable, PrivateDB, GlobalDB
+local W, F, E, L, V, P, G ---@type WindTools, Functions, ElvUI, LocaleTable, PrivateDB, ProfileDB, GlobalDB
 W, F, E, L, V, P, G = unpack((select(2, ...)))
 local D = E:GetModule("Distributor")
 local LibDeflate = E.Libs.Deflate

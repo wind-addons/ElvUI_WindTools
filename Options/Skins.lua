@@ -525,6 +525,11 @@ options.cooldownViewer = {
 				E.private.WT.skins.cooldownViewer[info[#info]] = value
 				E:StaticPopup_Show("PRIVATE_RL")
 			end,
+			disabled = function()
+				return not E.private.WT.skins.blizzard.enable
+					or not E.private.skins.blizzard.cooldownManager
+					or not E.private.WT.skins.blizzard.cooldownViewer
+			end,
 		},
 
 		general = {

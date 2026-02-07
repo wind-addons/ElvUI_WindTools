@@ -15,11 +15,21 @@ local IsInRaid = IsInRaid
 local IsPartyLFG = IsPartyLFG
 local UnitIsGroupAssistant = UnitIsGroupAssistant
 local UnitIsGroupLeader = UnitIsGroupLeader
+local UnitInParty = UnitInParty
+local UnitInRaid = UnitInRaid
 
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 
 A.history = {}
+
+function A:AddHistory(text, channel)
+	if not self.db.sameMessageInterval or self.db.sameMessageInterval == 0 then
+		return
+	end
+
+	self.history[text .. "_@@@_" .. channel] = time()
+end
 
 function A:CheckBeforeSend(text, channel)
 	if not self.db.sameMessageInterval or self.db.sameMessageInterval == 0 then
@@ -55,7 +65,7 @@ function A:SendMessage(text, channel, raidWarning, whisperTarget)
 	end
 
 	if channel == "SELF" then
-		_G.DEFAULT_CHAT_FRAME:AddMessage(text)
+		_G.ChatFrame1:AddMessage(text)
 		return
 	end
 
@@ -104,6 +114,50 @@ function A:GetChannel(channelDB)
 	return "NONE"
 end
 
+do
+	local delimiterList = {
+		["zhCN"] = "的",
+		["zhTW"] = "的",
+		["enUS"] = "'s",
+		["koKR"] = "의",
+	}
+
+	function A:GetPetInfo(petName)
+		E.ScanTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
+		E.ScanTooltip:ClearLines()
+		E.ScanTooltip:SetUnit(petName)
+		local details = E.ScanTooltip.TextLeft2:GetText()
+
+		if not details then
+			return
+		end
+
+		local delimiter = delimiterList[W.Locale] or "'s"
+		local raw = { F.Strings.Split(details, delimiter) }
+
+		local owner, role = raw[1], raw[#raw]
+		if owner and role then
+			return owner, role
+		end
+
+		return nil, nil
+	end
+end
+
+function A:IsGroupMember(name)
+	if not name or E:IsSecretValue(name) then
+		return false
+	end
+
+	if UnitInParty(name) then
+		return 1
+	elseif UnitInRaid(name) then
+		return 2
+	elseif name == E.myname then
+		return 3
+	end
+end
+
 function A:Initialize()
 	self.db = E.db.WT.announcement
 
@@ -122,6 +176,9 @@ function A:Initialize()
 	for _, message in pairs(self.MessageList) do
 		A:RegisterMessage(message)
 	end
+
+	self:InitializeAuthority()
+	self:ResetAuthority()
 
 	self.initialized = true
 end
@@ -146,6 +203,7 @@ function A:ProfileUpdate()
 		A:UnregisterMessage(message)
 	end
 
+	self:ResetAuthority()
 	self.initialized = false
 end
 

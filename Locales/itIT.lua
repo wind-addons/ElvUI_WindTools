@@ -1521,6 +1521,7 @@ L["The Great Vault"] = true
 L["The War Within"] = true
 L["The Y-Offset of the backdrop."] = true
 L["The absorb style %s and %s is highly recommended with %s tweaks."] = true
+L["The addon message prefix registration is failed."] = true
 L["The alias you want to set for the hotkey."] = true
 L["The amount of buttons to display per row."] = true
 L["The animation speed."] = true

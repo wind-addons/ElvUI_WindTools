@@ -1521,6 +1521,7 @@ L["The Great Vault"] = "Die große Schatzkammer"
 L["The War Within"] = true
 L["The Y-Offset of the backdrop."] = "Der Y-Versatz des Hintergrunds."
 L["The absorb style %s and %s is highly recommended with %s tweaks."] = "Der Absorptionsstil %s und %s wird mit %s Optimierungen dringend empfohlen."
+L["The addon message prefix registration is failed."] = "Die Registrierung des Addon Nachrichtenpräfix ist fehlgeschlagen."
 L["The alias you want to set for the hotkey."] = "Der Alias, den Du für den Hotkey festlegen möchtest."
 L["The amount of buttons to display per row."] = "Die Anzahl der Tasten, die pro Zeile angezeigt werden sollen."
 L["The animation speed."] = "Die Animationsgeschwindigkeit."

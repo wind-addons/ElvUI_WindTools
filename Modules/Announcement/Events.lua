@@ -1,6 +1,7 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local A = W:GetModule("Announcement") ---@class Announcement
 
+local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 local IsInGroup = IsInGroup
 local RunNextFrame = RunNextFrame
 local UnitName = UnitName
@@ -9,6 +10,7 @@ local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
 A.EventList = {
 	"CHALLENGE_MODE_COMPLETED",
+	"CHAT_MSG_ADDON",
 	"CHAT_MSG_GUILD",
 	"CHAT_MSG_PARTY",
 	"CHAT_MSG_PARTY_LEADER",
@@ -16,6 +18,7 @@ A.EventList = {
 	"GROUP_ROSTER_UPDATE",
 	"LFG_COMPLETION_REWARD",
 	"PARTY_LEADER_CHANGED",
+	"PLAYER_ENTERING_WORLD",
 	"SCENARIO_COMPLETED",
 	"UNIT_SPELLCAST_SUCCEEDED",
 }
@@ -82,8 +85,23 @@ function A:LFG_COMPLETION_REWARD()
 	self:Goodbye()
 end
 
+function A:PLAYER_ENTERING_WORLD()
+	E:Delay(4, self.ResetAuthority, self)
+	E:Delay(10, self.ResetAuthority, self)
+end
+
 function A:CHALLENGE_MODE_COMPLETED()
 	self:Goodbye()
+end
+
+function A:CHAT_MSG_ADDON(_, prefix, text)
+	if prefix == self.prefix then
+		self:ReceiveLevel(text)
+	end
+end
+
+function A:GROUP_ROSTER_UPDATE()
+	self:ResetAuthority()
 end
 
 function A:UNIT_SPELLCAST_SUCCEEDED(event, unitTarget, _, spellId)

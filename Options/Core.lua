@@ -46,7 +46,7 @@ W.options = {
 	},
 	announcement = {
 		order = 106,
-		name = L["Announcement"],
+		name = L["(Fixing)"] .. L["Announcement"],
 		desc = L["Send something to game automatically."],
 		icon = W.Media.Icons.announcement,
 		args = {},

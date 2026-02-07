@@ -54,6 +54,7 @@ L["'Absolute' mode means the height of the bar is fixed."] = "'絕對'模式代�
 L["'Absolute' mode means the width of the bar is fixed."] = "'絕對'模式代表條的寬度是固定的."
 L["'Dynamic' mode will also add the height of header text."] = "'動態'模式同時會自動加上標題文字的高度."
 L["'Dynamic' mode will also add the width of header text."] = "'動態'模式同時會自動加上加入標題文字的寬度."
+L["(Fixing)"] = "(修復中)"
 L["(e.g., 'in-quadratic' becomes 'out-quadratic' and vice versa)"] = "(例如, \"進入二次緩動\" 會變成 \"離開二次緩動\", 反之亦然)."
 L["1. Customize the font of Objective Tracker."] = "1. 自訂任務追蹤字型."
 L["2. Add colorful progress text to the quest."] = "2. 為任務添加彩色進度文字."

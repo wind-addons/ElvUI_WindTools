@@ -3,8 +3,15 @@
 	<Script file='Core.lua'/>
 	<Script file='Events.lua'/>
 	<!-- Submodule -->
+	<Script file='Dispel.lua'/>
+	<Script file='CombatResurrection.lua'/>
 	<Script file='Goodbye.lua'/>
+	<Script file='Interrupt.lua'/>
 	<Script file='Keystone.lua'/>
 	<Script file='Quest.lua'/>
 	<Script file='ResetInstance.lua'/>
+	<Script file='Taunt.lua'/>
+	<Script file='Thanks.lua'/>
+	<Script file='ThreatTransfer.lua'/>
+	<Script file='Utility.lua'/>
 </Ui>

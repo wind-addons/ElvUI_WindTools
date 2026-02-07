@@ -12,6 +12,74 @@ P.announcement = {
 	enable = true,
 	emoteFormat = ": %s",
 	sameMessageInterval = 10,
+	combatResurrection = {
+		enable = true,
+		onlySourceIsPlayer = false,
+		raidWarning = false,
+		text = L["%player% cast %spell% -> %target%"],
+		channel = {
+			solo = "NONE",
+			party = "PARTY",
+			instance = "INSTANCE_CHAT",
+			raid = "RAID",
+		},
+	},
+	goodbye = {
+		enable = false,
+		text = L["Thanks all!"],
+		delay = 3,
+		channel = {
+			party = "PARTY",
+			instance = "INSTANCE_CHAT",
+			raid = "RAID",
+		},
+	},
+	dispel = {
+		enable = false,
+		onlyInstance = true,
+		player = {
+			enable = true,
+			text = L["I dispelled %target%'s %target_spell%!"],
+			channel = {
+				solo = "NONE",
+				party = "PARTY",
+				instance = "INSTANCE_CHAT",
+				raid = "RAID",
+			},
+		},
+		others = {
+			enable = false,
+			text = L["%player% dispelled %target%'s %target_spell%!"],
+			channel = {
+				party = "EMOTE",
+				instance = "NONE",
+				raid = "NONE",
+			},
+		},
+	},
+	interrupt = {
+		enable = true,
+		onlyInstance = true,
+		player = {
+			enable = true,
+			text = L["I interrupted %target%'s %target_spell%!"],
+			channel = {
+				solo = "NONE",
+				party = "PARTY",
+				instance = "INSTANCE_CHAT",
+				raid = "RAID",
+			},
+		},
+		others = {
+			enable = false,
+			text = L["%player% interrupted %target%'s %target_spell%!"],
+			channel = {
+				party = "EMOTE",
+				instance = "NONE",
+				raid = "NONE",
+			},
+		},
+	},
 	quest = {
 		enable = false,
 		paused = true,
@@ -25,16 +93,6 @@ P.announcement = {
 		},
 		template = "{{level}}{{link}} {{progress}}",
 	},
-	goodbye = {
-		enable = false,
-		text = L["Thanks all!"],
-		delay = 3,
-		channel = {
-			party = "PARTY",
-			instance = "INSTANCE_CHAT",
-			raid = "RAID",
-		},
-	},
 	resetInstance = {
 		enable = true,
 		difficultyChange = true,
@@ -42,6 +100,183 @@ P.announcement = {
 			party = "PARTY",
 			instance = "INSTANCE_CHAT",
 			raid = "RAID",
+		},
+	},
+	taunt = {
+		enable = false,
+		player = {
+			player = {
+				enable = true,
+				tauntAllText = L["I taunted all enemies!"],
+				successText = L["I taunted %target% successfully!"],
+				failedText = L["I failed on taunting %target%!"],
+				channel = {
+					solo = "NONE",
+					party = "PARTY",
+					instance = "INSTANCE_CHAT",
+					raid = "RAID",
+				},
+			},
+			pet = {
+				enable = true,
+				successText = L["My %pet_role% %pet% taunted %target% successfully!"],
+				failedText = L["My %pet_role% %pet% failed on taunting %target%!"],
+				channel = {
+					solo = "NONE",
+					party = "PARTY",
+					instance = "INSTANCE_CHAT",
+					raid = "RAID",
+				},
+			},
+		},
+		others = {
+			player = {
+				enable = true,
+				tauntAllText = L["%player% taunted all enemies!"],
+				successText = L["%player% taunted %target% successfully!"],
+				failedText = L["%player% failed on taunting %target%!"],
+				channel = {
+					party = "SELF",
+					instance = "SELF",
+					raid = "SELF",
+				},
+			},
+			pet = {
+				enable = true,
+				successText = L["%player%'s %pet_role% %pet% taunted %target% successfully!"],
+				failedText = L["%player%'s %pet_role% %pet% failed on taunting %target%!"],
+				channel = {
+					party = "SELF",
+					instance = "SELF",
+					raid = "SELF",
+				},
+			},
+		},
+	},
+	thanks = {
+		enable = false,
+		resurrection = true,
+		enhancement = true,
+		resurrectionText = L["%target%, thank you for using %spell% to revive me. :)"],
+		enhancementText = L["%target%, thank you for %spell%. :)"],
+		delay = 0,
+		channel = {
+			solo = "WHISPER",
+			party = "WHISPER",
+			instance = "WHISPER",
+			raid = "WHISPER",
+		},
+	},
+	threatTransfer = {
+		enable = true,
+		onlyNotTank = true,
+		forceSourceIsPlayer = true,
+		forceDestIsPlayer = false,
+		raidWarning = false,
+		text = L["%player% cast %spell% -> %target%"],
+		channel = {
+			solo = "NONE",
+			party = "PARTY",
+			instance = "INSTANCE_CHAT",
+			raid = "RAID",
+		},
+	},
+	utility = {
+		enable = true,
+		channel = {
+			solo = "NONE",
+			party = "PARTY",
+			instance = "INSTANCE_CHAT",
+			raid = "RAID",
+		},
+		spells = {
+			["698"] = {
+				-- 召喚儀式
+				enable = true,
+				includePlayer = true,
+				raidWarning = true,
+				text = L["%player% is casting %spell%, please assist!"],
+			},
+			["29893"] = {
+				-- 靈魂之井
+				enable = true,
+				includePlayer = true,
+				raidWarning = false,
+				text = L["%player% is handing out cookies, go and get one!"],
+			},
+			["54710"] = {
+				-- MOLL-E 郵箱
+				enable = true,
+				includePlayer = true,
+				raidWarning = false,
+				text = L["%player% puts %spell%"],
+			},
+			["261602"] = {
+				-- 凱蒂的郵哨
+				enable = true,
+				includePlayer = true,
+				raidWarning = false,
+				text = L["%player% used %spell%"],
+			},
+			["384911"] = {
+				-- 原子校準器
+				enable = true,
+				includePlayer = true,
+				raidWarning = false,
+				text = L["%player% used %spell%"],
+			},
+			["290154"] = {
+				-- 塑形師道標
+				enable = true,
+				includePlayer = true,
+				raidWarning = false,
+				text = L["%player% used %spell%"],
+			},
+			["376664"] = {
+				-- 歐胡納鷹棲所
+				enable = true,
+				includePlayer = true,
+				raidWarning = false,
+				text = L["%player% used %spell%"],
+			},
+			["195782"] = {
+				-- 召喚月羽雕像
+				enable = true,
+				includePlayer = true,
+				raidWarning = false,
+				text = L["%player% used %spell%"],
+			},
+			["190336"] = {
+				-- 召喚餐點桌
+				enable = true,
+				includePlayer = true,
+				raidWarning = false,
+				text = L["%player% cast %spell%, today's special is Anchovy Pie!"],
+			},
+			feasts = {
+				enable = true,
+				includePlayer = true,
+				raidWarning = false,
+				text = L["OMG, wealthy %player% puts %spell%!"],
+			},
+			bots = {
+				enable = true,
+				includePlayer = true,
+				raidWarning = false,
+				text = L["%player% puts %spell%"],
+			},
+			toys = {
+				enable = true,
+				includePlayer = true,
+				raidWarning = false,
+				text = L["%player% puts %spell%"],
+			},
+			portals = {
+				enable = true,
+				includePlayer = true,
+				raidWarning = false,
+				text = L["%player% opened %spell%!"],
+			},
 		},
 	},
 	keystone = {

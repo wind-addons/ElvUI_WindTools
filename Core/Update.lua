@@ -9,6 +9,8 @@ local print = print
 local tonumber = tonumber
 local type = type
 
+local GetKeysArray = GetKeysArray
+
 ---@cast E ElvUI
 ---@cast P ProfileDB
 
@@ -393,6 +395,22 @@ function W:UpdateScripts()
 		if E.private.WT.misc and E.private.WT.misc.cooldownTextOffset ~= nil then
 			E.private.WT.misc.cooldownTextOffset = nil
 			UpdateMessage(L["Misc"] .. ": " .. L["Database cleanup"], privateVersion)
+		end
+	end
+
+	if privateVersion < 4.11 and E.private.WT then
+		local defaultKeys = GetKeysArray(V)
+
+		local cleaned = false
+		for _, key in pairs(GetKeysArray(E.private.WT)) do
+			if not tContains(defaultKeys, key) then
+				E.private.WT[key] = nil
+				cleaned = true
+			end
+		end
+
+		if cleaned then
+			UpdateMessage( L["Database cleanup"], privateVersion)
 		end
 	end
 

@@ -100,16 +100,9 @@ Português, Italiano
 ### Announcement
 
 1. **Quest**: Announce detailed quest progress to party members, supports including quest link and progress information; and also better quest progression text display.
-2. **Interrupt**: Announce spell interrupts with customizable messages; supports pet spells and shows interrupted spell information.
-3. **Dispel**: Announce successful dispels with customizable messages.
-4. **Taunt**: Announce taunt casts with customizable messages; supports pets and Monk ox statue; shows target information.
-5. **Combat Resurrection**: Announce combat resurrection usage with customizable messages and channel selection (party/raid/raid warning).
-6. **Utility**: Announce utility spell usage including bots, feasts, portals, toys with customizable messages; organized by categories (Toy, Feast, Portal, Soulwell, Mail, Lightwell, Repair, Ritual of Summoning).
-7. **Threat Transfer**: Announce threat transfer abilities like Tricks of the Trade and Misdirection with target information.
-8. **Goodbye**: Say goodbye to teammates after dungeon/raid completion with customizable messages and delay.
-9. **Thanks**: Thank players for resurrection, buffs, and other helpful actions with customizable messages, delay, and action filters.
-10. **Reset Instance**: Alert teammates after resetting instances with customizable messages.
-11. **Keystone**: Announce Mythic+ keystone information with customizable format.
+2. **Goodbye**: Say goodbye to teammates after dungeon/raid completion with customizable messages and delay.
+3. **Reset Instance**: Alert teammates after resetting instances with customizable messages.
+4. **Keystone**: Announce Mythic+ keystone information with customizable format.
 
 ### Tooltip
 

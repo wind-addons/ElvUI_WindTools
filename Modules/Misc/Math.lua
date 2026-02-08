@@ -1,6 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local M = W.Modules.Misc ---@class Misc
 
+local hooksecurefunc = hooksecurefunc
+local wipe = wipe
+
+local CreateAbbreviateConfig = CreateAbbreviateConfig
+
 function M:Math()
 	if E.private.WT.misc.noKanjiMath then
 		hooksecurefunc(E, "BuildAbbreviateConfigs", function()
@@ -46,11 +51,8 @@ function M:Math()
 				}
 			end
 
-			if CreateAbbreviateConfig then
-				short.config = CreateAbbreviateConfig(short.breakpoints)
-
-				wipe(short.breakpoints)
-			end
+			short.config = CreateAbbreviateConfig(short.breakpoints)
+			wipe(short.breakpoints)
 		end)
 
 		E:BuildAbbreviateConfigs()

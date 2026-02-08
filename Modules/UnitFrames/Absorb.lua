@@ -3,7 +3,6 @@ local A = W:NewModule("Absorb", "AceHook-3.0") ---@class Absorb: AceModule, AceH
 local LSM = E.Libs.LSM
 local UF = E.UnitFrames
 
-local pairs = pairs
 local rad = rad
 
 function A:SetTexture_HealComm(module, obj, texture)
@@ -19,29 +18,21 @@ function A:SetTexture_HealComm(module, obj, texture)
 		end
 	end
 
-	for _, barKey in pairs({
-		"healingPlayer",
-		"healingOther",
-		"damageAbsorb",
-		"healAbsorb",
-	}) do
-		local bar = obj[barKey]
+	local bar = obj.damageAbsorb
+	bar:SetStatusBarTexture(texture)
 
-		bar:SetStatusBarTexture(texture)
-
-		-- Overlay
-		if self.db.blizzardAbsorbOverlay then
-			if not bar.__shieldOverlay then
-				local overlay = bar:CreateTexture(nil, "ARTWORK", nil, 1)
-				overlay:SetAllPoints(bar:GetStatusBarTexture())
-				overlay:SetTexture("Interface/RaidFrame/Shield-Overlay", true, true)
-				overlay:SetHorizTile(true)
-				overlay:SetVertTile(true)
-				bar.__shieldOverlay = overlay
-			end
-		elseif bar.__shieldOverlay then
-			bar.__shieldOverlay:Hide()
+	-- Overlay
+	if self.db.blizzardAbsorbOverlay then
+		if not bar.__shieldOverlay then
+			local overlay = bar:CreateTexture(nil, "ARTWORK", nil, 1)
+			overlay:SetAllPoints(bar:GetStatusBarTexture())
+			overlay:SetTexture("Interface/RaidFrame/Shield-Overlay", true, true)
+			overlay:SetHorizTile(true)
+			overlay:SetVertTile(true)
+			bar.__shieldOverlay = overlay
 		end
+	elseif bar.__shieldOverlay then
+		bar.__shieldOverlay:Hide()
 	end
 
 	-- Glow

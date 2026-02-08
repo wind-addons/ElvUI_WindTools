@@ -22,18 +22,23 @@ W.Changelog[411] = {
 	NEW = {
 		["zhCN"] = {
 			"[战斗提醒] 新增了进入战斗, 离开战斗的声音设置选项. 默认关闭.",
+			"[美化外观] 新增了 ElvUI 姓名板的阴影美化皮肤.",
 		},
 		["zhTW"] = {
 			"[戰鬥提醒] 新增了進入戰鬥, 離開戰鬥的聲音設置選項. 默認關閉.",
+			"[美化外觀] 新增了 ElvUI 姓名板的陰影美化皮膚.",
 		},
 		["enUS"] = {
 			"[Combat Reminder] Added sound settings options for entering and leaving combat. Disabled by default.",
+			"[Skins] Added shadow skin for ElvUI Nameplates.",
 		},
 		["koKR"] = {
 			"[전투 알림] 전투 진입 및 퇴장에 대한 사운드 설정 옵션이 추가되었습니다. 기본적으로 비활성화되어 있습니다.",
+			"[스킨] ElvUI 이름표에 대한 그림자 스킨이 추가되었습니다.",
 		},
 		["ruRU"] = {
 			"[Боевое напоминание] Добавлены параметры настройки звука для входа и выхода из боя. По умолчанию отключено.",
+			"[Скины] Добавлен теневой скин для табличек с именами ElvUI.",
 		},
 	},
 	IMPROVEMENT = {

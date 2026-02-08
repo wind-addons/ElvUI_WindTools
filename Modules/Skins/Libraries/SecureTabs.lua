@@ -44,7 +44,7 @@ local function reskinCoverTab(lib, panel)
 end
 
 function S:SecureTabs(lib)
-	if lib.Add and lib.Update then
+	if lib.Add and lib.Update and not self:IsHooked(lib, "Add") and not self:IsHooked(lib, "Update") then
 		self:SecureHook(lib, "Add", reskinTab)
 		self:SecureHook(lib, "Update", reskinCoverTab)
 	end

@@ -85,7 +85,7 @@ local UtilitySpells = {
 	[462212] = UtilityType.Feast, -- 丰盛的降圣白昼盛宴
 	[462213] = UtilityType.Feast, -- 丰盛的午夜舞会盛宴
 
-	-- * Alliance
+	-- Alliance
 	[10059] = UtilityType.Portal, -- 传送门：暴风城
 	[11416] = UtilityType.Portal, -- 传送门：铁炉堡
 	[11419] = UtilityType.Portal, -- 传送门：达纳苏斯
@@ -97,7 +97,7 @@ local UtilitySpells = {
 	[176246] = UtilityType.Portal, -- 传送门：暴风之盾
 	[281400] = UtilityType.Portal, -- 传送门：伯拉勒斯
 
-	-- * Horde
+	-- Horde
 	[11417] = UtilityType.Portal, -- 传送门：奥格瑞玛
 	[11418] = UtilityType.Portal, -- 传送门：幽暗城
 	[11420] = UtilityType.Portal, -- 传送门：雷霆崖
@@ -154,7 +154,7 @@ A.ConfigurableUtilitySpells = {}
 function A:GetAvailableUtilitySpells()
 	async.WithSpellIDTable(UtilitySpells, "key", function(spell)
 		local id, tex, name = spell:GetSpellID(), spell:GetSpellTexture(), spell:GetSpellName()
-		local desc = format("%s %s (%s)", F.GetTextureString(tostring(tex), 16, 13, true), name, id)
+		local desc = format("%s %s (%s)", F.GetIconString(tex, 14, 18, true), name, id)
 		self.ConfigurableUtilitySpells[tostring(id)] = desc
 	end)
 

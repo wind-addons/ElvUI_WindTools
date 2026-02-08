@@ -57,9 +57,6 @@ end
 ---@param raidWarning any Let the function send raid warning if possible
 ---@param whisperTarget any The target if the channel is whisper
 function A:SendMessage(text, channel, raidWarning, whisperTarget)
-    
-    print("Announcement SendMessage:", text, channel, raidWarning, whisperTarget)
-    
 	-- Skip if the channel is NONE
 	if channel == "NONE" then
 		return

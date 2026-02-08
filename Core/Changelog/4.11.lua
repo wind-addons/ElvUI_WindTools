@@ -3,11 +3,21 @@ local W = unpack((select(2, ...))) ---@type WindTools
 W.Changelog[411] = {
 	RELEASE_DATE = "TBD",
 	IMPORTANT = {
-		["zhCN"] = {},
-		["zhTW"] = {},
-		["enUS"] = {},
-		["koKR"] = {},
-		["ruRU"] = {},
+		["zhCN"] = {
+			"[通告] 重写了实用技能的通告功能, 现在可以在暴雪不限制的情况下使用通报自己使用的技能.",
+		},
+		["zhTW"] = {
+			"[通告] 重寫了實用技能的通告功能, 現在可以在暴雪不限制的情況下使用通報自己使用的技能.",
+		},
+		["enUS"] = {
+			"[Announcement] Rewrote the announcement feature for utility skills, now you can announce your own skills without Blizzard restrictions.",
+		},
+		["koKR"] = {
+			"[공지] 유틸리티 스킬의 공지 기능을 재작성했습니다. 이제 블리자드의 제한 없이 자신의 스킬을 공지할 수 있습니다.",
+		},
+		["ruRU"] = {
+			"[Оповещения] Переписана функция оповещения для вспомогательных навыков, теперь вы можете оповещать о своих собственных навыках без ограничений Blizzard.",
+		},
 	},
 	NEW = {
 		["zhCN"] = {},

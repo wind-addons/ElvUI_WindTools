@@ -23,8 +23,6 @@ local UtilityType = {
 }
 
 local UtilitySpells = {
-	[116670] = UtilityType.Spell, -- 活血术
-
 	[698] = UtilityType.Spell, -- 召唤仪式
 	[29893] = UtilityType.Spell, -- 制造灵魂之井
 	[190336] = UtilityType.Spell, -- 造餐术

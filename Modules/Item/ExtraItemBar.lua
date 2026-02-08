@@ -570,7 +570,7 @@ function EB:UpdateBar(id)
 			if self.ModuleList[module] then
 				addNormalButtons(self.ModuleList[module])
 			elseif module == "QUEST" then -- Quest Items
-				for _, data in pairs(questItemList) do
+				for _, data in ipairs(questItemList) do
 					addNormalButton(data.itemID)
 				end
 			elseif module == "EQUIP" then -- Equipments

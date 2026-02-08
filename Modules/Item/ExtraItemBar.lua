@@ -9,6 +9,7 @@ local ceil = ceil
 local format = format
 local ipairs = ipairs
 local pairs = pairs
+local sort = sort
 local strmatch = strmatch
 local strsplit = strsplit
 local tinsert = tinsert
@@ -32,9 +33,12 @@ local UnregisterStateDriver = UnregisterStateDriver
 
 local C_Item_GetItemCooldown = C_Item.GetItemCooldown
 local C_Item_GetItemCount = C_Item.GetItemCount
+local C_Item_GetItemInfoInstant = C_Item.GetItemInfoInstant
 local C_Item_IsItemInRange = C_Item.IsItemInRange
 local C_Item_IsUsableItem = C_Item.IsUsableItem
+local C_QuestLog_GetDistanceSqToQuest = C_QuestLog.GetDistanceSqToQuest
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
+local C_QuestLog_GetQuestIDForLogIndex = C_QuestLog.GetQuestIDForLogIndex
 local C_Timer_NewTicker = C_Timer.NewTicker
 local C_TradeSkillUI_GetItemCraftedQualityByItemInfo = C_TradeSkillUI.GetItemCraftedQualityByItemInfo
 local C_TradeSkillUI_GetItemReagentQualityByItemInfo = C_TradeSkillUI.GetItemReagentQualityByItemInfo
@@ -42,17 +46,20 @@ local C_TradeSkillUI_GetItemReagentQualityByItemInfo = C_TradeSkillUI.GetItemRea
 local questItemList = {}
 local function UpdateQuestItemList()
 	wipe(questItemList)
+
 	for questLogIndex = 1, C_QuestLog_GetNumQuestLogEntries() do
 		local link = GetQuestLogSpecialItemInfo(questLogIndex)
 		if link then
-			local itemID = tonumber(strmatch(link, "|Hitem:(%d+):"))
-			local data = {
-				questLogIndex = questLogIndex,
-				itemID = itemID,
-			}
-			tinsert(questItemList, data)
+			local questID = C_QuestLog_GetQuestIDForLogIndex(questLogIndex)
+			local distance = questID and C_QuestLog_GetDistanceSqToQuest(questID)
+			local itemID = C_Item_GetItemInfoInstant(link)
+			tinsert(questItemList, { questLogIndex = questLogIndex, itemID = itemID, distance = distance or 1e8 })
 		end
 	end
+
+	sort(questItemList, function(a, b)
+		return a.distance < b.distance
+	end)
 end
 
 local forceUsableItems = {

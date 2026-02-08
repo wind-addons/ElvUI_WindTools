@@ -974,6 +974,7 @@ L["Mythic Plus"] = "Mythisch+"
 L["Mythic+"] = "Mytisch+"
 L["NGA.cn"] = true
 L["Name"] = "Name"
+L["Nameplates"] = "Namensplaketten"
 L["Nether Effect"] = "Nethereffekt"
 L["New"] = "Neu"
 L["New Channel Abbreviation Rule"] = "Neue Kanalkürzelregel"

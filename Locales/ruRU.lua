@@ -974,6 +974,7 @@ L["Mythic Plus"] = "Подземелья М+"
 L["Mythic+"] = "М+"
 L["NGA.cn"] = true
 L["Name"] = "Имя"
+L["Nameplates"] = "Индикаторы здоровья"
 L["Nether Effect"] = "Эффект пустоты"
 L["New"] = "Новые"
 L["New Channel Abbreviation Rule"] = "Новое правило аббревиатуры каналов"

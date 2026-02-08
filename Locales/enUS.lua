@@ -974,6 +974,7 @@ L["Mythic Plus"] = true
 L["Mythic+"] = true
 L["NGA.cn"] = true
 L["Name"] = true
+L["Nameplates"] = true
 L["Nether Effect"] = true
 L["New"] = true
 L["New Channel Abbreviation Rule"] = true

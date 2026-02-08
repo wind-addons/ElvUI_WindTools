@@ -974,6 +974,7 @@ L["Mythic Plus"] = "쐐기"
 L["Mythic+"] = "신화+"
 L["NGA.cn"] = true
 L["Name"] = "이름"
+L["Nameplates"] = "이름표-NamePlates"
 L["Nether Effect"] = "은신 효과"
 L["New"] = "신규 사항"
 L["New Channel Abbreviation Rule"] = "새로운 채널 줄임말 규칙"

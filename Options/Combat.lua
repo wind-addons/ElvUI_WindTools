@@ -359,24 +359,17 @@ options.combatAlert = {
 				},
 				enterText = {
 					order = 2,
-					type = "input",
-					name = L["Enter Text"],
-				},
-				enterColor = {
-					order = 3,
 					type = "group",
 					inline = true,
-					name = L["Enter Color"],
-					get = function(info)
-						return E.db.WT.combat.combatAlert.enterColor[info[#info]]
-					end,
-					set = function(info, value)
-						E.db.WT.combat.combatAlert.enterColor[info[#info]] = value
-						C:ProfileUpdate()
-					end,
+					name = L["Enter Text"],
 					args = {
-						left = {
+						enterText = {
 							order = 1,
+							type = "input",
+							name = L["Text"],
+						},
+						leftColor = {
+							order = 2,
 							type = "color",
 							name = L["Gradient Color 1"],
 							hasAlpha = false,
@@ -391,8 +384,8 @@ options.combatAlert = {
 								C:ProfileUpdate()
 							end,
 						},
-						right = {
-							order = 2,
+						rightColor = {
+							order = 3,
 							type = "color",
 							name = L["Gradient Color 2"],
 							hasAlpha = false,
@@ -410,25 +403,18 @@ options.combatAlert = {
 					},
 				},
 				leaveText = {
-					order = 4,
-					type = "input",
-					name = L["Leave Text"],
-				},
-				leaveColor = {
-					order = 5,
+					order = 3,
 					type = "group",
 					inline = true,
-					name = L["Leave Color"],
-					get = function(info)
-						return E.db.WT.combat.combatAlert.leaveColor[info[#info]]
-					end,
-					set = function(info, value)
-						E.db.WT.combat.combatAlert.leaveColor[info[#info]] = value
-						C:ProfileUpdate()
-					end,
+					name = L["Leave Text"],
 					args = {
-						left = {
+						leaveText = {
 							order = 1,
+							type = "input",
+							name = L["Text"],
+						},
+						leftColor = {
+							order = 2,
 							type = "color",
 							name = L["Gradient Color 1"],
 							hasAlpha = false,
@@ -443,8 +429,8 @@ options.combatAlert = {
 								C:ProfileUpdate()
 							end,
 						},
-						right = {
-							order = 2,
+						rightColor = {
+							order = 3,
 							type = "color",
 							name = L["Gradient Color 2"],
 							hasAlpha = false,
@@ -503,6 +489,104 @@ options.combatAlert = {
 							min = 5,
 							max = 60,
 							step = 1,
+						},
+					},
+				},
+			},
+		},
+		soundConfig = {
+			order = 7,
+			type = "group",
+			inline = true,
+			name = L["Sound"],
+			args = {
+				enterSound = {
+					order = 1,
+					type = "group",
+					inline = true,
+					name = L["Enter Combat"],
+					get = function(info)
+						return E.db.WT.combat.combatAlert.enterSound[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.combat.combatAlert.enterSound[info[#info]] = value
+					end,
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						sound = {
+							order = 2,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound"],
+							values = LSM:HashTable("sound"),
+							hidden = function()
+								return not E.db.WT.combat.combatAlert.enterSound.enable
+							end,
+						},
+						channel = {
+							order = 3,
+							type = "select",
+							name = L["Sound Channel"],
+							values = {
+								Master = L["Master"],
+								SFX = L["SFX"],
+								Music = L["Music"],
+								Ambience = L["Ambience"],
+								Dialog = L["Dialog"],
+							},
+							sorting = { "Master", "Music", "SFX", "Ambience", "Dialog" },
+							hidden = function()
+								return not E.db.WT.combat.combatAlert.enterSound.enable
+							end,
+						},
+					},
+				},
+				leaveSound = {
+					order = 2,
+					type = "group",
+					inline = true,
+					name = L["Leave Combat"],
+					get = function(info)
+						return E.db.WT.combat.combatAlert.leaveSound[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.combat.combatAlert.leaveSound[info[#info]] = value
+					end,
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						sound = {
+							order = 2,
+							type = "select",
+							dialogControl = "LSM30_Sound",
+							name = L["Sound"],
+							values = LSM:HashTable("sound"),
+							hidden = function()
+								return not E.db.WT.combat.combatAlert.leaveSound.enable
+							end,
+						},
+						channel = {
+							order = 3,
+							type = "select",
+							name = L["Sound Channel"],
+							values = {
+								Master = L["Master"],
+								SFX = L["SFX"],
+								Music = L["Music"],
+								Ambience = L["Ambience"],
+								Dialog = L["Dialog"],
+							},
+							sorting = { "Master", "Music", "SFX", "Ambience", "Dialog" },
+							hidden = function()
+								return not E.db.WT.combat.combatAlert.leaveSound.enable
+							end,
 						},
 					},
 				},

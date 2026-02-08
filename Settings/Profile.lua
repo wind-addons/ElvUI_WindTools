@@ -133,6 +133,16 @@ P.combat = {
 			size = 25,
 			style = "OUTLINE",
 		},
+		enterSound = {
+			enable = false,
+			sound = "None",
+			channel = "Master",
+		},
+		leaveSound = {
+			enable = false,
+			sound = "None",
+			channel = "Master",
+		},
 	},
 	raidMarkers = {
 		enable = true,

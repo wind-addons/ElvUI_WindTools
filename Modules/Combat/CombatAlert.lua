@@ -617,10 +617,16 @@ end
 
 ---Event handler: Player enters combat
 function CA:PLAYER_REGEN_DISABLED()
+	if self.db.enterSound.enable and self.db.enterSound.sound and self.db.enterSound.sound ~= "None" then
+		F.PlayLSMSound(self.db.enterSound.sound, self.db.enterSound.channel)
+	end
 	self:ShowAlert("ENTER")
 end
 
 function CA:PLAYER_REGEN_ENABLED()
+	if self.db.leaveSound.enable and self.db.leaveSound.sound and self.db.leaveSound.sound ~= "None" then
+		F.PlayLSMSound(self.db.leaveSound.sound, self.db.leaveSound.channel)
+	end
 	self:ShowAlert("LEAVE")
 end
 

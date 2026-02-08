@@ -1,235 +1,177 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local A = W:GetModule("Announcement") ---@class Announcement
+local async = W.Utilities.Async
 
+local format = format
 local gsub = gsub
 local tostring = tostring
 
-local InCombatLockdown = InCombatLockdown
-
 local C_Spell_GetSpellLink = C_Spell.GetSpellLink
 
-local BotList = {
-	[22700] = true, -- 修理機器人74A型
-	[44389] = true, -- 修理機器人110G型
-	[54711] = true, -- 廢料機器人
-	[67826] = true, -- 吉福斯
-	[126459] = true, -- 布靈登4000型
-	[157066] = true, -- 沃特
-	[161414] = true, -- 布靈登5000型
-	[199109] = true, -- 自動鐵錘
-	[200061] = true, -- 召喚劫福斯
-	[200204] = true, -- 自動鐵錘模式
-	[200205] = true, -- 自動鐵錘模式
-	[200210] = true, -- 滅團偵測水晶塔
-	[200211] = true, -- 滅團偵測水晶塔
-	[200212] = true, -- 煙火展示模式
-	[200214] = true, -- 煙火展示模式
-	[200215] = true, -- 點心發送模式
-	[200216] = true, -- 點心發送模式
-	[200217] = true, -- 閃亮模式
-	[200218] = true, -- 閃亮模式
-	[200219] = true, -- 機甲戰鬥模式
-	[200220] = true, -- 機甲戰鬥模式
-	[200221] = true, -- 蟲洞生成模式
-	[200222] = true, -- 蟲洞生成模式
-	[200223] = true, -- 熱能鐵砧模式
-	[200225] = true, -- 熱能鐵砧模式
-	[226241] = true, -- 靜心寶典
-	[256230] = true, -- 寧神寶典
-	[298926] = true, -- 布靈登7000型
-	[324029] = true, -- 寧心寶典
-	[453942] = true, -- 阿爾加修理機器人11O
-}
-
-local FeastList = {
-	[104958] = true, -- 熊貓人盛宴
-	[126492] = true, -- 燒烤盛宴
-	[126494] = true, -- 豪華燒烤盛宴
-	[126495] = true, -- 快炒盛宴
-	[126496] = true, -- 豪華快炒盛宴
-	[126497] = true, -- 燉煮盛宴
-	[126498] = true, -- 豪華燉煮盛宴
-	[126499] = true, -- 蒸煮盛宴
-	[126500] = true, -- 豪華蒸煮盛宴
-	[126501] = true, -- 烘烤盛宴
-	[126502] = true, -- 豪華烘烤盛宴
-	[126503] = true, -- 美酒盛宴
-	[126504] = true, -- 豪華美酒盛宴
-	[145166] = true, -- 拉麵推車
-	[145169] = true, -- 豪華拉麵推車
-	[145196] = true, -- 熊貓人國寶級拉麵推車
-	[188036] = true, -- 靈魂大鍋
-	[201351] = true, -- 澎湃盛宴
-	[201352] = true, -- 蘇拉瑪爾豪宴
-	[259409] = true, -- 艦上盛宴
-	[259410] = true, -- 豐盛的船長饗宴
-	[276972] = true, -- 神秘大鍋
-	[286050] = true, -- 血潤盛宴
-	[297048] = true, -- 超澎湃饗宴
-	[298861] = true, -- 強效神秘大鍋
-	[307157] = true, -- 永恆大鍋
-	[308458] = true, -- 意外可口盛宴
-	[308462] = true, -- 暴食享樂盛宴
-	[382423] = true, -- 雨莎的澎湃燉肉
-	[382427] = true, -- 卡魯耶克的豪華盛宴
-	[383063] = true, -- 製作加料龍族佳餚大餐
-	[455960] = true, -- 大雜燴
-	[457283] = true, -- 神聖日盛宴
-	[457285] = true, -- 午夜化妝舞會盛宴
-	[457302] = true, -- 特級壽司
-	[457487] = true, -- 澎湃大雜燴
-	[462211] = true, -- 澎湃特級壽司
-	[462212] = true, -- 澎湃神聖日盛宴
-	[462213] = true, -- 澎湃午夜化妝舞會盛宴
-}
-
-local FeastList_SPELLCAST_SUCCEEDED = {
-	[359336] = true, -- 準備石頭湯之壺
-	[432877] = true, -- 準備阿爾加精煉藥劑大鍋
-	[432878] = true, -- 準備阿爾加精煉藥劑大鍋
-	[432879] = true, -- 準備阿爾加精煉藥劑大鍋
-	[433292] = true, -- 準備阿爾加藥水大鍋
-	[433293] = true, -- 準備阿爾加藥水大鍋
-	[433294] = true, -- 準備阿爾加藥水大鍋
-}
-
-local PortalList = {
-	-- 聯盟
-	[10059] = true, -- 傳送門：暴風城
-	[11416] = true, -- 傳送門：鐵爐堡
-	[11419] = true, -- 傳送門：達納蘇斯
-	[32266] = true, -- 傳送門：艾克索達
-	[33691] = true, -- 傳送門：撒塔斯
-	[49360] = true, -- 傳送門：塞拉摩
-	[88345] = true, -- 傳送門：托巴拉德
-	[132620] = true, -- 傳送門：恆春谷
-	[176246] = true, -- 傳送門：暴風之盾
-	[281400] = true, -- 傳送門：波拉勒斯
-	-- 部落
-	[11417] = true, -- 傳送門：奧格瑪
-	[11418] = true, -- 傳送門：幽暗城
-	[11420] = true, -- 傳送門：雷霆崖
-	[32267] = true, -- 傳送門：銀月城
-	[35717] = true, -- 傳送門：撒塔斯
-	[49361] = true, -- 傳送門：斯通納德
-	[88346] = true, -- 傳送門：托巴拉德
-	[132626] = true, -- 傳送門：恆春谷
-	[176244] = true, -- 傳送門：戰爭之矛
-	[281402] = true, -- 傳送門：達薩亞洛
-	-- 中立
-	[53142] = true, -- 傳送門：達拉然－北裂境
-	[120146] = true, -- 遠古傳送門：達拉然
-	[224871] = true, -- 傳送門：達拉然－破碎群島
-	[344597] = true, -- 傳送門：奧睿博司
-	[395289] = true, -- 傳送門：沃卓肯
-	[446534] = true, -- 傳送門：多恩諾加
-}
-
-local ToyList = {
-	[61031] = true, -- 玩具火車組
-	[49844] = true, -- 恐酒遙控器
-}
-
--- 格式化自定义字符串
-local function FormatMessage(message, name, id)
-	message = gsub(message, "%%player%%", name)
-	message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(id))
+local function FormatMessage(message, spellID)
+	message = gsub(message, "%%player%%", E.name)
+	message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(spellID))
 	return message
 end
 
-local function TryAnnounce(spellId, sourceName, id, list, type)
-	if not A.db or not A.db.utility then
-		return
-	end
+local UtilityType = {
+	Spell = "spell",
+	Feast = "feast",
+	Portal = "portal",
+	Toy = "toy",
+	Bot = "bot",
+}
 
-	local channelConfig = A.db.utility.channel
-	local spellConfig = (type and A.db.utility.spells[type]) or (id and A.db.utility.spells[tostring(id)])
+local UtilitySpells = {
+	[116670] = UtilityType.Spell, -- 活血术
 
-	if not spellConfig or not channelConfig then
-		return
-	end
+	[698] = UtilityType.Spell, -- 召唤仪式
+	[29893] = UtilityType.Spell, -- 制造灵魂之井
+	[190336] = UtilityType.Spell, -- 造餐术
 
-	if (id and spellId == id) or (type and list[spellId]) then
-		if spellConfig.enable and (sourceName ~= E.myname or spellConfig.includePlayer) then
-			A:SendMessage(
-				FormatMessage(spellConfig.text, sourceName, spellId),
-				A:GetChannel(channelConfig),
-				spellConfig.raidWarning
-			)
-		end
-		return true
-	end
+	[49844] = UtilityType.Toy, -- 使用烈酒的遥控器
+	[61031] = UtilityType.Toy, -- 玩具火车
+	[195782] = UtilityType.Toy, -- 召唤月羽雕像
+	[261602] = UtilityType.Toy, -- 印哨
+	[290154] = UtilityType.Toy, -- 虚灵幻变者
+	[376664] = UtilityType.Toy, -- 欧胡纳栖枝
+	[384911] = UtilityType.Toy, -- 原子重校器
 
-	return false
+	[104958] = UtilityType.Feast, -- 熊猫人大餐
+	[126492] = UtilityType.Feast, -- 烧烤大餐
+	[126494] = UtilityType.Feast, -- 烧烤盛宴
+	[126495] = UtilityType.Feast, -- 烹炒大餐
+	[126496] = UtilityType.Feast, -- 烹炒盛宴
+	[126497] = UtilityType.Feast, -- 炖煮大餐
+	[126498] = UtilityType.Feast, -- 炖煮盛宴
+	[126499] = UtilityType.Feast, -- 蒸烧大餐
+	[126500] = UtilityType.Feast, -- 蒸烧盛宴
+	[126501] = UtilityType.Feast, -- 烘焙大餐
+	[126502] = UtilityType.Feast, -- 烘焙盛宴
+	[126503] = UtilityType.Feast, -- 酿造大餐
+	[126504] = UtilityType.Feast, -- 酿造盛宴
+	[145166] = UtilityType.Feast, -- 汤面餐车
+	[145169] = UtilityType.Feast, -- 什锦汤面餐车
+	[145196] = UtilityType.Feast, -- 熊猫人八宝汤面餐车
+	[188036] = UtilityType.Feast, -- 灵魂药锅
+	[201351] = UtilityType.Feast, -- 丰盛大餐
+	[201352] = UtilityType.Feast, -- 苏拉玛奢华大餐
+	[259409] = UtilityType.Feast, -- 海帆盛宴
+	[259410] = UtilityType.Feast, -- 船长盛宴佳肴
+	[276972] = UtilityType.Feast, -- 秘法药锅
+	[286050] = UtilityType.Feast, -- 鲜血大餐
+	[297048] = UtilityType.Feast, -- “饿了没”点心桌
+	[298861] = UtilityType.Feast, -- 强效秘法药锅
+	[307157] = UtilityType.Feast, -- 永恒药锅
+	[308458] = UtilityType.Feast, -- 惊异怡人大餐
+	[308462] = UtilityType.Feast, -- 纵情饕餮盛宴
+	[359335] = UtilityType.Feast, -- 建造窗口：石头汤大锅
+	[382423] = UtilityType.Feast, -- 育莎的丰盛炖煮
+	[382427] = UtilityType.Feast, -- 卡鲁亚克盛宴
+	[383063] = UtilityType.Feast, -- 准备不断壮大的飞龙美味珍肴
+	[432876] = UtilityType.Feast, -- 黑血之球
+	[432877] = UtilityType.Feast, -- 准备阿加合剂大锅
+	[432878] = UtilityType.Feast, -- 准备阿加合剂大锅
+	[432879] = UtilityType.Feast, -- 准备阿加合剂大锅
+	[433292] = UtilityType.Feast, -- 准备阿加药水大锅
+	[433293] = UtilityType.Feast, -- 准备阿加药水大锅
+	[433294] = UtilityType.Feast, -- 准备阿加药水大锅
+	[455960] = UtilityType.Feast, -- 全味炖煮
+	[457283] = UtilityType.Feast, -- 降圣白昼盛宴
+	[457285] = UtilityType.Feast, -- 午夜舞会盛宴
+	[457302] = UtilityType.Feast, -- 特色寿司
+	[457487] = UtilityType.Feast, -- 丰盛的全味炖煮
+	[462211] = UtilityType.Feast, -- 丰盛的特色寿司
+	[462212] = UtilityType.Feast, -- 丰盛的降圣白昼盛宴
+	[462213] = UtilityType.Feast, -- 丰盛的午夜舞会盛宴
+
+	-- * Alliance
+	[10059] = UtilityType.Portal, -- 传送门：暴风城
+	[11416] = UtilityType.Portal, -- 传送门：铁炉堡
+	[11419] = UtilityType.Portal, -- 传送门：达纳苏斯
+	[32266] = UtilityType.Portal, -- 传送门：埃索达
+	[33691] = UtilityType.Portal, -- 传送门：沙塔斯
+	[49360] = UtilityType.Portal, -- 传送门：塞拉摩
+	[88345] = UtilityType.Portal, -- 传送门：托尔巴拉德
+	[132620] = UtilityType.Portal, -- 传送门：锦绣谷
+	[176246] = UtilityType.Portal, -- 传送门：暴风之盾
+	[281400] = UtilityType.Portal, -- 传送门：伯拉勒斯
+
+	-- * Horde
+	[11417] = UtilityType.Portal, -- 传送门：奥格瑞玛
+	[11418] = UtilityType.Portal, -- 传送门：幽暗城
+	[11420] = UtilityType.Portal, -- 传送门：雷霆崖
+	[32267] = UtilityType.Portal, -- 传送门：银月城（燃烧的远征）
+	[35717] = UtilityType.Portal, -- 传送门：沙塔斯
+	[49361] = UtilityType.Portal, -- 传送门：斯通纳德
+	[88346] = UtilityType.Portal, -- 传送门：托尔巴拉德
+	[132626] = UtilityType.Portal, -- 传送门：锦绣谷
+	[176244] = UtilityType.Portal, -- 传送门：战争之矛
+	[281402] = UtilityType.Portal, -- 传送门：达萨罗
+
+	-- Neutral
+	[53142] = UtilityType.Portal, -- 传送门：达拉然 - 诺森德
+	[120146] = UtilityType.Portal, -- 远古传送门：达拉然
+	[224871] = UtilityType.Portal, -- 传送门：达拉然 - 破碎群岛
+	[344597] = UtilityType.Portal, -- 传送门：奥利波斯
+	[395289] = UtilityType.Portal, -- 传送门：瓦德拉肯
+	[446534] = UtilityType.Portal, -- 传送门：多恩诺嘉尔
+
+	[22700] = UtilityType.Bot, -- 修理机器人74A型
+	[44389] = UtilityType.Bot, -- 战地修理机器人110G
+	[54711] = UtilityType.Bot, -- 废物贩卖机器人
+	[67826] = UtilityType.Bot, -- 基维斯
+	[126459] = UtilityType.Bot, -- 布林顿4000
+	[157066] = UtilityType.Bot, -- 沃尔特
+	[161414] = UtilityType.Bot, -- 布林顿5000
+	[199109] = UtilityType.Bot, -- 自动铁锤
+	[200061] = UtilityType.Bot, -- 召唤里弗斯
+	[200204] = UtilityType.Bot, -- 自动铁锤模式
+	[200205] = UtilityType.Bot, -- 自动铁锤模式
+	[200210] = UtilityType.Bot, -- 故障检测模式
+	[200211] = UtilityType.Bot, -- 故障检测模式
+	[200212] = UtilityType.Bot, -- 烟火表演模式
+	[200214] = UtilityType.Bot, -- 烟火表演模式
+	[200215] = UtilityType.Bot, -- 零食发放模式
+	[200216] = UtilityType.Bot, -- 零食发放模式
+	[200217] = UtilityType.Bot, -- 华丽模式
+	[200218] = UtilityType.Bot, -- 华丽模式
+	[200219] = UtilityType.Bot, -- 驾驶战斗模式
+	[200220] = UtilityType.Bot, -- 驾驶战斗模式
+	[200221] = UtilityType.Bot, -- 虫洞发生器模式
+	[200222] = UtilityType.Bot, -- 虫洞发生器模式
+	[200223] = UtilityType.Bot, -- 热砧模式
+	[200225] = UtilityType.Bot, -- 热砧模式
+	[226241] = UtilityType.Bot, -- 宁神圣典
+	[256230] = UtilityType.Bot, -- 静心圣典
+	[298926] = UtilityType.Bot, -- 布林顿7000
+	[324029] = UtilityType.Bot, -- 宁心圣典
+	[453942] = UtilityType.Bot, -- 阿加修理机器人11O
+}
+
+A.ConfigurableUtilitySpells = {}
+
+function A:GetAvailableUtilitySpells()
+	async.WithSpellIDTable(UtilitySpells, "key", function(spell)
+		local id, tex, name = spell:GetSpellID(), spell:GetSpellTexture(), spell:GetSpellName()
+		local desc = format("%s %s (%s)", F.GetTextureString(tostring(tex), 16, 13, true), name, id)
+		self.ConfigurableUtilitySpells[tostring(id)] = desc
+	end)
+
+	F.Developer.DevTool(A.ConfigurableUtilitySpells, "Announcement Utility Spells")
 end
 
-function A:Utility(event, sourceName, spellId)
-	local config = self.db.utility
+function A:Utility(spellID)
+	if not self.db or not self.db.utility or not UtilitySpells[spellID] then
+		return
+	end
+
+	local db = self.db.utility
+	local config = db.custom[tostring(spellID)] or db.general[UtilitySpells[spellID]]
 
 	if not config or not config.enable then
 		return
 	end
 
-	if InCombatLockdown() or not event or not spellId or not sourceName then
-		return
-	end
-
-	local groupStatus = self:IsGroupMember(sourceName)
-	if not groupStatus or groupStatus == 3 then
-		return
-	end
-
-	if not self:CheckAuthority("UTILITY") then
-		return
-	end
-
-	sourceName = sourceName:gsub("%-[^|]+", "")
-
-	if event == "SPELL_CAST_SUCCESS" then
-		if TryAnnounce(spellId, sourceName, 190336) then
-			return
-		end -- 召喚餐點桌
-		if TryAnnounce(spellId, sourceName, nil, FeastList, "feasts") then
-			return
-		end -- 大餐大鍋
-	elseif event == "SPELL_SUMMON" then
-		if TryAnnounce(spellId, sourceName, nil, BotList, "bots") then
-			return
-		end -- 修理機器人
-		if TryAnnounce(spellId, sourceName, 261602) then
-			return
-		end -- 凱蒂的郵哨
-		if TryAnnounce(spellId, sourceName, 376664) then
-			return
-		end -- 歐胡納鷹棲所
-		if TryAnnounce(spellId, sourceName, 195782) then
-			return
-		end -- 召喚月羽雕像
-	elseif event == "SPELL_CREATE" then
-		if TryAnnounce(spellId, sourceName, 698) then
-			return
-		end -- 召喚儀式
-		if TryAnnounce(spellId, sourceName, 54710) then
-			return
-		end -- MOLL-E 郵箱
-		if TryAnnounce(spellId, sourceName, 29893) then
-			return
-		end -- 靈魂之井
-		if TryAnnounce(spellId, sourceName, nil, ToyList, "toys") then
-			return
-		end -- 玩具
-		if TryAnnounce(spellId, sourceName, nil, PortalList, "portals") then
-			return
-		end --傳送門
-	elseif event == "UNIT_SPELLCAST_SUCCEEDED" then
-		if TryAnnounce(spellId, sourceName, 384911) then
-			return
-		end -- 原子校準器
-		if TryAnnounce(spellId, sourceName, 290154) then
-			return
-		end -- 塑形師道標
-		if TryAnnounce(spellId, sourceName, nil, FeastList_SPELLCAST_SUCCEEDED, "feasts") then
-			return
-		end -- Since TWW, some feasts event has been changed
-	end
+	self:SendMessage(FormatMessage(config.text, spellID), self:GetChannel(db.channel), config.raidWarning)
 end

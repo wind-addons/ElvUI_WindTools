@@ -1,21 +1,21 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local A = W:GetModule("Announcement") ---@class Announcement
 
-local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 local IsInGroup = IsInGroup
 local RunNextFrame = RunNextFrame
 local UnitName = UnitName
 
+local C_RestrictedActions_IsAddOnRestrictionActive = C_RestrictedActions.IsAddOnRestrictionActive
+
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
+local Enum_AddOnRestrictionType_ChallengeMode = Enum.AddOnRestrictionType.ChallengeMode
 
 A.EventList = {
 	"CHALLENGE_MODE_COMPLETED",
-	"CHAT_MSG_ADDON",
 	"CHAT_MSG_GUILD",
 	"CHAT_MSG_PARTY",
 	"CHAT_MSG_PARTY_LEADER",
 	"CHAT_MSG_SYSTEM",
-	"GROUP_ROSTER_UPDATE",
 	"LFG_COMPLETION_REWARD",
 	"PARTY_LEADER_CHANGED",
 	"PLAYER_ENTERING_WORLD",
@@ -48,69 +48,32 @@ function A:CHAT_MSG_GUILD(event, ...)
 end
 
 function A:SCENARIO_COMPLETED(_, questID)
-	-- Only say goodbye when in a LFG group
-	if questID and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and UnitName("party1") then
-		self:Goodbye()
-	end
-end
-
-function A:COMBAT_LOG_EVENT_UNFILTERED()
-	-- https://wow.gamepedia.com/COMBAT_LOG_EVENT#Base_Parameters
-	local timestamp, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId, _, _, extraSpellId =
-		CombatLogGetCurrentEventInfo()
-
-	if event == "SPELL_CAST_SUCCESS" then
-		self:ThreatTransfer(sourceGUID, sourceName, destGUID, destName, spellId)
-		self:CombatResurrection(sourceGUID, sourceName, destName, spellId)
-		self:Utility(event, sourceName, spellId)
-		self:Thanks(sourceGUID, sourceName, destGUID, destName, spellId)
-	elseif event == "SPELL_SUMMON" then
-		self:Utility(event, sourceName, spellId)
-	elseif event == "SPELL_CREATE" then
-		self:Utility(event, sourceName, spellId)
-	elseif event == "SPELL_INTERRUPT" then
-		self:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
-	elseif event == "SPELL_AURA_APPLIED" then
-		self:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
-	elseif event == "SPELL_MISSED" then
-		self:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
-	elseif event == "SPELL_DISPEL" then
-		self:Dispel(sourceGUID, sourceName, destName, spellId, extraSpellId)
-	elseif event == "SPELL_STOLEN" then
-		self:Dispel(sourceGUID, sourceName, destName, spellId, extraSpellId)
-	end
+	E:Delay(1, function()
+		-- Only say goodbye when in a LFG group
+		if questID and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and UnitName("party1") then
+			self:Goodbye()
+		end
+	end)
 end
 
 function A:LFG_COMPLETION_REWARD()
-	self:Goodbye()
-end
-
-function A:PLAYER_ENTERING_WORLD()
-	E:Delay(4, self.ResetAuthority, self)
-	E:Delay(10, self.ResetAuthority, self)
+	E:Delay(1, self.Goodbye, self)
 end
 
 function A:CHALLENGE_MODE_COMPLETED()
-	self:Goodbye()
+	E:Delay(1, self.Goodbye, self)
 end
 
-function A:CHAT_MSG_ADDON(_, prefix, text)
-	if prefix == self.prefix then
-		self:ReceiveLevel(text)
-	end
-end
-
-function A:GROUP_ROSTER_UPDATE()
-	self:ResetAuthority()
-end
-
-function A:UNIT_SPELLCAST_SUCCEEDED(event, unitTarget, _, spellId)
-	-- TODO: check the new event returns
-	if spellId and E:IsSecretValue(spellId) then
+function A:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellID)
+	if C_RestrictedActions_IsAddOnRestrictionActive(Enum_AddOnRestrictionType_ChallengeMode) then
 		return
 	end
 
-	self:Utility(event, UnitName(unitTarget), spellId)
+	if E:IsSecretValue(spellID) or not spellID then
+		return
+	end
+
+	self:Utility(spellID)
 end
 
 function A:PARTY_LEADER_CHANGED(event)
@@ -119,4 +82,8 @@ end
 
 function A:WINDTOOLS_PLAYER_KEYSTONE_CHANGED(_, ...)
 	self:Keystone(...)
+end
+
+function A:PLAYER_ENTERING_WORLD()
+	self:GetAvailableUtilitySpells()
 end

@@ -6,20 +6,20 @@ local gsub = gsub
 local strlower = strlower
 
 function A:Keystone(_, _, link)
-	local config = self.db.keystone
+	local db = self.db.keystone
 
-	if not config or not config.enable then
+	if not db or not db.enable then
 		return
 	end
 
-	local message = gsub(config.text, "%%keystone%%", link)
-	self:SendMessage(message, self:GetChannel(config.channel))
+	local message = gsub(db.text, "%%keystone%%", link)
+	self:SendMessage(message, self:GetChannel(db.channel))
 end
 
 function A:KeystoneLink(event, text)
-	local config = self.db.keystone
+	local db = self.db.keystone
 
-	if not config or not config.enable or not config.command then
+	if not db or not db.enable or not db.command then
 		return
 	end
 

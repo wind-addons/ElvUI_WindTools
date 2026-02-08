@@ -22,10 +22,10 @@ function A:AnnounceQuestProgress(eventType, context)
 		return
 	end
 
-	local config = self.db.quest
+	local db = self.db.quest
 
 	-- Check if paused (controlled by SwitchButtons module)
-	if E.db.WT.quest.switchButtons.enable and config.paused then
+	if E.db.WT.quest.switchButtons.enable and db.paused then
 		return
 	end
 
@@ -40,7 +40,7 @@ function A:AnnounceQuestProgress(eventType, context)
 		shouldAnnounce = true
 	elseif eventType == self.QUEST_EVENT.PROGRESS_UPDATE then
 		-- Only announce progress if includeDetails is enabled
-		shouldAnnounce = config.includeDetails
+		shouldAnnounce = db.includeDetails
 	end
 
 	if not shouldAnnounce then
@@ -49,17 +49,17 @@ function A:AnnounceQuestProgress(eventType, context)
 
 	if context.rawLevel then
 		if
-			config.hideLevelOnMaxLevel and context.rawLevel == W.MaxLevelForPlayerExpansion
-			or config.hideLevelIfSameAsPlayer and context.rawLevel == UnitLevel("player")
+			db.hideLevelOnMaxLevel and context.rawLevel == W.MaxLevelForPlayerExpansion
+			or db.hideLevelIfSameAsPlayer and context.rawLevel == UnitLevel("player")
 		then
 			context.level = nil
 		end
 	end
 
 	-- Render message using template and contexts
-	local message = QP:RenderTemplate(config.template, context)
+	local message = QP:RenderTemplate(db.template, context)
 
 	if message and message ~= "" then
-		self:SendMessage(message, self:GetChannel(config.channel))
+		self:SendMessage(message, self:GetChannel(db.channel))
 	end
 end

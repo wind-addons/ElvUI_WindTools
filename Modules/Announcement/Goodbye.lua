@@ -2,12 +2,14 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local A = W:GetModule("Announcement") ---@class Announcement
 
 function A:Goodbye()
-	local config = self.db.goodbye
-	if not config or not config.enable then
+	local db = self.db.goodbye
+	if not db or not db.enable then
 		return
 	end
 
-	E:Delay(config.delay + 1, function()
-		self:SendMessage(config.text, self:GetChannel(config.channel))
-	end)
+	self:SendMessage(db.text, self:GetChannel(db.channel))
+end
+
+function A:DelayedGoodbye()
+	E:Delay(1, self.Goodbye, self)
 end

@@ -8,6 +8,7 @@ local pairs = pairs
 local print = print
 local tonumber = tonumber
 local type = type
+local tContains = tContains
 
 local GetKeysArray = GetKeysArray
 
@@ -410,7 +411,23 @@ function W:UpdateScripts()
 		end
 
 		if cleaned then
-			UpdateMessage( L["Database cleanup"], privateVersion)
+			UpdateMessage(L["Database cleanup"], privateVersion)
+		end
+	end
+
+	if profileVersion < 4.11 and E.db.WT then
+		if E.db.WT and E.db.WT.announcement then
+			E.db.WT.announcement.combatResurrection = nil
+			E.db.WT.announcement.dispel = nil
+			E.db.WT.announcement.interrupt = nil
+			E.db.WT.announcement.taunt = nil
+			E.db.WT.announcement.thanks = nil
+			E.db.WT.announcement.threatTransfer = nil
+			if E.db.WT.announcement.utility then
+				E.db.WT.announcement.utility.spells = nil
+			end
+
+			UpdateMessage(L["Announcements"] .. ": " .. L["Database cleanup"], profileVersion)
 		end
 	end
 

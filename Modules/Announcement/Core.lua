@@ -15,13 +15,18 @@ local IsInRaid = IsInRaid
 local IsPartyLFG = IsPartyLFG
 local UnitIsGroupAssistant = UnitIsGroupAssistant
 local UnitIsGroupLeader = UnitIsGroupLeader
-local UnitInParty = UnitInParty
-local UnitInRaid = UnitInRaid
 
-local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
+local C_RestrictedActions_IsAddOnRestrictionActive = C_RestrictedActions.IsAddOnRestrictionActive
+
+local Enum_AddOnRestrictionType_ChallengeMode = Enum.AddOnRestrictionType.ChallengeMode
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
+local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
 A.history = {}
+
+function A:CanSentMessage()
+	return not C_RestrictedActions_IsAddOnRestrictionActive(Enum_AddOnRestrictionType_ChallengeMode)
+end
 
 function A:AddHistory(text, channel)
 	if not self.db.sameMessageInterval or self.db.sameMessageInterval == 0 then
@@ -52,6 +57,9 @@ end
 ---@param raidWarning any Let the function send raid warning if possible
 ---@param whisperTarget any The target if the channel is whisper
 function A:SendMessage(text, channel, raidWarning, whisperTarget)
+    
+    print("Announcement SendMessage:", text, channel, raidWarning, whisperTarget)
+    
 	-- Skip if the channel is NONE
 	if channel == "NONE" then
 		return
@@ -65,7 +73,11 @@ function A:SendMessage(text, channel, raidWarning, whisperTarget)
 	end
 
 	if channel == "SELF" then
-		_G.ChatFrame1:AddMessage(text)
+		_G.DEFAULT_CHAT_FRAME:AddMessage(text)
+		return
+	end
+
+	if not self:CanSentMessage() then
 		return
 	end
 
@@ -114,50 +126,6 @@ function A:GetChannel(channelDB)
 	return "NONE"
 end
 
-do
-	local delimiterList = {
-		["zhCN"] = "的",
-		["zhTW"] = "的",
-		["enUS"] = "'s",
-		["koKR"] = "의",
-	}
-
-	function A:GetPetInfo(petName)
-		E.ScanTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
-		E.ScanTooltip:ClearLines()
-		E.ScanTooltip:SetUnit(petName)
-		local details = E.ScanTooltip.TextLeft2:GetText()
-
-		if not details then
-			return
-		end
-
-		local delimiter = delimiterList[W.Locale] or "'s"
-		local raw = { F.Strings.Split(details, delimiter) }
-
-		local owner, role = raw[1], raw[#raw]
-		if owner and role then
-			return owner, role
-		end
-
-		return nil, nil
-	end
-end
-
-function A:IsGroupMember(name)
-	if not name or E:IsSecretValue(name) then
-		return false
-	end
-
-	if UnitInParty(name) then
-		return 1
-	elseif UnitInRaid(name) then
-		return 2
-	elseif name == E.myname then
-		return 3
-	end
-end
-
 function A:Initialize()
 	self.db = E.db.WT.announcement
 
@@ -165,20 +133,13 @@ function A:Initialize()
 		return
 	end
 
-	if self.db.interrupt.enable and E.db.general.interruptAnnounce ~= "NONE" then
-		E.db.general.interruptAnnounce = "NONE"
-	end
-
 	for _, event in pairs(self.EventList) do
-		A:RegisterEvent(event)
+		self:RegisterEvent(event)
 	end
 
 	for _, message in pairs(self.MessageList) do
-		A:RegisterMessage(message)
+		self:RegisterMessage(message)
 	end
-
-	self:InitializeAuthority()
-	self:ResetAuthority()
 
 	self.initialized = true
 end
@@ -186,15 +147,10 @@ end
 function A:ProfileUpdate()
 	self:Initialize()
 
-	if self.db.interrupt.enable and E.db.general.interruptAnnounce ~= "NONE" then
-		E.db.general.interruptAnnounce = "NONE"
-	end
-
 	if self.db.enable or not self.initialized then
 		return
 	end
 
-	-- If the module is disabled from profile, unregister all events and reset authority
 	for _, event in pairs(self.EventList) do
 		A:UnregisterEvent(event)
 	end
@@ -203,7 +159,6 @@ function A:ProfileUpdate()
 		A:UnregisterMessage(message)
 	end
 
-	self:ResetAuthority()
 	self.initialized = false
 end
 

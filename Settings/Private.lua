@@ -732,6 +732,7 @@ V.skins = {
 		dataPanels = true,
 		lootRoll = true,
 		miniMap = true,
+		nameplates = true,
 		option = true,
 		panels = true,
 		raidUtility = true,

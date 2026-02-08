@@ -1791,6 +1791,11 @@ options.elvui = {
 			type = "toggle",
 			name = L["Minimap"],
 		},
+		nameplates = {
+			order = 10,
+			type = "toggle",
+			name = L["Nameplates"],
+		},
 		option = {
 			order = 10,
 			type = "toggle",

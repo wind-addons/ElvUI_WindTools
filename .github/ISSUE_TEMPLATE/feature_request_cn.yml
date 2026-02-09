@@ -31,7 +31,7 @@ body:
     validations:
       required: false
     attributes:
-      label: 描述你考虑过的替代方案，插件或是 WeakAuras
+      label: 描述你考虑过的替代方案，比如某一个插件
       description: 清楚简洁地描述你考虑过的任何替代解决方案或功能。
   - type: textarea
     validations:

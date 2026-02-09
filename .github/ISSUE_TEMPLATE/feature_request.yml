@@ -31,7 +31,7 @@ body:
     validations:
       required: false
     attributes:
-      label: Describe alternatives you've considered, including addons or WeakAuras
+      label: Describe alternatives you've considered, for example a specific addon
       description: A clear and concise description of any alternative solutions or features you've considered.
   - type: textarea
     validations:

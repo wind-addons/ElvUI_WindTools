@@ -1,4 +1,4 @@
-## Interface: 120000
+## Interface: 120000, 120001
 ## Author: fang2hou
 ## Version: @project-version@
 ## X-Version: 4.10

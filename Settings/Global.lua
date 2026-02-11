@@ -7,7 +7,7 @@ G.core = {
 	changlogPopup = false,
 	elvUIVersionPopup = true,
 	cvarAlert = false,
-	fixSetPassThroughButtons = true,
+	fixSetPassThroughButtons = false,
 	loginMessage = true,
 }
 

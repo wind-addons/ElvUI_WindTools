@@ -9,7 +9,6 @@ G.core = {
 	cvarAlert = false,
 	fixSetPassThroughButtons = true,
 	loginMessage = true,
-	midnightAPIFix = true,
 }
 
 G.developer = {

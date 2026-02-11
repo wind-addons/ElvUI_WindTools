@@ -138,6 +138,7 @@ function S:CreateShadow(frame, size, r, g, b, force)
 	size = size + (E.private.WT.skins.increasedSize or 0)
 
 	local shadow = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+	E:ReplaceSetupTextureCoordinates(shadow)
 	shadow:SetFrameStrata(frame:GetFrameStrata())
 	shadow:SetFrameLevel(frame:GetFrameLevel() or 1)
 	shadow:SetOutside(frame, size, size)

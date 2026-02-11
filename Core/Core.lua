@@ -228,14 +228,3 @@ function W:GameFixing()
 		_G.FlightPointPinMixin.SetPassThroughButtons = nop
 	end
 end
-
-do -- Midnight API Fix
-	local BackdropTemplateMixin_SetupTextureCoordinates = _G.BackdropTemplateMixin.SetupTextureCoordinates
-	function _G.BackdropTemplateMixin:SetupTextureCoordinates(...)
-		local enabled = E and E.global and E.global.WT and E.global.WT.core and E.global.WT.core.midnightAPIFix
-		if not enabled or E:NotSecretValue(self:GetWidth()) then
-			---@diagnostic disable-next-line: redundant-parameter
-			BackdropTemplateMixin_SetupTextureCoordinates(self, ...)
-		end
-	end
-end

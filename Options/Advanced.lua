@@ -100,20 +100,6 @@ options.gameFix = {
 			end,
 			width = 2,
 		},
-		midnightAPIFix = {
-			order = 3,
-			type = "toggle",
-			name = L["Midnight API Fix"],
-			desc = L["Fix the issues caused by Blizzard."],
-			get = function(info)
-				return E.global.WT.core.midnightAPIFix
-			end,
-			set = function(info, value)
-				E.global.WT.core.midnightAPIFix = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
-			width = 2,
-		},
 	},
 }
 

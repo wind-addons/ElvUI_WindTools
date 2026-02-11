@@ -4,18 +4,28 @@ W.Changelog[411] = {
 	RELEASE_DATE = "TBD",
 	IMPORTANT = {
 		["zhCN"] = {
+			"SetPassThroughButtons 修复默认停用, 你可以随时在 [高级] 中启用它.",
+			"至暗之夜 API 修复已经移除, 改用 ElvUI API 来实现最小化修复.",
 			"[通告] 重写了实用技能的通告功能, 现在可以在暴雪不限制的情况下使用通报自己使用的技能.",
 		},
 		["zhTW"] = {
+			"SetPassThroughButtons 修復默認停用, 你可以隨時在 [進階] 中啟用它.",
+			"至暗之夜 API 修復已經移除, 改用 ElvUI API 來實現最小化修復.",
 			"[通告] 重寫了實用技能的通告功能, 現在可以在暴雪不限制的情況下使用通報自己使用的技能.",
 		},
 		["enUS"] = {
+			"SetPassThroughButtons fix is disabled by default, you can enable it anytime in [Advanced] settings.",
+			"The Darkest Night API fix has been removed, switching to ElvUI API for minimal fix.",
 			"[Announcement] Rewrote the announcement feature for utility skills, now you can announce your own skills without Blizzard restrictions.",
 		},
 		["koKR"] = {
+			"SetPassThroughButtons 수정이 기본적으로 비활성화되어 있으며, [고급] 설정에서 언제든지 활성화할 수 있습니다.",
+			"The Darkest Night API 수정이 제거되었으며, 최소한의 수정을 위해 ElvUI API로 전환되었습니다.",
 			"[공지] 유틸리티 스킬의 공지 기능을 재작성했습니다. 이제 블리자드의 제한 없이 자신의 스킬을 공지할 수 있습니다.",
 		},
 		["ruRU"] = {
+			"Исправление SetPassThroughButtons отключено по умолчанию, вы можете включить его в любое время в настройках [Дополнительно].",
+			"Исправление API 'Самая темная ночь' было удалено, для минимального исправления используется API ElvUI.",
 			"[Оповещения] Переписана функция оповещений для вспомогательных навыков, теперь Вы можете оповещать о своих собственных навыках без ограничений Blizzard.",
 		},
 	},

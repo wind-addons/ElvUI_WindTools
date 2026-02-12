@@ -8,34 +8,7 @@ local _G = _G
 local ceil = ceil
 local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
-local next = next
 local pairs = pairs
-
-local hookFunctions = {
-	RefreshSpellCooldownInfo = ES.CooldownManager_RefreshSpellCooldownInfo,
-}
-
-function ES:CooldownManager_SkinItemFrame(frame)
-	if frame.Cooldown then
-		frame.Cooldown:SetSwipeTexture(E.media.blankTex)
-
-		if not frame.Cooldown.isRegisteredCooldown then
-			E:RegisterCooldown(frame.Cooldown, "cdmanager")
-
-			for key, func in next, hookFunctions do
-				if frame[key] then
-					hooksecurefunc(frame, key, func)
-				end
-			end
-		end
-	end
-
-	if frame.Bar then
-		ES:CooldownManager_SkinBar(frame, frame.Bar)
-	elseif frame.Icon then
-		ES:CooldownManager_SkinIcon(frame, frame.Icon)
-	end
-end
 
 local function UpdateFrameAndStrata(frame, config)
 	frame:SetFrameStrata(S.db.cooldownViewer[config].frameStrata)

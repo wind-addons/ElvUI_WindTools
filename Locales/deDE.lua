@@ -179,7 +179,6 @@ L["Announce your mythic keystone."] = "Kündigt Deine mythischen Schlüsselstein
 L["Announce your quest progress to other players."] = "Kündigt Deinen Questfortschritt anderen Spielern an."
 L["Announcement"] = "Ankündigungen"
 L["Announcement module is a tool to help you send messages."] = "Das Ankündigungsmodul ist ein Tool zum versenden von Nachrichten."
-L["Announcements"] = true
 L["Anonymous"] = "Anonym"
 L["Anti-override"] = "Schreibschutz"
 L["Any"] = "Irgendeine"

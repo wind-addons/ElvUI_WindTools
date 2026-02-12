@@ -179,7 +179,6 @@ L["Announce your mythic keystone."] = "보유중인 쐐기돌을 표시합니다
 L["Announce your quest progress to other players."] = "다른 플레이어에게 퀘스트 진행 상황을 알립니다."
 L["Announcement"] = "알림"
 L["Announcement module is a tool to help you send messages."] = "알림 모듈은 자신과 주변의 상황을 알리는데 도움이 되는 도구입니다."
-L["Announcements"] = true
 L["Anonymous"] = "익명 모드"
 L["Anti-override"] = "욕설 필터·모델 변경 차단"
 L["Any"] = "무엇이든"

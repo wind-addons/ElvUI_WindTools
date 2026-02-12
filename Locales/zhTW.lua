@@ -179,7 +179,6 @@ L["Announce your mythic keystone."] = "通告你的傳奇地城鑰石."
 L["Announce your quest progress to other players."] = "通告任務進度給其他玩家."
 L["Announcement"] = "通告"
 L["Announcement module is a tool to help you send messages."] = "通告模組是一個幫你發送訊息的工具."
-L["Announcements"] = true
 L["Anonymous"] = "匿名"
 L["Anti-override"] = "反和諧"
 L["Any"] = "任意"

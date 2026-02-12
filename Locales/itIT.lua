@@ -179,7 +179,6 @@ L["Announce your mythic keystone."] = true
 L["Announce your quest progress to other players."] = true
 L["Announcement"] = true
 L["Announcement module is a tool to help you send messages."] = true
-L["Announcements"] = true
 L["Anonymous"] = true
 L["Anti-override"] = true
 L["Any"] = true

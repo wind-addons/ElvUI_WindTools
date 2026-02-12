@@ -427,7 +427,7 @@ function W:UpdateScripts()
 				E.db.WT.announcement.utility.spells = nil
 			end
 
-			UpdateMessage(L["Announcements"] .. ": " .. L["Database cleanup"], profileVersion)
+			UpdateMessage(L["Announcement"] .. ": " .. L["Database cleanup"], profileVersion)
 		end
 	end
 

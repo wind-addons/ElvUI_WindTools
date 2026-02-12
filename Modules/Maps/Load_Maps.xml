@@ -1,10 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file='EventTracker.lua'/>
-	<Script file='EventTracker_Data.lua'/>
-	<Script file='InstanceDifficulty.lua'/>
-	<Script file='MinimapButtons.lua'/>
-	<Script file='RectangleMinimap.lua'/>
-	<Script file='SuperTracker.lua'/>
-	<Script file='WhoClicked.lua'/>
-	<Script file='WorldMap.lua'/>
+	<Script file='EventTracker.lua' />
+	<Script file='EventTracker_Data.lua' />
+	<Script file='InstanceDifficulty.lua' />
+	<Script file='MinimapButtons.lua' />
+	<Script file='RectangleMinimap.lua' />
+	<Script file='SuperTracker.lua' />
+	<Script file='WorldMap.lua' />
 </Ui>

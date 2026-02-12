@@ -3,7 +3,6 @@ local options = W.options.maps.args
 local LSM = E.Libs.LSM
 local C = W.Utilities.Color
 local MB = W:GetModule("MinimapButtons")
-local WC = W:GetModule("WhoClicked")
 local RM = W:GetModule("RectangleMinimap")
 local WM = W:GetModule("WorldMap")
 local ET = W:GetModule("EventTracker")
@@ -279,193 +278,8 @@ options.superTracker = {
 	},
 }
 
-options.whoClicked = {
-	order = 2,
-	type = "group",
-	name = L["Who Clicked Minimap"],
-	get = function(info)
-		return E.db.WT.maps.whoClicked[info[#info]]
-	end,
-	set = function(info, value)
-		E.db.WT.maps.whoClicked[info[#info]] = value
-		WC:ProfileUpdate()
-	end,
-	args = {
-		desc = {
-			order = 1,
-			type = "group",
-			inline = true,
-			name = L["Description"],
-			args = {
-				feature = {
-					order = 1,
-					type = "description",
-					name = L["Display the name of the player who clicked the minimap."],
-					fontSize = "medium",
-				},
-			},
-		},
-		enable = {
-			order = 2,
-			type = "toggle",
-			name = L["Enable"],
-			width = "full",
-		},
-		general = {
-			order = 3,
-			type = "group",
-			inline = true,
-			name = L["General"],
-			args = {
-				addRealm = {
-					order = 1,
-					type = "toggle",
-					name = L["Add Server Name"],
-				},
-				onlyOnCombat = {
-					order = 2,
-					type = "toggle",
-					name = L["Only On Combat"],
-				},
-			},
-		},
-		position = {
-			order = 4,
-			type = "group",
-			inline = true,
-			name = L["Position"],
-			args = {
-				xOffset = {
-					order = 1,
-					type = "range",
-					name = L["X-Offset"],
-					min = -200,
-					max = 200,
-					step = 1,
-				},
-				yOffset = {
-					order = 2,
-					type = "range",
-					name = L["Y-Offset"],
-					min = -200,
-					max = 200,
-					step = 1,
-				},
-			},
-		},
-		animation = {
-			order = 5,
-			type = "group",
-			inline = true,
-			name = L["Animation Duration"],
-			args = {
-				fadeInTime = {
-					order = 1,
-					type = "range",
-					name = L["Fade In"],
-					desc = L["The time of animation. Set 0 to disable animation."],
-					min = 0,
-					max = 5,
-					step = 0.1,
-				},
-				stayTime = {
-					order = 2,
-					type = "range",
-					name = L["Stay"],
-					desc = L["The time of animation. Set 0 to disable animation."],
-					min = 0,
-					max = 10,
-					step = 0.1,
-				},
-				fadeOutTime = {
-					order = 3,
-					type = "range",
-					name = L["Fade Out"],
-					desc = L["The time of animation. Set 0 to disable animation."],
-					min = 0,
-					max = 5,
-					step = 0.1,
-				},
-			},
-		},
-		color = {
-			order = 6,
-			type = "group",
-			inline = true,
-			name = L["Color"],
-			args = {
-				classColor = {
-					order = 1,
-					type = "toggle",
-					name = L["Use Class Color"],
-				},
-				customColor = {
-					order = 2,
-					type = "color",
-					name = L["Custom Color"],
-					get = function(info)
-						local db = E.db.WT.maps.whoClicked[info[#info]]
-						local default = P.maps.whoClicked[info[#info]]
-						return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
-					end,
-					set = function(info, r, g, b, a)
-						local db = E.db.WT.maps.whoClicked[info[#info]]
-						db.r, db.g, db.b, db.a = r, g, b, nil
-					end,
-				},
-			},
-		},
-		font = {
-			order = 7,
-			type = "group",
-			inline = true,
-			name = L["Font Setting"],
-			get = function(info)
-				return E.db.WT.maps.whoClicked.font[info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.whoClicked.font[info[#info]] = value
-				WC:ProfileUpdate()
-			end,
-			args = {
-				name = {
-					order = 1,
-					type = "select",
-					dialogControl = "LSM30_Font",
-					name = L["Font"],
-					values = LSM:HashTable("font"),
-				},
-				style = {
-					order = 2,
-					type = "select",
-					name = L["Outline"],
-					values = {
-						NONE = L["None"],
-						OUTLINE = L["Outline"],
-						THICKOUTLINE = L["Thick"],
-						SHADOW = L["|cff888888Shadow|r"],
-						SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
-						SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
-						MONOCHROME = L["|cFFAAAAAAMono|r"],
-						MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
-						MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
-					},
-				},
-				size = {
-					order = 3,
-					name = L["Size"],
-					type = "range",
-					min = 5,
-					max = 60,
-					step = 1,
-				},
-			},
-		},
-	},
-}
-
 options.rectangleMinimap = {
-	order = 3,
+	order = 2,
 	type = "group",
 	name = L["Rectangle Minimap"],
 	get = function(info)
@@ -528,7 +342,7 @@ options.rectangleMinimap = {
 }
 
 options.minimapButtons = {
-	order = 4,
+	order = 3,
 	type = "group",
 	name = L["Minimap Buttons"],
 	args = {
@@ -750,7 +564,7 @@ options.minimapButtons = {
 }
 
 options.worldMap = {
-	order = 5,
+	order = 4,
 	type = "group",
 	name = L["World Map"],
 	get = function(info)
@@ -871,7 +685,7 @@ options.worldMap = {
 }
 
 options.instanceDifficulty = {
-	order = 6,
+	order = 5,
 	type = "group",
 	name = L["Instance Difficulty"],
 	get = function(info)
@@ -1042,7 +856,7 @@ do
 end
 
 options.eventTracker = {
-	order = 7,
+	order = 6,
 	type = "group",
 	name = L["Event Tracker"],
 	get = function(info)

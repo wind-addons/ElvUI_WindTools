@@ -429,6 +429,11 @@ function W:UpdateScripts()
 
 			UpdateMessage(L["Announcement"] .. ": " .. L["Database cleanup"], profileVersion)
 		end
+
+		if E.db.WT and E.db.WT.maps and E.db.WT.maps.whoClicked then
+			E.db.WT.maps.whoClicked = nil
+			UpdateMessage(L["Maps"] .. ": " .. L["Database cleanup"], profileVersion)
+		end
 	end
 
 	if not isFirstLine then

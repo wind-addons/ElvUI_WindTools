@@ -522,7 +522,7 @@ options.moveFrames = {
 					name = L["Auto Reset Off-screen Frames"],
 					desc = L["Automatically clear the remembered position if the frame is off the screen."],
 					disabled = function()
-						return not E.private.WT.misc.moveFrames.rememberPositions
+						return not E.private.WT.misc.moveFrames.rememberPositions or not MF:IsRunning()
 					end,
 				},
 				clearHistory = {

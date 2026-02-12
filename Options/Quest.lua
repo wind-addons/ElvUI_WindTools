@@ -808,7 +808,7 @@ options.objectiveTracker = {
 					type = "range",
 					name = L["Scale"],
 					desc = L["Scale of the POI button."],
-					min = 0.5,
+					min = 0.05,
 					max = 3,
 					step = 0.01,
 				},

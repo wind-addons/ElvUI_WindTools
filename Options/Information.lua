@@ -23,6 +23,9 @@ local donators = {
 		"paroxp",
 		"Constrained",
 	}, ", "),
+	paypal = C.StringByTemplate(L["PayPal"] .. ": ", "blue-500") .. tconcat({
+		"M. Stracke",
+	}, ", "),
 	aifadian = C.StringByTemplate(L["AiFaDian"] .. ": ", "blue-500") .. tconcat({
 		"LuckyAres",
 		"喵仙人Meowcactus",
@@ -60,7 +63,7 @@ options.help = {
 					type = "description",
 					fontSize = "small",
 					name = tconcat({
-						donators.patreon .. "       " .. donators.cdkeys,
+						donators.patreon .. "  " .. donators.paypal .. "  " .. donators.cdkeys,
 						donators.aifadian,
 					}, "\n"),
 				},

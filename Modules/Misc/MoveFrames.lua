@@ -411,6 +411,10 @@ local ignorePositionRememberingFrames = {
 	["PlayerChoiceFrame"] = true,
 }
 
+local disabled = {}
+local framePaths = {}
+local moveTargets = {}
+
 local function getFrame(frameOrName)
 	local frame
 
@@ -434,7 +438,7 @@ function MF:Remember(frame)
 		return
 	end
 
-	local path = frame.__windFramePath
+	local path = framePaths[frame]
 	if not path or path == "" or ignorePositionRememberingFrames[path] then
 		return
 	end
@@ -460,8 +464,7 @@ function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, o
 		return
 	end
 
-	local path = frame.__windFramePath
-
+	local path = framePaths[frame]
 	if path == "" or ignorePositionRememberingFrames[path] then
 		self.db.framePositions[path] = nil
 		return
@@ -482,8 +485,9 @@ function MF:Frame_StartMoving(this, button)
 		return
 	end
 
-	if button == "LeftButton" and this.MoveFrame:IsMovable() and not this.MoveFrame.__windMoveFrameDisabled then
-		this.MoveFrame:StartMoving()
+	local moveTarget = moveTargets[this]
+	if button == "LeftButton" and moveTarget and moveTarget:IsMovable() and not disabled[moveTarget] then
+		moveTarget:StartMoving()
 	end
 end
 
@@ -492,9 +496,10 @@ function MF:Frame_StopMoving(this, button)
 		return
 	end
 
-	if button == "LeftButton" then
-		this.MoveFrame:StopMovingOrSizing()
-		MF:Remember(this.MoveFrame)
+	local moveTarget = moveTargets[this]
+	if button == "LeftButton" and moveTarget then
+		moveTarget:StopMovingOrSizing()
+		MF:Remember(moveTarget)
 	end
 end
 
@@ -502,7 +507,7 @@ function MF:HandleFrame(this, bindTo)
 	local thisFrame = getFrame(this)
 	local bindingTargetFrame = getFrame(bindTo)
 
-	if not thisFrame or thisFrame.MoveFrame then
+	if not thisFrame or moveTargets[thisFrame] then
 		return
 	end
 
@@ -513,8 +518,9 @@ function MF:HandleFrame(this, bindTo)
 			-- Some frames may need to run the fix function first, so reposition should be run next frame to avoid issues
 			RunNextFrame(function()
 				local repositionFrame = getFrame(this)
-				if repositionFrame and repositionFrame.MoveFrame then
-					self:Reposition(repositionFrame.MoveFrame)
+				local moveTarget = repositionFrame and moveTargets[repositionFrame]
+				if moveTarget then
+					self:Reposition(moveTarget)
 				end
 			end)
 		end)
@@ -524,18 +530,18 @@ function MF:HandleFrame(this, bindTo)
 	thisFrame:SetMovable(true)
 	thisFrame:SetClampedToScreen(true)
 	thisFrame:EnableMouse(true)
-	thisFrame.MoveFrame = bindingTargetFrame or thisFrame
+	moveTargets[thisFrame] = bindingTargetFrame or thisFrame
 
-	thisFrame.__windFramePath = this
-	if not thisFrame.MoveFrame.__windFramePath then
-		thisFrame.MoveFrame.__windFramePath = bindTo
+	framePaths[thisFrame] = this
+	if not framePaths[moveTargets[thisFrame]] then
+		framePaths[moveTargets[thisFrame]] = bindTo
 	end
 
 	self:SecureHookScript(thisFrame, "OnMouseDown", "Frame_StartMoving")
 	self:SecureHookScript(thisFrame, "OnMouseUp", "Frame_StopMoving")
 
-	if not self:IsHooked(thisFrame.MoveFrame, "SetPoint") then
-		self:SecureHook(thisFrame.MoveFrame, "SetPoint", "Reposition")
+	if moveTargets[thisFrame] and not self:IsHooked(moveTargets[thisFrame], "SetPoint") then
+		self:SecureHook(moveTargets[thisFrame], "SetPoint", "Reposition")
 	end
 end
 
@@ -615,7 +621,7 @@ function MF:HandleElvUIBag(frameName)
 	end
 	local frame = B[frameName]
 
-	if not frame or frame.__windFramePath then
+	if not frame or framePaths[frame] then
 		return
 	end
 
@@ -634,11 +640,20 @@ function MF:HandleElvUIBag(frameName)
 		end)
 	end
 
-	frame.__windFramePath = "ElvUI_" .. frameName
+	framePaths[frame] = "ElvUI_" .. frameName
 end
 
+---Check if the MoveFrames module is running
+---@return boolean Whether the MoveFrames module is running
 function MF:IsRunning()
 	return E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning
+end
+
+---Get the move target frame for a given frame
+---@param frame Frame The frame to get the move target for
+---@return Frame|nil The move target frame, or nil if not found
+function MF:GetMoveTarget(frame)
+	return moveTargets[frame]
 end
 
 ---Handle the internal frame movement
@@ -653,7 +668,7 @@ function MF:InternalHandle(frame, bindTo, remember)
 	self:HandleFrame(frame, bindTo)
 
 	if remember == false then
-		frame.__windFramePath = ""
+		framePaths[frame] = ""
 	end
 end
 
@@ -667,7 +682,7 @@ function MF:SetMovable(frame, movable)
 		return
 	end
 
-	targetFrame.__windMoveFrameDisabled = not movable
+	disabled[targetFrame] = not movable
 end
 
 function MF:Initialize()

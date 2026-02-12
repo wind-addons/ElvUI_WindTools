@@ -9,6 +9,8 @@ local tDeleteItem = tDeleteItem
 local type = type
 
 local GenerateFlatClosure = GenerateFlatClosure
+local GetScreenHeight = GetScreenHeight
+local GetScreenWidth = GetScreenWidth
 local InCombatLockdown = InCombatLockdown
 local RunNextFrame = RunNextFrame
 
@@ -415,7 +417,7 @@ local disabled = {}
 local framePaths = {}
 local moveTargets = {}
 
-local function getFrame(frameOrName)
+local function GetFrame(frameOrName)
 	local frame
 
 	if frameOrName then
@@ -450,16 +452,18 @@ function MF:Remember(frame)
 			local anchorPoint, relativeFrame, relativePoint, offX, offY = frame:GetPoint(index)
 			self.db.framePositions[path][index] = {
 				anchorPoint = anchorPoint,
-				relativeFrame = relativeFrame,
+				relativeFrame = relativeFrame and relativeFrame:GetName() or "UIParent",
 				relativePoint = relativePoint,
 				offX = offX,
 				offY = offY,
 			}
 		end
 	end
+
+	self:EnsureWindowInTheScreen(frame)
 end
 
-function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, offY, skip)
+function MF:Reposition(frame, _, _, _, _, _, skip)
 	if skip or InCombatLockdown() or not self.db or not self.db.rememberPositions or self.StopRunning then
 		return
 	end
@@ -475,8 +479,49 @@ function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, o
 	end
 
 	frame:ClearAllPoints()
-	for _, point in pairs(self.db.framePositions[path]) do
-		frame:Point(point.anchorPoint, point.relativeFrame, point.relativePoint, point.offX, point.offY, true)
+	for _, record in pairs(self.db.framePositions[path]) do
+		if type(record.relativeFrame) ~= "string" then
+			record.relativeFrame = "UIParent"
+		end
+		local relativeFrame = GetFrame(record.relativeFrame or "UIParent")
+		frame:Point(record.anchorPoint, relativeFrame, record.relativePoint, record.offX, record.offY, true)
+	end
+
+	self:EnsureWindowInTheScreen(frame)
+end
+
+---Check and ensure the window is completely within the screen bounds, it not, forget its remembered position
+---@param frame Frame The frame to check
+function MF:EnsureWindowInTheScreen(frame)
+	if not self.db or not self.db.autoResetOffScreenFrames then
+		return
+	end
+
+	local path = framePaths[frame]
+	if not path or not self.db.framePositions[path] then
+		return
+	end
+
+	local isOffScreen = false
+	local left, right = frame:GetLeft(), frame:GetRight()
+	local top, bottom = frame:GetTop(), frame:GetBottom()
+	local screenWidth = GetScreenWidth()
+	local screenHeight = GetScreenHeight()
+
+	if E:IsSecretValue(left) or E:IsSecretValue(right) or E:IsSecretValue(top) or E:IsSecretValue(bottom) then
+		return
+	end
+
+	if left and right and (right < 3 or left > screenWidth - 3) then
+		isOffScreen = true
+	end
+
+	if top and bottom and (bottom < 3 or top > screenHeight - 3) then
+		isOffScreen = true
+	end
+
+	if isOffScreen then
+		self.db.framePositions[path] = nil
 	end
 end
 
@@ -504,8 +549,8 @@ function MF:Frame_StopMoving(this, button)
 end
 
 function MF:HandleFrame(this, bindTo)
-	local thisFrame = getFrame(this)
-	local bindingTargetFrame = getFrame(bindTo)
+	local thisFrame = GetFrame(this)
+	local bindingTargetFrame = GetFrame(bindTo)
 
 	if not thisFrame or moveTargets[thisFrame] then
 		return
@@ -517,7 +562,7 @@ function MF:HandleFrame(this, bindTo)
 			-- Manually trigger a reposition after combat ends
 			-- Some frames may need to run the fix function first, so reposition should be run next frame to avoid issues
 			RunNextFrame(function()
-				local repositionFrame = getFrame(this)
+				local repositionFrame = GetFrame(this)
 				local moveTarget = repositionFrame and moveTargets[repositionFrame]
 				if moveTarget then
 					self:Reposition(moveTarget)
@@ -677,7 +722,7 @@ function MF:SetMovable(frame, movable)
 		return
 	end
 
-	local targetFrame = getFrame(frame)
+	local targetFrame = GetFrame(frame)
 	if not targetFrame then
 		return
 	end

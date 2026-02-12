@@ -176,6 +176,7 @@ V.misc = {
 		elvUIBags = true,
 		tradeSkillMasterCompatible = true,
 		rememberPositions = false,
+		autoResetOffScreenFrames = true,
 		framePositions = {},
 	},
 	---@class PrivateDB.misc.mute

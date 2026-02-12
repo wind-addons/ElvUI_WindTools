@@ -515,8 +515,18 @@ options.moveFrames = {
 						E.private.WT.misc.moveFrames[info[#info]] = value
 					end,
 				},
-				clearHistory = {
+				autoResetOffScreenFrames = {
 					order = 2,
+					type = "toggle",
+					width = 1.5,
+					name = L["Auto Reset Off-screen Frames"],
+					desc = L["Automatically clear the remembered position if the frame is off the screen."],
+					disabled = function()
+						return not E.private.WT.misc.moveFrames.rememberPositions
+					end,
+				},
+				clearHistory = {
+					order = 3,
 					type = "execute",
 					name = L["Clear History"],
 					func = function()
@@ -526,10 +536,15 @@ options.moveFrames = {
 				notice = {
 					order = 999,
 					type = "description",
-					name = C.StringByTemplate(L["Notice"], "rose-500") .. " " .. format(
-						L["%s may cause some frames to get messed, but you can use %s button to reset frames."],
-						C.StringByTemplate(L["Remember Positions"], "amber-400"),
-						C.StringByTemplate(L["Clear History"], "sky-500")
+					name = format(
+						"%s %s\n%s",
+						C.StringByTemplate(L["Notice"], "rose-500"),
+						format(
+							L["%s may cause some frames to get messed, but you can use %s button to reset frames."],
+							C.StringByTemplate(L["Remember Positions"], "amber-400"),
+							C.StringByTemplate(L["Clear History"], "sky-500")
+						),
+						L["Enable auto reset off-screen frames should make the problem less likely to happen."]
 					),
 					fontSize = "medium",
 				},

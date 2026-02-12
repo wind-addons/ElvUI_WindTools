@@ -1,8 +1,8 @@
 <div align="center">
 <img width="512" alt="標題" src="https://raw.githubusercontent.com/wind-addons/resources/main/dist/addons/elvui-windtools/logo.svg"/><br><br>
 
-![版本](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-4.10-538AED.svg?longCache=true&style=for-the-badge)
-![ElvUI 版本](https://img.shields.io/badge/ElvUI-15.03-ff784d.svg?longCache=true&style=for-the-badge)
+![版本](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-4.11-538AED.svg?longCache=true&style=for-the-badge)
+![ElvUI 版本](https://img.shields.io/badge/ElvUI-15.05-ff784d.svg?longCache=true&style=for-the-badge)
 
 [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=DISCORD&logo=discord&style=for-the-badge)](https://discord.gg/CMDsBmhvyW) [![GitHub Stars](https://img.shields.io/github/stars/wind-addons/ElvUI_WindTools?style=for-the-badge&label=GitHub%20Stars%20%E2%AD%90&logo=github&color=yellow)](https://github.com/wind-addons/ElvUI_WindTools)
 
@@ -72,12 +72,11 @@ Português，Italiano
 ### 地圖
 
 1. **超級追蹤**：提供路徑點自動追蹤、滑鼠中鍵清除、移除距離限制、命令解析與虛擬 TomTom 指令等功能。
-2. **小地圖點擊者**：顯示點擊小地圖的玩家名稱，並可自訂動畫效果與顏色。
-3. **矩形小地圖**：自訂小地圖的寬與高，打造矩形外觀。
-4. **小地圖按鍵**：將所有小地圖按鍵集中於按鍵列，支援自訂版面、排序與版本大廳按鍵。
-5. **世界地圖**：移除世界地圖迷霧並提供彩色迷霧選項，可自訂縮放比例。
-6. **副本難度**：以文字樣式重新美化副本難度圖示，並可設定字型與顯示內容。
-7. **事件追蹤器**：在世界地圖顯示 TWW 每週任務、夜幕、劇團、回響、巨龍群島事件等資訊，並具備可調提醒與音效。
+2. **矩形小地圖**：自訂小地圖的寬與高，打造矩形外觀。
+3. **小地圖按鍵**：將所有小地圖按鍵集中於按鍵列，支援自訂版面、排序與版本大廳按鍵。
+4. **世界地圖**：移除世界地圖迷霧並提供彩色迷霧選項，可自訂縮放比例。
+5. **副本難度**：以文字樣式重新美化副本難度圖示，並可設定字型與顯示內容。
+6. **事件追蹤器**：在世界地圖顯示 TWW 每週任務、夜幕、劇團、回響、巨龍群島事件等資訊，並具備可調提醒與音效。
 
 ### 任務
 

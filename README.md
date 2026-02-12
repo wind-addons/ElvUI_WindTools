@@ -1,8 +1,8 @@
 <div align="center">
 <img width="512" alt="Title" src="https://raw.githubusercontent.com/wind-addons/resources/main/dist/addons/elvui-windtools/logo.svg"/><br><br>
 
-![Version](https://img.shields.io/badge/Version-4.10-538AED.svg?longCache=true&style=for-the-badge)
-![ElvUI version](https://img.shields.io/badge/ElvUI-15.03-ff784d.svg?longCache=true&style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-4.11-538AED.svg?longCache=true&style=for-the-badge)
+![ElvUI version](https://img.shields.io/badge/ElvUI-15.05-ff784d.svg?longCache=true&style=for-the-badge)
 
 [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=DISCORD&logo=discord&style=for-the-badge)](https://discord.gg/CMDsBmhvyW) [![GitHub Stars](https://img.shields.io/github/stars/wind-addons/ElvUI_WindTools?style=for-the-badge&label=GitHub%20Stars%20%E2%AD%90&logo=github&color=yellow)](https://github.com/wind-addons/ElvUI_WindTools) [![CurseForge](https://cf.way2muchnoise.eu/full_300361_Downloads.svg?badge_style=for_the_badge)](https://www.curseforge.com/wow/addons/elvui-windtools)
 
@@ -74,12 +74,11 @@ Português, Italiano
 ### Map
 
 1. **Super Tracker**: Additional features for waypoint - auto track, middle click to clear, remove distance limitation, waypoint parse support, virtual TomTom command support.
-2. **Who Clicked Minimap**: Display the name of players who clicked the minimap with customizable animation and colors.
-3. **Rectangle Minimap**: Customize the minimap with different length of width and height.
-4. **Minimap Buttons**: Collect all minimap buttons to a bar with customizable layout, sorting priority, and expansion buttons support.
-5. **World Map**: Remove fog of war with optional colored fog; resize world map with custom scale.
-6. **Instance Difficulty**: Reskin the instance difficulty in text style with customizable font and strings.
-7. **Event Tracker**: Track world events in the world map - supports TWW weekly quests, Nightfall, Theater Troupe, Radiant Echoes, Dragonlands events with customizable alerts and sounds.
+2. **Rectangle Minimap**: Customize the minimap with different length of width and height.
+3. **Minimap Buttons**: Collect all minimap buttons to a bar with customizable layout, sorting priority, and expansion buttons support.
+4. **World Map**: Remove fog of war with optional colored fog; resize world map with custom scale.
+5. **Instance Difficulty**: Reskin the instance difficulty in text style with customizable font and strings.
+6. **Event Tracker**: Track world events in the world map - supports TWW weekly quests, Nightfall, Theater Troupe, Radiant Echoes, Dragonlands events with customizable alerts and sounds.
 
 ### Quest
 

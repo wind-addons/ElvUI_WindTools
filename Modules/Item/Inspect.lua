@@ -716,7 +716,7 @@ function I:CreatePanel(parent)
 		frame:Hide()
 	end)
 
-	MF:InternalHandle(frame, parent.MoveFrame or parent)
+	MF:InternalHandle(frame, MF:GetMoveTarget(parent) or parent)
 
 	-- Portrait
 	frame.PortraitFrame = CreateFrame("Frame", nil, frame, "GarrisonFollowerPortraitTemplate") --[[@as GarrisonFollowerPortraitMixin]]
@@ -1118,7 +1118,8 @@ function I:CreateStatsComparePanel(parent)
 	hooksecurefunc(parent, "Hide", function()
 		frame:Hide()
 	end)
-	MF:InternalHandle(frame, parent.MoveFrame or parent)
+
+	MF:InternalHandle(frame, MF:GetMoveTarget(parent) or parent)
 	parent.WTInspectStatsCompare = frame
 
 	return frame

@@ -320,6 +320,13 @@ V.quest = {
 				style = "OUTLINE",
 			},
 		},
+		poiButton = {
+			enable = false,
+			scale = 1,
+			xOffset = 0,
+			yOffset = 0,
+			center = false,
+		},
 	},
 }
 

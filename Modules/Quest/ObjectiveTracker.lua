@@ -374,6 +374,48 @@ function OT:ScenarioObjectiveTracker_UpdateCriteria(tracker, numCriteria)
 	end
 end
 
+---Custom SetPoint handler for POI buttons to apply user-defined positioning
+---@param button Button The POI button being positioned
+function OT:ObjectiveTrackerPOIButton_SetPoint(button, point, relativeTo, relativePoint, xOffset, yOffset, skip)
+	if skip then
+		return
+	end
+
+	if not self.db.poiButton.center then
+		F.Move(button, self.db.poiButton.xOffset, self.db.poiButton.yOffset)
+		return
+	end
+
+	local parent = button:GetParent()
+	if not parent then
+		return
+	end
+
+	button:ClearAllPoints()
+	button:Point("RIGHT", parent, "LEFT", self.db.poiButton.xOffset, self.db.poiButton.yOffset, true)
+end
+
+---Handle POI button styling and positioning
+---@param block ObjectiveTrackerBlockTemplate The objective tracker block containing the POI button
+function OT:HandleBlockPOIButton(block)
+	if not self.db.poiButton.enable then
+		return
+	end
+
+	local button = block.poiButton
+	if not button or self:IsHooked(button, "SetPoint") then
+		return
+	end
+
+	button:SetScale(self.db.poiButton.scale)
+	F.InternalizeMethod(button, "SetPoint")
+	self:SecureHook(button, "SetPoint", "ObjectiveTrackerPOIButton_SetPoint")
+end
+
+function OT:ObjectiveTrackerBlock_GetPOIButton(block, style)
+	self:HandleBlockPOIButton(block)
+end
+
 ---Handle tracker module updates, applying cosmetic bar, font styling, and header modifications
 ---@param tracker ObjectiveTrackerModuleTemplate The tracker module being updated
 function OT:ObjectiveTrackerModule_Update(tracker)
@@ -406,6 +448,11 @@ function OT:ObjectiveTrackerModule_AddBlock(tracker, block)
 		self:SecureHook(block, "AddObjective", "ObjectiveTrackerBlock_AddObjective")
 	end
 
+	if block.GetPOIButton and not self:IsHooked(block, "GetPOIButton") then
+		self:SecureHook(block, "GetPOIButton", "ObjectiveTrackerBlock_GetPOIButton")
+	end
+
+	self:HandleBlockPOIButton(block)
 	self:HandleBlockHeader(block)
 	block:ForEachUsedLine(function(line, objectiveKey)
 		self:HandleLine(line, objectiveKey)

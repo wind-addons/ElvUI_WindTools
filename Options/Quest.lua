@@ -781,8 +781,73 @@ options.objectiveTracker = {
 				},
 			},
 		},
-		backdrop = {
+		poiButton = {
 			order = 10,
+			type = "group",
+			inline = true,
+			name = L["POI Button"],
+			disabled = function()
+				return not E.private.WT.quest.objectiveTracker.enable
+			end,
+			get = function(info)
+				return E.private.WT.quest.objectiveTracker.poiButton[info[#info]]
+			end,
+			set = function(info, value)
+				E.private.WT.quest.objectiveTracker.poiButton[info[#info]] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+					desc = L["Modify the position and scale of the POI button."],
+				},
+				scale = {
+					order = 2,
+					type = "range",
+					name = L["Scale"],
+					desc = L["Scale of the POI button."],
+					min = 0.5,
+					max = 3,
+					step = 0.01,
+				},
+				center = {
+					order = 3,
+					type = "toggle",
+					name = L["Center"],
+					desc = L["Move the POI button to the vertical center of the block."],
+				},
+				xOffset = {
+					order = 4,
+					type = "range",
+					name = L["X-Offset"],
+					desc = format(
+						"%s %s",
+						L["X-Offset of the POI button."],
+						L["It works whatever 'Center' is enabled or not."]
+					),
+					min = -100,
+					max = 100,
+					step = 1,
+				},
+				yOffset = {
+					order = 5,
+					type = "range",
+					name = L["Y-Offset"],
+					desc = format(
+						"%s %s",
+						L["Y-Offset of the POI button."],
+						L["It works whatever 'Center' is enabled or not."]
+					),
+					min = -100,
+					max = 100,
+					step = 1,
+				},
+			},
+		},
+		backdrop = {
+			order = 11,
 			type = "group",
 			inline = true,
 			name = L["Backdrop"],
@@ -878,7 +943,7 @@ options.objectiveTracker = {
 			},
 		},
 		menuTitle = {
-			order = 11,
+			order = 12,
 			type = "group",
 			inline = true,
 			name = L["Menu Title"] .. " (" .. L["it shows when objective tracker be collapsed."] .. ")",

@@ -1,8 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
   "workspace.library": [
-    "~/.vscode/extensions/ketho.wow-api-0.22.1/Annotations/Core",
-    "~/.vscode/extensions/ketho.wow-api-0.22.1/Annotations/FrameXML"
+    "~/.vscode/extensions/ketho.wow-api-0.22.2/Annotations/Core",
+    "~/.vscode/extensions/ketho.wow-api-0.22.2/Annotations/FrameXML"
   ],
   "workspace.ignoreDir": [
     ".vscode",

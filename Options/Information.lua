@@ -24,7 +24,7 @@ local donators = {
 		"Constrained",
 	}, ", "),
 	paypal = C.StringByTemplate(L["PayPal"] .. ": ", "blue-500") .. tconcat({
-		"M. Stracke",
+		"Magguu",
 	}, ", "),
 	aifadian = C.StringByTemplate(L["AiFaDian"] .. ": ", "blue-500") .. tconcat({
 		"LuckyAres",

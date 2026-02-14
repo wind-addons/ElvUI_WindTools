@@ -9,17 +9,31 @@ local select = select
 
 local GetClassInfo = GetClassInfo
 
-local function updateClassIcon(row)
+local function UpdateClassIcon(row)
 	if not row or not row.expanded then
 		return
 	end
 
 	local memberInfo = row:GetMemberInfo()
-	local classId = memberInfo and memberInfo.classID
-	local englishClassName = classId and select(2, GetClassInfo(classId))
+	local classID = memberInfo and memberInfo.classID
+	local englishClassName = classID and select(2, GetClassInfo(classID))
 	if englishClassName then
 		row.Class:SetTexture(F.GetClassIconWithStyle(englishClassName, "flat"))
 		row.Class:SetTexCoord(0, 1, 0, 1)
+	end
+end
+
+local function HandleRewardButton(button)
+	if not button.IsSkinned then
+		return
+	end
+
+	if not button.__windSkin and W.AsianLocale then
+		button.backdrop:ClearAllPoints()
+		button.backdrop:Point("TOPLEFT", button.Icon.backdrop, -7, 5)
+		button.backdrop:Point("BOTTOMLEFT", button.Icon.backdrop, -7, -5)
+		button.backdrop:Width(button:GetWidth() + 9)
+		button.__windSkin = true
 	end
 end
 
@@ -57,17 +71,11 @@ function S:Blizzard_Communities()
 	end
 
 	hooksecurefunc(CommunitiesFrame.MemberList, "RefreshListDisplay", function(memberList)
-		local target = memberList.ScrollBox:GetScrollTarget()
-		if not target or not target.GetChildren then
-			return
-		end
-
-		for _, row in pairs({ target:GetChildren() }) do
-			if row and not row.__windSkinHook then
-				hooksecurefunc(row, "RefreshExpandedColumns", updateClassIcon)
-				row.__windSkinHook = true
+		memberList.ScrollBox:ForEachFrame(function(frame)
+			if frame and not self:IsHooked(frame, "RefreshExpandedColumns") then
+				self:SecureHook(frame, "RefreshExpandedColumns", UpdateClassIcon)
 			end
-		end
+		end)
 	end)
 
 	local BossModel = _G.CommunitiesFrameGuildDetailsFrameNews.BossModel
@@ -75,26 +83,7 @@ function S:Blizzard_Communities()
 	self:CreateShadow(BossModel.TextFrame)
 
 	hooksecurefunc(CommunitiesFrame.GuildBenefitsFrame.Rewards.ScrollBox, "Update", function(scrollBox)
-		for _, child in next, { scrollBox.ScrollTarget:GetChildren() } do
-			if not child.IsSkinned then
-				self:Proxy("HandleIcon", child.Icon, true)
-				child:StripTextures()
-				child:CreateBackdrop("Transparent")
-				child.backdrop:ClearAllPoints()
-				child.backdrop:Point("TOPLEFT", child.Icon.backdrop)
-				child.backdrop:Point("BOTTOMLEFT", child.Icon.backdrop)
-				child.backdrop:Width(child:GetWidth() - 5)
-				child.IsSkinned = true
-			end
-
-			if not child.__windSkin and W.AsianLocale then
-				child.backdrop:ClearAllPoints()
-				child.backdrop:Point("TOPLEFT", child.Icon.backdrop, -7, 5)
-				child.backdrop:Point("BOTTOMLEFT", child.Icon.backdrop, -7, -5)
-				child.backdrop:Width(child:GetWidth() + 9)
-				child.__windSkin = true
-			end
-		end
+		scrollBox:ForEachFrame(HandleRewardButton)
 	end)
 end
 

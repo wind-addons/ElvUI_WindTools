@@ -35,26 +35,13 @@ local function ReskinScrollFrameItems(frame, template)
 	end
 end
 
-local function SAMDropDownSkin(frame)
-	frame:Width(200)
-	frame:Height(32)
-	frame:StripTextures()
-	frame:CreateBackdrop("Transparent")
-	frame:SetFrameLevel(frame:GetFrameLevel() + 2)
-	frame.backdrop:Point("TOPLEFT", 20, 1)
-	frame.backdrop:Point("BOTTOMRIGHT", frame.Button, "BOTTOMRIGHT", 2, -2)
-	S:Proxy("HandleNextPrevButton", frame.Button, "down")
-	frame.Text:ClearAllPoints()
-	frame.Text:Point("RIGHT", frame.Button, "LEFT", -2, 0)
-end
-
 local function ReskinModules(frame)
 	-- MainFrame
 	S:Proxy("HandleButton", frame.OkButton)
 	S:Proxy("HandleButton", frame.CancelButton)
 	S:Proxy("HandleButton", frame.EnableAllButton)
 	S:Proxy("HandleButton", frame.DisableAllButton)
-	SAMDropDownSkin(frame.CharacterDropDown)
+	S:Proxy("HandleDropDownBox", frame.CharacterDropDown, 120)
 
 	frame.OkButton:ClearAllPoints()
 	frame.OkButton:Point("RIGHT", frame.CancelButton, "LEFT", -2, 0)

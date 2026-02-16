@@ -487,6 +487,18 @@ options.minimapButtons = {
 						MB:UpdateLayout()
 					end,
 				},
+				ignoreButtons = {
+					order = 9,
+					type = "input",
+					multiline = 5,
+					width = "full",
+					name = L["Ignore Buttons"],
+					desc = L["Enter a comma-separated list of Lua regex patterns. Buttons matching these patterns will be continuously hidden from the screen.\n\nThis is useful for buttons that do not have a built-in option to hide them. Or addons that refuse to use a global setting to handle their minimap button."],
+					set = function(info, value)
+						E.private.WT.maps.minimapButtons[info[#info]] = value
+						MB:UpdateButtons()
+					end,
+				},
 			},
 		},
 		buttonsConfig = {

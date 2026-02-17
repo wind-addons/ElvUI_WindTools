@@ -21,7 +21,7 @@ local mythicPlusDataCache = {}
 
 function T:GetMythicPlusData(unit)
 	local guid = UnitGUID(unit)
-	if not guid then
+	if E:IsSecretValue(guid) or not guid then
 		return
 	end
 	local now = time()

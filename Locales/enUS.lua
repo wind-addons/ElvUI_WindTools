@@ -772,6 +772,7 @@ L["Ignore Earned Before"] = true
 L["Ignore List"] = true
 L["Ignore achievements already earned by other characters on this account."] = true
 L["Ignored NPCs"] = true
+L["Ignored minimap buttons"] = true
 L["Immersion"] = true
 L["Import"] = true
 L["Import and export your %s settings."] = true

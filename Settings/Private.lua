@@ -154,6 +154,7 @@ V.maps = {
 		orientation = "HORIZONTAL",
 		expansionLandingPage = false,
 		sortingPriority = "^Expansion, _BugSack, _Saved, _Wind",
+		ignoreButtons = "",
 	},
 }
 

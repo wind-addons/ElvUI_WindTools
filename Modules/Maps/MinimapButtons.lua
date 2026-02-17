@@ -90,6 +90,24 @@ local acceptedFrames = {
 }
 
 local handledButtons = {} ---@type table<integer, {name: string, debugName: string, frame: Frame}>
+local ignoredButtons = {} ---@type table<integer, {name: string, debugName: string, frame: Frame}>
+
+local function isIgnored(name)
+	if not name then
+		return false
+	end
+
+	if MB.db.ignoreButtons then
+		for pattern in gmatch(MB.db.ignoreButtons, "([^,]+)") do
+			pattern = strtrim(pattern)
+			if pattern ~= "" and strfind(name, pattern) then
+				return true
+			end
+		end
+	end
+
+	return false
+end
 
 local function isValidName(name)
 	for _, ignoreName in pairs(IgnoreList.full) do
@@ -274,7 +292,31 @@ function MB:SkinButton(button, force)
 	end
 
 	local name = button:GetDebugName()
-	if not force and (name == nil or not button:IsVisible() or button.isSkinned) then
+
+	-- Check if the button is already handled or ignored
+	if button.isSkinned then
+		-- Check handled buttons
+		for _, data in pairs(handledButtons) do
+			if data.frame == button then
+				if isIgnored(name) then
+					self:UpdateButtons()
+				end
+				return
+			end
+		end
+
+		-- Check ignored buttons
+		for _, data in pairs(ignoredButtons) do
+			if data.frame == button then
+				if not isIgnored(name) then
+					self:UpdateButtons()
+				end
+				return
+			end
+		end
+	end
+
+	if not force and (name == nil or not button:IsVisible()) then
 		return
 	end
 
@@ -293,6 +335,9 @@ function MB:SkinButton(button, force)
 	if not buttonType then
 		return
 	end
+
+	-- Check if button should be ignored by user settings
+	-- We need to capture original state first, so move this check down
 
 	local valid = false
 	for i = 1, #whiteList do
@@ -475,6 +520,17 @@ function MB:SkinButton(button, force)
 
 	self:SetButtonMouseOver(button, button)
 
+	-- Check if button should be ignored by user settings
+	-- Done here so we have captured the original state
+	if isIgnored(name) then
+		button:SetParent(self.hiddenFrame)
+		button:Hide() -- Ensure hidden
+		button:ClearAllPoints() -- Ensure no rogue anchors
+		tinsert(ignoredButtons, { name = name, debugName = name, frame = button })
+		button.isSkinned = true
+		return
+	end
+
 	-- After fix for some buttons
 	if name == "Narci_MinimapButton" then
 		self:SetButtonMouseOver(button, button.Panel)
@@ -504,6 +560,82 @@ function MB:SkinButton(button, force)
 	end
 
 	button.isSkinned = true
+end
+
+function MB:ReleaseButton(button)
+	local original = button.original
+	if not original then
+		return
+	end
+
+	button:SetParent(original.Parent)
+	if original.DragStart then
+		button:SetScript("OnDragStart", original.DragStart)
+	else
+		button:SetScript("OnDragStart", nil)
+	end
+	if original.DragEnd then
+		button:SetScript("OnDragStop", original.DragEnd)
+	else
+		button:SetScript("OnDragStop", nil)
+	end
+
+	button:SetSize(original.Width, original.Height)
+	button:ClearAllPoints()
+	if original.Point then
+		button:SetPoint(original.Point, original.relativeTo, original.relativePoint, original.xOfs, original.yOfs)
+	else
+		button:SetPoint("CENTER", _G.Minimap, "CENTER", -80, -34)
+	end
+
+	button:SetFrameStrata(original.FrameStrata)
+	button:SetFrameLevel(original.FrameLevel)
+	button:SetMovable(true)
+	button:SetScale(original.Scale)
+
+	if button.backdrop and button.backdrop.shadow then
+		button.backdrop.shadow:Hide()
+	end
+end
+
+function MB:UpdateButtons()
+	-- Check for ignored buttons in handled list
+	for i = #handledButtons, 1, -1 do
+		local buttonData = handledButtons[i]
+		local button = buttonData.frame
+		local name = buttonData.name
+
+		if isIgnored(name) then
+			tremove(handledButtons, i)
+			self:ReleaseButton(button) -- Reset size/scale first!
+			button:SetParent(self.hiddenFrame)
+			button:Hide() -- Ensure hidden
+			button:ClearAllPoints() -- Ensure no rogue anchors
+			tinsert(ignoredButtons, buttonData)
+		elseif not isValidName(name) then
+			self:ReleaseButton(button)
+			tremove(handledButtons, i)
+		end
+	end
+
+	-- Check for unignored buttons in ignored list
+	for i = #ignoredButtons, 1, -1 do
+		local buttonData = ignoredButtons[i]
+		local button = buttonData.frame
+		local name = buttonData.name
+
+		if not isIgnored(name) then
+			tremove(ignoredButtons, i)
+			-- We need to re-skin or re-add the button properly
+			-- Releasing it first to reset state is safest
+			self:ReleaseButton(button)
+			button:Show() -- Ensure it's visible again
+			button.isSkinned = false -- Force re-skin
+			self:SkinButton(button, true)
+		end
+	end
+
+	self:SkinMinimapButtons()
 end
 
 function MB.DelayedUpdateLayout()
@@ -595,6 +727,12 @@ function MB:PrintAllButtonNames()
 		local name = button.name or button.debugName
 		name = name and gsub(name, "\124", "\124\124") or format('"" (%s)', C.StringByTemplate(L["no name"], "red-300"))
 		F.Print(i, C.StringByTemplate(name, "cyan-300"))
+	end
+	F.Print(L["Ignored minimap buttons"] .. ":")
+	for i, button in pairs(ignoredButtons) do
+		local name = button.name or button.debugName
+		name = name and gsub(name, "\124", "\124\124") or format('"" (%s)', C.StringByTemplate(L["no name"], "red-300"))
+		F.Print(i, C.StringByTemplate(name, "red-300"))
 	end
 	F.PrintGradientLine()
 end
@@ -810,6 +948,10 @@ function MB:CreateFrames()
 		end,
 		"WindTools,maps,minimapButtons"
 	)
+
+	-- Hidden frame for ignored buttons
+	self.hiddenFrame = CreateFrame("Frame")
+	self.hiddenFrame:Hide()
 end
 
 function MB:SetUpdateHook()

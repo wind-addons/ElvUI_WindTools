@@ -18,11 +18,14 @@ local strfind = strfind
 local strlen = strlen
 local strsub = strsub
 local strtrim = strtrim
+local tContains = tContains
 local tinsert = tinsert
 local tremove = tremove
 local type = type
 local unpack = unpack
+local wipe = wipe
 
+local ContainsIf = ContainsIf
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
 local RegisterStateDriver = RegisterStateDriver
@@ -31,7 +34,7 @@ local UnregisterStateDriver = UnregisterStateDriver
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 
-local IgnoreList = {
+local BuildinIgnoreSettings = {
 	full = {
 		"AsphyxiaUIMinimapHelpButton",
 		"AsphyxiaUIMinimapVersionButton",
@@ -83,53 +86,13 @@ local LibDBTextureIgnore = {
 	["LibDBIcon10_IRememberYou"] = true,
 }
 
-local whiteList = {}
-
 local acceptedFrames = {
 	"BagSync_MinimapButton",
 }
 
 local handledButtons = {} ---@type table<integer, {name: string, debugName: string, frame: Frame}>
-local ignoredButtons = {} ---@type table<integer, {name: string, debugName: string, frame: Frame}>
-
-local function isIgnored(name)
-	if not name then
-		return false
-	end
-
-	if MB.db.ignoreButtons then
-		for pattern in gmatch(MB.db.ignoreButtons, "([^,]+)") do
-			pattern = strtrim(pattern)
-			if pattern ~= "" and strfind(name, pattern) then
-				return true
-			end
-		end
-	end
-
-	return false
-end
-
-local function isValidName(name)
-	for _, ignoreName in pairs(IgnoreList.full) do
-		if name == ignoreName then
-			return false
-		end
-	end
-
-	for _, ignoreName in pairs(IgnoreList.startWith) do
-		if strsub(name, 1, strlen(ignoreName)) == ignoreName then
-			return false
-		end
-	end
-
-	for _, ignoreName in pairs(IgnoreList.partial) do
-		if strfind(name, ignoreName) ~= nil then
-			return false
-		end
-	end
-
-	return true
-end
+local hiddenButtons = {} ---@type table<integer, {name: string, debugName: string, frame: Frame}>
+local ignoredByUserButtons = {} ---@type table<integer, {name: string, debugName: string, frame: Frame}>
 
 function MB:OnButtonSetShown(button, shown)
 	local name, debugName = button:GetName(), button:GetDebugName()
@@ -291,32 +254,37 @@ function MB:SkinButton(button, force)
 		return
 	end
 
+	---@cast button Button
+
 	local name = button:GetDebugName()
 
-	-- Check if the button is already handled or ignored
-	if button.isSkinned then
-		-- Check handled buttons
-		for _, data in pairs(handledButtons) do
-			if data.frame == button then
-				if isIgnored(name) then
-					self:UpdateButtons()
-				end
-				return
-			end
-		end
-
-		-- Check ignored buttons
-		for _, data in pairs(ignoredButtons) do
-			if data.frame == button then
-				if not isIgnored(name) then
-					self:UpdateButtons()
-				end
-				return
-			end
-		end
+	if not force and (name == nil or not button:IsVisible() or button.isSkinned) then
+		return
 	end
 
-	if not force and (name == nil or not button:IsVisible()) then
+	if
+		tContains(handledButtons, button)
+		or tContains(hiddenButtons, button)
+		or tContains(ignoredByUserButtons, button)
+	then
+		return
+	end
+
+	if self:IsHidden(name) then
+		if button.IsForbidden and button:IsForbidden() or button.IsProtected and button:IsProtected() then
+			return
+		end
+
+		button:SetParent(self.hiddenFrame)
+		tinsert(hiddenButtons, { name = name, debugName = button:GetDebugName(), frame = button })
+		return
+	end
+
+	local ignored = self:IsIgnored(name)
+	if ignored then
+		if ignored == "user" then -- Only log user ignored buttons, not the ones ignored by build-in settings
+			tinsert(ignoredByUserButtons, { name = name, debugName = button:GetDebugName(), frame = button })
+		end
 		return
 	end
 
@@ -333,30 +301,6 @@ function MB:SkinButton(button, force)
 	end
 
 	if not buttonType then
-		return
-	end
-
-	-- Check if button should be ignored by user settings
-	-- We need to capture original state first, so move this check down
-
-	local valid = false
-	for i = 1, #whiteList do
-		if strsub(name, 1, strlen(whiteList[i])) == whiteList[i] then
-			valid = true
-			break
-		end
-	end
-
-	if strsub(name, 1, strlen("LibDBIcon")) == "LibDBIcon" then
-		valid = true
-		for _, ignoreName in pairs(IgnoreList.libDBIcon) do
-			if strsub(name, strlen("LibDBIcon10_") + 1) == ignoreName then
-				return
-			end
-		end
-	end
-
-	if not valid and not isValidName(name) then
 		return
 	end
 
@@ -520,17 +464,6 @@ function MB:SkinButton(button, force)
 
 	self:SetButtonMouseOver(button, button)
 
-	-- Check if button should be ignored by user settings
-	-- Done here so we have captured the original state
-	if isIgnored(name) then
-		button:SetParent(self.hiddenFrame)
-		button:Hide() -- Ensure hidden
-		button:ClearAllPoints() -- Ensure no rogue anchors
-		tinsert(ignoredButtons, { name = name, debugName = name, frame = button })
-		button.isSkinned = true
-		return
-	end
-
 	-- After fix for some buttons
 	if name == "Narci_MinimapButton" then
 		self:SetButtonMouseOver(button, button.Panel)
@@ -562,82 +495,6 @@ function MB:SkinButton(button, force)
 	button.isSkinned = true
 end
 
-function MB:ReleaseButton(button)
-	local original = button.original
-	if not original then
-		return
-	end
-
-	button:SetParent(original.Parent)
-	if original.DragStart then
-		button:SetScript("OnDragStart", original.DragStart)
-	else
-		button:SetScript("OnDragStart", nil)
-	end
-	if original.DragEnd then
-		button:SetScript("OnDragStop", original.DragEnd)
-	else
-		button:SetScript("OnDragStop", nil)
-	end
-
-	button:SetSize(original.Width, original.Height)
-	button:ClearAllPoints()
-	if original.Point then
-		button:SetPoint(original.Point, original.relativeTo, original.relativePoint, original.xOfs, original.yOfs)
-	else
-		button:SetPoint("CENTER", _G.Minimap, "CENTER", -80, -34)
-	end
-
-	button:SetFrameStrata(original.FrameStrata)
-	button:SetFrameLevel(original.FrameLevel)
-	button:SetMovable(true)
-	button:SetScale(original.Scale)
-
-	if button.backdrop and button.backdrop.shadow then
-		button.backdrop.shadow:Hide()
-	end
-end
-
-function MB:UpdateButtons()
-	-- Check for ignored buttons in handled list
-	for i = #handledButtons, 1, -1 do
-		local buttonData = handledButtons[i]
-		local button = buttonData.frame
-		local name = buttonData.name
-
-		if isIgnored(name) then
-			tremove(handledButtons, i)
-			self:ReleaseButton(button) -- Reset size/scale first!
-			button:SetParent(self.hiddenFrame)
-			button:Hide() -- Ensure hidden
-			button:ClearAllPoints() -- Ensure no rogue anchors
-			tinsert(ignoredButtons, buttonData)
-		elseif not isValidName(name) then
-			self:ReleaseButton(button)
-			tremove(handledButtons, i)
-		end
-	end
-
-	-- Check for unignored buttons in ignored list
-	for i = #ignoredButtons, 1, -1 do
-		local buttonData = ignoredButtons[i]
-		local button = buttonData.frame
-		local name = buttonData.name
-
-		if not isIgnored(name) then
-			tremove(ignoredButtons, i)
-			-- We need to re-skin or re-add the button properly
-			-- Releasing it first to reset state is safest
-			self:ReleaseButton(button)
-			button:Show() -- Ensure it's visible again
-			button.isSkinned = false -- Force re-skin
-			self:SkinButton(button, true)
-		end
-	end
-
-	self:SkinMinimapButtons()
-end
-
 function MB.DelayedUpdateLayout()
 	if MB.db.orientation ~= "NOANCHOR" then
 		E:Delay(1, MB.UpdateLayout, MB)
@@ -655,6 +512,75 @@ function MB:GetSortPriorityPatterns()
 	end
 
 	return priorityPatterns
+end
+
+function MB:RefreshPredefinedPatterns()
+	self.hiddenPatterns = self.hiddenPatterns or {}
+	self.ignoredPatterns = self.ignoredPatterns or {}
+	wipe(self.hiddenPatterns)
+	wipe(self.ignoredPatterns)
+
+	for pattern in gmatch(self.db.hiddenPatterns, "([^,]+)") do
+		pattern = strtrim(pattern)
+		if pattern ~= "" then
+			tinsert(self.hiddenPatterns, pattern)
+		end
+	end
+
+	for pattern in gmatch(self.db.ignorePatterns, "([^,]+)") do
+		pattern = strtrim(pattern)
+		if pattern ~= "" then
+			tinsert(self.ignoredPatterns, pattern)
+		end
+	end
+end
+
+function MB:IsHidden(name)
+	if not name or name == "" or not self.hiddenPatterns or #self.hiddenPatterns == 0 then
+		return false
+	end
+
+	return ContainsIf(self.hiddenPatterns, function(pattern)
+		return strfind(name, pattern) ~= nil
+	end)
+end
+
+function MB:IsIgnored(name)
+	if not name or name == "" then
+		return false
+	end
+
+	for _, pattern in pairs(BuildinIgnoreSettings.full) do
+		if name == pattern then
+			return true
+		end
+	end
+
+	for _, pattern in pairs(BuildinIgnoreSettings.startWith) do
+		if strsub(name, 1, strlen(pattern)) == pattern then
+			return true
+		end
+	end
+
+	for _, pattern in pairs(BuildinIgnoreSettings.partial) do
+		if strfind(name, pattern) ~= nil then
+			return true
+		end
+	end
+
+	if strsub(name, 1, strlen("LibDBIcon")) == "LibDBIcon" then
+		for _, ignoreName in pairs(BuildinIgnoreSettings.libDBIcon) do
+			if strsub(name, strlen("LibDBIcon10_") + 1) == ignoreName then
+				return true
+			end
+		end
+	end
+
+	if self.ignoredPatterns and #self.ignoredPatterns > 0 then
+		return ContainsIf(self.ignoredPatterns, function(pattern)
+			return strfind(name, pattern) ~= nil
+		end) and "user" or false
+	end
 end
 
 function MB:SortButtons()
@@ -722,17 +648,35 @@ function MB:PrintAllButtonNames()
 	for i, pattern in pairs(self:GetSortPriorityPatterns()) do
 		F.Print(i, C.StringByTemplate(gsub(pattern, "\124", "\124\124"), "amber-300"))
 	end
+
+	F.PrintGradientLine()
 	F.Print(L["All handled minimap buttons"] .. ":")
 	for i, button in pairs(handledButtons) do
 		local name = button.name or button.debugName
 		name = name and gsub(name, "\124", "\124\124") or format('"" (%s)', C.StringByTemplate(L["no name"], "red-300"))
 		F.Print(i, C.StringByTemplate(name, "cyan-300"))
 	end
-	F.Print(L["Ignored minimap buttons"] .. ":")
-	for i, button in pairs(ignoredButtons) do
-		local name = button.name or button.debugName
-		name = name and gsub(name, "\124", "\124\124") or format('"" (%s)', C.StringByTemplate(L["no name"], "red-300"))
-		F.Print(i, C.StringByTemplate(name, "red-300"))
+
+	if #ignoredByUserButtons > 0 then
+		F.PrintGradientLine()
+		F.Print(L["Ignored minimap buttons"] .. ":")
+		for i, button in pairs(ignoredByUserButtons) do
+			local name = button.name or button.debugName
+			name = name and gsub(name, "\124", "\124\124")
+				or format('"" (%s)', C.StringByTemplate(L["no name"], "red-300"))
+			F.Print(i, C.StringByTemplate(name, "yellow-300"))
+		end
+	end
+
+	if #hiddenButtons > 0 then
+		F.PrintGradientLine()
+		F.Print(L["Hidden minimap buttons"] .. ":")
+		for i, button in pairs(hiddenButtons) do
+			local name = button.name or button.debugName
+			name = name and gsub(name, "\124", "\124\124")
+				or format('"" (%s)', C.StringByTemplate(L["no name"], "red-300"))
+			F.Print(i, C.StringByTemplate(name, "red-300"))
+		end
 	end
 	F.PrintGradientLine()
 end
@@ -949,18 +893,23 @@ function MB:CreateFrames()
 		"WindTools,maps,minimapButtons"
 	)
 
-	-- Hidden frame for ignored buttons
+	-- Parent frame for hidden buttons
 	self.hiddenFrame = CreateFrame("Frame")
 	self.hiddenFrame:Hide()
+	self.hiddenFrame.Show = self.hiddenFrame.Hide
+	self.hiddenFrame.SetShown = self.hiddenFrame.Hide
 end
 
 function MB:SetUpdateHook()
-	if not self.initialized then
-		self:SecureHook(EM, "SetGetMinimapShape", "UpdateLayout")
-		self:SecureHook(EM, "UpdateSettings", "UpdateLayout")
-		self:SecureHook(E, "UpdateAll", "UpdateLayout")
-		self.initialized = true
+	if self.initialized then
+		return
 	end
+
+	self:SecureHook(EM, "SetGetMinimapShape", "UpdateLayout")
+	self:SecureHook(EM, "UpdateSettings", "UpdateLayout")
+	self:SecureHook(E, "UpdateAll", "UpdateLayout")
+
+	self.initialized = true
 end
 
 function MB:PLAYER_ENTERING_WORLD()
@@ -980,6 +929,7 @@ function MB:Initialize()
 		return
 	end
 
+	self:RefreshPredefinedPatterns()
 	self:CreateFrames()
 	self:UpdateMouseOverConfig()
 

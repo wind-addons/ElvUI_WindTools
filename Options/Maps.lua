@@ -457,7 +457,7 @@ options.minimapButtons = {
 				sortingPriority = {
 					order = 7,
 					type = "input",
-					multiline = 5,
+					multiline = 3,
 					width = "full",
 					name = L["Sorting Priority"],
 					desc = format(
@@ -468,7 +468,7 @@ options.minimapButtons = {
 						L["Leading and trailing whitespace in each pattern will be automatically trimmed."],
 						L["If you are not familiar with Lua regex, try using AI to help you."],
 						format(
-							L["Use command %s to view all handled buttons and their current sorting priority."],
+							L["Use command %s to view all handled buttons and their states"],
 							C.StringByTemplate("/wtmmb all", "teal-300")
 						)
 					),
@@ -487,16 +487,70 @@ options.minimapButtons = {
 						MB:UpdateLayout()
 					end,
 				},
-				ignoreButtons = {
+				hiddenPatterns = {
 					order = 9,
 					type = "input",
-					multiline = 5,
+					multiline = 3,
 					width = "full",
-					name = L["Ignore Buttons"],
-					desc = L["Enter a comma-separated list of Lua regex patterns. Buttons matching these patterns will be continuously hidden from the screen.\n\nThis is useful for buttons that do not have a built-in option to hide them. Or addons that refuse to use a global setting to handle their minimap button."],
+					name = L["Hidden Patterns"],
+					desc = format(
+						"%s\n\n%s\n%s\n%s\n\n%s\n%s",
+						L["Set the buttons to be completely hidden on the minimap."],
+						L["Enter a comma-separated list of Lua regex patterns."],
+						L["Buttons matching any of these patterns will be hidden."],
+						L["Leading and trailing whitespace in each pattern will be automatically trimmed."],
+						L["If you are not familiar with Lua regex, try using AI to help you."],
+						format(
+							L["Use command %s to view all handled buttons and their states"],
+							C.StringByTemplate("/wtmmb all", "teal-300")
+						)
+					),
 					set = function(info, value)
 						E.private.WT.maps.minimapButtons[info[#info]] = value
-						MB:UpdateButtons()
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+				},
+				resetHiddenPatterns = {
+					order = 10,
+					type = "execute",
+					name = L["Reset"],
+					desc = L["Reset hidden patterns to default value."],
+					func = function()
+						E.private.WT.maps.minimapButtons.hiddenPatterns = V.maps.minimapButtons.hiddenPatterns
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+				},
+				ignorePatterns = {
+					order = 11,
+					type = "input",
+					multiline = 3,
+					width = "full",
+					name = L["Ignore Patterns"],
+					desc = format(
+						"%s\n\n%s\n%s\n%s\n\n%s\n%s",
+						L["Set the buttons to be ignored by this module."],
+						L["Enter a comma-separated list of Lua regex patterns."],
+						L["Buttons matching any of these patterns will be ignored, meaning they won't be moved to the bar or hidden."],
+						L["Leading and trailing whitespace in each pattern will be automatically trimmed."],
+						L["If you are not familiar with Lua regex, try using AI to help you."],
+						format(
+							L["Use command %s to view all handled buttons and their states"],
+							C.StringByTemplate("/wtmmb all", "teal-300")
+						)
+					),
+					set = function(info, value)
+						E.private.WT.maps.minimapButtons[info[#info]] = value
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+				},
+				resetIgnorePatterns = {
+					order = 12,
+					type = "execute",
+					name = L["Reset"],
+					desc = L["Reset ignore patterns to default value."],
+					func = function()
+						E.private.WT.maps.minimapButtons.ignorePatterns = V.maps.minimapButtons.ignorePatterns
+						E:StaticPopup_Show("PRIVATE_RL")
 					end,
 				},
 			},

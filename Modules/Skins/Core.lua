@@ -770,7 +770,7 @@ function S:Initialize()
 	self.db = E.private.WT.skins
 	self:ProcessWaitingAceGUIWidgets()
 
-	if not self.db.enable then
+	if not self.db.enable or not E.private.skins.blizzard.enable then
 		return
 	end
 

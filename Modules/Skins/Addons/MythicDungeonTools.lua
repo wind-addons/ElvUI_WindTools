@@ -7,7 +7,7 @@ local pairs = pairs
 
 local CreateFrame = CreateFrame
 
-local function reskinTooltip(tt)
+local function ReskinTooltip(tt)
 	if not tt then
 		return
 	end
@@ -23,7 +23,7 @@ local function reskinTooltip(tt)
 	S:CreateShadow(tt)
 end
 
-local function reskinDungeonButton(MDT)
+local function ReskinDungeonButton(MDT)
 	local db = MDT:GetDB()
 	local dungeonList = db and db.selectedDungeonList
 	local currentList = MDT.dungeonSelectionToIndex and dungeonList and MDT.dungeonSelectionToIndex[dungeonList]
@@ -70,7 +70,7 @@ local function reskinDungeonButton(MDT)
 	end
 end
 
-local function reskinProgressBar(_, progressBar)
+local function ReskinProgressBar(_, progressBar)
 	local bar = progressBar and progressBar.Bar
 	bar:StripTextures()
 	bar:CreateBackdrop(nil, nil, nil, nil, nil, nil, nil, nil, true)
@@ -81,7 +81,7 @@ local function reskinProgressBar(_, progressBar)
 	F.SetFont(bar.Label)
 end
 
-local function reskinButtonTexture(texture, alphaTimes)
+local function ReskinButtonTexture(texture, alphaTimes)
 	if not texture then
 		return
 	end
@@ -97,13 +97,13 @@ local function reskinButtonTexture(texture, alphaTimes)
 	texture:SetVertexColor(texture:GetVertexColor())
 end
 
-local function reskinContainerIcon(_, icon)
+local function ReskinContainerIcon(_, icon)
 	if icon and icon.image then
 		icon.image:SetTexCoords()
 	end
 end
 
-local function reskinMapPOI(frame)
+local function ReskinMapPOI(frame)
 	if not frame or frame.__windSkin or not frame.Texture then
 		return
 	end
@@ -130,6 +130,7 @@ local function reskinMapPOI(frame)
 
 	frame.__windSkin = true
 end
+
 function S:MythicDungeonTools()
 	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.mythicDungeonTools then
 		return
@@ -153,8 +154,8 @@ function S:MythicDungeonTools()
 			F.WaitFor(function()
 				return _G.MDT.tooltip and _G.MDT.pullTooltip and true or false
 			end, function()
-				reskinTooltip(_G.MDT.tooltip)
-				reskinTooltip(_G.MDT.pullTooltip)
+				ReskinTooltip(_G.MDT.tooltip)
+				ReskinTooltip(_G.MDT.pullTooltip)
 			end, 0.05, 10)
 
 			skinned = true
@@ -178,9 +179,9 @@ function S:MythicDungeonTools()
 
 		local container = MDT.enemyInfoFrame.characteristicsContainer
 		if container and not container.__windSkin then
-			hooksecurefunc(container, "AddChild", reskinContainerIcon)
+			hooksecurefunc(container, "AddChild", ReskinContainerIcon)
 			for _, child in pairs(container.children) do
-				reskinContainerIcon(nil, child)
+				ReskinContainerIcon(nil, child)
 			end
 
 			container.__windSkin = true
@@ -194,7 +195,12 @@ function S:MythicDungeonTools()
 				self:SecureHook(pool, "Acquire", function(p)
 					if p.active then
 						for _, frame in pairs(p.active) do
-							reskinMapPOI(frame)
+							if frame and frame.Texture and not frame.__windHooked then
+								hooksecurefunc(frame.Texture, "SetTexture", function()
+									ReskinMapPOI(frame)
+								end)
+								frame.__windHooked = true
+							end
 						end
 					end
 				end)
@@ -202,14 +208,14 @@ function S:MythicDungeonTools()
 		end
 	end)
 
-	self:SecureHook(_G.MDT, "UpdateDungeonDropDown", reskinDungeonButton)
-	self:SecureHook(_G.MDT, "SkinProgressBar", reskinProgressBar)
+	self:SecureHook(_G.MDT, "UpdateDungeonDropDown", ReskinDungeonButton)
+	self:SecureHook(_G.MDT, "SkinProgressBar", ReskinProgressBar)
 end
 
 function S:Ace3_MDTPullButton(widget)
-	reskinButtonTexture(widget.frame.pickedGlow, 0.5)
-	reskinButtonTexture(widget.frame.highlight, 0.2)
-	reskinButtonTexture(widget.background, 0.3)
+	ReskinButtonTexture(widget.frame.pickedGlow, 0.5)
+	ReskinButtonTexture(widget.frame.highlight, 0.2)
+	ReskinButtonTexture(widget.background, 0.3)
 
 	widget.pullNumber:ClearAllPoints()
 	widget.pullNumber:Point("CENTER", widget.frame, "LEFT", 12, 1)
@@ -227,9 +233,9 @@ end
 
 function S:Ace3_MDTNewPullButton(widget)
 	widget.frame:StripTextures()
-	reskinButtonTexture(widget.background, 0.2)
+	ReskinButtonTexture(widget.background, 0.2)
 	widget.background:SetVertexColor(1, 1, 1, 0.4)
-	reskinButtonTexture(widget.frame.highlight, 0.2)
+	ReskinButtonTexture(widget.frame.highlight, 0.2)
 end
 
 function S:Ace3_MDTSpellButton(widget)
@@ -239,7 +245,7 @@ function S:Ace3_MDTSpellButton(widget)
 	F.Move(widget.icon, -3, 0)
 
 	widget.frame.background:SetAlpha(0)
-	reskinButtonTexture(widget.frame.highlight, 0.2)
+	ReskinButtonTexture(widget.frame.highlight, 0.2)
 	widget.frame:SetTemplate()
 end
 

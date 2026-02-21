@@ -29,7 +29,7 @@ local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 ---Utility class for parsing and processing LFG (Looking For Group) player information.
 ---Provides functionality to extract role, class, and specialization data from group finder results.
 W.Utilities.LFGPlayerInfo = {
-	name = "Utilities:LFGPlayerInfo"
+	name = "Utilities:LFGPlayerInfo",
 }
 
 ---Get the name identifier for this utility

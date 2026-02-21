@@ -275,7 +275,7 @@ function MB:SkinButton(button, force)
 			return
 		end
 
-		button:SetParent(self.hiddenFrame)
+		button:Kill()
 		tinsert(hiddenButtons, { name = name, debugName = button:GetDebugName(), frame = button })
 		return
 	end
@@ -892,12 +892,6 @@ function MB:CreateFrames()
 		end,
 		"WindTools,maps,minimapButtons"
 	)
-
-	-- Parent frame for hidden buttons
-	self.hiddenFrame = CreateFrame("Frame")
-	self.hiddenFrame:Hide()
-	self.hiddenFrame.Show = self.hiddenFrame.Hide
-	self.hiddenFrame.SetShown = self.hiddenFrame.Hide
 end
 
 function MB:SetUpdateHook()

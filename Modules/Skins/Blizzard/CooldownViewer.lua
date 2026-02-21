@@ -8,6 +8,7 @@ local _G = _G
 local ceil = ceil
 local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
+local next = next
 local pairs = pairs
 
 local function UpdateFrameAndStrata(frame, config)
@@ -145,6 +146,59 @@ function S:Blizzard_CooldownViewer_Modification()
 	end
 end
 
+local buttonOffset = 1
+local function PositionCooldownViewerTab(tab, _, _, _, x, y)
+	if x ~= buttonOffset or y ~= -10 then
+		tab:ClearAllPoints()
+		tab:SetPoint("TOPLEFT", _G.CooldownViewerSettings, "TOPRIGHT", buttonOffset, -10)
+	end
+end
+
+local function PositionTabIcons(icon, point)
+	if point ~= "CENTER" then
+		icon:ClearAllPoints()
+		icon:SetPoint("CENTER")
+	end
+end
+
+ES.CooldownManager_HandleAbilityTabs = function(self, viewer)
+	for i, tab in next, { viewer.SpellsTab, viewer.AurasTab } do
+		tab:CreateBackdrop()
+		tab:Size(30, 40)
+
+		if i == 1 then
+			tab:ClearAllPoints()
+			tab:SetPoint("TOPLEFT", viewer, "TOPRIGHT", 1, -10)
+
+			hooksecurefunc(tab, "SetPoint", PositionCooldownViewerTab)
+		end
+
+		if tab.Icon then
+			tab.Icon:ClearAllPoints()
+			tab.Icon:SetPoint("CENTER")
+
+			hooksecurefunc(tab.Icon, "SetPoint", PositionTabIcons)
+		end
+
+		if tab.Background then
+			tab.Background:SetAlpha(0)
+		end
+
+		if tab.SelectedTexture then
+			tab.SelectedTexture:SetDrawLayer("ARTWORK")
+			tab.SelectedTexture:SetColorTexture(1, 0.82, 0, 0.3)
+			tab.SelectedTexture:SetAllPoints()
+		end
+
+		for _, region in next, { tab:GetRegions() } do
+			if region:IsObjectType("Texture") and region:GetAtlas() == "QuestLog-Tab-side-Glow-hover" then
+				region:SetColorTexture(1, 1, 1, 0.3)
+				region:SetAllPoints()
+			end
+		end
+	end
+end
+
 function S:Blizzard_CooldownViewer()
 	if not self:CheckDB("cooldownManager", "cooldownViewer") then
 		return
@@ -164,15 +218,10 @@ function S:Blizzard_CooldownViewer()
 		end
 
 		if i == 1 then
-			hooksecurefunc(tab, "SetPoint", function(theTab, _, _, _, x, y)
-				if x == 1 and y == -10 then
-					theTab:ClearAllPoints()
-					_G.UIParent.SetPoint(theTab, "TOPLEFT", CooldownViewerSettings, "TOPRIGHT", 3, -10)
-				end
-			end)
+			buttonOffset = 3
 
 			tab:ClearAllPoints()
-			_G.UIParent.SetPoint(tab, "TOPLEFT", CooldownViewerSettings, "TOPRIGHT", 3, -10)
+			tab:SetPoint("TOPLEFT", CooldownViewerSettings, "TOPRIGHT", 3, -10)
 		else
 			F.Move(tab, 0, -2)
 		end

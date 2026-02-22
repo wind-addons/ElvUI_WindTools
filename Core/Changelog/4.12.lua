@@ -3,11 +3,26 @@ local W = unpack((select(2, ...))) ---@type WindTools
 W.Changelog[412] = {
 	RELEASE_DATE = "TBD",
 	IMPORTANT = {
-		["zhCN"] = {},
-		["zhTW"] = {},
-		["enUS"] = {},
-		["koKR"] = {},
-		["ruRU"] = {},
+		["zhCN"] = {
+			"[美化皮肤] UIErrors 改为使用私有框体并同步原框体显隐逻辑, 以降低污染风险.",
+			"[美化皮肤] UIErrors 功能默认开启, 并新增高度选项.",
+		},
+		["zhTW"] = {
+			"[美化皮肤] UIErrors 改為使用私有框架並同步原框架顯隱邏輯, 以降低污染風險.",
+			"[美化皮肤] UIErrors 功能預設開啟, 並新增高度選項.",
+		},
+		["enUS"] = {
+			"[Skins] UIErrors now uses a private frame and synchronizes native frame visibility logic to reduce taint risk.",
+			"[Skins] UIErrors is now enabled by default, and a height option has been added.",
+		},
+		["koKR"] = {
+			"[스킨] UIErrors가 전용 프레임을 사용하고 기본 프레임의 표시/숨김 로직을 동기화하도록 변경되어 오염 위험이 줄어들었습니다.",
+			"[스킨] UIErrors 기능이 기본적으로 활성화되며, 높이 옵션이 추가되었습니다.",
+		},
+		["ruRU"] = {
+			"[Скины] UIErrors переведён на приватный фрейм с синхронизацией логики показа/скрытия нативного фрейма для снижения риска taint.",
+			"[Скины] UIErrors теперь по умолчанию включён, а также добавлена настройка высоты.",
+		},
 	},
 	NEW = {
 		["zhCN"] = {

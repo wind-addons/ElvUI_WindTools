@@ -11,7 +11,7 @@ local xpcall = xpcall
 local DEFAULT_HANDLER_PRIORITY = 1000
 
 ---@class UIErrorHandlerParams
----@field frame UIErrorsFrame
+---@field frame MessageFrame
 ---@field message string
 ---@field r number
 ---@field g number
@@ -27,30 +27,114 @@ local DEFAULT_HANDLER_PRIORITY = 1000
 W.UIERRORFRAME_IGNORE_PATTERN = "WINDTOOLS_IGNORE"
 W.UIErrorHandlers = W.UIErrorHandlers or {} ---@type UIErrorHandler[]
 
-function W:HookUIError()
-	if self:IsHooked(_G.UIErrorsFrame, "AddMessage") then
+local syncingUIErrorVisibility = false
+
+local function IsReplacingNativeUIErrors()
+	return E.private.WT.skins.enable and E.private.WT.skins.uiErrors and E.private.WT.skins.uiErrors.enable
+end
+
+local function SyncUIErrorFrameVisibility(showNative)
+	if not (_G.UIErrorsFrame and W.UIErrorsFrame) then
 		return
 	end
 
-	self:RawHook(_G.UIErrorsFrame, "AddMessage", function(frame, message, r, g, b, a)
-		if message and message == W.UIERRORFRAME_IGNORE_PATTERN then
-			return
-		end
+	syncingUIErrorVisibility = true
+	if showNative then
+		_G.UIErrorsFrame:Show()
+		W.UIErrorsFrame:Hide()
+	else
+		_G.UIErrorsFrame:Hide()
+		W.UIErrorsFrame:Show()
+	end
+	syncingUIErrorVisibility = false
+end
 
-		local params = { frame = frame, message = message, r = r, g = g, b = b, a = a } ---@type UIErrorHandlerParams
-		for _, handlerData in ipairs(self.UIErrorHandlers) do
-			local success, result = xpcall(handlerData.handler, F.Developer.ThrowError, params)
-			if not success then
+local function ShouldSkipMessage(message)
+	return message and (message == W.UIERRORFRAME_IGNORE_PATTERN or message == "")
+end
+
+function W:UpdateUIErrorFrameVisibility()
+	if not (W.UIErrorsFrame and _G.UIErrorsFrame) then
+		return
+	end
+
+	SyncUIErrorFrameVisibility(not IsReplacingNativeUIErrors())
+end
+
+function W:HookUIError()
+	if not (_G.UIErrorsFrame and _G.WTUIErrorsFrame) then
+		return
+	end
+
+	W.UIErrorsFrame = _G.WTUIErrorsFrame
+	W.UIErrorsFrame.flashingFontStrings = W.UIErrorsFrame.flashingFontStrings or {}
+
+	if not self:IsHooked(_G.UIErrorsFrame, "AddMessage") then
+		self:SecureHook(_G.UIErrorsFrame, "AddMessage", function(_, message, r, g, b, a, ...)
+			if not IsReplacingNativeUIErrors() then
 				return
 			end
 
-			if type(result) == "string" and result == "skip" then
+			W.UIErrorsFrame:AddMessage(message, r, g, b, a, ...)
+			SyncUIErrorFrameVisibility(false)
+		end)
+	end
+
+	if not self:IsHooked(_G.UIErrorsFrame, "OnShow") then
+		self:SecureHookScript(_G.UIErrorsFrame, "OnShow", function()
+			if not IsReplacingNativeUIErrors() or syncingUIErrorVisibility then
 				return
 			end
-		end
 
-		self.hooks[_G.UIErrorsFrame].AddMessage(params.frame, params.message, params.r, params.g, params.b, params.a)
-	end, true)
+			SyncUIErrorFrameVisibility(false)
+		end)
+	end
+
+	if not self:IsHooked(_G.UIErrorsFrame, "OnHide") then
+		self:SecureHookScript(_G.UIErrorsFrame, "OnHide", function()
+			if not IsReplacingNativeUIErrors() or syncingUIErrorVisibility then
+				return
+			end
+
+			syncingUIErrorVisibility = true
+			W.UIErrorsFrame:Hide()
+			syncingUIErrorVisibility = false
+		end)
+	end
+
+	if not self:IsHooked(W.UIErrorsFrame, "AddMessage") then
+		self:RawHook(W.UIErrorsFrame, "AddMessage", function(frame, message, r, g, b, a, ...)
+			if ShouldSkipMessage(message) then
+				return
+			end
+
+			local params = { frame = frame, message = message, r = r, g = g, b = b, a = a } ---@type UIErrorHandlerParams
+			for _, handlerData in ipairs(self.UIErrorHandlers) do
+				local success, result = xpcall(handlerData.handler, F.Developer.ThrowError, params)
+				if not success then
+					return
+				end
+
+				if type(result) == "string" and result == "skip" then
+					return
+				end
+			end
+
+			self.hooks[W.UIErrorsFrame].AddMessage(
+				params.frame,
+				params.message,
+				params.r,
+				params.g,
+				params.b,
+				params.a,
+				...
+			)
+		end, true)
+	end
+
+	self:UpdateUIErrorFrameVisibility()
+
+	W.Modules.Skins:UIErrors()
 end
 
 ---@param handler UIErrorHandlerFunc

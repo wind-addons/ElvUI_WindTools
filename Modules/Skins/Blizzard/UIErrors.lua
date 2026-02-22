@@ -2,9 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 local C = W.Utilities.Color
 
-local _G = _G
 local pairs = pairs
-local hooksecurefunc = hooksecurefunc
 
 local RED_FONT_COLOR = RED_FONT_COLOR
 local YELLOW_FONT_COLOR = YELLOW_FONT_COLOR
@@ -17,21 +15,31 @@ local BlizzardColors = {
 }
 
 function S:UIErrors()
-	if not self:CheckDB(nil, "uiErrors") then
+	if not E.private.WT.skins.enable or not (E.private.WT.skins.uiErrors and E.private.WT.skins.uiErrors.enable) then
 		return
 	end
 
-	_G.UIErrorsFrame:Width(E.private.WT.skins.uiErrors.width)
+	if not W.UIErrorsFrame or self.uiErrorsHandlerRegistered then
+		return
+	end
 
-	hooksecurefunc(_G.UIErrorsFrame, "SetWidth", function(frame, _, skip)
-		if not skip then
-			frame:Width(E.private.WT.skins.uiErrors.width, true)
-		end
-	end)
+	self.uiErrorsHandlerRegistered = true
 
-	hooksecurefunc(_G.UIErrorsFrame, "SetSize", function(frame)
-		frame:Width(E.private.WT.skins.uiErrors.width, true)
-	end)
+	W.UIErrorsFrame:Size(E.private.WT.skins.uiErrors.width, E.private.WT.skins.uiErrors.height or 60)
+
+	E:CreateMover(
+		W.UIErrorsFrame,
+		"WTUIErrorsFrameMover",
+		W.Title .. " - " .. L["UI Errors Frame"],
+		nil,
+		nil,
+		nil,
+		"ALL,WINDTOOLS",
+		function()
+			return not E.private.WT.skins.enable or not (E.private.WT.skins.uiErrors and E.private.WT.skins.uiErrors.enable)
+		end,
+		"WindTools,skins,uiErrors"
+	)
 
 	W:RegisterUIErrorHandler(function(params)
 		if params.r == nil or params.g == nil or params.b == nil then
@@ -57,5 +65,3 @@ function S:UIErrors()
 		end
 	end)
 end
-
-S:AddCallback("UIErrors")

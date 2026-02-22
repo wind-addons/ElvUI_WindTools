@@ -372,7 +372,9 @@ V.skins = {
 	},
 	color = { r = 0, g = 0, b = 0 },
 	uiErrors = {
+		enable = true,
 		normalTextClassColor = false,
+		height = 60,
 		width = 1024,
 		normalTextColor = C.GetRGBFromTemplate("neutral-50"),
 		redTextColor = C.GetRGBFromTemplate("red-500"),

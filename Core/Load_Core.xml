@@ -5,6 +5,7 @@
 	<Script file='Commands.lua'/>
 	<Script file='Compatibility.lua'/>
 	<Script file='Options.lua'/>
+	<Include file='UIError.xml'/>
 	<Script file='UIError.lua'/>
 	<Script file='Update.lua'/>
 	<Script file='KeystoneInfo.lua'/>

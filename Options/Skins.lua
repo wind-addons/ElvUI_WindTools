@@ -219,38 +219,82 @@ options.general = {
 		uiErrors = {
 			order = 7,
 			type = "group",
-			name = L["UI Errors Frame"],
+			name = W.Title .. " - " .. L["UI Errors Frame"],
 			inline = true,
 			disabled = function()
-				return not E.private.WT.skins.enable or not E.private.WT.skins.blizzard.uiErrors
+				return not E.private.WT.skins.enable
 			end,
 			args = {
-				desc = {
+				enable = {
 					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+					desc = L["Replace the native UIErrorsFrame with a custom one that supports skinning."],
+					get = function()
+						return E.private.WT.skins.uiErrors.enable
+					end,
+					set = function(_, value)
+						E.private.WT.skins.uiErrors.enable = value
+						if value then
+							S:UIErrors()
+						end
+						W:UpdateUIErrorFrameVisibility()
+					end,
+				},
+				desc = {
+					order = 2,
 					type = "description",
 					name = L["The middle top errors / messages frame (also used for quest progress text)."],
 				},
 				width = {
-					order = 2,
+					order = 3,
 					type = "range",
 					name = L["Width"],
 					desc = L["Set the width of UIErrorsFrame."],
 					min = 256,
 					max = 4096,
 					step = 1,
+					disabled = function()
+						return not E.private.WT.skins.uiErrors.enable
+					end,
 					get = function()
 						return E.private.WT.skins.uiErrors.width
 					end,
 					set = function(_, value)
 						E.private.WT.skins.uiErrors.width = value
-						_G.UIErrorsFrame:Width(value, true)
+						if W.UIErrorsFrame then
+							W.UIErrorsFrame:Width(value)
+						end
+					end,
+				},
+				height = {
+					order = 4,
+					type = "range",
+					name = L["Height"],
+					min = 20,
+					max = 240,
+					step = 1,
+					disabled = function()
+						return not E.private.WT.skins.uiErrors.enable
+					end,
+					get = function()
+						return E.private.WT.skins.uiErrors.height or (V.skins.uiErrors.height or 60)
+					end,
+					set = function(_, value)
+						E.private.WT.skins.uiErrors.height = value
+						if W.UIErrorsFrame then
+							W.UIErrorsFrame:Height(value)
+						end
 					end,
 				},
 				normalTextClassColor = {
-					order = 3,
+					order = 5,
 					type = "toggle",
 					name = L["Class Color"],
 					desc = L["Replace the default color used for messages with class color."],
+					disabled = function()
+						return not E.private.WT.skins.uiErrors.enable
+					end,
 					get = function(info)
 						return E.private.WT.skins.uiErrors.normalTextClassColor
 					end,
@@ -259,11 +303,14 @@ options.general = {
 					end,
 				},
 				normalTextColor = {
-					order = 4,
+					order = 6,
 					type = "color",
 					name = L["Default"],
 					desc = L["Replace the default color used for messages."],
 					hasAlpha = true,
+					disabled = function()
+						return not E.private.WT.skins.uiErrors.enable
+					end,
 					get = function(info)
 						local db = E.private.WT.skins.uiErrors.normalTextColor
 						local default = V.skins.uiErrors.normalTextColor
@@ -278,11 +325,14 @@ options.general = {
 					end,
 				},
 				redTextColor = {
-					order = 5,
+					order = 7,
 					type = "color",
 					name = L["Red"],
 					desc = L["Replace the default color used for error messages."],
 					hasAlpha = true,
+					disabled = function()
+						return not E.private.WT.skins.uiErrors.enable
+					end,
 					get = function(info)
 						local db = E.private.WT.skins.uiErrors.redTextColor
 						local default = V.skins.uiErrors.redTextColor
@@ -294,11 +344,14 @@ options.general = {
 					end,
 				},
 				yellowTextColor = {
-					order = 6,
+					order = 8,
 					type = "color",
 					name = L["Yellow"],
 					desc = L["Replace the default color used for warning messages."],
 					hasAlpha = true,
+					disabled = function()
+						return not E.private.WT.skins.uiErrors.enable
+					end,
 					get = function(info)
 						local db = E.private.WT.skins.uiErrors.yellowTextColor
 						local default = V.skins.uiErrors.yellowTextColor
@@ -310,7 +363,7 @@ options.general = {
 					end,
 				},
 				testButton = {
-					order = 7,
+					order = 9,
 					type = "execute",
 					name = L["Test"],
 					func = function()
@@ -1623,12 +1676,6 @@ options.blizzard = {
 			order = 10,
 			type = "toggle",
 			name = L["Tutorials"],
-		},
-		uiErrors = {
-			order = 10,
-			type = "toggle",
-			name = L["UI Errors"],
-			desc = L["The middle top errors / messages frame (also used for quest progress text)."],
 		},
 		uiWidget = {
 			order = 10,

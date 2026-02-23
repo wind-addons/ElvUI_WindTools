@@ -62,16 +62,22 @@ local function UpdateIcon(frame, config)
 	end
 end
 
+local function RemoveDebuffBorder(frame)
+	if not S.db.cooldownViewer.general.removeDebuffBorder then
+		return
+	end
+
+	if frame.DebuffBorder then
+		frame.DebuffBorder:SetAlpha(0)
+	end
+end
+
 function S:CooldownManager_AcquireItemFrame(container, frame)
 	if not container or not container.itemFramePool then
 		return
 	end
 
-	if self.db.cooldownViewer.general.removeDebuffBorder then
-		if frame and frame.DebuffBorder then
-			frame.DebuffBorder:SetAlpha(0)
-		end
-	end
+	RemoveDebuffBorder(frame)
 
 	if container == _G.EssentialCooldownViewer then
 		UpdateFrameAndStrata(frame, "essential")

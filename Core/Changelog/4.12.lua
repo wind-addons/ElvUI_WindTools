@@ -63,6 +63,7 @@ W.Changelog[412] = {
 			"[鼠标提示] 修复了多个在鼠标提示信息查询时可能出现的错误.",
 			"[世界地图] 修复了去除迷雾在破碎群岛地图上可能无法正确显示阿古斯区域的问题.",
 			"[智能 Tab] 修复了战斗中尝试记录密语目标时可能出现的秘密值错误.",
+			"[聊天文字] 同步 ElvUI 聊天代码, 提升稳定性.",
 		},
 		["zhTW"] = {
 			"[美化外觀] 修復了 Simple Addon Manager 皮膚.",
@@ -73,6 +74,7 @@ W.Changelog[412] = {
 			"[浮動提示] 修復了多個在滑鼠提示資訊查詢時可能出現的錯誤.",
 			"[世界地圖] 修復了去除迷霧在破碎群島地圖上可能無法正確顯示阿古斯區域的問題.",
 			"[智能 Tab] 修復了戰鬥中嘗試記錄密語目標時可能出現的秘密值錯誤.",
+			"[聊天文字] 同步 ElvUI 聊天代码, 提升稳定性.",
 		},
 		["enUS"] = {
 			"[Skins] Fixed the skin for Simple Addon Manager.",
@@ -83,6 +85,7 @@ W.Changelog[412] = {
 			"[Tooltips] Fixed multiple errors that may occur when querying tooltip information.",
 			"[World Map] Fixed an issue where removing fog of war may not correctly display the Argus area on the Broken Isles map.",
 			"[Smart Tab] Fixed a secret value error that may occur when trying to record whisper targets during combat.",
+			"[Chat Text] Synchronized ElvUI chat code for improved stability.",
 		},
 		["koKR"] = {
 			"[스킨] Simple Addon Manager 스킨이 수정되었습니다.",
@@ -93,6 +96,7 @@ W.Changelog[412] = {
 			"[툴팁] 툴팁 정보를 조회할 때 발생할 수 있는 여러 오류가 수정되었습니다.",
 			"[세계 지도] 안개 제거가 부서진 섬 지도에서 아르거스 지역을 올바르게 표시하지 못할 수 있는 문제를 수정했습니다.",
 			"[스마트 탭] 전투 중 귓속말 대상 기록 시 발생할 수 있는 비밀 값 오류를 수정했습니다.",
+			"[채팅 텍스트] ElvUI 채팅 코드를 동기화하여 안정성을 향상시켰습니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Исправлена тема для Simple Addon Manager.",
@@ -103,6 +107,7 @@ W.Changelog[412] = {
 			"[Подсказки] Исправлено несколько ошибок, которые могут возникать при запросе информации в подсказках.",
 			"[Карта мира] Исправлена проблема, из-за которой удаление тумана войны может некорректно отображать область Аргуса на карте Расколотых островов.",
 			"[Умная вкладка] Исправлена ошибка секретного значения, которая может возникать при попытке записать цели шепота во время боя.",
+			"[Текст чата] Синхронизирован код чата ElvUI для улучшения стабильности.",
 		},
 	},
 }

@@ -6,7 +6,7 @@ local pairs = pairs
 
 local hooksecurefunc = hooksecurefunc
 
-local function reskinWarningDialog(frame)
+local function ReskinWarningDialog(frame)
 	frame:StripTextures()
 	frame:SetTemplate("Transparent")
 	S:CreateShadow(frame)
@@ -24,7 +24,7 @@ local function reskinWarningDialog(frame)
 	end
 end
 
-local function reskinView(frame)
+local function ReskinView(frame)
 	if frame.ResultsListingInset then
 		frame.ResultsListingInset:Kill()
 	end
@@ -66,18 +66,26 @@ local function reskinView(frame)
 	end
 end
 
-local function replicateTabFrame(frame)
-	frame.windskin = true
+local function ReplicateTabFrame(frame)
+	frame.__windSkin = true
 
-	reskinWarningDialog(frame.WarningDialog)
+	ReskinWarningDialog(frame.WarningDialog)
 
-	for _, view in pairs({ frame.TMogView, frame.PetView, frame.ToyView, frame.MountView, frame.RecipeView }) do
+	for _, view in pairs({
+		frame.TMogView,
+		frame.PetView,
+		frame.ToyView,
+		frame.MountView,
+		frame.RecipeView,
+		frame.DecorView,
+	}) do
 		if view then
-			reskinView(view)
+			ReskinView(view)
 		end
 	end
 
 	for _, button in pairs({
+		frame.DecorButton,
 		frame.MountButton,
 		frame.PetButton,
 		frame.RecipeButton,
@@ -101,7 +109,7 @@ local function replicateTabFrame(frame)
 	end
 end
 
-local function reskinOption(frame)
+local function ReskinOption(frame)
 	for _, child in pairs({ frame:GetChildren() }) do
 		if child and child:IsObjectType("Button") then
 			S:Proxy("HandleButton", child)
@@ -122,15 +130,15 @@ function S:Collectionator()
 		return
 	end
 
-	hooksecurefunc(LibAHTab, "CreateTab", function(library, tabID, attachedFrame, displayText)
+	hooksecurefunc(LibAHTab, "CreateTab", function(_, _, attachedFrame, displayText)
 		if displayText ~= _G.COLLECTIONATOR_L_TAB_REPLICATE and displayText ~= _G.COLLECTIONATOR_L_TAB_SUMMARY then
 			return
 		end
 
-		replicateTabFrame(attachedFrame)
+		ReplicateTabFrame(attachedFrame)
 	end)
 
-	reskinOption(_G.CollectionatorConfigBasicOptionsFrame)
+	ReskinOption(_G.CollectionatorConfigBasicOptionsFrame)
 end
 
 S:AddCallbackForAddon("Collectionator")

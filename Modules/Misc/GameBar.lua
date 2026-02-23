@@ -64,6 +64,8 @@ local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
 local C_Housing_GetPlayerOwnedHouses = C_Housing.GetPlayerOwnedHouses
 local C_Item_GetItemCooldown = C_Item.GetItemCooldown
 local C_Item_GetItemCount = C_Item.GetItemCount
+local C_SpellBook_IsSpellKnown = C_SpellBook.IsSpellKnown
+local C_Spell_GetSpellCooldown = C_Spell.GetSpellCooldown
 local C_Timer_NewTicker = C_Timer.NewTicker
 local C_ToyBox_IsToyUsable = C_ToyBox.IsToyUsable
 local C_UI_Reload = C_UI.Reload
@@ -78,6 +80,8 @@ local ICON_STRING = "|T%s:16:18:0:0:64:64:4:60:7:57"
 local LEFT_BUTTON_ICON = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:230:307|t"
 local RIGHT_BUTTON_ICON = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:333:410|t"
 local SCROLL_BUTTON_ICON = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:127:204|t"
+local ASTRAL_RECALL_SPELL_ID = 556
+local ASTRAL_RECALL_KEY = "SPELL:556"
 
 local friendOnline = gsub(_G.ERR_FRIEND_ONLINE_SS, "\124Hplayer:%%s\124h%[%%s%]\124h", "")
 local friendOffline = gsub(_G.ERR_FRIEND_OFFLINE_S, "%%s", "")
@@ -304,26 +308,64 @@ function GB:AnimationOnLeave(button)
 	end
 end
 
-local function AddDoubleLineForItem(itemID, prefix)
-	local isRandomHearthstone
-	if type(itemID) == "string" then
-		if itemID == "RANDOM" then
-			isRandomHearthstone = true
-			itemID = 6948
+function GB:GetHearthstoneSetting(side)
+	if not self.db or not self.db.hearthstone then
+		return nil, nil
+	end
+
+	local primaryKey = side == "right" and "right" or "left"
+	local fallbackKey = side == "right" and "rightFallback" or "leftFallback"
+	local defaultFallback = side == "right" and "140192" or "6948"
+
+	local primary = self.db.hearthstone[primaryKey]
+	local fallback = self.db.hearthstone[fallbackKey] or defaultFallback
+
+	return primary and tostring(primary) or nil, tostring(fallback)
+end
+
+function GB:ResolveHearthstoneAction(side)
+	if not hearthstonesAndToysData then
+		return nil
+	end
+
+	local primary, fallback = self:GetHearthstoneSetting(side)
+	local primaryData = primary and hearthstonesAndToysData[primary] or nil
+
+	if primaryData then
+		if primaryData.actionType == "spell" then
+			if C_SpellBook_IsSpellKnown(primaryData.actionID) then
+				return primaryData
+			end
 		else
-			itemID = tonumber(itemID)
+			return primaryData
 		end
 	end
 
-	prefix = prefix and prefix .. " " or ""
+	local fallbackData = fallback and hearthstonesAndToysData[fallback] or nil
+	if fallbackData and fallbackData.actionType ~= "spell" then
+		return fallbackData
+	end
 
-	local data = hearthstonesAndToysData[tostring(itemID)]
-	if not data then
+	return nil
+end
+
+local function AddDoubleLineForItem(actionData, prefix)
+	if not actionData then
 		return
 	end
 
-	local icon = format(ICON_STRING .. ":255:255:255|t", data.icon)
-	local startTime, duration = C_Item_GetItemCooldown(itemID)
+	prefix = prefix and prefix .. " " or ""
+	local icon = format(ICON_STRING .. ":255:255:255|t", actionData.icon)
+
+	local startTime, duration = 0, 0
+	if actionData.actionType == "spell" then
+		local cooldownInfo = C_Spell_GetSpellCooldown(actionData.actionID)
+		startTime = cooldownInfo and cooldownInfo.startTime or 0
+		duration = cooldownInfo and cooldownInfo.duration or 0
+	else
+		startTime, duration = C_Item_GetItemCooldown(actionData.actionID)
+	end
+
 	local cooldownTime = startTime + duration - GetTime()
 	local canUse = cooldownTime <= 0
 	local cooldownTimeString
@@ -333,13 +375,13 @@ local function AddDoubleLineForItem(itemID, prefix)
 		cooldownTimeString = format("%02d:%02d", m, s)
 	end
 
-	local name = data.name
-	if itemID == 180817 then
-		local charge = C_Item_GetItemCount(itemID, nil, true)
+	local name = actionData.name
+	if actionData.actionType == "item" and actionData.actionID == 180817 then
+		local charge = C_Item_GetItemCount(actionData.actionID, nil, true)
 		name = name .. format(" (%d)", charge)
 	end
 
-	if isRandomHearthstone then
+	if actionData.actionType == "random" then
 		name = L["Random Hearthstone"]
 	end
 
@@ -599,8 +641,8 @@ local ButtonTypes = {
 				DT.tooltip:ClearLines()
 				DT.tooltip:SetText(L["Hearthstone"])
 				DT.tooltip:AddLine("\n")
-				AddDoubleLineForItem(GB.db.hearthstone.left, LEFT_BUTTON_ICON)
-				AddDoubleLineForItem(GB.db.hearthstone.right, RIGHT_BUTTON_ICON)
+				AddDoubleLineForItem(GB:ResolveHearthstoneAction("left"), LEFT_BUTTON_ICON)
+				AddDoubleLineForItem(GB:ResolveHearthstoneAction("right"), RIGHT_BUTTON_ICON)
 				DT.tooltip:Show()
 			end
 
@@ -1201,8 +1243,8 @@ _G.WTGameBar_UpdateHearthstoneButtons = function()
 	F.TaskManager:OutOfCombat(function()
 		for _, btn in pairs(GB.HearthstoneButtons) do
 			if btn.type == "HEARTHSTONE" then
-				GB:UpdateHearthstoneButtonMacro(btn, "left", ButtonTypes[btn.type].item.item1)
-				GB:UpdateHearthstoneButtonMacro(btn, "right", ButtonTypes[btn.type].item.item2)
+				GB:UpdateHearthstoneButtonMacro(btn, "left")
+				GB:UpdateHearthstoneButtonMacro(btn, "right")
 			end
 		end
 	end)
@@ -1223,13 +1265,10 @@ function GB:UpdateButton(button, buttonType)
 	button:ClearAttributes()
 
 	-- Click
-	if
-		buttonType == "HEARTHSTONE"
-		and (config.item.item1 == L["Random Hearthstone"] or config.item.item2 == L["Random Hearthstone"])
-	then
+	if buttonType == "HEARTHSTONE" then
 		button:SetAttribute("type*", "macro")
-		self:UpdateHearthstoneButtonMacro(button, "left", config.item.item1)
-		self:UpdateHearthstoneButtonMacro(button, "right", config.item.item2)
+		self:UpdateHearthstoneButtonMacro(button, "left")
+		self:UpdateHearthstoneButtonMacro(button, "right")
 		tinsert(self.HearthstoneButtons, button)
 	elseif config.macro then
 		button:SetAttribute("type*", "macro")
@@ -1610,15 +1649,17 @@ function GB:UpdateGuildButton()
 	end
 end
 
-function GB:UpdateHearthstoneButtonMacro(button, mouseButton, item)
-	if not button or not mouseButton or not item or not availableHearthstones then
+function GB:UpdateHearthstoneButtonMacro(button, mouseButton)
+	if not button or not mouseButton or not availableHearthstones then
 		return
 	end
 
+	local side = mouseButton == "right" and "right" or "left"
+	local actionData = self:ResolveHearthstoneAction(side)
 	local attribute = mouseButton == "right" and "macrotext2" or "macrotext1"
-	local macro = "/use " .. item
+	local macro = format('/run UIErrorsFrame:AddMessage("%s", RED_FONT_COLOR:GetRGBA())', L["No Hearthstone Found!"])
 
-	if item == L["Random Hearthstone"] then
+	if actionData and actionData.actionType == "random" then
 		if #availableHearthstones > 0 then
 			local randomIndex
 			if #availableHearthstones > 1 then
@@ -1633,17 +1674,19 @@ function GB:UpdateHearthstoneButtonMacro(button, mouseButton, item)
 			end
 			macro =
 				format("/use item:%d\n/run _G.WTGameBar_UpdateHearthstoneButtons()", availableHearthstones[randomIndex])
-		else
-			macro = format('/run UIErrorsFrame:AddMessage("%s", RED_FONT_COLOR:GetRGBA())', L["No Hearthstone Found!"])
 		end
+	elseif actionData and actionData.actionType == "spell" then
+		macro = "/cast " .. actionData.name
+	elseif actionData and actionData.actionType == "item" then
+		macro = format("/use item:%d", actionData.actionID)
 	end
 
 	button:SetAttribute(attribute, macro)
 end
 
 function GB:UpdateHearthstoneButton()
-	local left = hearthstonesAndToysData[self.db.hearthstone.left]
-	local right = hearthstonesAndToysData[self.db.hearthstone.right]
+	local left = self:ResolveHearthstoneAction("left")
+	local right = self:ResolveHearthstoneAction("right")
 
 	ButtonTypes.HEARTHSTONE.item = {
 		item1 = left and left.name,
@@ -1655,7 +1698,23 @@ function GB:UpdateHearthStoneTable()
 	hearthstonesAndToysData = { ["RANDOM"] = {
 		name = L["Random Hearthstone"],
 		icon = 134400,
+		actionType = "random",
+		actionID = 6948,
 	} }
+
+	async.WithSpellID(ASTRAL_RECALL_SPELL_ID, function(spell)
+		hearthstonesAndToysData[ASTRAL_RECALL_KEY] = {
+			name = spell:GetSpellName(),
+			icon = spell:GetSpellTexture(),
+			actionType = "spell",
+			actionID = ASTRAL_RECALL_SPELL_ID,
+		}
+
+		self:UpdateHearthstoneButton()
+		if self.initialized then
+			self:UpdateButtons()
+		end
+	end)
 
 	local hearthstonesTable = {}
 	for i = 1, #hearthstones do
@@ -1703,7 +1762,12 @@ function GB:UpdateHearthStoneTable()
 			end
 		end
 
-		hearthstonesAndToysData[tostring(id)] = { name = item:GetItemName(), icon = item:GetItemIcon() }
+		hearthstonesAndToysData[tostring(id)] = {
+			name = item:GetItemName(),
+			icon = item:GetItemIcon(),
+			actionType = "item",
+			actionID = id,
+		}
 	end, function()
 		self:UpdateHearthstoneButton()
 		if self.initialized then
@@ -1712,8 +1776,23 @@ function GB:UpdateHearthStoneTable()
 	end)
 end
 
-function GB:GetHearthStoneTable()
-	return hearthstonesAndToysData
+function GB:GetHearthStoneTable(includeSpell)
+	if not hearthstonesAndToysData then
+		return {}
+	end
+
+	if includeSpell then
+		return hearthstonesAndToysData
+	end
+
+	local filteredTable = {}
+	for id, data in pairs(hearthstonesAndToysData) do
+		if data.actionType ~= "spell" then
+			filteredTable[id] = data
+		end
+	end
+
+	return filteredTable
 end
 
 function GB:GetAvailableButtons()

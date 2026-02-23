@@ -526,6 +526,7 @@ V.skins = {
 			-- useBlizzardGlow = true,
 			iconShadow = true,
 			barShadow = true,
+			removeDebuffBorder = true,
 		},
 		essential = {
 			enable = true,

@@ -67,6 +67,12 @@ function S:CooldownManager_AcquireItemFrame(container, frame)
 		return
 	end
 
+	if self.db.cooldownViewer.general.removeDebuffBorder then
+		if frame and frame.DebuffBorder then
+			frame.DebuffBorder:SetAlpha(0)
+		end
+	end
+
 	if container == _G.EssentialCooldownViewer then
 		UpdateFrameAndStrata(frame, "essential")
 		UpdateIcon(frame, "essential")

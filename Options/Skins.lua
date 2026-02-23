@@ -584,7 +584,6 @@ options.cooldownViewer = {
 					or not E.private.WT.skins.blizzard.cooldownViewer
 			end,
 		},
-
 		general = {
 			order = 10,
 			type = "group",
@@ -618,6 +617,13 @@ options.cooldownViewer = {
 				-- 	name = L["Use Blizzard Glow"],
 				-- 	desc = L["Disable ElvUI's LibCustomGlow for fixing cooldown animations."],
 				-- },
+				removeDebuffBorder = {
+					order = 4,
+					type = "toggle",
+					width = 2,
+					name = L["Remove Debuff Border"],
+					desc = L["Remove the red border around icons when the cooldown is caused by debuffs."],
+				},
 			},
 		},
 		essential = {

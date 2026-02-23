@@ -842,8 +842,18 @@ options.reset = {
 						end)
 					end,
 				},
-				blizzard = {
+				damageMeter = {
 					order = 4,
+					type = "execute",
+					name = L["Damage Meter"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Damage Meter"], nil, function()
+							E.private.WT.skins.damageMeter = V.skins.damageMeter
+						end)
+					end,
+				},
+				blizzard = {
+					order = 5,
 					type = "execute",
 					name = L["Blizzard"],
 					func = function()
@@ -853,7 +863,7 @@ options.reset = {
 					end,
 				},
 				elvui = {
-					order = 5,
+					order = 6,
 					type = "execute",
 					name = L["ElvUI"],
 					func = function()
@@ -863,7 +873,7 @@ options.reset = {
 					end,
 				},
 				addons = {
-					order = 6,
+					order = 7,
 					type = "execute",
 					name = L["Addons"],
 					func = function()
@@ -873,7 +883,7 @@ options.reset = {
 					end,
 				},
 				libraries = {
-					order = 6,
+					order = 8,
 					type = "execute",
 					name = L["Libraries"],
 					func = function()
@@ -883,7 +893,7 @@ options.reset = {
 					end,
 				},
 				widgets = {
-					order = 8,
+					order = 9,
 					type = "execute",
 					name = L["Widgets"],
 					func = function()
@@ -893,7 +903,7 @@ options.reset = {
 					end,
 				},
 				bigWigsSkin = {
-					order = 9,
+					order = 10,
 					type = "execute",
 					name = L["BigWigs Skin"],
 					func = function()

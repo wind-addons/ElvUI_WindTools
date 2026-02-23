@@ -585,6 +585,29 @@ V.skins = {
 			colorRight = { r = 0.25882, g = 0.84314, b = 0.86667, a = 1 },
 		},
 	},
+	damageMeter = {
+		enable = true,
+		windowBackdrop = "always", ---@type "always"|"mouseover"
+		headerPart = "always", ---@type "always"|"mouseover"
+		headerBackdrop = "hide", ---@type "always"|"hide"
+		fadeTime = 0.2,
+		bar = {
+			texture = "WindTools Glow",
+			alpha = 1,
+				font = {
+					name = {
+						name = E.db.general.font,
+						size = E.db.general.fontSize + 1,
+						style = "OUTLINE",
+					},
+					value = {
+						name = E.db.general.font,
+						size = E.db.general.fontSize + 1,
+						style = "OUTLINE",
+					},
+				},
+		},
+	},
 	addons = {
 		advancedInterfaceOptions = true,
 		angryKeystones = true,
@@ -661,7 +684,6 @@ V.skins = {
 		covenantPreview = true,
 		covenantRenown = true,
 		covenantSanctum = true,
-		damageMeter = true,
 		debugTools = true,
 		delves = true,
 		dressingRoom = true,

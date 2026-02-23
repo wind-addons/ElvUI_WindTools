@@ -1194,7 +1194,7 @@ options.cooldownViewer = {
 }
 
 options.blizzard = {
-	order = 5,
+	order = 6,
 	type = "group",
 	name = L["Blizzard"],
 	get = function(info)
@@ -1382,11 +1382,6 @@ options.blizzard = {
 			order = 10,
 			type = "toggle",
 			name = L["Covenant Sanctum"],
-		},
-		damageMeter = {
-			order = 10,
-			type = "toggle",
-			name = L["Damage Meter"],
 		},
 		debugTools = {
 			order = 10,
@@ -1702,6 +1697,265 @@ options.blizzard = {
 			order = 10,
 			type = "toggle",
 			name = L["World Map"],
+		},
+	},
+}
+
+local function ensureDamageMeterBarDB()
+	local damageMeterDB = E.private.WT.skins.damageMeter
+	local barDB = damageMeterDB.bar
+	if barDB then
+		barDB.font = barDB.font or {}
+		barDB.font.name = barDB.font.name
+			or {
+				name = V.skins.damageMeter.bar.font.name.name,
+				size = V.skins.damageMeter.bar.font.name.size,
+				style = V.skins.damageMeter.bar.font.name.style,
+			}
+		barDB.font.value = barDB.font.value
+			or {
+				name = V.skins.damageMeter.bar.font.value.name,
+				size = V.skins.damageMeter.bar.font.value.size,
+				style = V.skins.damageMeter.bar.font.value.style,
+			}
+		return barDB
+	end
+
+	barDB = {
+		texture = damageMeterDB.barTexture or V.skins.damageMeter.bar.texture,
+		alpha = V.skins.damageMeter.bar.alpha,
+		font = {
+			name = {
+				name = V.skins.damageMeter.bar.font.name.name,
+				size = V.skins.damageMeter.bar.font.name.size,
+				style = V.skins.damageMeter.bar.font.name.style,
+			},
+			value = {
+				name = V.skins.damageMeter.bar.font.value.name,
+				size = V.skins.damageMeter.bar.font.value.size,
+				style = V.skins.damageMeter.bar.font.value.style,
+			},
+		},
+	}
+
+	damageMeterDB.bar = barDB
+	return barDB
+end
+
+options.damageMeter = {
+	order = 5,
+	type = "group",
+	name = L["Damage Meter"],
+	get = function(info)
+		return E.private.WT.skins.damageMeter[info[#info]]
+	end,
+	set = function(info, value)
+		E.private.WT.skins.damageMeter[info[#info]] = value
+		E:StaticPopup_Show("PRIVATE_RL")
+	end,
+	disabled = function()
+		return not E.private.WT.skins.enable
+	end,
+	args = {
+		enable = {
+			order = 1,
+			type = "toggle",
+			name = L["Enable"],
+		},
+		modes = {
+			order = 2,
+			type = "group",
+			name = L["General"],
+			get = function(info)
+				return E.private.WT.skins.damageMeter[info[#info]]
+			end,
+			set = function(info, value)
+				E.private.WT.skins.damageMeter[info[#info]] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+			inline = true,
+			disabled = function()
+				return not E.private.WT.skins.damageMeter.enable
+			end,
+			args = {
+				windowBackdrop = {
+					order = 1,
+					type = "select",
+					name = L["Window Backdrop"],
+					values = {
+						always = L["Always"],
+						mouseover = L["Mouse Over"],
+					},
+				},
+				headerPart = {
+					order = 2,
+					type = "select",
+					name = L["Header"],
+					get = function()
+						local mode = E.private.WT.skins.damageMeter.headerPart
+						return mode == "always" and "always" or "mouseover"
+					end,
+					set = function(_, value)
+						E.private.WT.skins.damageMeter.headerPart = value == "always" and "always" or "mouseover"
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+					values = {
+						always = L["Always"],
+						mouseover = L["Mouse Over"],
+					},
+				},
+				headerBackdrop = {
+					order = 3,
+					type = "select",
+					name = L["Header Backdrop"],
+					get = function()
+						local mode = E.private.WT.skins.damageMeter.headerBackdrop
+						return mode == "hide" and "hide" or "always"
+					end,
+					set = function(_, value)
+						E.private.WT.skins.damageMeter.headerBackdrop = value == "hide" and "hide" or "always"
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+					values = {
+						always = L["Always"],
+						hide = L["Hide"],
+					},
+				},
+				fadeTime = {
+					order = 4,
+					type = "range",
+					name = L["Fade Time"],
+					min = 0,
+					max = 1,
+					step = 0.01,
+				},
+			},
+		},
+		bar = {
+			order = 3,
+			type = "group",
+			name = L["Bar Texture"],
+			inline = true,
+			get = function(info)
+				return ensureDamageMeterBarDB()[info[#info]]
+			end,
+			set = function(info, value)
+				ensureDamageMeterBarDB()[info[#info]] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+			disabled = function()
+				return not E.private.WT.skins.damageMeter.enable
+			end,
+			args = {
+				texture = {
+					order = 1,
+					type = "select",
+					name = L["Bar Texture"],
+					dialogControl = "LSM30_Statusbar",
+					values = LSM:HashTable("statusbar"),
+				},
+				alpha = {
+					order = 2,
+					type = "range",
+					name = L["Alpha"],
+					min = 0,
+					max = 1,
+					step = 0.01,
+					isPercent = true,
+				},
+				nameText = {
+					order = 3,
+					type = "group",
+					name = L["Name"],
+					inline = true,
+					get = function(info)
+						return ensureDamageMeterBarDB().font.name[info[#info]]
+					end,
+					set = function(info, value)
+						ensureDamageMeterBarDB().font.name[info[#info]] = value
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+					args = {
+						name = {
+							order = 1,
+							type = "select",
+							dialogControl = "LSM30_Font",
+							name = L["Font"],
+							values = LSM:HashTable("font"),
+						},
+						size = {
+							order = 2,
+							type = "range",
+							name = L["Size"],
+							min = 5,
+							max = 32,
+							step = 1,
+						},
+						style = {
+							order = 3,
+							type = "select",
+							name = L["Outline"],
+							values = {
+								NONE = L["None"],
+								OUTLINE = L["Outline"],
+								THICKOUTLINE = L["Thick"],
+								SHADOW = L["|cff888888Shadow|r"],
+								SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+								SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+								MONOCHROME = L["|cFFAAAAAAMono|r"],
+								MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+								MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+							},
+						},
+					},
+				},
+				valueText = {
+					order = 4,
+					type = "group",
+					name = L["Value"],
+					inline = true,
+					get = function(info)
+						return ensureDamageMeterBarDB().font.value[info[#info]]
+					end,
+					set = function(info, value)
+						ensureDamageMeterBarDB().font.value[info[#info]] = value
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+					args = {
+						name = {
+							order = 1,
+							type = "select",
+							dialogControl = "LSM30_Font",
+							name = L["Font"],
+							values = LSM:HashTable("font"),
+						},
+						size = {
+							order = 2,
+							type = "range",
+							name = L["Size"],
+							min = 5,
+							max = 32,
+							step = 1,
+						},
+						style = {
+							order = 3,
+							type = "select",
+							name = L["Outline"],
+							values = {
+								NONE = L["None"],
+								OUTLINE = L["Outline"],
+								THICKOUTLINE = L["Thick"],
+								SHADOW = L["|cff888888Shadow|r"],
+								SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+								SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+								MONOCHROME = L["|cFFAAAAAAMono|r"],
+								MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+								MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+							},
+						},
+					},
+				},
+			},
 		},
 	},
 }

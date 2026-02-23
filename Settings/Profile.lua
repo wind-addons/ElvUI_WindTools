@@ -1199,6 +1199,8 @@ P.misc = {
 		hearthstone = {
 			left = "6948",
 			leftFallback = "6948",
+			middle = "110560",
+			middleFallback = "110560",
 			right = "140192",
 			rightFallback = "140192",
 		},

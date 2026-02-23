@@ -83,6 +83,27 @@ local SCROLL_BUTTON_ICON = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:
 local ASTRAL_RECALL_SPELL_ID = 556
 local ASTRAL_RECALL_KEY = "SPELL:556"
 
+local HEARTSTONE_SIDE_SETTINGS = {
+	left = {
+		primaryKey = "left",
+		fallbackKey = "leftFallback",
+		attribute = "macrotext1",
+		tooltipPrefix = LEFT_BUTTON_ICON,
+	},
+	middle = {
+		primaryKey = "middle",
+		fallbackKey = "middleFallback",
+		attribute = "macrotext3",
+		tooltipPrefix = SCROLL_BUTTON_ICON,
+	},
+	right = {
+		primaryKey = "right",
+		fallbackKey = "rightFallback",
+		attribute = "macrotext2",
+		tooltipPrefix = RIGHT_BUTTON_ICON,
+	},
+}
+
 local friendOnline = gsub(_G.ERR_FRIEND_ONLINE_SS, "\124Hplayer:%%s\124h%[%%s%]\124h", "")
 local friendOffline = gsub(_G.ERR_FRIEND_OFFLINE_S, "%%s", "")
 
@@ -313,14 +334,29 @@ function GB:GetHearthstoneSetting(side)
 		return nil, nil
 	end
 
-	local primaryKey = side == "right" and "right" or "left"
-	local fallbackKey = side == "right" and "rightFallback" or "leftFallback"
-	local defaultFallback = side == "right" and "140192" or "6948"
+	local sideSettings = HEARTSTONE_SIDE_SETTINGS[side] or HEARTSTONE_SIDE_SETTINGS.left
 
-	local primary = self.db.hearthstone[primaryKey]
-	local fallback = self.db.hearthstone[fallbackKey] or defaultFallback
+	local primary = self.db.hearthstone[sideSettings.primaryKey]
+	local fallback = self.db.hearthstone[sideSettings.fallbackKey]
 
-	return primary and tostring(primary) or nil, tostring(fallback)
+	return primary and tostring(primary) or nil, fallback and tostring(fallback) or nil
+end
+
+local function IsHearthstoneActionUsable(actionData)
+	if not actionData then
+		return false
+	end
+
+	if actionData.actionType == "spell" then
+		return C_SpellBook_IsSpellKnown(actionData.actionID)
+	elseif actionData.actionType == "random" then
+		return availableHearthstones and #availableHearthstones > 0
+	elseif actionData.actionType == "item" then
+		return C_Item_GetItemCount(actionData.actionID) > 0
+			or PlayerHasToy(actionData.actionID) and C_ToyBox_IsToyUsable(actionData.actionID)
+	end
+
+	return false
 end
 
 function GB:ResolveHearthstoneAction(side)
@@ -331,18 +367,12 @@ function GB:ResolveHearthstoneAction(side)
 	local primary, fallback = self:GetHearthstoneSetting(side)
 	local primaryData = primary and hearthstonesAndToysData[primary] or nil
 
-	if primaryData then
-		if primaryData.actionType == "spell" then
-			if C_SpellBook_IsSpellKnown(primaryData.actionID) then
-				return primaryData
-			end
-		else
-			return primaryData
-		end
+	if IsHearthstoneActionUsable(primaryData) then
+		return primaryData
 	end
 
 	local fallbackData = fallback and hearthstonesAndToysData[fallback] or nil
-	if fallbackData and fallbackData.actionType ~= "spell" then
+	if IsHearthstoneActionUsable(fallbackData) then
 		return fallbackData
 	end
 
@@ -641,8 +671,10 @@ local ButtonTypes = {
 				DT.tooltip:ClearLines()
 				DT.tooltip:SetText(L["Hearthstone"])
 				DT.tooltip:AddLine("\n")
-				AddDoubleLineForItem(GB:ResolveHearthstoneAction("left"), LEFT_BUTTON_ICON)
-				AddDoubleLineForItem(GB:ResolveHearthstoneAction("right"), RIGHT_BUTTON_ICON)
+				for _, side in ipairs({ "left", "middle", "right" }) do
+					local sideSettings = HEARTSTONE_SIDE_SETTINGS[side]
+					AddDoubleLineForItem(GB:ResolveHearthstoneAction(side), sideSettings.tooltipPrefix)
+				end
 				DT.tooltip:Show()
 			end
 
@@ -1243,8 +1275,9 @@ _G.WTGameBar_UpdateHearthstoneButtons = function()
 	F.TaskManager:OutOfCombat(function()
 		for _, btn in pairs(GB.HearthstoneButtons) do
 			if btn.type == "HEARTHSTONE" then
-				GB:UpdateHearthstoneButtonMacro(btn, "left")
-				GB:UpdateHearthstoneButtonMacro(btn, "right")
+				for _, side in ipairs({ "left", "middle", "right" }) do
+					GB:UpdateHearthstoneButtonMacro(btn, side)
+				end
 			end
 		end
 	end)
@@ -1267,8 +1300,9 @@ function GB:UpdateButton(button, buttonType)
 	-- Click
 	if buttonType == "HEARTHSTONE" then
 		button:SetAttribute("type*", "macro")
-		self:UpdateHearthstoneButtonMacro(button, "left")
-		self:UpdateHearthstoneButtonMacro(button, "right")
+		for _, side in ipairs({ "left", "middle", "right" }) do
+			self:UpdateHearthstoneButtonMacro(button, side)
+		end
 		tinsert(self.HearthstoneButtons, button)
 	elseif config.macro then
 		button:SetAttribute("type*", "macro")
@@ -1654,9 +1688,16 @@ function GB:UpdateHearthstoneButtonMacro(button, mouseButton)
 		return
 	end
 
-	local side = mouseButton == "right" and "right" or "left"
+	local side = "left"
+	if mouseButton == "right" or mouseButton == "RightButton" then
+		side = "right"
+	elseif mouseButton == "middle" or mouseButton == "MiddleButton" then
+		side = "middle"
+	end
+
+	local sideSettings = HEARTSTONE_SIDE_SETTINGS[side]
 	local actionData = self:ResolveHearthstoneAction(side)
-	local attribute = mouseButton == "right" and "macrotext2" or "macrotext1"
+	local attribute = sideSettings.attribute
 	local macro = format('/run UIErrorsFrame:AddMessage("%s", RED_FONT_COLOR:GetRGBA())', L["No Hearthstone Found!"])
 
 	if actionData and actionData.actionType == "random" then
@@ -1686,21 +1727,25 @@ end
 
 function GB:UpdateHearthstoneButton()
 	local left = self:ResolveHearthstoneAction("left")
+	local middle = self:ResolveHearthstoneAction("middle")
 	local right = self:ResolveHearthstoneAction("right")
 
 	ButtonTypes.HEARTHSTONE.item = {
 		item1 = left and left.name,
+		item3 = middle and middle.name,
 		item2 = right and right.name,
 	}
 end
 
 function GB:UpdateHearthStoneTable()
-	hearthstonesAndToysData = { ["RANDOM"] = {
-		name = L["Random Hearthstone"],
-		icon = 134400,
-		actionType = "random",
-		actionID = 6948,
-	} }
+	hearthstonesAndToysData = {
+		["RANDOM"] = {
+			name = L["Random Hearthstone"],
+			icon = 134400,
+			actionType = "random",
+			actionID = 6948,
+		},
+	}
 
 	async.WithSpellID(ASTRAL_RECALL_SPELL_ID, function(spell)
 		hearthstonesAndToysData[ASTRAL_RECALL_KEY] = {

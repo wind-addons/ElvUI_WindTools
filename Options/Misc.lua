@@ -1339,8 +1339,22 @@ do
 		end,
 	}
 
-	options.gameBar.args.hearthstone.args.right = {
+	options.gameBar.args.hearthstone.args.middle = {
 		order = 2,
+		type = "select",
+		name = L["Middle Button"],
+		width = "full",
+		values = function()
+			local result = {}
+			for id, data in pairs(GB:GetHearthStoneTable(true)) do
+				result[id] = F.GetIconString(data.icon, 14, 14) .. " " .. data.name
+			end
+			return result
+		end,
+	}
+
+	options.gameBar.args.hearthstone.args.right = {
+		order = 3,
 		type = "select",
 		name = L["Right Button"],
 		width = "full",
@@ -1354,7 +1368,7 @@ do
 	}
 
 	options.gameBar.args.hearthstone.args.leftFallback = {
-		order = 3,
+		order = 4,
 		type = "select",
 		name = L["Left Button (Fallback)"],
 		desc = L["The fallback option if the selected hearthstone is not available."],
@@ -1368,8 +1382,23 @@ do
 		end,
 	}
 
+	options.gameBar.args.hearthstone.args.middleFallback = {
+		order = 5,
+		type = "select",
+		name = L["Middle Button (Fallback)"],
+		desc = L["The fallback option if the selected hearthstone is not available."],
+		width = "full",
+		values = function()
+			local result = {}
+			for id, data in pairs(GB:GetHearthStoneTable(false)) do
+				result[id] = F.GetIconString(data.icon, 14, 14) .. " " .. data.name
+			end
+			return result
+		end,
+	}
+
 	options.gameBar.args.hearthstone.args.rightFallback = {
-		order = 4,
+		order = 6,
 		type = "select",
 		name = L["Right Button (Fallback)"],
 		desc = L["The fallback option if the selected hearthstone is not available."],

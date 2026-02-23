@@ -159,55 +159,10 @@ function S:Blizzard_CooldownViewer_Modification()
 end
 
 local buttonOffset = 1
-local function PositionCooldownViewerTab(tab, _, _, _, x, y)
+function ES:CooldownManager_PositionViewerTab(_, _, _, x, y)
 	if x ~= buttonOffset or y ~= -10 then
-		tab:ClearAllPoints()
-		tab:SetPoint("TOPLEFT", _G.CooldownViewerSettings, "TOPRIGHT", buttonOffset, -10)
-	end
-end
-
-local function PositionTabIcons(icon, point)
-	if point ~= "CENTER" then
-		icon:ClearAllPoints()
-		icon:SetPoint("CENTER")
-	end
-end
-
-ES.CooldownManager_HandleAbilityTabs = function(self, viewer)
-	for i, tab in next, { viewer.SpellsTab, viewer.AurasTab } do
-		tab:CreateBackdrop()
-		tab:Size(30, 40)
-
-		if i == 1 then
-			tab:ClearAllPoints()
-			tab:SetPoint("TOPLEFT", viewer, "TOPRIGHT", 1, -10)
-
-			hooksecurefunc(tab, "SetPoint", PositionCooldownViewerTab)
-		end
-
-		if tab.Icon then
-			tab.Icon:ClearAllPoints()
-			tab.Icon:SetPoint("CENTER")
-
-			hooksecurefunc(tab.Icon, "SetPoint", PositionTabIcons)
-		end
-
-		if tab.Background then
-			tab.Background:SetAlpha(0)
-		end
-
-		if tab.SelectedTexture then
-			tab.SelectedTexture:SetDrawLayer("ARTWORK")
-			tab.SelectedTexture:SetColorTexture(1, 0.82, 0, 0.3)
-			tab.SelectedTexture:SetAllPoints()
-		end
-
-		for _, region in next, { tab:GetRegions() } do
-			if region:IsObjectType("Texture") and region:GetAtlas() == "QuestLog-Tab-side-Glow-hover" then
-				region:SetColorTexture(1, 1, 1, 0.3)
-				region:SetAllPoints()
-			end
-		end
+		self:ClearAllPoints()
+		self:SetPoint("TOPLEFT", _G.CooldownViewerSettings, "TOPRIGHT", buttonOffset, -10)
 	end
 end
 

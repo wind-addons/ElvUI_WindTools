@@ -109,7 +109,7 @@ function ST:RefreshWhisperTargets()
 end
 
 function ST:UpdateWhisperTargets(target, chatTime, type)
-	if not self.private.whisperTargets then
+	if not self.private.whisperTargets or E:IsSecretValue(target) then
 		return
 	end
 

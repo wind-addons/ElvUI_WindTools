@@ -77,7 +77,7 @@ options.general = {
 				if E.global.general.locale == "zhCN" then
 					E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://bbs.nga.cn/read.php?tid=31851882")
 				else
-					E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://fang2hou.github.io/ElvUI_WindTools")
+					E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://wind-addons.github.io/ElvUI_WindTools")
 				end
 			end,
 			width = 1.2,

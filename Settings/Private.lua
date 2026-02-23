@@ -593,6 +593,7 @@ V.skins = {
 		btWQuests = true,
 		bugSack = true,
 		collectionator = true,
+		handyNotesMapNotes = true,
 		immersion = true,
 		manuscriptsJournal = true,
 		mountRoutePlanner = true,

@@ -1996,12 +1996,11 @@ options.addons = {
 			name = L["Collectionator"],
 			addonName = "Collectionator",
 		},
-		hekili = {
+		handyNotesMapNotes = {
 			order = 10,
 			type = "toggle",
-			name = L["Hekili"],
-			addonName = "Hekili",
-			addonskinsKey = "Hekili",
+			name = L["HandyNotes MapNotes"],
+			addonName = "HandyNotes_MapNotes",
 		},
 		immersion = {
 			order = 10,

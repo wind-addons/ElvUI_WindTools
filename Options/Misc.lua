@@ -1370,7 +1370,7 @@ do
 	options.gameBar.args.hearthstone.args.leftFallback = {
 		order = 4,
 		type = "select",
-		name = L["Left Button (Fallback)"],
+		name = L["Left Button"] .. " (" .. L["Fallback"] .. ")",
 		desc = L["The fallback option if the selected hearthstone is not available."],
 		width = "full",
 		values = function()
@@ -1385,7 +1385,7 @@ do
 	options.gameBar.args.hearthstone.args.middleFallback = {
 		order = 5,
 		type = "select",
-		name = L["Middle Button (Fallback)"],
+		name = L["Middle Button"] .. " (" .. L["Fallback"] .. ")",
 		desc = L["The fallback option if the selected hearthstone is not available."],
 		width = "full",
 		values = function()
@@ -1400,7 +1400,7 @@ do
 	options.gameBar.args.hearthstone.args.rightFallback = {
 		order = 6,
 		type = "select",
-		name = L["Right Button (Fallback)"],
+		name = L["Right Button"] .. " (" .. L["Fallback"] .. ")",
 		desc = L["The fallback option if the selected hearthstone is not available."],
 		width = "full",
 		values = function()

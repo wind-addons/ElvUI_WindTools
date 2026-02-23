@@ -48,6 +48,17 @@ W.MythicPlusMapData = {
 	[542] = { abbr = L["[ABBR] Eco-Dome Al'dani"], activityID = 381, timers = { 1116, 1488, 1860 } },
 }
 
+W.MidnightMythicPlusMapData = {
+	[557] = { abbr = L["[ABBR] Windrunner Spire"], activityID = 370, timers = { 1206, 1608, 2010 } },
+	[558] = { abbr = L["[ABBR] Magisters' Terrace"], activityID = 399, timers = { 1224, 1632, 2040 } },
+	[559] = { abbr = L["[ABBR] Nexus-Point Xenas"], activityID = 401, timers = { 1080, 1440, 1800 } },
+	[560] = { abbr = L["[ABBR] Maisara Caverns"], activityID = 400, timers = { 1188, 1584, 1980 } },
+	[161] = { abbr = L["[ABBR] Skyreach"], activityID = 9, timers = { 1008, 1344, 1680 } },
+	[402] = { abbr = L["[ABBR] Algeth'ar Academy"], activityID = 302, timers = { 1044, 1392, 1740 } },
+	[556] = { abbr = L["[ABBR] Pit of Saron"], activityID = 52, timers = { 1080, 1440, 1800 } },
+	[583] = { abbr = L["[ABBR] Seat of the Triumvirate"], activityID = 133, timers = { 1200, 1200, 1200 } },
+}
+
 function W:GetMythicPlusMapData()
 	return W.MythicPlusMapData
 end
@@ -62,7 +73,9 @@ W.OldInstances = {
 	L["[ABBR] Court of Stars"],
 	L["[ABBR] Darkflame Cleft"],
 	L["[ABBR] Darkheart Thicket"],
+	L["[ABBR] Eco-Dome Al'dani"],
 	L["[ABBR] Eye of Azshara"],
+	L["[ABBR] Halls of Atonement"],
 	L["[ABBR] Halls of Valor"],
 	L["[ABBR] Maw of Souls"],
 	L["[ABBR] Neltharion's Lair"],
@@ -72,6 +85,8 @@ W.OldInstances = {
 	L["[ABBR] Return to Karazhan: Lower"],
 	L["[ABBR] Return to Karazhan: Upper"],
 	L["[ABBR] Seat of the Triumvirate"],
+	L["[ABBR] Tazavesh: So'leah's Gambit"],
+	L["[ABBR] Tazavesh: Streets of Wonder"],
 	L["[ABBR] The Arcway"],
 	L["[ABBR] The Dawnbreaker"],
 	L["[ABBR] The MOTHERLODE!!"],

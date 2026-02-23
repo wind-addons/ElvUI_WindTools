@@ -62,6 +62,7 @@ W.Changelog[412] = {
 			"[美化外观] 优化了冷却管理器管理界面皮肤, 降低了导致污染的可能性.",
 			"[鼠标提示] 修复了多个在鼠标提示信息查询时可能出现的错误.",
 			"[世界地图] 修复了去除迷雾在破碎群岛地图上可能无法正确显示阿古斯区域的问题.",
+			"[智能 Tab] 修复了战斗中尝试记录密语目标时可能出现的秘密值错误.",
 		},
 		["zhTW"] = {
 			"[美化外觀] 修復了 Simple Addon Manager 皮膚.",
@@ -71,6 +72,7 @@ W.Changelog[412] = {
 			"[美化外觀] 優化了冷卻管理器管理界面皮膚, 降低了導致污染的可能性.",
 			"[浮動提示] 修復了多個在滑鼠提示資訊查詢時可能出現的錯誤.",
 			"[世界地圖] 修復了去除迷霧在破碎群島地圖上可能無法正確顯示阿古斯區域的問題.",
+			"[智能 Tab] 修復了戰鬥中嘗試記錄密語目標時可能出現的秘密值錯誤.",
 		},
 		["enUS"] = {
 			"[Skins] Fixed the skin for Simple Addon Manager.",
@@ -80,6 +82,7 @@ W.Changelog[412] = {
 			"[Skins] Optimized the skin for Cooldown Manager Setting, reducing the possibility of causing taint.",
 			"[Tooltips] Fixed multiple errors that may occur when querying tooltip information.",
 			"[World Map] Fixed an issue where removing fog of war may not correctly display the Argus area on the Broken Isles map.",
+			"[Smart Tab] Fixed a secret value error that may occur when trying to record whisper targets during combat.",
 		},
 		["koKR"] = {
 			"[스킨] Simple Addon Manager 스킨이 수정되었습니다.",
@@ -89,6 +92,7 @@ W.Changelog[412] = {
 			"[스킨] 쿨다운 관리자 설정 스킨이 최적화되어 오염 가능성이 줄어들었습니다.",
 			"[툴팁] 툴팁 정보를 조회할 때 발생할 수 있는 여러 오류가 수정되었습니다.",
 			"[세계 지도] 안개 제거가 부서진 섬 지도에서 아르거스 지역을 올바르게 표시하지 못할 수 있는 문제를 수정했습니다.",
+			"[스마트 탭] 전투 중 귓속말 대상 기록 시 발생할 수 있는 비밀 값 오류를 수정했습니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Исправлена тема для Simple Addon Manager.",
@@ -98,6 +102,7 @@ W.Changelog[412] = {
 			"[Скины] Оптимизирована тема для настроек Менеджера перезарядки, что снижает вероятность загрязнения.",
 			"[Подсказки] Исправлено несколько ошибок, которые могут возникать при запросе информации в подсказках.",
 			"[Карта мира] Исправлена проблема, из-за которой удаление тумана войны может некорректно отображать область Аргуса на карте Расколотых островов.",
+			"[Умная вкладка] Исправлена ошибка секретного значения, которая может возникать при попытке записать цели шепота во время боя.",
 		},
 	},
 }

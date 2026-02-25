@@ -1136,7 +1136,7 @@ options.gameBar = {
 				alwaysSystemInfo = {
 					order = 5,
 					type = "toggle",
-					name = L["Always Show Info"],
+					name = L["Always Show System Info"],
 					desc = L["The system information will be always shown rather than showing only being hovered."],
 				},
 				interval = {

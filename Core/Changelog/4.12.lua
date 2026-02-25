@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...))) ---@type WindTools
 
 W.Changelog[412] = {
-	RELEASE_DATE = "TBD",
+	RELEASE_DATE = "2026/02/25",
 	IMPORTANT = {
 		["zhCN"] = {
 			"[美化外观] 错误框体皮肤改为使用私有框体并同步原框体显隐逻辑, 以降低污染风险.",

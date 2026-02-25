@@ -1643,7 +1643,7 @@ local function UpdateBattleNetFriendStatus(friendIndex)
 				numberOfCharacters = numberOfCharacters + 1
 				characters[gameAccountInfo.characterName] = {
 					faction = gameAccountInfo.factionName,
-					realm = gameAccountInfo.realmDisplayName,
+					realm = gameAccountInfo.realmName,
 					class = E:UnlocalizedClassName(gameAccountInfo.className),
 				}
 			end

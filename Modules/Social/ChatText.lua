@@ -1139,7 +1139,6 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 		return
 	end
 
-	---@type boolean?
 	local linkSender = true
 	local isProtected = CH:MessageIsProtected(arg1)
 	local bossMonster = strsub(chatType, 1, 9) == 'RAID_BOSS' or strsub(chatType, 1, 7) == 'MONSTER'
@@ -1151,6 +1150,7 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 			arg1 = gsub(arg1, '(%d%s?%%)([^%%%a])', '%1%%%2') -- escape percentages that need it [broken since SL?]
 			arg1 = gsub(arg1, '(%d%s?%%)$', '%1%%') -- escape percentages on the end
 			arg1 = gsub(arg1, '^%%o', '%%s') -- replace %o to %s [broken in cata classic?]: "%o gular zila amanare rukadare." from "Cabal Zealot"
+			arg1 = gsub(arg1, '^%%bur', '%%s') -- "%bur uden agol mod ru se ruftos lo nevren algos!" from "Gan'arg Sapper"
 		end
 	elseif not isProtected then
 		arg1 = gsub(arg1, '%%', '%%%%') -- escape any % characters, as it may otherwise cause an 'invalid option in format' error
@@ -1194,25 +1194,22 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 		playerLinkDisplayText = format(noBrackets and '%s' or '[%s]', coloredName)
 	end
 
-	local isCommunityType = chatType == 'COMMUNITIES_CHANNEL'
-	local playerName, lineID, bnetIDAccount = (nameWithRealm ~= arg2 and nameWithRealm) or arg2, arg11, arg13
-	if isCommunityType then
-		local isBattleNetCommunity = bnetIDAccount ~= nil and bnetIDAccount ~= 0
+	local playerName = (nameWithRealm ~= arg2 and nameWithRealm) or arg2
+	if chatType == 'COMMUNITIES_CHANNEL' then -- isCommunityType
 		local messageInfo, clubId, streamId = C_Club_GetInfoFromLastCommunityChatLine()
-
-		if messageInfo ~= nil then
-			if isBattleNetCommunity then
-				playerLink = GetBNPlayerCommunityLink(playerName, playerLinkDisplayText, bnetIDAccount, clubId, streamId, messageInfo.messageId.epoch, messageInfo.messageId.position)
+		if messageInfo and E:NotSecretValue(arg13) then
+			if arg13 and arg13 ~= 0 then -- isBattleNetCommunity: arg13 is bnetIDAccount
+				playerLink = GetBNPlayerCommunityLink(playerName, playerLinkDisplayText, arg13, clubId, streamId, messageInfo.messageId.epoch, messageInfo.messageId.position)
 			else
 				playerLink = GetPlayerCommunityLink(playerName, playerLinkDisplayText, clubId, streamId, messageInfo.messageId.epoch, messageInfo.messageId.position)
 			end
 		else
 			playerLink = playerLinkDisplayText
 		end
-	elseif chatType == 'BN_WHISPER' or chatType == 'BN_WHISPER_INFORM' then
-		playerLink = CH:GetBNPlayerLink(playerName, playerLinkDisplayText, bnetIDAccount, lineID, chatGroup, chatTarget)
+	elseif chatType == 'BN_WHISPER' or chatType == 'BN_WHISPER_INFORM' then -- arg11: lineID
+		playerLink = CH:GetBNPlayerLink(playerName, playerLinkDisplayText, arg13, arg11, chatGroup, chatTarget)
 	else
-		playerLink = CH:GetPlayerLink(playerName, playerLinkDisplayText, lineID, chatGroup, chatTarget)
+		playerLink = CH:GetPlayerLink(playerName, playerLinkDisplayText, arg11, chatGroup, chatTarget)
 	end
 
 	local isMobile = arg14 and GetMobileEmbeddedTexture(info.r, info.g, info.b)

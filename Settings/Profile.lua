@@ -1251,7 +1251,7 @@ P.misc = {
 	},
 	---@class ProfileDB.misc.exitPhaseDiving
 	exitPhaseDiving = {
-		enable = true,
+		enable = false,
 		width = 81,
 		height = 50,
 	},

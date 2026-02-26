@@ -3,11 +3,21 @@ local W = unpack((select(2, ...))) ---@type WindTools
 W.Changelog[413] = {
 	RELEASE_DATE = "TBD",
 	IMPORTANT = {
-		["zhCN"] = {},
-		["zhTW"] = {},
-		["enUS"] = {},
-		["koKR"] = {},
-		["ruRU"] = {},
+		["zhCN"] = {
+			"[退出相位潜行] 作为地心之战版本功能, 默认关闭.",
+		},
+		["zhTW"] = {
+			"[退出相位深潛] 作為地心之戰版本功能, 預設關閉.",
+		},
+		["enUS"] = {
+			"[Exit Phase Diving] As a feature for TWW, it is now disabled by default.",
+		},
+		["koKR"] = {
+			"[상태 이상] TWW 버전의 기능으로, 기본적으로 비활성화되어 있습니다.",
+		},
+		["ruRU"] = {
+			"[Выход из фазы] Как функция для TWW, теперь по умолчанию отключена.",
+		},
 	},
 	NEW = {
 		["zhCN"] = {

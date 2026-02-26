@@ -2218,7 +2218,7 @@ options.addons = {
 			name = L["Angry Keystones"],
 			addonName = "AngryKeystones",
 		},
-		appearanceTooltips = {
+		appearanceTooltip = {
 			order = 10,
 			type = "toggle",
 			name = L["AppearanceTooltip"],

@@ -2,6 +2,8 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local ET = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips
 
+local GameTooltipStatusBar = _G.GameTooltipStatusBar
+
 function T:ChangeHealthBarPosition(_, tt)
 	local barYOffset = E.db.WT.tooltips.elvUITweaks.healthBar.barYOffset
 	local textYOffset = E.db.WT.tooltips.elvUITweaks.healthBar.textYOffset

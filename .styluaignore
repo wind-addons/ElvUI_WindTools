@@ -1,3 +1,4 @@
 Libraries/**
+!Libraries/LibItemEnchant/*
 !Modules/**
 Locales/

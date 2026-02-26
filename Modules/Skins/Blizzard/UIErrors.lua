@@ -15,7 +15,7 @@ local BlizzardColors = {
 }
 
 function S:UIErrors()
-	if not E.private.WT.skins.enable or not  E.private.WT.skins.uiErrors.enable then
+	if not E.private.WT.skins.enable or not E.private.WT.skins.uiErrors.enable then
 		return
 	end
 
@@ -36,7 +36,7 @@ function S:UIErrors()
 		nil,
 		"ALL,WINDTOOLS",
 		function()
-			return not E.private.WT.skins.enable or not  E.private.WT.skins.uiErrors.enable
+			return not E.private.WT.skins.enable or not E.private.WT.skins.uiErrors.enable
 		end,
 		"WindTools,skins,uiErrors"
 	)

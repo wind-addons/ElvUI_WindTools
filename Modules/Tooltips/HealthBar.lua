@@ -22,21 +22,19 @@ function T:ChangeHealthBarPosition(_, tt)
 		return
 	end
 
-	if tt.StatusBar then
-		if ET.db.healthBar.statusPosition == "BOTTOM" then
-			if not tt.StatusBar.anchoredToTop then
-				tt.StatusBar:ClearAllPoints()
-				tt.StatusBar:Point("TOPLEFT", tt, "BOTTOMLEFT", E.Border, -(E.Spacing * 3) + barYOffset)
-				tt.StatusBar:Point("TOPRIGHT", tt, "BOTTOMRIGHT", -E.Border, -(E.Spacing * 3) + barYOffset)
-				tt.StatusBar.text:Point("CENTER", tt.StatusBar, 0, textYOffset)
-			end
+	if GameTooltipStatusBar then
+		local spacing = E.Spacing * 3
+		local position = ET.db.healthBar.statusPosition
+		if position == "BOTTOM" then
+			GameTooltipStatusBar:ClearAllPoints()
+			GameTooltipStatusBar:Point("TOPLEFT", tt, "BOTTOMLEFT", E.Border, -spacing + barYOffset)
+			GameTooltipStatusBar:Point("TOPRIGHT", tt, "BOTTOMRIGHT", -E.Border, -spacing + barYOffset)
+			GameTooltipStatusBar.Text:Point("CENTER", GameTooltipStatusBar, 0, textYOffset)
 		else
-			if tt.StatusBar.anchoredToTop then
-				tt.StatusBar:ClearAllPoints()
-				tt.StatusBar:Point("BOTTOMLEFT", tt, "TOPLEFT", E.Border, (E.Spacing * 3) + barYOffset)
-				tt.StatusBar:Point("BOTTOMRIGHT", tt, "TOPRIGHT", -E.Border, (E.Spacing * 3) + barYOffset)
-				tt.StatusBar.text:Point("CENTER", tt.StatusBar, 0, textYOffset)
-			end
+			GameTooltipStatusBar:ClearAllPoints()
+			GameTooltipStatusBar:Point("BOTTOMLEFT", tt, "TOPLEFT", E.Border, spacing + barYOffset)
+			GameTooltipStatusBar:Point("BOTTOMRIGHT", tt, "TOPRIGHT", -E.Border, spacing + barYOffset)
+			GameTooltipStatusBar.Text:Point("CENTER", GameTooltipStatusBar, 0, textYOffset)
 		end
 	end
 end

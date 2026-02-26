@@ -18,6 +18,7 @@ local function ReskinChangelogFrame()
 
 	S:Proxy("HandleCloseButton", frame.CloseButton)
 	S:Proxy("HandleCheckBox", frame.CheckButton)
+	S:Proxy("HandleCheckBox", frame.checkbox)
 	S:Proxy("HandleButton", frame.closeButton)
 	F.Move(frame.closeButton, 0, 15)
 

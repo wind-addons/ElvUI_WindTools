@@ -49,6 +49,28 @@ local function SyncUIErrorFrameVisibility(showNative)
 	syncingUIErrorVisibility = false
 end
 
+local function ShouldSkipVisibilitySync()
+	return not IsReplacingNativeUIErrors() or syncingUIErrorVisibility
+end
+
+local function SyncCustomUIErrorFrameShown()
+	if ShouldSkipVisibilitySync() then
+		return
+	end
+
+	SyncUIErrorFrameVisibility(false)
+end
+
+local function SyncCustomUIErrorFrameHidden()
+	if ShouldSkipVisibilitySync() then
+		return
+	end
+
+	syncingUIErrorVisibility = true
+	W.UIErrorsFrame:Hide()
+	syncingUIErrorVisibility = false
+end
+
 local function ShouldSkipMessage(message)
 	return message and (message == W.UIERRORFRAME_IGNORE_PATTERN or message == "")
 end
@@ -81,25 +103,15 @@ function W:HookUIError()
 	end
 
 	if not self:IsHooked(_G.UIErrorsFrame, "OnShow") then
-		self:SecureHookScript(_G.UIErrorsFrame, "OnShow", function()
-			if not IsReplacingNativeUIErrors() or syncingUIErrorVisibility then
-				return
-			end
+		self:SecureHookScript(_G.UIErrorsFrame, "OnShow", SyncCustomUIErrorFrameShown)
+	end
 
-			SyncUIErrorFrameVisibility(false)
-		end)
+	if not self:IsHooked(_G.UIErrorsFrame, "Hide") then
+		self:SecureHook(_G.UIErrorsFrame, "Hide", SyncCustomUIErrorFrameHidden)
 	end
 
 	if not self:IsHooked(_G.UIErrorsFrame, "OnHide") then
-		self:SecureHookScript(_G.UIErrorsFrame, "OnHide", function()
-			if not IsReplacingNativeUIErrors() or syncingUIErrorVisibility then
-				return
-			end
-
-			syncingUIErrorVisibility = true
-			W.UIErrorsFrame:Hide()
-			syncingUIErrorVisibility = false
-		end)
+		self:SecureHookScript(_G.UIErrorsFrame, "OnHide", SyncCustomUIErrorFrameHidden)
 	end
 
 	if not self:IsHooked(W.UIErrorsFrame, "AddMessage") then

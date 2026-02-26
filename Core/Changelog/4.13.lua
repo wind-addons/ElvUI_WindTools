@@ -10,11 +10,21 @@ W.Changelog[413] = {
 		["ruRU"] = {},
 	},
 	NEW = {
-		["zhCN"] = {},
-		["zhTW"] = {},
-		["enUS"] = {},
-		["koKR"] = {},
-		["ruRU"] = {},
+		["zhCN"] = {
+			"[美化皮肤] 新增了 AppearanceTooltip 皮肤.",
+		},
+		["zhTW"] = {
+			"[美化皮肤] 新增了 AppearanceTooltip 皮肤.",
+		},
+		["enUS"] = {
+			"[Skins] Added a skin for AppearanceTooltip.",
+		},
+		["koKR"] = {
+			"[스킨] AppearanceTooltip 스킨이 추가되었습니다.",
+		},
+		["ruRU"] = {
+			"[Скины] Добавлена поддержка скина для AppearanceTooltip.",
+		},
 	},
 	IMPROVEMENT = {
 		["zhCN"] = {

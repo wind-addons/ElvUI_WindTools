@@ -38,17 +38,6 @@ W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
 W.MythicPlusMapData = {
 	-- https://wago.tools/db2/MapChallengeMode
 	-- https://wago.tools/db2/GroupFinderActivityGrp
-	[378] = { abbr = L["[ABBR] Halls of Atonement"], activityID = 261, timers = { 1152, 1536, 1920 } },
-	[391] = { abbr = L["[ABBR] Tazavesh: Streets of Wonder"], activityID = 280, timers = { 1260, 1680, 2100 } },
-	[392] = { abbr = L["[ABBR] Tazavesh: So'leah's Gambit"], activityID = 281, timers = { 1080, 1440, 1800 } },
-	[499] = { abbr = L["[ABBR] Priory of the Sacred Flame"], activityID = 324, timers = { 1170, 1560, 1950 } },
-	[503] = { abbr = L["[ABBR] Ara-Kara, City of Echoes"], activityID = 323, timers = { 1080, 1440, 1800 } },
-	[505] = { abbr = L["[ABBR] The Dawnbreaker"], activityID = 326, timers = { 1116, 1488, 1860 } },
-	[525] = { abbr = L["[ABBR] Operation: Floodgate"], activityID = 371, timers = { 1188, 1584, 1980 } },
-	[542] = { abbr = L["[ABBR] Eco-Dome Al'dani"], activityID = 381, timers = { 1116, 1488, 1860 } },
-}
-
-W.MidnightMythicPlusMapData = {
 	[557] = { abbr = L["[ABBR] Windrunner Spire"], activityID = 370, timers = { 1206, 1608, 2010 } },
 	[558] = { abbr = L["[ABBR] Magisters' Terrace"], activityID = 399, timers = { 1224, 1632, 2040 } },
 	[559] = { abbr = L["[ABBR] Nexus-Point Xenas"], activityID = 401, timers = { 1080, 1440, 1800 } },
@@ -210,42 +199,23 @@ W.EquipmentSlots = {
 }
 
 -- Tier Sets
--- wowhead: https://www.wowhead.com/guide/raids/manaforge-omega/tier-set-overview
--- dbc: https://wago.tools/db2/ItemSet
+-- https://www.wowhead.com/item-sets/max-level:220/min-req-level:90?filter=13;12;0
 ---@type table<number, true>
 W.CurrentTierSetTable = {
-	[1919] = true,
-	[1920] = true,
-	[1921] = true,
-	[1922] = true,
-	[1923] = true,
-	[1924] = true,
-	[1925] = true,
-	[1926] = true,
-	[1927] = true,
-	[1928] = true,
-	[1929] = true,
-	[1930] = true,
-	[1931] = true,
+	[1978] = true,
+	[1979] = true,
+	[1980] = true,
+	[1981] = true,
+	[1982] = true,
+	[1983] = true,
+	[1984] = true,
+	[1985] = true,
+	[1986] = true,
+	[1987] = true,
+	[1988] = true,
+	[1989] = true,
+	[1990] = true,
 }
-
--- Midnight
--- https://www.wowhead.com/item-sets/max-level:220/min-req-level:90?filter=13;12;0
--- W.CurrentTierSetTable = {
--- 	[1978] = true,
--- 	[1979] = true,
--- 	[1980] = true,
--- 	[1981] = true,
--- 	[1982] = true,
--- 	[1983] = true,
--- 	[1984] = true,
--- 	[1985] = true,
--- 	[1986] = true,
--- 	[1987] = true,
--- 	[1988] = true,
--- 	[1989] = true,
--- 	[1990] = true,
--- }
 
 ---@type table<number, true>
 W.CurrentTierSetItemIDTable = {}

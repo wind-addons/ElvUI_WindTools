@@ -594,23 +594,24 @@ V.skins = {
 		bar = {
 			texture = "WindTools Glow",
 			alpha = 1,
-				font = {
-					name = {
-						name = E.db.general.font,
-						size = E.db.general.fontSize + 1,
-						style = "OUTLINE",
-					},
-					value = {
-						name = E.db.general.font,
-						size = E.db.general.fontSize + 1,
-						style = "OUTLINE",
-					},
+			font = {
+				name = {
+					name = E.db.general.font,
+					size = E.db.general.fontSize + 1,
+					style = "OUTLINE",
 				},
+				value = {
+					name = E.db.general.font,
+					size = E.db.general.fontSize + 1,
+					style = "OUTLINE",
+				},
+			},
 		},
 	},
 	addons = {
 		advancedInterfaceOptions = true,
 		angryKeystones = true,
+		appearanceTooltip = true,
 		auctionator = true,
 		bigWigs = true,
 		bigWigsQueueTimer = true,

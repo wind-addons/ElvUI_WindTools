@@ -2218,6 +2218,12 @@ options.addons = {
 			name = L["Angry Keystones"],
 			addonName = "AngryKeystones",
 		},
+		appearanceTooltips = {
+			order = 10,
+			type = "toggle",
+			name = L["AppearanceTooltip"],
+			addonName = "AppearanceTooltip",
+		},
 		auctionator = {
 			order = 10,
 			type = "toggle",

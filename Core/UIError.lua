@@ -8,6 +8,9 @@ local tinsert = tinsert
 local type = type
 local xpcall = xpcall
 
+local FrameUtil_RegisterForTopLevelParentChanged = FrameUtil.RegisterForTopLevelParentChanged
+local GenerateFlatClosure = GenerateFlatClosure
+
 local DEFAULT_HANDLER_PRIORITY = 1000
 
 ---@class UIErrorHandlerParams
@@ -28,110 +31,54 @@ W.UIERRORFRAME_IGNORE_PATTERN = "WINDTOOLS_IGNORE"
 W.UIErrorHandlers = W.UIErrorHandlers or {} ---@type UIErrorHandler[]
 
 local syncing = false
-local suppressedExternally = false
-
-local function IsWTUIErrorEnabled()
-	return E.private.WT.skins.enable and E.private.WT.skins.uiErrors and E.private.WT.skins.uiErrors.enable
-end
-
-local function SyncVisibility(showNative)
-	if not (_G.UIErrorsFrame and W.UIErrorsFrame) then
-		return
-	end
-
-	syncing = true
-	if showNative then
-		_G.UIErrorsFrame:Show()
-		W.UIErrorsFrame:Hide()
-	else
-		_G.UIErrorsFrame:Hide()
-		W.UIErrorsFrame:Show()
-	end
-	syncing = false
-end
-
-local function HandleNativeShown()
-	suppressedExternally = false
-
-	if IsWTUIErrorEnabled() then
-		SyncVisibility(false)
-	end
-end
-
-local function HandleNativeHidden()
+local function SyncVisibility(isShown)
 	if syncing then
 		return
 	end
 
-	suppressedExternally = true
+	syncing = true
 
-	if IsWTUIErrorEnabled() then
-		syncing = true
-		W.UIErrorsFrame:Hide()
-		syncing = false
-	end
-end
+	_G.UIErrorsFrame:SetShown(not isShown)
+	W.UIErrorsFrame:SetShown(isShown)
 
-local function ShouldSkipMessage(message)
-	return message and (message == W.UIERRORFRAME_IGNORE_PATTERN or message == "")
-end
-
-function W:UpdateVisibility()
-	if suppressedExternally then
-		syncing = true
-		_G.UIErrorsFrame:Hide()
-		W.UIErrorsFrame:Hide()
-		syncing = false
-		return
-	end
-
-	SyncVisibility(not IsWTUIErrorEnabled())
+	syncing = false
 end
 
 function W:HookUIError()
-	if not (_G.UIErrorsFrame and _G.WTUIErrorsFrame) then
+	W.UIErrorsFrame = _G.WTUIErrorsFrame
+
+	if not (E.private.WT.skins.enable and E.private.WT.skins.uiErrors and E.private.WT.skins.uiErrors.enable) then
+		W.UIErrorsFrame:Hide()
 		return
 	end
 
-	W.UIErrorsFrame = _G.WTUIErrorsFrame
-	W.UIErrorsFrame.flashingFontStrings = W.UIErrorsFrame.flashingFontStrings or {}
+	FrameUtil_RegisterForTopLevelParentChanged(W.UIErrorsFrame)
+
+	W.UIErrorsFrame.flashingFontStrings = {}
 
 	if not self:IsHooked(_G.UIErrorsFrame, "AddMessage") then
-		self:SecureHook(_G.UIErrorsFrame, "AddMessage", function(_, message, r, g, b, a, ...)
-			if not IsWTUIErrorEnabled() or suppressedExternally then
-				return
-			end
-
-			W.UIErrorsFrame:AddMessage(message, r, g, b, a, ...)
-			SyncVisibility(false)
+		self:SecureHook(_G.UIErrorsFrame, "AddMessage", function(_, ...)
+			W.UIErrorsFrame:AddMessage(...)
 		end)
 	end
 
-	if not self:IsHooked(_G.UIErrorsFrame, "OnShow") then
-		self:SecureHookScript(_G.UIErrorsFrame, "OnShow", HandleNativeShown)
+	if not self:IsHooked(_G.UIErrorsFrame, "Show") then
+		self:SecureHook(_G.UIErrorsFrame, "Show", GenerateFlatClosure(SyncVisibility, true))
+	end
+
+	if not self:IsHooked(_G.UIErrorsFrame, "Hide") then
+		self:SecureHook(_G.UIErrorsFrame, "Hide", GenerateFlatClosure(SyncVisibility, false))
 	end
 
 	if not self:IsHooked(_G.UIErrorsFrame, "SetShown") then
 		self:SecureHook(_G.UIErrorsFrame, "SetShown", function(_, shown)
-			if shown then
-				HandleNativeShown()
-			else
-				HandleNativeHidden()
-			end
+			SyncVisibility(shown)
 		end)
-	end
-
-	if not self:IsHooked(_G.UIErrorsFrame, "Hide") then
-		self:SecureHook(_G.UIErrorsFrame, "Hide", HandleNativeHidden)
-	end
-
-	if not self:IsHooked(_G.UIErrorsFrame, "OnHide") then
-		self:SecureHookScript(_G.UIErrorsFrame, "OnHide", HandleNativeHidden)
 	end
 
 	if not self:IsHooked(W.UIErrorsFrame, "AddMessage") then
 		self:RawHook(W.UIErrorsFrame, "AddMessage", function(frame, message, r, g, b, a, ...)
-			if ShouldSkipMessage(message) then
+			if message and (message == W.UIERRORFRAME_IGNORE_PATTERN or message == "") then
 				return
 			end
 
@@ -157,12 +104,6 @@ function W:HookUIError()
 				...
 			)
 		end, true)
-	end
-
-	if _G.UIErrorsFrame:IsShown() then
-		HandleNativeShown()
-	else
-		HandleNativeHidden()
 	end
 
 	W.Modules.Skins:UIErrors()

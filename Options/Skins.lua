@@ -235,10 +235,7 @@ options.general = {
 					end,
 					set = function(_, value)
 						E.private.WT.skins.uiErrors.enable = value
-						if value then
-							S:UIErrors()
-						end
-						W:UpdateVisibility()
+						E:StaticPopup_Show("PRIVATE_RL")
 					end,
 				},
 				desc = {

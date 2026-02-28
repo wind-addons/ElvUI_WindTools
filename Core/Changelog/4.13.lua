@@ -21,23 +21,29 @@ W.Changelog[413] = {
 	},
 	NEW = {
 		["zhCN"] = {
-			"[美化皮肤] 新增了 AppearanceTooltip 皮肤.",
+			"[美化外观] 新增了 AppearanceTooltip 皮肤.",
+			"[游戏条] 支持至暗之夜版本的炉石物品.",
 		},
 		["zhTW"] = {
-			"[美化皮肤] 新增了 AppearanceTooltip 皮肤.",
+			"[美化外觀] 新增了 AppearanceTooltip 皮膚.",
+			"[遊戲條] 支持至暗之夜版本的爐石物品.",
 		},
 		["enUS"] = {
 			"[Skins] Added a skin for AppearanceTooltip.",
+			"[Game Bar] Added new Midnight Hearthstone item support.",
 		},
 		["koKR"] = {
 			"[스킨] AppearanceTooltip 스킨이 추가되었습니다.",
+			"[게임 바] 미드나이트 버전의 하스스톤 아이템 지원이 추가되었습니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Добавлена поддержка скина для AppearanceTooltip.",
+			"[Игровая панель] Добавлена поддержка нового предмета для Миднайта - Камня возвращения.",
 		},
 	},
 	IMPROVEMENT = {
 		["zhCN"] = {
+			"[美化外观] UI 错误框体现在能够更加正确地彻底禁用了.",
 			"[装备观察] 新增了至暗之夜的附魔数据. 感谢 Witnesscm.",
 			"[好友列表] 正式服好友在线图标现在变更为至暗之夜版本.",
 			"[鼠标提示] - [进度] 地下城数据更新为至暗之夜第一赛季.",
@@ -46,14 +52,16 @@ W.Changelog[413] = {
 			"[预组建队伍] 地下城过滤器更新为至暗之夜第一赛季.",
 		},
 		["zhTW"] = {
+			"[美化外觀] UI 錯誤框架現在能夠更加正確地徹底禁用了.",
 			"[裝備觀察] 新增了至暗之夜的附魔數據. 感謝 Witnesscm.",
 			"[好友列表] 正式服好友在線圖標現在變更為至暗之夜版本.",
 			"[浮動提示] - [進度] 地下城數據更新為至暗之夜第一賽季.",
 			"[浮動提示] - [套裝] 套裝數據更新為至暗之夜第一賽季.",
 			"[浮動提示] - [ElvUI 浮動提示微調] 修復了血條和血量文本的垂直偏移功能.",
-			"[預組队伍] 地下城過濾器更新為至暗之夜第一賽季.",
+			"[預組隊伍] 地下城過濾器更新為至暗之夜第一賽季.",
 		},
 		["enUS"] = {
+			"[Skins] The UI Errors frame can now be more properly and thoroughly disabled.",
 			"[Inspect] Added enchant data for Midnight. Thanks Witnesscm.",
 			"[Friends List] The online icon for retail has now been changed to the Midnight version.",
 			"[Tooltip] - [Progression] Dungeon data updated for Midnight S1.",
@@ -62,6 +70,7 @@ W.Changelog[413] = {
 			"[LFG List] Dungeon filters updated for Midnight S1.",
 		},
 		["koKR"] = {
+			"[스킨] UI 오류 프레임이 이제 더 제대로 완전히 비활성화될 수 있습니다.",
 			"[장비 정보] 미드나이트의 인챈트 데이터가 추가되었습니다. Witnesscm님께 감사드립니다.",
 			"[친구 목록] 공식 서버 친구 온라인 아이콘이 이제 미드나이트 버전으로 변경되었습니다.",
 			"[툴팁] - [진행 상황] 던전 데이터가 미드나이트 시즌 1로 업데이트되었습니다.",
@@ -70,6 +79,7 @@ W.Changelog[413] = {
 			"[파티 찾기 목록] 던전 필터가 미드나이트 시즌 1로 업데이트되었습니다.",
 		},
 		["ruRU"] = {
+			"[Скины] Фрейм ошибок UI теперь может быть более правильно и полностью отключен.",
 			"[Осмотр] Добавлены данные чар для Миднайта. Спасибо Witnesscm.",
 			"[Список друзей] Иконка онлайн для официального сервера теперь изменена на версию Миднайта.",
 			"[Подсказка] - [Прогресс] Данные подземелий обновлены для Миднайта С1.",

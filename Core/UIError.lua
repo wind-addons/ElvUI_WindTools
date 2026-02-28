@@ -27,18 +27,19 @@ local DEFAULT_HANDLER_PRIORITY = 1000
 W.UIERRORFRAME_IGNORE_PATTERN = "WINDTOOLS_IGNORE"
 W.UIErrorHandlers = W.UIErrorHandlers or {} ---@type UIErrorHandler[]
 
-local syncingUIErrorVisibility = false
+local syncing = false
+local suppressedExternally = false
 
-local function IsReplacingNativeUIErrors()
+local function IsWTUIErrorEnabled()
 	return E.private.WT.skins.enable and E.private.WT.skins.uiErrors and E.private.WT.skins.uiErrors.enable
 end
 
-local function SyncUIErrorFrameVisibility(showNative)
+local function SyncVisibility(showNative)
 	if not (_G.UIErrorsFrame and W.UIErrorsFrame) then
 		return
 	end
 
-	syncingUIErrorVisibility = true
+	syncing = true
 	if showNative then
 		_G.UIErrorsFrame:Show()
 		W.UIErrorsFrame:Hide()
@@ -46,41 +47,45 @@ local function SyncUIErrorFrameVisibility(showNative)
 		_G.UIErrorsFrame:Hide()
 		W.UIErrorsFrame:Show()
 	end
-	syncingUIErrorVisibility = false
+	syncing = false
 end
 
-local function ShouldSkipVisibilitySync()
-	return not IsReplacingNativeUIErrors() or syncingUIErrorVisibility
+local function HandleNativeShown()
+	suppressedExternally = false
+
+	if IsWTUIErrorEnabled() then
+		SyncVisibility(false)
+	end
 end
 
-local function SyncCustomUIErrorFrameShown()
-	if ShouldSkipVisibilitySync() then
+local function HandleNativeHidden()
+	if syncing then
 		return
 	end
 
-	SyncUIErrorFrameVisibility(false)
-end
+	suppressedExternally = true
 
-local function SyncCustomUIErrorFrameHidden()
-	if ShouldSkipVisibilitySync() then
-		return
+	if IsWTUIErrorEnabled() then
+		syncing = true
+		W.UIErrorsFrame:Hide()
+		syncing = false
 	end
-
-	syncingUIErrorVisibility = true
-	W.UIErrorsFrame:Hide()
-	syncingUIErrorVisibility = false
 end
 
 local function ShouldSkipMessage(message)
 	return message and (message == W.UIERRORFRAME_IGNORE_PATTERN or message == "")
 end
 
-function W:UpdateUIErrorFrameVisibility()
-	if not (W.UIErrorsFrame and _G.UIErrorsFrame) then
+function W:UpdateVisibility()
+	if suppressedExternally then
+		syncing = true
+		_G.UIErrorsFrame:Hide()
+		W.UIErrorsFrame:Hide()
+		syncing = false
 		return
 	end
 
-	SyncUIErrorFrameVisibility(not IsReplacingNativeUIErrors())
+	SyncVisibility(not IsWTUIErrorEnabled())
 end
 
 function W:HookUIError()
@@ -93,25 +98,35 @@ function W:HookUIError()
 
 	if not self:IsHooked(_G.UIErrorsFrame, "AddMessage") then
 		self:SecureHook(_G.UIErrorsFrame, "AddMessage", function(_, message, r, g, b, a, ...)
-			if not IsReplacingNativeUIErrors() then
+			if not IsWTUIErrorEnabled() or suppressedExternally then
 				return
 			end
 
 			W.UIErrorsFrame:AddMessage(message, r, g, b, a, ...)
-			SyncUIErrorFrameVisibility(false)
+			SyncVisibility(false)
 		end)
 	end
 
 	if not self:IsHooked(_G.UIErrorsFrame, "OnShow") then
-		self:SecureHookScript(_G.UIErrorsFrame, "OnShow", SyncCustomUIErrorFrameShown)
+		self:SecureHookScript(_G.UIErrorsFrame, "OnShow", HandleNativeShown)
+	end
+
+	if not self:IsHooked(_G.UIErrorsFrame, "SetShown") then
+		self:SecureHook(_G.UIErrorsFrame, "SetShown", function(_, shown)
+			if shown then
+				HandleNativeShown()
+			else
+				HandleNativeHidden()
+			end
+		end)
 	end
 
 	if not self:IsHooked(_G.UIErrorsFrame, "Hide") then
-		self:SecureHook(_G.UIErrorsFrame, "Hide", SyncCustomUIErrorFrameHidden)
+		self:SecureHook(_G.UIErrorsFrame, "Hide", HandleNativeHidden)
 	end
 
 	if not self:IsHooked(_G.UIErrorsFrame, "OnHide") then
-		self:SecureHookScript(_G.UIErrorsFrame, "OnHide", SyncCustomUIErrorFrameHidden)
+		self:SecureHookScript(_G.UIErrorsFrame, "OnHide", HandleNativeHidden)
 	end
 
 	if not self:IsHooked(W.UIErrorsFrame, "AddMessage") then
@@ -144,7 +159,11 @@ function W:HookUIError()
 		end, true)
 	end
 
-	self:UpdateUIErrorFrameVisibility()
+	if _G.UIErrorsFrame:IsShown() then
+		HandleNativeShown()
+	else
+		HandleNativeHidden()
+	end
 
 	W.Modules.Skins:UIErrors()
 end

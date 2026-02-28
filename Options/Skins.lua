@@ -238,7 +238,7 @@ options.general = {
 						if value then
 							S:UIErrors()
 						end
-						W:UpdateUIErrorFrameVisibility()
+						W:UpdateVisibility()
 					end,
 				},
 				desc = {

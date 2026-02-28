@@ -57,9 +57,27 @@ function W:HookUIError()
 	W.UIErrorsFrame.flashingFontStrings = {}
 
 	if not self:IsHooked(_G.UIErrorsFrame, "AddMessage") then
-		self:SecureHook(_G.UIErrorsFrame, "AddMessage", function(_, ...)
-			W.UIErrorsFrame:AddMessage(...)
-			_G.UIErrorsFrame:Hide()
+		self:SecureHook(_G.UIErrorsFrame, "AddMessage", function(frame, message, r, g, b, a, ...)
+			if message and (message == W.UIERRORFRAME_IGNORE_PATTERN or message == "") then
+				return
+			end
+
+			---@type UIErrorHandlerParams
+			local params = { frame = frame, message = message, r = r, g = g, b = b, a = a }
+			for _, handlerData in ipairs(self.UIErrorHandlers) do
+				local success, result = xpcall(handlerData.handler, F.Developer.ThrowError, params)
+				if not success then
+					return
+				end
+
+				if type(result) == "string" and result == "skip" then
+					return
+				end
+			end
+
+			W.UIErrorsFrame:AddMessage(params.message, params.r, params.g, params.b, params.a, ...)
+
+			SyncVisibility(true)
 		end)
 	end
 
@@ -75,36 +93,6 @@ function W:HookUIError()
 		self:SecureHook(_G.UIErrorsFrame, "SetShown", function(_, shown)
 			SyncVisibility(shown)
 		end)
-	end
-
-	if not self:IsHooked(W.UIErrorsFrame, "AddMessage") then
-		self:RawHook(W.UIErrorsFrame, "AddMessage", function(frame, message, r, g, b, a, ...)
-			if message and (message == W.UIERRORFRAME_IGNORE_PATTERN or message == "") then
-				return
-			end
-
-			local params = { frame = frame, message = message, r = r, g = g, b = b, a = a } ---@type UIErrorHandlerParams
-			for _, handlerData in ipairs(self.UIErrorHandlers) do
-				local success, result = xpcall(handlerData.handler, F.Developer.ThrowError, params)
-				if not success then
-					return
-				end
-
-				if type(result) == "string" and result == "skip" then
-					return
-				end
-			end
-
-			self.hooks[W.UIErrorsFrame].AddMessage(
-				params.frame,
-				params.message,
-				params.r,
-				params.g,
-				params.b,
-				params.a,
-				...
-			)
-		end, true)
 	end
 
 	W.Modules.Skins:UIErrors()

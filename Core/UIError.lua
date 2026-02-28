@@ -59,6 +59,7 @@ function W:HookUIError()
 	if not self:IsHooked(_G.UIErrorsFrame, "AddMessage") then
 		self:SecureHook(_G.UIErrorsFrame, "AddMessage", function(_, ...)
 			W.UIErrorsFrame:AddMessage(...)
+			_G.UIErrorsFrame:Hide()
 		end)
 	end
 

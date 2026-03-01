@@ -170,6 +170,7 @@ L["Always compare items when hovering over them."] = true
 L["Ambience"] = true
 L["Americas & Oceania"] = true
 L["Anchor Point"] = true
+L["Angleur"] = true
 L["Angry Keystones"] = true
 L["Anima Diversion"] = true
 L["Animation"] = true

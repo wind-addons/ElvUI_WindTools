@@ -610,6 +610,7 @@ V.skins = {
 	},
 	addons = {
 		advancedInterfaceOptions = true,
+		angleur = true,
 		angryKeystones = true,
 		appearanceTooltip = true,
 		auctionator = true,

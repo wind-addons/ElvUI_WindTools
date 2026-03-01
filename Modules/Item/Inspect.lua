@@ -918,7 +918,7 @@ function I:ShowPanel(unit, parent, ilevel)
 			line.ItemTextureFrame:Size(self.db.itemIcon.width, self.db.itemIcon.height)
 			line.ItemTextureFrame.Texture:SetTexCoord(E:CropRatio(self.db.itemIcon.width, self.db.itemIcon.height))
 			line.ItemTextureFrame:Point("LEFT", line.ItemLevel, "RIGHT", 4, 0)
-			if itemInfo and itemInfo.level > 0 then
+			if itemInfo and itemInfo.level and itemInfo.level > 0 then
 				line.ItemTextureFrame.Texture:SetTexture(itemInfo.texture)
 				local r, g, b = E.db.general.bordercolor.r, E.db.general.bordercolor.g, E.db.general.bordercolor.b
 				if self.db.itemIcon.qualityBorder then

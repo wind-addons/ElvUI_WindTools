@@ -574,19 +574,19 @@ P.maps = {
 			outline = "OUTLINE",
 		},
 		professionsWeeklyTWW = {
-			enable = true,
+			enable = false,
 			desaturate = true,
 		},
 		weeklyTWW = {
-			enable = true,
+			enable = false,
 			desaturate = true,
 		},
 		ecologicalSuccession = {
-			enable = true,
+			enable = false,
 			desaturate = true,
 		},
 		nightFall = {
-			enable = true,
+			enable = false,
 			desaturate = true,
 			alert = true,
 			sound = false,
@@ -595,7 +595,7 @@ P.maps = {
 			stopAlertIfCompleted = true,
 		},
 		theaterTroupe = {
-			enable = true,
+			enable = false,
 			desaturate = true,
 			alert = true,
 			sound = false,
@@ -604,15 +604,15 @@ P.maps = {
 			stopAlertIfCompleted = true,
 		},
 		ringingDeeps = {
-			enable = true,
+			enable = false,
 			desaturate = true,
 		},
 		spreadingTheLight = {
-			enable = true,
+			enable = false,
 			desaturate = true,
 		},
 		underworldOperative = {
-			enable = true,
+			enable = false,
 			desaturate = true,
 		},
 		radiantEchoes = {

@@ -183,6 +183,7 @@ L["Announcement module is a tool to help you send messages."] = "Модуль о
 L["Anonymous"] = "Анонимный"
 L["Anti-override"] = "Защита от перезаписи"
 L["Any"] = "Любой"
+L["AppearanceTooltip"] = true
 L["Apply"] = "Применить"
 L["Apply new shadow style for ElvUI."] = "Применить новый стиль тени для ElvUI."
 L["Archives Weekly"] = "Еженедельные Архивы"

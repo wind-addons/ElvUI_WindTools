@@ -183,6 +183,7 @@ L["Announcement module is a tool to help you send messages."] = "通告模組是
 L["Anonymous"] = "匿名"
 L["Anti-override"] = "反和諧"
 L["Any"] = "任意"
+L["AppearanceTooltip"] = true
 L["Apply"] = "套用"
 L["Apply new shadow style for ElvUI."] = "為 ElvUI 添加陰影風格."
 L["Archives Weekly"] = "文庫周常"

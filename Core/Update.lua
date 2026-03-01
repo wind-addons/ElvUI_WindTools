@@ -218,6 +218,16 @@ function W:UpdateScripts()
 				db.titleIcon.enable = db.icon
 				db.icon = nil
 			end
+
+			if type(db.objectiveProgress) ~= "table" then
+				local saved = db.objectiveProgress
+				db.objectiveProgress = {}
+
+				E:CopyTable(db.objectiveProgress, V.tooltips.objectiveProgress)
+				if type(saved) == "boolean" then
+					db.objectiveProgress.enable = saved
+				end
+			end
 		end
 
 		if E.db.WT and E.db.WT.tooltips then

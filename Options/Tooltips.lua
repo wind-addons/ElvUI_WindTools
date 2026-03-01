@@ -823,3 +823,32 @@ options.groupInfo = {
 		},
 	},
 }
+
+options.objectiveProgress = {
+	order = 7,
+	type = "group",
+	name = L["Objective Progress"],
+	get = function(info)
+		return E.private.WT.tooltips.objectiveProgress[info[#info]]
+	end,
+	set = function(info, value)
+		E.private.WT.tooltips.objectiveProgress[info[#info]] = value
+		E:StaticPopup_Show("PRIVATE_RL")
+	end,
+	args = {
+		enable = {
+			order = 1,
+			type = "toggle",
+			name = L["Enable"],
+			desc = L["Add more details of objective progress information into tooltips."],
+		},
+		accuracy = {
+			order = 2,
+			name = L["Accuracy"],
+			type = "range",
+			min = 0,
+			max = 5,
+			step = 1,
+		},
+	},
+}

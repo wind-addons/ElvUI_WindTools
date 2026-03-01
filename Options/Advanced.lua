@@ -737,6 +737,16 @@ options.reset = {
 						end)
 					end,
 				},
+				objectiveProgress = {
+					order = 6,
+					type = "execute",
+					name = L["Objective Progress"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Objective Progress"], nil, function()
+							E.private.WT.tooltips.objectiveProgress = V.tooltips.objectiveProgress
+						end)
+					end,
+				},
 			},
 		},
 		unitFrames = {

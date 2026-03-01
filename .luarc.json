@@ -9,6 +9,7 @@
     "Core/Changelog/*",
     "Locales/*",
     "Libraries/LibKeystone/*",
+    "Libraries/LibObjectiveProgress-1.0/*",
     "Libraries/LibOpenRaid/*",
     "Libraries/LibRangeCheck-3.0/*",
     "Libraries/TinyLibs/*"

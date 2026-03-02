@@ -10,16 +10,32 @@ function A:SetTexture_HealComm(module, obj, texture)
 		return self.hooks[module].SetTexture_HealComm(module, obj, texture)
 	end
 
+	if not obj then
+		return self.hooks[module].SetTexture_HealComm(module, obj, texture)
+	end
+
+	-- Decide texture for all bars: WindTools override only applies to damageAbsorb later
+	local textureForAll = texture
 	if self.db.texture and self.db.texture.enable then
 		if self.db.texture.blizzardStyle then
-			texture = "Interface/RaidFrame/Shield-Fill"
+			textureForAll = "Interface/RaidFrame/Shield-Fill"
 		elseif self.db.texture.custom then
-			texture = LSM:Fetch("statusbar", self.db.texture.custom)
+			textureForAll = LSM:Fetch("statusbar", self.db.texture.custom)
 		end
 	end
 
+	-- Call original first so healingPlayer, healingOther, healAbsorb get correct texture (ElvUI's)
+	self.hooks[module].SetTexture_HealComm(module, obj, texture)
+
 	local bar = obj.damageAbsorb
-	bar:SetStatusBarTexture(texture)
+	if not bar then
+		return
+	end
+
+	-- Override only damage absorb bar with WindTools texture when enabled
+	if textureForAll ~= texture then
+		bar:SetStatusBarTexture(textureForAll)
+	end
 
 	-- Overlay
 	if self.db.blizzardAbsorbOverlay then
@@ -70,6 +86,9 @@ function A:SetTexture_HealComm(module, obj, texture)
 
 		obj.__shieldGlow:Show()
 	elseif obj.__shieldGlow then
+		if obj.overDamageAbsorbIndicator == obj.__shieldGlow then
+			obj.overDamageAbsorbIndicator = nil
+		end
 		obj.__shieldGlow:Hide()
 	end
 end

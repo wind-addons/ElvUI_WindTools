@@ -1,8 +1,10 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable, PrivateDB, ProfileDB, GlobalDB
 local LSM = E.Libs.LSM
 local C = W:GetModule("CombatAlert")
+local DT = W:GetModule("DestroyTotem")
 local RM = W:GetModule("RaidMarkers")
 local QK = W:GetModule("QuickKeystone")
+local Color = W.Utilities.Color
 
 local format = format
 
@@ -595,8 +597,128 @@ options.combatAlert = {
 	},
 }
 
-options.quickKeystone = {
+options.destroyTotem = {
 	order = 3,
+	type = "group",
+	name = L["Destroy Totem"],
+	args = {
+		desc = {
+			order = 1,
+			type = "group",
+			inline = true,
+			name = L["Description"],
+			args = {
+				feature = {
+					order = 1,
+					type = "description",
+					name = L["Use key bindings or macro to destroy your totems quickly."],
+					fontSize = "medium",
+				},
+			},
+		},
+		enable = {
+			order = 2,
+			type = "toggle",
+			name = L["Enable"],
+			get = function(info)
+				return E.private.WT.combat.destroyTotem[info[#info]]
+			end,
+			set = function(info, value)
+				E.private.WT.combat.destroyTotem[info[#info]] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		},
+		keyConfig = {
+			order = 3,
+			type = "group",
+			inline = true,
+			name = L["Key Bindings"],
+			get = function(info)
+				return E.private.WT.combat.destroyTotem.keys[tonumber(info[#info])]
+			end,
+			set = function(info, value)
+				E.private.WT.combat.destroyTotem.keys[tonumber(info[#info])] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+			disabled = function()
+				return not E.private.WT.combat.destroyTotem.enable
+			end,
+			args = {
+				["1"] = {
+					order = 1,
+					type = "keybinding",
+					name = format(L["Destroy Totem %s"], 1),
+				},
+				["2"] = {
+					order = 2,
+					type = "keybinding",
+					name = format(L["Destroy Totem %s"], 2),
+				},
+				["3"] = {
+					order = 3,
+					type = "keybinding",
+					name = format(L["Destroy Totem %s"], 3),
+				},
+				["4"] = {
+					order = 4,
+					type = "keybinding",
+					name = format(L["Destroy Totem %s"], 4),
+				},
+			},
+		},
+		macroText = {
+			order = 4,
+			type = "group",
+			inline = true,
+			name = L["Macro Text"],
+			get = function(info)
+				return DT:GetMacroText(tonumber(info[#info]))
+			end,
+			hidden = function()
+				return not E.private.WT.combat.destroyTotem.enable
+			end,
+			set = E.noop,
+			args = {
+				tip = {
+					order = 1,
+					type = "description",
+					name = format(
+						"%s: %s",
+						Color.StringByTemplate(L["Tip"], "emerald-500"),
+						L["If you want to destroy totems by macro, or combine with other actions, you can use the following macro text."]
+					),
+				},
+				["1"] = {
+					order = 11,
+					type = "input",
+					name = format(L["Destroy Totem %s"], 1),
+					width = "full",
+				},
+				["2"] = {
+					order = 12,
+					type = "input",
+					name = format(L["Destroy Totem %s"], 2),
+					width = "full",
+				},
+				["3"] = {
+					order = 13,
+					type = "input",
+					name = format(L["Destroy Totem %s"], 3),
+					width = "full",
+				},
+				["4"] = {
+					order = 14,
+					type = "input",
+					name = format(L["Destroy Totem %s"], 4),
+					width = "full",
+				},
+			},
+		},
+	},
+}
+
+options.quickKeystone = {
+	order = 4,
 	name = L["Quick Keystone"],
 	type = "group",
 	get = function(info)

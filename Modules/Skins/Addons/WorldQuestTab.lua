@@ -174,8 +174,9 @@ local function settingsTextInput(frame)
 end
 
 local function listButton(button)
-	button.Bg:SetTexture(E.media.blankTex)
-	button.Bg:SetVertexColor(C.ExtractRGBFromTemplate("neutral-500"))
+	local QualityBg = button and button.QualityBg
+	QualityBg:SetTexture(E.media.blankTex)
+	QualityBg:SetVertexColor(C.ExtractRGBFromTemplate("neutral-500"))
 
 	button.Highlight:StripTextures()
 	local tex = button.Highlight:CreateTexture(nil, "ARTWORK")

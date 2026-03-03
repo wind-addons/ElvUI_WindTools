@@ -1062,6 +1062,23 @@ local fishings = {
 		220146, -- 皇家拟雀鲷
 		220152, -- 受诅食尸鱼
 	},
+	mn = {
+		-- fish that can be used to get buff https://www.wowhead.com/cn/items/trade-goods/meat?filter=166:69;12:1;0:0
+		238365, -- 辛多雷群聚鱼
+		238366, -- 山猫鱼
+		238367, -- 根须蟹
+		238369, -- 绽尾鲦鱼
+		238370, -- 烁光脊鱼
+		238371, -- 奥术龙鱼
+		238374, -- 嫩滑光鳍鱼
+		238378, -- 烁光海妖
+		238379, -- 迁跃睿心鱼
+		238381, -- 空洞石斑鱼
+		238382, -- 血痕孔雀鱼
+		-- others
+		243302, -- 宝瓶花
+		243343, -- 垂钓客的畸体
+	},
 }
 
 local banners = {
@@ -1981,6 +1998,7 @@ local professionItems = {
 	262644, -- 《跨越黑洞视界：锻造》
 	262645, -- 《跨越黑洞视界：炼金》
 	262646, -- 《跨越黑洞视界：工程学》
+	262649, -- 一份垂钓者的深潜日志
 	263454, -- 萨拉斯炼金师的笔记本
 	263455, -- 萨拉斯铁匠日志
 	263456, -- 萨拉斯工程师的记事本
@@ -2175,8 +2193,8 @@ EB.ModuleList = {
 	["FOODMN"] = CreateList(foods, "crafted_mn"),
 	["FOODVENDOR"] = CreateList(foods, "vendor"),
 	["MAGEFOOD"] = CreateList(foods, "mage"),
-	["FISHING"] = CreateList(fishings, "general", "tww"),
-	["FISHINGTWW"] = CreateList(fishings, "tww"),
+	["FISHING"] = CreateList(fishings, "general", "tww", "mn"),
+	["FISHINGTWW"] = CreateList(fishings, "mn"),
 	["BANNER"] = banners,
 	["UTILITY"] = utilities,
 	["OPENABLE"] = openableItems,

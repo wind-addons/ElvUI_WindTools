@@ -696,7 +696,7 @@ function MB:PrintAllButtonNames()
 end
 
 function MB:UpdateLayout()
-	if not self.db.enable then
+	if not self.db.enable or not self.bar or not self.barAnchor then
 		return
 	end
 

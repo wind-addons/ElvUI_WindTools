@@ -127,6 +127,13 @@ ET.EventData = {
 					-- https://www.wowhead.com/npc=256210/halduron-brightwing
 					93753, -- 魔导师平台
 				},
+				[F.GetIconString(2066011, 14, 16, true) .. " " .. C_QuestLog_GetTitleForQuestID(91627)] = {
+					-- https://www.wowhead.com/item=268489/surplus-bag-of-party-favors
+					90573, -- 加固符文石：魔导师
+					90574, -- 加固符文石：血骑士
+					90575, -- 加固符文石：远行者
+					90576, -- 加固符文石：径巷之影
+				},
 			},
 			questProgress = function(args)
 				local questIDs = type(args.questIDs) == "function" and args:questIDs() or args.questIDs

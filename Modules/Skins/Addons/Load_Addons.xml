@@ -2,6 +2,7 @@
 	<Script file='AdvancedInterfaceOptions.lua' />
 	<Script file='AngryKeystone.lua' />
 	<Script file='AppearanceTooltip.lua' />
+	<Script file='Angleur.lua' />
 	<Script file='Auctionator.lua' />
 	<Script file='BigWigs.lua' />
 	<Script file='BtWQuests.lua' />

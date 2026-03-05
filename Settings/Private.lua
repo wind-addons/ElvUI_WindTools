@@ -36,7 +36,18 @@ local function achievementConfigTable(t, sourceMetadata)
 end
 
 ---@class PrivateDB.combat
-V.combat = {}
+V.combat = {
+	---@class PrivateDB.combat.destroyTotem
+	destroyTotem = {
+		enable = false,
+		keys = {
+			[1] = nil,
+			[2] = nil,
+			[3] = nil,
+			[4] = nil,
+		},
+	},
+}
 
 ---@class PrivateDB.item
 V.item = {
@@ -610,6 +621,7 @@ V.skins = {
 	},
 	addons = {
 		advancedInterfaceOptions = true,
+		angleur = true,
 		angryKeystones = true,
 		appearanceTooltip = true,
 		auctionator = true,

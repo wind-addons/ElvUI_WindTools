@@ -2209,6 +2209,12 @@ options.addons = {
 			name = " ",
 			width = "full",
 		},
+		angleur = {
+			order = 10,
+			type = "toggle",
+			name = L["Angleur"],
+			addonName = "Angleur",
+		},
 		angryKeystones = {
 			order = 10,
 			type = "toggle",

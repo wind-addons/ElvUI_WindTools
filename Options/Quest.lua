@@ -1092,10 +1092,11 @@ options.turnIn = {
 				return not E.db.WT.quest.turnIn.enable
 			end,
 			values = {
-				ALL = L["All"],
+				ALL = L["Accepct and Complete"],
 				ACCEPT = L["Only Accept"],
 				COMPLETE = L["Only Complete"],
 			},
+			width = 1.5,
 		},
 		pauseModifier = {
 			order = 4,
@@ -1117,13 +1118,23 @@ options.turnIn = {
 			order = 5,
 			type = "group",
 			inline = true,
-			name = L["Enable Conditions"],
+			name = L["Automation Conditions"],
 			disabled = function()
 				return not E.db.WT.quest.turnIn.enable
 			end,
 			args = {
-				accountCompleted = {
+				desc = {
 					order = 1,
+					type = "description",
+					name = format(
+					"%s: %s",
+						C.StringByTemplate(L["Notice"], "rose-500"),
+						L["The automation will only work for the quests matched the conditions below."]
+					),
+					width = "full",
+				},
+				accountCompleted = {
+					order = 2,
 					type = "toggle",
 					name = L["Account Completed"],
 					desc = L["Enable automation for the quests already completed on any character in your account."],
@@ -1138,7 +1149,7 @@ options.turnIn = {
 					end,
 				},
 				repeatable = {
-					order = 2,
+					order = 3,
 					type = "toggle",
 					name = L["Repeatable"],
 					desc = format(
@@ -1158,7 +1169,7 @@ options.turnIn = {
 					end,
 				},
 				other = {
-					order = 3,
+					order = 4,
 					type = "toggle",
 					name = L["Other"],
 					desc = L["Enable automation for the quests not matched by other conditions."],

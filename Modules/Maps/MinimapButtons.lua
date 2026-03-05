@@ -74,6 +74,13 @@ local BuildinIgnoreSettings = {
 		"Pin",
 		"POI",
 	},
+	checker = {
+		RXPGuidesMapPin = function(_, frame)
+			if C_AddOns_IsAddOnLoaded("RXPGuides") and frame.inner and frame.text and frame.render then
+				return true
+			end
+		end,
+	},
 }
 
 local TexCoordIgnoreList = {
@@ -280,7 +287,7 @@ function MB:SkinButton(button, force)
 		return
 	end
 
-	local ignored = self:IsIgnored(name)
+	local ignored = self:IsIgnored(name, button)
 	if ignored then
 		if ignored == "user" then -- Only log user ignored buttons, not the ones ignored by build-in settings
 			tinsert(ignoredByUserButtons, { name = name, debugName = button:GetDebugName(), frame = button })
@@ -545,7 +552,7 @@ function MB:IsHidden(name)
 	end)
 end
 
-function MB:IsIgnored(name)
+function MB:IsIgnored(name, frame)
 	if not name or name == "" then
 		return false
 	end
@@ -573,6 +580,13 @@ function MB:IsIgnored(name)
 			if strsub(name, strlen("LibDBIcon10_") + 1) == ignoreName then
 				return true
 			end
+		end
+	end
+
+	for _, func in pairs(BuildinIgnoreSettings.checker) do
+		local success, result = pcall(func, name, frame)
+		if success and result then
+			return true
 		end
 	end
 
@@ -682,7 +696,7 @@ function MB:PrintAllButtonNames()
 end
 
 function MB:UpdateLayout()
-	if not self.db.enable then
+	if not self.db.enable or not self.bar or not self.barAnchor then
 		return
 	end
 

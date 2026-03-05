@@ -573,6 +573,16 @@ P.maps = {
 			scale = 1,
 			outline = "OUTLINE",
 		},
+		stormarionAssault = {
+			enable = true,
+			desaturate = true,
+			alert = true,
+			sound = true,
+			soundFile = "OnePlus Surprise",
+			second = 300,
+			stopAlertIfCompleted = true,
+			stopAlertIfPlayerNotEnteredMidnight = true,
+		},
 		professionsWeeklyTWW = {
 			enable = false,
 			desaturate = true,

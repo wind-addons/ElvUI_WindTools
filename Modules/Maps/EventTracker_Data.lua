@@ -80,9 +80,12 @@ ET.ColorPalette = {
 ---|"TimeRiftThaldraszus"
 ---|"SuperBloom"
 ---|"BigDig"
+---|"StormarionAssault"
 
 ---@type EventKey[]
 ET.EventList = {
+	-- Midnight
+	"StormarionAssault",
 	-- TWW
 	-- "ProfessionsWeeklyTWW",
 	"WeeklyTWW",
@@ -104,6 +107,33 @@ ET.EventList = {
 
 ---@alias EventTracker.EventData { [EventKey]: table }
 ET.EventData = {
+	-- MN
+	StormarionAssault = {
+		dbKey = "stormarionAssault",
+		args = {
+			icon = 7431083,
+			type = "loopTimer",
+			questIDs = { 90962 },
+			hasWeeklyReward = true,
+			duration = 15 * 60,
+			interval = 30 * 60,
+			eventName = L["Stormarion Assault"],
+			label = L["Stormarion Assault"],
+			location = C_Map_GetMapInfo(2405).name,
+			flash = true,
+			runningBarColor = ET.ColorPalette.purple,
+			runningText = L["In Progress"],
+			filter = function(args)
+				if args.stopAlertIfPlayerNotEnteredMidnight and not C_QuestLog_IsQuestFlaggedCompleted(91281) then
+					return false
+				end
+				return true
+			end,
+			startTimestamp = 1772728200,
+			onClick = worldMapIDSetter(2405),
+			onClickHelpText = L["Click to show location"],
+		},
+	},
 	-- TWW
 	ProfessionsWeeklyTWW = {
 		dbKey = "professionsWeeklyTWW",

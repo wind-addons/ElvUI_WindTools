@@ -573,6 +573,10 @@ P.maps = {
 			scale = 1,
 			outline = "OUTLINE",
 		},
+		weeklyMN = {
+			enable = true,
+			desaturate = true,
+		},
 		stormarionAssault = {
 			enable = true,
 			desaturate = true,

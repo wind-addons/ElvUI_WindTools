@@ -81,10 +81,12 @@ ET.ColorPalette = {
 ---|"SuperBloom"
 ---|"BigDig"
 ---|"StormarionAssault"
+---|"WeeklyMN"
 
 ---@type EventKey[]
 ET.EventList = {
 	-- Midnight
+	"WeeklyMN",
 	"StormarionAssault",
 	-- TWW
 	-- "ProfessionsWeeklyTWW",
@@ -108,6 +110,69 @@ ET.EventList = {
 ---@alias EventTracker.EventData { [EventKey]: table }
 ET.EventData = {
 	-- MN
+	WeeklyMN = {
+		dbKey = "weeklyMN",
+		args = {
+			icon = 236681,
+			type = "weekly",
+			questIDs = {
+				[F.GetIconString(7578704, 14, 16, true) .. " " .. C_QuestLog_GetTitleForQuestID(93744)] = {
+					-- https://www.wowhead.com/npc=256203/lady-liadrin
+					93767, -- 至暗之夜：奥术秘社
+					93889, -- 至暗之夜：萨瑟利尔的聚会
+					93909, -- 至暗之夜：地下堡
+					93911, -- 至暗之夜：地下城
+				},
+				[F.GetIconString(5554512, 14, 16, true) .. " " .. L["Dungeon Weekly"]] = {
+					-- https://www.wowhead.com/npc=256210/halduron-brightwing
+					93753, -- 魔导师平台
+				},
+			},
+			questProgress = function(args)
+				local questIDs = type(args.questIDs) == "function" and args:questIDs() or args.questIDs
+				local progress = {}
+
+				for storylineName, storylineQuests in pairs(questIDs) do
+					local weeklyQuestID, status
+					for _, questID in pairs(storylineQuests) do
+						if C_QuestLog_IsQuestFlaggedCompleted(questID) then
+							weeklyQuestID = questID
+							status = "completed"
+							break
+						end
+
+						if C_QuestLog_IsOnQuest(questID) then
+							weeklyQuestID = questID
+							status = "inProgress"
+							break
+						end
+					end
+
+					local rightText = ""
+					local questName = weeklyQuestID and C_QuestLog_GetTitleForQuestID(weeklyQuestID)
+
+					if questName then
+						if status == "inProgress" then
+							rightText = format("%s - %s", questName, C.StringByTemplate(L["In Progress"], "yellow-400"))
+						elseif status == "completed" then
+							rightText = format("%s - %s", questName, C.StringByTemplate(L["Completed"], "green-500"))
+						end
+					else
+						rightText = C.StringByTemplate(L["Not Accepted"], "rose-500")
+					end
+
+					tinsert(progress, { label = storylineName, rightText = rightText })
+				end
+
+				return progress
+			end,
+			eventName = format("%s (%s)", L["Weekly Quest"], L["[ABBR] Midnight"]),
+			location = C_Map_GetMapInfo(2393).name,
+			label = format("%s (%s)", L["Weekly Quest"], L["[ABBR] Midnight"]),
+			onClick = worldMapIDSetter(2393),
+			onClickHelpText = L["Click to show location"],
+		},
+	},
 	StormarionAssault = {
 		dbKey = "stormarionAssault",
 		args = {

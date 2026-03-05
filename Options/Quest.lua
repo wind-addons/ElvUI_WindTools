@@ -665,6 +665,13 @@ options.objectiveTracker = {
 					name = L["Word Wrap"],
 					desc = L["Enable word wrap for long text."],
 				},
+				uppercase = {
+					order = 5,
+					type = "toggle",
+					name = L["Uppercase"],
+					desc = L["Display quest titles in uppercase."],
+					hidden = W.AsianLocale,
+				},
 			},
 		},
 		infoColor = {

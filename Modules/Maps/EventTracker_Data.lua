@@ -138,7 +138,7 @@ ET.EventData = {
 					-- https://www.wowhead.com/quest=89268/lost-legends
 					89268, -- 失落的传说
 				},
-				[F.GetIconString(7385004, 14, 16, true) .. " " .. L["Abundance"]] = {
+				[F.GetIconString(7636650, 14, 16, true) .. " " .. L["Abundance"]] = {
 					-- https://www.wowhead.com/quest=89507/abundant-offerings
 					89507, -- 丰饶贡品
 				},

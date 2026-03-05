@@ -15,7 +15,6 @@ local tonumber = tonumber
 
 local CreateFrame = CreateFrame
 local GetKeysArray = GetKeysArray
-local hooksecurefunc = hooksecurefunc
 
 ---@type ObjectiveTrackerModuleTemplate[]
 local trackers = {
@@ -285,14 +284,6 @@ function OT:HandleBlockHeader(frame)
 	text:Height(text:GetStringHeight() + 2)
 
 	if self.db.title.uppercase then
-		if not F.IsMethodInternalized(text, "SetText") then
-			F.InternalizeMethod(text, "SetText")
-			hooksecurefunc(text, "SetText", function(t, str)
-				if str then
-					F.CallMethod(t, "SetText", str:upper())
-				end
-			end)
-		end
 		local current = text:GetText()
 		if current then
 			text:SetText(current:upper())
@@ -448,14 +439,6 @@ function OT:ObjectiveTrackerModule_Update(tracker)
 	self:ShortHeader(headerText)
 
 	if self.db.header.uppercase then
-		if not F.IsMethodInternalized(headerText, "SetText") then
-			F.InternalizeMethod(headerText, "SetText")
-			hooksecurefunc(headerText, "SetText", function(t, str)
-				if str then
-					F.CallMethod(t, "SetText", str:upper())
-				end
-			end)
-		end
 		local current = headerText:GetText()
 		if current then
 			headerText:SetText(current:upper())

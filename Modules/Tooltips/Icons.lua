@@ -127,6 +127,10 @@ end
 
 local function Handle(type)
 	TooltipDataProcessor_AddTooltipPostCall(type, function(tt, data)
+		if not tt or tt.IsForbidden and tt:IsForbidden() then
+			return
+		end
+
 		local name = tt.GetName and tt:GetName()
 
 		if not data or not data.id or not data.lines or E:IsSecretValue(name) or not tContains(tooltips, name) then

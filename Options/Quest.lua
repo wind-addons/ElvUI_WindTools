@@ -531,8 +531,15 @@ options.objectiveTracker = {
 					type = "toggle",
 					name = L["Use Class Color"],
 				},
-				color = {
+				uppercase = {
 					order = 6,
+					type = "toggle",
+					name = L["Uppercase"],
+					desc = L["Display tracker headers in uppercase."],
+					hidden = W.AsianLocale,
+				},
+				color = {
+					order = 7,
 					type = "color",
 					name = L["Color"],
 					hasAlpha = false,

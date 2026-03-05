@@ -447,6 +447,21 @@ function OT:ObjectiveTrackerModule_Update(tracker)
 
 	self:ShortHeader(headerText)
 
+	if self.db.header.uppercase then
+		if not F.IsMethodInternalized(headerText, "SetText") then
+			F.InternalizeMethod(headerText, "SetText")
+			hooksecurefunc(headerText, "SetText", function(t, str)
+				if str then
+					F.CallMethod(t, "SetText", str:upper())
+				end
+			end)
+		end
+		local current = headerText:GetText()
+		if current then
+			headerText:SetText(current:upper())
+		end
+	end
+
 	local color = self.db.header.classColor and E.myClassColor or self.db.header.color
 	headerText:SetTextColor(color.r, color.g, color.b)
 end

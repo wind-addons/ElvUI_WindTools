@@ -270,6 +270,7 @@ V.quest = {
 			classColor = false,
 			color = { r = 1, g = 1, b = 1 },
 			shortHeader = true,
+			uppercase = false,
 		},
 		cosmeticBar = {
 			enable = true,

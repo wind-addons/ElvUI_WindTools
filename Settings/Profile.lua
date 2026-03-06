@@ -577,6 +577,10 @@ P.maps = {
 			enable = true,
 			desaturate = true,
 		},
+		professionsWeeklyMN = {
+			enable = true,
+			desaturate = true,
+		},
 		stormarionAssault = {
 			enable = true,
 			desaturate = true,
@@ -586,10 +590,6 @@ P.maps = {
 			second = 300,
 			stopAlertIfCompleted = true,
 			stopAlertIfPlayerNotEnteredMidnight = true,
-		},
-		professionsWeeklyTWW = {
-			enable = false,
-			desaturate = true,
 		},
 		weeklyTWW = {
 			enable = false,

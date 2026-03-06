@@ -31,23 +31,19 @@ local function worldMapIDSetter(idOrFunc)
 end
 
 ET.Meta = {
-	radiantEchoesZoneRotation = {
-		C_Map_GetMapInfo(32),
-		C_Map_GetMapInfo(70),
-		C_Map_GetMapInfo(115),
-	},
-	ProfessionsTWW = {
-		[4620669] = 84133, -- 鍊金
-		[4620670] = 84127, -- 鍛造
-		[4620672] = 84084, -- 附魔
-		[4620673] = 84128, -- 工程
-		-- [4620675] = 84134, -- 草藥
-		[4620676] = 84129, -- 銘文
-		[4620677] = 84130, -- 珠寶
-		[4620678] = 84131, -- 製皮
-		-- [4620679] = 84128, -- 採礦
-		-- [4620680] = 84132, -- 剝皮
-		[4620681] = 84132, -- 裁縫
+	radiantEchoesZoneRotation = { C_Map_GetMapInfo(32), C_Map_GetMapInfo(70), C_Map_GetMapInfo(115) },
+	ProfessionsWeeklyMN = {
+		[4620669] = 93690, -- 炼金术
+		[4620670] = 93691, -- 锻造
+		[4620672] = 93698, -- 附魔
+		[4620673] = 93692, -- 工程学
+		[4620675] = { 93700, 93702, 93703, 93704 }, -- 草药学
+		[4620676] = 93693, -- 铭文
+		[4620677] = 93694, -- 珠宝
+		[4620678] = 93695, -- 制皮
+		[4620679] = { 93705, 93706, 93708, 93709 }, -- 采矿
+		[4620680] = { 93710, 93711, 93714 }, -- 剥皮
+		[4620681] = 93696, -- 裁缝
 	},
 }
 
@@ -65,7 +61,9 @@ ET.ColorPalette = {
 }
 
 ---@alias EventKey
----|"ProfessionsWeeklyTWW"
+---|"WeeklyMN"
+---|"ProfessionsWeeklyMN"
+---|"StormarionAssault"
 ---|"WeeklyTWW"
 ---|"EcologicalSuccession"
 ---|"Nightfall"
@@ -80,16 +78,14 @@ ET.ColorPalette = {
 ---|"TimeRiftThaldraszus"
 ---|"SuperBloom"
 ---|"BigDig"
----|"StormarionAssault"
----|"WeeklyMN"
 
 ---@type EventKey[]
 ET.EventList = {
 	-- Midnight
 	"WeeklyMN",
+	"ProfessionsWeeklyMN",
 	"StormarionAssault",
 	-- TWW
-	-- "ProfessionsWeeklyTWW",
 	"WeeklyTWW",
 	"EcologicalSuccession",
 	"Nightfall",
@@ -192,6 +188,38 @@ ET.EventData = {
 			onClickHelpText = L["Click to show location"],
 		},
 	},
+	ProfessionsWeeklyMN = {
+		dbKey = "professionsWeeklyMN",
+		args = {
+			icon = 1392955,
+			type = "weekly",
+			questProgress = function()
+				local prof1, prof2 = GetProfessions()
+				local quests = {}
+
+				for _, prof in pairs({ prof1, prof2 }) do
+					if prof then
+						local name, iconID = GetProfessionInfo(prof)
+						local questData = ET.Meta.ProfessionsWeeklyMN[iconID]
+						if questData then
+							tinsert(quests, {
+								questID = questData,
+								label = F.GetIconString(iconID, 14, 14) .. " " .. name,
+							})
+						end
+					end
+				end
+
+				return quests
+			end,
+			hasWeeklyReward = false,
+			eventName = L["Professions Weekly"],
+			location = C_Map_GetMapInfo(2393).name,
+			label = L["Professions Weekly"],
+			onClick = worldMapIDSetter(2393),
+			onClickHelpText = L["Click to show location"],
+		},
+	},
 	StormarionAssault = {
 		dbKey = "stormarionAssault",
 		args = {
@@ -219,35 +247,6 @@ ET.EventData = {
 		},
 	},
 	-- TWW
-	ProfessionsWeeklyTWW = {
-		dbKey = "professionsWeeklyTWW",
-		args = {
-			icon = 1392955,
-			type = "weekly",
-			questProgress = function()
-				local prof1, prof2 = GetProfessions()
-				local quests = {}
-
-				for _, prof in pairs({ prof1, prof2 }) do
-					if prof then
-						local name, iconID = GetProfessionInfo(prof)
-						tinsert(quests, {
-							questID = ET.Meta.ProfessionsWeeklyTWW[iconID],
-							label = F.GetIconString(iconID, 14, 14) .. " " .. name,
-						})
-					end
-				end
-
-				return quests
-			end,
-			hasWeeklyReward = false,
-			eventName = L["Professions Weekly"],
-			location = C_Map_GetMapInfo(2339).name,
-			label = L["Professions Weekly"],
-			onClick = worldMapIDSetter(2339),
-			onClickHelpText = L["Click to show location"],
-		},
-	},
 	WeeklyTWW = {
 		dbKey = "weeklyTWW",
 		args = {

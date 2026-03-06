@@ -1113,8 +1113,34 @@ options.eventTracker = {
 						},
 					},
 				},
-				stormarionAssault = {
+				professionsWeeklyMN = {
 					order = 12,
+					type = "group",
+					inline = true,
+					name = L["Professions Weekly Quest"],
+					get = function(info)
+						return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
+						ET:ProfileUpdate()
+					end,
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						desaturate = {
+							order = 2,
+							type = "toggle",
+							name = L["Desaturate"],
+							desc = L["Desaturate icon if the event is completed in this week."],
+						},
+					},
+				},
+				stormarionAssault = {
+					order = 13,
 					type = "group",
 					inline = true,
 					name = L["Stormarion Assault"],

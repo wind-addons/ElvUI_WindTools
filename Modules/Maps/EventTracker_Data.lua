@@ -134,9 +134,13 @@ ET.EventData = {
 					90575, -- 加固符文石：远行者
 					90576, -- 加固符文石：径巷之影
 				},
-				[F.GetIconString(7385004, 14, 16, true) .. " " .. L["Legends of the Haranir"]] = {
-					-- https://www.wowhead.com/quest=89268/lost-legends
-					89268, -- 失落的传说
+				[F.GetIconString(7385004, 14, 16, true) .. " " .. C_QuestLog_GetTitleForQuestID(89268)] = {
+					-- https://www.wowhead.com/npc=238170/zurashar-kassameh#ends
+					88993, -- 威南的结界
+					88994, -- 回响大锅
+					88995, -- 艾林哈籁之花
+					88996, -- 回响寂灭之焰
+					88997, -- 鲁斯苏拉之臂
 				},
 				[F.GetIconString(7636650, 14, 16, true) .. " " .. L["Abundance"]] = {
 					-- https://www.wowhead.com/quest=89507/abundant-offerings

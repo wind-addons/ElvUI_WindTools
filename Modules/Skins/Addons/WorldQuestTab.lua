@@ -2,7 +2,8 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames ---@type MoveFrames
 local C = W.Utilities.Color
-local TT = E:GetModule("Tooltip")
+local T = W.Modules.Tooltips
+local ET = E:GetModule("Tooltip")
 
 local _G = _G
 local next = next
@@ -233,11 +234,18 @@ function S:WorldQuestTab()
 			CompareHeader:StripTextures()
 		end
 
-		TT:SetStyle(tt)
+		ET:SetStyle(tt)
+		T:AddIconTooltip(tt:GetName())
+	end
+
+	local ItemTooltip = _G.WQT_GameTooltip.ItemTooltip
+	if ItemTooltip then
+		S:Proxy("HandleIcon", ItemTooltip.Icon, true)
+		S:Proxy("HandleIconBorder", ItemTooltip.IconBorder, ItemTooltip.Icon.backdrop)
 	end
 
 	-- Block the "WQT anti-error" line
-	self:RawHook(_G.WQT_GameTooltip, "AddLine", function (tt, text, ...)
+	self:RawHook(_G.WQT_GameTooltip, "AddLine", function(tt, text, ...)
 		if strfind(text, "WQT anti-error", 0, true) then
 			return
 		end

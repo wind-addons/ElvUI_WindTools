@@ -166,7 +166,18 @@ local FunctionFactory = {
 					_G.GameTooltip:AddLine(L["Quest Progress"])
 					for _, data in ipairs(questProgress) do
 						local isCompleted = data.isCompleted
-							or data.questID and C_QuestLog_IsQuestFlaggedCompleted(data.questID)
+						if not isCompleted and data.questID then
+							if type(data.questID) == "table" then
+								for _, qid in ipairs(data.questID) do
+									if C_QuestLog_IsQuestFlaggedCompleted(qid) then
+										isCompleted = true
+										break
+									end
+								end
+							else
+								isCompleted = C_QuestLog_IsQuestFlaggedCompleted(data.questID)
+							end
+						end
 						local color = isCompleted and "green-500" or "rose-500"
 						local textL = type(data.label) == "function" and data:label() or data.label
 						local textR = data.rightText
@@ -424,7 +435,17 @@ local FunctionFactory = {
 					_G.GameTooltip:AddLine(L["Quest Progress"])
 					for _, data in ipairs(questProgress) do
 						if data.questID then
-							local isCompleted = C_QuestLog_IsQuestFlaggedCompleted(data.questID)
+							local isCompleted = false
+							if type(data.questID) == "table" then
+								for _, qid in ipairs(data.questID) do
+									if C_QuestLog_IsQuestFlaggedCompleted(qid) then
+										isCompleted = true
+										break
+									end
+								end
+							else
+								isCompleted = C_QuestLog_IsQuestFlaggedCompleted(data.questID)
+							end
 							local color = isCompleted and "green-500" or "rose-500"
 							local label = type(data.label) == "function" and data:label() or data.label
 							if type(label) == "string" then

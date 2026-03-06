@@ -283,6 +283,13 @@ function OT:HandleBlockHeader(frame)
 	end
 	text:Height(text:GetStringHeight() + 2)
 
+	if self.db.title.uppercase then
+		local current = text:GetText()
+		if current then
+			text:SetText(current:upper())
+		end
+	end
+
 	if not self:IsHooked(text, "SetTextColor") then
 		self:SecureHook(text, "SetTextColor", "BlockHeaderText_SetTextColor")
 		self:BlockHeaderText_SetTextColor(
@@ -430,6 +437,13 @@ function OT:ObjectiveTrackerModule_Update(tracker)
 	end
 
 	self:ShortHeader(headerText)
+
+	if self.db.header.uppercase then
+		local current = headerText:GetText()
+		if current then
+			headerText:SetText(current:upper())
+		end
+	end
 
 	local color = self.db.header.classColor and E.myClassColor or self.db.header.color
 	headerText:SetTextColor(color.r, color.g, color.b)

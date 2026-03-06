@@ -1244,7 +1244,14 @@ options.gameBar = {
 				GB:UpdateHearthstoneButton()
 				GB:UpdateButtons()
 			end,
-			args = {},
+			args = {
+				showBindLocation = {
+					order = 1,
+					type = "toggle",
+					name = L["Show Bind Location"],
+					desc = L["Show the bind location of the hearthstone in tooltip."],
+				},
+			},
 		},
 		groupFinder = {
 			order = 15,
@@ -1326,7 +1333,7 @@ do
 	end
 
 	options.gameBar.args.hearthstone.args.left = {
-		order = 1,
+		order = 11,
 		type = "select",
 		name = L["Left Button"],
 		width = "full",
@@ -1340,7 +1347,7 @@ do
 	}
 
 	options.gameBar.args.hearthstone.args.middle = {
-		order = 2,
+		order = 12,
 		type = "select",
 		name = L["Middle Button"],
 		width = "full",
@@ -1354,7 +1361,7 @@ do
 	}
 
 	options.gameBar.args.hearthstone.args.right = {
-		order = 3,
+		order = 13,
 		type = "select",
 		name = L["Right Button"],
 		width = "full",
@@ -1368,7 +1375,7 @@ do
 	}
 
 	options.gameBar.args.hearthstone.args.leftFallback = {
-		order = 4,
+		order = 14,
 		type = "select",
 		name = L["Left Button"] .. " (" .. L["Fallback"] .. ")",
 		desc = L["The fallback option if the selected hearthstone is not available."],
@@ -1383,7 +1390,7 @@ do
 	}
 
 	options.gameBar.args.hearthstone.args.middleFallback = {
-		order = 5,
+		order = 15,
 		type = "select",
 		name = L["Middle Button"] .. " (" .. L["Fallback"] .. ")",
 		desc = L["The fallback option if the selected hearthstone is not available."],
@@ -1398,7 +1405,7 @@ do
 	}
 
 	options.gameBar.args.hearthstone.args.rightFallback = {
-		order = 6,
+		order = 16,
 		type = "select",
 		name = L["Right Button"] .. " (" .. L["Fallback"] .. ")",
 		desc = L["The fallback option if the selected hearthstone is not available."],

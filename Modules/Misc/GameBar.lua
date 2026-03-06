@@ -31,6 +31,7 @@ local CloseMenus = CloseMenus
 local CreateFrame = CreateFrame
 local GenerateClosure = GenerateClosure
 local GetAchievementCriteriaInfo = GetAchievementCriteriaInfo
+local GetBindLocation = GetBindLocation
 local GetGameTime = GetGameTime
 local GetNumGuildMembers = GetNumGuildMembers
 local GetTime = GetTime
@@ -426,6 +427,22 @@ local function AddDoubleLineForItem(actionData, prefix)
 
 	if actionData.actionType == "random" then
 		name = L["Random Hearthstone"]
+	end
+
+	if
+		GB.db
+		and GB.db.hearthstone
+		and GB.db.hearthstone.showBindLocation
+		and (
+			actionData.actionType == "item" and tContains(hearthstones, actionData.actionID)
+			or actionData.actionType == "spell" and actionData.actionID == ASTRAL_RECALL_SPELL_ID
+			or actionData.actionType == "random"
+		)
+	then
+		local bindLocation = GetBindLocation()
+		if bindLocation and bindLocation ~= "" then
+			name = name .. format(" > %s", bindLocation)
+		end
 	end
 
 	DT.tooltip:AddDoubleLine(

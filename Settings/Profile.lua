@@ -1217,6 +1217,7 @@ P.misc = {
 			middleFallback = "253629",
 			right = "140192",
 			rightFallback = "140192",
+			showBindLocation = true,
 		},
 		additionalText = {
 			enable = true,

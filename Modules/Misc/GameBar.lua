@@ -1771,7 +1771,7 @@ function GB:UpdateHearthStoneTable()
 	hearthstonesAndToysData = {
 		["RANDOM"] = {
 			name = L["Random Hearthstone"],
-			icon = 134400,
+			icon = 1669494,
 			actionType = "random",
 			actionID = 6948,
 		},

@@ -283,7 +283,7 @@ function OT:HandleBlockHeader(frame)
 	end
 	text:Height(text:GetStringHeight() + 2)
 
-	if self.db.title.uppercase then
+	if self.db.title.uppercase and not W.AsianLocale then
 		local current = text:GetText()
 		if current then
 			text:SetText(current:upper())
@@ -438,7 +438,7 @@ function OT:ObjectiveTrackerModule_Update(tracker)
 
 	self:ShortHeader(headerText)
 
-	if self.db.header.uppercase then
+	if self.db.header.uppercase and not W.AsianLocale then
 		local current = headerText:GetText()
 		if current then
 			headerText:SetText(current:upper())

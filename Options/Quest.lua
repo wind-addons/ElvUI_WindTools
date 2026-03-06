@@ -1141,7 +1141,7 @@ options.turnIn = {
 					order = 1,
 					type = "description",
 					name = format(
-					"%s: %s",
+						"%s: %s",
 						C.StringByTemplate(L["Notice"], "rose-500"),
 						L["The automation will only work for the quests matched the conditions below."]
 					),

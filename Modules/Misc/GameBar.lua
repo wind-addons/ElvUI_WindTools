@@ -393,13 +393,26 @@ function GB:ResolveHearthstoneAction(side)
 	return nil
 end
 
-local function AddDoubleLineForItem(actionData, prefix)
+local function AddDoubleLineForItem(actionData, prefix, button, side)
 	if not actionData then
 		return
 	end
 
 	prefix = prefix and prefix .. " " or ""
-	local icon = format(ICON_STRING .. ":255:255:255|t", actionData.icon)
+
+	-- For random hearthstones, use the icon of the actual selected hearthstone
+	local iconID = actionData.icon
+	if actionData.actionType == "random" and button and side and availableHearthstones then
+		local randomIndex = button["randomHearthstoneIndex_" .. side]
+		if randomIndex then
+			local actualItemID = availableHearthstones[randomIndex]
+			if actualItemID and hearthstonesAndToysData and hearthstonesAndToysData[tostring(actualItemID)] then
+				iconID = hearthstonesAndToysData[tostring(actualItemID)].icon
+			end
+		end
+	end
+
+	local icon = format(ICON_STRING .. ":255:255:255|t", iconID)
 
 	local startTime, duration = 0, 0
 	if actionData.actionType == "spell" then
@@ -703,7 +716,7 @@ local ButtonTypes = {
 				DT.tooltip:AddLine("\n")
 				for _, side in ipairs({ "left", "middle", "right" }) do
 					local sideSettings = HEARTSTONE_SIDE_SETTINGS[side]
-					AddDoubleLineForItem(GB:ResolveHearthstoneAction(side), sideSettings.tooltipPrefix)
+					AddDoubleLineForItem(GB:ResolveHearthstoneAction(side), sideSettings.tooltipPrefix, button, side)
 				end
 				DT.tooltip:Show()
 			end
@@ -1734,14 +1747,15 @@ function GB:UpdateHearthstoneButtonMacro(button, mouseButton)
 		if #availableHearthstones > 0 then
 			local randomIndex
 			if #availableHearthstones > 1 then
-				local currentIndex = button.randomHearthstoneIndex or 1
+				local currentIndex = button["randomHearthstoneIndex_" .. side] or 1
 				randomIndex = random(#availableHearthstones - 1)
 				if randomIndex >= currentIndex then
 					randomIndex = randomIndex + 1 -- Set to the different hearthstone from the current selection
 				end
-				button.randomHearthstoneIndex = randomIndex
+				button["randomHearthstoneIndex_" .. side] = randomIndex
 			else
 				randomIndex = 1
+				button["randomHearthstoneIndex_" .. side] = randomIndex
 			end
 			macro =
 				format("/use item:%d\n/run _G.WTGameBar_UpdateHearthstoneButtons()", availableHearthstones[randomIndex])

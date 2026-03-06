@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local T = W.Modules.Tooltips
+local T = W.Modules.Tooltips ---@class Tooltips
 
 local C = W.Utilities.Color
 
@@ -141,13 +141,6 @@ local function Handle(type)
 	end)
 end
 
-function T:ReskinRewardIcon(tt)
-	if tt and tt.Icon then
-		tt.Icon:SetTexCoords()
-		tt.IconBorder:Hide()
-	end
-end
-
 function T:AddFactionIcon(tt, unit, guid)
 	if UnitIsPlayer(unit) then
 		local faction = UnitFactionGroup(unit)
@@ -211,9 +204,6 @@ function T:Icons()
 		end
 
 		F.InternalizeMethod(_G.ShoppingTooltip1, "SetPoint")
-
-		self:ReskinRewardIcon(_G.GameTooltip.ItemTooltip)
-		self:ReskinRewardIcon(_G.EmbeddedItemTooltip.ItemTooltip)
 	end
 
 	if E.private.WT.tooltips.factionIcon then

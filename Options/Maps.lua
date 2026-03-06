@@ -1117,7 +1117,7 @@ options.eventTracker = {
 					order = 12,
 					type = "group",
 					inline = true,
-					name = L["Professions Weekly Quest"],
+					name = L["Professions Weekly"],
 					get = function(info)
 						return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
 					end,

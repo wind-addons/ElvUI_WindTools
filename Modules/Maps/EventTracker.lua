@@ -81,6 +81,38 @@ local FunctionFactory = {
 		ticker = {
 			interval = 2,
 			dateUpdater = function(self)
+				if self.args.questProgress and not self.args.questIDs then
+					local questProgress = self.args.questProgress
+					if type(questProgress) == "function" then
+						questProgress = questProgress(self.args)
+					end
+
+					if questProgress then
+						local allCompleted = true
+						for _, data in ipairs(questProgress) do
+							local isCompleted = false
+							if data.questID then
+								if type(data.questID) == "table" then
+									for _, qid in ipairs(data.questID) do
+										if C_QuestLog_IsQuestFlaggedCompleted(qid) then
+											isCompleted = true
+											break
+										end
+									end
+								else
+									isCompleted = C_QuestLog_IsQuestFlaggedCompleted(data.questID)
+								end
+							end
+							if not isCompleted then
+								allCompleted = false
+								break
+							end
+						end
+						self.isCompleted = allCompleted
+					end
+					return
+				end
+
 				if not self.args.questIDs then
 					return
 				end

@@ -1,8 +1,12 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local DT = W:NewModule("DestroyTotem", "AceEvent-3.0")
 
+local format = format
+
 local CreateFrame = CreateFrame
 local SetOverrideBindingClick = SetOverrideBindingClick
+
+local MAX_TOTEMS = MAX_TOTEMS
 
 DT.Buttons = {}
 

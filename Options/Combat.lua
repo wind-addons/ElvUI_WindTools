@@ -7,6 +7,7 @@ local QK = W:GetModule("QuickKeystone")
 local Color = W.Utilities.Color
 
 local format = format
+local tonumber = tonumber
 
 local Constants_PartyCountdownConstants_MaxCountdownSeconds = Constants.PartyCountdownConstants.MaxCountdownSeconds
 

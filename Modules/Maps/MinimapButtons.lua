@@ -12,6 +12,7 @@ local gmatch = gmatch
 local gsub = gsub
 local min = min
 local pairs = pairs
+local pcall = pcall
 local select = select
 local sort = sort
 local strfind = strfind

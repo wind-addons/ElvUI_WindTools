@@ -6,8 +6,10 @@ local T = W.Modules.Tooltips
 local ET = E:GetModule("Tooltip")
 
 local _G = _G
-local next = next
 local hooksecurefunc = hooksecurefunc
+local next = next
+local pairs = pairs
+local strfind = strfind
 local unpack = unpack
 
 local C_AddOns_GetAddOnMetadata = C_AddOns.GetAddOnMetadata

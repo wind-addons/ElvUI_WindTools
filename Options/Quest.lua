@@ -531,8 +531,15 @@ options.objectiveTracker = {
 					type = "toggle",
 					name = L["Use Class Color"],
 				},
-				color = {
+				uppercase = {
 					order = 6,
+					type = "toggle",
+					name = L["Uppercase"],
+					desc = L["Display tracker headers in uppercase."],
+					hidden = W.AsianLocale,
+				},
+				color = {
+					order = 7,
 					type = "color",
 					name = L["Color"],
 					hasAlpha = false,
@@ -664,6 +671,13 @@ options.objectiveTracker = {
 					type = "toggle",
 					name = L["Word Wrap"],
 					desc = L["Enable word wrap for long text."],
+				},
+				uppercase = {
+					order = 5,
+					type = "toggle",
+					name = L["Uppercase"],
+					desc = L["Display quest titles in uppercase."],
+					hidden = W.AsianLocale,
 				},
 			},
 		},

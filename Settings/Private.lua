@@ -281,6 +281,7 @@ V.quest = {
 			classColor = false,
 			color = { r = 1, g = 1, b = 1 },
 			shortHeader = true,
+			uppercase = false,
 		},
 		cosmeticBar = {
 			enable = true,
@@ -305,6 +306,7 @@ V.quest = {
 			size = E.db.general.fontSize + 1,
 			style = "OUTLINE",
 			wordWrap = true,
+			uppercase = false,
 		},
 		info = {
 			name = E.db.general.font,

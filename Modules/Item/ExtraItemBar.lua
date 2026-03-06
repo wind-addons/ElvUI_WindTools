@@ -40,8 +40,7 @@ local C_QuestLog_GetDistanceSqToQuest = C_QuestLog.GetDistanceSqToQuest
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local C_QuestLog_GetQuestIDForLogIndex = C_QuestLog.GetQuestIDForLogIndex
 local C_Timer_NewTicker = C_Timer.NewTicker
-local C_TradeSkillUI_GetItemCraftedQualityByItemInfo = C_TradeSkillUI.GetItemCraftedQualityByItemInfo
-local C_TradeSkillUI_GetItemReagentQualityByItemInfo = C_TradeSkillUI.GetItemReagentQualityByItemInfo
+local C_TradeSkillUI_GetItemReagentQualityInfo = C_TradeSkillUI.GetItemReagentQualityInfo
 
 local questItemList = {}
 local function UpdateQuestItemList()
@@ -183,14 +182,13 @@ function EB:CreateButton(name, barDB)
 	button.cooldown = cooldown
 
 	button.SetTier = function(_, itemIDOrLink)
-		local level = C_TradeSkillUI_GetItemReagentQualityByItemInfo(itemIDOrLink)
-			or C_TradeSkillUI_GetItemCraftedQualityByItemInfo(itemIDOrLink)
+		local qualityInfo = C_TradeSkillUI_GetItemReagentQualityInfo(itemIDOrLink)
 
-		if not level or level == 0 then
+		if not qualityInfo or not qualityInfo.icon or qualityInfo.icon == "" then
 			button.qualityTier:SetText("")
 			button.qualityTier:Hide()
 		else
-			button.qualityTier:SetText(CreateAtlasMarkup(format("Professions-Icon-Quality-Tier%d-Small", level)))
+			button.qualityTier:SetText(CreateAtlasMarkup(qualityInfo.icon))
 			button.qualityTier:Show()
 		end
 	end

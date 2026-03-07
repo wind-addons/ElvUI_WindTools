@@ -49,7 +49,6 @@ local Screenshot = Screenshot
 local ShowUIPanel = ShowUIPanel
 local ToggleCalendar = ToggleCalendar
 local ToggleCharacter = ToggleCharacter
-local ToggleFriendsFrame = ToggleFriendsFrame
 local ToggleTimeManager = ToggleTimeManager
 local UnregisterStateDriver = UnregisterStateDriver
 
@@ -73,7 +72,6 @@ local C_ToyBox_IsToyUsable = C_ToyBox.IsToyUsable
 local C_UI_Reload = C_UI.Reload
 
 local Enum_CovenantType = Enum.CovenantType
-local FRIEND_TAB_FRIENDS = FRIEND_TAB_FRIENDS
 local FollowerType_8_0 = Enum.GarrisonFollowerType.FollowerType_8_0_GarrisonFollower
 local FollowerType_9_0 = Enum.GarrisonFollowerType.FollowerType_9_0_GarrisonFollower
 local RED_FONT_COLOR = RED_FONT_COLOR
@@ -592,10 +590,8 @@ local ButtonTypes = {
 	FRIENDS = {
 		name = L["Friend List"],
 		icon = W.Media.Icons.barFriends,
-		click = {
-			LeftButton = function()
-				ToggleFriendsFrame(FRIEND_TAB_FRIENDS)
-			end,
+		macro = {
+			LeftButton = "/friends",
 		},
 		additionalText = function()
 			local numBNOnline, numWoWOnline = 0, 0

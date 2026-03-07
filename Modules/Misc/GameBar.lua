@@ -591,7 +591,7 @@ local ButtonTypes = {
 		name = L["Friend List"],
 		icon = W.Media.Icons.barFriends,
 		macro = {
-			LeftButton = "/friends",
+			LeftButton = "/cleartarget\n/friends",
 		},
 		additionalText = function()
 			local numBNOnline, numWoWOnline = 0, 0

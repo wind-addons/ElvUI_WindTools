@@ -19,7 +19,7 @@ local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 local C_QuestLog_IsOnQuest = C_QuestLog.IsOnQuest
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 
-local function worldMapIDSetter(idOrFunc)
+local function GetWorldMapIDSetter(idOrFunc)
 	return function(...)
 		if not _G.WorldMapFrame or not _G.WorldMapFrame:IsShown() or not _G.WorldMapFrame.SetMapID then
 			return
@@ -103,6 +103,23 @@ ET.EventList = {
 	"BigDig",
 }
 
+---Gets the display name for a weekly event based on the provided iconID, name, and position.
+---@param iconID number
+---@param name string
+---@param position? string|number
+local function WeeklyName(iconID, name, position)
+	local name = F.GetIconString(iconID, 14, 16, true) .. " " .. name
+	if type(position) == "number" then
+		position = C_Map_GetMapInfo(position).name
+	end
+
+	if position then
+		name = format("%s (%s)", name, C.StringByTemplate(position, "cyan-400"))
+	end
+
+	return name
+end
+
 ---@alias EventTracker.EventData { [EventKey]: table }
 ET.EventData = {
 	-- MN
@@ -112,25 +129,25 @@ ET.EventData = {
 			icon = 236681,
 			type = "weekly",
 			questIDs = {
-				[F.GetIconString(7578704, 14, 16, true) .. " " .. C_QuestLog_GetTitleForQuestID(93744)] = {
+				[WeeklyName(7578704, L["Liadrin 4 > 1"], 2393)] = {
 					-- https://www.wowhead.com/npc=256203/lady-liadrin
 					93767, -- 至暗之夜：奥术秘社
 					93889, -- 至暗之夜：萨瑟利尔的聚会
 					93909, -- 至暗之夜：地下堡
 					93911, -- 至暗之夜：地下城
 				},
-				[F.GetIconString(5554512, 14, 16, true) .. " " .. L["Dungeon Weekly"]] = {
+				[WeeklyName(5554512, L["Dungeon"], 2393)] = {
 					-- https://www.wowhead.com/npc=256210/halduron-brightwing
 					93753, -- 魔导师平台
 				},
-				[F.GetIconString(2066011, 14, 16, true) .. " " .. C_QuestLog_GetTitleForQuestID(91966)] = {
+				[WeeklyName(2066011, L["Soiree"], 2395)] = {
 					-- https://www.wowhead.com/item=268489/surplus-bag-of-party-favors
 					90573, -- 加固符文石：魔导师
 					90574, -- 加固符文石：血骑士
 					90575, -- 加固符文石：远行者
 					90576, -- 加固符文石：径巷之影
 				},
-				[F.GetIconString(7385004, 14, 16, true) .. " " .. C_QuestLog_GetTitleForQuestID(89268)] = {
+				[WeeklyName(7385004, L["Legend"], 2413)] = {
 					-- https://www.wowhead.com/npc=238170/zurashar-kassameh#ends
 					88993, -- 威南的结界
 					88994, -- 回响大锅
@@ -138,7 +155,7 @@ ET.EventData = {
 					88996, -- 回响寂灭之焰
 					88997, -- 鲁斯苏拉之臂
 				},
-				[F.GetIconString(7636650, 14, 16, true) .. " " .. L["Abundance"]] = {
+				[WeeklyName(7636650, L["Abundance"], 2437)] = {
 					-- https://www.wowhead.com/quest=89507/abundant-offerings
 					89507, -- 丰饶贡品
 				},
@@ -182,9 +199,9 @@ ET.EventData = {
 				return progress
 			end,
 			eventName = format("%s (%s)", L["Weekly Quest"], L["[ABBR] Midnight"]),
-			location = C_Map_GetMapInfo(2393).name,
+			location = C_Map_GetMapInfo(2537).name,
 			label = format("%s (%s)", L["Weekly Quest"], L["[ABBR] Midnight"]),
-			onClick = worldMapIDSetter(2393),
+			onClick = GetWorldMapIDSetter(2537),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -216,7 +233,7 @@ ET.EventData = {
 			eventName = L["Professions Weekly"],
 			location = C_Map_GetMapInfo(2393).name,
 			label = L["Professions Weekly"],
-			onClick = worldMapIDSetter(2393),
+			onClick = GetWorldMapIDSetter(2393),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -242,7 +259,7 @@ ET.EventData = {
 				return true
 			end,
 			startTimestamp = 1772728200,
-			onClick = worldMapIDSetter(2405),
+			onClick = GetWorldMapIDSetter(2405),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -334,7 +351,7 @@ ET.EventData = {
 			eventName = format("%s (%s)", L["Weekly Quest"], L["[ABBR] The War Within"]),
 			location = C_Map_GetMapInfo(2339).name,
 			label = format("%s (%s)", L["Weekly Quest"], L["[ABBR] The War Within"]),
-			onClick = worldMapIDSetter(2339),
+			onClick = GetWorldMapIDSetter(2339),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -350,7 +367,7 @@ ET.EventData = {
 			eventName = L["Ecological Succession"],
 			location = C_Map_GetMapInfo(2371).name,
 			label = L["Ecological Succession"],
-			onClick = worldMapIDSetter(2371),
+			onClick = GetWorldMapIDSetter(2371),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -390,7 +407,7 @@ ET.EventData = {
 
 				return timestampTable[region]
 			end)(),
-			onClick = worldMapIDSetter(2215),
+			onClick = GetWorldMapIDSetter(2215),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -430,7 +447,7 @@ ET.EventData = {
 
 				return timestampTable[region]
 			end)(),
-			onClick = worldMapIDSetter(2248),
+			onClick = GetWorldMapIDSetter(2248),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -446,7 +463,7 @@ ET.EventData = {
 			eventName = L["Ringing Deeps"],
 			location = C_Map_GetMapInfo(2214).name,
 			label = L["Ringing Deeps"],
-			onClick = worldMapIDSetter(2214),
+			onClick = GetWorldMapIDSetter(2214),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -462,7 +479,7 @@ ET.EventData = {
 			eventName = L["Spreading The Light"],
 			location = C_Map_GetMapInfo(2215).name,
 			label = L["Spreading The Light"],
-			onClick = worldMapIDSetter(2215),
+			onClick = GetWorldMapIDSetter(2215),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -480,7 +497,7 @@ ET.EventData = {
 			eventName = L["Underworld Operative"],
 			location = C_Map_GetMapInfo(2255).name,
 			label = L["Underworld Operative"],
-			onClick = worldMapIDSetter(2255),
+			onClick = GetWorldMapIDSetter(2255),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -584,7 +601,7 @@ ET.EventData = {
 
 				return timestampTable[region]
 			end)(),
-			onClick = worldMapIDSetter(function(args)
+			onClick = GetWorldMapIDSetter(function(args)
 				return ET.Meta.radiantEchoesZoneRotation[args:currentMapIndex()].mapID
 			end),
 			onClickHelpText = L["Click to show location"],
@@ -629,7 +646,7 @@ ET.EventData = {
 
 				return timestampTable[region]
 			end)(),
-			onClick = worldMapIDSetter(2024),
+			onClick = GetWorldMapIDSetter(2024),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -672,7 +689,7 @@ ET.EventData = {
 
 				return timestampTable[region]
 			end)(),
-			onClick = worldMapIDSetter(2022),
+			onClick = GetWorldMapIDSetter(2022),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -716,7 +733,7 @@ ET.EventData = {
 
 				return timestampTable[region]
 			end)(),
-			onClick = worldMapIDSetter(2133),
+			onClick = GetWorldMapIDSetter(2133),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -759,7 +776,7 @@ ET.EventData = {
 
 				return timestampTable[region]
 			end)(),
-			onClick = worldMapIDSetter(2025),
+			onClick = GetWorldMapIDSetter(2025),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -802,7 +819,7 @@ ET.EventData = {
 
 				return timestampTable[region]
 			end)(),
-			onClick = worldMapIDSetter(2200),
+			onClick = GetWorldMapIDSetter(2200),
 			onClickHelpText = L["Click to show location"],
 		},
 	},
@@ -846,7 +863,7 @@ ET.EventData = {
 
 				return timestampTable[region]
 			end)(),
-			onClick = worldMapIDSetter(2024),
+			onClick = GetWorldMapIDSetter(2024),
 			onClickHelpText = L["Click to show location"],
 		},
 	},

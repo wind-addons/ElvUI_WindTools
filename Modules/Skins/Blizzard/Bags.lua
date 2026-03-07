@@ -32,10 +32,14 @@ function S:Bank()
 	end
 end
 
+local skinnedButtons = {}
+
 local function SkinItemButton(button)
-	if not button or not button.IconBorder then
+	if not button or not button.IconBorder or skinnedButtons[button] then
 		return
 	end
+
+	skinnedButtons[button] = true
 
 	hooksecurefunc(button.IconBorder, "SetAlpha", function(border, alpha)
 		if alpha ~= 0 then

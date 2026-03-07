@@ -456,7 +456,12 @@ function CM:GetAvailableButtonTypes(contextData)
 end
 
 function CM:ModifyMenu(_, rootDescription, contextData)
-	if not self.db.enable or not IsShiftKeyDown() then
+	if not self.db.enable then
+		return
+	end
+
+	local which = contextData.which
+	if which == "BN_FRIEND" and not IsShiftKeyDown() then
 		return
 	end
 

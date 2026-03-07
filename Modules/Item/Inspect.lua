@@ -90,20 +90,23 @@ for index, localizedName in ipairs(W.EquipmentSlots) do
 	end
 end
 
-local INVSLOT_SOCKET_ITEMS = {
-	[INVSLOT_NECK] = { 213777, 213777 },
-	[INVSLOT_FINGER1] = { 213777, 213777 },
-	[INVSLOT_FINGER2] = { 213777, 213777 },
+local INVSLOT_PVP_SOCKET_ITEM = 257535
+local INVSLOT_NONPVP_SOCKET_ITEM = 263897
+
+local INVSLOT_ADDABLE_SOCKET_SLOTS = {
+	[INVSLOT_HEAD] = true,
+	[INVSLOT_WRIST] = true,
+	[INVSLOT_WAIST] = true,
 }
 
 local INVSLOT_ENCHANT = {
+	[INVSLOT_HEAD] = true,
+	[INVSLOT_SHOULDER] = true,
 	[INVSLOT_CHEST] = true,
 	[INVSLOT_LEGS] = true,
 	[INVSLOT_FEET] = true,
-	[INVSLOT_WRIST] = true,
 	[INVSLOT_FINGER1] = true,
 	[INVSLOT_FINGER2] = true,
-	[INVSLOT_BACK] = true,
 	[INVSLOT_MAINHAND] = true,
 	[INVSLOT_OFFHAND] = true,
 }
@@ -459,34 +462,29 @@ local function GetPvPItemLevel(itemLink)
 end
 
 ---Gets additional socket items that can be added to an item
----Checks if the item is eligible for socket additions based on item level and PvP status
 ---Modified from TinyInspect
 ---@param itemLink string The item link to check
----@param slotIndex number The inventory slot index (must be neck, finger1, or finger2)
+---@param slotIndex number The inventory slot index
 ---@param itemLevel number The item's current item level
 ---@return SocketGemInfo[]? socketItems Array of item IDs that can be socketed, nil if not eligible
 local function GetItemAddableSockets(itemLink, slotIndex, itemLevel)
-	local socketItems = INVSLOT_SOCKET_ITEMS[slotIndex]
-	if not socketItems then
+	if not INVSLOT_ADDABLE_SOCKET_SLOTS[slotIndex] then
 		return
 	end
 
-	if itemLevel < 584 then
+	if itemLevel < 86 or itemLevel > 170 then
+		return
+	end
+
+	local numSockets = C_Item_GetItemNumSockets(itemLink)
+	if numSockets > 0 then
 		return
 	end
 
 	local pvpItemLevel = GetPvPItemLevel(itemLink)
-	if pvpItemLevel and pvpItemLevel > 0 then
-		return
-	end
+	local isPvPItem = pvpItemLevel and pvpItemLevel > 0
 
-	local data = {}
-	local numSockets = C_Item_GetItemNumSockets(itemLink)
-	for i = numSockets + 1, #socketItems do
-		tinsert(data, { socketItemID = socketItems[i] })
-	end
-
-	return data
+	return { { socketItemID = isPvPItem and INVSLOT_PVP_SOCKET_ITEM or INVSLOT_NONPVP_SOCKET_ITEM } }
 end
 
 ---@alias EnchantInfo { enchantID: string?, itemID: number?, spellID: number? }

@@ -4,26 +4,31 @@ W.Changelog[414] = {
 	RELEASE_DATE = "2026/03/07",
 	IMPORTANT = {
 		["zhCN"] = {
+			"最低支持的 ElvUI 版本提升到 15.08.",
 			"更新了 LibRangeCheck-3.0 库, 能够更加准确地检测距离.",
 			"调整了任务交接相关的选项名称和描述. 由于默认设定是不会自动交接账户未完成且非日常任务的, 你需要手动去设定中启用条件才能在全部任务上生效.",
 			"优化了简体中文客户端中反和谐功能, 现在不会污染到好友列表导致无法使用访问住宅功能了.",
 		},
 		["zhTW"] = {
+			"ElvUI 最低支援版本提升到 15.08.",
 			"更新了 LibRangeCheck-3.0 函式庫, 能夠更加準確地檢測距離.",
 			"調整了任務交接相關的選項名稱和描述. 由於預設設置是不會自動交接帳號未完成且非日常任務的, 你需要手動在設置中啟用條件才能在全部任務上生效.",
 			"優化了簡體中文客戶端中反和諧功能, 現在不會污染到好友列表導致無法使用訪問住宅功能了.",
 		},
 		["enUS"] = {
+			"The minimum supported ElvUI version has been raised to 15.08.",
 			"Updated the LibRangeCheck-3.0 library, which can now detect distances more accurately.",
 			"Adjusted the names and descriptions of the quest turn-in related options. Since the default setting is not to automatically turn in quests that are account incomplete and non-daily, you will need to manually enable the conditions in the settings for it to take effect on all quests.",
 			"Improved the anti-censorship feature in the Simplified Chinese client, which should no longer pollute the friends list and cause the housing access feature to be unusable.",
 		},
 		["koKR"] = {
+			"지원하는 ElvUI 버전이 15.08로 상향되었습니다.",
 			"LibRangeCheck-3.0 라이브러리가 업데이트되어 거리를 보다 정확하게 감지할 수 있습니다.",
 			"퀘스트 인계 관련 옵션의 이름과 설명이 조정되었습니다. 기본 설정은 계정 미완료 및 비일일 퀘스트를 자동으로 인계하지 않도록 되어 있으므로, 모든 퀘스트에 적용하려면 설정에서 조건을 수동으로 활성화해야 합니다.",
 			"간체 중국어 클라이언트에서 검열 방지 기능이 개선되어 친구 목록이 오염되어 주택 접근 기능을 사용할 수 없게 되는 문제가 더 이상 발생하지 않습니다.",
 		},
 		["ruRU"] = {
+			"Минимальная поддерживаемая версия ElvUI повышена до 15.08.",
 			"Обновлена библиотека LibRangeCheck-3.0, которая теперь может более точно определять расстояния.",
 			"Изменены названия и описания параметров, связанных со сдачей заданий. Поскольку по умолчанию задания, не выполненные на учетной записи и не являющиеся ежедневными, не сдаются автоматически, Вам потребуется вручную включить соответствующие условия в настройках, чтобы они вступили в силу для всех заданий.",
 			"Улучшена функция анти-цензуры в клиенте на упрощенном китайском языке, которая больше не должна загрязнять список друзей и делать функцию доступа к жилью недоступной.",

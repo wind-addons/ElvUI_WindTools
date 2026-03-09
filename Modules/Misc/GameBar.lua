@@ -366,8 +366,11 @@ local function IsHearthstoneActionUsable(actionData)
 	elseif actionData.actionType == "random" then
 		return availableHearthstones and #availableHearthstones > 0
 	elseif actionData.actionType == "item" then
-		return C_Item_GetItemCount(actionData.actionID) > 0
-			or PlayerHasToy(actionData.actionID) and C_ToyBox_IsToyUsable(actionData.actionID)
+		local usesCount = C_Item_GetItemCount(actionData.actionID, nil, true)
+		if usesCount and usesCount > 0 then
+			return true
+		end
+		return PlayerHasToy(actionData.actionID) and C_ToyBox_IsToyUsable(actionData.actionID)
 	end
 
 	return false

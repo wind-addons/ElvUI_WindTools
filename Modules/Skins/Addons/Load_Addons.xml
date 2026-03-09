@@ -8,6 +8,7 @@
 	<Script file='BtWQuests.lua' />
 	<Script file='BugSack.lua' />
 	<Script file='Collectionator.lua' />
+	<Script file='ExtraQuestButton.lua' />
 	<Script file='HandyNotes_MapNotes.lua' />
 	<Script file='Immersion.lua' />
 	<Script file='ManuscriptsJournal.lua' />

@@ -629,6 +629,7 @@ L["Extends the merchant page to show more items."] = true
 L["Extra"] = true
 L["Extra Buttons"] = true
 L["Extra Items Bar"] = true
+L["ExtraQuestButton"] = true
 L["Faction"] = true
 L["Faction Icon"] = true
 L["Fade"] = true

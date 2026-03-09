@@ -2265,6 +2265,12 @@ options.addons = {
 			name = L["Collectionator"],
 			addonName = "Collectionator",
 		},
+		extraQuestButton = {
+			order = 10,
+			type = "toggle",
+			name = L["ExtraQuestButton"],
+			addonName = "ExtraQuestButton",
+		},
 		handyNotesMapNotes = {
 			order = 10,
 			type = "toggle",

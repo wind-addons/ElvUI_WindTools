@@ -632,6 +632,7 @@ V.skins = {
 		btWQuests = true,
 		bugSack = true,
 		collectionator = true,
+		extraQuestButton = true,
 		handyNotesMapNotes = true,
 		immersion = true,
 		manuscriptsJournal = true,

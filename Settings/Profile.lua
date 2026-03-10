@@ -256,7 +256,7 @@ P.item = {
 					b = 1,
 				},
 			},
-			include = "QUEST,BANNER,EQUIP,PROF,HOLIDAY,OPENABLE,DELVE",
+			include = "QUEST,BANNER,EQUIP,PROFMN,HOLIDAY,OPENABLE,DELVE",
 		},
 		bar2 = {
 			enable = true,

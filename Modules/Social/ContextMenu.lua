@@ -26,22 +26,22 @@ local GetHaste = GetHaste
 local GetLifesteal = GetLifesteal
 local GetMasteryEffect = GetMasteryEffect
 local GetRangedCritChance = GetRangedCritChance
-local C_SpecializationInfo_GetSpecialization = C_SpecializationInfo.GetSpecialization
-local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo
 local GetSpellCritChance = GetSpellCritChance
 local GetVersatilityBonus = GetVersatilityBonus
-local C_ChatInfo_SendChatMessage = C_ChatInfo.SendChatMessage
+local IsControlKeyDown = IsControlKeyDown
 local UnitClass = UnitClass
 local UnitHealthMax = UnitHealthMax
 local UnitPlayerControlled = UnitPlayerControlled
-local IsShiftKeyDown = IsShiftKeyDown
 
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
+local C_ChatInfo_SendChatMessage = C_ChatInfo.SendChatMessage
 local C_Club_GetGuildClubId = C_Club.GetGuildClubId
 local C_FriendList_SendWho = C_FriendList.SendWho
 local C_GuildInfo_Invite = C_GuildInfo.Invite
+local C_SpecializationInfo_GetSpecialization = C_SpecializationInfo.GetSpecialization
+local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo
 local Menu_ModifyMenu = Menu.ModifyMenu
 
 local CR_VERSATILITY_DAMAGE_DONE = CR_VERSATILITY_DAMAGE_DONE
@@ -461,7 +461,7 @@ function CM:ModifyMenu(_, rootDescription, contextData)
 	end
 
 	local which = contextData.which
-	if which == "BN_FRIEND" and not IsShiftKeyDown() then
+	if which == "BN_FRIEND" and not IsControlKeyDown() then
 		return
 	end
 

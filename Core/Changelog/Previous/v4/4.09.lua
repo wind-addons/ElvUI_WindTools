@@ -29,7 +29,7 @@ W.Changelog[409] = {
 		},
 		["enUS"] = {
 			"Continued to optimize compatibility issues caused by Midnight API changes.",
-			"[Right-Click Menu] Because of Blizzard 'Visit Home' button taint issue, the additional options only will be added when you pressing Shift key while right-clicking.",
+			"[Right-Click Menu] Because of Blizzard 'Visit Home' button taint issue, the additional options only will be added when you pressing Ctrl key while right-clicking.",
 			"[Advanced] - [Midnight API Fixes] Since Blizzard has fixed the MoneyFrame related bugs, the related fix patches have been removed.",
 			"[Advanced] The combat log enhancement feature has been removed due to Blizzard API changes making the feature no longer feasible.",
 			"[Misc] - [Cooldown Text Offset] This feature module has been removed as the new ElvUI cooldown text already supports offset functionality.",

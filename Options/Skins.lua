@@ -1698,47 +1698,6 @@ options.blizzard = {
 	},
 }
 
-local function ensureDamageMeterBarDB()
-	local damageMeterDB = E.private.WT.skins.damageMeter
-	local barDB = damageMeterDB.bar
-	if barDB then
-		barDB.font = barDB.font or {}
-		barDB.font.name = barDB.font.name
-			or {
-				name = V.skins.damageMeter.bar.font.name.name,
-				size = V.skins.damageMeter.bar.font.name.size,
-				style = V.skins.damageMeter.bar.font.name.style,
-			}
-		barDB.font.value = barDB.font.value
-			or {
-				name = V.skins.damageMeter.bar.font.value.name,
-				size = V.skins.damageMeter.bar.font.value.size,
-				style = V.skins.damageMeter.bar.font.value.style,
-			}
-		return barDB
-	end
-
-	barDB = {
-		texture = damageMeterDB.barTexture or V.skins.damageMeter.bar.texture,
-		alpha = V.skins.damageMeter.bar.alpha,
-		font = {
-			name = {
-				name = V.skins.damageMeter.bar.font.name.name,
-				size = V.skins.damageMeter.bar.font.name.size,
-				style = V.skins.damageMeter.bar.font.name.style,
-			},
-			value = {
-				name = V.skins.damageMeter.bar.font.value.name,
-				size = V.skins.damageMeter.bar.font.value.size,
-				style = V.skins.damageMeter.bar.font.value.style,
-			},
-		},
-	}
-
-	damageMeterDB.bar = barDB
-	return barDB
-end
-
 options.damageMeter = {
 	order = 5,
 	type = "group",
@@ -1834,10 +1793,10 @@ options.damageMeter = {
 			name = L["Bar Texture"],
 			inline = true,
 			get = function(info)
-				return ensureDamageMeterBarDB()[info[#info]]
+				return E.private.WT.skins.damageMeter.bar[info[#info]]
 			end,
 			set = function(info, value)
-				ensureDamageMeterBarDB()[info[#info]] = value
+				E.private.WT.skins.damageMeter.bar[info[#info]] = value
 				E:StaticPopup_Show("PRIVATE_RL")
 			end,
 			disabled = function()
@@ -1866,10 +1825,10 @@ options.damageMeter = {
 					name = L["Name"],
 					inline = true,
 					get = function(info)
-						return ensureDamageMeterBarDB().font.name[info[#info]]
+						return E.private.WT.skins.damageMeter.bar.font.name[info[#info]]
 					end,
 					set = function(info, value)
-						ensureDamageMeterBarDB().font.name[info[#info]] = value
+						E.private.WT.skins.damageMeter.bar.font.name[info[#info]] = value
 						E:StaticPopup_Show("PRIVATE_RL")
 					end,
 					args = {
@@ -1912,10 +1871,10 @@ options.damageMeter = {
 					name = L["Value"],
 					inline = true,
 					get = function(info)
-						return ensureDamageMeterBarDB().font.value[info[#info]]
+						return E.private.WT.skins.damageMeter.bar.font.value[info[#info]]
 					end,
 					set = function(info, value)
-						ensureDamageMeterBarDB().font.value[info[#info]] = value
+						E.private.WT.skins.damageMeter.bar.font.value[info[#info]] = value
 						E:StaticPopup_Show("PRIVATE_RL")
 					end,
 					args = {

@@ -2,8 +2,6 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames ---@type MoveFrames
 local C = W.Utilities.Color
-local T = W.Modules.Tooltips
-local ET = E:GetModule("Tooltip")
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -230,21 +228,7 @@ function S:WorldQuestTab()
 		reskinFlightMapContainer(_G.WQT_FlightMapContainer)
 	end
 
-	for _, tt in pairs({ _G.WQT_GameTooltip, _G.WQT_ShoppingTooltip1, _G.WQT_ShoppingTooltip2 }) do
-		local CompareHeader = tt.CompareHeader
-		if CompareHeader and not CompareHeader.template then
-			CompareHeader:StripTextures()
-		end
-
-		ET:SetStyle(tt)
-		T:AddIconTooltip(tt:GetName())
-	end
-
-	local ItemTooltip = _G.WQT_GameTooltip.ItemTooltip
-	if ItemTooltip then
-		S:Proxy("HandleIcon", ItemTooltip.Icon, true)
-		S:Proxy("HandleIconBorder", ItemTooltip.IconBorder, ItemTooltip.Icon.backdrop)
-	end
+	S:ReskinCustomGameTooltips(_G.WQT_GameTooltip, _G.WQT_ShoppingTooltip1, _G.WQT_ShoppingTooltip2)
 
 	-- Block the "WQT anti-error" line
 	self:RawHook(_G.WQT_GameTooltip, "AddLine", function(tt, text, ...)

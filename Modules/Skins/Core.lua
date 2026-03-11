@@ -1,8 +1,10 @@
 local W, F, E = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local LSM = E.Libs.LSM
+local ET = E:GetModule("Tooltip")
 local S = W.Modules.Skins ---@class Skins
 local ES = E.Skins
 local C = W.Utilities.Color
+local T = W.Modules.Tooltips
 
 local _G = _G
 local assert = assert
@@ -764,6 +766,33 @@ function S:HandleResizeButton(button)
 	button:Size(floor(button:GetWidth() * 1.25 + 0.5))
 
 	button.__windSkin = true
+end
+
+function S:ReskinCustomGameTooltips(...)
+	local tooltips = { ... }
+
+	for _, tt in pairs(tooltips) do
+		if type(tt) == "string" then
+			tt = _G[tt]
+		end
+
+		if tt and not tt.__windSkin then
+			if tt.CompareHeader and not tt.CompareHeader.template then
+				tt.CompareHeader:StripTextures()
+			end
+
+			ET:SetStyle(tt)
+			T:AddIconTooltip(tt:GetName())
+
+			local ItemTooltip = tt.ItemTooltip
+			if ItemTooltip then
+				S:Proxy("HandleIcon", ItemTooltip.Icon, true)
+				S:Proxy("HandleIconBorder", ItemTooltip.IconBorder, ItemTooltip.Icon.backdrop)
+			end
+
+			tt.__windSkin = true
+		end
+	end
 end
 
 function S:Initialize()

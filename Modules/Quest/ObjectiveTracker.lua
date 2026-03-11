@@ -11,6 +11,7 @@ local max = max
 local pairs = pairs
 local strfind = strfind
 local strmatch = strmatch
+local strupper = strupper
 local tonumber = tonumber
 
 local CreateFrame = CreateFrame
@@ -440,8 +441,9 @@ function OT:ObjectiveTrackerModule_Update(tracker)
 
 	if self.db.header.uppercase and not W.AsianLocale then
 		local current = headerText:GetText()
-		if current then
-			headerText:SetText(current:upper())
+		local new = current and strupper(current)
+		if new and new ~= current then
+			headerText:SetText(new)
 		end
 	end
 
@@ -460,17 +462,16 @@ function OT:ObjectiveTrackerModule_AddBlock(tracker, block)
 
 	if not self:IsHooked(block, "AddObjective") then
 		self:SecureHook(block, "AddObjective", "ObjectiveTrackerBlock_AddObjective")
+		block:ForEachUsedLine(function(line, objectiveKey)
+			self:HandleLine(line, objectiveKey)
+		end)
+		self:HandleBlockHeader(block)
 	end
 
 	if block.GetPOIButton and not self:IsHooked(block, "GetPOIButton") then
 		self:SecureHook(block, "GetPOIButton", "ObjectiveTrackerBlock_GetPOIButton")
+		self:HandleBlockPOIButton(block)
 	end
-
-	self:HandleBlockPOIButton(block)
-	self:HandleBlockHeader(block)
-	block:ForEachUsedLine(function(line, objectiveKey)
-		self:HandleLine(line, objectiveKey)
-	end)
 end
 
 ---Initialize the ObjectiveTracker module with hooks and settings

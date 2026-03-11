@@ -423,6 +423,11 @@ function S:BigWigs_Keystone()
 	finder:Start()
 end
 
+function S:BigWigs()
+	self:ReskinCustomGameTooltips(_G.BigWigsTooltip)
+end
+
+S:AddCallbackForAddon("BigWigs")
 S:AddCallbackForAddon("BigWigs_Plugins")
 S:AddCallbackForEnterWorld("BigWigs_QueueTimer")
 S:AddCallbackForEnterWorld("BigWigs_Keystone")

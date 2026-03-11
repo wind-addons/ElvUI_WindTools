@@ -370,7 +370,7 @@ local function IsHearthstoneActionUsable(actionData)
 		if usesCount and usesCount > 0 then
 			return true
 		end
-		return PlayerHasToy(actionData.actionID) and C_ToyBox_IsToyUsable(actionData.actionID)
+		return PlayerHasToy(actionData.actionID)
 	end
 
 	return false
@@ -406,7 +406,7 @@ local function AddDoubleLineForItem(actionData, prefix, button, side)
 	-- For random hearthstones, use the icon of the actual selected hearthstone
 	local iconID = actionData.icon
 	if actionData.actionType == "random" and button and side and availableHearthstones then
-		local randomIndex = button["randomHearthstoneIndex_" .. side]
+		local randomIndex = button["randomHearthstoneIndex" .. side]
 		if randomIndex then
 			local actualItemID = availableHearthstones[randomIndex]
 			if actualItemID and hearthstonesAndToysData and hearthstonesAndToysData[tostring(actualItemID)] then
@@ -1729,6 +1729,21 @@ function GB:UpdateGuildButton()
 	end
 end
 
+function GetNextRandomHearthstone(currentIndex, times)
+	if not availableHearthstones or #availableHearthstones <= 1 or times and times >= 10 then
+		return 1, 6948
+	end
+
+	local randomIndex = random(1, #availableHearthstones)
+	local itemID = availableHearthstones[randomIndex]
+	local isToyNotUsable = PlayerHasToy(itemID) and not C_ToyBox_IsToyUsable(itemID)
+	if isToyNotUsable or currentIndex and randomIndex == currentIndex then
+		return GetNextRandomHearthstone(currentIndex, (times or 0) + 1)
+	end
+
+	return randomIndex, itemID
+end
+
 function GB:UpdateHearthstoneButtonMacro(button, mouseButton)
 	if not button or not mouseButton or not availableHearthstones then
 		return
@@ -1744,25 +1759,14 @@ function GB:UpdateHearthstoneButtonMacro(button, mouseButton)
 	local sideSettings = HEARTSTONE_SIDE_SETTINGS[side]
 	local actionData = self:ResolveHearthstoneAction(side)
 	local attribute = sideSettings.attribute
-	local macro = format('/run UIErrorsFrame:AddMessage("%s", RED_FONT_COLOR:GetRGBA())', L["No Hearthstone Found!"])
+	local macro =
+		format('/run UIErrorsFrame:AddMessage("%s", RED_FONT_COLOR:GetRGBA())', L["Hearthstone not found or usable."])
 
 	if actionData and actionData.actionType == "random" then
-		if #availableHearthstones > 0 then
-			local randomIndex
-			if #availableHearthstones > 1 then
-				local currentIndex = button["randomHearthstoneIndex_" .. side] or 1
-				randomIndex = random(#availableHearthstones - 1)
-				if randomIndex >= currentIndex then
-					randomIndex = randomIndex + 1 -- Set to the different hearthstone from the current selection
-				end
-				button["randomHearthstoneIndex_" .. side] = randomIndex
-			else
-				randomIndex = 1
-				button["randomHearthstoneIndex_" .. side] = randomIndex
-			end
-			macro =
-				format("/use item:%d\n/run _G.WTGameBar_UpdateHearthstoneButtons()", availableHearthstones[randomIndex])
-		end
+		local currentIndex = button["randomHearthstoneIndex" .. side]
+		local randomIndex, itemID = GetNextRandomHearthstone(currentIndex)
+		button["randomHearthstoneIndex" .. side] = randomIndex
+		macro = format("/use item:%d\n/run _G.WTGameBar_UpdateHearthstoneButtons()", itemID)
 	elseif actionData and actionData.actionType == "spell" then
 		macro = "/cast " .. actionData.name
 	elseif actionData and actionData.actionType == "item" then
@@ -1849,7 +1853,7 @@ function GB:UpdateHearthStoneTable()
 		end
 
 		if hearthstonesTable[id] then
-			if C_Item_GetItemCount(id) >= 1 or PlayerHasToy(id) and C_ToyBox_IsToyUsable(id) then
+			if C_Item_GetItemCount(id) >= 1 or PlayerHasToy(id) then
 				tinsert(availableHearthstones, id)
 			end
 		end

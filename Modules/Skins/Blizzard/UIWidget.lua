@@ -37,7 +37,9 @@ end
 local function ReskinBar(bar)
 	if bar and bar.backdrop then
 		S:CreateBackdropShadow(bar)
-		ReskinLabel(bar.Label)
+		if bar.Label then
+			ReskinLabel(bar.Label)
+		end
 	end
 end
 
@@ -108,12 +110,30 @@ function S:BlizzardUIWidget()
 		end
 
 		if not widget.__windSkin then
-			ReskinLabel(widget.Label)
-			ReskinBar(widget.Bar)
-			ReskinLabel(widget.Bar.Label)
+			if widget.Label then
+				ReskinLabel(widget.Label)
+			end
+			if widget.Bar then
+				ReskinBar(widget.Bar)
+				if widget.Bar.Label then
+					ReskinLabel(widget.Bar.Label)
+				end
+				if widget.isJailersTowerBar and self:CheckDB(nil, "scenario") then
+					widget.Bar:Width(234)
+				end
+			end
+		end
 
-			if widget.isJailersTowerBar and self:CheckDB(nil, "scenario") then
-				widget.Bar:Width(234)
+		-- Always apply global status bar texture so widget bars match user preference
+		local bar = widget.Bar
+		if bar and bar:IsObjectType("StatusBar") then
+			E:RegisterStatusBar(bar)
+			bar:SetStatusBarTexture(E.media.normTex)
+			if bar.Spark then
+				bar.Spark:SetAlpha(0)
+			end
+			if bar.BackgroundGlow then
+				bar.BackgroundGlow:SetAlpha(0)
 			end
 		end
 	end)
@@ -126,12 +146,20 @@ function S:BlizzardUIWidget()
 	end)
 
 	self:SecureHook(ES, "SkinStatusBarWidget", function(_, widget)
-		ReskinBar(widget.Bar)
+		if widget and widget.Bar then
+			ReskinBar(widget.Bar)
+		end
 	end)
 
 	self:SecureHook(ES, "SkinDoubleStatusBarWidget", function(_, widget)
-		ReskinBar(widget.LeftBar)
-		ReskinBar(widget.RightBar)
+		if widget then
+			if widget.LeftBar then
+				ReskinBar(widget.LeftBar)
+			end
+			if widget.RightBar then
+				ReskinBar(widget.RightBar)
+			end
+		end
 	end)
 
 	ES.SkinTextWithStateWidget = E.noop -- Use Blizzard default color

@@ -537,11 +537,21 @@ local function keyStoneLevelHex(level)
 	end
 end
 
+local colorTableCache = {}
+
 ---Create a ColorMixin object from a color table
 ---@param colorTable table Color table with r, g, b, a values
----@return colorRGBA color The created color object
+---@return colorRGBA color The created color object (cached by RGBA values)
 function W.Utilities.Color.CreateColorFromTable(colorTable)
-	return CreateColor(colorTable.r, colorTable.g, colorTable.b, colorTable.a) --[[@as colorRGBA ]]
+	local r, g, b = colorTable.r, colorTable.g, colorTable.b
+	local a = colorTable.a or 1
+	local key = format("%s:%s:%s:%s", r, g, b, a)
+	local cached = colorTableCache[key]
+	if not cached then
+		cached = CreateColor(r, g, b, a) --[[@as colorRGBA ]]
+		colorTableCache[key] = cached
+	end
+	return cached
 end
 
 ---Create a ColorMixin object from predefined color template

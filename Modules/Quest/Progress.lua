@@ -429,7 +429,8 @@ function QP:HandleQuestProgress(status, questData, objectiveData)
 	elseif status == QUEST_STATUS.QUEST_UPDATE or status == QUEST_STATUS.SCENARIO_UPDATE then
 		assert(objectiveData, "Objective data is required for progress update")
 		local db = self.db.progress.objective
-		local objectiveText, coloredObjectiveText = Render(objectiveData.item, "%s", db.color)
+		local item = gsub(objectiveData.item, " |A:.+|a", "")
+		local objectiveText, coloredObjectiveText = Render(item, "%s", db.color)
 		local progressText = format(db.detailTemplate, objectiveData.numFulfilled, objectiveData.numRequired)
 		local progressColor = F.GetProgressColor(objectiveData.numFulfilled / objectiveData.numRequired)
 		local coloredProgressText = C.StringWithRGB(progressText, progressColor)

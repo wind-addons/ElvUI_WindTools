@@ -87,6 +87,7 @@ local potions = {
 		5512, -- 治疗石
 		177278, -- 静谧之瓶
 		224464, -- 恶魔治疗石
+		258138, -- 强效治疗药水
 	},
 	legacy = {
 		109217, -- 德拉诺敏捷药水
@@ -333,6 +334,7 @@ local potions = {
 	},
 	mn = {
 		-- https://www.wowhead.com/items/consumables/potions/min-level:40/min-req-level:71?filter=161:166;1:12;0:0
+		-- https://www.wowhead.com/items/consumables/potions/name:Potion?filter=166;12;0
 		241286, -- 圣光之护 (2)
 		241287, -- 圣光之护 (1)
 		241288, -- 鲁莽药水 (2)
@@ -361,8 +363,10 @@ local potions = {
 		245898, -- 飞逝圣光潜力 (2)
 		245900, -- 飞逝狂热药水 (1)
 		245901, -- 飞逝狂热药水 (2)
-		268954, -- Entropic Extract
-		268955, -- Entropic Extract
+		259092, -- 虚空浸染的自由行动药水
+		259245, -- 虚空相位药水
+		268954, -- 熵能萃取物 (1)
+		268955, -- 熵能萃取物 (2)
 	},
 }
 
@@ -1847,6 +1851,7 @@ local professionItems = {
 		235860, -- 虚灵铭文知识著作
 		235861, -- 虚灵草药学知识著作
 		235862, -- 虚灵工程学知识著作
+		-- stylua: ignore UTF-8 Error
 		235863, -- 虚灵附魔知识著作
 		235864, -- 虚灵锻造知识著作
 		235865, -- 虚灵炼金知识著作

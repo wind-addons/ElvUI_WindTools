@@ -1339,6 +1339,7 @@ L["Screenshot after 2 secs"] = "2초 후 스크린샷 촬영"
 L["Screenshot after you earned an achievement automatically."] = "업적 달성 시 자동으로 스크린샷을 촬영합니다."
 L["Screenshot has been automatically taken."] = "스크린샷이 자동으로 찍혔습니다."
 L["Screenshot immediately"] = "즉시 스크린샷 촬영"
+L["Scrollbar"] = true
 L["Search"] = "검색"
 L["Search by name, description, ID, rewards, title, etc."] = "이름, 설명, ID, 보상, 제목 등으로 검색합니다."
 L["Section Title"] = "섹션 제목"

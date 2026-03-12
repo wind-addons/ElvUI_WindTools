@@ -1339,6 +1339,7 @@ L["Screenshot after 2 secs"] = "Captura de pantalla después de 2 segundos"
 L["Screenshot after you earned an achievement automatically."] = "Captura de pantalla después de obtener un logro automáticamente."
 L["Screenshot has been automatically taken."] = "Captura de pantalla ha sido tomada automáticamente."
 L["Screenshot immediately"] = "Captura de pantalla inmediatamente"
+L["Scrollbar"] = true
 L["Search"] = true
 L["Search by name, description, ID, rewards, title, etc."] = "Buscar por nombre, descripción, ID, recompensas, título, etc."
 L["Section Title"] = "Título de la sección"

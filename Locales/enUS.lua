@@ -1339,6 +1339,7 @@ L["Screenshot after 2 secs"] = true
 L["Screenshot after you earned an achievement automatically."] = true
 L["Screenshot has been automatically taken."] = true
 L["Screenshot immediately"] = true
+L["Scrollbar"] = true
 L["Search"] = true
 L["Search by name, description, ID, rewards, title, etc."] = true
 L["Section Title"] = true

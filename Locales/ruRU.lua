@@ -1339,6 +1339,7 @@ L["Screenshot after 2 secs"] = "Скриншот через 2 сек."
 L["Screenshot after you earned an achievement automatically."] = "Автоматический скриншот после получения достижения."
 L["Screenshot has been automatically taken."] = "Скриншот был сделан автоматически."
 L["Screenshot immediately"] = "Быстрый скриншот"
+L["Scrollbar"] = true
 L["Search"] = "Поиск"
 L["Search by name, description, ID, rewards, title, etc."] = "Поиск по имени, описанию, идентификатору, наградам, званию и т.д."
 L["Section Title"] = "Название раздела"

@@ -11,18 +11,23 @@ W.Changelog[415] = {
 	},
 	NEW = {
 		["zhCN"] = {
+			"新增 [战斗] - [伤害统计布局] 模块. 该模块能够帮助你快速建立多个对齐布局并根据条件自动切换. 默认关闭.",
 			"[美化外观] 新增了 Extra Quest Button 美化外观.",
 		},
 		["zhTW"] = {
+			"新增 [戰鬥] - [傷害統計佈局] 模組. 該模組能夠幫助你快速建立多個對齊佈局並根據條件自動切換. 預設關閉.",
 			"[美化外觀] 新增了 Extra Quest Button 美化外觀.",
 		},
 		["enUS"] = {
+			"Added a new module [Combat] - [Damage Meter Layout]. This module helps you quickly set up multiple aligned layouts and automatically switch between them based on conditions. Disabled by default.",
 			"[Skins] Added a new skin for Extra Quest Button.",
 		},
 		["koKR"] = {
+			"[전투] - [데미지 미터 레이아웃] 모듈이 추가되었습니다. 이 모듈은 여러 정렬된 레이아웃을 빠르게 설정하고 조건에 따라 자동으로 전환하는 데 도움이 됩니다. 기본적으로 비활성화되어 있습니다.",
 			"[스킨] Extra Quest Button에 대한 새로운 스킨이 추가되었습니다.",
 		},
 		["ruRU"] = {
+			"Добавлен новый модуль [Бой] - [Макет счетчика урона]. Этот модуль помогает быстро настроить несколько выровненных макетов и автоматически переключаться между ними в зависимости от условий. По умолчанию отключено.",
 			"[Скины] Добавлен новый скин для Extra Quest Button.",
 		},
 	},

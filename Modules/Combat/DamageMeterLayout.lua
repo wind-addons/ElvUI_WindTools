@@ -30,10 +30,6 @@ function DL:StoreOriginalState(windowIndex, sessionWindow)
 
 	local state = { width = sessionWindow:GetWidth(), height = sessionWindow:GetHeight(), points = {} }
 	state.clampedToScreen = sessionWindow:IsClampedToScreen()
-	state.mouseEnabled = sessionWindow:IsMouseEnabled()
-	state.movable = sessionWindow:IsMovable()
-	state.resizable = sessionWindow:IsResizable()
-	state.locked = sessionWindow:IsLocked()
 	for i = 1, sessionWindow:GetNumPoints() do
 		local point, relativeTo, relativePoint, xOffset, yOffset = sessionWindow:GetPoint(i)
 		if not relativeTo then
@@ -63,7 +59,6 @@ function DL:RestoreOriginalState(windowIndex, sessionWindow)
 
 	sessionWindow:Size(state.width or sessionWindow:GetWidth(), state.height or sessionWindow:GetHeight())
 	sessionWindow:SetClampedToScreen(state.clampedToScreen ~= false)
-	sessionWindow:SetLocked(state.locked)
 
 	self.originalState[windowIndex] = nil
 end
@@ -88,7 +83,6 @@ function DL:TakeoverSessionWindow(windowIndex)
 
 	self:StoreOriginalState(windowIndex, sessionWindow)
 	sessionWindow:SetClampedToScreen(false)
-	sessionWindow:SetLocked(true)
 
 	self.managedMeters[windowIndex] = sessionWindow
 
@@ -482,10 +476,8 @@ function DL:Enable()
 
 	if not C_AddOns_IsAddOnLoaded("Blizzard_DamageMeter") then
 		self:RegisterEvent("ADDON_LOADED")
-	elseif not self:IsHooked(_G.DamageMeter, "SetupSessionWindow") then
-		self:SecureHook(_G.DamageMeter, "SetupSessionWindow", function()
-			F.TaskManager:OutOfCombat(self.UpdateLayout, self)
-		end)
+	else
+		self:HookDamageMeter()
 	end
 
 	if self.isPreviewing then
@@ -505,11 +497,7 @@ function DL:ADDON_LOADED(_, addonName)
 	end
 
 	self:UnregisterEvent("ADDON_LOADED")
-	if not self:IsHooked(_G.DamageMeter, "SetupSessionWindow") then
-		self:SecureHook(_G.DamageMeter, "SetupSessionWindow", function()
-			F.TaskManager:OutOfCombat(self.UpdateLayout, self)
-		end)
-	end
+	self:HookDamageMeter()
 	self:ForceSwitch()
 end
 

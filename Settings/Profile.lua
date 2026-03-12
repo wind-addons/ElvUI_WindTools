@@ -169,9 +169,9 @@ P.combat = {
 		enable = true,
 	},
 	damageMeterLayout = {
-		enable = true,
-		width = 600,
-		height = 250,
+		enable = false,
+		width = 500,
+		height = 230,
 		backdrop = true,
 		shadow = true,
 		layouts = {
@@ -194,18 +194,12 @@ P.combat = {
 					{ windowIndex = 1, weight = 1, hidden = false },
 					{ windowIndex = 2, weight = 1, hidden = true },
 				},
-			}
+			},
 		},
 		activeLayout = 2,
 		autoSwitch = {
 			enable = true,
-			rules = {
-				combat = 2,
-				outOfCombat = 2,
-				mythicPlus = 1,
-				raid = 1,
-				delve = 2,
-			},
+			rules = { combat = 2, outOfCombat = 2, mythicPlus = 1, raid = 1, delve = 2 },
 		},
 	},
 }

@@ -1729,7 +1729,7 @@ function GB:UpdateGuildButton()
 	end
 end
 
-function GetNextRandomHearthstone(currentIndex, times)
+function GB:GetNextRandomHearthstone(currentIndex, times)
 	if not availableHearthstones or #availableHearthstones <= 1 or times and times >= 10 then
 		return 1, 6948
 	end
@@ -1738,7 +1738,7 @@ function GetNextRandomHearthstone(currentIndex, times)
 	local itemID = availableHearthstones[randomIndex]
 	local isToyNotUsable = PlayerHasToy(itemID) and not C_ToyBox_IsToyUsable(itemID)
 	if isToyNotUsable or currentIndex and randomIndex == currentIndex then
-		return GetNextRandomHearthstone(currentIndex, (times or 0) + 1)
+		return self:GetNextRandomHearthstone(currentIndex, (times or 0) + 1)
 	end
 
 	return randomIndex, itemID
@@ -1764,7 +1764,7 @@ function GB:UpdateHearthstoneButtonMacro(button, mouseButton)
 
 	if actionData and actionData.actionType == "random" then
 		local currentIndex = button["randomHearthstoneIndex" .. side]
-		local randomIndex, itemID = GetNextRandomHearthstone(currentIndex)
+		local randomIndex, itemID = self:GetNextRandomHearthstone(currentIndex)
 		button["randomHearthstoneIndex" .. side] = randomIndex
 		macro = format("/use item:%d\n/run _G.WTGameBar_UpdateHearthstoneButtons()", itemID)
 	elseif actionData and actionData.actionType == "spell" then

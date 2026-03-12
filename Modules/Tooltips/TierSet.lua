@@ -34,21 +34,23 @@ function T:ElvUITooltipPopulateInspectGUIDCache(_, unitGUID, itemLevel)
 	locked[unitGUID] = true
 end
 
-function T:ElvUIScanTooltipSetInventoryItem(tt, unit, slot)
+function T:ElvUIScanTooltipSetInventoryItem(tt, unit)
 	local guid = UnitGUID(unit)
-	if guid and cache[guid] and not locked[guid] then
-		local itemLink = select(2, tt:GetItem())
-		local itemID = itemLink and strmatch(itemLink, "item:(%d+):")
-		if itemID then
-			itemID = tonumber(itemID)
-			if W.CurrentTierSetItemIDTable[itemID] then
-				for _, i in pairs(cache[guid]) do
-					if i == itemID then
-						return
-					end
+	if E:IsSecretValue(guid) or not guid or not cache[guid] or locked[guid] then
+		return
+	end
+
+	local itemLink = select(2, tt:GetItem())
+	local itemID = itemLink and strmatch(itemLink, "item:(%d+):")
+	if itemID then
+		itemID = tonumber(itemID)
+		if W.CurrentTierSetItemIDTable[itemID] then
+			for _, i in pairs(cache[guid]) do
+				if i == itemID then
+					return
 				end
-				tinsert(cache[guid], itemID)
 			end
+			tinsert(cache[guid], itemID)
 		end
 	end
 end

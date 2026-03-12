@@ -5,6 +5,7 @@ W, F, E, L, V, P, G = unpack((select(2, ...)))
 ---@cast W WindTools
 local C = W.Utilities.Color
 
+local format = format
 local tinsert = tinsert
 
 ---@class ProfileDB.announcement
@@ -166,6 +167,46 @@ P.combat = {
 	},
 	quickKeystone = {
 		enable = true,
+	},
+	damageMeterLayout = {
+		enable = true,
+		width = 600,
+		height = 250,
+		backdrop = true,
+		shadow = true,
+		layouts = {
+			{
+				name = format(L["Layout %d"], 1),
+				direction = "HORIZONTAL",
+				outerPadding = 0,
+				innerPadding = 4,
+				meters = {
+					{ windowIndex = 1, weight = 3, hidden = false },
+					{ windowIndex = 2, weight = 2, hidden = false },
+				},
+			},
+			{
+				name = format(L["Layout %d"], 2),
+				direction = "HORIZONTAL",
+				outerPadding = 0,
+				innerPadding = 4,
+				meters = {
+					{ windowIndex = 1, weight = 1, hidden = false },
+					{ windowIndex = 2, weight = 1, hidden = true },
+				},
+			}
+		},
+		activeLayout = 2,
+		autoSwitch = {
+			enable = true,
+			rules = {
+				combat = 2,
+				outOfCombat = 2,
+				mythicPlus = 1,
+				raid = 1,
+				delve = 2,
+			},
+		},
 	},
 }
 

@@ -1,13 +1,20 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable, PrivateDB, ProfileDB, GlobalDB
 local LSM = E.Libs.LSM
-local C = W:GetModule("CombatAlert")
+local AceConfigRegistry = E.Libs.AceConfigRegistry
+local C = W.Utilities.Color
+local CA = W:GetModule("CombatAlert")
+local DL = W:GetModule("DamageMeterLayout")
 local DT = W:GetModule("DestroyTotem")
-local RM = W:GetModule("RaidMarkers")
 local QK = W:GetModule("QuickKeystone")
-local Color = W.Utilities.Color
+local RM = W:GetModule("RaidMarkers")
 
 local format = format
 local tonumber = tonumber
+local tinsert = tinsert
+local tremove = tremove
+local wipe = wipe
+
+local CopyTable = CopyTable
 
 local Constants_PartyCountdownConstants_MaxCountdownSeconds = Constants.PartyCountdownConstants.MaxCountdownSeconds
 
@@ -285,7 +292,7 @@ options.combatAlert = {
 	end,
 	set = function(info, value)
 		E.db.WT.combat.combatAlert[info[#info]] = value
-		C:ProfileUpdate()
+		CA:ProfileUpdate()
 	end,
 	args = {
 		desc = {
@@ -322,7 +329,7 @@ options.combatAlert = {
 			name = L["Preview"],
 			desc = L["Preview the alert visual effect."],
 			func = function()
-				C:Preview()
+				CA:Preview()
 			end,
 		},
 		animationConfig = {
@@ -384,7 +391,7 @@ options.combatAlert = {
 							set = function(info, r, g, b)
 								local db = E.db.WT.combat.combatAlert.enterColor.left
 								db.r, db.g, db.b = r, g, b
-								C:ProfileUpdate()
+								CA:ProfileUpdate()
 							end,
 						},
 						rightColor = {
@@ -400,7 +407,7 @@ options.combatAlert = {
 							set = function(info, r, g, b)
 								local db = E.db.WT.combat.combatAlert.enterColor.right
 								db.r, db.g, db.b = r, g, b
-								C:ProfileUpdate()
+								CA:ProfileUpdate()
 							end,
 						},
 					},
@@ -429,7 +436,7 @@ options.combatAlert = {
 							set = function(info, r, g, b)
 								local db = E.db.WT.combat.combatAlert.leaveColor.left
 								db.r, db.g, db.b = r, g, b
-								C:ProfileUpdate()
+								CA:ProfileUpdate()
 							end,
 						},
 						rightColor = {
@@ -445,7 +452,7 @@ options.combatAlert = {
 							set = function(info, r, g, b)
 								local db = E.db.WT.combat.combatAlert.leaveColor.right
 								db.r, db.g, db.b = r, g, b
-								C:ProfileUpdate()
+								CA:ProfileUpdate()
 							end,
 						},
 					},
@@ -459,7 +466,7 @@ options.combatAlert = {
 					end,
 					set = function(info, value)
 						E.db.WT.combat.combatAlert[info[#info - 1]][info[#info]] = value
-						C:ProfileUpdate()
+						CA:ProfileUpdate()
 					end,
 					args = {
 						name = {
@@ -685,7 +692,7 @@ options.destroyTotem = {
 					type = "description",
 					name = format(
 						"%s: %s",
-						Color.StringByTemplate(L["Tip"], "emerald-500"),
+						C.StringByTemplate(L["Tip"], "emerald-500"),
 						L["If you want to destroy totems by macro, or combine with other actions, you can use the following macro text."]
 					),
 				},
@@ -753,6 +760,679 @@ options.quickKeystone = {
 	},
 }
 
-local function addClassIcon(text, class)
-	return F.GetClassIconStringWithStyle(class, "flat", 16, 16) .. " " .. text
+local damageMeterEditingLayout = 1
+local damageMeterRuleKeys = { "combat", "outOfCombat", "mythicPlus", "raid", "delve" }
+local damageMeterLayoutDynamicArgKeys = {}
+local RebuildDamageMeterLayoutTabArgs
+
+local function GetDamageMeterLayoutValues(includeNone)
+	local values = {}
+	local layouts = E.db.WT.combat.damageMeterLayout.layouts
+
+	if includeNone then
+		values[0] = L["None"]
+	end
+
+	for i = 1, #layouts do
+		local layout = layouts[i]
+		values[i] = layout.name or format(L["Layout %d"], i)
+	end
+
+	return values
 end
+
+local function ReindexDamageMeterLayoutRef(layoutIndex, removedIndex)
+	if not layoutIndex then
+		return nil
+	end
+
+	if layoutIndex == removedIndex then
+		return 1
+	end
+
+	if layoutIndex > removedIndex then
+		return layoutIndex - 1
+	end
+
+	return layoutIndex
+end
+
+local function NormalizeDamageMeterLayoutRefs(removedIndex)
+	local db = E.db.WT.combat.damageMeterLayout
+	local rules = db.autoSwitch and db.autoSwitch.rules
+
+	db.activeLayout = ReindexDamageMeterLayoutRef(db.activeLayout, removedIndex) or 1
+	damageMeterEditingLayout = ReindexDamageMeterLayoutRef(damageMeterEditingLayout, removedIndex) or 1
+
+	if rules then
+		for i = 1, #damageMeterRuleKeys do
+			local key = damageMeterRuleKeys[i]
+			rules[key] = ReindexDamageMeterLayoutRef(rules[key], removedIndex)
+		end
+	end
+end
+
+local function IsWindowIndexDuplicated(layout, slotIndex, windowIndex)
+	for i = 1, 3 do
+		if i ~= slotIndex then
+			local meter = layout.meters[i]
+			if meter and meter.windowIndex == windowIndex then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+local function UpdateDamageMeterLayoutOptions(rebuildTabs)
+	DL:ProfileUpdate()
+
+	if rebuildTabs then
+		RebuildDamageMeterLayoutTabArgs()
+	end
+
+	if AceConfigRegistry then
+		AceConfigRegistry:NotifyChange("ElvUI")
+	end
+end
+
+local function BuildLayoutSlotGroup(layoutIndex, slotIndex, order)
+	return {
+		order = order,
+		type = "group",
+		inline = true,
+		name = format(L["Slot %d"], slotIndex),
+		args = {
+			window = {
+				order = 1,
+				type = "select",
+				name = L["Window"],
+				values = {
+					[0] = L["None"],
+					[1] = "1",
+					[2] = "2",
+					[3] = "3",
+				},
+				get = function()
+					damageMeterEditingLayout = layoutIndex
+					local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+					local meter = layout.meters and layout.meters[slotIndex]
+					return meter and meter.windowIndex or 0
+				end,
+				set = function(_, value)
+					damageMeterEditingLayout = layoutIndex
+					local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+					layout.meters = layout.meters or {}
+					if value == 0 then
+						layout.meters[slotIndex] = nil
+					elseif not IsWindowIndexDuplicated(layout, slotIndex, value) then
+						layout.meters[slotIndex] = layout.meters[slotIndex] or { weight = 100, hidden = false }
+						layout.meters[slotIndex].windowIndex = value
+					else
+						E:Print(L["Damage Meter Layout: duplicated window index in current layout."])
+					end
+					UpdateDamageMeterLayoutOptions(false)
+				end,
+				disabled = function()
+					return not E.db.WT.combat.damageMeterLayout.enable
+				end,
+			},
+			weight = {
+				order = 2,
+				type = "range",
+				name = L["Weight"],
+				desc = L["The relative weight of the meter compared to other meters in the same layout."],
+				min = 1,
+				max = 100,
+				step = 1,
+				get = function()
+					damageMeterEditingLayout = layoutIndex
+					local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+					local meter = layout.meters and layout.meters[slotIndex]
+					return meter and meter.weight or 1
+				end,
+				set = function(_, value)
+					damageMeterEditingLayout = layoutIndex
+					local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+					layout.meters = layout.meters or {}
+					if layout.meters[slotIndex] then
+						layout.meters[slotIndex].weight = value
+						UpdateDamageMeterLayoutOptions(false)
+					end
+				end,
+				disabled = function()
+					local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+					return not E.db.WT.combat.damageMeterLayout.enable
+						or not (
+							layout
+							and layout.meters
+							and layout.meters[slotIndex]
+							and layout.meters[slotIndex].windowIndex
+						)
+				end,
+			},
+			hidden = {
+				order = 3,
+				type = "toggle",
+				name = L["Hide"],
+				desc = L["Hide this meter slot in the layout."]
+					.. "\n"
+					.. L["If all slots in the layout are hidden, the full layout container will also be hidden."],
+				get = function()
+					damageMeterEditingLayout = layoutIndex
+					local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+					local meter = layout.meters and layout.meters[slotIndex]
+					return meter and meter.hidden == true or false
+				end,
+				set = function(_, value)
+					damageMeterEditingLayout = layoutIndex
+					local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+					layout.meters = layout.meters or {}
+					if layout.meters[slotIndex] then
+						layout.meters[slotIndex].hidden = value == true
+						UpdateDamageMeterLayoutOptions(false)
+					end
+				end,
+				disabled = function()
+					local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+					return not E.db.WT.combat.damageMeterLayout.enable
+						or not (
+							layout
+							and layout.meters
+							and layout.meters[slotIndex]
+							and layout.meters[slotIndex].windowIndex
+						)
+				end,
+			},
+		},
+	}
+end
+
+local function BuildLayoutTabGroup(layoutIndex)
+	return {
+		order = layoutIndex,
+		type = "group",
+		name = function()
+			local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+			return layout.name or format(L["Layout %d"], layoutIndex)
+		end,
+		args = {
+			name = {
+				order = 1,
+				type = "input",
+				name = L["Layout Name"],
+				get = function()
+					damageMeterEditingLayout = layoutIndex
+					local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+					return layout.name
+				end,
+				set = function(_, value)
+					damageMeterEditingLayout = layoutIndex
+					local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+					layout.name = value ~= "" and value or format(L["Layout %d"], layoutIndex)
+					UpdateDamageMeterLayoutOptions(false)
+				end,
+				disabled = function()
+					return not E.db.WT.combat.damageMeterLayout.enable
+				end,
+			},
+			deleteLayout = {
+				order = 2,
+				type = "execute",
+				name = C.StringByTemplate(L["Delete this layout"], "red-500"),
+				confirm = function()
+					return format(
+						L["Are you sure you want to delete layout %s? This action cannot be undone."],
+						E.db.WT.combat.damageMeterLayout.layouts[layoutIndex].name
+					)
+				end,
+				func = function()
+					tremove(E.db.WT.combat.damageMeterLayout.layouts, layoutIndex)
+					NormalizeDamageMeterLayoutRefs(layoutIndex)
+					DL:StopPreview()
+					UpdateDamageMeterLayoutOptions(true)
+				end,
+				hidden = function()
+					return not E.db.WT.combat.damageMeterLayout.enable
+						or #E.db.WT.combat.damageMeterLayout.layouts <= 1
+						or layoutIndex == 1
+				end,
+			},
+			divider = {
+				order = 3,
+				type = "description",
+				name = "",
+				width = "full",
+			},
+			layout = {
+				order = 4,
+				type = "group",
+				inline = true,
+				name = L["Layout"],
+				args = {
+					direction = {
+						order = 2,
+						type = "select",
+						name = L["Direction"],
+						values = {
+							HORIZONTAL = L["Horizontal"],
+							VERTICAL = L["Vertical"],
+						},
+						get = function()
+							damageMeterEditingLayout = layoutIndex
+							local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+							return layout.direction
+						end,
+						set = function(_, value)
+							damageMeterEditingLayout = layoutIndex
+							local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+							layout.direction = value
+							UpdateDamageMeterLayoutOptions(false)
+						end,
+						disabled = function()
+							return not E.db.WT.combat.damageMeterLayout.enable
+						end,
+					},
+					outerPadding = {
+						order = 3,
+						type = "range",
+						name = L["Outer Padding"],
+						min = 0,
+						max = 30,
+						step = 1,
+						get = function()
+							damageMeterEditingLayout = layoutIndex
+							local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+							return layout.outerPadding
+						end,
+						set = function(_, value)
+							damageMeterEditingLayout = layoutIndex
+							local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+							layout.outerPadding = value
+							UpdateDamageMeterLayoutOptions(false)
+						end,
+						disabled = function()
+							return not E.db.WT.combat.damageMeterLayout.enable
+						end,
+					},
+					innerPadding = {
+						order = 4,
+						type = "range",
+						name = L["Inner Padding"],
+						min = 0,
+						max = 30,
+						step = 1,
+						get = function()
+							damageMeterEditingLayout = layoutIndex
+							local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+							return layout.innerPadding
+						end,
+						set = function(_, value)
+							damageMeterEditingLayout = layoutIndex
+							local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+							layout.innerPadding = value
+							UpdateDamageMeterLayoutOptions(false)
+						end,
+						disabled = function()
+							return not E.db.WT.combat.damageMeterLayout.enable
+						end,
+					},
+				},
+			},
+			windowDistribution = {
+				order = 5,
+				type = "group",
+				inline = true,
+				name = L["Window Distribution"],
+				args = {
+					slot1 = BuildLayoutSlotGroup(layoutIndex, 1, 1),
+					slot2 = BuildLayoutSlotGroup(layoutIndex, 2, 2),
+					slot3 = BuildLayoutSlotGroup(layoutIndex, 3, 3),
+				},
+			},
+		},
+	}
+end
+
+RebuildDamageMeterLayoutTabArgs = function()
+	local damageMeterLayoutArgs = options.damageMeterLayout.args
+	for i = 1, #damageMeterLayoutDynamicArgKeys do
+		damageMeterLayoutArgs[damageMeterLayoutDynamicArgKeys[i]] = nil
+	end
+	wipe(damageMeterLayoutDynamicArgKeys)
+
+	local layouts = E.db.WT.combat.damageMeterLayout.layouts
+
+	for i = 1, #layouts do
+		local key = "layoutTab" .. i
+		damageMeterLayoutArgs[key] = BuildLayoutTabGroup(i)
+		damageMeterLayoutArgs[key].order = 20 + i
+		damageMeterLayoutDynamicArgKeys[#damageMeterLayoutDynamicArgKeys + 1] = key
+	end
+
+	local newTabKey = "layoutTabNew"
+	damageMeterLayoutArgs[newTabKey] = {
+		order = 21 + #layouts,
+		type = "group",
+		name = C.StringByTemplate("+ " .. L["New"], "emerald-500"),
+		args = {
+			newLayout = {
+				order = 1,
+				type = "execute",
+				name = L["Create"],
+				func = function()
+					local newLayout = CopyTable(P.combat.damageMeterLayout.layouts[1])
+					local layoutCount = #layouts + 1
+					newLayout.name = format(L["Layout %d"], layoutCount)
+					tinsert(layouts, newLayout)
+					damageMeterEditingLayout = layoutCount
+					E.db.WT.combat.damageMeterLayout.activeLayout = damageMeterEditingLayout
+					UpdateDamageMeterLayoutOptions(true)
+				end,
+				disabled = function()
+					return not E.db.WT.combat.damageMeterLayout.enable
+				end,
+			},
+		},
+	}
+	damageMeterLayoutDynamicArgKeys[#damageMeterLayoutDynamicArgKeys + 1] = newTabKey
+end
+
+options.damageMeterLayout = {
+	order = 5,
+	type = "group",
+	name = L["Damage Meter Layout"],
+	args = {
+		desc = {
+			order = 1,
+			type = "group",
+			inline = true,
+			name = L["Description"],
+			args = {
+				feature = {
+					order = 1,
+					type = "description",
+					name = L["Manage Blizzard Damage Meter windows with reusable layouts."],
+					fontSize = "medium",
+				},
+			},
+		},
+		enable = {
+			order = 2,
+			type = "toggle",
+			name = L["Enable"],
+			get = function(info)
+				return E.db.WT.combat.damageMeterLayout[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.combat.damageMeterLayout[info[#info]] = value
+				DL:ProfileUpdate()
+			end,
+		},
+		activeLayout = {
+			order = 3,
+			type = "select",
+			name = L["Active Layout"],
+			values = function()
+				return GetDamageMeterLayoutValues(false)
+			end,
+			get = function()
+				return E.db.WT.combat.damageMeterLayout.activeLayout
+			end,
+			set = function(_, value)
+				local targetLayout = value
+				if DL:IsPreviewing() then
+					DL:Preview(targetLayout)
+				else
+					DL:UpdateLayout(targetLayout)
+				end
+			end,
+			disabled = function()
+				return not E.db.WT.combat.damageMeterLayout.enable
+			end,
+		},
+		preview = {
+			order = 4,
+			type = "execute",
+			name = function()
+				if DL:IsPreviewing() then
+					return C.StringByTemplate(L["Stop Preview Mode"], "red-500")
+				end
+
+				return L["Start Preview Mode"]
+			end,
+			desc = L["Lock and preview the active layout."],
+			disabled = function()
+				return not E.db.WT.combat.damageMeterLayout.enable
+			end,
+			func = function()
+				local layoutIndex = damageMeterEditingLayout
+
+				if DL:IsPreviewing() and DL.previewLayoutIndex == layoutIndex then
+					DL:StopPreview()
+				else
+					DL:Preview(layoutIndex)
+				end
+			end,
+			width = 1.5,
+		},
+		container = {
+			order = 5,
+			type = "group",
+			inline = true,
+			name = L["Container"],
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					min = 200,
+					max = 1600,
+					step = 1,
+					get = function()
+						return E.db.WT.combat.damageMeterLayout.width
+					end,
+					set = function(_, value)
+						E.db.WT.combat.damageMeterLayout.width = value
+						DL:ProfileUpdate()
+					end,
+					disabled = function()
+						return not E.db.WT.combat.damageMeterLayout.enable
+					end,
+				},
+				height = {
+					order = 2,
+					type = "range",
+					name = L["Height"],
+					min = 120,
+					max = 1000,
+					step = 1,
+					get = function()
+						return E.db.WT.combat.damageMeterLayout.height
+					end,
+					set = function(_, value)
+						E.db.WT.combat.damageMeterLayout.height = value
+						DL:ProfileUpdate()
+					end,
+					disabled = function()
+						return not E.db.WT.combat.damageMeterLayout.enable
+					end,
+				},
+				backdrop = {
+					order = 3,
+					type = "toggle",
+					name = L["Backdrop"],
+					get = function()
+						return E.db.WT.combat.damageMeterLayout.backdrop
+					end,
+					set = function(_, value)
+						E.db.WT.combat.damageMeterLayout.backdrop = value
+						DL:ProfileUpdate()
+					end,
+					disabled = function()
+						return not E.db.WT.combat.damageMeterLayout.enable
+					end,
+				},
+				shadow = {
+					order = 4,
+					type = "toggle",
+					name = L["Shadow"],
+					get = function()
+						return E.db.WT.combat.damageMeterLayout.shadow
+					end,
+					set = function(_, value)
+						E.db.WT.combat.damageMeterLayout.shadow = value
+						DL:ProfileUpdate()
+					end,
+					disabled = function()
+						return not E.db.WT.combat.damageMeterLayout.enable
+					end,
+				},
+			},
+		},
+		autoSwitch = {
+			order = 6,
+			type = "group",
+			inline = true,
+			name = L["Auto Switch"],
+			args = {
+				desc = {
+					order = 1,
+					type = "description",
+					name = format(
+						"%s\n%s",
+						L["Automatically switch damage meter layouts based on different combat scenarios."],
+						C.StringByTemplate(L["Priority"], "yellow-500")
+							.. format(
+								": %s > %s > %s > %s > %s",
+								L["Raid"],
+								L["Mythic Plus"],
+								L["Delves"],
+								L["In Combat"],
+								L["Out of Combat"]
+							)
+					),
+				},
+				enable = {
+					order = 2,
+					type = "toggle",
+					name = L["Enable"],
+					get = function()
+						return E.db.WT.combat.damageMeterLayout.autoSwitch.enable
+					end,
+					set = function(_, value)
+						E.db.WT.combat.damageMeterLayout.autoSwitch.enable = value
+						DL:AutoSwitch(true)
+					end,
+					disabled = function()
+						return not E.db.WT.combat.damageMeterLayout.enable
+					end,
+				},
+				divider = {
+					order = 10,
+					type = "description",
+					name = "",
+					width = "full",
+				},
+				raid = {
+					order = 11,
+					type = "select",
+					name = L["Raid"],
+					values = function()
+						return GetDamageMeterLayoutValues(true)
+					end,
+					get = function()
+						return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.raid or 0
+					end,
+					set = function(_, value)
+						E.db.WT.combat.damageMeterLayout.autoSwitch.rules.raid = value == 0 and nil or value
+						DL:AutoSwitch(true)
+					end,
+					hidden = function()
+						return not E.db.WT.combat.damageMeterLayout.enable
+							or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
+					end,
+				},
+				mythicPlus = {
+					order = 12,
+					type = "select",
+					name = L["Mythic Plus"],
+					values = function()
+						return GetDamageMeterLayoutValues(true)
+					end,
+					get = function()
+						return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.mythicPlus or 0
+					end,
+					set = function(_, value)
+						E.db.WT.combat.damageMeterLayout.autoSwitch.rules.mythicPlus = value == 0 and nil or value
+						DL:AutoSwitch(true)
+					end,
+					hidden = function()
+						return not E.db.WT.combat.damageMeterLayout.enable
+							or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
+					end,
+				},
+				delve = {
+					order = 13,
+					type = "select",
+					name = L["Delves"],
+					values = function()
+						return GetDamageMeterLayoutValues(true)
+					end,
+					get = function()
+						return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.delve or 0
+					end,
+					set = function(_, value)
+						E.db.WT.combat.damageMeterLayout.autoSwitch.rules.delve = value == 0 and nil or value
+						DL:AutoSwitch(true)
+					end,
+					hidden = function()
+						return not E.db.WT.combat.damageMeterLayout.enable
+							or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
+					end,
+				},
+				combat = {
+					order = 14,
+					type = "select",
+					name = L["In Combat"],
+					values = function()
+						return GetDamageMeterLayoutValues(true)
+					end,
+					get = function()
+						return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.combat or 0
+					end,
+					set = function(_, value)
+						E.db.WT.combat.damageMeterLayout.autoSwitch.rules.combat = value == 0 and nil or value
+						DL:AutoSwitch(true)
+					end,
+					hidden = function()
+						return not E.db.WT.combat.damageMeterLayout.enable
+							or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
+					end,
+				},
+				outOfCombat = {
+					order = 15,
+					type = "select",
+					name = L["Out of Combat"],
+					values = function()
+						return GetDamageMeterLayoutValues(true)
+					end,
+					get = function()
+						return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.outOfCombat or 0
+					end,
+					set = function(_, value)
+						E.db.WT.combat.damageMeterLayout.autoSwitch.rules.outOfCombat = value == 0 and nil or value
+						DL:AutoSwitch(true)
+					end,
+					hidden = function()
+						return not E.db.WT.combat.damageMeterLayout.enable
+							or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
+					end,
+				},
+			},
+		},
+	},
+}
+
+W:RunAfterOptionsLoaded(RebuildDamageMeterLayoutTabArgs)

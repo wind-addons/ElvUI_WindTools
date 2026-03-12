@@ -107,6 +107,17 @@ gsub(E:TextGradient(strrep("Z", 14), r1, g1, b1, r2, g2, b2, r3, g3, b3, r4, g4,
 	color[#color + 1] = self
 end)
 
+---@type function[]
+local lazyloadFunctions = {}
+
+function W:RunAfterOptionsLoaded(func)
+	if E.Options.args.WindTools then
+		func()
+	else
+		tinsert(lazyloadFunctions, func)
+	end
+end
+
 -- ElvUI_OptionsUI Callback
 function W:OptionsCallback()
 	-- Title
@@ -161,6 +172,11 @@ function W:OptionsCallback()
 	-- Data warmup
 	async.WithItemIDTable(E.db.WT.item.extraItemsBar.blackList, "key")
 	async.WithItemIDTable(E.db.WT.item.extraItemsBar.customList, "value")
+
+	-- Run lazyload functions
+	for _, func in pairs(lazyloadFunctions) do
+		func()
+	end
 end
 
 W.AnimationEaseTable = {

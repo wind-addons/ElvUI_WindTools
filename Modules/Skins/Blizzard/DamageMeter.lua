@@ -17,22 +17,74 @@ local headerElements = {
 	"SettingsDropdown",
 }
 
-local windowMouseOverStates = {}
-local windowLeavePendingStates = {}
-local hookedSessionWindows = {}
-local skinnedSessionWindows = {}
 local headerBackdropFrames = {}
+local hookedScrollBars = {}
+local hookedSessionWindows = {}
+local scrollBarAlphaApplyingStates = {}
+local scrollBarBaseAlphas = {}
+local scrollBarHiddenByMode = {}
+local skinnedSessionWindows = {}
+local windowLeavePendingStates = {}
+local windowMouseOverStates = {}
 
 local function IsSessionMouseOver(sessionWindow)
 	if not sessionWindow then
 		return false
 	end
 
-	if DoesAncestryIncludeAny and GetMouseFoci then
-		return DoesAncestryIncludeAny(sessionWindow, GetMouseFoci())
+	return DoesAncestryIncludeAny(sessionWindow, GetMouseFoci())
+end
+
+local function IsScrollBarMouseOver(scrollBar)
+	if not scrollBar then
+		return false
 	end
 
-	return sessionWindow:IsMouseOver()
+	return DoesAncestryIncludeAny(scrollBar, GetMouseFoci())
+end
+
+function S:DamageMeter_GetScrollBarTargetAlpha(scrollBar)
+	if not scrollBar then
+		return nil
+	end
+
+	local mode = self.db.damageMeter.scrollBar
+	if mode == "default" then
+		return nil
+	end
+
+	local baseAlpha = scrollBarBaseAlphas[scrollBar] or 1
+	if mode == "hide" then
+		return 0
+	end
+
+	return IsScrollBarMouseOver(scrollBar) and baseAlpha or 0
+end
+
+function S:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+	if not scrollBar or scrollBarAlphaApplyingStates[scrollBar] then
+		return
+	end
+
+	local targetAlpha = self:DamageMeter_GetScrollBarTargetAlpha(scrollBar)
+	if targetAlpha == nil then
+		return
+	end
+
+	local currentAlpha = scrollBar:GetAlpha()
+	if currentAlpha == targetAlpha then
+		return
+	end
+
+	scrollBarAlphaApplyingStates[scrollBar] = true
+	scrollBar:SetAlpha(targetAlpha)
+	scrollBarAlphaApplyingStates[scrollBar] = nil
+end
+
+function S:DamageMeter_ForceHideScrollBar(scrollBar)
+	self:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+	scrollBar:Hide()
+	scrollBarHiddenByMode[scrollBar] = true
 end
 
 function S:DamageMeter_FadeAlpha(frame, targetAlpha)
@@ -151,6 +203,82 @@ function S:DamageMeter_RefreshHeaderMode(sessionWindow, isMouseOver)
 	end
 end
 
+function S:DamageMeter_RefreshScrollBarMode(frame)
+	local scrollBar = frame:GetScrollBar()
+	if not scrollBar then
+		return
+	end
+
+	local currentAlpha = scrollBar:GetAlpha()
+	if currentAlpha > 0 then
+		scrollBarBaseAlphas[scrollBar] = currentAlpha
+	end
+
+	local mode = self.db.damageMeter.scrollBar
+	if mode == "hide" then
+		self:DamageMeter_ForceHideScrollBar(scrollBar)
+		return
+	end
+
+	if scrollBarHiddenByMode[scrollBar] then
+		scrollBarHiddenByMode[scrollBar] = nil
+		scrollBar:Show()
+	end
+
+	if mode == "default" then
+		return
+	end
+
+	self:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+end
+
+function S.DamageMeter_OnScrollBarScriptShow(scrollBar)
+	if S.db.damageMeter.scrollBar == "hide" then
+		S:DamageMeter_ForceHideScrollBar(scrollBar)
+		return
+	end
+
+	S:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+end
+
+function S:DamageMeter_OnScrollBarSetAlpha(scrollBar, alpha)
+	if scrollBarAlphaApplyingStates[scrollBar] then
+		return
+	end
+
+	if alpha and alpha > 0 then
+		scrollBarBaseAlphas[scrollBar] = alpha
+	end
+
+	self:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+end
+
+function S.DamageMeter_OnScrollBarEnter(scrollBar)
+	S:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+end
+
+function S.DamageMeter_OnScrollBarLeave(scrollBar)
+	S:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+end
+
+function S:DamageMeter_HookScrollBar(frame)
+	local scrollBar = frame:GetScrollBar()
+	if not scrollBar then
+		return
+	end
+
+	if not hookedScrollBars[scrollBar] then
+		scrollBar:HookScript("OnEnter", S.DamageMeter_OnScrollBarEnter)
+		scrollBar:HookScript("OnLeave", S.DamageMeter_OnScrollBarLeave)
+		scrollBar:HookScript("OnShow", S.DamageMeter_OnScrollBarScriptShow)
+		hookedScrollBars[scrollBar] = true
+	end
+
+	if not self:IsHooked(scrollBar, "SetAlpha") then
+		self:SecureHook(scrollBar, "SetAlpha", "DamageMeter_OnScrollBarSetAlpha")
+	end
+end
+
 function S:DamageMeter_ApplyEntryStyle(entry)
 	if not entry then
 		return
@@ -180,15 +308,17 @@ function S:DamageMeter_ScrollBoxUpdate(scrollBox)
 end
 
 function S:DamageMeter_HookScrollBox(frame)
-	local scrollBox = frame and frame.GetScrollBox and frame:GetScrollBox()
+	local scrollBox = frame:GetScrollBox()
 	if scrollBox and not self:IsHooked(scrollBox, "Update") then
 		self:SecureHook(scrollBox, "Update", "DamageMeter_ScrollBoxUpdate")
 		self:DamageMeter_ScrollBoxUpdate(scrollBox)
 	end
+
+	self:DamageMeter_HookScrollBar(frame)
+	self:DamageMeter_RefreshScrollBarMode(frame)
 end
 
 function S:DamageMeter_SourceWindowRefresh(sourceWindow)
-	self:DamageMeter_HookScrollBox(sourceWindow)
 	if sourceWindow and sourceWindow.ForEachEntryFrame then
 		sourceWindow:ForEachEntryFrame(S.DamageMeter_HandleEntry)
 	end
@@ -211,11 +341,7 @@ function S:DamageMeter_ApplyWindowModes(sessionWindow, isMouseOver, force)
 
 	self:DamageMeter_RefreshBackdropMode(sessionWindow, isMouseOver)
 	self:DamageMeter_RefreshHeaderMode(sessionWindow, isMouseOver)
-
-	local sourceWindow = sessionWindow.SourceWindow
-	if sourceWindow then
-		self:DamageMeter_RefreshBackdropMode(sourceWindow, isMouseOver)
-	end
+	self:DamageMeter_RefreshScrollBarMode(sessionWindow)
 end
 
 function S.DamageMeter_OnSessionWindowEnter(sessionWindow)
@@ -243,8 +369,12 @@ function S:DamageMeter_HookSessionWindowInteractions(sessionWindow)
 		return
 	end
 
-	sessionWindow:HookScript("OnEnter", S.DamageMeter_OnSessionWindowEnter)
-	sessionWindow:HookScript("OnLeave", S.DamageMeter_OnSessionWindowLeave)
+	sessionWindow:HookScript("OnEnter", function()
+		S.DamageMeter_OnSessionWindowEnter(sessionWindow)
+	end)
+	sessionWindow:HookScript("OnLeave", function()
+		S.DamageMeter_OnSessionWindowLeave(sessionWindow)
+	end)
 
 	hookedSessionWindows[sessionWindow] = true
 end
@@ -271,8 +401,6 @@ function S:DamageMeter_ApplyConfigToSessionWindow(sessionWindow)
 		if not self:IsHooked(sourceWindow, "Refresh") then
 			self:SecureHook(sourceWindow, "Refresh", "DamageMeter_SourceWindowRefresh")
 		end
-
-		self:DamageMeter_HookScrollBox(sourceWindow)
 
 		if sourceWindow.ForEachEntryFrame then
 			sourceWindow:ForEachEntryFrame(S.DamageMeter_HandleEntry)

@@ -1778,8 +1778,18 @@ options.damageMeter = {
 						hide = L["Hide"],
 					},
 				},
-				fadeTime = {
+				scrollBar = {
 					order = 4,
+					type = "select",
+					name = L["Scrollbar"],
+					values = {
+						hide = L["Hide"],
+						default = L["Default"],
+						mouseover = L["Mouse Over"],
+					},
+				},
+				fadeTime = {
+					order = 5,
 					type = "range",
 					name = L["Fade Time"],
 					min = 0,

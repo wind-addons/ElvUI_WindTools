@@ -460,17 +460,23 @@ function OT:ObjectiveTrackerModule_AddBlock(tracker, block)
 		return
 	end
 
-	if not self:IsHooked(block, "AddObjective") then
-		self:SecureHook(block, "AddObjective", "ObjectiveTrackerBlock_AddObjective")
-		block:ForEachUsedLine(function(line, objectiveKey)
-			self:HandleLine(line, objectiveKey)
-		end)
-		self:HandleBlockHeader(block)
-	end
+	-- Header
+	self:HandleBlockHeader(block)
 
+	-- PoiButton
 	if block.GetPOIButton and not self:IsHooked(block, "GetPOIButton") then
 		self:SecureHook(block, "GetPOIButton", "ObjectiveTrackerBlock_GetPOIButton")
-		self:HandleBlockPOIButton(block)
+	end
+
+	self:HandleBlockPOIButton(block)
+
+	-- Lines
+	block:ForEachUsedLine(function(line, objectiveKey)
+		self:HandleLine(line, objectiveKey)
+	end)
+
+	if not self:IsHooked(block, "AddObjective") then
+		self:SecureHook(block, "AddObjective", "ObjectiveTrackerBlock_AddObjective")
 	end
 end
 

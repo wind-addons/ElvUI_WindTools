@@ -949,9 +949,9 @@ local function BuildLayoutSlotGroup(layoutIndex, slotIndex, order)
 	}
 end
 
-local function BuildLayoutTabGroup(layoutIndex)
+local function BuildLayoutTabGroup(layoutIndex, order)
 	return {
-		order = layoutIndex,
+		order = order,
 		type = "group",
 		name = function()
 			local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
@@ -1106,7 +1106,7 @@ RebuildDamageMeterLayoutTabArgs = function()
 
 	for i = 1, #layouts do
 		local key = "layoutTab" .. i
-		damageMeterLayoutArgs[key] = BuildLayoutTabGroup(10 + i)
+		damageMeterLayoutArgs[key] = BuildLayoutTabGroup(i, 10 + i)
 		damageMeterLayoutArgs[key].order = 20 + i
 		damageMeterLayoutDynamicArgKeys[#damageMeterLayoutDynamicArgKeys + 1] = key
 	end

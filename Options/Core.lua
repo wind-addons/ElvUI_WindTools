@@ -6,6 +6,7 @@ local format = format
 local gsub = gsub
 local pairs = pairs
 local strrep = strrep
+local tinsert = tinsert
 
 -- All categories
 W.options = {

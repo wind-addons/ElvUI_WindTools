@@ -1106,14 +1106,14 @@ RebuildDamageMeterLayoutTabArgs = function()
 
 	for i = 1, #layouts do
 		local key = "layoutTab" .. i
-		damageMeterLayoutArgs[key] = BuildLayoutTabGroup(i)
+		damageMeterLayoutArgs[key] = BuildLayoutTabGroup(10 + i)
 		damageMeterLayoutArgs[key].order = 20 + i
 		damageMeterLayoutDynamicArgKeys[#damageMeterLayoutDynamicArgKeys + 1] = key
 	end
 
 	local newTabKey = "layoutTabNew"
 	damageMeterLayoutArgs[newTabKey] = {
-		order = 21 + #layouts,
+		order = 20 + #layouts,
 		type = "group",
 		name = C.StringByTemplate("+ " .. L["New"], "emerald-500"),
 		args = {
@@ -1192,8 +1192,23 @@ options.damageMeterLayout = {
 				return not E.db.WT.combat.damageMeterLayout.enable
 			end,
 		},
-		preview = {
+		applyRecommendedSkin = {
 			order = 4,
+			type = "execute",
+			name = L["Recommended Skin Settings"],
+			desc = L["Apply recommended Damage Meter Wind skin settings for the best experience."],
+			confirm = true,
+			confirmText = L["Apply skin settings and reload UI?"],
+			func = function()
+				E.private.WT.skins.damageMeter.windowBackdrop = "hide"
+				E.private.WT.skins.damageMeter.headerPart = "always"
+				E.private.WT.skins.damageMeter.headerBackdrop = "hide"
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+			width = 1.5,
+		},
+		preview = {
+			order = 5,
 			type = "execute",
 			name = function()
 				if DL:IsPreviewing() then
@@ -1218,7 +1233,7 @@ options.damageMeterLayout = {
 			width = 1.5,
 		},
 		container = {
-			order = 5,
+			order = 7,
 			type = "group",
 			inline = true,
 			name = L["Container"],
@@ -1292,7 +1307,7 @@ options.damageMeterLayout = {
 			},
 		},
 		autoSwitch = {
-			order = 6,
+			order = 8,
 			type = "group",
 			inline = true,
 			name = L["Auto Switch"],

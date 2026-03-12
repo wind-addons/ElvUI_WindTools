@@ -958,61 +958,61 @@ local function BuildLayoutTabGroup(layoutIndex, order)
 			return layout.name or format(L["Layout %d"], layoutIndex)
 		end,
 		args = {
-			name = {
-				order = 1,
-				type = "input",
-				name = L["Layout Name"],
-				get = function()
-					damageMeterEditingLayout = layoutIndex
-					local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
-					return layout.name
-				end,
-				set = function(_, value)
-					damageMeterEditingLayout = layoutIndex
-					local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
-					layout.name = value ~= "" and value or format(L["Layout %d"], layoutIndex)
-					UpdateDamageMeterLayoutOptions(false)
-				end,
-				disabled = function()
-					return not E.db.WT.combat.damageMeterLayout.enable
-				end,
-			},
-			deleteLayout = {
-				order = 2,
-				type = "execute",
-				name = C.StringByTemplate(L["Delete this layout"], "red-500"),
-				confirm = function()
-					return format(
-						L["Are you sure you want to delete layout %s? This action cannot be undone."],
-						E.db.WT.combat.damageMeterLayout.layouts[layoutIndex].name
-					)
-				end,
-				func = function()
-					tremove(E.db.WT.combat.damageMeterLayout.layouts, layoutIndex)
-					NormalizeDamageMeterLayoutRefs(layoutIndex)
-					DL:StopPreview()
-					UpdateDamageMeterLayoutOptions(true)
-				end,
-				hidden = function()
-					return not E.db.WT.combat.damageMeterLayout.enable
-						or #E.db.WT.combat.damageMeterLayout.layouts <= 1
-						or layoutIndex == 1
-				end,
-			},
-			divider = {
-				order = 3,
-				type = "description",
-				name = "",
-				width = "full",
-			},
 			layout = {
 				order = 4,
 				type = "group",
 				inline = true,
 				name = L["Layout"],
 				args = {
-					direction = {
+					name = {
+						order = 1,
+						type = "input",
+						name = L["Layout Name"],
+						get = function()
+							damageMeterEditingLayout = layoutIndex
+							local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+							return layout.name
+						end,
+						set = function(_, value)
+							damageMeterEditingLayout = layoutIndex
+							local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
+							layout.name = value ~= "" and value or format(L["Layout %d"], layoutIndex)
+							UpdateDamageMeterLayoutOptions(false)
+						end,
+						disabled = function()
+							return not E.db.WT.combat.damageMeterLayout.enable
+						end,
+					},
+					deleteLayout = {
 						order = 2,
+						type = "execute",
+						name = C.StringByTemplate(L["Delete this layout"], "red-500"),
+						confirm = function()
+							return format(
+								L["Are you sure you want to delete layout %s? This action cannot be undone."],
+								E.db.WT.combat.damageMeterLayout.layouts[layoutIndex].name
+							)
+						end,
+						func = function()
+							tremove(E.db.WT.combat.damageMeterLayout.layouts, layoutIndex)
+							NormalizeDamageMeterLayoutRefs(layoutIndex)
+							DL:StopPreview()
+							UpdateDamageMeterLayoutOptions(true)
+						end,
+						hidden = function()
+							return not E.db.WT.combat.damageMeterLayout.enable
+								or #E.db.WT.combat.damageMeterLayout.layouts <= 1
+								or layoutIndex == 1
+						end,
+					},
+					divider = {
+						order = 3,
+						type = "description",
+						name = "",
+						width = "full",
+					},
+					direction = {
+						order = 4,
 						type = "select",
 						name = L["Direction"],
 						values = {
@@ -1035,9 +1035,10 @@ local function BuildLayoutTabGroup(layoutIndex, order)
 						end,
 					},
 					outerPadding = {
-						order = 3,
+						order = 5,
 						type = "range",
 						name = L["Outer Padding"],
+						desc = L["The padding between the backdrop and the meters in the layout."],
 						min = 0,
 						max = 30,
 						step = 1,
@@ -1057,9 +1058,10 @@ local function BuildLayoutTabGroup(layoutIndex, order)
 						end,
 					},
 					innerPadding = {
-						order = 4,
+						order = 6,
 						type = "range",
 						name = L["Inner Padding"],
+						desc = L["The padding between meters in the layout."],
 						min = 0,
 						max = 30,
 						step = 1,
@@ -1238,8 +1240,14 @@ options.damageMeterLayout = {
 			inline = true,
 			name = L["Container"],
 			args = {
-				width = {
+				tip = {
 					order = 1,
+					type = "description",
+					name = L["You can move the container in ElvUI move mode."],
+					fontSize = "medium",
+				},
+				width = {
+					order = 2,
 					type = "range",
 					name = L["Width"],
 					min = 200,
@@ -1257,7 +1265,7 @@ options.damageMeterLayout = {
 					end,
 				},
 				height = {
-					order = 2,
+					order = 3,
 					type = "range",
 					name = L["Height"],
 					min = 120,
@@ -1275,7 +1283,7 @@ options.damageMeterLayout = {
 					end,
 				},
 				backdrop = {
-					order = 3,
+					order = 4,
 					type = "toggle",
 					name = L["Backdrop"],
 					get = function()
@@ -1290,7 +1298,7 @@ options.damageMeterLayout = {
 					end,
 				},
 				shadow = {
-					order = 4,
+					order = 5,
 					type = "toggle",
 					name = L["Shadow"],
 					get = function()

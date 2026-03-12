@@ -949,9 +949,8 @@ local function BuildLayoutSlotGroup(layoutIndex, slotIndex, order)
 	}
 end
 
-local function BuildLayoutTabGroup(layoutIndex, order)
+local function BuildLayoutTabGroup(layoutIndex)
 	return {
-		order = order,
 		type = "group",
 		name = function()
 			local layout = E.db.WT.combat.damageMeterLayout.layouts[layoutIndex]
@@ -1108,14 +1107,14 @@ RebuildDamageMeterLayoutTabArgs = function()
 
 	for i = 1, #layouts do
 		local key = "layoutTab" .. i
-		damageMeterLayoutArgs[key] = BuildLayoutTabGroup(i, 10 + i)
+		damageMeterLayoutArgs[key] = BuildLayoutTabGroup(i)
 		damageMeterLayoutArgs[key].order = 20 + i
 		damageMeterLayoutDynamicArgKeys[#damageMeterLayoutDynamicArgKeys + 1] = key
 	end
 
 	local newTabKey = "layoutTabNew"
 	damageMeterLayoutArgs[newTabKey] = {
-		order = 20 + #layouts,
+		order = 30 + #layouts,
 		type = "group",
 		name = C.StringByTemplate("+ " .. L["New"], "emerald-500"),
 		args = {
@@ -1307,6 +1306,42 @@ options.damageMeterLayout = {
 					set = function(_, value)
 						E.db.WT.combat.damageMeterLayout.shadow = value
 						DL:ProfileUpdate()
+					end,
+					disabled = function()
+						return not E.db.WT.combat.damageMeterLayout.enable
+					end,
+				},
+				animation = {
+					order = 6,
+					type = "toggle",
+					name = L["Animation"],
+					desc = L["Fade in/out the damage meters when switching layouts."],
+					get = function()
+						return E.db.WT.combat.damageMeterLayout.animation.enable
+					end,
+					set = function(_, value)
+						E.db.WT.combat.damageMeterLayout.animation.enable = value
+					end,
+					disabled = function()
+						return not E.db.WT.combat.damageMeterLayout.enable
+					end,
+				},
+				animationDuration = {
+					order = 7,
+					type = "range",
+					name = L["Animation Duration"],
+					desc = L["Values below 0.05 are treated as disabled."],
+					min = -1,
+					max = 1,
+					step = 0.01,
+					get = function()
+						return E.db.WT.combat.damageMeterLayout.animation.duration
+					end,
+					set = function(_, value)
+						E.db.WT.combat.damageMeterLayout.animation.duration = value
+					end,
+					hidden = function()
+						return not E.db.WT.combat.damageMeterLayout.animation.enable
 					end,
 					disabled = function()
 						return not E.db.WT.combat.damageMeterLayout.enable

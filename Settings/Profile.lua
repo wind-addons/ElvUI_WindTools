@@ -174,6 +174,10 @@ P.combat = {
 		height = 300,
 		backdrop = true,
 		shadow = true,
+		animation = {
+			enable = true,
+			duration = 0.37,
+		},
 		layouts = {
 			{
 				name = format(L["Layout %d"], 1),

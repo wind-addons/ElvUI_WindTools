@@ -14,7 +14,6 @@ local wipe = wipe
 
 local CreateFrame = CreateFrame
 local GetInstanceInfo = GetInstanceInfo
-local InCombatLockdown = InCombatLockdown
 local UnitAffectingCombat = UnitAffectingCombat
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
@@ -126,7 +125,7 @@ function DL:UpdatePreviewState(layout)
 
 	if self.isPreviewing then
 		local displayIndex = self.previewLayoutIndex or self.db.activeLayout or 1
-		local displayLayout = layout or (self.db and self.db.layouts and self.db.layouts[displayIndex])
+		local displayLayout = layout or self.db.layouts[displayIndex]
 		local layoutName = (displayLayout and displayLayout.name) or format(L["Layout %d"], displayIndex)
 		self.previewFrame.Text:SetText(format(L["Previewing: %s"], layoutName))
 		self.previewFrame:Show()
@@ -196,13 +195,28 @@ function DL:GetLayoutAssignments(layout)
 	return assignments, visibleAssignments
 end
 
----@param layoutIndex? number
-function DL:UpdateLayout(layoutIndex)
-	if not self.db or not self.container then
-		return
-	end
+function DL:FadeManagedMeters(duration, targetAlpha, startAlpha)
+	for _, sessionWindow in pairs(self.managedMeters) do
+		if sessionWindow:IsShown() then
+			E:UIFrameFadeRemoveFrame(sessionWindow)
+			if startAlpha then
+				sessionWindow:SetAlpha(startAlpha)
+			end
 
-	if InCombatLockdown() then
+			local beginAlpha = startAlpha or sessionWindow:GetAlpha()
+			local isIncreasing = targetAlpha >= beginAlpha
+			if isIncreasing then
+				E:UIFrameFadeIn(sessionWindow, duration, beginAlpha, targetAlpha)
+			else
+				E:UIFrameFadeOut(sessionWindow, duration, beginAlpha, targetAlpha)
+			end
+		end
+	end
+end
+
+---@param layoutIndex? number
+function DL:UpdateLayoutDirect(layoutIndex)
+	if not self.db or not self.container then
 		return
 	end
 
@@ -214,9 +228,13 @@ function DL:UpdateLayout(layoutIndex)
 	self:UpdatePreviewState(activeLayout)
 
 	if not activeLayout then
+		self.appliedLayout = nil
+		self.container:SetAlpha(1)
 		self.container:Hide()
 		return
 	end
+
+	self.appliedLayout = self.db.activeLayout
 
 	local assignments, visibleAssignments = self:GetLayoutAssignments(activeLayout)
 	local activeWindows = {}
@@ -245,82 +263,115 @@ function DL:UpdateLayout(layoutIndex)
 	end
 
 	if #visibleAssignments == 0 then
+		self.container:SetAlpha(1)
 		self.container:Hide()
 		return
 	end
 
 	local visualRegionWidth = self.container:GetWidth() - activeLayout.outerPadding * 2
 	local visualRegionHeight = self.container:GetHeight() - activeLayout.outerPadding * 2
-
 	local spacingTotal = activeLayout.innerPadding * (#visibleAssignments - 1)
+	local isHorizontal = activeLayout.direction == "HORIZONTAL"
+	local distributable = isHorizontal and visualRegionWidth - spacingTotal or visualRegionHeight - spacingTotal
+	local usedVisual = 0
 
-	if activeLayout.direction == "HORIZONTAL" then
-		local distributableWidth = visualRegionWidth - spacingTotal
-		local usedVisualWidth = 0
+	for i = 1, #visibleAssignments do
+		local assignment = visibleAssignments[i]
+		local sessionWindow = assignment.sessionWindow
+		if sessionWindow then
+			local visual = (i == #visibleAssignments) and (distributable - usedVisual)
+			or E:Round(distributable * assignment.ratio)
+			local frameStartX, frameStartY, frameWidth, frameHeight
 
-		for i = 1, #visibleAssignments do
-			local assignment = visibleAssignments[i]
-			local sessionWindow = assignment.sessionWindow
-			if sessionWindow then
-				local startVisualWidth = usedVisualWidth
-				local visualWidth
-				if i == #visibleAssignments then
-					visualWidth = distributableWidth - usedVisualWidth
-				else
-					visualWidth = E:Round(distributableWidth * assignment.ratio)
-				end
-
-				local visualStartX = activeLayout.outerPadding + startVisualWidth + (i - 1) * activeLayout.innerPadding
-				local frameStartX = visualStartX - ELVUI_SKIN_VISUAL_LEFT_INSET
-				local frameWidth = visualWidth + ELVUI_SKIN_VISUAL_LEFT_INSET + ELVUI_SKIN_VISUAL_RIGHT_INSET
-				local frameHeight = visualRegionHeight
-				local frameStartY = -activeLayout.outerPadding
-
-				sessionWindow:ClearAllPoints()
-				sessionWindow:Point("TOPLEFT", self.container, "TOPLEFT", frameStartX, frameStartY)
-				sessionWindow:Size(frameWidth, frameHeight)
-				if not sessionWindow:IsShown() then
-					sessionWindow:Show()
-				end
-
-				usedVisualWidth = usedVisualWidth + visualWidth
+			if isHorizontal then
+				local visualStartX = activeLayout.outerPadding + usedVisual + (i - 1) * activeLayout.innerPadding
+				frameStartX = visualStartX - ELVUI_SKIN_VISUAL_LEFT_INSET
+				frameStartY = -activeLayout.outerPadding
+				frameWidth = visual + ELVUI_SKIN_VISUAL_LEFT_INSET + ELVUI_SKIN_VISUAL_RIGHT_INSET
+				frameHeight = visualRegionHeight
+			else
+				local visualStartY = activeLayout.outerPadding + usedVisual + (i - 1) * activeLayout.innerPadding
+				frameStartX = activeLayout.outerPadding - ELVUI_SKIN_VISUAL_LEFT_INSET
+				frameStartY = -visualStartY
+				frameWidth = visualRegionWidth + ELVUI_SKIN_VISUAL_LEFT_INSET + ELVUI_SKIN_VISUAL_RIGHT_INSET
+				frameHeight = visual
 			end
-		end
-	else
-		local distributableHeight = visualRegionHeight - spacingTotal
-		local usedVisualHeight = 0
 
-		for i = 1, #visibleAssignments do
-			local assignment = visibleAssignments[i]
-			local sessionWindow = assignment.sessionWindow
-			if sessionWindow then
-				local startVisualHeight = usedVisualHeight
-				local visualHeight
-				if i == #visibleAssignments then
-					visualHeight = distributableHeight - usedVisualHeight
-				else
-					visualHeight = E:Round(distributableHeight * assignment.ratio)
-				end
-
-				local visualStartY = activeLayout.outerPadding + startVisualHeight + (i - 1) * activeLayout.innerPadding
-				local frameStartX = activeLayout.outerPadding - ELVUI_SKIN_VISUAL_LEFT_INSET
-				local frameStartY = -visualStartY
-				local frameWidth = visualRegionWidth + ELVUI_SKIN_VISUAL_LEFT_INSET + ELVUI_SKIN_VISUAL_RIGHT_INSET
-				local frameHeight = visualHeight
-
-				sessionWindow:ClearAllPoints()
-				sessionWindow:Point("TOPLEFT", self.container, "TOPLEFT", frameStartX, frameStartY)
-				sessionWindow:Size(frameWidth, frameHeight)
-				if not sessionWindow:IsShown() then
-					sessionWindow:Show()
-				end
-
-				usedVisualHeight = usedVisualHeight + visualHeight
+			sessionWindow:ClearAllPoints()
+			sessionWindow:Point("TOPLEFT", self.container, "TOPLEFT", frameStartX, frameStartY)
+			sessionWindow:Size(frameWidth, frameHeight)
+			if not sessionWindow:IsShown() then
+				sessionWindow:Show()
 			end
+
+			usedVisual = usedVisual + visual
 		end
 	end
 
-	self.container:Show()
+	if not self.container:IsShown() then
+		self.container:SetAlpha(1)
+		self.container:Show()
+	end
+end
+
+---@param layoutIndex? number
+function DL:UpdateLayout(layoutIndex)
+	if not self.db or not self.container then
+		return
+	end
+
+	local targetLayout = layoutIndex or self.db.activeLayout
+
+	if layoutIndex then
+		self.db.activeLayout = layoutIndex
+	end
+
+	if self.isAnimating then
+		self.pendingLayoutIndex = targetLayout
+		return
+	end
+
+	local useAnimation = self.db.animation.enable
+		and self.db.animation.duration >= 0.05
+		and self.appliedLayout
+		and targetLayout ~= self.appliedLayout
+
+	if not useAnimation then
+		self:UpdateLayoutDirect(targetLayout)
+		return
+	end
+
+	self.isAnimating = true
+	self.pendingLayoutIndex = nil
+
+	local duration = self.db.animation.duration
+	local _, currentVisible = self:GetLayoutAssignments(self.db.layouts[self.appliedLayout])
+	local _, targetVisible = self:GetLayoutAssignments(self.db.layouts[targetLayout])
+	local containerVisibilityChanges = (#currentVisible > 0) ~= (#targetVisible > 0)
+
+	if containerVisibilityChanges then
+		E:UIFrameFadeRemoveFrame(self.container)
+		E:UIFrameFadeOut(self.container, duration, self.container:GetAlpha(), 0)
+	end
+
+	self:FadeManagedMeters(duration, 0)
+
+	E:Delay(duration, function()
+		self.isAnimating = nil
+
+		local resolvedLayout = self.pendingLayoutIndex or targetLayout
+		self.pendingLayoutIndex = nil
+
+		self:UpdateLayoutDirect(resolvedLayout)
+
+		if containerVisibilityChanges and self.container:IsShown() then
+			E:UIFrameFadeRemoveFrame(self.container)
+			self.container:SetAlpha(0)
+			E:UIFrameFadeIn(self.container, duration, 0, 1)
+		end
+
+		self:FadeManagedMeters(duration, 1, 0)
+	end)
 end
 
 function DL:AutoSwitch(force)
@@ -443,9 +494,13 @@ end
 
 function DL:Disable()
 	self:StopPreview()
+	self.isAnimating = nil
+	self.pendingLayoutIndex = nil
+	self.appliedLayout = nil
 	self:ReleaseAllMeters()
 
 	if self.container then
+		E:UIFrameFadeRemoveFrame(self.container)
 		self.container:SetAlpha(1)
 		self.container:Hide()
 	end

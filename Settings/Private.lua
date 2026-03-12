@@ -600,7 +600,7 @@ V.skins = {
 	},
 	damageMeter = {
 		enable = true,
-		windowBackdrop = "always", ---@type "always"|"mouseover"
+		windowBackdrop = "always", ---@type "always"|"mouseover"|"hide"
 		headerPart = "always", ---@type "always"|"mouseover"
 		headerBackdrop = "hide", ---@type "always"|"hide"
 		fadeTime = 0.2,

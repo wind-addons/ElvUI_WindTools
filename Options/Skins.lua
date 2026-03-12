@@ -1741,6 +1741,7 @@ options.damageMeter = {
 					values = {
 						always = L["Always"],
 						mouseover = L["Mouse Over"],
+						hide = L["Hide"],
 					},
 				},
 				headerPart = {

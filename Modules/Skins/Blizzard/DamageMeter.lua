@@ -105,6 +105,9 @@ function S:DamageMeter_RefreshBackdropMode(frame, isMouseOver)
 	if mode == "always" then
 		alpha = frameBackgroundAlpha
 		shown = true
+	elseif mode == "hide" then
+		alpha = 0
+		shown = false
 	else
 		alpha = isMouseOver and frameBackgroundAlpha or 0
 		shown = isMouseOver == true

@@ -1,3 +1,25 @@
+ElvUI_WindTools Additional Licensing Terms
+
+Copyright (C) ElvUI_WindTools Authors
+
+This project is restricted-source software.
+
+1. Within the ElvUI and NDui ecosystems, this code is licensed under GNU GPLv3.
+  The ElvUI ecosystem includes ElvUI and officially recognized ElvUI-based
+  modules, plugins, and distributions.
+  The NDui ecosystem includes NDui and officially recognized NDui-based
+  modules, plugins, and distributions.
+
+2. Any copying, reuse, porting, or redistribution of this code outside the
+  ElvUI and NDui ecosystems is not granted by GPLv3 under this project policy.
+
+3. For any code copying or use outside the ElvUI and NDui ecosystems, you must contact
+  the author(s) and obtain a separate written license in advance.
+
+By using this code, you agree to the terms above.
+
+---
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 

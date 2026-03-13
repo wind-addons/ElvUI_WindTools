@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local TI = W:NewModule("TurnIn", "AceEvent-3.0")
+local TI = W:NewModule("TurnIn", "AceEvent-3.0") ---@class TurnIn: AceModule, AceEvent-3.0
 
 local _G = _G
 local format = format
@@ -765,18 +765,7 @@ function TI:ProfileUpdate()
 	self:Initialize()
 
 	if self.initialized and not self.db.enable then
-		self:UnregisterEvent("GOSSIP_CONFIRM")
-		self:UnregisterEvent("GOSSIP_SHOW")
-		self:UnregisterEvent("PLAYER_LOGIN")
-		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		self:UnregisterEvent("QUEST_ACCEPTED")
-		self:UnregisterEvent("QUEST_ACCEPT_CONFIRM")
-		self:UnregisterEvent("QUEST_COMPLETE")
-		self:UnregisterEvent("QUEST_DETAIL")
-		self:UnregisterEvent("QUEST_GREETING")
-		self:UnregisterEvent("QUEST_ITEM_UPDATE")
-		self:UnregisterEvent("QUEST_LOG_UPDATE")
-		self:UnregisterEvent("QUEST_PROGRESS")
+		self:UnregisterAllEvents()
 		self.initialized = false
 	end
 end

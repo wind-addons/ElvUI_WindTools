@@ -140,7 +140,7 @@ local function UpdateBlock(block)
 
 			local timeBar = widgetFrame.TimerBar
 			if timeBar and not timeBar.__windSkin then
-				F.InternalizeMethod(timeBar, "SetStatusBarTexture", true)
+				F.InternalizeMethod(timeBar, "SetStatusBarTexture")
 				hooksecurefunc(timeBar, "SetStatusBarTexture", function(frame)
 					F.CallMethod(frame, "SetStatusBarTexture", E.media.normTex)
 					frame:SetStatusBarColor(unpack(E.media.rgbvaluecolor))

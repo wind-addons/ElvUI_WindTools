@@ -2179,6 +2179,12 @@ options.addons = {
 			name = " ",
 			width = "full",
 		},
+		addonProfiler = {
+			order = 10,
+			type = "toggle",
+			name = L["Addon Profiler"],
+			addonName = "!!AddonProfiler",
+		},
 		angleur = {
 			order = 10,
 			type = "toggle",

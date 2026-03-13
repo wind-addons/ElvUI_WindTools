@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='AdvancedInterfaceOptions.lua' />
+	<Script file='AddonProfiler.lua' />
 	<Script file='AngryKeystone.lua' />
 	<Script file='AppearanceTooltip.lua' />
 	<Script file='Angleur.lua' />

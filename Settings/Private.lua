@@ -624,6 +624,7 @@ V.skins = {
 	},
 	addons = {
 		advancedInterfaceOptions = true,
+		addonProfiler = true,
 		angleur = true,
 		angryKeystones = true,
 		appearanceTooltip = true,

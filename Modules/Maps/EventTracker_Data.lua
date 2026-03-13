@@ -131,14 +131,30 @@ ET.EventData = {
 			questIDs = {
 				[WeeklyName(7578704, L["Liadrin 4 > 1"], 2393)] = {
 					-- https://www.wowhead.com/npc=256203/lady-liadrin
+					93766, -- 至暗之夜：世界任务
 					93767, -- 至暗之夜：奥术秘社
+					93769, -- 至暗之夜：住宅
 					93889, -- 至暗之夜：萨瑟利尔的聚会
+					93890, -- 至暗之夜：丰饶
+					93891, -- 至暗之夜：哈籁尼尔的传说
+					93892, -- 至暗之夜：斯托玛兰突袭战
 					93909, -- 至暗之夜：地下堡
+					93910, -- 至暗之夜：狩猎
 					93911, -- 至暗之夜：地下城
+					93912, -- 至暗之夜：团队副本
+					93913, -- 至暗之夜：世界首领
+					94457, -- 至暗之夜：战场
 				},
 				[WeeklyName(5554512, L["Dungeon"], 2393)] = {
 					-- https://www.wowhead.com/npc=256210/halduron-brightwing
+					93751, -- 风行者之塔
+					93752, -- 密谋小径
 					93753, -- 魔导师平台
+					93754, -- 迈萨拉洞窟
+					93755, -- 纳洛拉克的洞穴
+					93756, -- 夺目谷
+					93757, -- 虚空之痕竞技场
+					93758, -- 节点希纳斯
 				},
 				[WeeklyName(2066011, L["Soiree"], 2395)] = {
 					-- https://www.wowhead.com/item=268489/surplus-bag-of-party-favors
@@ -148,12 +164,8 @@ ET.EventData = {
 					90576, -- 加固符文石：径巷之影
 				},
 				[WeeklyName(7385004, L["Legend"], 2413)] = {
-					-- https://www.wowhead.com/npc=238170/zurashar-kassameh#ends
-					88993, -- 威南的结界
-					88994, -- 回响大锅
-					88995, -- 艾林哈籁之花
-					88996, -- 回响寂灭之焰
-					88997, -- 鲁斯苏拉之臂
+					-- https://www.wowhead.com/quest=89268
+					89268, -- 失落的传说
 				},
 				[WeeklyName(7636650, L["Abundance"], 2437)] = {
 					-- https://www.wowhead.com/quest=89507/abundant-offerings
@@ -168,7 +180,6 @@ ET.EventData = {
 					local weeklyQuestID, status
 					for _, questID in pairs(storylineQuests) do
 						if C_QuestLog_IsQuestFlaggedCompleted(questID) then
-							weeklyQuestID = questID
 							status = "completed"
 							break
 						end
@@ -180,18 +191,12 @@ ET.EventData = {
 						end
 					end
 
-					local rightText = ""
 					local questName = weeklyQuestID and C_QuestLog_GetTitleForQuestID(weeklyQuestID)
-
-					if questName then
-						if status == "inProgress" then
-							rightText = format("%s - %s", questName, C.StringByTemplate(L["In Progress"], "yellow-400"))
-						elseif status == "completed" then
-							rightText = format("%s - %s", questName, C.StringByTemplate(L["Completed"], "green-500"))
-						end
-					else
-						rightText = C.StringByTemplate(L["Not Accepted"], "rose-500")
-					end
+					questName = questName and questName .. " - " or ""
+					local rightText = status == "inProgress"
+							and questName .. C.StringByTemplate(L["In Progress"], "yellow-400")
+						or status == "completed" and questName .. C.StringByTemplate(L["Completed"], "green-500")
+						or C.StringByTemplate(L["Not Accepted"], "rose-500")
 
 					tinsert(progress, { label = storylineName, rightText = rightText })
 				end

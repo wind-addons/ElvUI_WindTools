@@ -809,6 +809,7 @@ L["If you already have a tank in your group and you use the 'Role Available' fil
 L["If you are not familiar with Lua regex, try using AI to help you."] = "Si no estás familiarizado con regex de Lua, intenta usar IA para ayudarte."
 L["If you find the %s module conflicts with another addon, alert me via Discord."] = "Si encuentras que el módulo %s entra en conflicto con otro addon, avísame a través de Discord."
 L["If you found the CVars changed automatically, please check other addons."] = "Si has encontrado que las CVar han cambiado automáticamente, por favor, revisa otros addons."
+L["If you select 'Do Nothing', the objective tracker will remain unchanged and try match the next condition."] = true
 L["If you want to destroy totems by macro, or combine with other actions, you can use the following macro text."] = true
 L["Ignore Earned Before"] = "Ignorar obtenidos antes"
 L["Ignore List"] = "Lista de Ignorados"
@@ -832,6 +833,7 @@ L["In Player House"] = true
 L["In Progress"] = "En Progreso"
 L["In Raid"] = "En Banda"
 L["In Scenario"] = true
+L["In Vehicle"] = "En Vehículo"
 L["Include Details"] = "Incluir detalles"
 L["Include world channel configured in %s in tab cycle."] = "Incluir el canal de mundo configurado en %s en el ciclo de tabulación."
 L["Increase Size"] = "Aumentar el tamaño"

@@ -809,6 +809,7 @@ L["If you already have a tank in your group and you use the 'Role Available' fil
 L["If you are not familiar with Lua regex, try using AI to help you."] = "Lua 정규식이 익숙하지 않다면 AI의 도움을 받아보세요."
 L["If you find the %s module conflicts with another addon, alert me via Discord."] = "%s 모듈이 다른 애드온과 충돌하는 것을 발견하면 Discord를 통해 알려주세요."
 L["If you found the CVars changed automatically, please check other addons."] = "CVar가 자동으로 변경되는 것을 발견하면 다른 애드온을 확인하십시오."
+L["If you select 'Do Nothing', the objective tracker will remain unchanged and try match the next condition."] = true
 L["If you want to destroy totems by macro, or combine with other actions, you can use the following macro text."] = true
 L["Ignore Earned Before"] = "이전에 획득한 것은 무시"
 L["Ignore List"] = "제외 목록"
@@ -832,6 +833,7 @@ L["In Player House"] = true
 L["In Progress"] = "진행 중"
 L["In Raid"] = "공격대 안일 때"
 L["In Scenario"] = true
+L["In Vehicle"] = "탈것 탑승 중"
 L["Include Details"] = "세부 정보 포함"
 L["Include world channel configured in %s in tab cycle."] = "%s에 설정된 월드 채널을 탭 순환에 포함합니다."
 L["Increase Size"] = "두께 설정"

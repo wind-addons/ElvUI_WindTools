@@ -82,30 +82,28 @@ function AC:ObjectiveTrackerFrame_SetCollapsed(frame)
 	ApplyCollapseState(frame, self.state)
 end
 
-function AC:PLAYER_ENTERING_WORLD()
-	E:Delay(0.5, self.Apply, self)
-end
-
 function AC:ProfileUpdate()
 	self.db = E.db.WT.quest.autoCollapse
 
-	if self.db.enable then
-		self:RegisterEvent("PLAYER_ENTERING_WORLD")
+	if not self.db.enable then
+		self:UnregisterAllEvents()
+		self.eventRegistered = false
+		return
+	end
+
+	if not self.eventRegistered then
+		self:RegisterEvent("PLAYER_ENTERING_WORLD", "Apply")
 		self:RegisterEvent("PLAYER_REGEN_DISABLED", "Apply")
 		self:RegisterEvent("PLAYER_REGEN_ENABLED", "Apply")
 		self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "Apply")
-
-		if _G.ObjectiveTrackerFrame and not self:IsHooked(_G.ObjectiveTrackerFrame, "SetCollapsed") then
-			self:SecureHook(_G.ObjectiveTrackerFrame, "SetCollapsed", "ObjectiveTrackerFrame_SetCollapsed")
-		end
-
-		self:Apply()
-	else
-		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
+		self.eventRegistered = true
 	end
+
+	if _G.ObjectiveTrackerFrame and not self:IsHooked(_G.ObjectiveTrackerFrame, "SetCollapsed") then
+		self:SecureHook(_G.ObjectiveTrackerFrame, "SetCollapsed", "ObjectiveTrackerFrame_SetCollapsed")
+	end
+
+	self:Apply()
 end
 
 AC.Initialize = AC.ProfileUpdate

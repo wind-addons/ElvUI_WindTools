@@ -101,9 +101,9 @@ do
 
 	function W.PrintDebugEnviromentTip()
 		F.PrintGradientLine()
-		F.Print(L["Debug Enviroment"])
+		F.Print(L["Debug Environment"])
 		print(L["You can use |cff00d1b2/wtdebug off|r command to exit debug mode."])
-		print(format(L["After you stop debuging, %s will reenable the addons automatically."], W.Title))
+		print(format(L["After you stop debugging, %s will reenable the addons automatically."], W.Title))
 		F.PrintGradientLine()
 	end
 end

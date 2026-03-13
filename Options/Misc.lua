@@ -1825,7 +1825,7 @@ options.lfgList = {
 							type = "description",
 							name = format(
 								"%s\n|cffff0000%s|r\n\n%s\n%s",
-								L["Automatic filters behaviour"],
+								L["Automatic filters behavior"],
 								format(
 									"!! - %s: %s - !!",
 									L["WARNING"],
@@ -1848,7 +1848,7 @@ options.lfgList = {
 							order = 2,
 							type = "toggle",
 							name = L["Disable safe filters"],
-							desc = L["Disable the default behaviour that prevents inconsistent filters with flags 'Has Tank', 'Has Healer' and 'Role Available'"],
+							desc = L["Disable the default behavior that prevents inconsistent filters with flags 'Has Tank', 'Has Healer' and 'Role Available'"],
 						},
 					},
 				},

@@ -189,7 +189,7 @@ options.objectiveTracker = {
 								.. L["'Dynamic' mode will also add the width of header text."],
 							values = {
 								ABSOLUTE = L["Absolute"],
-								DYNAMIC = L["Dyanamic"],
+								DYNAMIC = L["Dynamic"],
 							},
 						},
 						width = {
@@ -209,7 +209,7 @@ options.objectiveTracker = {
 								.. L["'Dynamic' mode will also add the height of header text."],
 							values = {
 								ABSOLUTE = L["Absolute"],
-								DYNAMIC = L["Dyanamic"],
+								DYNAMIC = L["Dynamic"],
 							},
 						},
 						height = {
@@ -1113,14 +1113,12 @@ options.autoCollapse = {
 			disabled = function()
 				return not E.db.WT.quest.autoCollapse.enable
 			end,
-			args = {
-				combat = {
-					order = 1,
-					type = "select",
-					name = L["In Combat"],
-					values = collapseStateValues,
-				},
+			values = {
+				ALL = L["Accept and Complete"],
+				ACCEPT = L["Only Accept"],
+				COMPLETE = L["Only Complete"],
 			},
+			width = 1.5,
 		},
 		priority2 = {
 			order = 3,

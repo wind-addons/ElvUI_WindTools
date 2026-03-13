@@ -314,14 +314,14 @@ function RM:CreateButtons()
 					"%s\n%s\n%s\n%s",
 					L["Left Click to mark the target with this mark."],
 					L["Right Click to clear the mark on the target."],
-					format(L["%s + Left Click to place this worldmarker."], RM.modifierString),
-					format(L["%s + Right Click to clear this worldmarker."], RM.modifierString)
+					format(L["%s + Left Click to place this world marker."], RM.modifierString),
+					format(L["%s + Right Click to clear this world marker."], RM.modifierString)
 				)
 			else
 				tooltipText = format(
 					"%s\n%s\n%s\n%s",
-					L["Left Click to place this worldmarker."],
-					L["Right Click to clear this worldmarker."],
+					L["Left Click to place this world marker."],
+					L["Right Click to clear this world marker."],
 					format(L["%s + Left Click to mark the target with this mark."], RM.modifierString),
 					format(L["%s + Right Click to clear the mark on the target."], RM.modifierString)
 				)
@@ -331,12 +331,12 @@ function RM:CreateButtons()
 				tooltipText = format(
 					"%s\n%s",
 					L["Click to clear all marks."],
-					format(L["%s + Click to remove all worldmarkers."], RM.modifierString)
+					format(L["%s + Click to remove all world markers."], RM.modifierString)
 				)
 			else
 				tooltipText = format(
 					"%s\n%s",
-					L["Click to remove all worldmarkers."],
+					L["Click to remove all world markers."],
 					format(L["%s + Click to clear all marks."], RM.modifierString)
 				)
 			end

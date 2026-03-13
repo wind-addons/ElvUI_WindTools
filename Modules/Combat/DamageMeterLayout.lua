@@ -280,7 +280,7 @@ function DL:UpdateLayoutDirect(layoutIndex)
 		local sessionWindow = assignment.sessionWindow
 		if sessionWindow then
 			local visual = (i == #visibleAssignments) and (distributable - usedVisual)
-			or E:Round(distributable * assignment.ratio)
+				or E:Round(distributable * assignment.ratio)
 			local frameStartX, frameStartY, frameWidth, frameHeight
 
 			if isHorizontal then

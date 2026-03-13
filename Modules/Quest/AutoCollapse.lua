@@ -28,6 +28,11 @@ function AC:UpdateState(event)
 		return
 	end
 
+	if event == "UNIT_ENTERED_VEHICLE" and self.db.vehicle ~= "none" then
+		self.state = self.db.vehicle
+		return
+	end
+
 	if IsResting() and self.db.resting ~= "none" then
 		self.state = self.db.resting
 		return
@@ -61,7 +66,14 @@ local function ApplyCollapseState(tracker, state)
 	end
 end
 
-function AC:Apply(event)
+function AC:Apply(event, arg1)
+	if
+		(event == "UNIT_ENTERED_VEHICLE" or event == "UNIT_EXITED_VEHICLE")
+		and (E:IsSecretValue(arg1) or arg1 ~= "player")
+	then
+		return
+	end
+
 	local tracker = _G.ObjectiveTrackerFrame
 	if not tracker then
 		return
@@ -82,6 +94,15 @@ function AC:ObjectiveTrackerFrame_SetCollapsed(frame)
 	ApplyCollapseState(frame, self.state)
 end
 
+local events = {
+	"PLAYER_ENTERING_WORLD",
+	"PLAYER_REGEN_DISABLED",
+	"PLAYER_REGEN_ENABLED",
+	"UNIT_ENTERED_VEHICLE",
+	"UNIT_EXITED_VEHICLE",
+	"ZONE_CHANGED_NEW_AREA",
+}
+
 function AC:ProfileUpdate()
 	self.db = E.db.WT.quest.autoCollapse
 
@@ -92,10 +113,9 @@ function AC:ProfileUpdate()
 	end
 
 	if not self.eventRegistered then
-		self:RegisterEvent("PLAYER_ENTERING_WORLD", "Apply")
-		self:RegisterEvent("PLAYER_REGEN_DISABLED", "Apply")
-		self:RegisterEvent("PLAYER_REGEN_ENABLED", "Apply")
-		self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "Apply")
+		for _, event in ipairs(events) do
+			self:RegisterEvent(event, "Apply")
+		end
 		self.eventRegistered = true
 	end
 

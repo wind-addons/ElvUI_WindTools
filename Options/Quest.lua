@@ -1121,6 +1121,12 @@ options.autoCollapse = {
 					name = L["In Combat"],
 					values = collapseStateValues,
 				},
+				vehicle = {
+					order = 2,
+					type = "select",
+					name = L["In Vehicle"],
+					values = collapseStateValues,
+				},
 			},
 			width = 1.5,
 		},

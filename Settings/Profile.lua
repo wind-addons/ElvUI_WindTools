@@ -985,8 +985,9 @@ end
 ---@class ProfileDB.quest
 P.quest = {
 	autoCollapse = {
-		enable = true,
+		enable = false,
 		combat = "none",
+		vehicle = "collapse",
 		resting = "none",
 		outOfInstance = "none",
 		battleground = "collapse",

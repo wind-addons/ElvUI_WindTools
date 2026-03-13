@@ -1718,8 +1718,56 @@ options.damageMeter = {
 			type = "toggle",
 			name = L["Enable"],
 		},
-		modes = {
+		customSourceName = {
 			order = 2,
+			type = "group",
+			name = L["Custom Source Name"],
+			inline = true,
+			get = function(info)
+				return E.private.WT.skins.damageMeter.customSourceName[info[#info]]
+			end,
+			set = function(info, value)
+				E.private.WT.skins.damageMeter.customSourceName[info[#info]] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+			disabled = function()
+				return not E.private.WT.skins.damageMeter.enable
+			end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+				},
+				format = {
+					order = 2,
+					type = "input",
+					name = L["Format"],
+					desc = L["Set the format of the source name. Use %d for rank and %s for name."]
+						.. "\n"
+						.. L["Note: The order of %d and %s is fixed by Blizzard and cannot be changed."],
+					width = 1.5,
+					disabled = function()
+						return not E.private.WT.skins.damageMeter.customSourceName.enable
+					end,
+				},
+				reset = {
+					order = 3,
+					type = "execute",
+					name = L["Reset"],
+					func = function()
+						E.private.WT.skins.damageMeter.customSourceName.format =
+							V.skins.damageMeter.customSourceName.format
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+					disabled = function()
+						return not E.private.WT.skins.damageMeter.customSourceName.enable
+					end,
+				},
+			},
+		},
+		modes = {
+			order = 3,
 			type = "group",
 			name = L["General"],
 			get = function(info)
@@ -1799,7 +1847,7 @@ options.damageMeter = {
 			},
 		},
 		bar = {
-			order = 3,
+			order = 4,
 			type = "group",
 			name = L["Bar Texture"],
 			inline = true,

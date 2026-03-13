@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
+local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable, PrivateDB, ProfileDB, GlobalDB
 local S = W.Modules.Skins ---@type Skins
 local LSM = E.Libs.LSM
 
@@ -445,5 +445,28 @@ function S:Blizzard_DamageMeter()
 	self:SecureHook(_G.DamageMeter, "SetupSessionWindow", "DamageMeter_SetupSessionWindow")
 	S:DamageMeter_SetupSessionWindow()
 end
+
+local function UpdateDamageMeterSourceNameFormat()
+	if not _G.ElvPrivateDB then
+		return
+	end
+
+	local key = _G.ElvPrivateDB.profileKeys and _G.ElvPrivateDB.profileKeys[E.mynameRealm]
+	if not key or not _G.ElvPrivateDB.profiles or not _G.ElvPrivateDB.profiles[key] then
+		return
+	end
+
+	local private = E:CopyTable({}, V)
+
+	if _G.ElvPrivateDB.profiles[key] and _G.ElvPrivateDB.profiles[key].WT then
+		E:CopyTable(private, _G.ElvPrivateDB.profiles[key].WT)
+	end
+
+	if private.skins and private.skins.damageMeter and private.skins.damageMeter.customSourceName.enable then
+		_G.DAMAGE_METER_SOURCE_NAME = private.skins.damageMeter.customSourceName.format
+	end
+end
+
+UpdateDamageMeterSourceNameFormat()
 
 S:AddCallbackForAddon("Blizzard_DamageMeter")

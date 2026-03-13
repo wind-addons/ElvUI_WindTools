@@ -188,7 +188,7 @@ options.objectiveTracker = {
 								.. L["'Dynamic' mode will also add the width of header text."],
 							values = {
 								ABSOLUTE = L["Absolute"],
-								DYNAMIC = L["Dyanamic"],
+								DYNAMIC = L["Dynamic"],
 							},
 						},
 						width = {
@@ -208,7 +208,7 @@ options.objectiveTracker = {
 								.. L["'Dynamic' mode will also add the height of header text."],
 							values = {
 								ABSOLUTE = L["Absolute"],
-								DYNAMIC = L["Dyanamic"],
+								DYNAMIC = L["Dynamic"],
 							},
 						},
 						height = {
@@ -1106,7 +1106,7 @@ options.turnIn = {
 				return not E.db.WT.quest.turnIn.enable
 			end,
 			values = {
-				ALL = L["Accepct and Complete"],
+				ALL = L["Accept and Complete"],
 				ACCEPT = L["Only Accept"],
 				COMPLETE = L["Only Complete"],
 			},

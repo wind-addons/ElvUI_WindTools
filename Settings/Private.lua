@@ -600,10 +600,6 @@ V.skins = {
 	},
 	damageMeter = {
 		enable = true,
-		customSourceName = {
-			enable = W.AsianLocale,
-			format = "%d. %s",
-		},
 		windowBackdrop = "always", ---@type "always"|"mouseover"|"hide"
 		headerPart = "always", ---@type "always"|"mouseover"
 		headerBackdrop = "hide", ---@type "always"|"hide"

@@ -1091,11 +1091,12 @@ options.autoCollapse = {
 				feature = {
 					order = 1,
 					type = "description",
-					name = L["Automatically collapse/expand/hide the objective tracker based on conditions."]
-						.. "\n\n"
-						.. C.StringByTemplate(L["Priority"] .. ": ", "blue-400")
-						.. "1 > 2 > 3 > 4",
-					fontSize = "medium",
+					name = format(
+						"%s\n\n%s\n%s",
+						L["Automatically collapse/expand/hide the objective tracker based on conditions."],
+						C.StringByTemplate(L["Priority"] .. ": ", "blue-400") .. "1 > 2 > 3 > 4",
+						L["If you select 'Do Nothing', the objective tracker will remain unchanged and try match the next condition."]
+					),
 				},
 			},
 		},
@@ -1113,10 +1114,13 @@ options.autoCollapse = {
 			disabled = function()
 				return not E.db.WT.quest.autoCollapse.enable
 			end,
-			values = {
-				ALL = L["Accept and Complete"],
-				ACCEPT = L["Only Accept"],
-				COMPLETE = L["Only Complete"],
+			args = {
+				combat = {
+					order = 1,
+					type = "select",
+					name = L["In Combat"],
+					values = collapseStateValues,
+				},
 			},
 			width = 1.5,
 		},
@@ -1217,6 +1221,7 @@ options.autoCollapse = {
 		},
 	},
 }
+
 options.switchButtons = {
 	order = 3,
 	type = "group",

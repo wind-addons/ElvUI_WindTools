@@ -2517,7 +2517,7 @@ options.turnIn = {
 				return not E.db.WT.quest.turnIn.enable
 			end,
 			values = {
-				ALL = L["Accepct and Complete"],
+				ALL = L["Accept and Complete"],
 				ACCEPT = L["Only Accept"],
 				COMPLETE = L["Only Complete"],
 			},

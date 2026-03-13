@@ -984,6 +984,20 @@ end
 
 ---@class ProfileDB.quest
 P.quest = {
+	autoCollapse = {
+		enable = true,
+		resting = "none", --- "none" | "collapse" | "expand" | "hide"
+		combat = "none",
+		outOfInstance = "none",
+		battleground = "collapse",
+		arena = "collapse",
+		dungeon = "none",
+		raid = "none",
+		scenario = "expand",
+		neighborhood = "expand",
+		interior = "expand",
+		default = "expand",
+	},
 	---@class ProfileDB.quest.progress
 	progress = {
 		enable = true,

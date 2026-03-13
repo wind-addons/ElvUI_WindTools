@@ -2,6 +2,7 @@ local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functio
 local C = W.Utilities.Color
 local options = W.options.quest.args
 local LSM = E.Libs.LSM
+local AC = W:GetModule("AutoCollapse")
 local AS = W:GetModule("AchievementScreenshot")
 local AT = W:GetModule("AchievementTracker")
 local OT = W:GetModule("ObjectiveTracker")
@@ -1062,15 +1063,172 @@ options.objectiveTracker = {
 	},
 }
 
-options.turnIn = {
+local collapseStateValues = {
+	none = L["Do Nothing"],
+	collapse = L["Collapse"],
+	expand = L["Expand"],
+	hide = L["Hide"],
+}
+
+options.autoCollapse = {
 	order = 2,
 	type = "group",
-	name = L["Turn In"],
+	name = L["Auto Collapse"],
 	get = function(info)
-		return E.db.WT.quest.turnIn[info[#info]]
+		return E.db.WT.quest.autoCollapse[info[#info]]
 	end,
 	set = function(info, value)
-		E.db.WT.quest.turnIn[info[#info]] = value
+		E.db.WT.quest.autoCollapse[info[#info]] = value
+		AC:ProfileUpdate()
+	end,
+	args = {
+		desc = {
+			order = 0,
+			type = "group",
+			inline = true,
+			name = L["Description"],
+			args = {
+				feature = {
+					order = 1,
+					type = "description",
+					name = L["Automatically collapse/expand/hide the objective tracker based on conditions."]
+						.. "\n\n"
+						.. C.StringByTemplate(L["Priority"] .. ": ", "blue-400")
+						.. "1 > 2 > 3 > 4",
+					fontSize = "medium",
+				},
+			},
+		},
+		enable = {
+			order = 1,
+			type = "toggle",
+			name = L["Enable"],
+			width = "full",
+		},
+		priority1 = {
+			order = 2,
+			type = "group",
+			inline = true,
+			name = format(L["Priority %d"], 1),
+			disabled = function()
+				return not E.db.WT.quest.autoCollapse.enable
+			end,
+			args = {
+				combat = {
+					order = 1,
+					type = "select",
+					name = L["In Combat"],
+					values = collapseStateValues,
+				},
+			},
+		},
+		priority2 = {
+			order = 3,
+			type = "group",
+			inline = true,
+			name = format(L["Priority %d"], 2),
+			disabled = function()
+				return not E.db.WT.quest.autoCollapse.enable
+			end,
+			args = {
+				resting = {
+					order = 1,
+					type = "select",
+					name = L["Is Resting"],
+					desc = L["State when resting in an inn or city."],
+					values = collapseStateValues,
+				},
+			},
+		},
+		priority3 = {
+			order = 4,
+			type = "group",
+			inline = true,
+			name = format(L["Priority %d"], 3),
+			disabled = function()
+				return not E.db.WT.quest.autoCollapse.enable
+			end,
+			args = {
+				outOfInstance = {
+					order = 1,
+					type = "select",
+					name = L["Out of Instance"],
+					values = collapseStateValues,
+				},
+				battleground = {
+					order = 2,
+					type = "select",
+					name = L["In Battleground"],
+					values = collapseStateValues,
+				},
+				arena = {
+					order = 3,
+					type = "select",
+					name = L["In Arena"],
+					values = collapseStateValues,
+				},
+				dungeon = {
+					order = 4,
+					type = "select",
+					name = L["In Dungeon"],
+					values = collapseStateValues,
+				},
+				raid = {
+					order = 5,
+					type = "select",
+					name = L["In Raid"],
+					values = collapseStateValues,
+				},
+				scenario = {
+					order = 6,
+					type = "select",
+					name = L["In Scenario"],
+					values = collapseStateValues,
+				},
+				neighborhood = {
+					order = 7,
+					type = "select",
+					name = L["In Housing Neighborhood"],
+					values = collapseStateValues,
+				},
+				interior = {
+					order = 8,
+					type = "select",
+					name = L["In Player House"],
+					values = collapseStateValues,
+				},
+			},
+		},
+		priority4 = {
+			order = 5,
+			type = "group",
+			inline = true,
+			name = format(L["Priority %d"], 4),
+			disabled = function()
+				return not E.db.WT.quest.autoCollapse.enable
+			end,
+			args = {
+				default = {
+					order = 1,
+					type = "select",
+					name = L["Default"],
+					desc = L["Default state when no other condition is met."],
+					values = collapseStateValues,
+				},
+			},
+		},
+	},
+}
+options.switchButtons = {
+	order = 3,
+	type = "group",
+	name = L["Switch Buttons"],
+	get = function(info)
+		return E.db.WT.quest.switchButtons[info[#info]]
+	end,
+	set = function(info, value)
+		E.db.WT.quest.switchButtons[info[#info]] = value
+		SB:ProfileUpdate()
 	end,
 	args = {
 		desc = {
@@ -1082,7 +1240,7 @@ options.turnIn = {
 				feature = {
 					order = 1,
 					type = "description",
-					name = L["Make quest acceptance and completion automatically."],
+					name = L["Add a bar that contains buttons to enable/disable modules quickly."],
 					fontSize = "medium",
 				},
 			},
@@ -1091,237 +1249,125 @@ options.turnIn = {
 			order = 2,
 			type = "toggle",
 			name = L["Enable"],
-			set = function(info, value)
-				E.db.WT.quest.turnIn[info[#info]] = value
-				TI:ProfileUpdate()
-				SB:ProfileUpdate()
-			end,
 			width = "full",
 		},
-		mode = {
+		hideWithObjectiveTracker = {
 			order = 3,
-			type = "select",
-			name = L["Mode"],
+			type = "toggle",
+			name = L["Hide With Objective Tracker"],
 			disabled = function()
-				return not E.db.WT.quest.turnIn.enable
+				return not E.db.WT.quest.switchButtons.enable
 			end,
-			values = {
-				ALL = L["Accepct and Complete"],
-				ACCEPT = L["Only Accept"],
-				COMPLETE = L["Only Complete"],
-			},
 			width = 1.5,
 		},
-		pauseModifier = {
+		tooltip = {
 			order = 4,
-			type = "select",
-			name = L["Pause On Press"],
-			desc = L["Pause the automation by pressing a modifier key."],
+			type = "toggle",
 			disabled = function()
-				return not E.db.WT.quest.turnIn.enable
+				return not E.db.WT.quest.switchButtons.enable
 			end,
-			values = {
-				ANY = L["Any"],
-				ALT = L["Alt Key"],
-				CTRL = L["Ctrl Key"],
-				SHIFT = L["Shift Key"],
-				NONE = L["None"],
-			},
+			name = L["Tooltip"],
 		},
-		enableCondition = {
+		backdrop = {
 			order = 5,
-			type = "group",
-			inline = true,
-			name = L["Automation Conditions"],
+			type = "toggle",
 			disabled = function()
-				return not E.db.WT.quest.turnIn.enable
+				return not E.db.WT.quest.switchButtons.enable
 			end,
-			args = {
-				desc = {
-					order = 1,
-					type = "description",
-					name = format(
-						"%s: %s",
-						C.StringByTemplate(L["Notice"], "rose-500"),
-						L["The automation will only work for the quests matched the conditions below."]
-					),
-					width = "full",
-				},
-				accountCompleted = {
-					order = 2,
-					type = "toggle",
-					name = L["Account Completed"],
-					desc = L["Enable automation for the quests already completed on any character in your account."],
-					disabled = function()
-						return not E.db.WT.quest.turnIn.enable
-					end,
-					get = function(info)
-						return E.db.WT.quest.turnIn.enableCondition[info[#info]]
-					end,
-					set = function(info, value)
-						E.db.WT.quest.turnIn.enableCondition[info[#info]] = value
-					end,
-				},
-				repeatable = {
-					order = 3,
-					type = "toggle",
-					name = L["Repeatable"],
-					desc = format(
-						"%s\n%s: %s",
-						L["Enable automation for repeatable quests (daily, weekly, etc.)."],
-						C.StringByTemplate(L["Notice"], "rose-500"),
-						L["Some repeatable quests are not marked as repeatable by Blizzard."]
-					),
-					disabled = function()
-						return not E.db.WT.quest.turnIn.enable
-					end,
-					get = function(info)
-						return E.db.WT.quest.turnIn.enableCondition[info[#info]]
-					end,
-					set = function(info, value)
-						E.db.WT.quest.turnIn.enableCondition[info[#info]] = value
-					end,
-				},
-				other = {
-					order = 4,
-					type = "toggle",
-					name = L["Other"],
-					desc = L["Enable automation for the quests not matched by other conditions."],
-					disabled = function()
-						return not E.db.WT.quest.turnIn.enable
-					end,
-					get = function(info)
-						return E.db.WT.quest.turnIn.enableCondition[info[#info]]
-					end,
-					set = function(info, value)
-						E.db.WT.quest.turnIn.enableCondition[info[#info]] = value
-					end,
-				},
-			},
+			name = L["Bar Backdrop"],
 		},
-		reward = {
+		font = {
 			order = 6,
 			type = "group",
 			inline = true,
-			name = L["Reward"],
+			name = L["Font Setting"],
 			disabled = function()
-				return not E.db.WT.quest.turnIn.enable
+				return not E.db.WT.quest.switchButtons.enable
+			end,
+			get = function(info)
+				return E.db.WT.quest.switchButtons.font[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.quest.switchButtons.font[info[#info]] = value
+				SB:UpdateLayout()
 			end,
 			args = {
-				selectReward = {
+				name = {
 					order = 1,
-					type = "toggle",
-					name = L["Select Reward"],
-					desc = L["If there are multiple items in the reward list, it will select the reward with the highest sell price."],
-					disabled = function()
-						return not E.db.WT.quest.turnIn.enable or E.db.WT.quest.turnIn.mode == "ACCEPT"
-					end,
+					type = "select",
+					dialogControl = "LSM30_Font",
+					name = L["Font"],
+					values = LSM:HashTable("font"),
 				},
-				getBestReward = {
-					order = 2,
-					type = "toggle",
-					name = L["Get Best Reward"],
-					desc = L["Complete the quest with the most valuable reward."],
-					disabled = function()
-						return not E.db.WT.quest.turnIn.enable
-							or E.db.WT.quest.turnIn.mode == "ACCEPT"
-							or not E.db.WT.quest.turnIn.selectReward
-					end,
-				},
-			},
-		},
-		smartChat = {
-			order = 7,
-			type = "group",
-			inline = true,
-			name = L["Smart Chat"],
-			disabled = function()
-				return not E.db.WT.quest.turnIn.enable
-			end,
-			args = {
-				smartChat = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-					desc = L["Chat with NPCs smartly. It will automatically select the best option for you."],
-					disabled = function()
-						return not E.db.WT.quest.turnIn.enable
-					end,
-				},
-				darkmoon = {
-					order = 2,
-					type = "toggle",
-					name = L["Dark Moon"],
-					desc = L["Accept the teleportation from Darkmoon Faire Mystic Mage automatically."],
-					disabled = function()
-						return not E.db.WT.quest.turnIn.enable or not E.db.WT.quest.turnIn.smartChat
-					end,
-				},
-				followerAssignees = {
-					order = 3,
-					type = "toggle",
-					name = L["Follower Assignees"],
-					desc = L["Open the window of follower recruit automatically."],
-					disabled = function()
-						return not E.db.WT.quest.turnIn.enable or not E.db.WT.quest.turnIn.smartChat
-					end,
-				},
-			},
-		},
-		ignore = {
-			order = 8,
-			type = "group",
-			inline = true,
-			name = L["Ignored NPCs"],
-			disabled = function()
-				return not E.db.WT.quest.turnIn.enable
-			end,
-			args = {
-				description = {
-					order = 1,
-					type = "description",
-					name = "\n" .. L["If you add the NPC into the list, all automation will do not work for it."],
-					width = "full",
-				},
-				list = {
+				style = {
 					order = 2,
 					type = "select",
-					name = L["Ignore List"],
-					get = function()
-						return customListSelected
-					end,
-					set = function(_, value)
-						customListSelected = value
-					end,
-					values = function()
-						local list = E.db.WT.quest.turnIn.customIgnoreNPCs
-						local result = {}
-						for key, value in pairs(list) do
-							result[tostring(key)] = value
-						end
-						return result
-					end,
+					name = L["Outline"],
+					values = {
+						NONE = L["None"],
+						OUTLINE = L["Outline"],
+						THICKOUTLINE = L["Thick"],
+						SHADOW = L["|cff888888Shadow|r"],
+						SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+						SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+						MONOCHROME = L["|cFFAAAAAAMono|r"],
+						MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+						MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+					},
 				},
-				addButton = {
+				size = {
 					order = 3,
-					type = "execute",
-					name = L["Add Target"],
-					desc = L["Make sure you select the NPC as your target."],
-					func = function()
-						TI:AddTargetToBlacklist()
+					name = L["Size"],
+					type = "range",
+					min = 5,
+					max = 60,
+					step = 1,
+				},
+				color = {
+					order = 4,
+					type = "color",
+					name = L["Color"],
+					hasAlpha = false,
+					get = function(info)
+						local db = E.db.WT.quest.switchButtons.font.color
+						local default = P.quest.switchButtons.font.color
+						return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+					end,
+					set = function(info, r, g, b)
+						local db = E.db.WT.quest.switchButtons.font.color
+						db.r, db.g, db.b = r, g, b
+						SB:UpdateLayout()
 					end,
 				},
-				deleteButton = {
-					order = 4,
-					type = "execute",
-					name = L["Delete"],
-					desc = L["Delete the selected NPC."],
-					func = function()
-						if customListSelected then
-							local list = E.db.WT.quest.turnIn.customIgnoreNPCs
-							list[tonumber(customListSelected)] = nil
-						end
-					end,
+			},
+		},
+		modules = {
+			order = 6,
+			type = "group",
+			inline = true,
+			name = L["Modules"],
+			disabled = function()
+				return not E.db.WT.quest.switchButtons.enable
+			end,
+			get = function(info)
+				return E.db.WT.quest.switchButtons[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.quest.switchButtons[info[#info]] = value
+				SB:UpdateLayout()
+			end,
+			args = {
+				announcement = {
+					order = 1,
+					type = "toggle",
+					name = L["Announcement"] .. " (" .. L["Quest"] .. ")",
+					width = 1.667,
+				},
+				turnIn = {
+					order = 2,
+					type = "toggle",
+					name = L["Turn In"],
+					width = 1.667,
 				},
 			},
 		},
@@ -1329,7 +1375,7 @@ options.turnIn = {
 }
 
 options.progress = {
-	order = 3,
+	order = 4,
 	type = "group",
 	name = L["Progress"],
 	get = function(info)
@@ -2429,16 +2475,15 @@ options.progress = {
 	},
 }
 
-options.switchButtons = {
-	order = 4,
+options.turnIn = {
+	order = 5,
 	type = "group",
-	name = L["Switch Buttons"],
+	name = L["Turn In"],
 	get = function(info)
-		return E.db.WT.quest.switchButtons[info[#info]]
+		return E.db.WT.quest.turnIn[info[#info]]
 	end,
 	set = function(info, value)
-		E.db.WT.quest.switchButtons[info[#info]] = value
-		SB:ProfileUpdate()
+		E.db.WT.quest.turnIn[info[#info]] = value
 	end,
 	args = {
 		desc = {
@@ -2450,7 +2495,7 @@ options.switchButtons = {
 				feature = {
 					order = 1,
 					type = "description",
-					name = L["Add a bar that contains buttons to enable/disable modules quickly."],
+					name = L["Make quest acceptance and completion automatically."],
 					fontSize = "medium",
 				},
 			},
@@ -2459,125 +2504,237 @@ options.switchButtons = {
 			order = 2,
 			type = "toggle",
 			name = L["Enable"],
+			set = function(info, value)
+				E.db.WT.quest.turnIn[info[#info]] = value
+				TI:ProfileUpdate()
+				SB:ProfileUpdate()
+			end,
 			width = "full",
 		},
-		hideWithObjectiveTracker = {
+		mode = {
 			order = 3,
-			type = "toggle",
-			name = L["Hide With Objective Tracker"],
+			type = "select",
+			name = L["Mode"],
 			disabled = function()
-				return not E.db.WT.quest.switchButtons.enable
+				return not E.db.WT.quest.turnIn.enable
 			end,
+			values = {
+				ALL = L["Accepct and Complete"],
+				ACCEPT = L["Only Accept"],
+				COMPLETE = L["Only Complete"],
+			},
 			width = 1.5,
 		},
-		tooltip = {
+		pauseModifier = {
 			order = 4,
-			type = "toggle",
+			type = "select",
+			name = L["Pause On Press"],
+			desc = L["Pause the automation by pressing a modifier key."],
 			disabled = function()
-				return not E.db.WT.quest.switchButtons.enable
+				return not E.db.WT.quest.turnIn.enable
 			end,
-			name = L["Tooltip"],
+			values = {
+				ANY = L["Any"],
+				ALT = L["Alt Key"],
+				CTRL = L["Ctrl Key"],
+				SHIFT = L["Shift Key"],
+				NONE = L["None"],
+			},
 		},
-		backdrop = {
+		enableCondition = {
 			order = 5,
-			type = "toggle",
-			disabled = function()
-				return not E.db.WT.quest.switchButtons.enable
-			end,
-			name = L["Bar Backdrop"],
-		},
-		font = {
-			order = 6,
 			type = "group",
 			inline = true,
-			name = L["Font Setting"],
+			name = L["Automation Conditions"],
 			disabled = function()
-				return not E.db.WT.quest.switchButtons.enable
-			end,
-			get = function(info)
-				return E.db.WT.quest.switchButtons.font[info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.quest.switchButtons.font[info[#info]] = value
-				SB:UpdateLayout()
+				return not E.db.WT.quest.turnIn.enable
 			end,
 			args = {
-				name = {
+				desc = {
 					order = 1,
-					type = "select",
-					dialogControl = "LSM30_Font",
-					name = L["Font"],
-					values = LSM:HashTable("font"),
+					type = "description",
+					name = format(
+						"%s: %s",
+						C.StringByTemplate(L["Notice"], "rose-500"),
+						L["The automation will only work for the quests matched the conditions below."]
+					),
+					width = "full",
 				},
-				style = {
+				accountCompleted = {
 					order = 2,
-					type = "select",
-					name = L["Outline"],
-					values = {
-						NONE = L["None"],
-						OUTLINE = L["Outline"],
-						THICKOUTLINE = L["Thick"],
-						SHADOW = L["|cff888888Shadow|r"],
-						SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
-						SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
-						MONOCHROME = L["|cFFAAAAAAMono|r"],
-						MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
-						MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
-					},
-				},
-				size = {
-					order = 3,
-					name = L["Size"],
-					type = "range",
-					min = 5,
-					max = 60,
-					step = 1,
-				},
-				color = {
-					order = 4,
-					type = "color",
-					name = L["Color"],
-					hasAlpha = false,
-					get = function(info)
-						local db = E.db.WT.quest.switchButtons.font.color
-						local default = P.quest.switchButtons.font.color
-						return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+					type = "toggle",
+					name = L["Account Completed"],
+					desc = L["Enable automation for the quests already completed on any character in your account."],
+					disabled = function()
+						return not E.db.WT.quest.turnIn.enable
 					end,
-					set = function(info, r, g, b)
-						local db = E.db.WT.quest.switchButtons.font.color
-						db.r, db.g, db.b = r, g, b
-						SB:UpdateLayout()
+					get = function(info)
+						return E.db.WT.quest.turnIn.enableCondition[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.turnIn.enableCondition[info[#info]] = value
+					end,
+				},
+				repeatable = {
+					order = 3,
+					type = "toggle",
+					name = L["Repeatable"],
+					desc = format(
+						"%s\n%s: %s",
+						L["Enable automation for repeatable quests (daily, weekly, etc.)."],
+						C.StringByTemplate(L["Notice"], "rose-500"),
+						L["Some repeatable quests are not marked as repeatable by Blizzard."]
+					),
+					disabled = function()
+						return not E.db.WT.quest.turnIn.enable
+					end,
+					get = function(info)
+						return E.db.WT.quest.turnIn.enableCondition[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.turnIn.enableCondition[info[#info]] = value
+					end,
+				},
+				other = {
+					order = 4,
+					type = "toggle",
+					name = L["Other"],
+					desc = L["Enable automation for the quests not matched by other conditions."],
+					disabled = function()
+						return not E.db.WT.quest.turnIn.enable
+					end,
+					get = function(info)
+						return E.db.WT.quest.turnIn.enableCondition[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.turnIn.enableCondition[info[#info]] = value
 					end,
 				},
 			},
 		},
-		modules = {
+		reward = {
 			order = 6,
 			type = "group",
 			inline = true,
-			name = L["Modules"],
+			name = L["Reward"],
 			disabled = function()
-				return not E.db.WT.quest.switchButtons.enable
-			end,
-			get = function(info)
-				return E.db.WT.quest.switchButtons[info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.quest.switchButtons[info[#info]] = value
-				SB:UpdateLayout()
+				return not E.db.WT.quest.turnIn.enable
 			end,
 			args = {
-				announcement = {
+				selectReward = {
 					order = 1,
 					type = "toggle",
-					name = L["Announcement"] .. " (" .. L["Quest"] .. ")",
-					width = 1.667,
+					name = L["Select Reward"],
+					desc = L["If there are multiple items in the reward list, it will select the reward with the highest sell price."],
+					disabled = function()
+						return not E.db.WT.quest.turnIn.enable or E.db.WT.quest.turnIn.mode == "ACCEPT"
+					end,
 				},
-				turnIn = {
+				getBestReward = {
 					order = 2,
 					type = "toggle",
-					name = L["Turn In"],
-					width = 1.667,
+					name = L["Get Best Reward"],
+					desc = L["Complete the quest with the most valuable reward."],
+					disabled = function()
+						return not E.db.WT.quest.turnIn.enable
+							or E.db.WT.quest.turnIn.mode == "ACCEPT"
+							or not E.db.WT.quest.turnIn.selectReward
+					end,
+				},
+			},
+		},
+		smartChat = {
+			order = 7,
+			type = "group",
+			inline = true,
+			name = L["Smart Chat"],
+			disabled = function()
+				return not E.db.WT.quest.turnIn.enable
+			end,
+			args = {
+				smartChat = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+					desc = L["Chat with NPCs smartly. It will automatically select the best option for you."],
+					disabled = function()
+						return not E.db.WT.quest.turnIn.enable
+					end,
+				},
+				darkmoon = {
+					order = 2,
+					type = "toggle",
+					name = L["Dark Moon"],
+					desc = L["Accept the teleportation from Darkmoon Faire Mystic Mage automatically."],
+					disabled = function()
+						return not E.db.WT.quest.turnIn.enable or not E.db.WT.quest.turnIn.smartChat
+					end,
+				},
+				followerAssignees = {
+					order = 3,
+					type = "toggle",
+					name = L["Follower Assignees"],
+					desc = L["Open the window of follower recruit automatically."],
+					disabled = function()
+						return not E.db.WT.quest.turnIn.enable or not E.db.WT.quest.turnIn.smartChat
+					end,
+				},
+			},
+		},
+		ignore = {
+			order = 8,
+			type = "group",
+			inline = true,
+			name = L["Ignored NPCs"],
+			disabled = function()
+				return not E.db.WT.quest.turnIn.enable
+			end,
+			args = {
+				description = {
+					order = 1,
+					type = "description",
+					name = "\n" .. L["If you add the NPC into the list, all automation will do not work for it."],
+					width = "full",
+				},
+				list = {
+					order = 2,
+					type = "select",
+					name = L["Ignore List"],
+					get = function()
+						return customListSelected
+					end,
+					set = function(_, value)
+						customListSelected = value
+					end,
+					values = function()
+						local list = E.db.WT.quest.turnIn.customIgnoreNPCs
+						local result = {}
+						for key, value in pairs(list) do
+							result[tostring(key)] = value
+						end
+						return result
+					end,
+				},
+				addButton = {
+					order = 3,
+					type = "execute",
+					name = L["Add Target"],
+					desc = L["Make sure you select the NPC as your target."],
+					func = function()
+						TI:AddTargetToBlacklist()
+					end,
+				},
+				deleteButton = {
+					order = 4,
+					type = "execute",
+					name = L["Delete"],
+					desc = L["Delete the selected NPC."],
+					func = function()
+						if customListSelected then
+							local list = E.db.WT.quest.turnIn.customIgnoreNPCs
+							list[tonumber(customListSelected)] = nil
+						end
+					end,
 				},
 			},
 		},
@@ -2585,7 +2742,7 @@ options.switchButtons = {
 }
 
 options.achievementScreenshot = {
-	order = 5,
+	order = 6,
 	type = "group",
 	name = L["Achievement Screenshot"],
 	get = function(info)
@@ -2644,7 +2801,7 @@ options.achievementScreenshot = {
 }
 
 options.achievementTracker = {
-	order = 6,
+	order = 7,
 	type = "group",
 	name = L["Achievement Tracker"],
 	get = function(info)

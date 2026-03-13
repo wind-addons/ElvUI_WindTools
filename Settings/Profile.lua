@@ -986,8 +986,8 @@ end
 P.quest = {
 	autoCollapse = {
 		enable = true,
-		resting = "none", --- "none" | "collapse" | "expand" | "hide"
 		combat = "none",
+		resting = "none",
 		outOfInstance = "none",
 		battleground = "collapse",
 		arena = "collapse",

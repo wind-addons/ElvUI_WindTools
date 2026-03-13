@@ -1083,7 +1083,7 @@ options.autoCollapse = {
 	end,
 	args = {
 		desc = {
-			order = 0,
+			order = 1,
 			type = "group",
 			inline = true,
 			name = L["Description"],
@@ -1101,13 +1101,13 @@ options.autoCollapse = {
 			},
 		},
 		enable = {
-			order = 1,
+			order = 2,
 			type = "toggle",
 			name = L["Enable"],
 			width = "full",
 		},
 		priority1 = {
-			order = 2,
+			order = 11,
 			type = "group",
 			inline = true,
 			name = format(L["Priority %d"], 1),
@@ -1131,7 +1131,7 @@ options.autoCollapse = {
 			width = 1.5,
 		},
 		priority2 = {
-			order = 3,
+			order = 12,
 			type = "group",
 			inline = true,
 			name = format(L["Priority %d"], 2),
@@ -1149,7 +1149,7 @@ options.autoCollapse = {
 			},
 		},
 		priority3 = {
-			order = 4,
+			order = 13,
 			type = "group",
 			inline = true,
 			name = format(L["Priority %d"], 3),
@@ -1208,7 +1208,7 @@ options.autoCollapse = {
 			},
 		},
 		priority4 = {
-			order = 5,
+			order = 14,
 			type = "group",
 			inline = true,
 			name = format(L["Priority %d"], 4),

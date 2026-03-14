@@ -77,7 +77,7 @@ end
 
 local function NotifyStartTracking(questID)
 	local title = tostring(C_QuestLog_GetTitleForQuestID(questID) or questID)
-	title = C.StringByTemplate(title, "neutral-50")
+	title = C.StringByTemplate(title, "indigo-300")
 	local tag = C.StringByTemplate(format("[%s]", L["Prey Hunt"]), "amber-500")
 	F.Print(format("%s %s", tag, format(L["Start tracking %s."], title)))
 end

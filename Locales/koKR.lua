@@ -902,6 +902,7 @@ L["Label"] = "라벨"
 L["Layout"] = true
 L["Layout %d"] = true
 L["Layout Name"] = true
+L["Layouts"] = true
 L["Leader"] = "파티장"
 L["Leader Best Run"] = "파티장 최대 단수"
 L["Leader Score"] = "파장 점수"

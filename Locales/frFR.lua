@@ -902,6 +902,7 @@ L["Label"] = "Étiquette"
 L["Layout"] = true
 L["Layout %d"] = true
 L["Layout Name"] = true
+L["Layouts"] = true
 L["Leader"] = "Chef"
 L["Leader Best Run"] = "Meilleur score du chef"
 L["Leader Score"] = "Score du chef"

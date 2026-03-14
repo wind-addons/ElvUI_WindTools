@@ -902,6 +902,7 @@ L["Label"] = "Метка"
 L["Layout"] = "Макет"
 L["Layout %d"] = "Макет %d"
 L["Layout Name"] = "Название макета"
+L["Layouts"] = true
 L["Leader"] = "Лидер"
 L["Leader Best Run"] = "Лучшее прохождение лидера"
 L["Leader Score"] = "Результат лидера"

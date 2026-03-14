@@ -1097,7 +1097,7 @@ local function BuildLayoutTabGroup(layoutIndex)
 end
 
 RebuildDamageMeterLayoutTabArgs = function()
-	local damageMeterLayoutArgs = options.damageMeterLayout.args
+	local damageMeterLayoutArgs = options.damageMeterLayout.args.layouts.args
 	for i = 1, #damageMeterLayoutDynamicArgKeys do
 		damageMeterLayoutArgs[damageMeterLayoutDynamicArgKeys[i]] = nil
 	end
@@ -1108,13 +1108,13 @@ RebuildDamageMeterLayoutTabArgs = function()
 	for i = 1, #layouts do
 		local key = "layoutTab" .. i
 		damageMeterLayoutArgs[key] = BuildLayoutTabGroup(i)
-		damageMeterLayoutArgs[key].order = 20 + i
+		damageMeterLayoutArgs[key].order = i
 		damageMeterLayoutDynamicArgKeys[#damageMeterLayoutDynamicArgKeys + 1] = key
 	end
 
 	local newTabKey = "layoutTabNew"
 	damageMeterLayoutArgs[newTabKey] = {
-		order = 30 + #layouts,
+		order = #layouts + 1,
 		type = "group",
 		name = C.StringByTemplate("+ " .. L["New"], "emerald-500"),
 		args = {
@@ -1143,6 +1143,7 @@ end
 options.damageMeterLayout = {
 	order = 5,
 	type = "group",
+	childGroups = "tab",
 	name = L["Damage Meter Layout"],
 	args = {
 		desc = {
@@ -1236,7 +1237,6 @@ options.damageMeterLayout = {
 		container = {
 			order = 7,
 			type = "group",
-			inline = true,
 			name = L["Container"],
 			args = {
 				tip = {
@@ -1347,148 +1347,157 @@ options.damageMeterLayout = {
 						return not E.db.WT.combat.damageMeterLayout.enable
 					end,
 				},
+				autoSwitch = {
+					order = 8,
+					type = "group",
+					inline = true,
+					name = L["Auto Switch"],
+					args = {
+						desc = {
+							order = 1,
+							type = "description",
+							name = format(
+								"%s\n%s",
+								L["Automatically switch damage meter layouts based on different combat scenarios."],
+								C.StringByTemplate(L["Priority"], "yellow-500")
+									.. format(
+										": %s > %s > %s > %s > %s",
+										L["Raid"],
+										L["Mythic Plus"],
+										L["Delves"],
+										L["In Combat"],
+										L["Out of Combat"]
+									)
+							),
+						},
+						enable = {
+							order = 2,
+							type = "toggle",
+							name = L["Enable"],
+							get = function()
+								return E.db.WT.combat.damageMeterLayout.autoSwitch.enable
+							end,
+							set = function(_, value)
+								E.db.WT.combat.damageMeterLayout.autoSwitch.enable = value
+								DL:AutoSwitch(true)
+							end,
+							disabled = function()
+								return not E.db.WT.combat.damageMeterLayout.enable
+							end,
+						},
+						divider = {
+							order = 10,
+							type = "description",
+							name = "",
+							width = "full",
+						},
+						raid = {
+							order = 11,
+							type = "select",
+							name = L["Raid"],
+							values = function()
+								return GetDamageMeterLayoutValues(true)
+							end,
+							get = function()
+								return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.raid or 0
+							end,
+							set = function(_, value)
+								E.db.WT.combat.damageMeterLayout.autoSwitch.rules.raid = value == 0 and nil or value
+								DL:AutoSwitch(true)
+							end,
+							hidden = function()
+								return not E.db.WT.combat.damageMeterLayout.enable
+									or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
+							end,
+						},
+						mythicPlus = {
+							order = 12,
+							type = "select",
+							name = L["Mythic Plus"],
+							values = function()
+								return GetDamageMeterLayoutValues(true)
+							end,
+							get = function()
+								return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.mythicPlus or 0
+							end,
+							set = function(_, value)
+								E.db.WT.combat.damageMeterLayout.autoSwitch.rules.mythicPlus = value == 0 and nil
+									or value
+								DL:AutoSwitch(true)
+							end,
+							hidden = function()
+								return not E.db.WT.combat.damageMeterLayout.enable
+									or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
+							end,
+						},
+						delve = {
+							order = 13,
+							type = "select",
+							name = L["Delves"],
+							values = function()
+								return GetDamageMeterLayoutValues(true)
+							end,
+							get = function()
+								return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.delve or 0
+							end,
+							set = function(_, value)
+								E.db.WT.combat.damageMeterLayout.autoSwitch.rules.delve = value == 0 and nil or value
+								DL:AutoSwitch(true)
+							end,
+							hidden = function()
+								return not E.db.WT.combat.damageMeterLayout.enable
+									or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
+							end,
+						},
+						combat = {
+							order = 14,
+							type = "select",
+							name = L["In Combat"],
+							values = function()
+								return GetDamageMeterLayoutValues(true)
+							end,
+							get = function()
+								return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.combat or 0
+							end,
+							set = function(_, value)
+								E.db.WT.combat.damageMeterLayout.autoSwitch.rules.combat = value == 0 and nil or value
+								DL:AutoSwitch(true)
+							end,
+							hidden = function()
+								return not E.db.WT.combat.damageMeterLayout.enable
+									or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
+							end,
+						},
+						outOfCombat = {
+							order = 15,
+							type = "select",
+							name = L["Out of Combat"],
+							values = function()
+								return GetDamageMeterLayoutValues(true)
+							end,
+							get = function()
+								return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.outOfCombat or 0
+							end,
+							set = function(_, value)
+								E.db.WT.combat.damageMeterLayout.autoSwitch.rules.outOfCombat = value == 0 and nil
+									or value
+								DL:AutoSwitch(true)
+							end,
+							hidden = function()
+								return not E.db.WT.combat.damageMeterLayout.enable
+									or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
+							end,
+						},
+					},
+				},
 			},
 		},
-		autoSwitch = {
+		layouts = {
 			order = 8,
 			type = "group",
-			inline = true,
-			name = L["Auto Switch"],
-			args = {
-				desc = {
-					order = 1,
-					type = "description",
-					name = format(
-						"%s\n%s",
-						L["Automatically switch damage meter layouts based on different combat scenarios."],
-						C.StringByTemplate(L["Priority"], "yellow-500")
-							.. format(
-								": %s > %s > %s > %s > %s",
-								L["Raid"],
-								L["Mythic Plus"],
-								L["Delves"],
-								L["In Combat"],
-								L["Out of Combat"]
-							)
-					),
-				},
-				enable = {
-					order = 2,
-					type = "toggle",
-					name = L["Enable"],
-					get = function()
-						return E.db.WT.combat.damageMeterLayout.autoSwitch.enable
-					end,
-					set = function(_, value)
-						E.db.WT.combat.damageMeterLayout.autoSwitch.enable = value
-						DL:AutoSwitch(true)
-					end,
-					disabled = function()
-						return not E.db.WT.combat.damageMeterLayout.enable
-					end,
-				},
-				divider = {
-					order = 10,
-					type = "description",
-					name = "",
-					width = "full",
-				},
-				raid = {
-					order = 11,
-					type = "select",
-					name = L["Raid"],
-					values = function()
-						return GetDamageMeterLayoutValues(true)
-					end,
-					get = function()
-						return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.raid or 0
-					end,
-					set = function(_, value)
-						E.db.WT.combat.damageMeterLayout.autoSwitch.rules.raid = value == 0 and nil or value
-						DL:AutoSwitch(true)
-					end,
-					hidden = function()
-						return not E.db.WT.combat.damageMeterLayout.enable
-							or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
-					end,
-				},
-				mythicPlus = {
-					order = 12,
-					type = "select",
-					name = L["Mythic Plus"],
-					values = function()
-						return GetDamageMeterLayoutValues(true)
-					end,
-					get = function()
-						return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.mythicPlus or 0
-					end,
-					set = function(_, value)
-						E.db.WT.combat.damageMeterLayout.autoSwitch.rules.mythicPlus = value == 0 and nil or value
-						DL:AutoSwitch(true)
-					end,
-					hidden = function()
-						return not E.db.WT.combat.damageMeterLayout.enable
-							or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
-					end,
-				},
-				delve = {
-					order = 13,
-					type = "select",
-					name = L["Delves"],
-					values = function()
-						return GetDamageMeterLayoutValues(true)
-					end,
-					get = function()
-						return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.delve or 0
-					end,
-					set = function(_, value)
-						E.db.WT.combat.damageMeterLayout.autoSwitch.rules.delve = value == 0 and nil or value
-						DL:AutoSwitch(true)
-					end,
-					hidden = function()
-						return not E.db.WT.combat.damageMeterLayout.enable
-							or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
-					end,
-				},
-				combat = {
-					order = 14,
-					type = "select",
-					name = L["In Combat"],
-					values = function()
-						return GetDamageMeterLayoutValues(true)
-					end,
-					get = function()
-						return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.combat or 0
-					end,
-					set = function(_, value)
-						E.db.WT.combat.damageMeterLayout.autoSwitch.rules.combat = value == 0 and nil or value
-						DL:AutoSwitch(true)
-					end,
-					hidden = function()
-						return not E.db.WT.combat.damageMeterLayout.enable
-							or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
-					end,
-				},
-				outOfCombat = {
-					order = 15,
-					type = "select",
-					name = L["Out of Combat"],
-					values = function()
-						return GetDamageMeterLayoutValues(true)
-					end,
-					get = function()
-						return E.db.WT.combat.damageMeterLayout.autoSwitch.rules.outOfCombat or 0
-					end,
-					set = function(_, value)
-						E.db.WT.combat.damageMeterLayout.autoSwitch.rules.outOfCombat = value == 0 and nil or value
-						DL:AutoSwitch(true)
-					end,
-					hidden = function()
-						return not E.db.WT.combat.damageMeterLayout.enable
-							or not E.db.WT.combat.damageMeterLayout.autoSwitch.enable
-					end,
-				},
-			},
+			childGroups = "tree",
+			name = L["Layouts"],
+			args = {},
 		},
 	},
 }

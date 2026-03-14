@@ -1,6 +1,7 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 local ES = E.Skins
+local C = W.Utilities.Color
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -53,7 +54,7 @@ local function ReskinUIWidgetContainer(container)
 	end
 end
 
-local function reskinPartitionFrame(partitionFrame)
+local function ReskinPartitionFrame(partitionFrame)
 	if partitionFrame.__windSkin then
 		return
 	end
@@ -85,17 +86,37 @@ do
 		hookedWidget[widget] = true
 
 		for partitionFrame in pool:EnumerateActive() do
-			reskinPartitionFrame(partitionFrame)
+			ReskinPartitionFrame(partitionFrame)
 		end
 
 		hooksecurefunc(pool, "Acquire", function(_pool)
 			for partitionFrame in _pool:EnumerateActive() do
-				reskinPartitionFrame(partitionFrame)
+				ReskinPartitionFrame(partitionFrame)
 			end
 		end)
 	end
 end
 
+local barAtalsColorMapping = {
+	["widgetstatusbar-fill-red"] = C.GetRGBFromTemplate("rose-600"),
+	["widgetstatusbar-fill-blue"] = C.GetRGBFromTemplate("sky-600"),
+	["widgetstatusbar-fill-green"] = C.GetRGBFromTemplate("emerald-600"),
+	["widgetstatusbar-fill-yellow"] = C.GetRGBFromTemplate("amber-600"),
+	["widgetstatusbar-fill-white"] = C.GetRGBFromTemplate("neutral-50"),
+}
+
+local function GetColorFromAtlas(tex)
+	if not tex or not tex.GetAtlas then
+		return
+	end
+
+	local atlas = tex:GetAtlas()
+	if atlas then
+		return barAtalsColorMapping[atlas]
+	end
+end
+
+local cachedColors = {}
 function S:BlizzardUIWidget()
 	if not self:CheckDB("misc", "uiWidget") then
 		return
@@ -104,7 +125,7 @@ function S:BlizzardUIWidget()
 	-- Partitions
 	self:SecureHook(_G.UIWidgetBaseStatusBarTemplateMixin, "InitPartitions", "ReskinWidgetPartition")
 	self:SecureHook(_G.UIWidgetTemplateUnitPowerBarMixin, "InitPartitions", "ReskinWidgetPartition")
-	self:SecureHook(_G.UIWidgetTemplateStatusBarMixin, "Setup", function(widget, widgetInfo)
+	self:SecureHook(_G.UIWidgetTemplateStatusBarMixin, "Setup", function(widget)
 		if widget:IsForbidden() or widget.widgetSetID and widget.widgetSetID == 283 then
 			return
 		end
@@ -127,8 +148,16 @@ function S:BlizzardUIWidget()
 		-- Always apply global status bar texture so widget bars match user preference
 		local bar = widget.Bar
 		if bar and bar:IsObjectType("StatusBar") then
+			---@cast bar StatusBar
 			E:RegisterStatusBar(bar)
+			local color = GetColorFromAtlas(bar:GetStatusBarTexture())
+				or cachedColors[bar]
+				or barAtalsColorMapping["widgetstatusbar-fill-white"]
+			cachedColors[bar] = color
 			bar:SetStatusBarTexture(E.media.normTex)
+			if color then
+				bar:SetStatusBarColor(color.r, color.g, color.b)
+			end
 			if bar.Spark then
 				bar.Spark:SetAlpha(0)
 			end

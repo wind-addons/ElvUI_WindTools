@@ -4,7 +4,9 @@ local S = W.Modules.Skins ---@type Skins
 local pairs = pairs
 
 function S:AceGUI(lib)
-	self:SecureHook(lib, "RegisterWidgetType", "HandleAceGUIWidget")
+	if not self:IsHooked(lib, "RegisterWidgetType") then
+		self:SecureHook(lib, "RegisterWidgetType", "HandleAceGUIWidget")
+	end
 	for name, constructor in pairs(lib.WidgetRegistry) do
 		self:HandleAceGUIWidget(lib, name, constructor)
 	end

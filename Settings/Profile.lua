@@ -986,6 +986,7 @@ end
 P.quest = {
 	autoCollapse = {
 		enable = false,
+		ignoreManualToggle = false,
 		combat = "none",
 		vehicle = "collapse",
 		resting = "none",
@@ -1121,6 +1122,29 @@ P.quest = {
 		followerAssignees = true,
 		pauseModifier = "SHIFT",
 		customIgnoreNPCs = {},
+	},
+	preyHunt = {
+		enable = true,
+		progressWidget = {
+			hide = false,
+			stageText = {
+				enable = true,
+				name = E.db.general.font,
+				size = 14,
+				style = "OUTLINE",
+				color = { r = 1, g = 1, b = 1 },
+				label = true,
+				template = "%d/4",
+				xOffset = 0,
+				yOffset = 0,
+			},
+		},
+		autoTrack = {
+			enable = true,
+			worldQuest = true,
+			stageQuest = true,
+			notify = true,
+		},
 	},
 	achievementScreenshot = {
 		enable = false,

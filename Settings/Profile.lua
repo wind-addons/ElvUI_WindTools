@@ -170,7 +170,7 @@ P.combat = {
 	},
 	damageMeterLayout = {
 		enable = false,
-		width = 450,
+		width = 400,
 		height = 300,
 		backdrop = true,
 		shadow = true,

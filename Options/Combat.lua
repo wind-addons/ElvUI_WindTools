@@ -1331,8 +1331,8 @@ options.damageMeterLayout = {
 					type = "range",
 					name = L["Animation Duration"],
 					desc = L["Values below 0.05 are treated as disabled."],
-					min = -1,
-					max = 1,
+					min = 0,
+					max = 2,
 					step = 0.01,
 					get = function()
 						return E.db.WT.combat.damageMeterLayout.animation.duration

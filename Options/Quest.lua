@@ -2971,6 +2971,21 @@ options.preyHunt = {
 						PH:ProfileUpdate()
 					end,
 				},
+				notify = {
+					order = 4,
+					type = "toggle",
+					name = L["Show Notification"],
+					desc = L["Print a simple message in chat box when this module attempts to switch the tracked target or quest."],
+					disabled = function()
+						return not E.db.WT.quest.preyHunt.enable or not E.db.WT.quest.preyHunt.autoTrack.enable
+					end,
+					get = function()
+						return E.db.WT.quest.preyHunt.autoTrack.notify
+					end,
+					set = function(_, value)
+						E.db.WT.quest.preyHunt.autoTrack.notify = value
+					end,
+				},
 			},
 		},
 	},

@@ -1,5 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local PH = W:NewModule("PreyHunt", "AceHook-3.0", "AceEvent-3.0") ---@class PreyHunt: AceModule, AceHook-3.0, AceEvent-3.0
+local C = W.Utilities.Color
 
 local _G = _G
 local ipairs = ipairs
@@ -16,6 +17,8 @@ local C_QuestLog_AddWorldQuestWatch = C_QuestLog.AddWorldQuestWatch
 local C_QuestLog_GetActivePreyQuest = C_QuestLog.GetActivePreyQuest
 local C_QuestLog_GetDistanceSqToQuest = C_QuestLog.GetDistanceSqToQuest
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
+local C_QuestLog_GetQuestWatchType = C_QuestLog.GetQuestWatchType
+local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 local C_QuestLog_IsOnMap = C_QuestLog.IsOnMap
 local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
 local C_SuperTrack_GetSuperTrackedQuestID = C_SuperTrack.GetSuperTrackedQuestID
@@ -72,6 +75,13 @@ function PH:RefreshPreyHuntStage()
 	end
 end
 
+local function NotifyStartTracking(questID)
+	local title = tostring(C_QuestLog_GetTitleForQuestID(questID) or questID)
+	title = C.StringByTemplate(title, "neutral-50")
+	local tag = C.StringByTemplate(format("[%s]", L["Prey Hunt"]), "amber-500")
+	W:Print(format("%s %s", tag, format(L["Start tracking %s."], title)))
+end
+
 function PH:TryAutoTrack()
 	local db = self.db
 	if not db or not db.enable then
@@ -122,17 +132,29 @@ function PH:TryAutoTrack()
 	end
 
 	if bestQuestID then
+		if C_QuestLog_GetQuestWatchType(bestQuestID) ~= nil then
+			return
+		end
 		C_QuestLog_AddWorldQuestWatch(bestQuestID, Enum_QuestWatchType_Automatic)
 		if superTrackedID ~= bestQuestID then
 			C_SuperTrack_SetSuperTrackedQuestID(bestQuestID)
+			if autoTrack.notify then
+				NotifyStartTracking(bestQuestID)
+			end
 		end
 		return
 	end
 
 	if autoTrack.stageQuest and C_QuestLog_IsOnMap(activePreyQuestID) then
+		if C_QuestLog_GetQuestWatchType(activePreyQuestID) ~= nil then
+			return
+		end
 		C_QuestLog_AddQuestWatch(activePreyQuestID)
 		if superTrackedID ~= activePreyQuestID then
 			C_SuperTrack_SetSuperTrackedQuestID(activePreyQuestID)
+			if autoTrack.notify then
+				NotifyStartTracking(activePreyQuestID)
+			end
 		end
 	end
 end

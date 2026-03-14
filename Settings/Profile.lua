@@ -1143,6 +1143,7 @@ P.quest = {
 			enable = true,
 			worldQuest = true,
 			stageQuest = true,
+			notify = true,
 		},
 	},
 	achievementScreenshot = {

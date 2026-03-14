@@ -1,4 +1,4 @@
----@diagnostic disable: need-check-nil
+---@diagnostic disable: need-check-nil, cast-local-type
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local CT = W:NewModule("ChatText", "AceEvent-3.0", "AceHook-3.0") ---@class ChatTextModule : AceModule, AceEvent-3.0, AceHook-3.0
 local CH = E:GetModule("Chat")
@@ -801,11 +801,10 @@ local function ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 end
 
 function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, isHistory, historyTime, historyName, historyBTag)
-	local noBrackets = CT.db.removeBrackets
-
 	-- ElvUI Chat History Note: isHistory, historyTime, historyName, and historyBTag are passed from CH:DisplayChatHistory() and need to be on the end to prevent issues in other addons that listen on ChatFrame_MessageEventHandler.
 	-- we also send isHistory and historyTime into CH:AddMessage so that we don't have to override the timestamp.
 
+	local noBrackets = CT.db.removeBrackets
 	local notChatHistory, historySavedName --we need to extend the arguments on CH.ChatFrame_MessageEventHandler so we can properly handle saved names without overriding
 	if isHistory == 'ElvUI_ChatHistory' then
 		if historyBTag then arg2 = historyBTag end -- swap arg2 (which is a |k string) to btag name
@@ -905,40 +904,41 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 		local chatGroup = GetChatCategory(chatType)
 		local chatTarget = CH:FCFManager_GetChatTarget(chatGroup, arg2, arg8)
 
-		if _G.FCFManager_ShouldSuppressMessage(frame, chatGroup, chatTarget) then
+		if E:NotSecretValue(chatTarget) and _G.FCFManager_ShouldSuppressMessage(frame, chatGroup, chatTarget) then
 			return true
 		end
 
-		if chatGroup == 'WHISPER' or chatGroup == 'BN_WHISPER' then
-			if frame.privateMessageList and not frame.privateMessageList[strlower(arg2)] then
+		if not isProtected and (chatGroup == 'WHISPER' or chatGroup == 'BN_WHISPER') then
+			local nameLower = strlower(arg2)
+			if frame.privateMessageList and not frame.privateMessageList[nameLower] then
 				return true
-			elseif frame.excludePrivateMessageList and frame.excludePrivateMessageList[strlower(arg2)] and ((chatGroup == 'WHISPER' and GetCVar('whisperMode') ~= 'popout_and_inline') or (chatGroup == 'BN_WHISPER' and GetCVar('whisperMode') ~= 'popout_and_inline')) then
-				return true
+			elseif frame.excludePrivateMessageList and frame.excludePrivateMessageList[nameLower] then
+				if GetCVar('whisperMode') ~= 'popout_and_inline' then
+					return true
+				end
 			end
 		end
 
 		if frame.privateMessageList then
-			-- Dedicated BN whisper windows need online/offline messages for only that player
-			if (chatGroup == 'BN_INLINE_TOAST_ALERT' or chatGroup == 'BN_WHISPER_PLAYER_OFFLINE') and not frame.privateMessageList[strlower(arg2)] then
-				return true
-			end
-
-			-- HACK to put certain system messages into dedicated whisper windows
-			if chatGroup == 'SYSTEM' then
-				local matchFound = false
-				local message = strlower(arg1)
+			if chatGroup == 'SYSTEM' then -- HACK to put certain system messages into dedicated whisper windows
+				local found, msg = false, strlower(arg1)
 				for playerName in pairs(frame.privateMessageList) do
 					local playerNotFoundMsg = strlower(format(_G.ERR_CHAT_PLAYER_NOT_FOUND_S, playerName))
 					local charOnlineMsg = strlower(format(_G.ERR_FRIEND_ONLINE_SS, playerName, playerName))
 					local charOfflineMsg = strlower(format(_G.ERR_FRIEND_OFFLINE_S, playerName))
-					if message == playerNotFoundMsg or message == charOnlineMsg or message == charOfflineMsg then
-						matchFound = true
+					if msg == playerNotFoundMsg or msg == charOnlineMsg or msg == charOfflineMsg then
+						found = true
 						break
 					end
 				end
 
-				if not matchFound then
+				if not found then
 					return true
+				end
+			elseif not isProtected and (chatGroup == 'BN_INLINE_TOAST_ALERT' or chatGroup == 'BN_WHISPER_PLAYER_OFFLINE') then
+				local nameLower = strlower(arg2)
+				if not frame.privateMessageList[nameLower] then
+					return true -- Dedicated BN whisper windows need online/offline messages for only that player
 				end
 			end
 		end
@@ -961,7 +961,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 			frame:AddMessage(format(arg1, CH:GetPlayerLink(arg2, format(noBrackets and '%s' or '[%s]', coloredName))), info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)
 		elseif strsub(chatType,1,18) == 'GUILD_ACHIEVEMENT' then
 			if not CT:ElvUIChat_AchievementMessageHandler(event, frame, arg1, arg12) then
-				frame:AddMessage(format(arg1, CH:GetPlayerLink(arg2, format(noBrackets and '%s' or '[%s]', coloredName))), info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)
+			frame:AddMessage(format(arg1, CH:GetPlayerLink(arg2, format(noBrackets and '%s' or '[%s]', coloredName))), info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)
 			end
 		elseif chatType == 'PING' then
 			frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)
@@ -1134,8 +1134,8 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 end
 
 function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, channelLength, coloredName, historySavedName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, isHistory, historyTime, historyName, historyBTag)
-	local noBrackets = CT.db.removeBrackets
 	local body
+	local noBrackets = CT.db.removeBrackets
 
 	if chatType == 'WHISPER_INFORM' and GMChatFrame_IsGM and GMChatFrame_IsGM(arg2) then
 		return
@@ -1267,31 +1267,7 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 	elseif chatType == 'TEXT_EMOTE' then
 		body = (E:NotSecretValue(arg2) and arg2 ~= senderLink) and gsub(message, arg2, senderLink, 1) or message
 	else
-		local chatTemplate = _G['CHAT_'..chatType..'_GET']
-		if not chatTemplate then
-			F.Developer.ThrowError(
-				'Missing chat format template.',
-				'chatType:', tostring(chatType),
-				'message:', tostring(message),
-				'senderLink:', tostring(senderLink),
-				'pflag:', tostring(pflag)
-			)
-			body = message
-		else
-			local success, result = xpcall(format, function(errorMessage)
-				F.Developer.ThrowError(
-					'Error formatting chat message.',
-					'Please report this with the details above.',
-					'chatType:', tostring(chatType),
-					'template:', tostring(chatTemplate),
-					'message:', tostring(message),
-					'senderLink:', tostring(senderLink),
-					'pflag:', tostring(pflag),
-					'error:', tostring(errorMessage)
-				)
-			end, chatTemplate..message, pflag..senderLink)
-			body = success and result or message
-		end
+		body = format(_G['CHAT_'..chatType..'_GET']..message, pflag..senderLink)
 	end
 
 	-- Add Channel

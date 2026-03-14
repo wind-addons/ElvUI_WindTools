@@ -2,7 +2,6 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
-local pairs = pairs
 local hooksecurefunc = hooksecurefunc
 
 local function ReskinColumnHeaders(display)
@@ -14,22 +13,6 @@ local function ReskinColumnHeaders(display)
 		if not header.__windSkin then
 			S:Proxy("HandleButton", header)
 			header.__windSkin = true
-		end
-	end
-end
-
---- Reparent the "History Range" label to TitleBar so it draws above the frame/Inset (addon doesn't expose it).
-local function RaiseHistoryRangeLabel(display)
-	if not display.TitleBar or not display.HistoryDropdown then
-		return
-	end
-	for _, region in pairs({ display:GetRegions() }) do
-		if region.IsObjectType and region:IsObjectType("FontString") and region:GetText() == "History Range" then
-			region:SetParent(display.TitleBar)
-			region:ClearAllPoints()
-			region:SetPoint("RIGHT", display.HistoryDropdown, "LEFT", -4, 0)
-			region:SetDrawLayer("OVERLAY", 0)
-			return
 		end
 	end
 end
@@ -77,7 +60,13 @@ function S:AddonProfiler()
 	if display.ModeDropdown then
 		self:Proxy("HandleDropDownBox", display.ModeDropdown, 150)
 	end
-	RaiseHistoryRangeLabel(display)
+	if display.HistoryRangeLabel and display.TitleBar and display.HistoryDropdown then
+		local label = display.HistoryRangeLabel
+		label:SetParent(display.TitleBar)
+		label:ClearAllPoints()
+		label:SetPoint("RIGHT", display.HistoryDropdown, "LEFT", -4, 0)
+		label:SetDrawLayer("OVERLAY", 0)
+	end
 
 	local searchBox = _G.NumyAddonProfilerFrameSearchBox
 	if searchBox then

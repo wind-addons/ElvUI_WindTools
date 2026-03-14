@@ -3,11 +3,21 @@ local W = unpack((select(2, ...))) ---@type WindTools
 W.Changelog[415] = {
 	RELEASE_DATE = "2026/03/14",
 	IMPORTANT = {
-		["zhCN"] = {},
-		["zhTW"] = {},
-		["enUS"] = {},
-		["koKR"] = {},
-		["ruRU"] = {},
+		["zhCN"] = {
+			"继续优化插件的稳定性, 改善对秘密值的数据的处理模式.",
+		},
+		["zhTW"] = {
+			"繼續優化插件的穩定性, 改善對秘密值的數據的處理模式.",
+		},
+		["enUS"] = {
+			"Continue to optimize the stability of the plugin and improve the processing of secret values.",
+		},
+		["koKR"] = {
+			"플러그인의 안정성을 개선하고 비밀 값의 데이터 처리를 개선합니다.",
+		},
+		["ruRU"] = {
+			"Продолжайте оптимизировать стабильность плагина и улучшать обработку секретных значений.",
+		},
 	},
 	NEW = {
 		["zhCN"] = {

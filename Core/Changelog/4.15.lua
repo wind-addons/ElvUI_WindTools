@@ -60,7 +60,7 @@ W.Changelog[415] = {
 			"[美化外观] 优化了暴雪背包的美化外观性能问题.",
 			"[美化外观] 伤害统计美化现在支持完全隐藏窗口背景了.",
 			"[美化外观] 伤害统计美化现在支持调整滚动条了.",
-			"[美化外观] 优化了组件皮肤, 支持更多进度条. 感谢 Dack.".
+			"[美化外观] 优化了组件皮肤, 支持更多进度条. 感谢 Dack.",
 			"[美化外观] 修复了场景战役皮肤可能导致部分时间条不显示的问题.",
 			"[美化外观] 优化了 BigWigs 皮肤, 支持 BigWigs 自建鼠标提示美化.",
 		},
@@ -77,7 +77,7 @@ W.Changelog[415] = {
 			"[美化外觀] 優化了暴雪背包的美化外觀性能問題.",
 			"[美化外觀] 傷害統計美化現在支持完全隱藏視窗背景了.",
 			"[美化外觀] 傷害統計美化現在支持調整滾動條了.",
-			"[美化外觀] 優化了組件皮膚, 支持更多進度條. 感謝 Dack.".
+			"[美化外觀] 優化了組件皮膚, 支持更多進度條. 感謝 Dack.",
 			"[美化外觀] 修復了場景戰役皮膚可能導致部分時間條不顯示的問題.",
 			"[美化外觀] 優化了 BigWigs 皮膚, 支持 BigWigs 自建浮動提示美化.",
 		},
@@ -94,7 +94,7 @@ W.Changelog[415] = {
 			"[Skins] Optimized the skinning performance for Blizzard's bags.",
 			"[Skins] The damage meter skin now supports completely hiding the window backdrop.",
 			"[Skins] The damage meter skin now supports adjusting the scrollbar.",
-			"[Skins] Optimized the skinning for widgets, supporting more progress bars. Thanks to Dack.".
+			"[Skins] Optimized the skinning for widgets, supporting more progress bars. Thanks to Dack.",
 			"[Skins] Fixed an issue where the scenario campaign skin may cause some timer bars to not show.",
 			"[Skins] Optimized the BigWigs skin, supporting BigWigs built-in tooltip skinning.",
 		},
@@ -111,7 +111,7 @@ W.Changelog[415] = {
 			"[스킨] 블리자드 가방의 스킨 성능을 최적화했습니다.",
 			"[스킨] 데미지 미터 스킨이 이제 창 배경을 완전히 숨기는 것을 지원합니다.",
 			"[스킨] 데미지 미터 스킨이 이제 스크롤바 조정을 지원합니다.",
-			"[스킨] 위젯 스킨을 최적화하여 더 많은 진행 바를 지원합니다. 감사합니다 Dack.".
+			"[스킨] 위젯 스킨을 최적화하여 더 많은 진행 바를 지원합니다. 감사합니다 Dack.",
 			"[스킨] 시나리오 캠페인 스킨이 일부 타이머 바가 표시되지 않는 문제를 수정했습니다.",
 			"[스킨] BigWigs 스킨을 최적화하여 BigWigs 자체 툴팁 스킨을 지원합니다.",
 		},
@@ -128,7 +128,7 @@ W.Changelog[415] = {
 			"[Скины] Оптимизирована производительность скинов для сумок Blizzard.",
 			"[Скины] Скин для счетчика урона теперь поддерживает полное скрытие фона окна.",
 			"[Скины] Скин для счетчика урона теперь поддерживает настройку полосы прокрутки.",
-			"[Скины] Оптимизировано оформление виджетов, поддерживается больше полос прогресса. Спасибо Dack.".
+			"[Скины] Оптимизировано оформление виджетов, поддерживается больше полос прогресса. Спасибо Dack.",
 			"[Скины] Исправлена проблема, из-за которой скин для сценариев мог привести к тому, что некоторые таймеры не отображались.",
 			"[Скины] Оптимизирован скин для BigWigs, поддерживается встроенное оформление подсказок BigWigs.",
 		},

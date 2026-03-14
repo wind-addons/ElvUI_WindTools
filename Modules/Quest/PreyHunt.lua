@@ -17,7 +17,6 @@ local C_QuestLog_AddWorldQuestWatch = C_QuestLog.AddWorldQuestWatch
 local C_QuestLog_GetActivePreyQuest = C_QuestLog.GetActivePreyQuest
 local C_QuestLog_GetDistanceSqToQuest = C_QuestLog.GetDistanceSqToQuest
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
-local C_QuestLog_GetQuestWatchType = C_QuestLog.GetQuestWatchType
 local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 local C_QuestLog_IsOnMap = C_QuestLog.IsOnMap
 local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
@@ -132,10 +131,8 @@ function PH:TryAutoTrack()
 	end
 
 	if bestQuestID then
-		if C_QuestLog_GetQuestWatchType(bestQuestID) ~= nil then
-			return
-		end
 		C_QuestLog_AddWorldQuestWatch(bestQuestID, Enum_QuestWatchType_Automatic)
+
 		if superTrackedID ~= bestQuestID then
 			C_SuperTrack_SetSuperTrackedQuestID(bestQuestID)
 			if autoTrack.notify then
@@ -146,10 +143,8 @@ function PH:TryAutoTrack()
 	end
 
 	if autoTrack.stageQuest and C_QuestLog_IsOnMap(activePreyQuestID) then
-		if C_QuestLog_GetQuestWatchType(activePreyQuestID) ~= nil then
-			return
-		end
 		C_QuestLog_AddQuestWatch(activePreyQuestID)
+
 		if superTrackedID ~= activePreyQuestID then
 			C_SuperTrack_SetSuperTrackedQuestID(activePreyQuestID)
 			if autoTrack.notify then

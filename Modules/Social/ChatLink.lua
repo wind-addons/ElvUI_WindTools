@@ -286,7 +286,10 @@ local function AddCurrencyInfo(link)
 end
 
 function CL:Filter(event, msg, ...)
-	if CL.db.enable then
+	-- WoW Midnight introduces secret string values for some chat payloads.
+	-- String operations (gsub, strlower, format, etc) crash if applied to them.
+	-- Guard with E:NotSecretValue to safely skip protected payloads.
+	if CL.db.enable and E:NotSecretValue(msg) then
 		msg = gsub(msg, "(|cff71d5ff|Hconduit:%d+:.-|h.-|h|r)", AddConduitIcon)
 		msg = gsub(msg, "(|cffa335ee|Hkeystone:%d+:.-|h.-|h|r)", AddKeystoneIcon)
 		msg = gsub(msg, "(|Hitem:%d+:.-|h.-|h)", AddItemInfo)

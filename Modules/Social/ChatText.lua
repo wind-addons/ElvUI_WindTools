@@ -924,21 +924,26 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 			end
 
 			-- HACK to put certain system messages into dedicated whisper windows
+			-- WoW Midnight introduces secret string values for some chat payloads.
+			-- String operations (gsub, strlower, format, etc) crash if applied to them.
+			-- Guard with E:NotSecretValue to safely skip protected payloads.
 			if chatGroup == 'SYSTEM' then
 				local matchFound = false
-				local message = strlower(arg1)
-				for playerName in pairs(frame.privateMessageList) do
-					local playerNotFoundMsg = strlower(format(_G.ERR_CHAT_PLAYER_NOT_FOUND_S, playerName))
-					local charOnlineMsg = strlower(format(_G.ERR_FRIEND_ONLINE_SS, playerName, playerName))
-					local charOfflineMsg = strlower(format(_G.ERR_FRIEND_OFFLINE_S, playerName))
-					if message == playerNotFoundMsg or message == charOnlineMsg or message == charOfflineMsg then
-						matchFound = true
-						break
+				if E:NotSecretValue(arg1) then
+					local message = strlower(arg1)
+					for playerName in pairs(frame.privateMessageList) do
+						local playerNotFoundMsg = strlower(format(_G.ERR_CHAT_PLAYER_NOT_FOUND_S, playerName))
+						local charOnlineMsg = strlower(format(_G.ERR_FRIEND_ONLINE_SS, playerName, playerName))
+						local charOfflineMsg = strlower(format(_G.ERR_FRIEND_OFFLINE_S, playerName))
+						if message == playerNotFoundMsg or message == charOnlineMsg or message == charOfflineMsg then
+							matchFound = true
+							break
+						end
 					end
-				end
 
-				if not matchFound then
-					return true
+					if not matchFound then
+						return true
+					end
 				end
 			end
 		end

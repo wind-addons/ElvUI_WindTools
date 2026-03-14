@@ -110,7 +110,10 @@ local function ReplaceEmote(value)
 end
 
 local function EmoteFilter(_, _, msg, ...)
-	if CE.db.enable then
+	-- WoW Midnight introduces secret string values for some chat payloads.
+	-- String operations (gsub, strlower, format, etc) crash if applied to them.
+	-- Guard with E:NotSecretValue to safely skip protected payloads.
+	if CE.db.enable and E:NotSecretValue(msg) then
 		msg = gsub(msg, "%{.-%}", ReplaceEmote)
 	end
 

@@ -53,7 +53,7 @@ local function ReskinUIWidgetContainer(container)
 	end
 end
 
-local function reskinPartitionFrame(partitionFrame)
+local function ReskinPartitionFrame(partitionFrame)
 	if partitionFrame.__windSkin then
 		return
 	end
@@ -85,12 +85,12 @@ do
 		hookedWidget[widget] = true
 
 		for partitionFrame in pool:EnumerateActive() do
-			reskinPartitionFrame(partitionFrame)
+			ReskinPartitionFrame(partitionFrame)
 		end
 
 		hooksecurefunc(pool, "Acquire", function(_pool)
 			for partitionFrame in _pool:EnumerateActive() do
-				reskinPartitionFrame(partitionFrame)
+				ReskinPartitionFrame(partitionFrame)
 			end
 		end)
 	end
@@ -104,7 +104,7 @@ function S:BlizzardUIWidget()
 	-- Partitions
 	self:SecureHook(_G.UIWidgetBaseStatusBarTemplateMixin, "InitPartitions", "ReskinWidgetPartition")
 	self:SecureHook(_G.UIWidgetTemplateUnitPowerBarMixin, "InitPartitions", "ReskinWidgetPartition")
-	self:SecureHook(_G.UIWidgetTemplateStatusBarMixin, "Setup", function(widget, widgetInfo)
+	self:SecureHook(_G.UIWidgetTemplateStatusBarMixin, "Setup", function(widget)
 		if widget:IsForbidden() or widget.widgetSetID and widget.widgetSetID == 283 then
 			return
 		end

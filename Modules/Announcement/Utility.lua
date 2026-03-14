@@ -155,8 +155,6 @@ function A:GetAvailableUtilitySpells()
 		local desc = format("%s %s (%s)", F.GetIconString(tex, 14, 18, true), name, id)
 		self.ConfigurableUtilitySpells[tostring(id)] = desc
 	end)
-
-	F.Developer.DevTool(A.ConfigurableUtilitySpells, "Announcement Utility Spells")
 end
 
 function A:Utility(spellID)

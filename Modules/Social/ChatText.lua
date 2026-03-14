@@ -27,11 +27,13 @@ local strupper = strupper
 local time = time
 local tinsert = tinsert
 local tonumber = tonumber
+local tostring = tostring
 local tremove = tremove
 local type = type
 local unpack = unpack
 local utf8sub = string.utf8sub
 local wipe = wipe
+local xpcall = xpcall
 
 local Ambiguate = Ambiguate
 local BNGetNumFriendInvites = BNGetNumFriendInvites
@@ -1265,7 +1267,31 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 	elseif chatType == 'TEXT_EMOTE' then
 		body = (E:NotSecretValue(arg2) and arg2 ~= senderLink) and gsub(message, arg2, senderLink, 1) or message
 	else
-		body = format(_G['CHAT_'..chatType..'_GET']..message, pflag..senderLink)
+		local chatTemplate = _G['CHAT_'..chatType..'_GET']
+		if not chatTemplate then
+			F.Developer.ThrowError(
+				'Missing chat format template.',
+				'chatType:', tostring(chatType),
+				'message:', tostring(message),
+				'senderLink:', tostring(senderLink),
+				'pflag:', tostring(pflag)
+			)
+			body = message
+		else
+			local success, result = xpcall(format, function(errorMessage)
+				F.Developer.ThrowError(
+					'Error formatting chat message.',
+					'Please report this with the details above.',
+					'chatType:', tostring(chatType),
+					'template:', tostring(chatTemplate),
+					'message:', tostring(message),
+					'senderLink:', tostring(senderLink),
+					'pflag:', tostring(pflag),
+					'error:', tostring(errorMessage)
+				)
+			end, chatTemplate..message, pflag..senderLink)
+			body = success and result or message
+		end
 	end
 
 	-- Add Channel

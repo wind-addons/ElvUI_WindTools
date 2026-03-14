@@ -18,6 +18,7 @@ local ipairs = ipairs
 local math_pi = math.pi
 local max = max
 local pairs = pairs
+local pcall = pcall
 local select = select
 local strfind = strfind
 local strmatch = strmatch
@@ -1306,8 +1307,8 @@ function I:NotifyInspect(unit)
 		end
 	end
 
-	local guid = UnitGUID(unit)
-	if guid then
+	local success, guid = pcall(UnitGUID, unit)
+	if success and guid then
 		self.inspecting[guid] = unit
 	end
 end

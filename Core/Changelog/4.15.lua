@@ -14,26 +14,31 @@ W.Changelog[415] = {
 			"新增 [战斗] - [伤害统计布局] 模块. 该模块能够帮助你快速建立多个对齐布局并根据条件自动切换. 默认关闭.",
 			"新增 [任务成就] - [自动折叠] 模块. 该模块能够根据角色所在区域或者状态自动折叠或展开任务追踪框体. 默认关闭.",
 			"[美化外观] 新增了 Extra Quest Button 美化外观.",
+			"[美化外观] 新增了 Addon Profiler 美化外观.",
 		},
 		["zhTW"] = {
 			"新增 [戰鬥] - [傷害統計佈局] 模組. 該模組能夠幫助你快速建立多個對齊佈局並根據條件自動切換. 預設關閉.",
 			"新增 [任務成就] - [自動折疊] 模組. 該模組能夠根據角色所在區域或者狀態自動折疊或展開任務追蹤框框架. 預設關閉.",
 			"[美化外觀] 新增了 Extra Quest Button 美化外觀.",
+			"[美化外觀] 新增了 Addon Profiler 美化外觀.",
 		},
 		["enUS"] = {
 			"Added a new module [Combat] - [Damage Meter Layout]. This module helps you quickly set up multiple aligned layouts and automatically switch between them based on conditions. Disabled by default.",
 			"Added a new module [Quest & Achieve] - [Auto Collapse]. This module automatically collapses or expands the objective tracker based on the player's location or status. Disabled by default.",
 			"[Skins] Added a new skin for Extra Quest Button.",
+			"[Skins] Added a new skin for Addon Profiler.",
 		},
 		["koKR"] = {
 			"[전투] - [데미지 미터 레이아웃] 모듈이 추가되었습니다. 이 모듈은 여러 정렬된 레이아웃을 빠르게 설정하고 조건에 따라 자동으로 전환하는 데 도움이 됩니다. 기본적으로 비활성화되어 있습니다.",
 			"[퀘스트 & 업적] - [자동 접기] 모듈이 추가되었습니다. 이 모듈은 플레이어의 위치나 상태에 따라 목표 추적기를 자동으로 접거나 펼칩니다. 기본적으로 비활성화되어 있습니다.",
 			"[스킨] Extra Quest Button에 대한 새로운 스킨이 추가되었습니다.",
+			"[스킨] Addon Profiler에 대한 새로운 스킨이 추가되었습니다.",
 		},
 		["ruRU"] = {
 			"Добавлен новый модуль [Бой] - [Макет счетчика урона]. Этот модуль помогает быстро настроить несколько выровненных макетов и автоматически переключаться между ними в зависимости от условий. По умолчанию отключено.",
 			"Добавлен новый модуль [Задания и достижения] - [Автосворачивание]. Этот модуль автоматически сворачивает или разворачивает отслеживатель задач в зависимости от местоположения или статуса игрока. По умолчанию отключено.",
 			"[Скины] Добавлен новый скин для Extra Quest Button.",
+			"[Скины] Добавлен новый скин для Addon Profiler.",
 		},
 	},
 	IMPROVEMENT = {

@@ -76,6 +76,7 @@ function PH:HandleWidget(container, widgetID, widgetType)
 
 	if self.db.enable and self.db.progressWidget.stageText.enable then
 		F.SetFontWithDB(frame.StageText, self.db.progressWidget.stageText)
+		F.SetFontColorWithDB(frame.StageText, self.db.progressWidget.stageText.color)
 		frame.StageText:ClearAllPoints()
 		frame.StageText:Point(
 			"BOTTOM",

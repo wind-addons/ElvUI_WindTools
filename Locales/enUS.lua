@@ -902,6 +902,7 @@ L["Label"] = true
 L["Layout"] = true
 L["Layout %d"] = true
 L["Layout Name"] = true
+L["Layouts"] = true
 L["Leader"] = true
 L["Leader Best Run"] = true
 L["Leader Score"] = true

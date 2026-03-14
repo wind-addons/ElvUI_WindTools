@@ -97,7 +97,7 @@ do
 	end
 end
 
-local barAtalsColor = {
+local barAtalsColorMapping = {
 	["widgetstatusbar-fill-red"] = C.GetRGBFromTemplate("rose-600"),
 	["widgetstatusbar-fill-blue"] = C.GetRGBFromTemplate("sky-600"),
 	["widgetstatusbar-fill-green"] = C.GetRGBFromTemplate("emerald-600"),
@@ -105,6 +105,18 @@ local barAtalsColor = {
 	["widgetstatusbar-fill-white"] = C.GetRGBFromTemplate("neutral-50"),
 }
 
+local function GetColorFromAtlas(tex)
+	if not tex or not tex.GetAtlas then
+		return
+	end
+
+	local atlas = tex:GetAtlas()
+	if atlas then
+		return barAtalsColorMapping[atlas]
+	end
+end
+
+local cachedColors = {}
 function S:BlizzardUIWidget()
 	if not self:CheckDB("misc", "uiWidget") then
 		return
@@ -138,11 +150,14 @@ function S:BlizzardUIWidget()
 		if bar and bar:IsObjectType("StatusBar") then
 			---@cast bar StatusBar
 			E:RegisterStatusBar(bar)
-			local barTexture = bar:GetStatusBarTexture()
-			local barAtlas = barTexture and barTexture:GetAtlas()
-			local color = barAtlas and barAtalsColor[barAtlas] or barAtalsColor["widgetstatusbar-fill-white"]
+			local color = GetColorFromAtlas(bar:GetStatusBarTexture())
+				or cachedColors[bar]
+				or barAtalsColorMapping["widgetstatusbar-fill-white"]
+			cachedColors[bar] = color
 			bar:SetStatusBarTexture(E.media.normTex)
-			bar:SetStatusBarColor(color.r, color.g, color.b)
+			if color then
+				bar:SetStatusBarColor(color.r, color.g, color.b)
+			end
 			if bar.Spark then
 				bar.Spark:SetAlpha(0)
 			end

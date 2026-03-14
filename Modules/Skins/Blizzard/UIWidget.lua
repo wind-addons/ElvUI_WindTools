@@ -1,6 +1,7 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 local ES = E.Skins
+local C = W.Utilities.Color
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -53,7 +54,7 @@ local function ReskinUIWidgetContainer(container)
 	end
 end
 
-local function reskinPartitionFrame(partitionFrame)
+local function ReskinPartitionFrame(partitionFrame)
 	if partitionFrame.__windSkin then
 		return
 	end
@@ -85,16 +86,24 @@ do
 		hookedWidget[widget] = true
 
 		for partitionFrame in pool:EnumerateActive() do
-			reskinPartitionFrame(partitionFrame)
+			ReskinPartitionFrame(partitionFrame)
 		end
 
 		hooksecurefunc(pool, "Acquire", function(_pool)
 			for partitionFrame in _pool:EnumerateActive() do
-				reskinPartitionFrame(partitionFrame)
+				ReskinPartitionFrame(partitionFrame)
 			end
 		end)
 	end
 end
+
+local barAtalsColor = {
+	["widgetstatusbar-fill-red"] = C.GetRGBFromTemplate("rose-600"),
+	["widgetstatusbar-fill-blue"] = C.GetRGBFromTemplate("sky-600"),
+	["widgetstatusbar-fill-green"] = C.GetRGBFromTemplate("emerald-600"),
+	["widgetstatusbar-fill-yellow"] = C.GetRGBFromTemplate("amber-600"),
+	["widgetstatusbar-fill-white"] = C.GetRGBFromTemplate("neutral-50"),
+}
 
 function S:BlizzardUIWidget()
 	if not self:CheckDB("misc", "uiWidget") then
@@ -104,7 +113,7 @@ function S:BlizzardUIWidget()
 	-- Partitions
 	self:SecureHook(_G.UIWidgetBaseStatusBarTemplateMixin, "InitPartitions", "ReskinWidgetPartition")
 	self:SecureHook(_G.UIWidgetTemplateUnitPowerBarMixin, "InitPartitions", "ReskinWidgetPartition")
-	self:SecureHook(_G.UIWidgetTemplateStatusBarMixin, "Setup", function(widget, widgetInfo)
+	self:SecureHook(_G.UIWidgetTemplateStatusBarMixin, "Setup", function(widget)
 		if widget:IsForbidden() or widget.widgetSetID and widget.widgetSetID == 283 then
 			return
 		end
@@ -127,8 +136,13 @@ function S:BlizzardUIWidget()
 		-- Always apply global status bar texture so widget bars match user preference
 		local bar = widget.Bar
 		if bar and bar:IsObjectType("StatusBar") then
+			---@cast bar StatusBar
 			E:RegisterStatusBar(bar)
+			local barTexture = bar:GetStatusBarTexture()
+			local barAtlas = barTexture and barTexture:GetAtlas()
+			local color = barAtlas and barAtalsColor[barAtlas] or barAtalsColor["widgetstatusbar-fill-white"]
 			bar:SetStatusBarTexture(E.media.normTex)
+			bar:SetStatusBarColor(color.r, color.g, color.b)
 			if bar.Spark then
 				bar.Spark:SetAlpha(0)
 			end

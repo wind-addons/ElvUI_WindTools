@@ -2909,6 +2909,62 @@ options.preyHunt = {
 				},
 			},
 		},
+		autoTrack = {
+			order = 4,
+			type = "group",
+			inline = true,
+			name = L["Auto Tracking"],
+			disabled = function()
+				return not E.db.WT.quest.preyHunt.enable
+			end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+					get = function()
+						return E.db.WT.quest.preyHunt.autoTrack.enable
+					end,
+					set = function(_, value)
+						E.db.WT.quest.preyHunt.autoTrack.enable = value
+						PH:ProfileUpdate()
+					end,
+					width = "full",
+				},
+				stageQuest = {
+					order = 2,
+					type = "toggle",
+					name = L["Stage Quest"],
+					desc = L["Automatically track the stage quest of Prey Hunt (non-world quest)."],
+					disabled = function()
+						return not E.db.WT.quest.preyHunt.enable or not E.db.WT.quest.preyHunt.autoTrack.enable
+					end,
+					get = function()
+						return E.db.WT.quest.preyHunt.autoTrack.stageQuest
+					end,
+					set = function(_, value)
+						E.db.WT.quest.preyHunt.autoTrack.stageQuest = value
+						PH:ProfileUpdate()
+					end,
+				},
+				worldQuest = {
+					order = 3,
+					type = "toggle",
+					name = L["Nearest World Quest"],
+					desc = L["Automatically track the nearest Prey Hunt world quest."],
+					disabled = function()
+						return not E.db.WT.quest.preyHunt.enable or not E.db.WT.quest.preyHunt.autoTrack.enable
+					end,
+					get = function()
+						return E.db.WT.quest.preyHunt.autoTrack.worldQuest
+					end,
+					set = function(_, value)
+						E.db.WT.quest.preyHunt.autoTrack.worldQuest = value
+						PH:ProfileUpdate()
+					end,
+				},
+			},
+		},
 	},
 }
 

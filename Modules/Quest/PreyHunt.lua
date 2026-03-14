@@ -2,20 +2,37 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local PH = W:NewModule("PreyHunt", "AceHook-3.0", "AceEvent-3.0") ---@class PreyHunt: AceModule, AceHook-3.0, AceEvent-3.0
 
 local _G = _G
-local format = format
+local ipairs = ipairs
 local pairs = pairs
+local format = format
+local math_huge = math.huge
+
+local GetTime = GetTime
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
+local C_QuestLog_AddQuestWatch = C_QuestLog.AddQuestWatch
+local C_QuestLog_AddWorldQuestWatch = C_QuestLog.AddWorldQuestWatch
+local C_QuestLog_GetActivePreyQuest = C_QuestLog.GetActivePreyQuest
+local C_QuestLog_GetDistanceSqToQuest = C_QuestLog.GetDistanceSqToQuest
+local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
+local C_QuestLog_IsOnMap = C_QuestLog.IsOnMap
+local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
+local C_SuperTrack_GetSuperTrackedQuestID = C_SuperTrack.GetSuperTrackedQuestID
+local C_SuperTrack_SetSuperTrackedQuestID = C_SuperTrack.SetSuperTrackedQuestID
+local C_TaskQuest_GetQuestsOnMap = C_TaskQuest.GetQuestsOnMap
 
-local PROGRESS_UI_WIDGET_TYPE = Enum.UIWidgetVisualizationType.PreyHuntProgress
+local PREY_UI_WIDGET_TYPE = Enum.UIWidgetVisualizationType.PreyHuntProgress
+local PREY_WORLD_QUEST_TYPE = Enum.QuestTagType.Prey
+local AUTO_TRACK_THROTTLE = 2
 
 function PH:HandleWidget(container, widgetID, widgetType)
-	if widgetType and widgetType ~= PROGRESS_UI_WIDGET_TYPE then
+	if widgetType and widgetType ~= PREY_UI_WIDGET_TYPE then
 		return
 	end
 
 	local frame = container.widgetFrames[widgetID]
-	if not frame or not frame.widgetType or frame.widgetType ~= PROGRESS_UI_WIDGET_TYPE then
+	if not frame or not frame.widgetType or frame.widgetType ~= PREY_UI_WIDGET_TYPE then
 		return
 	end
 
@@ -48,8 +65,92 @@ end
 
 function PH:RefreshPreyHuntStage()
 	for _, frame in pairs(_G.UIWidgetPowerBarContainerFrame.widgetFrames) do
-		if frame and frame.widgetType and frame.widgetType == PROGRESS_UI_WIDGET_TYPE then
+		if frame and frame.widgetType and frame.widgetType == PREY_UI_WIDGET_TYPE then
 			self:HandleWidget(_G.UIWidgetPowerBarContainerFrame, frame.widgetID, frame.widgetType)
+		end
+	end
+end
+
+function PH:TryAutoTrack()
+	local db = self.db
+	if not db or not db.enable then
+		return
+	end
+
+	local autoTrack = db.autoTrack
+	if not autoTrack.enable or (not autoTrack.worldQuest and not autoTrack.stageQuest) then
+		return
+	end
+
+	local activePreyQuestID = C_QuestLog_GetActivePreyQuest()
+	if not activePreyQuestID or activePreyQuestID == 0 then
+		return
+	end
+
+	local now = GetTime()
+	if self.lastAutoTrackTime and (now - self.lastAutoTrackTime) < AUTO_TRACK_THROTTLE then
+		return
+	end
+	self.lastAutoTrackTime = now
+
+	local mapID = C_Map_GetBestMapForUnit("player")
+	if not mapID then
+		return
+	end
+
+	local superTrackedID = C_SuperTrack_GetSuperTrackedQuestID()
+	local bestQuestID
+	local bestDistSq = math_huge
+
+	if autoTrack.worldQuest then
+		local tasks = C_TaskQuest_GetQuestsOnMap(mapID)
+		if tasks then
+			for _, info in ipairs(tasks) do
+				if C_QuestLog_IsWorldQuest(info.questID) then
+					local tagInfo = C_QuestLog_GetQuestTagInfo(info.questID)
+					if tagInfo and tagInfo.worldQuestType == PREY_WORLD_QUEST_TYPE then
+						local distSq = C_QuestLog_GetDistanceSqToQuest(info.questID)
+						if distSq and distSq < bestDistSq then
+							bestDistSq = distSq
+							bestQuestID = info.questID
+						end
+					end
+				end
+			end
+		end
+	end
+
+	if bestQuestID then
+		C_QuestLog_AddWorldQuestWatch(bestQuestID, Enum.QuestWatchType.Automatic)
+		if superTrackedID ~= bestQuestID then
+			C_SuperTrack_SetSuperTrackedQuestID(bestQuestID)
+		end
+		return
+	end
+
+	if autoTrack.stageQuest and C_QuestLog_IsOnMap(activePreyQuestID) then
+		C_QuestLog_AddQuestWatch(activePreyQuestID)
+		if superTrackedID ~= activePreyQuestID then
+			C_SuperTrack_SetSuperTrackedQuestID(activePreyQuestID)
+		end
+	end
+end
+
+function PH:UpdateAutoTrackEvents()
+	local shouldRegister = self.db and self.db.enable and self.db.autoTrack.enable
+		and (self.db.autoTrack.worldQuest or self.db.autoTrack.stageQuest)
+
+	if shouldRegister then
+		if not self.autoTrackEventsRegistered then
+			self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "TryAutoTrack")
+			self:RegisterEvent("QUEST_LOG_UPDATE", "TryAutoTrack")
+			self.autoTrackEventsRegistered = true
+		end
+	else
+		if self.autoTrackEventsRegistered then
+			self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
+			self:UnregisterEvent("QUEST_LOG_UPDATE")
+			self.autoTrackEventsRegistered = false
 		end
 	end
 end
@@ -71,6 +172,8 @@ end
 
 function PH:ProfileUpdate()
 	self.db = E.db.WT.quest.preyHunt
+
+	self:UpdateAutoTrackEvents()
 
 	if not self.db.enable then
 		if self.initialized then

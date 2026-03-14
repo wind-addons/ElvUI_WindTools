@@ -1138,6 +1138,11 @@ P.quest = {
 				yOffset = 0,
 			},
 		},
+		autoTrack = {
+			enable = true,
+			worldQuest = true,
+			stageQuest = true,
+		},
 	},
 	achievementScreenshot = {
 		enable = false,

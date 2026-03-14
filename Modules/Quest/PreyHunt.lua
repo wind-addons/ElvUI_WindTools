@@ -21,6 +21,7 @@ local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
 local C_SuperTrack_GetSuperTrackedQuestID = C_SuperTrack.GetSuperTrackedQuestID
 local C_SuperTrack_SetSuperTrackedQuestID = C_SuperTrack.SetSuperTrackedQuestID
 local C_TaskQuest_GetQuestsOnMap = C_TaskQuest.GetQuestsOnMap
+local Enum_QuestWatchType_Automatic = Enum.QuestWatchType.Automatic
 
 local PREY_UI_WIDGET_TYPE = Enum.UIWidgetVisualizationType.PreyHuntProgress
 local PREY_WORLD_QUEST_TYPE = Enum.QuestTagType.Prey
@@ -121,7 +122,7 @@ function PH:TryAutoTrack()
 	end
 
 	if bestQuestID then
-		C_QuestLog_AddWorldQuestWatch(bestQuestID, Enum.QuestWatchType.Automatic)
+		C_QuestLog_AddWorldQuestWatch(bestQuestID, Enum_QuestWatchType_Automatic)
 		if superTrackedID ~= bestQuestID then
 			C_SuperTrack_SetSuperTrackedQuestID(bestQuestID)
 		end
@@ -137,7 +138,9 @@ function PH:TryAutoTrack()
 end
 
 function PH:UpdateAutoTrackEvents()
-	local shouldRegister = self.db and self.db.enable and self.db.autoTrack.enable
+	local shouldRegister = self.db
+		and self.db.enable
+		and self.db.autoTrack.enable
 		and (self.db.autoTrack.worldQuest or self.db.autoTrack.stageQuest)
 
 	if shouldRegister then

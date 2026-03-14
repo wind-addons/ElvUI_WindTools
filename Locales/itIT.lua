@@ -132,6 +132,7 @@ L["Additional Backdrop"] = true
 L["Additional Information"] = true
 L["Additional Text"] = true
 L["Additional features for waypoint."] = true
+L["Addon Profiler"] = true
 L["Addons"] = true
 L["Adjust the font size of the right panel."] = true
 L["Advanced"] = true

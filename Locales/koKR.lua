@@ -132,6 +132,7 @@ L["Additional Backdrop"] = "배경 추가"
 L["Additional Information"] = "추가 정보"
 L["Additional Text"] = "추가 문자"
 L["Additional features for waypoint."] = "지도 핀에 기능을 추가합니다."
+L["Addon Profiler"] = true
 L["Addons"] = "애드온"
 L["Adjust the font size of the right panel."] = "오른쪽 패널의 글꼴 크기를 조정합니다."
 L["Advanced"] = "고급"

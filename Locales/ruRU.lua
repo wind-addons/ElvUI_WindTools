@@ -132,6 +132,7 @@ L["Additional Backdrop"] = "Дополнительный фон"
 L["Additional Information"] = "Дополнительная информация"
 L["Additional Text"] = "Дополнительный текст"
 L["Additional features for waypoint."] = "Дополнительные возможности для путевой точки."
+L["Addon Profiler"] = true
 L["Addons"] = "Модификации"
 L["Adjust the font size of the right panel."] = "Отрегулировать размер шрифта правой панели."
 L["Advanced"] = "Дополнительно"

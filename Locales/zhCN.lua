@@ -132,6 +132,7 @@ L["Additional Backdrop"] = "额外背景"
 L["Additional Information"] = "额外信息"
 L["Additional Text"] = "附加文字"
 L["Additional features for waypoint."] = "为标记点添加额外功能."
+L["Addon Profiler"] = true
 L["Addons"] = "插件"
 L["Adjust the font size of the right panel."] = "调整右侧面板的字体大小."
 L["Advanced"] = "高级"

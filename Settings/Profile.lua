@@ -986,6 +986,7 @@ end
 P.quest = {
 	autoCollapse = {
 		enable = false,
+		ignoreManualToggle = false,
 		combat = "none",
 		vehicle = "collapse",
 		resting = "none",

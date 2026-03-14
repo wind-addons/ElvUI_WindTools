@@ -3,8 +3,10 @@ local AC = W:NewModule("AutoCollapse", "AceHook-3.0", "AceEvent-3.0") ---@class 
 local BL = E:GetModule("Blizzard")
 
 local _G = _G
+local ipairs = ipairs
 
 local IsInInstance = IsInInstance
+local IsResting = IsResting
 
 local instanceTypeKeyMap = {
 	none = "outOfInstance",
@@ -91,6 +93,14 @@ function AC:ObjectiveTrackerFrame_SetCollapsed(frame)
 		return
 	end
 
+	local header = frame.Header
+	local isUserAction = header and header.MinimizeButton and header.MinimizeButton:IsMouseOver()
+
+	if not self.db.ignoreManualToggle and isUserAction then
+		self.state = "none"
+		return
+	end
+
 	ApplyCollapseState(frame, self.state)
 end
 
@@ -119,8 +129,11 @@ function AC:ProfileUpdate()
 		self.eventRegistered = true
 	end
 
-	if _G.ObjectiveTrackerFrame and not self:IsHooked(_G.ObjectiveTrackerFrame, "SetCollapsed") then
-		self:SecureHook(_G.ObjectiveTrackerFrame, "SetCollapsed", "ObjectiveTrackerFrame_SetCollapsed")
+	local tracker = _G.ObjectiveTrackerFrame
+	if tracker then
+		if not self:IsHooked(tracker, "SetCollapsed") then
+			self:SecureHook(tracker, "SetCollapsed", "ObjectiveTrackerFrame_SetCollapsed")
+		end
 	end
 
 	self:Apply()

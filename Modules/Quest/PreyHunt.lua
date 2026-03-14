@@ -3,10 +3,11 @@ local PH = W:NewModule("PreyHunt", "AceHook-3.0", "AceEvent-3.0") ---@class Prey
 local C = W.Utilities.Color
 
 local _G = _G
-local ipairs = ipairs
-local pairs = pairs
 local format = format
+local ipairs = ipairs
 local math_huge = math.huge
+local pairs = pairs
+local tonumber = tonumber
 
 local GetTime = GetTime
 
@@ -87,7 +88,7 @@ function PH:HandleWidget(container, widgetID, widgetType)
 		)
 		local prefix = self.db.progressWidget.stageText.label and L["Stage"] .. ": " or ""
 		local template = prefix .. self.db.progressWidget.stageText.template
-		frame.StageText:SetText(format(template, frame.progressState or 0))
+		frame.StageText:SetText(format(template, tonumber(frame.progressState or 1) + 1))
 		frame.StageText:Show()
 	else
 		frame.StageText:Hide()

@@ -1,9 +1,10 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file='AchievementScreenshot.lua'/>
-	<Script file='AchievementTracker.lua'/>
-	<Script file='AutoCollapse.lua'/>
-	<Script file='ObjectiveTracker.lua'/>
-	<Script file='Progress.lua'/>
-	<Script file='SwitchButtons.lua'/>
-	<Script file='TurnIn.lua'/>
+	<Script file='AchievementScreenshot.lua' />
+	<Script file='AchievementTracker.lua' />
+	<Script file='AutoCollapse.lua' />
+	<Script file='ObjectiveTracker.lua' />
+	<Script file='PreyHunt.lua' />
+	<Script file='Progress.lua' />
+	<Script file='SwitchButtons.lua' />
+	<Script file='TurnIn.lua' />
 </Ui>

@@ -9,6 +9,7 @@ local OT = W:GetModule("ObjectiveTracker")
 local QP = W:GetModule("QuestProgress")
 local SB = W:GetModule("SwitchButtons")
 local TI = W:GetModule("TurnIn")
+local PH = W:GetModule("PreyHunt")
 
 local format = format
 local pairs = pairs
@@ -2750,8 +2751,169 @@ options.turnIn = {
 	},
 }
 
-options.achievementScreenshot = {
+options.preyHunt = {
 	order = 6,
+	type = "group",
+	name = L["Prey Hunt"],
+	get = function(info)
+		return E.db.WT.quest.preyHunt[info[#info]]
+	end,
+	set = function(info, value)
+		E.db.WT.quest.preyHunt[info[#info]] = value
+		PH:ProfileUpdate()
+	end,
+	args = {
+		desc = {
+			order = 1,
+			type = "group",
+			inline = true,
+			name = L["Description"],
+			args = {
+				feature = {
+					order = 1,
+					type = "description",
+					name = L["Additional UI enhancements for Prey Hunt."],
+					fontSize = "medium",
+				},
+			},
+		},
+		enable = {
+			order = 2,
+			type = "toggle",
+			name = L["Enable"],
+			width = "full",
+		},
+		progressWidget = {
+			order = 3,
+			type = "group",
+			inline = true,
+			name = L["Progress Widget"],
+			disabled = function()
+				return not E.db.WT.quest.preyHunt.enable
+			end,
+			get = function(info)
+				return E.db.WT.quest.preyHunt.progressWidget[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.quest.preyHunt.progressWidget[info[#info]] = value
+				PH:ProfileUpdate()
+			end,
+			args = {
+				hide = {
+					order = 1,
+					type = "toggle",
+					name = L["Hide"],
+					desc = L["Hide the progress widget."],
+				},
+				stageText = {
+					order = 2,
+					type = "group",
+					inline = true,
+					name = L["Stage Text"],
+					disabled = function()
+						return not E.db.WT.quest.preyHunt.enable
+					end,
+					hidden = function()
+						return E.db.WT.quest.preyHunt.progressWidget.hide
+					end,
+					get = function(info)
+						return E.db.WT.quest.preyHunt.progressWidget.stageText[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.preyHunt.progressWidget.stageText[info[#info]] = value
+						PH:ProfileUpdate()
+					end,
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						name = {
+							order = 2,
+							type = "select",
+							dialogControl = "LSM30_Font",
+							name = L["Font"],
+							values = LSM:HashTable("font"),
+						},
+						style = {
+							order = 3,
+							type = "select",
+							name = L["Outline"],
+							values = {
+								NONE = L["None"],
+								OUTLINE = L["Outline"],
+								THICKOUTLINE = L["Thick"],
+								SHADOW = L["|cff888888Shadow|r"],
+								SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+								SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+								MONOCHROME = L["|cFFAAAAAAMono|r"],
+								MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+								MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+							},
+						},
+						size = {
+							order = 4,
+							name = L["Size"],
+							type = "range",
+							min = 5,
+							max = 60,
+							step = 1,
+						},
+						color = {
+							order = 5,
+							type = "color",
+							name = L["Color"],
+							hasAlpha = false,
+							get = function(info)
+								local db = E.db.WT.quest.preyHunt.progressWidget.stageText.color
+								local default = P.quest.preyHunt.progressWidget.stageText.color
+								return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+							end,
+							set = function(info, r, g, b)
+								local db = E.db.WT.quest.preyHunt.progressWidget.stageText.color
+								db.r, db.g, db.b = r, g, b
+								PH:ProfileUpdate()
+							end,
+						},
+						label = {
+							order = 6,
+							type = "toggle",
+							name = L["Label"],
+							desc = L["Show 'Stage' label before the number."],
+						},
+						template = {
+							order = 7,
+							type = "input",
+							name = L["Template"],
+							desc = L["The template for stage text. Use %d for the stage number."],
+							width = 1.5,
+						},
+						xOffset = {
+							order = 8,
+							type = "range",
+							name = L["X-Offset"],
+							min = -100,
+							max = 100,
+							step = 1,
+						},
+						yOffset = {
+							order = 9,
+							type = "range",
+							name = L["Y-Offset"],
+							min = -100,
+							max = 100,
+							step = 1,
+						},
+					},
+				},
+			},
+		},
+	},
+}
+
+options.achievementScreenshot = {
+	order = 7,
 	type = "group",
 	name = L["Achievement Screenshot"],
 	get = function(info)
@@ -2810,7 +2972,7 @@ options.achievementScreenshot = {
 }
 
 options.achievementTracker = {
-	order = 7,
+	order = 8,
 	type = "group",
 	name = L["Achievement Tracker"],
 	get = function(info)

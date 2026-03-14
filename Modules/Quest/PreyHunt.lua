@@ -16,7 +16,9 @@ local C_QuestLog_AddQuestWatch = C_QuestLog.AddQuestWatch
 local C_QuestLog_AddWorldQuestWatch = C_QuestLog.AddWorldQuestWatch
 local C_QuestLog_GetActivePreyQuest = C_QuestLog.GetActivePreyQuest
 local C_QuestLog_GetDistanceSqToQuest = C_QuestLog.GetDistanceSqToQuest
+local C_QuestLog_GetNextWaypointForMap = C_QuestLog.GetNextWaypointForMap
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
+local C_QuestLog_GetQuestsOnMap = C_QuestLog.GetQuestsOnMap
 local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 local C_QuestLog_IsOnMap = C_QuestLog.IsOnMap
 local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
@@ -28,6 +30,31 @@ local Enum_QuestWatchType_Automatic = Enum.QuestWatchType.Automatic
 local PREY_UI_WIDGET_TYPE = Enum.UIWidgetVisualizationType.PreyHuntProgress
 local PREY_WORLD_QUEST_TYPE = Enum.QuestTagType.Prey
 local AUTO_TRACK_THROTTLE = 2
+
+local function NotifyStartTracking(questID)
+	local title = tostring(C_QuestLog_GetTitleForQuestID(questID) or questID)
+	title = C.StringByTemplate(title, "indigo-300")
+	local tag = C.StringByTemplate(format("[%s]", L["Prey Hunt"]), "amber-500")
+	F.Print(format("%s %s", tag, format(L["Start tracking %s."], title)))
+end
+
+local function QuestHasMapIcon(questID, mapID)
+	local x, y = C_QuestLog_GetNextWaypointForMap(questID, mapID)
+	if x and y then
+		return true
+	end
+
+	local quests = C_QuestLog_GetQuestsOnMap(mapID)
+	if quests then
+		for _, info in ipairs(quests) do
+			if info.questID == questID then
+				return true
+			end
+		end
+	end
+
+	return false
+end
 
 function PH:HandleWidget(container, widgetID, widgetType)
 	if widgetType and widgetType ~= PREY_UI_WIDGET_TYPE then
@@ -72,13 +99,6 @@ function PH:RefreshPreyHuntStage()
 			self:HandleWidget(_G.UIWidgetPowerBarContainerFrame, frame.widgetID, frame.widgetType)
 		end
 	end
-end
-
-local function NotifyStartTracking(questID)
-	local title = tostring(C_QuestLog_GetTitleForQuestID(questID) or questID)
-	title = C.StringByTemplate(title, "indigo-300")
-	local tag = C.StringByTemplate(format("[%s]", L["Prey Hunt"]), "amber-500")
-	F.Print(format("%s %s", tag, format(L["Start tracking %s."], title)))
 end
 
 function PH:TryAutoTrack()
@@ -142,7 +162,7 @@ function PH:TryAutoTrack()
 		return
 	end
 
-	if autoTrack.stageQuest and C_QuestLog_IsOnMap(activePreyQuestID) then
+	if autoTrack.stageQuest and C_QuestLog_IsOnMap(activePreyQuestID) and QuestHasMapIcon(activePreyQuestID, mapID) then
 		C_QuestLog_AddQuestWatch(activePreyQuestID)
 
 		if superTrackedID ~= activePreyQuestID then

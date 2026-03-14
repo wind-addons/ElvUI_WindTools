@@ -1807,7 +1807,7 @@ function CT:PLAYER_ENTERING_WORLD(event)
 	end
 
 	if C_Club_GetGuildClubId() then
-		CT:INITIAL_CLUBS_LOADED()
+		self:INITIAL_CLUBS_LOADED()
 	end
 
 	self.bnetFriendDataCached = true

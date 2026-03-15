@@ -624,6 +624,13 @@ options.minimapButtons = {
 					desc = L["Add expansion landing page (ex. garrison) to the bar."],
 					width = 2,
 				},
+				garrisonAlertMsg = {
+					order = 3,
+					type = "toggle",
+					name = L["Garrison Alert Message"],
+					desc = L["Display garrison alert messages in the chat frame."],
+					width = 2,
+				},
 			},
 		},
 	},

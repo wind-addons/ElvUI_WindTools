@@ -1323,92 +1323,90 @@ function LL:InitializeRightPanel()
 	local buttonData = {
 		{ text = L["Mythic+"], categoryID = GROUP_FINDER_CATEGORY_ID_DUNGEONS, filters = 0 },
 		{ text = L["Raids"], categoryID = 3, filters = 1 },
-		{ text = L["Delves"], categoryID = 121, filters = 0, disableIfTimerunning = true },
+		{ text = L["Delves"], categoryID = 121, filters = 0 },
 		{ text = L["Quest"], categoryID = 1, filters = 0 },
-		{ text = L["Custom"], categoryID = GROUP_FINDER_CUSTOM_CATEGORY, filters = 0, disableIfTimerunning = true },
+		{ text = L["Custom"], categoryID = GROUP_FINDER_CUSTOM_CATEGORY, filters = 0 },
 	}
 
 	local prevButton
 	for _, data in ipairs(buttonData) do
-		if not data.disableIfTimerunning then
-			local button = CreateFrame("Frame", nil, QuickAccessPanel)
-			if not prevButton then
-				button:Point("TOPLEFT", QuickAccessTitle, "BOTTOMLEFT")
-				button:Point("BOTTOMRIGHT", QuickAccessTitle, "BOTTOMRIGHT", 0, -64)
-			else
-				button:Point("TOPLEFT", prevButton, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
-				button:Point("BOTTOMRIGHT", prevButton, "BOTTOMRIGHT", 0, -32 - FILTER_BUTTON_SPACING)
-			end
-			prevButton = button
-			button:SetTemplate()
-			addSetActive(button)
-
-			button.text = button:CreateFontString(nil, "OVERLAY")
-			button.text:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
-			button.text:Point("CENTER", button, "CENTER", 0, 0)
-			button.text:SetText(data.text)
-
-			button.categoryID = data.categoryID
-
-			button:SetScript("OnEnter", function(btn)
-				btn:SetActive(true)
-			end)
-
-			button:SetScript("OnLeave", function(btn)
-				btn:SetActive(false)
-			end)
-
-			button:SetScript("OnMouseDown", function(_, mouseButton)
-				if mouseButton ~= "LeftButton" then
-					return
-				end
-
-				if _G.PVEFrame.activeTabIndex ~= 1 then
-					_G.PVEFrame_ShowFrame("GroupFinderFrame")
-				end
-
-				if not _G.LFGListFrame.SearchPanel:IsShown() or _G.GroupFinderFrame.selection ~= _G.LFGListPVEStub then
-					local PremadeGroupButton = _G.PVEFrame:ScenariosEnabled() and _G.GroupFinderFrame.groupButton4
-						or _G.GroupFinderFrame.groupButton3
-					GroupFinderFrameGroupButton_OnClick(PremadeGroupButton)
-				end
-
-				local searchPanel, selection = _G.LFGListFrame.SearchPanel, _G.LFGListFrame.CategorySelection
-				if not selection or not searchPanel then
-					return
-				end
-
-				for _, categoryButton in ipairs(selection.CategoryButtons) do
-					if categoryButton.categoryID == data.categoryID and categoryButton.filters == data.filters then
-						local baseFilters = _G.LFGListFrame.baseFilters
-
-						-- Set the selectedCategory and selectedFilters to a not nil value will cause taint, needs cleanup later
-						self.needTaintCleanup = true
-						selection.selectedCategory = data.categoryID
-						selection.selectedFilters = data.filters
-
-						LFGListSearchPanel_Clear(searchPanel)
-						LFGListSearchPanel_SetCategory(searchPanel, data.categoryID, data.filters, baseFilters)
-						LFGListSearchPanel_DoSearch(searchPanel)
-						_G.LFGListFrame_SetActivePanel(_G.LFGListFrame, searchPanel)
-						return
-					end
-				end
-			end)
-
-			-- Prehook the back button to clear the selectedCategory and selectedFilters to avoid taint
-			local backButtonOnClick = _G.LFGListFrame.SearchPanel.BackButton:GetScript("OnClick")
-			_G.LFGListFrame.SearchPanel.BackButton:SetScript("OnClick", function(...)
-				if self.needTaintCleanup then
-					_G.LFGListFrame.CategorySelection.selectedCategory = nil
-					_G.LFGListFrame.CategorySelection.selectedFilters = nil
-				end
-				backButtonOnClick(...)
-			end)
-
-			button:SetActive(false)
-			tinsert(quickAccessButtons, button)
+		local button = CreateFrame("Frame", nil, QuickAccessPanel)
+		if not prevButton then
+			button:Point("TOPLEFT", QuickAccessTitle, "BOTTOMLEFT")
+			button:Point("BOTTOMRIGHT", QuickAccessTitle, "BOTTOMRIGHT", 0, -64)
+		else
+			button:Point("TOPLEFT", prevButton, "BOTTOMLEFT", 0, -FILTER_BUTTON_SPACING)
+			button:Point("BOTTOMRIGHT", prevButton, "BOTTOMRIGHT", 0, -32 - FILTER_BUTTON_SPACING)
 		end
+		prevButton = button
+		button:SetTemplate()
+		addSetActive(button)
+
+		button.text = button:CreateFontString(nil, "OVERLAY")
+		button.text:SetFont(E.media.normFont, 12 + self.db.rightPanel.adjustFontSize, "OUTLINE")
+		button.text:Point("CENTER", button, "CENTER", 0, 0)
+		button.text:SetText(data.text)
+
+		button.categoryID = data.categoryID
+
+		button:SetScript("OnEnter", function(btn)
+			btn:SetActive(true)
+		end)
+
+		button:SetScript("OnLeave", function(btn)
+			btn:SetActive(false)
+		end)
+
+		button:SetScript("OnMouseDown", function(_, mouseButton)
+			if mouseButton ~= "LeftButton" then
+				return
+			end
+
+			if _G.PVEFrame.activeTabIndex ~= 1 then
+				_G.PVEFrame_ShowFrame("GroupFinderFrame")
+			end
+
+			if not _G.LFGListFrame.SearchPanel:IsShown() or _G.GroupFinderFrame.selection ~= _G.LFGListPVEStub then
+				local PremadeGroupButton = _G.PVEFrame:ScenariosEnabled() and _G.GroupFinderFrame.groupButton4
+					or _G.GroupFinderFrame.groupButton3
+				GroupFinderFrameGroupButton_OnClick(PremadeGroupButton)
+			end
+
+			local searchPanel, selection = _G.LFGListFrame.SearchPanel, _G.LFGListFrame.CategorySelection
+			if not selection or not searchPanel then
+				return
+			end
+
+			for _, categoryButton in ipairs(selection.CategoryButtons) do
+				if categoryButton.categoryID == data.categoryID and categoryButton.filters == data.filters then
+					local baseFilters = _G.LFGListFrame.baseFilters
+
+					-- Set the selectedCategory and selectedFilters to a not nil value will cause taint, needs cleanup later
+					self.needTaintCleanup = true
+					selection.selectedCategory = data.categoryID
+					selection.selectedFilters = data.filters
+
+					LFGListSearchPanel_Clear(searchPanel)
+					LFGListSearchPanel_SetCategory(searchPanel, data.categoryID, data.filters, baseFilters)
+					LFGListSearchPanel_DoSearch(searchPanel)
+					_G.LFGListFrame_SetActivePanel(_G.LFGListFrame, searchPanel)
+					return
+				end
+			end
+		end)
+
+		-- Prehook the back button to clear the selectedCategory and selectedFilters to avoid taint
+		local backButtonOnClick = _G.LFGListFrame.SearchPanel.BackButton:GetScript("OnClick")
+		_G.LFGListFrame.SearchPanel.BackButton:SetScript("OnClick", function(...)
+			if self.needTaintCleanup then
+				_G.LFGListFrame.CategorySelection.selectedCategory = nil
+				_G.LFGListFrame.CategorySelection.selectedFilters = nil
+			end
+			backButtonOnClick(...)
+		end)
+
+		button:SetActive(false)
+		tinsert(quickAccessButtons, button)
 	end
 
 	QuickAccessPanel.Title = QuickAccessTitle

@@ -286,7 +286,7 @@ local function AddCurrencyInfo(link)
 end
 
 function CL:Filter(event, msg, ...)
-	if CL.db.enable then
+	if CL.db.enable and E:NotSecretValue(msg) then
 		msg = gsub(msg, "(|cff71d5ff|Hconduit:%d+:.-|h.-|h|r)", AddConduitIcon)
 		msg = gsub(msg, "(|cffa335ee|Hkeystone:%d+:.-|h.-|h|r)", AddKeystoneIcon)
 		msg = gsub(msg, "(|Hitem:%d+:.-|h.-|h)", AddItemInfo)

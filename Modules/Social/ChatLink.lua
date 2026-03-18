@@ -132,8 +132,9 @@ local function AddItemInfo(link)
 
 	local level, slot
 
+	-- item level: tooltip display value, fallback if hyperlink data not ready
 	if CL.db.level then
-		level = GetDisplayedItemLevelFromHyperlink(link)
+		level = GetDisplayedItemLevelFromHyperlink(link) or C_Item_GetDetailedItemLevelInfo(link)
 	end
 
 	-- armor

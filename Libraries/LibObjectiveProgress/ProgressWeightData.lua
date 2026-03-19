@@ -9,7 +9,7 @@ You may use this compiled data in any form for any purpose without my permission
 ]]
 --
 
-local LOP = LibStub("LibObjectiveProgress-1.0")
+local LOP = LibStub("LibObjectiveProgress-WT")
 if not LOP then
 	return
 end

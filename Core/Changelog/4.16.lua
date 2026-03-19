@@ -6,22 +6,27 @@ W.Changelog[416] = {
 		["zhCN"] = {
 			"继续优化插件的稳定性, 改善对秘密值的数据的处理模式. 感谢 Sargeraz00",
 			"本地化文件更新, 感谢 Crazyyoungs (krKR), Dlarge (deDE), Valdemar (ruRU)",
+			"[鼠标提示] - [进度] 世界任务的怪物进度提示新增了许多至暗之夜数据, 更多数据将在未来的版本中陆续添加. 感谢 Dack",
 		},
 		["zhTW"] = {
 			"繼續優化插件的穩定性, 改善對秘密值的數據的處理模式. 感謝 Sargeraz00",
 			"本地化文件更新, 感謝 Crazyyoungs (krKR), Dlarge (deDE), Valdemar (ruRU)",
+			"[滑鼠提示] - [進度] 世界任務的怪物進度提示新增了許多至暗之夜數據, 更多數據將在未來的版本中陸續添加. 感謝 Dack",
 		},
 		["enUS"] = {
 			"Continue to optimize the stability of the plugin and improve the processing of secret values. Thanks to Sargeraz00",
 			"Localization file updated, thanks to Crazyyoungs (krKR), Dlarge (deDE), Valdemar (ruRU)",
+			"[Tooltip] - [Progress] The monster progress tips for world quests have added a lot of data for the Darkest Night, and more data will be added in future versions. Thanks to Dack",
 		},
 		["koKR"] = {
 			"플러그인의 안정성을 개선하고 비밀 값의 데이터 처리를 개선합니다. Sargeraz00에게 감사드립니다.",
 			"현지화 파일이 업데이트되었습니다. Crazyyoungs (krKR), Dlarge (deDE)에게 감사드립니다.",
+			"[툴팁] - [진행 상황] 세계 퀘스트의 몬스터 진행 상황 팁에 가장 어두운 밤에 대한 많은 데이터가 추가되었으며 향후 버전에서 더 많은 데이터가 추가될 예정입니다. Dack에게 감사드립니다.",
 		},
 		["ruRU"] = {
 			"Повышена стабильность плагина и улучшена обработка секретных значений. Спасибо Sargeraz00",
 			"Файл локализации обновлен, спасибо Crazyyoungs (krKR), Dlarge (deDE)",
+			"[Подсказка] - [Прогресс] Подсказки по прогрессу монстров для мировых заданий добавили много данных для Темнейшей Ночи, и в будущих версиях будет добавлено больше данных. Спасибо Dack",
 		},
 	},
 	NEW = {

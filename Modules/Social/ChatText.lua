@@ -906,14 +906,17 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 
 		if frame.privateMessageList then
 			if chatGroup == 'SYSTEM' then -- HACK to put certain system messages into dedicated whisper windows
-				local found, msg = false, strlower(arg1)
-				for playerName in pairs(frame.privateMessageList) do
-					local playerNotFoundMsg = strlower(format(_G.ERR_CHAT_PLAYER_NOT_FOUND_S, playerName))
-					local charOnlineMsg = strlower(format(_G.ERR_FRIEND_ONLINE_SS, playerName, playerName))
-					local charOfflineMsg = strlower(format(_G.ERR_FRIEND_OFFLINE_S, playerName))
-					if msg == playerNotFoundMsg or msg == charOnlineMsg or msg == charOfflineMsg then
-						found = true
-						break
+				local msg = E:NotSecretValue(arg1) and strlower(arg1)
+				local found = false
+				if msg then
+					for playerName in pairs(frame.privateMessageList) do
+						local notFound = strlower(format(_G.ERR_CHAT_PLAYER_NOT_FOUND_S, playerName))
+						local charOnline = strlower(format(_G.ERR_FRIEND_ONLINE_SS, playerName, playerName))
+						local charOffline = strlower(format(_G.ERR_FRIEND_OFFLINE_S, playerName))
+						if msg == notFound or msg == charOnline or msg == charOffline then
+							found = true
+							break
+						end
 					end
 				end
 

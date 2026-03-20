@@ -196,7 +196,7 @@ function MB:HandleExpansionButton(...)
 		if button.AlertText then
 			button.AlertText:Kill()
 			button.AlertText.SetText = function(_, text)
-				if text then
+				if text and MB.db.garrisonAlertMsg then
 					local event = C.StringWithRGB(button.title or L["Garrison"], E.db.general.valuecolor)
 					F.Print(event .. " " .. text)
 				end

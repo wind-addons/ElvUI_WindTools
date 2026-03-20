@@ -8,6 +8,7 @@ local ipairs = ipairs
 local math_huge = math.huge
 local pairs = pairs
 local tonumber = tonumber
+local tostring = tostring
 
 local GetTime = GetTime
 

@@ -164,6 +164,7 @@ V.maps = {
 		reverseOrder = false,
 		orientation = "HORIZONTAL",
 		expansionLandingPage = false,
+		garrisonAlertMsg = false,
 		sortingPriority = "^Expansion, _BugSack, _Saved, _Wind",
 		hiddenPatterns = "",
 		ignorePatterns = "",

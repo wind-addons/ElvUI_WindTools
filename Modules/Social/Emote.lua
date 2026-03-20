@@ -110,7 +110,7 @@ local function ReplaceEmote(value)
 end
 
 local function EmoteFilter(_, _, msg, ...)
-	if CE.db.enable then
+	if CE.db.enable and E:NotSecretValue(msg) then
 		msg = gsub(msg, "%{.-%}", ReplaceEmote)
 	end
 

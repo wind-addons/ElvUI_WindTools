@@ -27,23 +27,15 @@ local strupper = strupper
 local time = time
 local tinsert = tinsert
 local tonumber = tonumber
-local tostring = tostring
 local tremove = tremove
 local type = type
 local unpack = unpack
 local utf8sub = string.utf8sub
 local wipe = wipe
-local xpcall = xpcall
 
 local Ambiguate = Ambiguate
 local BNGetNumFriendInvites = BNGetNumFriendInvites
 local BNGetNumFriends = BNGetNumFriends
-local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
-local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
-local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
-local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
-local C_Club_GetClubInfo = C_Club.GetClubInfo
-local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
 local ChatEditSetLastTellTarget = ChatFrameUtil.SetLastTellTarget
 local FlashClientIcon = FlashClientIcon
 local GMChatFrame_IsGM = GMChatFrame_IsGM
@@ -57,17 +49,14 @@ local GetChannelRuleset = C_ChatInfo.GetChannelRuleset
 local GetChannelShortcutForChannelID = C_ChatInfo.GetChannelShortcutForChannelID
 local GetChatCategory = ChatFrameUtil.GetChatCategory
 local GetClientTexture = BNet_GetClientEmbeddedTexture
-local GetGuildRosterInfo = GetGuildRosterInfo
 local GetMobileEmbeddedTexture = ChatFrameUtil.GetMobileEmbeddedTexture
 local GetNumGroupMembers = GetNumGroupMembers
-local GetNumGuildMembers = GetNumGuildMembers
 local GetPlayerCommunityLink = GetPlayerCommunityLink
 local GetTitleIconTexture = C_Texture.GetTitleIconTexture
 local InCombatLockdown = InCombatLockdown
 local IsChannelRegionalForChannelID = C_ChatInfo.IsChannelRegionalForChannelID
 local IsChatLineCensored = C_ChatInfo.IsChatLineCensored
 local IsInGroup = IsInGroup
-local IsInGuild = IsInGuild
 local IsInRaid = IsInRaid
 local PlaySoundFile = PlaySoundFile
 local RemoveExtraSpaces = RemoveExtraSpaces
@@ -77,6 +66,17 @@ local UnitExists = UnitExists
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitIsUnit = UnitIsUnit
 local UnitName = UnitName
+
+local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
+local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
+local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
+local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
+local C_Club_GetClubInfo = C_Club.GetClubInfo
+local C_Club_GetClubMembers = C_Club.GetClubMembers
+local C_Club_GetGuildClubId = C_Club.GetGuildClubId
+local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
+local C_Club_GetMemberInfo = C_Club.GetMemberInfo
+local C_CreatureInfo_GetClassInfo = C_CreatureInfo.GetClassInfo
 
 local CHATCHANNELRULESET_MENTOR = Enum.ChatChannelRuleset.Mentor
 local Constants_ChatFrameConstants_MaxChatWindows = Constants.ChatFrameConstants.MaxChatWindows
@@ -221,21 +221,6 @@ CH:AddPluginIcons(function(sender)
 		return authorIcons[sender]
 	end
 end)
-
-local function UpdateGuildPlayerCache(_, event)
-	if not (event == "PLAYER_ENTERING_WORLD" or event == "FORCE_UPDATE") then
-		return
-	end
-
-	if IsInGuild() then
-		for i = 1, GetNumGuildMembers() do
-			local name, _, _, _, _, _, _, _, _, _, className = GetGuildRosterInfo(i)
-			if name and className then
-				guildPlayerCache[Ambiguate(name, "none")] = className
-			end
-		end
-	end
-end
 
 local function AddSpaceForAsianText(text, revert)
 	if W.Locale == "zhCN" or W.Locale == "zhTW" or W.Locale == "koKR" then
@@ -921,14 +906,17 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 
 		if frame.privateMessageList then
 			if chatGroup == 'SYSTEM' then -- HACK to put certain system messages into dedicated whisper windows
-				local found, msg = false, strlower(arg1)
-				for playerName in pairs(frame.privateMessageList) do
-					local playerNotFoundMsg = strlower(format(_G.ERR_CHAT_PLAYER_NOT_FOUND_S, playerName))
-					local charOnlineMsg = strlower(format(_G.ERR_FRIEND_ONLINE_SS, playerName, playerName))
-					local charOfflineMsg = strlower(format(_G.ERR_FRIEND_OFFLINE_S, playerName))
-					if msg == playerNotFoundMsg or msg == charOnlineMsg or msg == charOfflineMsg then
-						found = true
-						break
+				local msg = E:NotSecretValue(arg1) and strlower(arg1)
+				local found = false
+				if msg then
+					for playerName in pairs(frame.privateMessageList) do
+						local notFound = strlower(format(_G.ERR_CHAT_PLAYER_NOT_FOUND_S, playerName))
+						local charOnline = strlower(format(_G.ERR_FRIEND_ONLINE_SS, playerName, playerName))
+						local charOffline = strlower(format(_G.ERR_FRIEND_OFFLINE_S, playerName))
+						if msg == notFound or msg == charOnline or msg == charOffline then
+							found = true
+							break
+						end
 					end
 				end
 
@@ -1564,14 +1552,7 @@ function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
 		link, name = strmatch(msg, onlineMessagePattern)
 	end
 
-	if name then
-		class = guildPlayerCache[name]
-		if not class then
-			self:Log("debug", "force update guild player cache")
-			UpdateGuildPlayerCache(nil, "FORCE_UPDATE")
-			class = guildPlayerCache[name]
-		end
-	end
+	class = name and guildPlayerCache[name]
 
 	if class then
 		local displayName = CT.db.removeRealm and Ambiguate(name, "short") or name
@@ -1696,14 +1677,46 @@ local function UpdateBattleNetFriendStatus(friendIndex)
 	return changed, friendInfo.accountName, friendInfo.bnetAccountID, changedCharacters
 end
 
-function CT:PLAYER_ENTERING_WORLD(event)
-	UpdateGuildPlayerCache(nil, event)
-	for friendIndex = 1, BNGetNumFriends() do
-		UpdateBattleNetFriendStatus(friendIndex)
+local guildClubId
+
+local function CacheGuildMemberFromClub(memberId)
+	if not guildClubId then
+		return
 	end
 
-	self.bnetFriendDataCached = true
-	self:UnregisterEvent(event)
+	local info = C_Club_GetMemberInfo(guildClubId, memberId)
+	if info and info.name and info.classID then
+		local classInfo = C_CreatureInfo_GetClassInfo(info.classID)
+		if classInfo then
+			guildPlayerCache[Ambiguate(info.name, "none")] = classInfo.classFile
+		end
+	end
+end
+
+function CT:INITIAL_CLUBS_LOADED()
+	guildClubId = C_Club_GetGuildClubId()
+	if not guildClubId then
+		return
+	end
+
+	local memberIds = C_Club_GetClubMembers(guildClubId)
+	if memberIds then
+		for _, memberId in ipairs(memberIds) do
+			CacheGuildMemberFromClub(memberId)
+		end
+	end
+
+	self:UnregisterEvent("INITIAL_CLUBS_LOADED")
+end
+
+function CT:CLUB_MEMBER_PRESENCE_UPDATED(_, clubId, memberId)
+	if not guildClubId then
+		guildClubId = C_Club_GetGuildClubId()
+	end
+
+	if clubId == guildClubId then
+		CacheGuildMemberFromClub(memberId)
+	end
 end
 
 function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture, noRetry)
@@ -1791,6 +1804,19 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture, noRetry)
 	end
 end
 
+function CT:PLAYER_ENTERING_WORLD(event)
+	for friendIndex = 1, BNGetNumFriends() do
+		UpdateBattleNetFriendStatus(friendIndex)
+	end
+
+	if C_Club_GetGuildClubId() then
+		self:INITIAL_CLUBS_LOADED()
+	end
+
+	self.bnetFriendDataCached = true
+	self:UnregisterEvent(event)
+end
+
 function CT:Initialize()
 	self.db = E.db.WT.social.chatText
 	if not self.db or not self.db.enable or not E.private.chat.enable then
@@ -1802,6 +1828,9 @@ function CT:Initialize()
 	self:CheckLFGRoles()
 
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
+	self:RegisterEvent("INITIAL_CLUBS_LOADED")
+	self:RegisterEvent("CLUB_MEMBER_PRESENCE_UPDATED")
+	self:RegisterEvent("CLUB_MEMBER_ADDED", "CLUB_MEMBER_PRESENCE_UPDATED")
 	self:RegisterEvent("BN_FRIEND_INFO_CHANGED")
 end
 

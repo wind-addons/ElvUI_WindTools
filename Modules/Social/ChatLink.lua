@@ -24,6 +24,50 @@ local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 local C_Soulbinds_GetConduitCollectionData = C_Soulbinds.GetConduitCollectionData
 local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 
+local RETRIEVING_ITEM_INFO = RETRIEVING_ITEM_INFO
+local ITEM_LEVEL = ITEM_LEVEL
+local ITEM_LEVEL_ALT = ITEM_LEVEL_ALT
+local ITEM_MIN_LEVEL = ITEM_MIN_LEVEL
+
+local MATCH_ITEM_LEVEL = ITEM_LEVEL:gsub("%%d", "(%%d+)")
+local MATCH_MIN_LEVEL = ITEM_MIN_LEVEL:gsub("%%d", "(%%d+)")
+local MATCH_ITEM_LEVEL_ALT = ITEM_LEVEL_ALT:gsub("%%d(%s?)%(%%d%)", "%%d+%1%%((%%d+)%%)")
+
+local function ParseItemLevelFromTooltipLine(text)
+	if not text or text == "" then
+		return
+	end
+	local ilvl = strmatch(text, MATCH_ITEM_LEVEL_ALT)
+		or (not strmatch(text, MATCH_MIN_LEVEL) and strmatch(text, MATCH_ITEM_LEVEL))
+	return ilvl and tonumber(ilvl)
+end
+
+--- Item level as shown on the item tooltip (post-squish display), not C_Item.GetDetailedItemLevelInfo.
+local function GetDisplayedItemLevelFromHyperlink(link)
+	local info = E:ScanTooltip_HyperlinkInfo(link)
+	if not info or not info.lines then
+		return
+	end
+	local firstLine = info.lines[1]
+	local firstText = firstLine and firstLine.leftText
+	if firstText == RETRIEVING_ITEM_INFO then
+		return
+	end
+	for i = 1, #info.lines do
+		local line = info.lines[i]
+		if line then
+			local lv = ParseItemLevelFromTooltipLine(line.leftText)
+			if lv then
+				return lv
+			end
+			lv = ParseItemLevelFromTooltipLine(line.rightText)
+			if lv then
+				return lv
+			end
+		end
+	end
+end
+
 local SearchArmorType = {
 	INVTYPE_HEAD = true,
 	INVTYPE_SHOULDER = true,
@@ -88,9 +132,9 @@ local function AddItemInfo(link)
 
 	local level, slot
 
-	-- item Level
+	-- item level: tooltip display value, fallback if hyperlink data not ready
 	if CL.db.level then
-		level = C_Item_GetDetailedItemLevelInfo(link)
+		level = GetDisplayedItemLevelFromHyperlink(link) or C_Item_GetDetailedItemLevelInfo(link)
 	end
 
 	-- armor
@@ -286,7 +330,7 @@ local function AddCurrencyInfo(link)
 end
 
 function CL:Filter(event, msg, ...)
-	if CL.db.enable then
+	if CL.db.enable and E:NotSecretValue(msg) then
 		msg = gsub(msg, "(|cff71d5ff|Hconduit:%d+:.-|h.-|h|r)", AddConduitIcon)
 		msg = gsub(msg, "(|cffa335ee|Hkeystone:%d+:.-|h.-|h|r)", AddKeystoneIcon)
 		msg = gsub(msg, "(|Hitem:%d+:.-|h.-|h)", AddItemInfo)

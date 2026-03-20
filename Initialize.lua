@@ -133,10 +133,74 @@ function W:Initialize()
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
+-- Default Private Profile
+do
+	local type = type
+	local next = next
+	local pairs = pairs
+
+	local function DeepCopy(src)
+		if type(src) ~= "table" then return src end
+		local copy = {}
+		for k, v in pairs(src) do
+			copy[k] = DeepCopy(v)
+		end
+		return copy
+	end
+
+	function W:TryApplyDefaultPrivateProfile()
+		local privateDB = _G.ElvPrivateDB
+		local profileDB = _G.ElvDB
+		if not (privateDB and profileDB) then return end
+
+		if not E.global.WT.core then E.global.WT.core = {} end
+		if not E.global.WT.core.initializedPrivateChars then
+			E.global.WT.core.initializedPrivateChars = {}
+		end
+
+		local charKey = E.mynameRealm
+		if E.global.WT.core.initializedPrivateChars[charKey] then return end
+
+		E.global.WT.core.initializedPrivateChars[charKey] = true
+
+		local profileKeys = privateDB.profileKeys
+		local profiles = privateDB.profiles
+		if not (profileKeys and profiles) then return end
+
+		local dbProfileKeys = profileDB.profileKeys
+		if not dbProfileKeys then return end
+
+		local myElvUIProfile = dbProfileKeys[charKey]
+		if not myElvUIProfile then return end
+
+		local myPrivateKey = profileKeys[charKey]
+		if not myPrivateKey then return end
+
+		for otherCharKey, elvUIProfile in pairs(dbProfileKeys) do
+			if elvUIProfile == myElvUIProfile and otherCharKey ~= charKey then
+				local otherPrivateKey = profileKeys[otherCharKey]
+				if otherPrivateKey then
+					local otherProfile = profiles[otherPrivateKey]
+					if otherProfile and otherProfile.WT and next(otherProfile.WT) then
+						local myProfile = profiles[myPrivateKey]
+						if not myProfile then
+							profiles[myPrivateKey] = {}
+							myProfile = profiles[myPrivateKey]
+						end
+						myProfile.WT = DeepCopy(otherProfile.WT)
+						return
+					end
+				end
+			end
+		end
+	end
+end
+
 do
 	local checked = false
 	function W:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
 		if isInitialLogin then
+			self:TryApplyDefaultPrivateProfile()
 			E:Delay(6, self.ChangelogReadAlert, self)
 			if E.global.WT.core.loginMessage then
 				local icon = addon[2].GetIconString(self.Media.Textures.smallLogo, 14)

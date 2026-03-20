@@ -9,6 +9,8 @@ G.core = {
 	cvarAlert = false,
 	fixSetPassThroughButtons = false,
 	loginMessage = true,
+	syncPrivateProfile = false,
+	syncPrivateProfileSource = "",
 }
 
 G.developer = {

@@ -61,6 +61,22 @@ options.core = {
 				E:StaticPopup_Show("PRIVATE_RL")
 			end,
 		},
+		syncPrivateProfile = {
+			order = 5,
+			type = "toggle",
+			name = L["Sync Private Profile"],
+			desc = L["Auto-copy WindTools private settings from the current character when a new character logs in for the first time."],
+			get = function(info)
+				return E.global.WT.core.syncPrivateProfile
+			end,
+			set = function(info, value)
+				E.global.WT.core.syncPrivateProfile = value
+				if value then
+					E.global.WT.core.syncPrivateProfileSource = E.mynameRealm
+				end
+			end,
+			width = 2,
+		},
 	},
 }
 

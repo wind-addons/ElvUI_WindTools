@@ -1308,7 +1308,7 @@ function I:NotifyInspect(unit)
 	end
 
 	local success, guid = pcall(UnitGUID, unit)
-	if success and guid then
+	if success and E:NotSecretValue(guid) and guid then
 		self.inspecting[guid] = unit
 	end
 end

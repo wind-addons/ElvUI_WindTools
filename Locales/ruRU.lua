@@ -330,7 +330,7 @@ L["Buttons Per Row"] = "Кнопок в ряду"
 L["Buttons matching any of these patterns will be hidden."] = "Кнопки, соответствующие любому из этих шаблонов, будут скрыты."
 L["Buttons matching any of these patterns will be ignored, meaning they won't be moved to the bar or hidden."] = "Кнопки, соответствующие любому из этих шаблонов, будут проигнорированы, то есть они не будут перемещены на панель или скрыты."
 L["Buttons matching earlier patterns will appear first."] = "Кнопки, соответствующие ранее установленным шаблонам, будут отображаться первыми."
-L["By default, WindTools only embed latest expansion data for objective progress."] = true
+L["By default, WindTools only embed latest expansion data for objective progress."] = "По умолчанию WindTools отображает только последние данные о дополнениях WoW для отслеживания прогресса."
 L["CDKey"] = "Активировать код"
 L["CENTER"] = "ЦЕНТР"
 L["CTRL+A: Select All"] = "CTRL+A: Выбрать все"
@@ -569,7 +569,7 @@ L["Do not show quest level if the quest level is the same as the maximum level o
 L["Do not show quest level if the quest level is the same as your current level."] = "Не показывать уровень задания, если он совпадает с Вашим текущим уровнем."
 L["Don't forget to set you favorite bar texture in BigWigs option!"] = "Не забудьте установить свою любимую текстуру полосы в опции BigWigs!"
 L["Donate"] = "Пожертвовать"
-L["Download All Data"] = true
+L["Download All Data"] = "Загрузить все данные"
 L["Drag"] = "Растянуто"
 L["Dragon"] = "Дракон"
 L["Dragonbane Keep"] = "Осада Крепости"
@@ -821,7 +821,7 @@ L["If you find the %s module conflicts with another addon, alert me via Discord.
 L["If you found the CVars changed automatically, please check other addons."] = "Если Вы обнаружили, что CVars изменились автоматически, проверьте другие аддоны."
 L["If you select 'Do Nothing', the objective tracker will remain unchanged and try match the next condition."] = "Если вы выберете 'Ничего не делать', трекер целей останется без изменений и попытается соответствовать следующему условию."
 L["If you want to destroy totems by macro, or combine with other actions, you can use the following macro text."] = "Если Вы хотите уничтожить тотемы с помощью макроса или объединить это с другими действиями, то можете использовать следующий текст макроса."
-L["If you want to show the progress of older expansions, you can click this button to download the optional addon for all expansions."] = true
+L["If you want to show the progress of older expansions, you can click this button to download the optional addon for all expansions."] = "Если Вы хотите показать прогресс разработки более ранних дополнений, то можете нажать эту кнопку, чтобы загрузить необязательное дополнение для всех расширений."
 L["Ignore Earned Before"] = "Игнорировать полученные ранее"
 L["Ignore List"] = "Черный список"
 L["Ignore Manual Toggle"] = "Игнорировать ручное переключение"

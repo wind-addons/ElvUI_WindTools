@@ -3,8 +3,8 @@
 ..\FrameXML\UI.xsd">
     <Script file="LibItemEnchant\LibItemEnchant.lua"/>
     <Script file="LibKeystone\LibKeystone.lua"/>
-    <Script file="LibObjectiveProgress\LibObjectiveProgress.lua"/>
-    <Script file="LibObjectiveProgress\ProgressWeightData.lua"/>
+    <Script file="LibObjectiveProgressWT\LibObjectiveProgress.lua"/>
+    <Script file="LibObjectiveProgressWT\ProgressWeightData.lua"/>
     <Script file="LibRangeCheck-3.0\LibRangeCheck-3.0.lua"/>
     <Include file="LibOpenRaid\lib.xml"/>
 </Ui>

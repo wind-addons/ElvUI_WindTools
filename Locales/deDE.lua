@@ -330,6 +330,7 @@ L["Buttons Per Row"] = "Tasten pro Zeile"
 L["Buttons matching any of these patterns will be hidden."] = "Tasten, die einem dieser Muster entsprechen, werden ausgeblendet."
 L["Buttons matching any of these patterns will be ignored, meaning they won't be moved to the bar or hidden."] = "Tasten, die einem dieser Muster entsprechen, werden ignoriert, d. h. sie werden weder in die Leiste verschoben noch ausgeblendet."
 L["Buttons matching earlier patterns will appear first."] = "Tasten, die früheren Mustern entsprechen, werden zuerst angezeigt."
+L["By default, WindTools only embed latest expansion data for objective progress."] = true
 L["CDKey"] = true
 L["CENTER"] = "Zentrum"
 L["CTRL+A: Select All"] = "CTRL+A: Alles Auswählen"
@@ -568,6 +569,7 @@ L["Do not show quest level if the quest level is the same as the maximum level o
 L["Do not show quest level if the quest level is the same as your current level."] = "Die Queststufe soll nicht angezeigt werden, wenn die Queststufe mit deiner aktuellen Stufe übereinstimmt."
 L["Don't forget to set you favorite bar texture in BigWigs option!"] = "Vergesse nicht, Deine bevorzugte Leistentextur in den BigWigs Optionen einzustellen!"
 L["Donate"] = "Spenden"
+L["Download All Data"] = true
 L["Drag"] = "Ziehen"
 L["Dragon"] = "Drachen"
 L["Dragonbane Keep"] = "Drachenfluchfestung"
@@ -819,6 +821,7 @@ L["If you find the %s module conflicts with another addon, alert me via Discord.
 L["If you found the CVars changed automatically, please check other addons."] = "Wenn Du feststellst, dass sich die CVars automatisch geändert haben, überprüfe bitte andere Addons."
 L["If you select 'Do Nothing', the objective tracker will remain unchanged and try match the next condition."] = "Wenn Du „Nichts tun“ auswählst, bleibt der Zielverfolgungs-Tracker unverändert und versucht, die nächste Bedingung zu erfüllen."
 L["If you want to destroy totems by macro, or combine with other actions, you can use the following macro text."] = "Wenn Du Totems per Makro zerstören oder mit anderen Aktionen kombinieren möchtest, kannst Du den folgenden Makrotext verwenden."
+L["If you want to show the progress of older expansions, you can click this button to download the optional addon for all expansions."] = true
 L["Ignore Earned Before"] = "Vorher verdiente Erfolge ignorieren"
 L["Ignore List"] = "Ingnoriere Liste"
 L["Ignore Manual Toggle"] = true

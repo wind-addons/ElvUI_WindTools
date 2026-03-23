@@ -330,6 +330,7 @@ L["Buttons Per Row"] = "한 줄당 버튼 수"
 L["Buttons matching any of these patterns will be hidden."] = "이 패턴과 일치하는 버튼은 숨겨집니다."
 L["Buttons matching any of these patterns will be ignored, meaning they won't be moved to the bar or hidden."] = "이 패턴과 일치하는 버튼은 무시되어, 바에 이동되거나 숨겨지지 않습니다."
 L["Buttons matching earlier patterns will appear first."] = "앞쪽 패턴과 일치하는 버튼이 먼저 표시됩니다."
+L["By default, WindTools only embed latest expansion data for objective progress."] = true
 L["CDKey"] = true
 L["CENTER"] = "중앙"
 L["CTRL+A: Select All"] = "CTRL+A: 모두 선택"
@@ -568,6 +569,7 @@ L["Do not show quest level if the quest level is the same as the maximum level o
 L["Do not show quest level if the quest level is the same as your current level."] = "현재 레벨과 같으면 숨김"
 L["Don't forget to set you favorite bar texture in BigWigs option!"] = "BigWigs 옵션에서 바 설정하는 것을 잊지 마세요"
 L["Donate"] = "기부"
+L["Download All Data"] = true
 L["Drag"] = "제한 없음"
 L["Dragon"] = "용"
 L["Dragonbane Keep"] = "성채 공성전"
@@ -819,6 +821,7 @@ L["If you find the %s module conflicts with another addon, alert me via Discord.
 L["If you found the CVars changed automatically, please check other addons."] = "CVar가 자동으로 변경되는 것을 발견하면 다른 애드온을 확인하십시오."
 L["If you select 'Do Nothing', the objective tracker will remain unchanged and try match the next condition."] = "‘아무 것도 하지 않음’을 선택하면 목표 추적기는 변경되지 않고 다음 조건을 시도합니다."
 L["If you want to destroy totems by macro, or combine with other actions, you can use the following macro text."] = "매크로로 토템을 파괴하거나 다른 동작과 결합하려면 다음 매크로 텍스트를 사용할 수 있습니다."
+L["If you want to show the progress of older expansions, you can click this button to download the optional addon for all expansions."] = true
 L["Ignore Earned Before"] = "이전에 획득한 것은 무시"
 L["Ignore List"] = "제외 목록"
 L["Ignore Manual Toggle"] = "수동 전환 무시"

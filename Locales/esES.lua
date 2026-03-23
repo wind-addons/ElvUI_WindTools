@@ -330,6 +330,7 @@ L["Buttons Per Row"] = "Botones por Fila"
 L["Buttons matching any of these patterns will be hidden."] = true
 L["Buttons matching any of these patterns will be ignored, meaning they won't be moved to the bar or hidden."] = true
 L["Buttons matching earlier patterns will appear first."] = "Los botones que coincidan con patrones anteriores aparecerán primero."
+L["By default, WindTools only embed latest expansion data for objective progress."] = true
 L["CDKey"] = "CDKey"
 L["CENTER"] = "CENTRO"
 L["CTRL+A: Select All"] = "CTRL+A: Seleccionar todo"
@@ -568,6 +569,7 @@ L["Do not show quest level if the quest level is the same as the maximum level o
 L["Do not show quest level if the quest level is the same as your current level."] = "No mostrar el nivel de misión si es igual a tu nivel actual."
 L["Don't forget to set you favorite bar texture in BigWigs option!"] = "¡No olvides establecer tu textura de barra favorita en las opciones de BigWigs!"
 L["Donate"] = "Donar"
+L["Download All Data"] = true
 L["Drag"] = "Arrastre"
 L["Dragon"] = "Dragón"
 L["Dragonbane Keep"] = "Fortaleza de Dragónbrío"
@@ -819,6 +821,7 @@ L["If you find the %s module conflicts with another addon, alert me via Discord.
 L["If you found the CVars changed automatically, please check other addons."] = "Si has encontrado que las CVar han cambiado automáticamente, por favor, revisa otros addons."
 L["If you select 'Do Nothing', the objective tracker will remain unchanged and try match the next condition."] = true
 L["If you want to destroy totems by macro, or combine with other actions, you can use the following macro text."] = true
+L["If you want to show the progress of older expansions, you can click this button to download the optional addon for all expansions."] = true
 L["Ignore Earned Before"] = "Ignorar obtenidos antes"
 L["Ignore List"] = "Lista de Ignorados"
 L["Ignore Manual Toggle"] = true

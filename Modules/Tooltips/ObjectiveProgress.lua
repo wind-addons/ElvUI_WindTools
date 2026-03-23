@@ -53,8 +53,6 @@ local function addObjectiveProgress(tt, data)
 				end
 			end
 		end
-		OP:ReleaseTable(weightsTable)
-		weightsTable = nil
 	end
 
 	local difficultyID = select(3, GetInstanceInfo())

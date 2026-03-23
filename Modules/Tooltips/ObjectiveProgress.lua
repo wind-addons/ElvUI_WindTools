@@ -1,6 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local T = W.Modules.Tooltips
-local OP = LibStub("LibObjectiveProgress", true) or E.Libs.ObjectiveProgressWT
 
 local _G = _G
 local format = format
@@ -30,6 +29,7 @@ local function AddObjectiveProgress(tt, data)
 
 	npcID = tonumber(npcID)
 
+	local OP = LibStub("LibObjectiveProgress", true) or E.Libs.ObjectiveProgressWT
 	local weightsTable = OP:GetNPCWeightByCurrentQuests(npcID)
 	if not weightsTable then
 		return

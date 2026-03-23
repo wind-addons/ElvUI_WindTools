@@ -455,10 +455,12 @@ function S:AlertFrames()
 	self:SecureHook(_G.EntitlementDeliveredAlertSystem, "setUpFunction", "SkinAlert")
 	self:SecureHook(_G.RafRewardDeliveredAlertSystem, "setUpFunction", "SkinRafRewardDeliveredAlert")
 	self:SecureHook(_G.HousingItemEarnedAlertFrameSystem, "setUpFunction", "SkinHousingItemEarnedAlert")
+	self:SecureHook(_G.InitiativeTaskCompleteAlertFrameSystem, "setUpFunction", "SkinHousingItemEarnedAlert")
 
 	-- Professions
 	self:SecureHook(_G.DigsiteCompleteAlertSystem, "setUpFunction", "SkinDigsiteCompleteAlert")
 	self:SecureHook(_G.NewRecipeLearnedAlertSystem, "setUpFunction", "SkinNewRecipeLearnedAlert")
+	self:SecureHook(_G.SkillLineSpecsUnlockedAlertSystem, "setUpFunction", "SkinNewRecipeLearnedAlert")
 
 	-- Pets/Mounts
 	self:SecureHook(_G.NewPetAlertSystem, "setUpFunction", "SkinNewItemAlert")

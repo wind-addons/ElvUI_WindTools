@@ -850,5 +850,29 @@ options.objectiveProgress = {
 			max = 5,
 			step = 1,
 		},
+		resourcePage = {
+			order = 3,
+			type = "execute",
+			name = F.GetWindStyleText(L["Download All Data"]),
+			desc = format(
+				"%s\n%s\n\n|cff00d1b2%s|r (%s)\n%s\n%s\n%s",
+				L["By default, WindTools only embed latest expansion data for objective progress."],
+				L["If you want to show the progress of older expansions, you can click this button to download the optional addon for all expansions."],
+				L["Tips"],
+				L["Editbox"],
+				L["CTRL+A: Select All"],
+				L["CTRL+C: Copy"],
+				L["CTRL+V: Paste"]
+			),
+			func = function()
+				E:StaticPopup_Show(
+				"WINDTOOLS_EDITBOX",
+					nil,
+					nil,
+					"https://github.com/wind-addons/LibObjectiveProgress-1.0/releases"
+				)
+			end,
+			width = 1.2,
+		},
 	},
 }

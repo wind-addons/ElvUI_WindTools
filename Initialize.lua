@@ -133,10 +133,31 @@ function W:Initialize()
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
+-- Auto-copy private profile for new characters from the designated source
+function W:TryApplyDefaultPrivateProfile()
+	if not E.global.WT.core.syncPrivateProfile then return end
+
+	if not E.global.WT.core.initializedPrivateChars then
+		E.global.WT.core.initializedPrivateChars = {}
+	end
+
+	local charKey = E.mynameRealm
+	if E.global.WT.core.initializedPrivateChars[charKey] then return end
+
+	local sourceChar = E.global.WT.core.syncPrivateProfileSource
+	if not sourceChar or sourceChar == "" or sourceChar == charKey then return end
+
+	E.global.WT.core.initializedPrivateChars[charKey] = true
+
+	-- Same as manually doing "Profiles > Per Character > Copy From"
+	E.charSettings:CopyProfile(sourceChar)
+end
+
 do
 	local checked = false
 	function W:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
 		if isInitialLogin then
+			self:TryApplyDefaultPrivateProfile()
 			E:Delay(6, self.ChangelogReadAlert, self)
 			if E.global.WT.core.loginMessage then
 				local icon = addon[2].GetIconString(self.Media.Textures.smallLogo, 14)

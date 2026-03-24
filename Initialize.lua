@@ -12,6 +12,7 @@ local next = next
 local print = print
 local strfind = strfind
 local strmatch = strmatch
+local tContains = tContains
 
 local C_AddOns_GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 
@@ -133,31 +134,31 @@ function W:Initialize()
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
--- Auto-copy private profile for new characters from the designated source
-function W:TryApplyDefaultPrivateProfile()
-	if not E.global.WT.core.syncPrivateProfile then return end
-
-	if not E.global.WT.core.initializedPrivateChars then
-		E.global.WT.core.initializedPrivateChars = {}
+function W:AutoCopyPrivateProfile()
+	if
+		not E.global.WT.core.autoCopyPrivateProfile.enable
+		or E.global.WT.core.autoCopyPrivateProfile.initializedCharacters[E.mynameRealm]
+	then
+		return
 	end
 
-	local charKey = E.mynameRealm
-	if E.global.WT.core.initializedPrivateChars[charKey] then return end
+	local copyFrom = E.global.WT.core.autoCopyPrivateProfile.copyFrom
+	if not copyFrom or E.charSettings:GetCurrentProfile() == copyFrom then
+		return
+	end
 
-	local sourceChar = E.global.WT.core.syncPrivateProfileSource
-	if not sourceChar or sourceChar == "" or sourceChar == charKey then return end
-
-	E.global.WT.core.initializedPrivateChars[charKey] = true
-
-	-- Same as manually doing "Profiles > Per Character > Copy From"
-	E.charSettings:CopyProfile(sourceChar)
+	local profiles = E.charSettings:GetProfiles()
+	if tContains(profiles, copyFrom) then
+		E.charSettings:CopyProfile(copyFrom)
+		E.global.WT.core.autoCopyPrivateProfile.initializedCharacters[E.mynameRealm] = true
+	end
 end
 
 do
 	local checked = false
 	function W:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
 		if isInitialLogin then
-			self:TryApplyDefaultPrivateProfile()
+			self:AutoCopyPrivateProfile()
 			E:Delay(6, self.ChangelogReadAlert, self)
 			if E.global.WT.core.loginMessage then
 				local icon = addon[2].GetIconString(self.Media.Textures.smallLogo, 14)

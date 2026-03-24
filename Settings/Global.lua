@@ -9,8 +9,11 @@ G.core = {
 	cvarAlert = false,
 	fixSetPassThroughButtons = false,
 	loginMessage = true,
-	syncPrivateProfile = false,
-	syncPrivateProfileSource = "",
+	autoCopyPrivateProfile = {
+		enable = false,
+		copyFrom = nil,
+		initializedCharacters = {},
+	},
 }
 
 G.developer = {

@@ -61,22 +61,6 @@ options.core = {
 				E:StaticPopup_Show("PRIVATE_RL")
 			end,
 		},
-		syncPrivateProfile = {
-			order = 5,
-			type = "toggle",
-			name = L["Sync Private Profile"],
-			desc = L["Auto-copy WindTools private settings from the current character when a new character logs in for the first time."],
-			get = function(info)
-				return E.global.WT.core.syncPrivateProfile
-			end,
-			set = function(info, value)
-				E.global.WT.core.syncPrivateProfile = value
-				if value then
-					E.global.WT.core.syncPrivateProfileSource = E.mynameRealm
-				end
-			end,
-			width = 2,
-		},
 	},
 }
 
@@ -1196,6 +1180,76 @@ do
 							L["Check the setting of ElvUI Private database in ElvUI Options -> Profiles -> Private (tab)."]
 						),
 						width = "full",
+					},
+				},
+			},
+			autoCopyPrivateProfileGroup = {
+				order = 3,
+				type = "group",
+				inline = true,
+				name = L["Auto Copy Private Profile"],
+				args = {
+					desc = {
+						order = 1,
+						type = "description",
+						name = format(
+							"%s\n%s\n%s\n%s",
+							L["Automatically copy the selected private profile to a new character on first login."],
+							L["This is useful when you have multiple characters but want to use a specific private profile as the starting point for new ones."],
+							L["If you simply want to share the same private settings across all characters, it is recommended to set the same private profile for them in ElvUI > Profiles > Private."],
+							L["Note: This feature only copies the private profile once per character. It does not synchronize settings afterwards."]
+						),
+					},
+					enable = {
+						order = 2,
+						type = "toggle",
+						name = L["Enable"],
+						get = function(info)
+							return E.global.WT.core.autoCopyPrivateProfile.enable
+						end,
+						set = function(info, value)
+							E.global.WT.core.autoCopyPrivateProfile.enable = value
+						end,
+					},
+					copyFrom = {
+						order = 3,
+						type = "select",
+						name = L["Copy From"],
+						desc = L["The profile from which the private settings will be copied."],
+						get = function(info)
+							return E.global.WT.core.autoCopyPrivateProfile.copyFrom or "__NOT_SET__"
+						end,
+						set = function(info, value)
+							E.global.WT.core.autoCopyPrivateProfile.copyFrom = value ~= "__NOT_SET__" and value
+						end,
+						hidden = function()
+							return not E.global.WT.core.autoCopyPrivateProfile.enable
+						end,
+						values = function()
+							local profilesNames = E.charSettings:GetProfiles()
+							local result = {
+								["__NOT_SET__"] = L["Not Set"],
+							}
+							for _, profileName in ipairs(profilesNames) do
+								result[profileName] = _G[profileName] or profileName
+							end
+							return result
+						end,
+						width = 1.5,
+					},
+					clearInitializedCharacters = {
+						order = 4,
+						type = "execute",
+						name = L["Clear Initialized Characters"],
+						desc = L["Clear the record of initialized characters, allowing the profile to be copied again on next login."],
+						func = function()
+							E.global.WT.core.autoCopyPrivateProfile.initializedCharacters = {}
+							E:StaticPopup_Show("PRIVATE_RL")
+						end,
+						hidden = function()
+							return not E.global.WT.core.autoCopyPrivateProfile.enable
+						end,
+						width = 1.5,
 					},
 				},
 			},

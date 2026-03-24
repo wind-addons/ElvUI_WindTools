@@ -79,6 +79,7 @@
 ---@field UnitFrames UnitFramesModule Unit frames module
 ---@field WorldMap WorldMapModule World map module
 ---@field Masque table Masque library reference
+---@field charSettings AceDBObject-3.0
 local E = {}
 
 ---@class ElvUIProfileDB

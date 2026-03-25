@@ -26,19 +26,19 @@ W.Changelog[417] = {
 	},
 	NEW = {
 		["zhCN"] = {
-			"[高级] - [配置文件] 中新增了一个选项, 允许为新角色自动拷贝角色专属配置.",
+			"[高级] - [配置文件] 中新增了一个选项, 允许为新角色自动拷贝 ElvUI 角色专属配置. 感谢 aquariuslt",
 		},
 		["zhTW"] = {
-			"[高級] - [配置文件] 中新增了一個選項, 允許為新角色自動拷貝角色專用設定檔.",
+			"[高級] - [配置文件] 中新增了一個選項, 允許為新角色自動拷貝 ElvUI 角色專用設定檔. 感謝 aquariuslt",
 		},
 		["enUS"] = {
-			"[Advanced] - [Profiles] has a new option that allows automatically copying private profile for new characters.",
+			"[Advanced] - [Profiles] has a new option that allows automatically copying ElvUI private profile for new characters. Thanks to aquariuslt",
 		},
 		["koKR"] = {
-			"[고급] - [프로필]에 새 옵션이 추가되어 새 캐릭터에 대한 개인 프로필을 자동으로 복사할 수 있습니다.",
+			"[고급] - [프로필]에 새로운 옵션이 추가되어 새 캐릭터에 대해 ElvUI 개인 프로필을 자동으로 복사할 수 있습니다. aquariuslt에게 감사드립니다.",
 		},
 		["ruRU"] = {
-			"[Расширенные] - [Профили] имеет новую опцию, которая позволяет автоматически копировать личный профиль для новых персонажей.",
+			"[Расширенные] - [Профили] имеет новую опцию, которая позволяет автоматически копировать личный профиль ElvUI для новых персонажей. Спасибо aquariuslt",
 		},
 	},
 	IMPROVEMENT = {

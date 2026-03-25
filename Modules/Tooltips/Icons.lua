@@ -181,7 +181,8 @@ function T:AddPetIcon(tt, unit, guid)
 end
 
 function T:ClearPetIcon(tt)
-	if tt.petIcon and tt.petIcon:GetAlpha() ~= 0 then
+	local alpha = tt.petIcon and tt.petIcon:GetAlpha()
+	if alpha and not hasanysecretvalues(alpha) and alpha ~= 0 then
 		tt.petIcon:SetAlpha(0)
 	end
 end

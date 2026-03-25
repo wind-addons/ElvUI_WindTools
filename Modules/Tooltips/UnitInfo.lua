@@ -66,7 +66,7 @@ function T:SetUnitText(_, tt, unit, isPlayerUnit)
 		end
 
 		local specText = specLine and specLine:GetText()
-		if specText then
+		if E:NotSecretValue(specText) and specText then
 			local localeClass, class, classID = UnitClass(unit)
 			if not localeClass or not class then
 				return

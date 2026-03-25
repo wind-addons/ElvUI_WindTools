@@ -721,7 +721,7 @@ function S:TryCropTexture(tex)
 
 	local textureID = tex:GetTexture()
 
-	if hasanysecretvalues(textureID) then
+	if not E:NotSecretValue(textureID) then
 		return
 	end
 

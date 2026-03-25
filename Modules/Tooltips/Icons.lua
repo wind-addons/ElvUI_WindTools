@@ -182,7 +182,7 @@ end
 
 function T:ClearPetIcon(tt)
 	local alpha = tt.petIcon and tt.petIcon:GetAlpha()
-	if alpha and not hasanysecretvalues(alpha) and alpha ~= 0 then
+	if alpha and E:NotSecretValue(alpha) and alpha ~= 0 then
 		tt.petIcon:SetAlpha(0)
 	end
 end

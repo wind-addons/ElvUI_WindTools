@@ -74,10 +74,10 @@ function T:TierSet(tt, _, guid)
 	for i = 1, tt:NumLines() do
 		local leftTip = _G["GameTooltipTextLeft" .. i]
 		local leftTipText = leftTip:GetText()
-		if leftTipText and not hasanysecretvalues(leftTipText) and leftTipText == L["Item Level:"] then
+		if leftTipText and E:NotSecretValue(leftTipText) and leftTipText == L["Item Level:"] then
 			local rightTip = _G["GameTooltipTextRight" .. i]
 			local rightTipText = rightTip:GetText()
-			if rightTipText and not hasanysecretvalues(rightTipText) then
+			if rightTipText and E:NotSecretValue(rightTipText) then
 				rightTip:SetText(formatSets[#cache[guid]] .. "|r " .. rightTipText)
 			end
 			return

@@ -42,8 +42,9 @@ local function AddObjectiveProgress(tt, data)
 		if info and info.title then
 			for i = 1, tt:NumLines() do
 				local text = _G["GameTooltipTextLeft" .. i]
-				if text and text:GetText() == info.title then
-					text:SetText(text:GetText() .. format(" + %s%%", E:Round(npcWeight, accuracy)))
+				local textStr = text and text:GetText()
+				if textStr and E:NotSecretValue(textStr) and textStr == info.title then
+					text:SetText(textStr .. format(" + %s%%", E:Round(npcWeight, accuracy)))
 				end
 			end
 		end

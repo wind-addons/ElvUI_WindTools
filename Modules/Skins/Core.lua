@@ -721,7 +721,10 @@ function S:TryCropTexture(tex)
 
 	local textureID = tex:GetTexture()
 
-	-- Skip the check if the texture is an atlas or a custom texture
+	if hasanysecretvalues(textureID) then
+		return
+	end
+
 	if type(textureID) == "number" and textureID <= 0 then
 		return
 	end

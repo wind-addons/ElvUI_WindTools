@@ -176,14 +176,13 @@ function T:AddPetIcon(tt, unit, guid)
 		end
 		tt.petIcon:SetTexture("Interface\\PetBattles\\PetIcon-" .. PET_TYPE_SUFFIX[UnitBattlePetType(unit)])
 		tt.petIcon:SetTexCoord(0.188, 0.883, 0, 0.348)
-		tt.petIcon:SetAlpha(1)
+		tt.petIcon:Show()
 	end
 end
 
 function T:ClearPetIcon(tt)
-	local alpha = tt.petIcon and tt.petIcon:GetAlpha()
-	if alpha and E:NotSecretValue(alpha) and alpha ~= 0 then
-		tt.petIcon:SetAlpha(0)
+	if tt.petIcon then
+		tt.petIcon:Hide()
 	end
 end
 

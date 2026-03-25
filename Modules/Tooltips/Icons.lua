@@ -150,17 +150,18 @@ function T:AddFactionIcon(tt, unit, guid)
 				f:Point("TOPRIGHT", 0, -5)
 				f:Size(35)
 				f:SetBlendMode("ADD")
+				f:SetAlpha(0.5)
 				tt.factionFrame = f
 			end
 			tt.factionFrame:SetTexture("Interface\\FriendsFrame\\PlusManz-" .. faction)
-			tt.factionFrame:SetAlpha(0.5)
+			tt.factionFrame:Show()
 		end
 	end
 end
 
 function T:ClearFactionIcon(tt)
-	if tt.factionFrame and tt.factionFrame:GetAlpha() ~= 0 then
-		tt.factionFrame:SetAlpha(0)
+	if tt.factionFrame then
+		tt.factionFrame:Hide()
 	end
 end
 

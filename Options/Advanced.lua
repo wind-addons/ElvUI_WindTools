@@ -4,6 +4,7 @@ local C = W.Utilities.Color
 
 local _G = _G
 local format = format
+local ipairs = pairs
 
 local C_UI_Reload = C_UI.Reload
 

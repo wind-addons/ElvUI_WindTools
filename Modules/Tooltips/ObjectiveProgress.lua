@@ -1,5 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local T = W.Modules.Tooltips
+local LibStub = LibStub
 
 local _G = _G
 local format = format

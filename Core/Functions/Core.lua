@@ -451,6 +451,9 @@ function F.Move(frame, x, y)
 
 	for i = 1, frame:GetNumPoints() do
 		local point, relativeTo, relativePoint, xOfs, yOfs = frame:GetPoint(i)
+		if not E:NotSecretValue(xOfs) or not E:NotSecretValue(yOfs) then
+			return
+		end
 		pointsData[i] = { point, relativeTo, relativePoint, xOfs, yOfs }
 	end
 

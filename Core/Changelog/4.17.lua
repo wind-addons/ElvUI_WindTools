@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...))) ---@type WindTools
 
 W.Changelog[417] = {
-	RELEASE_DATE = "2026/03/25",
+	RELEASE_DATE = "2026/03/26",
 	IMPORTANT = {
 		["zhCN"] = {
 			"最低支持的 ElvUI 版本提升到 15.10.",
@@ -27,18 +27,23 @@ W.Changelog[417] = {
 	NEW = {
 		["zhCN"] = {
 			"[高级] - [配置文件] 中新增了一个选项, 允许为新角色自动拷贝 ElvUI 角色专属配置. 感谢 aquariuslt",
+			"[怪物狩猎] 新增附近陷阱数量提示. 默认开启.",
 		},
 		["zhTW"] = {
 			"[高級] - [配置文件] 中新增了一個選項, 允許為新角色自動拷貝 ElvUI 角色專用設定檔. 感謝 aquariuslt",
+			"[怪物狩獵] 新增附近陷阱數量提示. 預設開啟.",
 		},
 		["enUS"] = {
 			"[Advanced] - [Profiles] has a new option that allows automatically copying ElvUI private profile for new characters. Thanks to aquariuslt",
+			"[Prey Hunt] Added nearby trap count display. Enabled by default.",
 		},
 		["koKR"] = {
 			"[고급] - [프로필]에 새로운 옵션이 추가되어 새 캐릭터에 대해 ElvUI 개인 프로필을 자동으로 복사할 수 있습니다. aquariuslt에게 감사드립니다.",
+			"[먹이 사냥] 근처 함정 수 표시가 추가되었습니다. 기본적으로 활성화되어 있습니다.",
 		},
 		["ruRU"] = {
 			"[Расширенные] - [Профили] появилась новая опция, которая позволяет автоматически копировать личный профиль ElvUI для новых персонажей. Спасибо aquariuslt",
+			"[Охота на добычу] Добавлено отображение количества ловушек поблизости. Включено по умолчанию.",
 		},
 	},
 	IMPROVEMENT = {

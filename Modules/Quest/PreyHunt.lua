@@ -152,7 +152,7 @@ function PH:RefreshVignetteText()
 					return (info and info.vignetteID == vignetteID) and 1 or 0
 				end)
 				if count > 0 then
-					vignetteCounts[#vignetteCounts + 1] = format(" %d|A:%s:14:14|a", count, data.atlas)
+					vignetteCounts[#vignetteCounts + 1] = format("|A:%s:14:14|a x %d", data.atlas, count)
 					hasAny = true
 				end
 			end

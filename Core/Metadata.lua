@@ -38,14 +38,14 @@ W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
 W.MythicPlusMapData = {
 	-- https://wago.tools/db2/MapChallengeMode
 	-- https://wago.tools/db2/GroupFinderActivityGrp
-	[557] = { abbr = L["[ABBR] Windrunner Spire"], activityID = 370, timers = { 1206, 1608, 2010 } },
+	[557] = { abbr = L["[ABBR] Windrunner Spire"], activityID = 370, timers = { 1188, 1584, 1980 } },
 	[558] = { abbr = L["[ABBR] Magisters' Terrace"], activityID = 399, timers = { 1224, 1632, 2040 } },
 	[559] = { abbr = L["[ABBR] Nexus-Point Xenas"], activityID = 401, timers = { 1080, 1440, 1800 } },
 	[560] = { abbr = L["[ABBR] Maisara Caverns"], activityID = 400, timers = { 1188, 1584, 1980 } },
 	[161] = { abbr = L["[ABBR] Skyreach"], activityID = 9, timers = { 1008, 1344, 1680 } },
 	[402] = { abbr = L["[ABBR] Algeth'ar Academy"], activityID = 302, timers = { 1044, 1392, 1740 } },
 	[556] = { abbr = L["[ABBR] Pit of Saron"], activityID = 52, timers = { 1080, 1440, 1800 } },
-	[583] = { abbr = L["[ABBR] Seat of the Triumvirate"], activityID = 133, timers = { 1200, 1200, 1200 } },
+	[239] = { abbr = L["[ABBR] Seat of the Triumvirate"], activityID = 133, timers = { 1260, 1680, 2100 } },
 }
 
 function W:GetMythicPlusMapData()

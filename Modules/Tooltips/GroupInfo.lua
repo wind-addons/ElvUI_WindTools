@@ -31,7 +31,7 @@ end
 local function clearEmptyTooltipLine(line)
 	if line then
 		local raw = line:GetText()
-		if raw and gsub(raw, "%s+$", "") == "" then
+		if E:NotSecretValue(raw) and raw and gsub(raw, "%s+$", "") == "" then
 			line:SetText("")
 		end
 	end

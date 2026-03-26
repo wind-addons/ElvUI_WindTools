@@ -27,11 +27,14 @@ local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
 local C_SuperTrack_GetSuperTrackedQuestID = C_SuperTrack.GetSuperTrackedQuestID
 local C_SuperTrack_SetSuperTrackedQuestID = C_SuperTrack.SetSuperTrackedQuestID
 local C_TaskQuest_GetQuestsOnMap = C_TaskQuest.GetQuestsOnMap
+local C_VignetteInfo_GetVignetteInfo = C_VignetteInfo.GetVignetteInfo
+local C_VignetteInfo_GetVignettes = C_VignetteInfo.GetVignettes
 local Enum_QuestWatchType_Automatic = Enum.QuestWatchType.Automatic
 
 local PREY_UI_WIDGET_TYPE = Enum.UIWidgetVisualizationType.PreyHuntProgress
 local PREY_WORLD_QUEST_TYPE = Enum.QuestTagType.Prey
 local AUTO_TRACK_THROTTLE = 2
+local TRAP_ATLAS = "|A:Vehicle-Trap-Gold:14:14|a"
 
 local function NotifyStartTracking(questID)
 	local title = tostring(C_QuestLog_GetTitleForQuestID(questID) or questID)
@@ -74,25 +77,97 @@ function PH:HandleWidget(container, widgetID, widgetType)
 		F.InternalizeMethod(frame.StageText, "SetAlpha", true)
 	end
 
+	if not frame.TrapText then
+		frame.TrapText = frame:CreateFontString(nil, "OVERLAY")
+		frame.TrapText:SetJustifyH("CENTER")
+		F.InternalizeMethod(frame.TrapText, "SetAlpha", true)
+	end
+
 	frame:SetShown(not self.db.enable or not self.db.progressWidget.hide)
 
-	if self.db.enable and self.db.progressWidget.stageText.enable then
-		F.SetFontWithDB(frame.StageText, self.db.progressWidget.stageText)
-		F.SetFontColorWithDB(frame.StageText, self.db.progressWidget.stageText.color)
-		frame.StageText:ClearAllPoints()
-		frame.StageText:Point(
-			"BOTTOM",
-			frame,
-			"TOP",
-			self.db.progressWidget.stageText.xOffset,
-			self.db.progressWidget.stageText.yOffset
-		)
-		local prefix = self.db.progressWidget.stageText.label and L["Stage"] .. ": " or ""
-		local template = prefix .. self.db.progressWidget.stageText.template
-		frame.StageText:SetText(format(template, tonumber(frame.progressState or 1) + 1))
-		frame.StageText:Show()
+	if self.db.enable then
+		if self.db.progressWidget.stageText.enable then
+			F.SetFontWithDB(frame.StageText, self.db.progressWidget.stageText)
+			F.SetFontColorWithDB(frame.StageText, self.db.progressWidget.stageText.color)
+			frame.StageText:ClearAllPoints()
+			frame.StageText:Point(
+				"BOTTOM",
+				frame,
+				"TOP",
+				self.db.progressWidget.stageText.xOffset,
+				self.db.progressWidget.stageText.yOffset
+			)
+			local prefix = self.db.progressWidget.stageText.label and L["Stage"] .. ": " or ""
+			local template = prefix .. self.db.progressWidget.stageText.template
+			frame.StageText:SetText(format(template, tonumber(frame.progressState or 1) + 1))
+			frame.StageText:Show()
+		else
+			frame.StageText:Hide()
+		end
+
+		if self.db.progressWidget.trapText.enable then
+			F.SetFontWithDB(frame.TrapText, self.db.progressWidget.trapText)
+			frame.TrapText:ClearAllPoints()
+			frame.TrapText:Point(
+				"BOTTOM",
+				frame.StageText,
+				"TOP",
+				self.db.progressWidget.trapText.xOffset,
+				self.db.progressWidget.trapText.yOffset + 3
+			)
+			self:RefreshTrapText()
+			frame.TrapText:Show()
+			self:RegisterTrapEvent()
+		else
+			frame.TrapText:Hide()
+			self:UnregisterTrapEvent()
+		end
 	else
 		frame.StageText:Hide()
+		frame.TrapText:Hide()
+		self:UnregisterTrapEvent()
+	end
+end
+
+function PH:RefreshTrapText()
+	local count = AccumulateOp(C_VignetteInfo_GetVignettes() or {}, function(id)
+		local info = C_VignetteInfo_GetVignetteInfo(id)
+		return (info and info.vignetteID == 7667) and 1 or 0
+	end)
+
+	local text
+	if count > 0 then
+		text = C.StringByTemplate(TRAP_ATLAS .. " " .. format(L["%d |4trap:traps; nearby"], count), "amber-500")
+	else
+		text = C.StringByTemplate(TRAP_ATLAS .. " " .. L["No trap nearby"], "gray-400")
+	end
+
+	for _, frame in pairs(_G.UIWidgetPowerBarContainerFrame.widgetFrames) do
+		if frame and frame.widgetType and frame.widgetType == PREY_UI_WIDGET_TYPE and frame.TrapText then
+			frame.TrapText:SetText(text)
+		end
+	end
+end
+
+function PH:VIGNETTE_MINIMAP_UPDATED()
+	if not self.db or not self.db.enable or not self.db.progressWidget.trapText.enable then
+		return
+	end
+
+	self:RefreshTrapText()
+end
+
+function PH:RegisterTrapEvent()
+	if not self.trapEventsRegistered then
+		self:RegisterEvent("VIGNETTE_MINIMAP_UPDATED")
+		self.trapEventsRegistered = true
+	end
+end
+
+function PH:UnregisterTrapEvent()
+	if self.trapEventsRegistered then
+		self:UnregisterEvent("VIGNETTE_MINIMAP_UPDATED")
+		self.trapEventsRegistered = false
 	end
 end
 

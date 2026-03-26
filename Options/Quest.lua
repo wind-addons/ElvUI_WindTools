@@ -2915,6 +2915,79 @@ options.preyHunt = {
 						},
 					},
 				},
+				trapText = {
+					order = 3,
+					type = "group",
+					inline = true,
+					name = L["Trap Text"],
+					disabled = function()
+						return not E.db.WT.quest.preyHunt.enable
+					end,
+					hidden = function()
+						return E.db.WT.quest.preyHunt.progressWidget.hide
+					end,
+					get = function(info)
+						return E.db.WT.quest.preyHunt.progressWidget.trapText[info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.quest.preyHunt.progressWidget.trapText[info[#info]] = value
+						PH:ProfileUpdate()
+					end,
+					args = {
+						enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable"],
+						},
+						name = {
+							order = 2,
+							type = "select",
+							dialogControl = "LSM30_Font",
+							name = L["Font"],
+							values = LSM:HashTable("font"),
+						},
+						style = {
+							order = 3,
+							type = "select",
+							name = L["Outline"],
+							values = {
+								NONE = L["None"],
+								OUTLINE = L["Outline"],
+								THICKOUTLINE = L["Thick"],
+								SHADOW = L["|cff888888Shadow|r"],
+								SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+								SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+								MONOCHROME = L["|cFFAAAAAAMono|r"],
+								MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+								MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+							},
+						},
+						size = {
+							order = 4,
+							name = L["Size"],
+							type = "range",
+							min = 5,
+							max = 60,
+							step = 1,
+						},
+						xOffset = {
+							order = 5,
+							type = "range",
+							name = L["X-Offset"],
+							min = -100,
+							max = 100,
+							step = 1,
+						},
+						yOffset = {
+							order = 6,
+							type = "range",
+							name = L["Y-Offset"],
+							min = -100,
+							max = 100,
+							step = 1,
+						},
+					},
+				},
 			},
 		},
 		autoTrack = {

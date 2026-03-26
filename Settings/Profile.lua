@@ -1138,6 +1138,14 @@ P.quest = {
 				xOffset = 0,
 				yOffset = 0,
 			},
+			trapText = {
+				enable = true,
+				name = E.db.general.font,
+				size = 12,
+				style = "OUTLINE",
+				xOffset = 0,
+				yOffset = 0,
+			},
 		},
 		autoTrack = {
 			enable = true,

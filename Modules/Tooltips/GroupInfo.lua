@@ -48,7 +48,7 @@ local function cleanupBlizzardGroupInfo(tooltip)
 		local line = _G["GameTooltipTextLeft" .. i] ---@type FontString?
 		local raw = line and line:GetText()
 		---@cast line FontString
-		if raw then
+		if E:NotSecretValue(raw) and raw then
 			if raw == _G.MEMBERS_COLON then
 				line:SetText("")
 				clearEmptyTooltipLine(_G["GameTooltipTextLeft" .. (i - 1)])

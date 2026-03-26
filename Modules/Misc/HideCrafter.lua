@@ -29,7 +29,8 @@ local function removeCraftInformation(tooltip, data)
 			if line and strmatch(line, "^|cff00ff00<(.+)>|r$") then
 				for tooltipLineIndex = dataIndex, dataIndex + 2 do
 					local realLine = _G[tooltipName .. "TextLeft" .. tooltipLineIndex]
-					if realLine and realLine:GetText() == line then
+					local realText = realLine and realLine:GetText()
+					if E:NotSecretValue(realText) and realText == line then
 						realLine:SetText("")
 					end
 				end

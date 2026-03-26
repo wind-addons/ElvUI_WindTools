@@ -93,7 +93,7 @@ for i = 1, 10 do
 	tinsert(vaultItemLevel, weeklyItemLevel)
 end
 
-local affixAddedAtLevel = { 4, 7, 10, 12 }
+local affixAddedAtLevel = { "<6", "<12", "7", "10", "12" }
 
 local availableSortMode = {
 	"DEFAULT",
@@ -667,7 +667,7 @@ function LL:InitializeRightPanel()
 			local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixes[i].id)
 			_G.GameTooltip:AddLine(" ")
 			local level = affixAddedAtLevel[i] or 0
-			_G.GameTooltip:AddLine(format("%s (%d) %s", F.GetIconString(fileDataID, 16, 18, true), level, name))
+			_G.GameTooltip:AddLine(format("%s (%s) %s", F.GetIconString(fileDataID, 16, 18, true), level, name))
 			_G.GameTooltip:AddLine(description, 1, 1, 1, true)
 		end
 		_G.GameTooltip:Show()

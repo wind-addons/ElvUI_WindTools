@@ -1537,7 +1537,7 @@ function CT:ElvUIChat_AchievementMessageHandler(event, frame, achievementMessage
 end
 
 function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
-	if not frame or not msg or E:IsSecretValue(msg) then
+	if not frame or E:IsSecretValue(msg) or not msg then
 		return
 	end
 

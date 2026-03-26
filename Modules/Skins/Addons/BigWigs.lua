@@ -83,7 +83,7 @@ local function applyPoints(object, points)
 	for i = 1, #points do
 		local point, relativeTo, relativePoint, xOfs, yOfs = unpack(points[i])
 		if E:NotSecretValue(point) and type(point) == "string" then
-			if relativePoint and (type(relativePoint) ~= "string" or E:IsSecretValue(relativePoint)) then
+			if relativePoint and (E:IsSecretValue(relativePoint) or type(relativePoint) ~= "string") then
 				relativePoint = nil
 			end
 			if relativeTo and type(relativeTo) ~= "table" then

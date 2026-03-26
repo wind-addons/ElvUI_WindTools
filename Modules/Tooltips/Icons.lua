@@ -115,7 +115,7 @@ local function SetTooltipIcon(tt, data, type)
 	for i = 1, 3 do
 		local row = _G[tt:GetName() .. "TextLeft" .. i]
 		local existingText = row and row:GetText()
-		if existingText and E:NotSecretValue(existingText) and strfind(existingText, title, 1, true) then
+		if E:NotSecretValue(existingText) and existingText and strfind(existingText, title, 1, true) then
 			if iconString and existingText and not strfind(existingText, "^|T") then
 				row:SetText(iconString .. " " .. existingText)
 			end

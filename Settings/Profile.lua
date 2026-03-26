@@ -1138,13 +1138,17 @@ P.quest = {
 				xOffset = 0,
 				yOffset = 0,
 			},
-			trapText = {
+			vignetteText = {
 				enable = true,
 				name = E.db.general.font,
 				size = 12,
 				style = "OUTLINE",
 				xOffset = 0,
 				yOffset = 0,
+				ids = {
+					[7667] = true,
+					[7443] = true,
+				},
 			},
 		},
 		autoTrack = {

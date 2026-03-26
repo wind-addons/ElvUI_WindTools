@@ -2759,6 +2759,26 @@ options.turnIn = {
 	},
 }
 
+local vignetteOptions = {}
+do
+	local order = 1
+	for id, data in pairs(PH:GetVignetteData()) do
+		vignetteOptions["vignette_" .. id] = {
+			order = order,
+			type = "toggle",
+			name = format("|A:%s:14:14|a %s", data.atlas, data.name),
+			get = function()
+				return E.db.WT.quest.preyHunt.progressWidget.vignetteText.ids[id]
+			end,
+			set = function(_, value)
+				E.db.WT.quest.preyHunt.progressWidget.vignetteText.ids[id] = value
+				PH:ProfileUpdate()
+			end,
+		}
+		order = order + 1
+	end
+end
+
 options.preyHunt = {
 	order = 6,
 	type = "group",
@@ -2915,11 +2935,11 @@ options.preyHunt = {
 						},
 					},
 				},
-				trapText = {
+				vignetteText = {
 					order = 3,
 					type = "group",
 					inline = true,
-					name = L["Trap Text"],
+					name = L["Vignette Text"],
 					disabled = function()
 						return not E.db.WT.quest.preyHunt.enable
 					end,
@@ -2927,10 +2947,10 @@ options.preyHunt = {
 						return E.db.WT.quest.preyHunt.progressWidget.hide
 					end,
 					get = function(info)
-						return E.db.WT.quest.preyHunt.progressWidget.trapText[info[#info]]
+						return E.db.WT.quest.preyHunt.progressWidget.vignetteText[info[#info]]
 					end,
 					set = function(info, value)
-						E.db.WT.quest.preyHunt.progressWidget.trapText[info[#info]] = value
+						E.db.WT.quest.preyHunt.progressWidget.vignetteText[info[#info]] = value
 						PH:ProfileUpdate()
 					end,
 					args = {
@@ -2985,6 +3005,13 @@ options.preyHunt = {
 							min = -100,
 							max = 100,
 							step = 1,
+						},
+						vignettes = {
+							order = 7,
+							type = "group",
+							inline = true,
+							name = L["Monitor Objects"],
+							args = vignetteOptions,
 						},
 					},
 				},

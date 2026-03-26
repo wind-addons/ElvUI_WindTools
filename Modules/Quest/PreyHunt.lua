@@ -7,9 +7,11 @@ local format = format
 local ipairs = ipairs
 local math_huge = math.huge
 local pairs = pairs
+local table_concat = table.concat
 local tonumber = tonumber
 local tostring = tostring
 
+local AccumulateOp = AccumulateOp
 local GetTime = GetTime
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
@@ -34,7 +36,11 @@ local Enum_QuestWatchType_Automatic = Enum.QuestWatchType.Automatic
 local PREY_UI_WIDGET_TYPE = Enum.UIWidgetVisualizationType.PreyHuntProgress
 local PREY_WORLD_QUEST_TYPE = Enum.QuestTagType.Prey
 local AUTO_TRACK_THROTTLE = 2
-local TRAP_ATLAS = "|A:Vehicle-Trap-Gold:14:14|a"
+
+local VIGNETTE_DATA = {
+	[7667] = { atlas = "Vehicle-Trap-Gold", name = L["Trap"] },
+	[7443] = { atlas = "poi-prey", name = L["Anguish"] },
+}
 
 local function NotifyStartTracking(questID)
 	local title = tostring(C_QuestLog_GetTitleForQuestID(questID) or questID)
@@ -77,10 +83,10 @@ function PH:HandleWidget(container, widgetID, widgetType)
 		F.InternalizeMethod(frame.StageText, "SetAlpha", true)
 	end
 
-	if not frame.TrapText then
-		frame.TrapText = frame:CreateFontString(nil, "OVERLAY")
-		frame.TrapText:SetJustifyH("CENTER")
-		F.InternalizeMethod(frame.TrapText, "SetAlpha", true)
+	if not frame.VignetteText then
+		frame.VignetteText = frame:CreateFontString(nil, "OVERLAY")
+		frame.VignetteText:SetJustifyH("CENTER")
+		F.InternalizeMethod(frame.VignetteText, "SetAlpha", true)
 	end
 
 	frame:SetShown(not self.db.enable or not self.db.progressWidget.hide)
@@ -105,69 +111,87 @@ function PH:HandleWidget(container, widgetID, widgetType)
 			frame.StageText:Hide()
 		end
 
-		if self.db.progressWidget.trapText.enable then
-			F.SetFontWithDB(frame.TrapText, self.db.progressWidget.trapText)
-			frame.TrapText:ClearAllPoints()
-			frame.TrapText:Point(
+		if self.db.progressWidget.vignetteText.enable then
+			F.SetFontWithDB(frame.VignetteText, self.db.progressWidget.vignetteText)
+			frame.VignetteText:ClearAllPoints()
+			frame.VignetteText:Point(
 				"BOTTOM",
 				frame.StageText,
 				"TOP",
-				self.db.progressWidget.trapText.xOffset,
-				self.db.progressWidget.trapText.yOffset + 3
+				self.db.progressWidget.vignetteText.xOffset,
+				self.db.progressWidget.vignetteText.yOffset + 3
 			)
-			self:RefreshTrapText()
-			frame.TrapText:Show()
-			self:RegisterTrapEvent()
+			self:RefreshVignetteText()
+			frame.VignetteText:Show()
+			self:RegisterVignetteEvent()
 		else
-			frame.TrapText:Hide()
-			self:UnregisterTrapEvent()
+			frame.VignetteText:Hide()
+			self:UnregisterVignetteEvent()
 		end
 	else
 		frame.StageText:Hide()
-		frame.TrapText:Hide()
-		self:UnregisterTrapEvent()
+		frame.VignetteText:Hide()
+		self:UnregisterVignetteEvent()
 	end
 end
 
-function PH:RefreshTrapText()
-	local count = AccumulateOp(C_VignetteInfo_GetVignettes() or {}, function(id)
-		local info = C_VignetteInfo_GetVignetteInfo(id)
-		return (info and info.vignetteID == 7667) and 1 or 0
-	end)
+function PH:GetVignetteData()
+	return VIGNETTE_DATA
+end
 
-	local text
-	if count > 0 then
-		text = C.StringByTemplate(TRAP_ATLAS .. " " .. format(L["%d |4trap:traps; nearby"], count), "amber-500")
-	else
-		text = C.StringByTemplate(TRAP_ATLAS .. " " .. L["No trap nearby"], "gray-400")
+function PH:RefreshVignetteText()
+	local ids = C_VignetteInfo_GetVignettes()
+	local vignetteCounts = {}
+	local hasAny = false
+
+	if ids then
+		for vignetteID, data in pairs(VIGNETTE_DATA) do
+			if self.db.progressWidget.vignetteText.ids[vignetteID] then
+				local count = AccumulateOp(ids, function(id)
+					local info = C_VignetteInfo_GetVignetteInfo(id)
+					return (info and info.vignetteID == vignetteID) and 1 or 0
+				end)
+				if count > 0 then
+					vignetteCounts[#vignetteCounts + 1] = format(" %d|A:%s:14:14|a", count, data.atlas)
+					hasAny = true
+				end
+			end
+		end
 	end
 
 	for _, frame in pairs(_G.UIWidgetPowerBarContainerFrame.widgetFrames) do
-		if frame and frame.widgetType and frame.widgetType == PREY_UI_WIDGET_TYPE and frame.TrapText then
-			frame.TrapText:SetText(text)
+		if frame and frame.widgetType and frame.widgetType == PREY_UI_WIDGET_TYPE and frame.VignetteText then
+			if hasAny then
+				frame.VignetteText:SetText(
+					C.StringByTemplate(format(L["%s nearby"], table_concat(vignetteCounts, ", ")), "orange-500")
+				)
+				frame.VignetteText:Show()
+			else
+				frame.VignetteText:Hide()
+			end
 		end
 	end
 end
 
 function PH:VIGNETTE_MINIMAP_UPDATED()
-	if not self.db or not self.db.enable or not self.db.progressWidget.trapText.enable then
+	if not self.db or not self.db.enable or not self.db.progressWidget.vignetteText.enable then
 		return
 	end
 
-	self:RefreshTrapText()
+	self:RefreshVignetteText()
 end
 
-function PH:RegisterTrapEvent()
-	if not self.trapEventsRegistered then
+function PH:RegisterVignetteEvent()
+	if not self.vignetteEventsRegistered then
 		self:RegisterEvent("VIGNETTE_MINIMAP_UPDATED")
-		self.trapEventsRegistered = true
+		self.vignetteEventsRegistered = true
 	end
 end
 
-function PH:UnregisterTrapEvent()
-	if self.trapEventsRegistered then
+function PH:UnregisterVignetteEvent()
+	if self.vignetteEventsRegistered then
 		self:UnregisterEvent("VIGNETTE_MINIMAP_UPDATED")
-		self.trapEventsRegistered = false
+		self.vignetteEventsRegistered = false
 	end
 end
 

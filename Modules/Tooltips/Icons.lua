@@ -4,7 +4,6 @@ local T = W.Modules.Tooltips ---@class Tooltips
 local C = W.Utilities.Color
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local select = select
 local strfind = strfind

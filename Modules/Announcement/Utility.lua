@@ -82,6 +82,14 @@ local UtilitySpells = {
 	[462211] = UtilityType.Feast, -- 丰盛的特色寿司
 	[462212] = UtilityType.Feast, -- 丰盛的降圣白昼盛宴
 	[462213] = UtilityType.Feast, -- 丰盛的午夜舞会盛宴
+	[1259657] = UtilityType.Feast, -- Quel'dorei Medley
+	[1278915] = UtilityType.Feast, -- Hearty Quel'dorei Medley
+	[1259658] = UtilityType.Feast, -- Harandar Celebration
+	[1278929] = UtilityType.Feast, -- Hearty Harandar Celebration
+	[1240225] = UtilityType.Feast, -- Voidlight Potion Cauldron R2
+	[1240267] = UtilityType.Feast, -- Voidlight Potion Cauldron R3
+	[1240195] = UtilityType.Feast, -- Cauldron of Sin'dorei Flasks R3
+	[1240019] = UtilityType.Feast, -- Cauldron of Sin'dorei Flasks R2
 
 	-- Alliance
 	[10059] = UtilityType.Portal, -- 传送门：暴风城
@@ -100,6 +108,7 @@ local UtilitySpells = {
 	[11418] = UtilityType.Portal, -- 传送门：幽暗城
 	[11420] = UtilityType.Portal, -- 传送门：雷霆崖
 	[32267] = UtilityType.Portal, -- 传送门：银月城（燃烧的远征）
+	[1259194] = UtilityType.Portal, -- Portal: Silvermoon City
 	[35717] = UtilityType.Portal, -- 传送门：沙塔斯
 	[49361] = UtilityType.Portal, -- 传送门：斯通纳德
 	[88346] = UtilityType.Portal, -- 传送门：托尔巴拉德

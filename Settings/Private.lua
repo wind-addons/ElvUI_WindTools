@@ -202,6 +202,7 @@ V.misc = {
 			[339588] = false,
 			[312762] = false,
 			[40192] = false,
+			[121820] = false,
 		},
 		other = {
 			["Crying"] = false,

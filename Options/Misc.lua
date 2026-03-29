@@ -646,20 +646,40 @@ options.mute = {
 }
 
 do
-	for id in pairs(V.misc.mute.mount) do
-		async.WithSpellID(id, function(spell)
-			local icon = spell:GetSpellTexture()
-			local name = spell:GetSpellName()
+	local mountInfo = {
+		[121820] = {
+			icon = 399041,
+			name = L["Obsidian Nightwing"],
+		},
+	}
 
-			local iconString = F.GetIconString(icon, 12, 12)
+	for id in pairs(V.misc.mute.mount) do
+		local info = mountInfo[id]
+
+		if info then
+			local iconString = F.GetIconString(info.icon, 12, 12)
 
 			options.mute.args.mount.args[tostring(id)] = {
 				order = id,
 				type = "toggle",
-				name = iconString .. " " .. name,
+				name = iconString .. " " .. info.name,
 				width = 1.5,
 			}
-		end)
+		else
+			async.WithSpellID(id, function(spell)
+				local icon = spell:GetSpellTexture()
+				local name = spell:GetSpellName()
+
+				local iconString = F.GetIconString(icon, 12, 12)
+
+				options.mute.args.mount.args[tostring(id)] = {
+					order = id,
+					type = "toggle",
+					name = iconString .. " " .. name,
+					width = 1.5,
+				}
+			end)
+		end
 	end
 
 	local itemList = {

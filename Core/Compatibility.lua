@@ -316,21 +316,14 @@ function W:CheckCompatibility()
 		format("%s-%s", L["Tooltips"], L["Icon"]),
 		L["Tooltip Icons"],
 		"private.WT.tooltips.titleIcon.enable",
-		"db.mMT.tooltip.enable"
-	)
-
-	CheckmMediaTag(
-		L["Objective Tracker"],
-		L["ObjectiveTracker Skin"],
-		"private.WT.quest.objectiveTracker.enable",
-		"db.mMT.objectivetracker.enable"
+		"db.mMediaTag.tooltip.enable"
 	)
 
 	CheckmMediaTag(
 		L["Role Icon"],
 		L["Role Symbols"],
 		"private.WT.unitFrames.roleIcon.enable",
-		"db.mMT.roleicons.enable"
+		"db.mMediaTag.role_icons.enable"
 	)
 
 	-- Enhanced Again

@@ -600,6 +600,41 @@ V.skins = {
 			colorRight = { r = 0.25882, g = 0.84314, b = 0.86667, a = 1 },
 		},
 	},
+	lossOfControl = {
+		enable = true,
+		icon = {
+			iconSize = 64,
+			iconShadow = true,
+			anchor = "LEFT",
+			offsetX = 0,
+			offsetY = 0,
+		},
+		abilityName = {
+			hide = false,
+			justifyH = "LEFT",
+			offsetX = -20,
+			offsetY = 18,
+			font = {
+				name = E.db.general.font,
+				size = 20,
+				style = "OUTLINE",
+			},
+		},
+		timeLeft = {
+			hide = false,
+			justifyH = "LEFT",
+			offsetX = -20,
+			offsetY = -18,
+			font = {
+				name = E.db.general.font,
+				size = 25,
+				style = "OUTLINE",
+			},
+		},
+		backdrop = {
+			useCustomColor = false,
+		},
+	},
 	damageMeter = {
 		enable = true,
 		windowBackdrop = "always", ---@type "always"|"mouseover"|"hide"

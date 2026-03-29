@@ -14,6 +14,24 @@ local C_AddOns_DoesAddOnExist = C_AddOns.DoesAddOnExist
 local RED_FONT_COLOR = RED_FONT_COLOR
 local YELLOW_FONT_COLOR = YELLOW_FONT_COLOR
 
+local function ShowLossOfControlTest(testData)
+	local frame = _G.LossOfControlFrame
+	if not frame then
+		return
+	end
+
+	frame:SetUpDisplay(true, testData)
+	frame.fadeDelayTime = nil
+	frame.fadeTime = 3600
+end
+
+local function ApplyLossOfControlLive()
+	local frame = _G.LossOfControlFrame
+	if frame and frame:IsShown() then
+		S:LossOfControlFrame_SetUpDisplay(frame)
+	end
+end
+
 options.desc = {
 	order = 1,
 	type = "group",
@@ -1183,6 +1201,387 @@ options.cooldownViewer = {
 					set = function(info, r, g, b, a)
 						local db = E.private.WT.skins.cooldownViewer.buffBar.colorRight
 						db.r, db.g, db.b, db.a = r, g, b, a
+					end,
+				},
+			},
+		},
+	},
+}
+
+options.lossOfControl = {
+	order = 5,
+	type = "group",
+	name = L["Loss Of Control"],
+	args = {
+		enable = {
+			order = 1,
+			type = "toggle",
+			name = L["Enable"],
+			get = function(info)
+				return E.private.WT.skins.lossOfControl[info[#info]]
+			end,
+			set = function(info, value)
+				E.private.WT.skins.lossOfControl[info[#info]] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+			disabled = function()
+				return not E.private.WT.skins.blizzard.enable
+					or not E.private.skins.blizzard.losscontrol
+					or not E.private.WT.skins.blizzard.lossOfControl
+			end,
+		},
+		test = {
+			order = 2,
+			type = "group",
+			inline = true,
+			name = L["Test"],
+			args = {
+				testStun = {
+					order = 1,
+					type = "execute",
+					name = L["Test"],
+					func = function()
+						local frame = _G.LossOfControlFrame
+						if not frame then
+							return
+						end
+
+						frame:SetUpDisplay(true, {
+							locType = "STUN",
+							spellID = 408,
+							displayText = L["Stunned"],
+							iconTexture = C_Spell.GetSpellTexture(408),
+							startTime = GetTime(),
+							timeRemaining = 6,
+							duration = 6,
+							lockoutSchool = 0,
+							priority = 5,
+							displayType = 1,
+						})
+						frame.fadeDelayTime = nil
+						frame.fadeTime = 3600
+					end,
+				},
+				stop = {
+					order = 2,
+					type = "execute",
+					name = L["Stop"],
+					func = function()
+						local frame = _G.LossOfControlFrame
+						if frame then
+							frame:Hide()
+						end
+					end,
+				},
+			},
+		},
+		icon = {
+			order = 10,
+			type = "group",
+			inline = true,
+			name = L["Icon"],
+			get = function(info)
+				return E.private.WT.skins.lossOfControl[info[#info - 1]][info[#info]]
+			end,
+			set = function(info, value)
+				E.private.WT.skins.lossOfControl[info[#info - 1]][info[#info]] = value
+				ApplyLossOfControlLive()
+			end,
+			disabled = function()
+				return not E.private.WT.skins.lossOfControl.enable
+			end,
+			args = {
+				iconSize = {
+					order = 1,
+					type = "range",
+					name = L["Icon Size"],
+					min = 20,
+					max = 120,
+					step = 1,
+				},
+				iconShadow = {
+					order = 2,
+					type = "toggle",
+					name = L["Icon Shadow"],
+				},
+				anchor = {
+					order = 4,
+					type = "select",
+					name = L["Anchor"],
+					desc = L["The anchor point of the icon within the frame."],
+					values = {
+						TOPLEFT = L["TOPLEFT"],
+						TOP = L["TOP"],
+						TOPRIGHT = L["TOPRIGHT"],
+						LEFT = L["LEFT"],
+						CENTER = L["CENTER"],
+						RIGHT = L["RIGHT"],
+						BOTTOMLEFT = L["BOTTOMLEFT"],
+						BOTTOM = L["BOTTOM"],
+						BOTTOMRIGHT = L["BOTTOMRIGHT"],
+					},
+				},
+				offsetX = {
+					order = 5,
+					type = "range",
+					name = L["X-Offset"],
+					desc = L["Horizontal offset from the anchor point."],
+					min = -200,
+					max = 200,
+					step = 1,
+				},
+				offsetY = {
+					order = 6,
+					type = "range",
+					name = L["Y-Offset"],
+					desc = L["Vertical offset from the anchor point."],
+					min = -200,
+					max = 200,
+					step = 1,
+				},
+			},
+		},
+		abilityName = {
+			order = 11,
+			type = "group",
+			inline = true,
+			name = L["Ability Name"],
+			get = function(info)
+				return E.private.WT.skins.lossOfControl[info[#info - 1]][info[#info]]
+			end,
+			set = function(info, value)
+				E.private.WT.skins.lossOfControl[info[#info - 1]][info[#info]] = value
+				ApplyLossOfControlLive()
+			end,
+			disabled = function()
+				return not E.private.WT.skins.lossOfControl.enable
+			end,
+			args = {
+				hide = {
+					order = 1,
+					type = "toggle",
+					name = L["Hide"],
+					desc = L["Hide the ability name text and only show the icon."],
+				},
+				justifyH = {
+					order = 2,
+					type = "select",
+					name = L["Alignment"],
+					desc = L["Controls the anchor side of the text relative to the frame center."],
+					values = {
+						LEFT = L["LEFT"],
+						CENTER = L["CENTER"],
+						RIGHT = L["RIGHT"],
+					},
+				},
+				offsetX = {
+					order = 3,
+					type = "range",
+					name = L["X-Offset"],
+					desc = L["Horizontal offset from the frame center."],
+					min = -200,
+					max = 200,
+					step = 1,
+				},
+				offsetY = {
+					order = 4,
+					type = "range",
+					name = L["Y-Offset"],
+					desc = L["Vertical offset from the frame center."],
+					min = -200,
+					max = 200,
+					step = 1,
+				},
+				font = {
+					order = 5,
+					type = "group",
+					inline = true,
+					name = L["Font"],
+					get = function(info)
+						return E.private.WT.skins.lossOfControl[info[#info - 2]][info[#info - 1]][info[#info]]
+					end,
+					set = function(info, value)
+						E.private.WT.skins.lossOfControl[info[#info - 2]][info[#info - 1]][info[#info]] = value
+						ApplyLossOfControlLive()
+					end,
+					args = {
+						name = {
+							order = 1,
+							type = "select",
+							dialogControl = "LSM30_Font",
+							name = L["Font"],
+							values = LSM:HashTable("font"),
+						},
+						style = {
+							order = 2,
+							type = "select",
+							name = L["Outline"],
+							values = {
+								NONE = L["None"],
+								OUTLINE = L["Outline"],
+								THICKOUTLINE = L["Thick"],
+								SHADOW = L["|cff888888Shadow|r"],
+								SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+								SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+								MONOCHROME = L["|cFFAAAAAAMono|r"],
+								MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+								MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+							},
+						},
+						size = {
+							order = 3,
+							name = L["Size"],
+							type = "range",
+							min = 5,
+							max = 60,
+							step = 1,
+						},
+					},
+				},
+			},
+		},
+		timeLeft = {
+			order = 12,
+			type = "group",
+			inline = true,
+			name = L["Time Left"],
+			get = function(info)
+				return E.private.WT.skins.lossOfControl[info[#info - 1]][info[#info]]
+			end,
+			set = function(info, value)
+				E.private.WT.skins.lossOfControl[info[#info - 1]][info[#info]] = value
+				ApplyLossOfControlLive()
+			end,
+			disabled = function()
+				return not E.private.WT.skins.lossOfControl.enable
+			end,
+			args = {
+				hide = {
+					order = 1,
+					type = "toggle",
+					name = L["Hide"],
+					desc = L["Hide the time left text."],
+				},
+				justifyH = {
+					order = 2,
+					type = "select",
+					name = L["Alignment"],
+					desc = L["Controls the anchor side of the text relative to the frame center."],
+					values = {
+						LEFT = L["LEFT"],
+						CENTER = L["CENTER"],
+						RIGHT = L["RIGHT"],
+					},
+				},
+				offsetX = {
+					order = 3,
+					type = "range",
+					name = L["X-Offset"],
+					desc = L["Horizontal offset from the frame center."],
+					min = -200,
+					max = 200,
+					step = 1,
+				},
+				offsetY = {
+					order = 4,
+					type = "range",
+					name = L["Y-Offset"],
+					desc = L["Vertical offset from the frame center."],
+					min = -200,
+					max = 200,
+					step = 1,
+				},
+				font = {
+					order = 5,
+					type = "group",
+					inline = true,
+					name = L["Font"],
+					get = function(info)
+						return E.private.WT.skins.lossOfControl[info[#info - 2]][info[#info - 1]][info[#info]]
+					end,
+					set = function(info, value)
+						E.private.WT.skins.lossOfControl[info[#info - 2]][info[#info - 1]][info[#info]] = value
+						ApplyLossOfControlLive()
+					end,
+					args = {
+						name = {
+							order = 1,
+							type = "select",
+							dialogControl = "LSM30_Font",
+							name = L["Font"],
+							values = LSM:HashTable("font"),
+						},
+						style = {
+							order = 2,
+							type = "select",
+							name = L["Outline"],
+							values = {
+								NONE = L["None"],
+								OUTLINE = L["Outline"],
+								THICKOUTLINE = L["Thick"],
+								SHADOW = L["|cff888888Shadow|r"],
+								SHADOWOUTLINE = L["|cff888888Shadow|r Outline"],
+								SHADOWTHICKOUTLINE = L["|cff888888Shadow|r Thick"],
+								MONOCHROME = L["|cFFAAAAAAMono|r"],
+								MONOCHROMEOUTLINE = L["|cFFAAAAAAMono|r Outline"],
+								MONOCHROMETHICKOUTLINE = L["|cFFAAAAAAMono|r Thick"],
+							},
+						},
+						size = {
+							order = 3,
+							name = L["Size"],
+							type = "range",
+							min = 5,
+							max = 60,
+							step = 1,
+						},
+					},
+				},
+			},
+		},
+		backdrop = {
+			order = 13,
+			type = "group",
+			inline = true,
+			name = L["Backdrop"],
+			get = function(info)
+				local db = E.private.WT.skins.lossOfControl.backdrop
+				return db[info[#info]]
+			end,
+			set = function(info, value)
+				E.private.WT.skins.lossOfControl.backdrop[info[#info]] = value
+				ApplyLossOfControlLive()
+			end,
+			disabled = function()
+				return not E.private.WT.skins.lossOfControl.enable
+			end,
+			args = {
+				useCustomColor = {
+					order = 1,
+					type = "toggle",
+					name = L["Use Custom Color"],
+					desc = L["Use a custom border color for the icon backdrop."],
+					width = "full",
+				},
+				borderColor = {
+					order = 2,
+					type = "color",
+					name = L["Border Color"],
+					hasAlpha = false,
+					get = function(info)
+						local db = E.private.WT.skins.lossOfControl.backdrop
+						if not db.useCustomColor then
+							return E.db.general.bordercolor.r, E.db.general.bordercolor.g, E.db.general.bordercolor.b
+						end
+						return db.r or 1, db.g or 1, db.b or 1
+					end,
+					set = function(info, r, g, b)
+						local db = E.private.WT.skins.lossOfControl.backdrop
+						db.r, db.g, db.b = r, g, b
+					end,
+					disabled = function()
+						return not E.private.WT.skins.lossOfControl.enable
+							or not E.private.WT.skins.lossOfControl.backdrop.useCustomColor
 					end,
 				},
 			},

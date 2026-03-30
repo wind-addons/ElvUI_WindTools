@@ -4,8 +4,10 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local abs = abs
 local hooksecurefunc = hooksecurefunc
-local next = next
 local pairs = pairs
+
+local HybridScrollFrame_CreateButtons = HybridScrollFrame_CreateButtons
+local RunNextFrame = RunNextFrame
 
 local function ReskinScrollFrameItems(frame, template)
 	if template == "SimpleAddonManagerAddonItem" or template == "SimpleAddonManagerCategoryItem" then
@@ -33,6 +35,14 @@ local function ReskinScrollFrameItems(frame, template)
 			end
 		end
 	end
+end
+
+--- Copied from SAM
+local function OnSizeChangedScrollFrame(self)
+	local offsetBefore = self:GetValue()
+	HybridScrollFrame_CreateButtons(self:GetParent(), "SimpleAddonManagerCategoryItem")
+	self:SetValue(offsetBefore)
+	self:GetParent().update()
 end
 
 local function ReskinModules(frame)
@@ -65,6 +75,9 @@ local function ReskinModules(frame)
 	S:Proxy("HandleButton", frame.CategoryFrame.ClearSelectionButton)
 	S:Proxy("HandleButton", frame.CategoryButton)
 	S:Proxy("HandleScrollBar", frame.CategoryFrame.ScrollFrame.ScrollBar)
+	RunNextFrame(function()
+		OnSizeChangedScrollFrame(frame.CategoryFrame.ScrollFrame.ScrollBar) -- Force refresh
+	end)
 
 	frame.CategoryFrame.NewButton:ClearAllPoints()
 	frame.CategoryFrame.NewButton:Height(20)

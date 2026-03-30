@@ -3,6 +3,7 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 local max = max
+local unpack = unpack
 
 local PADDING = 4
 
@@ -21,15 +22,24 @@ function S:LossOfControlFrame_SetUpDisplay(frame)
 		if not frame.Icon.backdrop then
 			frame.Icon:CreateBackdrop()
 		end
-		self:CreateBackdropShadow(frame.Icon, true)
-		self:BindShadowColorWithBorder(frame.Icon.backdrop)
+		if not frame.Icon.__windShadow then
+			self:CreateBackdropShadow(frame.Icon, true)
+			if frame.Icon.__windShadow then
+				self:BindShadowColorWithBorder(frame.Icon.backdrop)
+			end
+		end
+		if frame.Icon.backdrop and frame.Icon.backdrop.shadow then
+			frame.Icon.backdrop.shadow:Show()
+		end
 
 		local backdropDB = db.backdrop
 		if backdropDB.useCustomColor and backdropDB.r then
 			frame.Icon.backdrop:SetBackdropBorderColor(backdropDB.r, backdropDB.g, backdropDB.b)
+		else
+			frame.Icon.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
 		end
-	elseif frame.Icon.shadow then
-		frame.Icon.shadow:Hide()
+	elseif frame.Icon.backdrop and frame.Icon.backdrop.shadow then
+		frame.Icon.backdrop.shadow:Hide()
 	end
 
 	local hasText = false

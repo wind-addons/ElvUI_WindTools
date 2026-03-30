@@ -14,17 +14,6 @@ local C_AddOns_DoesAddOnExist = C_AddOns.DoesAddOnExist
 local RED_FONT_COLOR = RED_FONT_COLOR
 local YELLOW_FONT_COLOR = YELLOW_FONT_COLOR
 
-local function ShowLossOfControlTest(testData)
-	local frame = _G.LossOfControlFrame
-	if not frame then
-		return
-	end
-
-	frame:SetUpDisplay(true, testData)
-	frame.fadeDelayTime = nil
-	frame.fadeTime = 3600
-end
-
 local function ApplyLossOfControlLive()
 	local frame = _G.LossOfControlFrame
 	if frame and frame:IsShown() then
@@ -1561,7 +1550,6 @@ options.lossOfControl = {
 					type = "toggle",
 					name = L["Use Custom Color"],
 					desc = L["Use a custom border color for the icon backdrop."],
-					width = "full",
 				},
 				borderColor = {
 					order = 2,
@@ -1578,6 +1566,7 @@ options.lossOfControl = {
 					set = function(info, r, g, b)
 						local db = E.private.WT.skins.lossOfControl.backdrop
 						db.r, db.g, db.b = r, g, b
+						ApplyLossOfControlLive()
 					end,
 					disabled = function()
 						return not E.private.WT.skins.lossOfControl.enable

@@ -1574,6 +1574,7 @@ L["Swap the functionality of normal click and click with modifier keys."] = "對
 L["Switch Buttons"] = "切換按鍵"
 L["Switch Buttons Bar"] = "切換按鍵條"
 L["System Default"] = "系統預設"
+L["System Info Font"] = "系統資訊字體"
 L["THICKOUTLINE"] = "厚輪廓"
 L["TOP"] = "上"
 L["TOPLEFT"] = "左上"

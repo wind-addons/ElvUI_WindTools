@@ -1574,6 +1574,7 @@ L["Swap the functionality of normal click and click with modifier keys."] = "Tau
 L["Switch Buttons"] = "Wechsel Tasten"
 L["Switch Buttons Bar"] = "Wechsel Tastenleiste"
 L["System Default"] = "Systemstandard"
+L["System Info Font"] = true
 L["THICKOUTLINE"] = "DICKERUMRISS"
 L["TOP"] = "OBEN"
 L["TOPLEFT"] = "Oben Links"

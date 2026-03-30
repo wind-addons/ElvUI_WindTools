@@ -1574,6 +1574,7 @@ L["Swap the functionality of normal click and click with modifier keys."] = "일
 L["Switch Buttons"] = "전환 버튼"
 L["Switch Buttons Bar"] = "전환 버튼 바"
 L["System Default"] = "시스템 기본값"
+L["System Info Font"] = true
 L["THICKOUTLINE"] = "두꺼운 외곽선"
 L["TOP"] = "상단"
 L["TOPLEFT"] = "좌상단"

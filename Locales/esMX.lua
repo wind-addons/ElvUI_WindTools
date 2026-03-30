@@ -1574,6 +1574,7 @@ L["Swap the functionality of normal click and click with modifier keys."] = "Int
 L["Switch Buttons"] = "Cambiar botones"
 L["Switch Buttons Bar"] = "Cambiar barra de botones"
 L["System Default"] = "Predeterminado del sistema"
+L["System Info Font"] = true
 L["THICKOUTLINE"] = "BORDEGRANDE"
 L["TOP"] = "SUP"
 L["TOPLEFT"] = "SUPIZQ"

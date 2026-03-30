@@ -1574,6 +1574,7 @@ L["Swap the functionality of normal click and click with modifier keys."] = "П�
 L["Switch Buttons"] = "Кнопка переключения"
 L["Switch Buttons Bar"] = "Кнопка переключения панели"
 L["System Default"] = "Системные настройки по умолчанию"
+L["System Info Font"] = true
 L["THICKOUTLINE"] = "Толстый контур"
 L["TOP"] = "Верх"
 L["TOPLEFT"] = "Лево верх"

@@ -1574,6 +1574,7 @@ L["Swap the functionality of normal click and click with modifier keys."] = true
 L["Switch Buttons"] = true
 L["Switch Buttons Bar"] = true
 L["System Default"] = true
+L["System Info Font"] = true
 L["THICKOUTLINE"] = true
 L["TOP"] = "Acima"
 L["TOPLEFT"] = "Canto Superior Esquerdo"

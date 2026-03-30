@@ -1574,6 +1574,7 @@ L["Swap the functionality of normal click and click with modifier keys."] = "Éc
 L["Switch Buttons"] = "Boutons de changement"
 L["Switch Buttons Bar"] = "Barre du boutons de changement"
 L["System Default"] = true
+L["System Info Font"] = true
 L["THICKOUTLINE"] = "CONTOUREPAIS"
 L["TOP"] = "HAUT"
 L["TOPLEFT"] = "HAUTGAUCHE"

@@ -866,7 +866,7 @@ options.objectiveProgress = {
 			),
 			func = function()
 				E:StaticPopup_Show(
-				"WINDTOOLS_EDITBOX",
+					"WINDTOOLS_EDITBOX",
 					nil,
 					nil,
 					"https://github.com/wind-addons/LibObjectiveProgress-1.0/releases"

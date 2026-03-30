@@ -1299,6 +1299,11 @@ P.misc = {
 				size = 25,
 				style = "OUTLINE",
 			},
+			systemInfoFont = {
+				name = F.GetCompatibleFont("Montserrat"),
+				size = 12,
+				style = "OUTLINE",
+			},
 		},
 		hearthstone = {
 			left = "6948",

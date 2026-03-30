@@ -1037,7 +1037,7 @@ function GB:ConstructTimeArea()
 
 	local text = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
 	text:Point("TOP", self.bar, "BOTTOM", 0, -5)
-	F.SetFontWithDB(text, self.db.additionalText.font)
+	F.SetFontWithDB(text, self.db.time.systemInfoFont)
 	text:SetAlpha(self.db.time.alwaysSystemInfo and 1 or 0)
 	self.bar.middlePanel.text = text
 
@@ -1156,7 +1156,7 @@ function GB:UpdateTime()
 	F.SetFontWithDB(panel.hour, self.db.time.font)
 	F.SetFontWithDB(panel.minutes, self.db.time.font)
 	F.SetFontWithDB(panel.colon, self.db.time.font)
-	F.SetFontWithDB(panel.text, self.db.additionalText.font)
+	F.SetFontWithDB(panel.text, self.db.time.systemInfoFont)
 
 	panel.hour.group:Stop()
 	animationReset(panel.hour.group.anim)

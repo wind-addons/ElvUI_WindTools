@@ -1218,6 +1218,52 @@ options.gameBar = {
 						},
 					},
 				},
+				systemInfoFont = {
+					order = 7,
+					type = "group",
+					name = L["System Info Font"],
+					inline = true,
+					get = function(info)
+						return E.db.WT.misc.gameBar.time[info[#info - 1]][info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.misc.gameBar.time[info[#info - 1]][info[#info]] = value
+						GB:UpdateTimeArea()
+					end,
+					args = {
+						name = {
+							order = 1,
+							type = "select",
+							dialogControl = "LSM30_Font",
+							name = L["Font"],
+							values = LSM:HashTable("font"),
+						},
+						style = {
+							order = 2,
+							type = "select",
+							name = L["Outline"],
+							values = {
+								NONE = L["None"],
+								OUTLINE = L["OUTLINE"],
+								THICKOUTLINE = L["THICKOUTLINE"],
+								SHADOW = L["SHADOW"],
+								SHADOWOUTLINE = L["SHADOWOUTLINE"],
+								SHADOWTHICKOUTLINE = L["SHADOWTHICKOUTLINE"],
+								MONOCHROME = L["MONOCHROME"],
+								MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+								MONOCHROMETHICKOUTLINE = L["MONOCHROMETHICKOUTLINE"],
+							},
+						},
+						size = {
+							order = 3,
+							name = L["Size"],
+							type = "range",
+							min = 5,
+							max = 60,
+							step = 1,
+						},
+					},
+				},
 			},
 		},
 		friends = {

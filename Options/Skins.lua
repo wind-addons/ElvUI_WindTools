@@ -9,7 +9,10 @@ local format = format
 local pairs = pairs
 local type = type
 
+local GetTime = GetTime
+
 local C_AddOns_DoesAddOnExist = C_AddOns.DoesAddOnExist
+local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 
 local RED_FONT_COLOR = RED_FONT_COLOR
 local YELLOW_FONT_COLOR = YELLOW_FONT_COLOR
@@ -1239,7 +1242,7 @@ options.lossOfControl = {
 							locType = "STUN",
 							spellID = 408,
 							displayText = L["Stunned"],
-							iconTexture = C_Spell.GetSpellTexture(408),
+							iconTexture = C_Spell_GetSpellTexture(408),
 							startTime = GetTime(),
 							timeRemaining = 6,
 							duration = 6,

@@ -739,7 +739,25 @@ function LL:InitializeRightPanel()
 		FilterButton.name:Point("LEFT", FilterButton.tex, "RIGHT", 8, 0)
 		FilterButton.name:SetText(mythicPlusMapData[mapID].abbr)
 
+		FilterButton.mapID = mapID
+
 		addSetActive(FilterButton)
+
+		FilterButton:SetScript("OnEnter", function(btn)
+			if not self.db.rightPanel.filterButtonTooltip then
+				return
+			end
+			local mapData = mythicPlusMapData[btn.mapID]
+			if mapData and mapData.name then
+				_G.GameTooltip:SetOwner(btn, "ANCHOR_TOP", 0, 4)
+				_G.GameTooltip:AddLine(mapData.name, 1, 1, 1)
+				_G.GameTooltip:Show()
+			end
+		end)
+
+		FilterButton:SetScript("OnLeave", function()
+			_G.GameTooltip:Hide()
+		end)
 
 		FilterButton:SetScript("OnMouseDown", function(btn, button)
 			if button == "LeftButton" then

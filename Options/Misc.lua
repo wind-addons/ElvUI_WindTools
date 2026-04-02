@@ -1880,8 +1880,14 @@ options.lfgList = {
 						E:StaticPopup_Show("PRIVATE_RL")
 					end,
 				},
-				filtersBehaviour = {
+				filterButtonTooltip = {
 					order = 5,
+					type = "toggle",
+					name = L["Filter Button Tooltip"],
+					desc = L["Show the dungeon full name when hovering over the filter button."],
+				},
+				filtersBehaviour = {
+					order = 6,
 					type = "group",
 					inline = true,
 					name = L["Filters"],

@@ -5,34 +5,33 @@ local UF = E.UnitFrames
 
 local rad = rad
 
-function A:UpdateStatusBar( obj, key, texture)
-	if self.db[key] and self.db[key].enable and obj[key] then
-		local tex = nil
-		if self.db[key].blizzardStyle then
-			tex = "Interface/RaidFrame/Shield-Fill"
-		elseif self.db[key].custom then
-			tex = LSM:Fetch("statusbar", self.db[key].custom)
-		end
+function A:UpdateStatusBarTexture(bar, texture, dbKey)
+	if not self.db[dbKey] or not self.db[dbKey].enable or not bar then
+		return
+	end
 
-		if tex and tex ~= texture then
-			obj[key]:SetStatusBarTexture(tex)
-		end
+	local tex
+	if self.db[dbKey].blizzardStyle then
+		tex = "Interface/RaidFrame/Shield-Fill"
+	elseif self.db[dbKey].custom then
+		tex = LSM:Fetch("statusbar", self.db[dbKey].custom)
+	end
+
+	if tex and tex ~= texture then
+		bar:SetStatusBarTexture(tex)
 	end
 end
 
 function A:SetTexture_HealComm(module, obj, texture)
-	if not self.db or not self.db.enable then
-		return self.hooks[module].SetTexture_HealComm(module, obj, texture)
-	end
-
-	if not obj then
-		return self.hooks[module].SetTexture_HealComm(module, obj, texture)
-	end
-
 	self.hooks[module].SetTexture_HealComm(module, obj, texture)
+	if not self.db or not self.db.enable or not obj then
+		return
+	end
 
-	self:UpdateStatusBar(obj, "healAbsorb", texture)
-	self:UpdateStatusBar(obj, "damageAbsorb", texture)
+	self:UpdateStatusBarTexture(obj.damageAbsorb, texture, "damageAbsorb")
+	self:UpdateStatusBarTexture(obj.healAbsorb, texture, "healAbsorb")
+	self:UpdateStatusBarTexture(obj.healingPlayer, texture, "healPrediction")
+	self:UpdateStatusBarTexture(obj.healingOther, texture, "healPrediction")
 
 	-- Overlay
 	if self.db.blizzardAbsorbOverlay and obj.damageAbsorb then

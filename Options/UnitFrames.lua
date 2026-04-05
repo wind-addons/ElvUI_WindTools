@@ -159,16 +159,16 @@ options.absorb = {
 		texture = {
 			order = 3,
 			type = "group",
-			name = L["Damage Absorb"],
+			name = L["Texture"],
 			disabled = function()
 				return not E.db.WT.unitFrames.absorb.enable
 			end,
 			inline = true,
 			get = function(info)
-				return E.db.WT.unitFrames.absorb.texture[info[#info]]
+				return E.db.WT.unitFrames.absorb.damageAbsorb[info[#info]]
 			end,
 			set = function(info, value)
-				E.db.WT.unitFrames.absorb.texture[info[#info]] = value
+				E.db.WT.unitFrames.absorb.damageAbsorb[info[#info]] = value
 				A:ProfileUpdate()
 			end,
 			args = {
@@ -184,7 +184,7 @@ options.absorb = {
 					name = L["Blizzard Style"],
 					desc = L["Use the texture from Blizzard Raid Frames."],
 					disabled = function()
-						return not E.db.WT.unitFrames.absorb.enable or not E.db.WT.unitFrames.absorb.texture.enable
+						return not E.db.WT.unitFrames.absorb.damageAbsorb.enable
 					end,
 				},
 				custom = {
@@ -193,9 +193,8 @@ options.absorb = {
 					name = L["Custom Texture"],
 					desc = L["The selected texture will override the ElvUI default absorb bar texture."],
 					disabled = function()
-						return not E.db.WT.unitFrames.absorb.enable
-							or not E.db.WT.unitFrames.absorb.texture.enable
-							or E.db.WT.unitFrames.absorb.texture.blizzardStyle
+						return not E.db.WT.unitFrames.absorb.damageAbsorb.enable
+							or E.db.WT.unitFrames.absorb.damageAbsorb.blizzardStyle
 					end,
 					dialogControl = "LSM30_Statusbar",
 					values = LSM:HashTable("statusbar"),
@@ -222,26 +221,24 @@ options.absorb = {
 					order = 1,
 					type = "toggle",
 					name = L["Enable"],
-					desc = L["Enable the replacing of ElvUI heal absorb bar textures."],
+					desc = L["Enable the replacing of ElvUI absorb bar textures."],
 				},
 				blizzardStyle = {
 					order = 2,
 					type = "toggle",
 					name = L["Blizzard Style"],
-					desc = L["Use the texture from Blizzard Raid Frames for heal absorb bar."],
+					desc = L["Use the texture from Blizzard Raid Frames."],
 					disabled = function()
-						return not E.db.WT.unitFrames.absorb.enable
-							or not E.db.WT.unitFrames.absorb.healAbsorb.enable
+						return not E.db.WT.unitFrames.absorb.healAbsorb.enable
 					end,
 				},
 				custom = {
 					order = 3,
 					type = "select",
 					name = L["Custom Texture"],
-					desc = L["The selected texture will override the ElvUI default heal absorb bar texture."],
+					desc = L["The selected texture will override the ElvUI default absorb bar texture."],
 					disabled = function()
-						return not E.db.WT.unitFrames.absorb.enable
-							or not E.db.WT.unitFrames.absorb.healAbsorb.enable
+						return not E.db.WT.unitFrames.absorb.healAbsorb.enable
 							or E.db.WT.unitFrames.absorb.healAbsorb.blizzardStyle
 					end,
 					dialogControl = "LSM30_Statusbar",
@@ -249,8 +246,53 @@ options.absorb = {
 				},
 			},
 		},
-		misc = {
+		healPredictionTexture = {
 			order = 5,
+			type = "group",
+			name = L["Heal Prediction"],
+			disabled = function()
+				return not E.db.WT.unitFrames.absorb.enable
+			end,
+			inline = true,
+			get = function(info)
+				return E.db.WT.unitFrames.absorb.healPrediction[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.unitFrames.absorb.healPrediction[info[#info]] = value
+				A:ProfileUpdate()
+			end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+					desc = L["Enable the replacing of ElvUI absorb bar textures."],
+				},
+				blizzardStyle = {
+					order = 2,
+					type = "toggle",
+					name = L["Blizzard Style"],
+					desc = L["Use the texture from Blizzard Raid Frames."],
+					disabled = function()
+						return not E.db.WT.unitFrames.absorb.healPrediction.enable
+					end,
+				},
+				custom = {
+					order = 3,
+					type = "select",
+					name = L["Custom Texture"],
+					desc = L["The selected texture will override the ElvUI default absorb bar texture."],
+					disabled = function()
+						return not E.db.WT.unitFrames.absorb.healPrediction.enable
+							or E.db.WT.unitFrames.absorb.healPrediction.blizzardStyle
+					end,
+					dialogControl = "LSM30_Statusbar",
+					values = LSM:HashTable("statusbar"),
+				},
+			},
+		},
+		misc = {
+			order = 6,
 			type = "group",
 			name = L["Misc"],
 			inline = true,
@@ -284,7 +326,7 @@ options.absorb = {
 			},
 		},
 		elvui = {
-			order = 6,
+			order = 7,
 			type = "group",
 			name = L["ElvUI"],
 			inline = true,

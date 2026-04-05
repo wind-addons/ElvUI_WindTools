@@ -1247,6 +1247,11 @@ P.unitFrames = {
 			blizzardStyle = false,
 			custom = E.db.unitframe.statusbar,
 		},
+		healPrediction = {
+			enable = true,
+			blizzardStyle = false,
+			custom = E.db.unitframe.statusbar,
+		},
 		blizzardOverAbsorbGlow = true,
 		blizzardAbsorbOverlay = true,
 	},

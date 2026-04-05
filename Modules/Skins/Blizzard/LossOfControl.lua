@@ -100,12 +100,28 @@ function S:LossOfControlFrame_SetUpDisplay(frame)
 	frame:Size(width, height)
 end
 
+function S:LossOfControlFrame_OnUpdate(frame)
+	local db = self.db.lossOfControl
+	if not db then
+		return
+	end
+
+	if db.abilityName.hide then
+		frame.AbilityName:Hide()
+	end
+
+	if db.timeLeft.hide then
+		frame.TimeLeft:Hide()
+	end
+end
+
 function S:LossOfControlFrame()
 	if not self:CheckDB("losscontrol", "lossOfControl") then
 		return
 	end
 
 	S:SecureHook(_G.LossOfControlFrame, "SetUpDisplay", "LossOfControlFrame_SetUpDisplay")
+	S:HookScript(_G.LossOfControlFrame, "OnUpdate", "LossOfControlFrame_OnUpdate")
 end
 
 S:AddCallback("LossOfControlFrame")

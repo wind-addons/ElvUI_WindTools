@@ -44,23 +44,10 @@ function S:LossOfControlFrame_SetUpDisplay(frame)
 
 	local hasText = false
 
-	if not self:IsHooked(frame.AbilityName, "Show") then
-		self:SecureHook(frame.AbilityName, "Show", function()
-			if db.abilityName.hide then
-				frame.AbilityName:Hide()
-			end
-		end)
-	end
-
-	if not self:IsHooked(frame.TimeLeft, "Show") then
-		self:SecureHook(frame.TimeLeft, "Show", function()
-			if db.timeLeft.hide then
-				frame.TimeLeft:Hide()
-			end
-		end)
-	end
-
-	if not db.abilityName.hide then
+	if db.abilityName.hide then
+		frame.AbilityName:Hide()
+	else
+		frame.AbilityName:Show()
 		frame.AbilityName:ClearAllPoints()
 		if db.abilityName.justifyH == "LEFT" then
 			frame.AbilityName:Point("LEFT", frame, "CENTER", db.abilityName.offsetX, db.abilityName.offsetY)
@@ -73,7 +60,10 @@ function S:LossOfControlFrame_SetUpDisplay(frame)
 		hasText = true
 	end
 
-	if not db.timeLeft.hide then
+	if db.timeLeft.hide then
+		frame.TimeLeft:Hide()
+	else
+		frame.TimeLeft:Show()
 		frame.TimeLeft:ClearAllPoints()
 		frame.TimeLeft.NumberText:ClearAllPoints()
 		frame.TimeLeft.SecondsText:ClearAllPoints()
@@ -115,7 +105,17 @@ function S:LossOfControlFrame()
 		return
 	end
 
-	S:SecureHook(_G.LossOfControlFrame, "SetUpDisplay", "LossOfControlFrame_SetUpDisplay")
+	self:SecureHook(_G.LossOfControlFrame, "SetUpDisplay", "LossOfControlFrame_SetUpDisplay")
+	self:SecureHook(_G.LossOfControlFrame.AbilityName, "Show", function(f)
+		if self.db.lossOfControl.abilityName.hide then
+			f:Hide()
+		end
+	end)
+	self:SecureHook(_G.LossOfControlFrame.TimeLeft, "Show", function(f)
+		if self.db.lossOfControl.timeLeft.hide then
+			f:Hide()
+		end
+	end)
 end
 
 S:AddCallback("LossOfControlFrame")

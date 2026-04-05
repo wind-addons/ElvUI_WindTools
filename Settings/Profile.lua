@@ -1243,12 +1243,12 @@ P.unitFrames = {
 			custom = E.db.unitframe.statusbar,
 		},
 		healAbsorb = {
-			enable = true,
+			enable = false,
 			blizzardStyle = false,
 			custom = E.db.unitframe.statusbar,
 		},
 		healPrediction = {
-			enable = true,
+			enable = false,
 			blizzardStyle = false,
 			custom = E.db.unitframe.statusbar,
 		},

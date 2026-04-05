@@ -785,8 +785,8 @@ function S:ReskinCustomGameTooltips(...)
 
 			local ItemTooltip = tt.ItemTooltip
 			if ItemTooltip then
-				S:Proxy("HandleIcon", ItemTooltip.Icon, true)
-				S:Proxy("HandleIconBorder", ItemTooltip.IconBorder, ItemTooltip.Icon.backdrop)
+				self:Proxy("HandleIcon", ItemTooltip.Icon, true)
+				self:Proxy("HandleIconBorder", ItemTooltip.IconBorder, ItemTooltip.Icon.backdrop)
 			end
 
 			tt.__windSkin = true

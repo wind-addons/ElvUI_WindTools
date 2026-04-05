@@ -44,10 +44,23 @@ function S:LossOfControlFrame_SetUpDisplay(frame)
 
 	local hasText = false
 
-	if db.abilityName.hide then
-		frame.AbilityName:Hide()
-	else
-		frame.AbilityName:Show()
+	if not self:IsHooked(frame.AbilityName, "Show") then
+		self:SecureHook(frame.AbilityName, "Show", function()
+			if db.abilityName.hide then
+				frame.AbilityName:Hide()
+			end
+		end)
+	end
+
+	if not self:IsHooked(frame.TimeLeft, "Show") then
+		self:SecureHook(frame.TimeLeft, "Show", function()
+			if db.timeLeft.hide then
+				frame.TimeLeft:Hide()
+			end
+		end)
+	end
+
+	if not db.abilityName.hide then
 		frame.AbilityName:ClearAllPoints()
 		if db.abilityName.justifyH == "LEFT" then
 			frame.AbilityName:Point("LEFT", frame, "CENTER", db.abilityName.offsetX, db.abilityName.offsetY)
@@ -60,10 +73,7 @@ function S:LossOfControlFrame_SetUpDisplay(frame)
 		hasText = true
 	end
 
-	if db.timeLeft.hide then
-		frame.TimeLeft:Hide()
-	else
-		frame.TimeLeft:Show()
+	if not db.timeLeft.hide then
 		frame.TimeLeft:ClearAllPoints()
 		frame.TimeLeft.NumberText:ClearAllPoints()
 		frame.TimeLeft.SecondsText:ClearAllPoints()
@@ -100,28 +110,12 @@ function S:LossOfControlFrame_SetUpDisplay(frame)
 	frame:Size(width, height)
 end
 
-function S:LossOfControlFrame_OnUpdate(frame)
-	local db = self.db.lossOfControl
-	if not db then
-		return
-	end
-
-	if db.abilityName.hide then
-		frame.AbilityName:Hide()
-	end
-
-	if db.timeLeft.hide then
-		frame.TimeLeft:Hide()
-	end
-end
-
 function S:LossOfControlFrame()
 	if not self:CheckDB("losscontrol", "lossOfControl") then
 		return
 	end
 
 	S:SecureHook(_G.LossOfControlFrame, "SetUpDisplay", "LossOfControlFrame_SetUpDisplay")
-	S:HookScript(_G.LossOfControlFrame, "OnUpdate", "LossOfControlFrame_OnUpdate")
 end
 
 S:AddCallback("LossOfControlFrame")

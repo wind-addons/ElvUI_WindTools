@@ -3,6 +3,7 @@ local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames ---@type MoveFrames
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 local strfind = strfind
 
 local function reskinFlightMapContainer(frame)

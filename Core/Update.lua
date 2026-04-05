@@ -436,6 +436,16 @@ function W:UpdateScripts()
 		end
 	end
 
+	if profileVersion < 4.18 and E.db.WT then
+		if E.db.WT and E.db.WT.unitFrames and E.db.WT.unitFrames.absorb then
+			if E.db.WT.unitFrames.absorb.texture then
+				E:CopyTable(E.db.WT.unitFrames.absorb.damageAbsorb, E.db.WT.unitFrames.absorb.texture)
+				E.db.WT.unitFrames.absorb.texture = nil
+			end
+			UpdateMessage(L["Unit Frames"] .. ": " .. L["Absorb"] .. " - " .. L["Update Database"], profileVersion)
+		end
+	end
+
 	if not isFirstLine then
 		F.PrintGradientLine()
 	end

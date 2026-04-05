@@ -159,7 +159,7 @@ options.absorb = {
 		texture = {
 			order = 3,
 			type = "group",
-			name = L["Texture"],
+			name = L["Damage Absorb"],
 			disabled = function()
 				return not E.db.WT.unitFrames.absorb.enable
 			end,
@@ -202,8 +202,55 @@ options.absorb = {
 				},
 			},
 		},
-		misc = {
+		healAbsorbTexture = {
 			order = 4,
+			type = "group",
+			name = L["Heal Absorb"],
+			disabled = function()
+				return not E.db.WT.unitFrames.absorb.enable
+			end,
+			inline = true,
+			get = function(info)
+				return E.db.WT.unitFrames.absorb.healAbsorb[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.unitFrames.absorb.healAbsorb[info[#info]] = value
+				A:ProfileUpdate()
+			end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+					desc = L["Enable the replacing of ElvUI heal absorb bar textures."],
+				},
+				blizzardStyle = {
+					order = 2,
+					type = "toggle",
+					name = L["Blizzard Style"],
+					desc = L["Use the texture from Blizzard Raid Frames for heal absorb bar."],
+					disabled = function()
+						return not E.db.WT.unitFrames.absorb.enable
+							or not E.db.WT.unitFrames.absorb.healAbsorb.enable
+					end,
+				},
+				custom = {
+					order = 3,
+					type = "select",
+					name = L["Custom Texture"],
+					desc = L["The selected texture will override the ElvUI default heal absorb bar texture."],
+					disabled = function()
+						return not E.db.WT.unitFrames.absorb.enable
+							or not E.db.WT.unitFrames.absorb.healAbsorb.enable
+							or E.db.WT.unitFrames.absorb.healAbsorb.blizzardStyle
+					end,
+					dialogControl = "LSM30_Statusbar",
+					values = LSM:HashTable("statusbar"),
+				},
+			},
+		},
+		misc = {
+			order = 5,
 			type = "group",
 			name = L["Misc"],
 			inline = true,
@@ -214,15 +261,15 @@ options.absorb = {
 				blizzardOverAbsorbGlow = {
 					order = 1,
 					type = "toggle",
-					name = L["Blizzard Over Absorb Glow"],
-					desc = L["Add a glow in the end of health bars to indicate the over absorb."],
+					name = L["Over Absorb Glow"],
+					desc = L["Add a glow at the end of health bars to indicate that damage absorb has exceeded the unit's missing health."],
 					width = 1.5,
 				},
 				blizzardAbsorbOverlay = {
 					order = 2,
 					type = "toggle",
-					name = L["Blizzard Absorb Overlay"],
-					desc = L["Add an additional overlay to the absorb bar."],
+					name = L["Absorb Overlay"],
+					desc = L["Add an additional overlay to the damage absorb bar."],
 					width = 1.3,
 				},
 				setColor = {
@@ -237,7 +284,7 @@ options.absorb = {
 			},
 		},
 		elvui = {
-			order = 5,
+			order = 6,
 			type = "group",
 			name = L["ElvUI"],
 			inline = true,

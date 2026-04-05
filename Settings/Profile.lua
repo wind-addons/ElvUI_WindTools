@@ -1237,10 +1237,15 @@ P.unitFrames = {
 	---@class ProfileDB.unitFrames.absorb
 	absorb = {
 		enable = false,
-		texture = {
+		damageAbsorb = {
 			enable = true,
+			blizzardStyle = false,
 			custom = E.db.unitframe.statusbar,
-			blizzardStyle = true,
+		},
+		healAbsorb = {
+			enable = true,
+			blizzardStyle = false,
+			custom = E.db.unitframe.statusbar,
 		},
 		blizzardOverAbsorbGlow = true,
 		blizzardAbsorbOverlay = true,

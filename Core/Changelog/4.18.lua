@@ -63,6 +63,7 @@ W.Changelog[418] = {
 			"[预组建队伍] 优化了西方语系中副本名的缩写, 使其更加贴合 Raider.IO 风格.",
 			"[美化皮肤] 由于 World Quest Tab 现在自带对 ElvUI 的美化支持, 现在精简了相关重复美化, 依旧保留了对鼠标提示文字去边框, 框体阴影, 世界地图框体跟随移动等功能.",
 			"[美化皮肤] 修复了 Simple Addon Manager 右侧内容无法快速跟随框体移动的问题.",
+			"[美化皮肤] Mount Route Planner 皮肤现在支持最新版本.",
 			"[聊天文字] 同步 ElvUI 聊天模块, 尝试解决部分情况下发生的 Lua 错误.",
 		},
 		["zhTW"] = {
@@ -71,6 +72,7 @@ W.Changelog[418] = {
 			"[預組建隊伍] 優化了西方語系中副本名的縮寫, 使其更加貼合 Raider.IO 風格.",
 			"[美化皮膚] 由於 World Quest Tab 現在自帶對 ElvUI 的美化支持, 現在精簡了相關重複美化, 依舊保留了對鼠標提示文字去邊框, 框體陰影, 世界地圖框體跟隨移動等功能.",
 			"[美化皮膚] 修復了 Simple Addon Manager 右側內容無法快速跟隨框體移動的問題.",
+			"[美化皮膚] Mount Route Planner 皮膚現在支持最新版本.",
 			"[聊天文字] 同步 ElvUI 聊天模块, 嘗試解決部分情況下發生的 Lua 錯誤.",
 		},
 		["enUS"] = {
@@ -79,6 +81,7 @@ W.Changelog[418] = {
 			"[LFG List] Optimized the abbreviation of dungeon names in Western languages to better fit the Raider.IO style.",
 			"[Skins] Since the World Quest Tab now comes with skin support for ElvUI by default, the related duplicate skins are now streamlined, while still retaining features such as removing borders from mouse tooltip text, frame shadows, and world map frame following movement.",
 			"[Skins] Fixed an issue where the content on the right side of the Simple Addon Manager could not quickly follow the movement of the frame.",
+			"[Skins]  Mount Route Planner skin now supports the latest version.",
 			"[Chat Text] Synchronized with ElvUI's chat module, attempting to resolve Lua errors that occur in some cases.",
 		},
 		["koKR"] = {
@@ -87,6 +90,7 @@ W.Changelog[418] = {
 			"[파티 찾기 목록] Raider.IO 스타일에 더 잘 맞도록 서양 언어의 던전 이름 약어를 최적화했습니다.",
 			"[스킨] World Quest Tab이 이제 ElvUI에 대한 스킨 지원을 기본적으로 제공하기 때문에 관련 중복 스킨을 간소화했습니다. 여전히 마우스 툴팁 텍스트의 테두리 제거, 프레임 그림자, 세계 지도 프레임 이동과 같은 기능을 유지합니다.",
 			"[스킨] Simple Addon Manager의 오른쪽 콘텐츠가 프레임의 움직임을 빠르게 따라가지 못하는 문제를 수정했습니다.",
+			"[스킨] Mount Route Planner 스킨이 최신 버전을 지원합니다.",
 			"[채팅 텍스트] ElvUI의 채팅 모듈과 동기화하여 일부 경우에 발생하는 Lua 오류를 해결하려고 시도했습니다.",
 		},
 		["ruRU"] = {
@@ -95,6 +99,7 @@ W.Changelog[418] = {
 			"[Поиск группы] Оптимизировано сокращение названий подземелий в западных языках, чтобы лучше соответствовать стилю Raider.IO.",
 			"[Скины] Поскольку вкладка World Quest теперь по умолчанию поддерживает скины для ElvUI, были упрощены связанные повторяющиеся скины, при этом по-прежнему сохраняются функции, такие как удаление границ текста подсказки мыши, тени рамок и перемещение рамок на карте мира.",
 			"[Скины] Исправлена проблема, из-за которой содержимое на правой стороне Simple Addon Manager не могло быстро следовать за движением рамки.",
+			"[Скины] Скин Mount Route Planner теперь поддерживает последнюю версию.",
 			"[Текст чата] Синхронизировано с модулем чата ElvUI, попытка решить ошибки Lua, которые возникают в некоторых случаях.",
 		},
 	},

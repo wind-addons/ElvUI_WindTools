@@ -40,7 +40,7 @@ License: MIT
 -- @class file
 -- @name LibRangeCheck-3.0
 local MAJOR_VERSION = "LibRangeCheck-3.0"
-local MINOR_VERSION = 33
+local MINOR_VERSION = 34
 
 ---@class lib
 local lib, oldminor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
@@ -53,6 +53,7 @@ local interfaceVersion = select(4, GetBuildInfo())
 local isRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 local isEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 local isTBC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+local isWrath = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
 local isCata = WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
 local isMidnight = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and interfaceVersion >= 120000
 
@@ -4951,18 +4952,19 @@ function lib:activate()
     local frame = CreateFrame("Frame")
     self.frame = frame
 
-    if not (isMidnight or isTBC) then
-      frame:RegisterEvent("LEARNED_SPELL_IN_TAB")
-    end
     frame:RegisterEvent("CHARACTER_POINTS_CHANGED")
     frame:RegisterEvent("SPELLS_CHANGED")
 
-    if isEra or isCata then
-      frame:RegisterEvent("CVAR_UPDATE")
+    if C_EventUtils and C_EventUtils.IsEventValid("LEARNED_SPELL_IN_TAB") then
+      frame:RegisterEvent("LEARNED_SPELL_IN_TAB")
     end
 
-    if isRetail or isCata then
+    if C_EventUtils and C_EventUtils.IsEventValid("PLAYER_TALENT_UPDATE") then
       frame:RegisterEvent("PLAYER_TALENT_UPDATE")
+    end
+
+    if (isEra or isTBC or isWrath or isCata) then
+      frame:RegisterEvent("CVAR_UPDATE")
     end
 
     local _, playerClass = UnitClass("player")

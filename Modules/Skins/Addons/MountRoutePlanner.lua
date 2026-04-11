@@ -6,6 +6,8 @@ local abs = abs
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
+local RunNextFrame = RunNextFrame
+
 local TEX_PREFIX = "Interface\\AddOns\\MountRoutePlanner\\Assets\\"
 
 local function trySkin(func)
@@ -86,12 +88,44 @@ local function actionButton(button)
 	button:SetTemplate()
 end
 
+local function changelogFrame(frame)
+	local ChangelogFrame = _G.MRPChangelogFrame
+	if not ChangelogFrame then
+		return
+	end
+
+	ChangelogFrame:SetTemplate("Transparent")
+	S:CreateShadow(ChangelogFrame)
+
+	local ScrollBar = ChangelogFrame.scrollFrame and ChangelogFrame.scrollFrame.ScrollBar
+	if ScrollBar then
+		S:Proxy("HandleScrollBar", ScrollBar)
+	end
+
+	local dismissCheckbox = ChangelogFrame.dismissCheckbox
+	if dismissCheckbox then
+		S:Proxy("HandleCheckBox", dismissCheckbox)
+		dismissCheckbox:Size(24)
+	end
+
+	for _, child in pairs({ ChangelogFrame:GetChildren() }) do
+		local objectType = child.GetObjectType and child:GetObjectType()
+		if objectType == "Button" then
+			if child:GetNumRegions() == 4 then
+				trySkin(closeButton)(child)
+			end
+		end
+	end
+end
+
 function S:MountRoutePlanner()
 	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.mountRoutePlanner then
 		return
 	end
 
-	local frame = _G.MRPFrame
+	RunNextFrame(changelogFrame)
+
+	local frame = _G.MRP_Frame
 	if not frame then
 		return
 	end
@@ -135,4 +169,9 @@ function S:MountRoutePlanner()
 	end)
 end
 
+-- function S:MountRoutePlannerOptions(frame)
+-- 	--TODO: Skin the options frame if needed
+-- end
+
 S:AddCallbackForAddon("MountRoutePlanner")
+-- S:ReskinSettingFrame("Mount Route Planner", "MountRoutePlannerOptions")

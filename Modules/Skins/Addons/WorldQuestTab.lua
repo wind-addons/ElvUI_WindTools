@@ -18,7 +18,7 @@ local function reskinFlightMapContainer(frame)
 		MF:InternalHandle(self, parent)
 	end)
 
-	if _G.WQT_FlightMapContainerButton then
+	if _G.WQT_FlightMapContainerButton and _G.WQT_FlightMapContainerButton.backdrop then
 		_G.WQT_FlightMapContainerButton.backdrop:SetTemplate("Transparent")
 		S:CreateBackdropShadow(_G.WQT_FlightMapContainerButton)
 	end

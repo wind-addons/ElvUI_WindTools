@@ -324,11 +324,9 @@ function LL:UpdateEnumerate(Enumerate)
 		local color = score and C_ChallengeMode_GetDungeonScoreRarityColor(score) or { r = 1.0, g = 1.0, b = 1.0 }
 		scoreText = C.StringWithRGB(score, color)
 
-		local bestRun = result.leaderDungeonScoreInfo
-			and result.leaderDungeonScoreInfo[1]
-			and result.leaderDungeonScoreInfo[1].bestRunLevel
+		local bestRun = result.leaderBestDungeonScoreInfo and result.leaderBestDungeonScoreInfo.bestRunLevel
 		if bestRun then
-			local template = result.leaderDungeonScoreInfo[1].finishedSuccess and "green-400" or "gray-400"
+			local template = result.leaderBestDungeonScoreInfo.finishedSuccess and "green-400" or "gray-400"
 			bestText = C.StringByTemplate("+" .. bestRun, template)
 		end
 
@@ -1160,7 +1158,7 @@ function LL:InitializeRightPanel()
 			tinsert(vaultStatusCache, {
 				mapID = runHistory[i].mapChallengeModeID,
 				level = runHistory[i].level,
-				score = runHistory[i].score,
+				score = runHistory[i].runScore,
 			})
 		end
 
@@ -1456,7 +1454,7 @@ function LL:UpdateRightPanel()
 	local isDungeonMode = _G.PVEFrame.activeTabIndex == 1
 		and _G.GroupFinderFrame.selection == _G.LFGListPVEStub
 		and _G.LFGListFrame.SearchPanel:IsShown()
-		and _G.LFGListFrame.SearchPanel.categoryID == 2
+		and _G.LFGListFrame.SearchPanel.categoryID == GROUP_FINDER_CATEGORY_ID_DUNGEONS
 
 	self.RightPanel.Filters:SetShown(isDungeonMode)
 	self.RightPanel.SortPanel:SetShown(isDungeonMode)
@@ -1578,7 +1576,7 @@ end
 
 function LL:OnUpdateResultList(searchPanel)
 	local results = CopyTable(searchPanel.results, true)
-	if _G.LFGListFrame.SearchPanel.categoryID ~= 2 then
+	if _G.LFGListFrame.SearchPanel.categoryID ~= GROUP_FINDER_CATEGORY_ID_DUNGEONS then
 		return
 	end
 
@@ -1600,18 +1598,21 @@ function LL:OnUpdateResultList(searchPanel)
 			local verified = true
 			local searchResultInfo = C_LFGList_GetSearchResultInfo(resultID)
 
-			local sortCache = { id = resultID, leaderOverallScore = 0, leaderScore = 0 }
+			local sortCache = {
+				id = resultID,
+				leaderOverallScore = 0,
+				leaderScore = 0,
+				numFriends = searchResultInfo.numBNetFriends
+					+ searchResultInfo.numCharFriends
+					+ searchResultInfo.numGuildMates,
+			}
 
 			if searchResultInfo.leaderOverallDungeonScore then
 				sortCache.leaderOverallScore = searchResultInfo.leaderOverallDungeonScore
 			end
 
-			if
-				searchResultInfo.leaderDungeonScoreInfo
-				and searchResultInfo.leaderDungeonScoreInfo[1]
-				and searchResultInfo.leaderDungeonScoreInfo[1].mapScore
-			then
-				sortCache.leaderScore = searchResultInfo.leaderDungeonScoreInfo[1].mapScore
+			if searchResultInfo.leaderBestDungeonScoreInfo then
+				sortCache.leaderScore = searchResultInfo.leaderBestDungeonScoreInfo.mapScore
 			end
 
 			-- Role available (Party fit) => missing checks on damagers from the 10.2.7 advanced filters
@@ -1644,6 +1645,13 @@ function LL:OnUpdateResultList(searchPanel)
 		sort(waitForSortingResults, function(a, b)
 			if not a or not b then
 				return false
+			end
+
+			-- Preserve Blizzard's social priority: BNet friends, character friends, and guild mates always rank above non-social groups
+			local aHasFriend = a.numFriends > 0
+			local bHasFriend = b.numFriends > 0
+			if aHasFriend ~= bHasFriend then
+				return aHasFriend
 			end
 
 			local result = sortMode[sortBy].func(a, b)

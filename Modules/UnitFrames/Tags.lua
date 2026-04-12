@@ -172,7 +172,7 @@ function Tags:Initialize()
 		return C_StringUtil_TruncateWhenZero(UnitGetTotalAbsorbs(unit))
 	end)
 
-	E:AddTag("healabsorbs-autohide", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	E:AddTag("healabsorbs-autohide", "UNIT_HEAL_ABSORB_AMOUNT_CHANGED", function(unit)
 		return C_StringUtil_TruncateWhenZero(UnitGetTotalHealAbsorbs(unit))
 	end)
 

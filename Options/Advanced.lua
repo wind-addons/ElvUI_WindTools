@@ -1,6 +1,7 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable, PrivateDB, ProfileDB, GlobalDB
 local options = W.options.advanced.args
 local C = W.Utilities.Color
+local NC = W:GetModule("NameClip") ---@class NameClip
 
 local _G = _G
 local format = format
@@ -796,8 +797,19 @@ options.reset = {
 						end)
 					end,
 				},
-				absorb = {
+				nameClip = {
 					order = 2,
+					type = "execute",
+					name = L["Name Clip"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Name Clip"], nil, function()
+							E.db.WT.unitFrames.nameClip = P.unitFrames.nameClip
+							NC:ProfileUpdate()
+						end)
+					end,
+				},
+				absorb = {
+					order = 3,
 					type = "execute",
 					name = L["Absorb"],
 					func = function()
@@ -807,7 +819,7 @@ options.reset = {
 					end,
 				},
 				roleIcon = {
-					order = 3,
+					order = 4,
 					type = "execute",
 					name = L["Role Icon"],
 					func = function()
@@ -817,7 +829,7 @@ options.reset = {
 					end,
 				},
 				tags = {
-					order = 4,
+					order = 5,
 					type = "execute",
 					name = L["Tags"],
 					func = function()

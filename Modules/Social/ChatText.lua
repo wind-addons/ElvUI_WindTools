@@ -1122,32 +1122,23 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 end
 
 function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, channelLength, coloredName, historySavedName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, isHistory, historyTime, historyName, historyBTag)
-	local body
 	local noBrackets = CT.db.removeBrackets
 
 	if chatType == 'WHISPER_INFORM' and GMChatFrame_IsGM and GMChatFrame_IsGM(arg2) then
 		return
 	end
 
-	local linkSender = true
 	local isProtected = CH:MessageIsProtected(arg1)
 	local bossMonster = strsub(chatType, 1, 9) == 'RAID_BOSS' or strsub(chatType, 1, 7) == 'MONSTER'
-	if bossMonster then
-		linkSender = nil
-
-		-- fix blizzard formatting errors from localization strings
-		if not isProtected then
+	if not isProtected then
+		if bossMonster then -- Blizzard Formatting Errors: escape any special characters when non-secret
 			arg1 = gsub(arg1, '(%d%s?%%)([^%%%a])', '%1%%%2') -- escape percentages that need it [broken since SL?]
 			arg1 = gsub(arg1, '(%d%s?%%)$', '%1%%') -- escape percentages on the end
 			arg1 = gsub(arg1, '^%%o', '%%s') -- replace %o to %s [broken in cata classic?]: "%o gular zila amanare rukadare." from "Cabal Zealot"
 			arg1 = gsub(arg1, '^%%bur', '%%s') -- "%bur uden agol mod ru se ruftos lo nevren algos!" from "Gan'arg Sapper"
 		end
-	elseif not isProtected then
-		arg1 = gsub(arg1, '%%', '%%%%') -- escape any % characters, as it may otherwise cause an 'invalid option in format' error
-	end
 
-	if not isProtected then
-		arg1 = RemoveExtraSpaces(arg1) -- Remove groups of many spaces
+		arg1 = RemoveExtraSpaces(arg1) -- Replace all instances of 5+ spaces with only 4 spaces
 
 		-- Search for icon links and replace them with texture links.
 		-- If arg17 is true, don't convert to raid icons
@@ -1177,9 +1168,9 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 	if chatType == 'SAY' or chatType == 'YELL' then
 		relevantDefaultLanguage = frame.alternativeDefaultLanguage
 	end
-	local usingDifferentLanguage = (arg3 ~= '') and (arg3 ~= relevantDefaultLanguage)
-	local usingEmote = (chatType == 'EMOTE') or (chatType == 'TEXT_EMOTE')
 
+	local usingEmote = (chatType == 'EMOTE') or (chatType == 'TEXT_EMOTE')
+	local usingDifferentLanguage = (arg3 ~= '') and (arg3 ~= relevantDefaultLanguage)
 	if usingDifferentLanguage or not usingEmote then
 		playerLinkDisplayText = format(noBrackets and '%s' or '[%s]', coloredName)
 	end
@@ -1212,7 +1203,7 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 		if type(chatIcon) == 'function' then
 			local icon, prettify, var1, var2, var3 = chatIcon()
 			if prettify and chatType ~= 'GUILD_ITEM_LOOTED' and not isProtected then
-				if chatType == 'TEXT_EMOTE' and not usingDifferentLanguage and (linkSender and arg2 ~= '') then
+				if not usingDifferentLanguage and (chatType == 'TEXT_EMOTE' and arg2 ~= '') then
 					var1, var2, var3 = strmatch(message, '^(.-)('..arg2..(realm and '%-'..realm or '')..')(.-)$')
 				end
 
@@ -1234,26 +1225,31 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 		if lfgRole then
 			pflag = pflag..lfgRole
 		end
+
 		-- Special Chat Icon
 		if chatIcon then
 			pflag = pflag..chatIcon
 		end
+
 		-- Plugin Chat Icon
 		if pluginChatIcon then
 			pflag = pflag..pluginChatIcon
 		end
 	end
 
-	local senderLink = linkSender and playerLink or arg2
+	local header, body = _G['CHAT_'..chatType..'_GET'], nil
+	local sender = (not bossMonster and playerLink) or arg2
 	if usingDifferentLanguage then
-		body = format(_G['CHAT_'..chatType..'_GET']..'[%s] %s', pflag..senderLink, arg3, message) -- arg3 is language header
+		body = format(header..(noBrackets and '%s %s' or '[%s] %s'), pflag..sender, arg3, message) -- arg3 is language
 	elseif chatType == 'GUILD_ITEM_LOOTED' then
-		body = not isProtected and gsub(message, '$s', senderLink, 1) or message
+		body = not isProtected and gsub(message, '$s', sender, 1) or message
 	elseif chatType == 'TEXT_EMOTE' then
 		local classLink = realm and playerLink and not isProtected and (info.colorNameByClass and gsub(playerLink, '(|h|c.-)|r|h$','%1-'..realm..'|r|h') or gsub(playerLink, '(|h.-)|h$','%1-'..realm..'|h'))
-		body = (classLink and gsub(message, arg2..'%-'..realm, pflag..classLink, 1)) or ((E:NotSecretValue(arg2) and arg2 ~= senderLink) and gsub(message, arg2, senderLink, 1)) or message
-	else
-		body = format(_G['CHAT_'..chatType..'_GET']..message, pflag..senderLink)
+		body = (classLink and gsub(message, arg2..'%-'..realm, pflag..classLink, 1)) or ((E:NotSecretValue(arg2) and arg2 ~= sender) and gsub(message, arg2, sender, 1)) or message
+	elseif bossMonster then -- may contain special formatting
+		body = format(header..message, pflag..sender)
+	else -- ignore special characters from players
+		body = format(header..'%s', pflag..sender, message)
 	end
 
 	-- Add Channel

@@ -1,12 +1,94 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames ---@type MoveFrames
+local C = W.Utilities.Color
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local next = next
 local strfind = strfind
+local unpack = unpack
 
-local function reskinFlightMapContainer(frame)
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+
+-- Modified from ElvUI WorldMap skin
+local function ReskinTab(tab)
+	tab:CreateBackdrop()
+	tab:Size(30, 40)
+
+	if tab.Icon then
+		F.InternalizeMethod(tab.Icon, "SetPoint", true)
+		F.InternalizeMethod(tab.Icon, "ClearAllPoints", true)
+		F.CallMethod(tab.Icon, "ClearAllPoints")
+		F.CallMethod(tab.Icon, "SetPoint", "CENTER")
+	end
+
+	if tab.Background then
+		tab.Background:SetAlpha(0)
+	end
+
+	if tab.SelectedTexture then
+		tab.SelectedTexture:SetDrawLayer("ARTWORK")
+		tab.SelectedTexture:SetColorTexture(1, 0.82, 0, 0.3)
+		tab.SelectedTexture:SetAllPoints()
+	end
+
+	for _, region in next, { tab:GetRegions() } do
+		if region:IsObjectType("Texture") and region:GetAtlas() == "QuestLog-Tab-side-Glow-hover" then
+			region:SetColorTexture(1, 1, 1, 0.3)
+			region:SetAllPoints()
+		end
+	end
+
+	if tab.backdrop then
+		S:CreateBackdropShadow(tab)
+		tab.backdrop:SetTemplate("Transparent")
+	end
+end
+
+local function ReskinContainer(container)
+	container.BorderFrame:Hide()
+	container.Background:Hide()
+	container:CreateBackdrop("Transparent")
+	container.backdrop:SetOutside(container.Background)
+	S:Proxy("HandleTrimScrollBar", container.ScrollBar)
+end
+
+local function ReskinQuestContainer(container)
+	ReskinContainer(container)
+	S:Proxy("HandleDropDownBox", _G.FML) -- Monitor the name "FML"
+	S:Proxy(
+		"HandleButton",
+		container.TopBar.FilterDropdown,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		true,
+		"right"
+	)
+end
+
+local function ReskinWhatsNew(container)
+	ReskinContainer(container)
+
+	container.CloseButton:Size(20)
+	S:Proxy("HandleCloseButton", container.CloseButton)
+end
+
+local function ReskinSettings(container)
+	ReskinContainer(container)
+end
+
+local function ReskinFlightMapContainer(frame)
+	frame:StripTextures()
+	frame:SetTemplate("Transparent")
 	S:CreateShadow(frame)
 
 	F.InternalizeMethod(frame, "SetPoint")
@@ -18,10 +100,94 @@ local function reskinFlightMapContainer(frame)
 		MF:InternalHandle(self, parent)
 	end)
 
-	if _G.WQT_FlightMapContainerButton and _G.WQT_FlightMapContainerButton.backdrop then
-		_G.WQT_FlightMapContainerButton.backdrop:SetTemplate("Transparent")
-		S:CreateBackdropShadow(_G.WQT_FlightMapContainerButton)
+	if _G.WQT_FlightMapContainerButton then
+		S:Proxy("HandleButton", _G.WQT_FlightMapContainerButton)
+		_G.WQT_FlightMapContainerButton:SetTemplate("Transparent")
+		S:CreateShadow(_G.WQT_FlightMapContainerButton)
 	end
+end
+
+local function ReskinSettingsCategory(frame)
+	if frame.ExpandIcon then
+		S:Proxy("HandleButton", frame, true, nil, nil, true)
+		frame.Highlight:SetAlpha(0)
+		frame.backdrop:SetInside(frame, 10, 5)
+
+		F.Move(frame.Title, 0, -2)
+		return
+	end
+
+	if frame.BGRight then
+		frame:StripTextures()
+		frame:CreateBackdrop()
+
+		frame.HighlightMiddle:SetTexture(E.media.blankTex)
+		frame.HighlightMiddle:SetVertexColor(1, 1, 1, 0.2)
+		frame.HighlightMiddle:SetAllPoints(frame.backdrop)
+
+		frame.windSelectedTexture = frame:CreateTexture(nil, "ARTWORK")
+		frame.windSelectedTexture:SetTexture(E.media.blankTex)
+		frame.windSelectedTexture:SetVertexColor(unpack(E.media.rgbvaluecolor))
+		frame.windSelectedTexture:SetAlpha(0.5)
+		frame.windSelectedTexture:SetAllPoints(frame.backdrop)
+		frame.windSelectedTexture:Hide()
+
+		frame.BGRight:Hide()
+		frame.backdrop:Point("TOPLEFT", frame.BGLeft)
+		frame.backdrop:Point("BOTTOMRIGHT", frame.BGRight)
+		hooksecurefunc(frame, "SetExpanded", function(self, expanded)
+			self.windSelectedTexture:SetShown(expanded)
+		end)
+	end
+end
+
+local function ReskinSettingsCheckbox(frame)
+	S:Proxy("HandleCheckBox", frame.CheckBox)
+end
+
+local function ReskinSettingsSlider(frame)
+	S:Proxy("HandleStepSlider", frame.SliderWithSteppers)
+	S:Proxy("HandleNextPrevButton", frame.SliderWithSteppers.Back, "left")
+	S:Proxy("HandleNextPrevButton", frame.SliderWithSteppers.Forward, "right")
+	S:Proxy("HandleEditBox", frame.TextBox)
+end
+
+local function ReskinSettingsColor(frame)
+	S:Proxy("HandleButton", frame.Picker)
+	S:Proxy("HandleButton", frame.ResetButton)
+end
+
+local function ReskinSettingsDropDown(frame)
+	S:Proxy("HandleDropDownBox", frame.Dropdown, frame:GetWidth())
+end
+
+local function ReskinSettingsButton(frame)
+	S:Proxy("HandleButton", frame.Button)
+end
+
+local function ReskinSettingsTextInput(frame)
+	S:Proxy("HandleEditBox", frame.TextBox)
+end
+
+local function ReskinListButton(button)
+	local QualityBg = button and button.QualityBg
+	QualityBg:SetTexture(E.media.blankTex)
+	QualityBg:SetVertexColor(C.ExtractRGBFromTemplate("neutral-500"))
+
+	button.Highlight:StripTextures()
+	local tex = button.Highlight:CreateTexture(nil, "ARTWORK")
+	tex:SetTexture(E.media.normTex)
+	tex:SetVertexColor(1, 1, 1, 0.2)
+	tex:SetInside(button)
+	button.Highlight.windTex = tex
+
+	button.TrackedBorder:StripTextures()
+	tex = button.TrackedBorder:CreateTexture(nil, "OVERLAY")
+	tex:SetTexture(E.media.normTex)
+	tex:SetVertexColor(C.ExtractRGBFromTemplate("amber-400"))
+	tex:SetAlpha(0.3)
+	tex:SetInside(button)
+	button.TrackedBorder.windTex = tex
 end
 
 function S:WorldQuestTab()
@@ -30,13 +196,28 @@ function S:WorldQuestTab()
 	end
 
 	local tab = _G.WQT_QuestMapTab
-	if tab and tab.backdrop then
-		self:CreateBackdropShadow(tab)
-		tab.backdrop:SetTemplate("Transparent")
+	if tab then
+		ReskinTab(tab)
+		F.InternalizeMethod(tab, "SetPoint")
+		hooksecurefunc(tab, "SetPoint", function()
+			F.Move(tab, 0, -2)
+		end)
+	end
+
+	if _G.WQT_ListContainer then
+		ReskinQuestContainer(_G.WQT_ListContainer)
+	end
+
+	if _G.WQT_WhatsNewFrame then
+		ReskinWhatsNew(_G.WQT_WhatsNewFrame)
+	end
+
+	if _G.WQT_SettingsFrame then
+		ReskinSettings(_G.WQT_SettingsFrame)
 	end
 
 	if _G.WQT_FlightMapContainer then
-		reskinFlightMapContainer(_G.WQT_FlightMapContainer)
+		ReskinFlightMapContainer(_G.WQT_FlightMapContainer)
 	end
 
 	self:ReskinCustomGameTooltips(_G.WQT_GameTooltip, _G.WQT_ShoppingTooltip1, _G.WQT_ShoppingTooltip2)
@@ -52,3 +233,28 @@ function S:WorldQuestTab()
 end
 
 S:AddCallbackForAddon("WorldQuestTab")
+
+local isLoaded, isFinished = C_AddOns_IsAddOnLoaded("WorldQuestTab")
+if isLoaded and isFinished then
+	local function wrap(func)
+		return function(...)
+			local args = { ... }
+			F.TaskManager:AfterLogin(function()
+				if not E.private.WT.skins.enable or not E.private.WT.skins.addons.worldQuestTab then
+					return
+				end
+				func(unpack(args))
+			end)
+		end
+	end
+
+	S:TryPostHook("WQT_SettingsCategoryMixin", "Init", wrap(ReskinSettingsCategory))
+	S:TryPostHook("WQT_SettingsCheckboxMixin", "Init", wrap(ReskinSettingsCheckbox))
+	S:TryPostHook("WQT_SettingsSliderMixin", "Init", wrap(ReskinSettingsSlider))
+	S:TryPostHook("WQT_SettingsColorMixin", "Init", wrap(ReskinSettingsColor))
+	S:TryPostHook("WQT_SettingsDropDownMixin", "Init", wrap(ReskinSettingsDropDown))
+	S:TryPostHook("WQT_SettingsButtonMixin", "Init", wrap(ReskinSettingsButton))
+	S:TryPostHook("WQT_SettingsConfirmButtonMixin", "Init", wrap(ReskinSettingsButton))
+	S:TryPostHook("WQT_SettingsTextInputMixin", "Init", wrap(ReskinSettingsTextInput))
+	S:TryPostHook("WQT_ListButtonMixin", "Update", wrap(ReskinListButton))
+end

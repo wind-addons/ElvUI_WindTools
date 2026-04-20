@@ -4,6 +4,7 @@ local LSM = E.Libs.LSM
 local C = W.Utilities.Color
 
 local A = W:GetModule("Absorb") ---@class Absorb
+local NC = W:GetModule("NameClip") ---@class NameClip
 local CT = W:GetModule("ChatText")
 
 local format = format
@@ -478,6 +479,783 @@ options.roleIcon = {
 				ELVUI_OLD = SampleStrings.ELVUI_OLD,
 				BLIZZARD = SampleStrings.BLIZZARD,
 				DEFAULT = SampleStrings.DEFAULT,
+			},
+		},
+	},
+}
+
+local function GetNameClipTargetValues(unitKey)
+	local values = { ["__Name__"] = L["Name"] }
+	local unitDB = E.db.unitframe and E.db.unitframe.units and E.db.unitframe.units[unitKey]
+	if unitDB and unitDB.customTexts then
+		for name in pairs(unitDB.customTexts) do
+			values[name] = C.StringByTemplate(format("(%s) ", L["Custom Texts"]), "yellow-400") .. name
+		end
+	end
+	return values
+end
+
+options.nameClip = {
+	order = 4,
+	type = "group",
+	name = L["Name Clip"],
+	get = function(info)
+		return E.db.WT.unitFrames.nameClip[info[#info]]
+	end,
+	set = function(info, value)
+		E.db.WT.unitFrames.nameClip[info[#info]] = value
+		NC:ProfileUpdate()
+	end,
+	args = {
+		desc = {
+			order = 1,
+			type = "group",
+			inline = true,
+			name = L["Description"],
+			args = {
+				feature = {
+					order = 1,
+					type = "description",
+					name = L["Clip name text by pixel width for ElvUI unitframes."],
+					fontSize = "medium",
+				},
+			},
+		},
+		enable = {
+			order = 2,
+			type = "toggle",
+			name = L["Enable"],
+			width = "full",
+		},
+		player = {
+			order = 10,
+			type = "group",
+			name = L["Player"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.player
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.player = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.playerTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.playerTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("player")
+					end,
+				},
+			},
+		},
+		pet = {
+			order = 11,
+			type = "group",
+			name = L["Pet"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.pet
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.pet = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.petTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.petTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("pet")
+					end,
+				},
+			},
+		},
+		target = {
+			order = 12,
+			type = "group",
+			name = L["Target"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.target
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.target = value
+						NC:ProfileUpdate()
+					end,
+				},
+				targetSelect = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.targetTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.targetTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("target")
+					end,
+				},
+			},
+		},
+		targettarget = {
+			order = 13,
+			type = "group",
+			name = L["Target of Target"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.targettarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.targettarget = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.targettargetTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.targettargetTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("targettarget")
+					end,
+				},
+			},
+		},
+		targettargettarget = {
+			order = 14,
+			type = "group",
+			name = L["Target of Target of Target"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.targettargettarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.targettargettarget = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.targettargettargetTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.targettargettargetTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("targettargettarget")
+					end,
+				},
+			},
+		},
+		focus = {
+			order = 15,
+			type = "group",
+			name = L["Focus"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.focus
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.focus = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.focusTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.focusTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("focus")
+					end,
+				},
+			},
+		},
+		focustarget = {
+			order = 16,
+			type = "group",
+			name = L["Focus Target"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.focustarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.focustarget = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.focustargetTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.focustargetTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("focustarget")
+					end,
+				},
+			},
+		},
+		pettarget = {
+			order = 17,
+			type = "group",
+			name = L["Pet Target"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.pettarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.pettarget = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.pettargetTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.pettargetTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("pettarget")
+					end,
+				},
+			},
+		},
+		party = {
+			order = 20,
+			type = "group",
+			name = L["Party"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.party
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.party = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.partyTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.partyTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("party")
+					end,
+				},
+			},
+		},
+		raid1 = {
+			order = 21,
+			type = "group",
+			name = format("%s %d", L["Raid"], 1),
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.raid1
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.raid1 = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.raid1Target
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.raid1Target = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("raid1")
+					end,
+				},
+			},
+		},
+		raid2 = {
+			order = 22,
+			type = "group",
+			name = format("%s %d", L["Raid"], 2),
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.raid2
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.raid2 = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.raid2Target
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.raid2Target = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("raid2")
+					end,
+				},
+			},
+		},
+		raid3 = {
+			order = 23,
+			type = "group",
+			name = format("%s %d", L["Raid"], 3),
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.raid3
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.raid3 = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.raid3Target
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.raid3Target = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("raid3")
+					end,
+				},
+			},
+		},
+		raidpet = {
+			order = 24,
+			type = "group",
+			name = L["Raid Pet"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.raidpet
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.raidpet = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.raidpetTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.raidpetTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("raidpet")
+					end,
+				},
+			},
+		},
+		arena = {
+			order = 25,
+			type = "group",
+			name = L["Arena"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.arena
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.arena = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.arenaTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.arenaTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("arena")
+					end,
+				},
+			},
+		},
+		boss = {
+			order = 26,
+			type = "group",
+			name = L["Boss"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.boss
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.boss = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.bossTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.bossTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("boss")
+					end,
+				},
+			},
+		},
+		tank = {
+			order = 27,
+			type = "group",
+			name = L["Tank"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.tank
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.tank = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.tankTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.tankTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("tank")
+					end,
+				},
+			},
+		},
+		assist = {
+			order = 28,
+			type = "group",
+			name = L["Assist"],
+			inline = true,
+			disabled = function()
+				return not E.db.WT.unitFrames.nameClip.enable
+			end,
+			args = {
+				width = {
+					order = 1,
+					type = "range",
+					name = L["Width"],
+					desc = L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."],
+					min = 0,
+					max = 400,
+					step = 1,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.assist
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.assist = value
+						NC:ProfileUpdate()
+					end,
+				},
+				target = {
+					order = 2,
+					type = "select",
+					name = L["Target"],
+					width = 2,
+					get = function()
+						return E.db.WT.unitFrames.nameClip.assistTarget
+					end,
+					set = function(_, value)
+						E.db.WT.unitFrames.nameClip.assistTarget = value
+						NC:ProfileUpdate()
+					end,
+					values = function()
+						return GetNameClipTargetValues("assist")
+					end,
+				},
 			},
 		},
 	},

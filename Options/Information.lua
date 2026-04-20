@@ -553,6 +553,9 @@ do -- Code References
 		[L["Item Level"]] = {
 			"Merathilis (ElvUI MerathilisUI)",
 		},
+		[L["Name Clip"]] = {
+			"Deltor (ElvUI NameClipper)",
+		},
 	}
 
 	local configOrder = 1

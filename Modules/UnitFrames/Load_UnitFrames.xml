@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='Absorb.lua'/>
+	<Script file='NameClip.lua'/>
 	<Script file='QuickFocus.lua'/>
 	<Script file='RoleIcon.lua'/>
 	<Script file='Tags.lua'/>

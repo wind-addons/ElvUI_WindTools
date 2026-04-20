@@ -123,6 +123,9 @@
 - Item Level
   - Merathilis (ElvUI MerathilisUI)
 
+- Name Clip
+  - Deltor (ElvUI NameClipper)
+
 ## Medias
 
 - ToxiUI Team

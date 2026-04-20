@@ -88,7 +88,7 @@ local function actionButton(button)
 	button:SetTemplate()
 end
 
-local function changelogFrame(frame)
+local function changelogFrame()
 	local ChangelogFrame = _G.MRPChangelogFrame
 	if not ChangelogFrame then
 		return

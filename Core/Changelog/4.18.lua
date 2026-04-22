@@ -1,25 +1,35 @@
 local W = unpack((select(2, ...))) ---@type WindTools
 
 W.Changelog[418] = {
-	RELEASE_DATE = "TBD",
+	RELEASE_DATE = "2026/04/23",
 	IMPORTANT = {
 		["zhCN"] = {
+			"兼容魔兽世界 12.0.5 版本.",
+			"最低 ElvUI 支持版本提升到 15.12.",
 			"更新库 LibOpenRaid. 感谢 Valdemar",
 			"[兼容性检查] 优化和 mMediaTag 的兼容性检查. 感谢 Merathilis",
 		},
 		["zhTW"] = {
+			"適配魔獸世界 12.0.5 版本.",
+			"最低 ElvUI 支援版本提升至 15.12.",
 			"更新庫 LibOpenRaid. 感謝 Valdemar",
 			"[兼容性检查] 優化和 mMediaTag 的兼容性检查. 感謝 Merathilis",
 		},
 		["enUS"] = {
+			"Compatible with WoW 12.0.5.",
+			"Minimum ElvUI version required is now 15.12.",
 			"Updated library LibOpenRaid. Thanks to Valdemar",
 			"[Compatibility Check] Optimized compatibility check with mMediaTag. Thanks to Merathilis",
 		},
 		["koKR"] = {
+			"월드 오브 워크래프트 12.0.5 버전과 호환됩니다.",
+			"최소 ElvUI 지원 버전이 15.12로 상향되었습니다.",
 			"라이브러리 LibOpenRaid가 업데이트되었습니다. Valdemar에게 감사드립니다.",
 			"[호환성 검사] mMediaTag와의 호환성 검사가 최적화되었습니다. Merathilis에게 감사드립니다.",
 		},
 		["ruRU"] = {
+			"Совместимо с World of Warcraft 12.0.5.",
+			"Минимальная требуемая версия ElvUI теперь 15.12.",
 			"Обновлена библиотека LibOpenRaid. Спасибо Valdemar",
 			"[Проверка совместимости] Оптимизирована проверка совместимости с mMediaTag. Спасибо Merathilis",
 		},
@@ -71,6 +81,7 @@ W.Changelog[418] = {
 			"[美化皮肤] 修复了 Simple Addon Manager 右侧内容无法快速跟随框体移动的问题.",
 			"[聊天文字] 同步 ElvUI 聊天模块, 尝试解决部分情况下发生的 Lua 错误.",
 			"[单位框体] - [标签] 优化了 healabsorbs-autohide 事件触发不及时的问题.",
+			"[鼠标提示] - [目标进度] 添加更多任务的进度显示支持. 感谢 Dack",
 		},
 		["zhTW"] = {
 			"[額外物品條] 更新大餐還有傳送門的物品數據. 感謝 Dack",
@@ -81,6 +92,7 @@ W.Changelog[418] = {
 			"[美化皮膚] 修復了 Simple Addon Manager 右側內容無法快速跟隨框體移動的問題.",
 			"[聊天文字] 同步 ElvUI 聊天模块, 嘗試解決部分情況下發生的 Lua 錯誤.",
 			"[單位框體] - [標籤] 優化了 healabsorbs-autohide 事件觸發不及時的問題.",
+			"[浮動提示] - [目標進度] 添加更多任務的進度顯示支持. 感謝 Dack",
 		},
 		["enUS"] = {
 			"[Extra Item Bar] Updated the item data for the Feasts and Portals. Thanks to Dack",
@@ -91,6 +103,7 @@ W.Changelog[418] = {
 			"[Skins] Fixed the issue of Simple Addon Manager right side content not following frame movement quickly.",
 			"[Chat Text] Synchronized with ElvUI's chat module, attempting to resolve Lua errors that occur in some cases.",
 			"[Unit Frames] - [Tags] Optimized the issue of healabsorbs-autohide event not triggering in a timely manner.",
+			"[Tooltips] - [Objective Progress] Added support for more objective progress display. Thanks to Dack",
 		},
 		["koKR"] = {
 			"[추가 아이템 바] 잔치와 포탈에 대한 아이템 데이터를 업데이트했습니다. Dack에게 감사드립니다.",
@@ -101,6 +114,7 @@ W.Changelog[418] = {
 			"[스킨] Simple Addon Manager의 오른쪽 콘텐츠가 프레임의 움직임을 빠르게 따라가지 못하는 문제를 수정했습니다.",
 			"[채팅 텍스트] ElvUI의 채팅 모듈과 동기화하여 일부 경우에 발생하는 Lua 오류를 해결하려고 시도했습니다.",
 			"[유닛 프레임] - [태그] healabsorbs-autohide 이벤트가 적시에 트리거되지 않는 문제를 최적화했습니다.",
+			"[툴팁] - [목표 진도] 더 많은 목표 진도 표시를 지원합니다. Dack에게 감사드립니다.",
 		},
 		["ruRU"] = {
 			"[Дополнительная панель предметов] Обновлены данные предметов для праздников и порталов. Спасибо Dack",
@@ -111,6 +125,7 @@ W.Changelog[418] = {
 			"[Скины] Исправлена проблема, из-за которой содержимое на правой стороне Simple Addon Manager не могло быстро следовать за движением рамки.",
 			"[Текст чата] Синхронизировано с модулем чата ElvUI, попытка решить ошибки Lua, которые возникают в некоторых случаях.",
 			"[Юнит-фреймы] - [Теги] Оптимизирована проблема с тем, что событие healabsorbs-autohide не срабатывает своевременно.",
+			"[Тултипы] - [Цельный прогресс] Добавлена поддержка отображения целевого прогресса. Спасибо Dack",
 		},
 	},
 }

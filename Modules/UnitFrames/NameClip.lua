@@ -30,11 +30,11 @@ end
 
 local function ResetFrame(frame)
 	if frame.Name then
-		frame.Name:SetWidth(0)
+		frame.Name:Width(0)
 	end
 	if frame.customTexts then
 		for _, fs in pairs(frame.customTexts) do
-			fs:SetWidth(0)
+			fs:Width(0)
 		end
 	end
 end
@@ -51,18 +51,17 @@ local function ApplyClip(frame)
 
 	ResetFrame(frame)
 
-	local width = NC.db[unitKey] or 0
-	if width <= 0 then
+	local unitDB = NC.db[unitKey]
+	if not unitDB or not unitDB.enable then
 		return
 	end
 
-	local target = NC.db[unitKey .. "Target"] or "__Name__"
-	local fs = GetTargetFontString(frame, target)
+	local fs = GetTargetFontString(frame, unitDB.target)
 	if not fs then
 		return
 	end
 
-	if target == "__Name__" and frame.db and frame.db.name then
+	if unitDB.target == "__Name__" and frame.db and frame.db.name then
 		local position = frame.db.name.position or "CENTER"
 		if strfind(position, "RIGHT") then
 			fs:SetJustifyH("RIGHT")
@@ -73,7 +72,7 @@ local function ApplyClip(frame)
 		end
 	end
 
-	fs:SetWidth(width)
+	fs:Width(unitDB.width)
 	fs:SetWordWrap(false)
 end
 
@@ -117,8 +116,8 @@ function NC:ProfileUpdate()
 		if not self.initialized then
 			self:Initialize()
 		else
-		BuildDBMap()
-		F.Throttle(0.1, "NameClipUpdate", UF.Update_AllFrames, UF)
+			BuildDBMap()
+			F.Throttle(0.5, "NameClipUpdate", UF.Update_AllFrames, UF)
 		end
 	else
 		if self.initialized then

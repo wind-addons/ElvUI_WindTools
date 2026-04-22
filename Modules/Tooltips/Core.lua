@@ -99,6 +99,9 @@ function T:CheckModifier()
 	return true
 end
 
+---@param tt GameTooltip
+---@param data table
+---@param triedTimes number?
 function T:InspectInfo(tt, data, triedTimes)
 	if (tt.IsForbidden and tt:IsForbidden()) or tt ~= GameTooltip or (ET.db and not ET.db.visibility) then
 		return
@@ -110,7 +113,7 @@ function T:InspectInfo(tt, data, triedTimes)
 
 	triedTimes = triedTimes or 0
 
-	local unit = select(2, tt:GetUnit())
+	local unit = ET:GetDisplayedUnit(tt)
 
 	if not unit then
 		local GMF = E:GetMouseFocus()

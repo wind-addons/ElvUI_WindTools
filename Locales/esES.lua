@@ -42,7 +42,6 @@ L["'Absolute' mode means the width of the bar is fixed."] = "'Modo absoluto' sig
 L["'Dynamic' mode will also add the height of header text."] = "'Modo dinámico' también añadirá la altura del texto de encabezado."
 L["'Dynamic' mode will also add the width of header text."] = "'Modo dinámico' también añadirá el ancho del texto de encabezado."
 L["(e.g., 'in-quadratic' becomes 'out-quadratic' and vice versa)"] = "(por ejemplo, 'in-quadratic' se convierte en 'out-quadratic' y viceversa)"
-L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."] = true
 L["1. Customize the font of Objective Tracker."] = "1. Personalizar el tipo de letra de Objective Tracker."
 L["2. Add colorful progress text to the quest."] = "2. Añade un colorido texto de progreso a la búsqueda."
 L["24 Hours"] = "24 Horas"
@@ -1436,6 +1435,7 @@ L["Set Mark"] = "Establecer marca"
 L["Set the buttons to be completely hidden on the minimap."] = true
 L["Set the buttons to be ignored by this module."] = true
 L["Set the height ratio of icons inside Cooldown Viewer."] = "Establecer la proporción de altura de los iconos en el Visor de reutilización."
+L["Set the maximum width of the name text in pixels."] = true
 L["Set the modifier key for placing world markers."] = "Establecer la tecla modificadora para colocar marcadores del mundo."
 L["Set the opacity of the spell activation alert frame. (Blizzard CVar)"] = "Establecer la opacidad del marco de alerta de activación de hechizos. (CVar de Blizzard)"
 L["Set the raid marker on the quick focused target if possible."] = "Establecer el marcador de banda en el objetivo enfocado rápidamente si es posible."

@@ -42,7 +42,6 @@ L["'Absolute' mode means the width of the bar is fixed."] = "В режиме 'А
 L["'Dynamic' mode will also add the height of header text."] = "В режиме 'Динамический' также будет добавлена ​​высота текста заголовка."
 L["'Dynamic' mode will also add the width of header text."] = "В режиме 'Динамический' также будет добавлена ​​ширина текста заголовка."
 L["(e.g., 'in-quadratic' becomes 'out-quadratic' and vice versa)"] = "(например, 'внутриквадратичное' становится 'внеквадратичным' и наоборот)"
-L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."] = true
 L["1. Customize the font of Objective Tracker."] = "1. Настройте шрифт фрейма 'Задачи'."
 L["2. Add colorful progress text to the quest."] = "2. Добавьте цветной текст выполнения задания."
 L["24 Hours"] = "24 часа"
@@ -1436,6 +1435,7 @@ L["Set Mark"] = "Установить метку"
 L["Set the buttons to be completely hidden on the minimap."] = "Установить так, чтобы кнопки на миникарте были полностью скрыты."
 L["Set the buttons to be ignored by this module."] = "Настроить кнопки таким образом, чтобы они игнорировались этим модулем."
 L["Set the height ratio of icons inside Cooldown Viewer."] = "Установить соотношение высоты значков в Трекере Восстановления."
+L["Set the maximum width of the name text in pixels."] = true
 L["Set the modifier key for placing world markers."] = "Установить клавишу-модификатор для размещения мировых меток."
 L["Set the opacity of the spell activation alert frame. (Blizzard CVar)"] = "Установить прозрачность рамки оповещения об активации заклинания. (Blizzard CVar)"
 L["Set the raid marker on the quick focused target if possible."] = "По возможности установить метку рейда на цель с быстрой фокусировкой."

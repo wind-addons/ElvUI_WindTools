@@ -42,7 +42,6 @@ L["'Absolute' mode means the width of the bar is fixed."] = "Le mode 'Absolu' si
 L["'Dynamic' mode will also add the height of header text."] = "Le mode 'Dynamique' ajoutera également la hauteur du texte de l'en-tête."
 L["'Dynamic' mode will also add the width of header text."] = "Le mode 'Dynamique' ajoute également la largeur du texte de l'en-tête."
 L["(e.g., 'in-quadratic' becomes 'out-quadratic' and vice versa)"] = true
-L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."] = true
 L["1. Customize the font of Objective Tracker."] = "1. Personnalise la police du suivi des quêtes."
 L["2. Add colorful progress text to the quest."] = "2. Met le texte de progression des quêtes en couleur."
 L["24 Hours"] = "24 Heures"
@@ -1436,6 +1435,7 @@ L["Set Mark"] = true
 L["Set the buttons to be completely hidden on the minimap."] = true
 L["Set the buttons to be ignored by this module."] = true
 L["Set the height ratio of icons inside Cooldown Viewer."] = true
+L["Set the maximum width of the name text in pixels."] = true
 L["Set the modifier key for placing world markers."] = "Définir la touche pour placer des marqueurs de terrain."
 L["Set the opacity of the spell activation alert frame. (Blizzard CVar)"] = "Définit l'opacité du cadre d'alerte d'activation des sorts. (Blizzard CVar)"
 L["Set the raid marker on the quick focused target if possible."] = true

@@ -42,7 +42,6 @@ L["'Absolute' mode means the width of the bar is fixed."] = "'부동' 모드는 
 L["'Dynamic' mode will also add the height of header text."] = "'유동' 모드는 자동으로 상단 텍스트의 높이를 추가합니다."
 L["'Dynamic' mode will also add the width of header text."] = "'유동' 모드는 자동으로 상단 텍스트의 너비를 추가합니다."
 L["(e.g., 'in-quadratic' becomes 'out-quadratic' and vice versa)"] = "(예: 'in-quadratic'이 'out-quadratic'으로, 또는 그 반대로 바뀜)"
-L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."] = true
 L["1. Customize the font of Objective Tracker."] = "1. 퀘스트 추적기의 글꼴을 설정합니다."
 L["2. Add colorful progress text to the quest."] = "2. 퀘스트 진행도에 따른 색상을 추가합니다."
 L["24 Hours"] = "24시간으로 표시"
@@ -1436,6 +1435,7 @@ L["Set Mark"] = "공격대 표시 설정"
 L["Set the buttons to be completely hidden on the minimap."] = "미니맵에서 버튼을 완전히 숨깁니다."
 L["Set the buttons to be ignored by this module."] = "이 모듈에서 버튼을 무시하도록 설정합니다."
 L["Set the height ratio of icons inside Cooldown Viewer."] = "재사용 대기시간 관리자 내부 아이콘의 세로 비율을 설정합니다."
+L["Set the maximum width of the name text in pixels."] = true
 L["Set the modifier key for placing world markers."] = "빛기둥 징표를 배치하기 위한 기능키를 설정합니다."
 L["Set the opacity of the spell activation alert frame. (Blizzard CVar)"] = "주문 활성화 알림 프레임의 불투명도를 설정합니다. (블리자드 CVar)"
 L["Set the raid marker on the quick focused target if possible."] = "가능한 경우 빠르게 집중한 대상에 공격대 표시기를 설정합니다."

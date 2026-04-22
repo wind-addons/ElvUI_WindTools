@@ -42,7 +42,6 @@ L["'Absolute' mode means the width of the bar is fixed."] = "Der Modus 'Absolut'
 L["'Dynamic' mode will also add the height of header text."] = "Der Modus 'Dynamisch' fügt auch die Höhe des Kopfzeilentexts hinzu."
 L["'Dynamic' mode will also add the width of header text."] = "Der Modus 'Dynamisch' fügt auch die Breite des Kopfzeilentexts hinzu."
 L["(e.g., 'in-quadratic' becomes 'out-quadratic' and vice versa)"] = "(z. B. wird „in-quadratisch“ zu „out-quadratisch“ und umgekehrt)"
-L["0 = disabled (uses ElvUI default). Values above 0 limit the name text width in pixels."] = true
 L["1. Customize the font of Objective Tracker."] = "1. Passe die Schriftart vom Questtracker an."
 L["2. Add colorful progress text to the quest."] = "2. Füge der Quest einen farblichen Fortschrittstext hinzu."
 L["24 Hours"] = "24 Stunden"
@@ -1436,6 +1435,7 @@ L["Set Mark"] = "Setze Mark"
 L["Set the buttons to be completely hidden on the minimap."] = "Stellt die Tasten so ein, dass sie auf der Minikarte vollständig ausgeblendet werden."
 L["Set the buttons to be ignored by this module."] = "Legt die Tasten fest, die von diesem Modul ignoriert werden sollen."
 L["Set the height ratio of icons inside Cooldown Viewer."] = "Legt das Höhenverhältnis der Symbole im Cooldown Viewer fest."
+L["Set the maximum width of the name text in pixels."] = true
 L["Set the modifier key for placing world markers."] = "Setzt eine Modifierungs Taste um eine Weltmarkierung zu setzen."
 L["Set the opacity of the spell activation alert frame. (Blizzard CVar)"] = "Legt die Deckkraft des Alarmfensters für die Zauberaktivierung fest. (Blizzard CVar)"
 L["Set the raid marker on the quick focused target if possible."] = "Setzt den Raid-Marker nach Möglichkeit auf das schnell fokussierte Ziel."

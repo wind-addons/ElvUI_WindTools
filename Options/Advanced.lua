@@ -979,7 +979,6 @@ options.reset = {
 					name = L["General"],
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["General"], nil, function()
-							E.private.WT.misc.moveSpeed = V.misc.moveSpeed
 							E.private.WT.misc.noKanjiMath = V.misc.noKanjiMath
 							E.private.WT.misc.pauseToSlash = V.misc.pauseToSlash
 							E.private.WT.misc.skipCutScene = V.misc.skipCutScene

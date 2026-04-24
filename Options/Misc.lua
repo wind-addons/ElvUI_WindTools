@@ -77,15 +77,8 @@ options.general = {
 				E.private.WT.misc[info[#info]] = value
 			end,
 		},
-
-		moveSpeed = {
-			order = 6,
-			type = "toggle",
-			name = L["Move Speed"],
-			desc = L["Show move speed in character panel."],
-		},
 		hideCrafter = {
-			order = 7,
+			order = 6,
 			type = "toggle",
 			name = L["Hide Crafter"],
 			desc = L["Hide crafter name in the item tooltip."],
@@ -97,7 +90,7 @@ options.general = {
 			end,
 		},
 		noLootPanel = {
-			order = 8,
+			order = 7,
 			type = "toggle",
 			name = L["No Loot Panel"],
 			desc = L["Disable Blizzard loot info which auto showing after combat overed."],
@@ -110,7 +103,7 @@ options.general = {
 			end,
 		},
 		keybindTextAbove = {
-			order = 9,
+			order = 8,
 			type = "toggle",
 			name = L["Keybind Text Above"],
 			desc = format(
@@ -120,19 +113,19 @@ options.general = {
 			),
 		},
 		guildNewsItemLevel = {
-			order = 10,
+			order = 9,
 			type = "toggle",
 			name = L["Guild News IL"],
 			desc = L["Show item level of each item in guild news."],
 		},
 		addCNFilter = {
-			order = 11,
+			order = 10,
 			type = "toggle",
 			name = L["View SC Group"],
 			desc = L["Let you can view the group created by Simplified Chinese players."],
 		},
 		antiOverride = {
-			order = 12,
+			order = 11,
 			type = "toggle",
 			name = L["Anti-override"],
 			desc = L["Unblock the profanity filter and disable model override."]
@@ -140,14 +133,14 @@ options.general = {
 				.. C.StringByTemplate(L["It only applies to players who play WoW in Simplified Chinese."], "yellow-400"),
 		},
 		autoToggleChatBubble = {
-			order = 13,
+			order = 12,
 			type = "toggle",
 			name = L["Auto Toggle Chat Bubble"],
 			desc = L["Only show chat bubble in instance."],
 			width = 1.5,
 		},
 		reshiiWrapsUpgrade = {
-			order = 14,
+			order = 13,
 			type = "toggle",
 			name = L["Reshii Wraps Upgrade"],
 			desc = L["Middle click the character back slot to open the Reshii Wraps upgrade menu."],

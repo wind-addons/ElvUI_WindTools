@@ -14,7 +14,6 @@
 	<Script file='KeybindTextAbove.lua' />
 	<Script file='LootPanel.lua' />
 	<Script file='Math.lua' />
-	<Script file='MoveSpeed.lua' />
 	<Script file='Mute.lua' />
 	<Script file='PauseToSlash.lua' />
 	<Script file='ReshiiWrapsUpgrade.lua' />

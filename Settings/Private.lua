@@ -173,7 +173,6 @@ V.maps = {
 
 ---@class PrivateDB.misc
 V.misc = {
-	moveSpeed = false,
 	noKanjiMath = false,
 	pauseToSlash = true,
 	skipCutScene = false,

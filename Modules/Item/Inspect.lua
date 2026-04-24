@@ -419,6 +419,11 @@ end
 local function GetItemGemInfo(itemLink)
 	local info = {} ---@type SocketGemInfo[]
 	local stats = C_Item_GetItemStats(itemLink)
+
+	if not stats then
+		return info
+	end
+
 	for key, num in pairs(stats) do
 		if strfind(key, "EMPTY_SOCKET_", 1, true) then
 			for _ = 1, num do

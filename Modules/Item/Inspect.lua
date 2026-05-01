@@ -1374,7 +1374,7 @@ function I:Initialize()
 	end
 
 	-- Player
-	self:HookScript(_G.PaperDollFrame, "OnShow", function()
+	self:SecureHookScript(_G.PaperDollFrame, "OnShow", function()
 		self:ShowPanel("player", _G.PaperDollFrame, E:GetUnitItemLevel("player"))
 	end)
 

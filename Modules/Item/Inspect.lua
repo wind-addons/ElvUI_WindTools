@@ -1098,7 +1098,6 @@ function I:CreateStatsComparePanel(parent)
 		for _, def in ipairs(group.rows) do
 			local row = CreateFrame("Frame", nil, frame, "BackdropTemplate")
 			row:Height(STAT_ROW_HEIGHT)
-			row:SetPassThroughButtons("LeftButton")
 
 			if not def.isHeader then
 				row:SetScript("OnEnter", function(self)

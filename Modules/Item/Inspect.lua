@@ -31,6 +31,7 @@ local tremove = tremove
 local type = type
 local wipe = wipe
 
+local AbbreviateNumbers = AbbreviateNumbers
 local CreateFrame = CreateFrame
 local GetInspectSpecialization = GetInspectSpecialization
 local GetInventoryItemLink = GetInventoryItemLink
@@ -79,6 +80,7 @@ local PANEL_COMPONENT_SPACING = 4
 local STAT_ROW_SEPARATOR_SPACING = 3
 local STAT_ROW_HEIGHT = 20
 local STAT_PADDING = 10
+local SECRET_VALUE_WIDTH = 80
 local ITEM_LEVEL_CHECK_INTERVAL = 0.08
 local INSPECT_WAIT_MAX_SECONDS = 3
 local INSPECT_WAIT_MAX_ROUNDS = floor(INSPECT_WAIT_MAX_SECONDS / ITEM_LEVEL_CHECK_INTERVAL)
@@ -608,6 +610,23 @@ end
 ---@field leech number
 ---@field speed number
 ---@field avoidance number
+
+local function HasDisplayableNumber(value)
+	return not E:NotSecretValue(value) or value ~= nil
+end
+
+local function FormatDisplayNumber(value)
+	if E:NotSecretValue(value) then
+		return E:ShortValue(value, 1)
+	end
+
+	return AbbreviateNumbers(value, E.Abbreviate.short)
+end
+
+local function GetPublicStringWidth(fontString, fallbackWidth)
+	local width = fontString:GetStringWidth()
+	return E:NotSecretValue(width) and width or fallbackWidth
+end
 
 ---Calculates stats from all equipped items
 ---@param unit UnitToken The unit to collect stats from
@@ -1167,17 +1186,30 @@ function I:UpdateStatsComparePanel(frame, inspectedUnit, inspectedItemLevel)
 			inspectedWidth = row.inspectedValue:GetStringWidth()
 			playerWidth = row.playerValue:GetStringWidth()
 		else
-			local inspectedValue = inspectedStats[def.key] or 0
-			local playerValue = playerStats[def.key] or 0
+			local inspectedValue = inspectedStats[def.key]
+			local playerValue = playerStats[def.key]
+			local canCompareValues = E:NotSecretValue(inspectedValue) and E:NotSecretValue(playerValue)
 
-			isVisible = not (self.db.statistics.comparison.hideIfBothZero and inspectedValue == 0 and playerValue == 0)
+			isVisible = HasDisplayableNumber(inspectedValue)
+				and HasDisplayableNumber(playerValue)
+				and not (
+					canCompareValues
+					and self.db.statistics.comparison.hideIfBothZero
+					and inspectedValue == 0
+					and playerValue == 0
+				)
 
 			if isVisible then
 				row.label:SetText(def.name)
 
-				local inspectedText, playerText = E:ShortValue(inspectedValue, 1), E:ShortValue(playerValue, 1)
+				local inspectedText, playerText = FormatDisplayNumber(inspectedValue), FormatDisplayNumber(playerValue)
 
-				if self.db.statistics.comparison.enable and playerValue > 0 and inspectedValue > 0 then
+				if
+					self.db.statistics.comparison.enable
+					and canCompareValues
+					and playerValue > 0
+					and inspectedValue > 0
+				then
 					local diffText, isPositive = "", false
 
 					if def.diffType == "value" then
@@ -1206,12 +1238,15 @@ function I:UpdateStatsComparePanel(frame, inspectedUnit, inspectedItemLevel)
 
 				local colorTemplate = def.color or row.groupColor ---@type ColorTemplate
 				row.label:SetTextColor(C.ExtractRGBFromTemplate(colorTemplate))
-				local inspectedColorTemplate = inspectedValue == 0 and "gray-500" or "neutral-50" ---@type ColorTemplate
+				local inspectedColorTemplate = E:NotSecretValue(inspectedValue) and inspectedValue == 0 and "gray-500"
+					or "neutral-50" ---@type ColorTemplate
 				row.inspectedValue:SetTextColor(C.ExtractRGBFromTemplate(inspectedColorTemplate))
-				local playerColorTemplate = playerValue == 0 and "gray-500" or "neutral-50" ---@type ColorTemplate
+				local playerColorTemplate = E:NotSecretValue(playerValue) and playerValue == 0 and "gray-500"
+					or "neutral-50" ---@type ColorTemplate
 				row.playerValue:SetTextColor(C.ExtractRGBFromTemplate(playerColorTemplate))
 
-				inspectedWidth, playerWidth = row.inspectedValue:GetStringWidth(), row.playerValue:GetStringWidth()
+				inspectedWidth = GetPublicStringWidth(row.inspectedValue, SECRET_VALUE_WIDTH)
+				playerWidth = GetPublicStringWidth(row.playerValue, SECRET_VALUE_WIDTH)
 			end
 		end
 

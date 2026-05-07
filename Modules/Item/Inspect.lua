@@ -1169,6 +1169,9 @@ function I:UpdateStatsComparePanel(frame, inspectedUnit, inspectedItemLevel)
 		else
 			local inspectedValue = inspectedStats[def.key] or 0
 			local playerValue = playerStats[def.key] or 0
+			if (E:IsSecretValue(inspectedValue) or not inspectedValue) or (E:IsSecretValue(playerValue) or not playerValue) then
+				return
+			end
 
 			isVisible = not (self.db.statistics.comparison.hideIfBothZero and inspectedValue == 0 and playerValue == 0)
 

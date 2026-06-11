@@ -136,7 +136,7 @@ function KI:UnitData(unit)
 		return
 	end
 
-	local data = OR.GetKeystoneInfo(unit)
+	local data = OR and OR.GetKeystoneInfo and OR.GetKeystoneInfo(unit)
 
 	-- If Details! library no returns data, try to get it from Bigwigs library
 	if self.LibKeystoneInfo and (not data or not data.level or data.level == 0) then

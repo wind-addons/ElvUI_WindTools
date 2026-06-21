@@ -86,6 +86,15 @@ local INSPECT_WAIT_MAX_SECONDS = 3
 local INSPECT_WAIT_MAX_ROUNDS = floor(INSPECT_WAIT_MAX_SECONDS / ITEM_LEVEL_CHECK_INTERVAL)
 local PVP_ITEM_LEVEL_PATTERN = gsub(_G.PVP_ITEM_LEVEL_TOOLTIP, "%%d", "(%%d+)")
 
+local RETRIEVING_ITEM_INFO = RETRIEVING_ITEM_INFO
+local ITEM_LEVEL = ITEM_LEVEL
+local ITEM_LEVEL_ALT = ITEM_LEVEL_ALT
+local ITEM_MIN_LEVEL = ITEM_MIN_LEVEL
+
+local MATCH_ITEM_LEVEL = ITEM_LEVEL:gsub("%%d", "(%%d+)")
+local MATCH_MIN_LEVEL = ITEM_MIN_LEVEL:gsub("%%d", "(%%d+)")
+local MATCH_ITEM_LEVEL_ALT = ITEM_LEVEL_ALT:gsub("%%d(%s?)%(%%d%)", "%%d+%1%%((%%d+)%%)")
+
 local DISPLAY_SLOTS = {}
 for index, localizedName in ipairs(W.EquipmentSlots) do
 	if not tContains({ INVSLOT_BODY, INVSLOT_RANGED, INVSLOT_TABARD }, index) then
@@ -469,14 +478,55 @@ local function GetPvPItemLevel(itemLink)
 	return tonumber(level)
 end
 
+local function ParseItemLevelFromTooltipLine(text)
+	if not text or text == "" then
+		return
+	end
+	local ilvl = strmatch(text, MATCH_ITEM_LEVEL_ALT)
+		or (not strmatch(text, MATCH_MIN_LEVEL) and strmatch(text, MATCH_ITEM_LEVEL))
+	return ilvl and tonumber(ilvl)
+end
+
+--- Item level as shown on the item tooltip (post-squish display), not C_Item.GetDetailedItemLevelInfo.
+---@param link string
+---@return number?
+local function GetDisplayedItemLevelFromHyperlink(link)
+	local info = E:ScanTooltip_HyperlinkInfo(link)
+	if not info or not info.lines then
+		return
+	end
+	local firstLine = info.lines[1]
+	local firstText = firstLine and firstLine.leftText
+	if firstText == RETRIEVING_ITEM_INFO then
+		return
+	end
+	for i = 1, #info.lines do
+		local line = info.lines[i]
+		if line then
+			local level = ParseItemLevelFromTooltipLine(line.leftText)
+			if level then
+				return level
+			end
+			level = ParseItemLevelFromTooltipLine(line.rightText)
+			if level then
+				return level
+			end
+		end
+	end
+end
+
 ---Gets additional socket items that can be added to an item
 ---Modified from TinyInspect
 ---@param itemLink string The item link to check
 ---@param slotIndex number The inventory slot index
----@param itemLevel number The item's current item level
+---@param itemLevel number? The item's current item level
 ---@return SocketGemInfo[]? socketItems Array of item IDs that can be socketed, nil if not eligible
 local function GetItemAddableSockets(itemLink, slotIndex, itemLevel)
 	if not INVSLOT_ADDABLE_SOCKET_SLOTS[slotIndex] then
+		return
+	end
+
+	if type(itemLevel) ~= "number" then
 		return
 	end
 
@@ -558,7 +608,16 @@ local function GetUnitSlotItemInfo(unit, slotIndex)
 	end
 
 	if not actualItemLevel or actualItemLevel <= 0 then
-		actualItemLevel = C_Item_GetDetailedItemLevelInfo(link)
+		local detailedItemLevel, _, sparseItemLevel = C_Item_GetDetailedItemLevelInfo(link)
+		if detailedItemLevel and detailedItemLevel > 0 then
+			actualItemLevel = detailedItemLevel
+		elseif sparseItemLevel and sparseItemLevel > 0 then
+			actualItemLevel = sparseItemLevel
+		end
+	end
+
+	if not actualItemLevel or actualItemLevel <= 0 then
+		actualItemLevel = GetDisplayedItemLevelFromHyperlink(link)
 	end
 
 	local craftingAtlas ---@type string?
@@ -1028,6 +1087,7 @@ function I:ShowPanel(unit, parent, ilevel)
 			local addableSockets = self.db.gemIcon.showAddableSockets
 					and itemInfo
 					and itemInfo.link
+					and type(itemInfo.level) == "number"
 					and GetItemAddableSockets(itemInfo.link, slotInfo.index, itemInfo.level)
 				or {}
 

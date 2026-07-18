@@ -18,6 +18,7 @@ local rawset = rawset
 local setmetatable = setmetatable
 local strfind = strfind
 local strjoin = strjoin
+local strsub = strsub
 local tonumber = tonumber
 local tostring = tostring
 local tremove = tremove
@@ -26,6 +27,31 @@ local unpack = unpack
 
 local GenerateClosure = GenerateClosure
 local PlaySoundFile = PlaySoundFile
+
+function F.FontTemplate(text, font, size, style)
+	if not text or not text.GetFont then
+		F.Developer.LogDebug("Functions.FontTemplate: text not found")
+		return
+	end
+
+	local justifyHBefore = text and text.GetJustifyH and text:GetJustifyH()
+	if font and size and style then
+		local fontStyle = style == "NONE" and "" or style
+		local slug = E:CanFlagSlug(fontStyle)
+		if slug then
+			fontStyle = fontStyle .. "SLUG"
+		end
+		if strsub(fontStyle, 0, 6) == "SHADOW" then
+			fontStyle = strsub(fontStyle, 7)
+		end
+		text:SetFont(font, size, fontStyle)
+	end
+
+	text:FontTemplate(font, size, style)
+	if text.SetJustifyH and text.GetJustifyH and justifyHBefore and justifyHBefore ~= text:GetJustifyH() then
+		text:SetJustifyH(justifyHBefore)
+	end
+end
 
 ---@cast F Functions
 
@@ -45,7 +71,7 @@ function F.SetFontWithDB(text, db)
 
 	local fontName, fontHeight = text:GetFont()
 
-	text:FontTemplate(db.name and LSM:Fetch("font", db.name) or fontName, db.size or fontHeight, db.style or "NONE")
+	F.FontTemplate(text, db.name and LSM:Fetch("font", db.name) or fontName, db.size or fontHeight, db.style or "NONE")
 end
 
 ---Set font color from database settings
@@ -84,7 +110,7 @@ function F.SetFont(text, font, size, style)
 		font = LSM:Fetch("font", font)
 	end
 
-	text:FontTemplate(font or fontName, size or fontHeight, style or "OUTLINE")
+	F.FontTemplate(text, font or fontName, size or fontHeight, style or "OUTLINE")
 	text:SetShadowColor(0, 0, 0, 0)
 	text.SetShadowColor = E.noop
 end
@@ -478,7 +504,7 @@ function F.GetAdaptiveTextWidth(fontFile, fontSize, fontStyle, texts)
 	end
 
 	local font = F.__GetAdaptiveTextWidthFont
-	font:FontTemplate(fontFile or E.media.normFont, fontSize or E.db.general.fontSize, fontStyle or "NONE")
+	F.FontTemplate(font, fontFile or E.media.normFont, fontSize or E.db.general.fontSize, fontStyle or "NONE")
 
 	if type(texts) == "string" then
 		texts = { texts }

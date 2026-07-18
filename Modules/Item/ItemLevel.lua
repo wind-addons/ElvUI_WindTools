@@ -21,7 +21,7 @@ local EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION = EQUIPMENTFLYOUT_FIRST_SPECIAL_LOC
 ---@param db ProfileDB.item.itemLevel.flyout | ProfileDB.item.itemLevel.scrappingMachine
 local function UpdateFlyoutItemLevelTextStyle(text, db)
 	if db.useBagsFontSetting then
-		text:FontTemplate(LSM:Fetch("font", B.db.itemLevelFont), B.db.itemLevelFontSize, B.db.itemLevelFontOutline)
+		F.FontTemplate(text, LSM:Fetch("font", B.db.itemLevelFont), B.db.itemLevelFontSize, B.db.itemLevelFontOutline)
 		text:ClearAllPoints()
 		text:Point(B.db.itemLevelPosition, B.db.itemLevelxOffset, B.db.itemLevelyOffset)
 		return

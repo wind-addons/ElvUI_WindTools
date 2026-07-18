@@ -448,7 +448,7 @@ local function ReskinPetsPanel(frame)
 		frame.Top.TypeBar.Level25Button.backdrop:SetBackdropBorderColor(0, 0, 0)
 	end)
 	frame.Top.TypeBar.Level25Button.Text = frame.Top.TypeBar.Level25Button.backdrop:CreateFontString(nil, "OVERLAY")
-	frame.Top.TypeBar.Level25Button.Text:FontTemplate(nil, 10)
+	F.FontTemplate(frame.Top.TypeBar.Level25Button.Text, nil, 10)
 	frame.Top.TypeBar.Level25Button.Text:SetText("25")
 	frame.Top.TypeBar.Level25Button.Text:Point("CENTER", 1, 0)
 

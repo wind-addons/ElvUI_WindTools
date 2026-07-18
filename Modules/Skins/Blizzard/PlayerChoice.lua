@@ -48,7 +48,7 @@ local function handleItemButton(item)
 	end
 
 	if item.Name then
-		item.Name:FontTemplate()
+		F.FontTemplate(item.Name)
 	end
 
 	if item.CircleBackground then

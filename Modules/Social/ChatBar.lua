@@ -251,7 +251,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
 				end
 			else
 				local fontName, _, fontFlags = btn.text:GetFont()
-				btn.text:FontTemplate(fontName, btn.defaultFontSize + BUTTON_HOVER_FONT_SIZE_INCREASE, fontFlags)
+				F.FontTemplate(btn.text, fontName, btn.defaultFontSize + BUTTON_HOVER_FONT_SIZE_INCREASE, fontFlags)
 			end
 
 			_G.GameTooltip:SetOwner(btn, "ANCHOR_TOP", 0, 7)
@@ -278,7 +278,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
 				end
 			else
 				local fontName, _, fontFlags = btn.text:GetFont()
-				btn.text:FontTemplate(fontName, btn.defaultFontSize, fontFlags)
+				F.FontTemplate(btn.text, fontName, btn.defaultFontSize, fontFlags)
 			end
 		end)
 

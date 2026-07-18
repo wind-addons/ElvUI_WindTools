@@ -18,7 +18,6 @@ local rawset = rawset
 local setmetatable = setmetatable
 local strfind = strfind
 local strjoin = strjoin
-local strsub = strsub
 local tonumber = tonumber
 local tostring = tostring
 local tremove = tremove
@@ -35,19 +34,12 @@ function F.FontTemplate(text, font, size, style)
 	end
 
 	local justifyHBefore = text and text.GetJustifyH and text:GetJustifyH()
-	if font and size and style then
-		local fontStyle = style == "NONE" and "" or style
-		local slug = E:CanFlagSlug(fontStyle)
-		if slug then
-			fontStyle = fontStyle .. "SLUG"
-		end
-		if strsub(fontStyle, 0, 6) == "SHADOW" then
-			fontStyle = strsub(fontStyle, 7)
-		end
-		text:SetFont(font, size, fontStyle)
+	text:FontTemplate(font, size, style)
+	if font then
+		local _, fontSize, fontFlags = text:GetFont()
+		text:SetFont(font, fontSize, fontFlags)
 	end
 
-	text:FontTemplate(font, size, style)
 	if text.SetJustifyH and text.GetJustifyH and justifyHBefore and justifyHBefore ~= text:GetJustifyH() then
 		text:SetJustifyH(justifyHBefore)
 	end

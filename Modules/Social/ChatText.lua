@@ -1694,7 +1694,7 @@ function CT:INITIAL_CLUBS_LOADED()
 	end
 
 	local memberIds = C_Club_GetClubMembers(guildClubId)
-	if memberIds then
+	if E:NotSecretValue(memberIds) and memberIds and type(memberIds) == "table" and #memberIds > 0 then
 		for _, memberId in ipairs(memberIds) do
 			CacheGuildMemberFromClub(memberId)
 		end

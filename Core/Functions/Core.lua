@@ -35,10 +35,6 @@ function F.FontTemplate(text, font, size, style)
 
 	local justifyHBefore = text and text.GetJustifyH and text:GetJustifyH()
 	text:FontTemplate(font, size, style)
-	if font then
-		local _, fontSize, fontFlags = text:GetFont()
-		text:SetFont(font, fontSize, fontFlags)
-	end
 
 	if text.SetJustifyH and text.GetJustifyH and justifyHBefore and justifyHBefore ~= text:GetJustifyH() then
 		text:SetJustifyH(justifyHBefore)

@@ -1,7 +1,7 @@
 --@curseforge-project-slug: libkeystone@
 if WOW_PROJECT_ID ~= 1 then return end -- Retail
 
-local LKS = LibStub:NewLibrary("LibKeystone", 10)
+local LKS = LibStub:NewLibrary("LibKeystone", 11)
 if not LKS then return end -- No upgrade needed
 
 LKS.callbackMap = LKS.callbackMap or {}
@@ -166,10 +166,9 @@ do
 			end
 		end
 	end
-	local issecretvalue = issecretvalue or function() return false end
 	LKS.frame:SetScript("OnEvent", function(self, event, prefix, msg, channel, sender)
 		if event == "CHAT_MSG_ADDON" then
-			if not issecretvalue(msg) and prefix == "LibKS" and throttleTable[channel] then
+			if prefix == "LibKS" and throttleTable[channel] then
 				if msg == "R" then
 					local t = GetTime()
 					if t - throttleTable[channel] > throttleTime then
@@ -187,8 +186,9 @@ do
 					local keyChallengeMapID = tonumber(keyChallengeMapIDStr)
 					local playerRating = tonumber(playerRatingStr)
 					if keyLevel and keyChallengeMapID and playerRating then
+						local shortName = Ambiguate(sender, "none")
 						for _,func in next, callbackMap do
-							securecallfunction(func, keyLevel, keyChallengeMapID, playerRating, Ambiguate(sender, "none"), channel)
+							securecallfunction(func, keyLevel, keyChallengeMapID, playerRating, shortName, channel)
 						end
 					end
 				end

@@ -362,6 +362,8 @@ function CB:UpdateBar()
 		return
 	end
 
+	self.db = E.db.WT.social.chatBar
+
 	if InCombatLockdown() then
 		F.TaskManager:AfterCombat(self.UpdateBar, self)
 		return

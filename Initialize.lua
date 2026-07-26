@@ -102,6 +102,12 @@ _G.WindTools_OnAddonCompartmentClick = function()
 end
 
 function W:Initialize()
+	-- ElvUI creates its AceDB during its ADDON_LOADED, before WindTools
+	-- populates E.DF.profile.WT / E.DF.global.WT / E.privateVars.profile.WT.
+	-- Re-register the filled defaults so AceDB merges the WT subtrees in.
+	E.data:RegisterDefaults(E.DF)
+	E.charSettings:RegisterDefaults(E.privateVars)
+
 	-- ElvUI -> WindTools -> WindTools Modules
 	if not self:CheckElvUIVersion() then
 		return
@@ -123,12 +129,6 @@ function W:Initialize()
 
 	-- To avoid the update tips from ElvUI when alpha/beta versions are used
 	EP:RegisterPlugin(addonName, W.OptionsCallback, false, xVersionString)
-
-	-- Fix the bug that locale files loaded after option table is created
-	local pluginTitle = L["Plugins"]
-	W:SecureHook(EP, "GetPluginOptions", function()
-		E.Options.args.plugins.name = pluginTitle
-	end)
 
 	self:SecureHook(E, "UpdateAll", "UpdateModules")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -204,4 +204,6 @@ do
 	end
 end
 
-EP:HookInitialize(W, W.Initialize)
+function W:OnInitialize()
+	W:Initialize()
+end

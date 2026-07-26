@@ -457,7 +457,7 @@ function LL:InitializePartyKeystoneFrame()
 end
 
 function LL:UpdatePartyKeystoneFrame()
-	if not self.db.partyKeystone.enable then
+	if not self.db or not self.db.partyKeystone or not self.db.partyKeystone.enable then
 		if self.PartyKeystoneFrame then
 			self.PartyKeystoneFrame:Hide()
 		end

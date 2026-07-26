@@ -74,8 +74,33 @@ function WS:LazyLoad()
 	wipe(self.LazyLoadTable)
 end
 
+function WS:ReskinEarlyFrames()
+	if not self:IsReady() then
+		return
+	end
+
+	if not E.private.WT.skins.enable or not E.private.WT.skins.widgets.button.enable then
+		return
+	end
+
+	for i = 1, E.MAX_STATIC_POPUPS do
+		local popup = _G["StaticPopup" .. i]
+		if popup then
+			for index = 1, 4 do
+				local getter = popup["GetButton" .. index]
+				local button = getter and getter(popup)
+				if button and button.IsSkinned and not button.windWidgetSkinned then
+					ES:HandleButton(button)
+				end
+			end
+		end
+	end
+end
+
 function WS:PLAYER_ENTERING_WORLD()
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+	self:ReskinEarlyFrames()
+	E:UpdateMediaItems(true)
 	self:LazyLoad()
 end
 

@@ -159,6 +159,7 @@ do
 	function W:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
 		if isInitialLogin then
 			self:AutoCopyPrivateProfile()
+			E:UpdateMediaItems(true)
 			E:Delay(6, self.ChangelogReadAlert, self)
 			if E.global.WT.core.loginMessage then
 				local icon = addon[2].GetIconString(self.Media.Textures.smallLogo, 14)

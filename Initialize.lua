@@ -125,13 +125,14 @@ function W:Initialize()
 
 	self:AddCustomLinkSupport()
 	self:UpdateScripts()
-	self:InitializeModules()
 
 	-- To avoid the update tips from ElvUI when alpha/beta versions are used
 	EP:RegisterPlugin(addonName, W.OptionsCallback, false, xVersionString)
 
 	self:SecureHook(E, "UpdateAll", "UpdateModules")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
+	-- Init Modules
+	self:RegisterEvent("PLAYER_LOGIN")
 end
 
 function W:AutoCopyPrivateProfile()

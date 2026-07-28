@@ -172,6 +172,11 @@ function W:InitializeModules()
 	end
 end
 
+-- Put the registration from the modules to the login event
+function W:PLAYER_LOGIN()
+	self:InitializeModules()
+end
+
 -- WindTools module update after profile switch
 function W:UpdateModules()
 	self:UpdateScripts()

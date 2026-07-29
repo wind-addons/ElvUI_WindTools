@@ -37,11 +37,9 @@ function M:ElvUI_AB_FixKeybindText(_, button)
 	local before = getBeforeText(button, currentText)
 	local after
 
-	-- ElvUI can fire UPDATE_BINDINGS before E:RefreshDB() merges the WT defaults
-	local db = E.db.WT and E.db.WT.misc and E.db.WT.misc.keybindAlias
-	if db and db.enable then
-		if db.list and db.list[before] then
-			after = db.list[before]
+	if E.db.WT and E.db.WT.misc.keybindAlias.enable then
+		if E.db.WT.misc.keybindAlias.list and E.db.WT.misc.keybindAlias.list[before] then
+			after = E.db.WT.misc.keybindAlias.list[before]
 			button.HotKey:SetText(after)
 		end
 	end

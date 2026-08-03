@@ -452,7 +452,7 @@ end
 
 ---Event handler for PLAYER_ENTERING_WORLD
 function S:PLAYER_ENTERING_WORLD()
-	if not E.initialized or not E.private.WT.skins.enable then
+	if not E.Initialized or not E.private.WT.skins.enable then
 		return
 	end
 
@@ -486,7 +486,7 @@ end
 ---@param _ any Unused parameter
 ---@param addonName string The name of the loaded addon
 function S:PLAYER_LOGIN(_, addonName)
-	if not E.initialized or not E.private.WT.skins.enable then
+	if not E.Initialized or not E.private.WT.skins.enable then
 		return
 	end
 

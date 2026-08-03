@@ -63,7 +63,7 @@ end
 ---@param _ any Unused parameter
 ---@param addonName string Addon name
 function M:ADDON_LOADED(_, addonName)
-	if not E.initialized then
+	if not E.Initialized then
 		return
 	end
 

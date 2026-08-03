@@ -59,6 +59,10 @@ function M:UpdateAllKeybindText()
 	end
 end
 
-M:RawHook(AB, "FixKeybindText", "ElvUI_AB_FixKeybindText")
-M:AddCallback("UpdateAllKeybindText")
-M:AddCallbackForUpdate("UpdateAllKeybindText")
+function M:PLAYER_LOGIN()
+	M:RawHook(AB, "FixKeybindText", "ElvUI_AB_FixKeybindText")
+	M:AddCallback("UpdateAllKeybindText")
+	M:AddCallbackForUpdate("UpdateAllKeybindText")
+ end
+
+ M:RegisterEvent("PLAYER_LOGIN")

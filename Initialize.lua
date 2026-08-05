@@ -102,12 +102,6 @@ _G.WindTools_OnAddonCompartmentClick = function()
 end
 
 function W:Initialize()
-	-- ElvUI creates its AceDB during its ADDON_LOADED, before WindTools
-	-- populates E.DF.profile.WT / E.DF.global.WT / E.privateVars.profile.WT.
-	-- Re-register the filled defaults so AceDB merges the WT subtrees in.
-	E.data:RegisterDefaults(E.DF)
-	E.charSettings:RegisterDefaults(E.privateVars)
-
 	-- ElvUI -> WindTools -> WindTools Modules
 	if not self:CheckElvUIVersion() then
 		return

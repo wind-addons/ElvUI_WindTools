@@ -485,7 +485,7 @@ end
 ---Event handler for ADDON_LOADED
 ---@param _ any Unused parameter
 ---@param addonName string The name of the loaded addon
-function S:PLAYER_LOGIN(_, addonName)
+function S:ADDON_LOADED(_, addonName)
 	if not E.Initialized or not E.private.WT.skins.enable then
 		return
 	end
@@ -824,6 +824,6 @@ function S:Initialize()
 	end
 end
 
-S:RegisterEvent("PLAYER_LOGIN")
+S:RegisterEvent("ADDON_LOADED")
 S:RegisterEvent("PLAYER_ENTERING_WORLD")
 W:RegisterModule(S:GetName())

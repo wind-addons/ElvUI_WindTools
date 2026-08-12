@@ -21,14 +21,24 @@ local function SkinPasteWindow(pasteWindow)
 		EditBox.ScrollingEditBox.backdrop:SetOutside(EditBox.ScrollingEditBox, 4, 4)
 	end
 
-	local CloseButton = pasteWindow.CloseButton
-	if CloseButton then
-		S:Proxy("HandleButton", CloseButton)
+	local AutoCloseCheck = pasteWindow.AutoCloseCheck
+	if AutoCloseCheck then
+		S:Proxy("HandleCheckBox", AutoCloseCheck)
+	end
+
+	local ExportButton = pasteWindow.ExportButton
+	if ExportButton then
+		S:Proxy("HandleButton", ExportButton)
 	end
 
 	local PasteButton = pasteWindow.PasteButton
 	if PasteButton then
 		S:Proxy("HandleButton", PasteButton)
+	end
+
+	local CloseButton = pasteWindow.CloseButton
+	if CloseButton then
+		S:Proxy("HandleButton", CloseButton)
 	end
 
 	pasteWindow.__windSkin = true

@@ -38,14 +38,14 @@ W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
 W.MythicPlusMapData = {
 	-- https://wago.tools/db2/MapChallengeMode
 	-- https://wago.tools/db2/GroupFinderActivityGrp
-	[557] = { abbr = L["[ABBR] Windrunner Spire"], activityID = 370, timers = { 1188, 1584, 1980 } },
-	[558] = { abbr = L["[ABBR] Magisters' Terrace"], activityID = 399, timers = { 1224, 1632, 2040 } },
-	[559] = { abbr = L["[ABBR] Nexus-Point Xenas"], activityID = 401, timers = { 1080, 1440, 1800 } },
-	[560] = { abbr = L["[ABBR] Maisara Caverns"], activityID = 400, timers = { 1188, 1584, 1980 } },
-	[161] = { abbr = L["[ABBR] Skyreach"], activityID = 9, timers = { 1008, 1344, 1680 } },
-	[402] = { abbr = L["[ABBR] Algeth'ar Academy"], activityID = 302, timers = { 1044, 1392, 1740 } },
-	[556] = { abbr = L["[ABBR] Pit of Saron"], activityID = 52, timers = { 1080, 1440, 1800 } },
-	[239] = { abbr = L["[ABBR] Seat of the Triumvirate"], activityID = 133, timers = { 1260, 1680, 2100 } },
+	[588] = { abbr = L["[ABBR] Altar of Fangs"], activityID = 420, timers = { 1080, 1440, 1800 } },
+	[587] = { abbr = L["[ABBR] Murder Row"], activityID = 396, timers = { 1224, 1632, 2040 } },
+	[586] = { abbr = L["[ABBR] Den of Nalorakk"], activityID = 392, timers = { 1152, 1536, 1920 } },
+	[584] = { abbr = L["[ABBR] The Blinding Vale"], activityID = 382, timers = { 1080, 1440, 1800 } },
+	[585] = { abbr = L["[ABBR] Voidscar Arena"], activityID = 398, timers = { 1080, 1440, 1800 } },
+	[249] = { abbr = L["[ABBR] Kings' Rest"], activityID = 141, timers = { 1188, 1584, 1980 } },
+	[399] = { abbr = L["[ABBR] Ruby Life Pools"], activityID = 306, timers = { 1008, 1344, 1680 } },
+	[250] = { abbr = L["[ABBR] Temple of Sethraliss"], activityID = 139, timers = { 1152, 1536, 1920 } },
 }
 
 function W:GetMythicPlusMapData()
@@ -54,6 +54,7 @@ end
 
 -- Histories (for localization)
 W.OldInstances = {
+	L["[ABBR] Algeth'ar Academy"],
 	L["[ABBR] Ara-Kara, City of Echoes"],
 	L["[ABBR] Black Rook Hold"],
 	L["[ABBR] Cathedral of Eternal Night"],
@@ -66,14 +67,19 @@ W.OldInstances = {
 	L["[ABBR] Eye of Azshara"],
 	L["[ABBR] Halls of Atonement"],
 	L["[ABBR] Halls of Valor"],
+	L["[ABBR] Magisters' Terrace"],
+	L["[ABBR] Maisara Caverns"],
 	L["[ABBR] Maw of Souls"],
 	L["[ABBR] Neltharion's Lair"],
+	L["[ABBR] Nexus-Point Xenas"],
 	L["[ABBR] Operation: Floodgate"],
 	L["[ABBR] Operation: Mechagon - Workshop"],
+	L["[ABBR] Pit of Saron"],
 	L["[ABBR] Priory of the Sacred Flame"],
 	L["[ABBR] Return to Karazhan: Lower"],
 	L["[ABBR] Return to Karazhan: Upper"],
 	L["[ABBR] Seat of the Triumvirate"],
+	L["[ABBR] Skyreach"],
 	L["[ABBR] Tazavesh: So'leah's Gambit"],
 	L["[ABBR] Tazavesh: Streets of Wonder"],
 	L["[ABBR] The Arcway"],

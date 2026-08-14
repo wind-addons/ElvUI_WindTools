@@ -83,14 +83,19 @@ W.OldInstances = {
 	L["[ABBR] The Stonevault"],
 	L["[ABBR] Theater of Pain"],
 	L["[ABBR] Vault of the Wardens"],
+	L["[ABBR] Windrunner Spire"],
 }
 
 ---@type table<number, { id: number, difficulty: number, abbr: string, name: string, tex: number, idString: string }>
 W.MythicPlusSeasonAchievementData = {
 	-- Midnight
-	{ on = true, id = 61258, difficulty = 3, abbr = L["[ABBR] Midnight Keystone Legend: Season One"] },
-	{ on = true, id = 61257, difficulty = 2, abbr = L["[ABBR] Midnight Keystone Hero: Season One"] },
-	{ on = false, id = 61256, difficulty = 1, abbr = L["[ABBR] Midnight Keystone Master: Season One"] },
+	{ on = true, id = 62449, difficulty = 3, abbr = L["[ABBR] Midnight Keystone Legend: Season 2"] },
+	{ on = true, id = 62448, difficulty = 2, abbr = L["[ABBR] Midnight Keystone Hero: Season 2"] },
+	{ on = false, id = 62447, difficulty = 1, abbr = L["[ABBR] Midnight Keystone Master: Season 2"] },
+	{ on = true, id = 63097, difficulty = 4, abbr = L["[ABBR] Midnight Keystone Myth: Season 1"] },
+	{ on = true, id = 61258, difficulty = 3, abbr = L["[ABBR] Midnight Keystone Legend: Season 1"] },
+	{ on = true, id = 61257, difficulty = 2, abbr = L["[ABBR] Midnight Keystone Hero: Season 1"] },
+	{ on = false, id = 61256, difficulty = 1, abbr = L["[ABBR] Midnight Keystone Master: Season 1"] },
 	-- The War Within
 	{ on = true, id = 42174, difficulty = 4, abbr = L["[ABBR] Unbound Hero: The War Within Season Three"] },
 	{ on = true, id = 42172, difficulty = 3, abbr = L["[ABBR] The War Within Keystone Legend: Season Three"] },

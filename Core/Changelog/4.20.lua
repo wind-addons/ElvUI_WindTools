@@ -4,22 +4,27 @@ W.Changelog[420] = {
 	RELEASE_DATE = "2026/08/13",
 	IMPORTANT = {
 		["zhCN"] = {
+			"最低支持的 ElvUI 版本提升到 15.21.",
 			"ElvUI 已移除 LibDeflate, WindTools 现自行内置该库以供 LibOpenRaid 与配置导入导出使用.",
 			"适配 ElvUI FontTemplate 新 API: 参数改为 LSM 字体名称而非字体路径.",
 		},
 		["zhTW"] = {
+			"最低支援的 ElvUI 版本提升到 15.21.",
 			"ElvUI 已移除 LibDeflate, WindTools 現自行內建該函式庫以供 LibOpenRaid 與設定匯入匯出使用.",
 			"適配 ElvUI FontTemplate 新 API: 參數改為 LSM 字型名稱而非字型路徑.",
 		},
 		["enUS"] = {
+			"Minimum supported ElvUI version raised to 15.21.",
 			"ElvUI no longer ships LibDeflate; WindTools now vendors it for LibOpenRaid and profile import/export.",
 			"Adapted to ElvUI FontTemplate API change: argument is now an LSM font name, not a font path.",
 		},
 		["koKR"] = {
+			"최소 지원 ElvUI 버전이 15.21로 상향되었습니다.",
 			"ElvUI가 더 이상 LibDeflate을 포함하지 않으므로, WindTools가 LibOpenRaid 및 프로필 가져오기/내보내기를 위해 해당 라이브러리를 내장합니다.",
 			"ElvUI FontTemplate API 변경에 대응: 인자가 글꼴 경로가 아닌 LSM 글꼴 이름입니다.",
 		},
 		["ruRU"] = {
+			"Минимальная поддерживаемая версия ElvUI повышена до 15.21.",
 			"ElvUI больше не поставляет LibDeflate; WindTools теперь включает эту библиотеку для LibOpenRaid и импорта/экспорта профилей.",
 			"Адаптация к новому API FontTemplate ElvUI: аргумент теперь имя шрифта LSM, а не путь к файлу.",
 		},

@@ -5,7 +5,6 @@ local C = W.Utilities.Color
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
-local next = next
 local strfind = strfind
 local unpack = unpack
 
@@ -31,11 +30,9 @@ local function ReskinTab(tab)
 		tab.SelectedTexture:SetAllPoints()
 	end
 
-	for _, region in next, { tab:GetRegions() } do
-		if region:IsObjectType("Texture") and region:GetAtlas() == "QuestLog-Tab-side-Glow-hover" then
-			region:SetColorTexture(1, 1, 1, 0.3)
-			region:SetAllPoints()
-		end
+	if tab.HighlightTexture then
+		tab.HighlightTexture:SetColorTexture(1, 1, 1, 0.3)
+		tab.HighlightTexture:SetAllPoints()
 	end
 
 	if tab.backdrop then

@@ -55,6 +55,9 @@ end
 ---@param fontSize number?
 ---@param fontStyle string?
 local function applyFontPath(text, fontPath, fontSize, fontStyle)
+    if not fontPath then
+        fontPath = E.media.normFont
+    end
 	if not fontStyle then
 		fontStyle = E.db.general.fontStyle or "NONE"
 	end

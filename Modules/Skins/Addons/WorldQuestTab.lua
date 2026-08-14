@@ -193,10 +193,6 @@ function S:WorldQuestTab()
 	local tab = _G.WQT_QuestMapTab
 	if tab then
 		ReskinTab(tab)
-		F.InternalizeMethod(tab, "SetPoint")
-		hooksecurefunc(tab, "SetPoint", function()
-			F.Move(tab, 0, -2)
-		end)
 	end
 
 	if _G.WQT_ListContainer then

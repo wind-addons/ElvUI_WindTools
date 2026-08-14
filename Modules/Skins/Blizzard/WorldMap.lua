@@ -5,6 +5,8 @@ local _G = _G
 local pairs = pairs
 local hooksecurefunc = hooksecurefunc
 
+local SetPoint = UIParent.SetPoint
+
 function S:WorldMapFrame()
 	if not self:CheckDB("worldmap", "worldMap") then
 		return
@@ -59,17 +61,17 @@ function S:WorldMapFrame()
 			self:CreateBackdropShadow(tab)
 			tab.backdrop:SetTemplate("Transparent")
 		end
-
-		if i > 1 then
-			F.Move(tab, 0, -2)
-		end
 	end
 
 	local questsTab = QuestMapFrame.QuestsTab
 	if questsTab then
 		questsTab:ClearAllPoints()
-		F.InternalizeMethod(questsTab, "SetPoint", true)
-		F.CallMethod(questsTab, "SetPoint", "TOPLEFT", QuestMapFrame, "TOPRIGHT", 13, -30)
+		SetPoint(questsTab, "TOPLEFT", QuestMapFrame, "TOPRIGHT", 13, 24)
+		questsTab.SetPoint = function(tab, _, _, POINT, x, y)
+			if x == 1 and y == 0 and POINT == "TOPLEFT" then
+				SetPoint(tab, "TOPLEFT", QuestMapFrame, "TOPRIGHT", 2, 0)
+			end
+		end
 	end
 end
 

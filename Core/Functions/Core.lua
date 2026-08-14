@@ -18,6 +18,7 @@ local rawset = rawset
 local setmetatable = setmetatable
 local strfind = strfind
 local strjoin = strjoin
+local strsub = strsub
 local tonumber = tonumber
 local tostring = tostring
 local tremove = tremove
@@ -27,14 +28,76 @@ local unpack = unpack
 local GenerateClosure = GenerateClosure
 local PlaySoundFile = PlaySoundFile
 
+---ElvUI FontTemplate expects an LSM font name; file paths must use SetFont + SetFontShadow.
+---@param font any
+---@return boolean
+local function isFontPath(font)
+	if type(font) ~= "string" or font == "" then
+		return false
+	end
+
+	if strfind(font, "%.ttf") or strfind(font, "%.otf") or strfind(font, "[/\\]") then
+		return true
+	end
+
+	if E.media then
+		if font == E.media.normFont or font == E.media.combatFont then
+			return true
+		end
+	end
+
+	return false
+end
+
+---Apply a font file path with ElvUI-compatible style/shadow handling.
+---@param text FontString|SimpleFontString
+---@param fontPath string
+---@param fontSize number?
+---@param fontStyle string?
+local function applyFontPath(text, fontPath, fontSize, fontStyle)
+	if not fontStyle then
+		fontStyle = E.db.general.fontStyle or "NONE"
+	end
+	if not fontSize then
+		fontSize = E.db.general.fontSize
+	end
+	if fontStyle == "NONE" then
+		fontStyle = ""
+	end
+
+	local shadow = strfind(fontStyle, "^SHADOW") ~= nil
+	if shadow then
+		fontStyle = strsub(fontStyle, 7)
+	end
+
+	text:SetFont(fontPath, fontSize, fontStyle)
+	if E.SetFontShadow then
+		E:SetFontShadow(text, fontStyle, shadow)
+	else
+		text:SetShadowColor(0, 0, 0, shadow and (fontStyle == "" and 1 or 0.6) or 0)
+		text:SetShadowOffset(shadow and 1 or 0, shadow and -1 or 0)
+	end
+end
+
+---Apply font styling. Pass an LSM font name (or nil for ElvUI default); paths use SetFont.
+---@param text FontString|SimpleFontString
+---@param font string? LSM font name or font file path
+---@param size number?
+---@param style string?
 function F.FontTemplate(text, font, size, style)
 	if not text or not text.GetFont then
 		F.Developer.LogDebug("Functions.FontTemplate: text not found")
 		return
 	end
 
-	local justifyHBefore = text and text.GetJustifyH and text:GetJustifyH()
-	text:FontTemplate(font, size, style)
+	local justifyHBefore = text.GetJustifyH and text:GetJustifyH()
+
+	if isFontPath(font) then
+		applyFontPath(text, font, size, style)
+	else
+		-- ElvUI FontTemplate arg1 is an LSM name; it Fetch()s internally.
+		text:FontTemplate(font, size, style)
+	end
 
 	if text.SetJustifyH and text.GetJustifyH and justifyHBefore and justifyHBefore ~= text:GetJustifyH() then
 		text:SetJustifyH(justifyHBefore)
@@ -57,9 +120,16 @@ function F.SetFontWithDB(text, db)
 		return
 	end
 
-	local fontName, fontHeight = text:GetFont()
+	local _, fontHeight = text:GetFont()
+	local fontSize = db.size or fontHeight
+	local fontStyle = db.style or "NONE"
 
-	F.FontTemplate(text, db.name and LSM:Fetch("font", db.name) or fontName, db.size or fontHeight, db.style or "NONE")
+	if db.name then
+		F.FontTemplate(text, db.name, fontSize, fontStyle)
+	else
+		local currentFontPath = text:GetFont()
+		applyFontPath(text, currentFontPath, fontSize, fontStyle)
+	end
 end
 
 ---Set font color from database settings
@@ -80,7 +150,7 @@ end
 
 ---Change font outline style to OUTLINE and remove shadow
 ---@param text FontString|SimpleFontString The FontString object to modify
----@param font string? Font path or name (optional)
+---@param font string? Font path or LSM name (optional)
 ---@param size number|string? Font size or size change amount as string (optional)
 ---@param style string? Font outline style. (optional, default is "OUTLINE")
 function F.SetFont(text, font, size, style)
@@ -88,19 +158,34 @@ function F.SetFont(text, font, size, style)
 		F.Developer.LogDebug("Functions.SetFont: text not found")
 		return
 	end
-	local fontName, fontHeight = text:GetFont()
+
+	local currentFontPath, fontHeight = text:GetFont()
 
 	if type(size) == "string" then
 		size = fontHeight + (tonumber(size) or 0)
 	end
 
-	if font and not strfind(font, "%.ttf") and not strfind(font, "%.otf") then
-		font = LSM:Fetch("font", font)
+	local fontSize = size or fontHeight
+	local fontStyle = style or "OUTLINE"
+
+	if font == nil then
+		applyFontPath(text, currentFontPath, fontSize, fontStyle)
+	elseif isFontPath(font) then
+		applyFontPath(text, font, fontSize, fontStyle)
+	else
+		F.FontTemplate(text, font, fontSize, fontStyle)
 	end
 
-	F.FontTemplate(text, font or fontName, size or fontHeight, style or "OUTLINE")
-	text:SetShadowColor(0, 0, 0, 0)
-	text.SetShadowColor = E.noop
+	if E.SetFontShadow then
+		local flags = fontStyle == "NONE" and "" or fontStyle
+		if strfind(flags, "^SHADOW") then
+			flags = strsub(flags, 7)
+		end
+		E:SetFontShadow(text, flags, false)
+	else
+		text:SetShadowColor(0, 0, 0, 0)
+		text:SetShadowOffset(0, 0)
+	end
 end
 
 ---Set font outline for all FontString regions in a frame
@@ -479,7 +564,7 @@ function F.Move(frame, x, y)
 	end
 end
 
----@param fontFile string Font path or name
+---@param fontFile string? LSM font name or font file path
 ---@param fontSize number Font size
 ---@param fontStyle string Font style (e.g., "OUTLINE")
 ---@param texts string | string[] Text or array of texts to measure
@@ -492,7 +577,7 @@ function F.GetAdaptiveTextWidth(fontFile, fontSize, fontStyle, texts)
 	end
 
 	local font = F.__GetAdaptiveTextWidthFont
-	F.FontTemplate(font, fontFile or E.media.normFont, fontSize or E.db.general.fontSize, fontStyle or "NONE")
+	F.FontTemplate(font, fontFile or E.db.general.font, fontSize or E.db.general.fontSize, fontStyle or "NONE")
 
 	if type(texts) == "string" then
 		texts = { texts }

@@ -100,7 +100,9 @@ end
 function WS:PLAYER_ENTERING_WORLD()
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 	self:ReskinEarlyFrames()
-	E:UpdateMediaItems(true)
+	E:UpdateMedia()
+	E:UpdateFontTemplates()
+	E:UpdateMediaItems()
 	self:LazyLoad()
 end
 

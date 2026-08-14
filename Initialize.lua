@@ -91,6 +91,8 @@ W:NewModule("QuestProgress", "AceEvent-3.0")
 W.Utilities = {}
 
 -- Pre-register libs into ElvUI
+E:AddLib("Deflate", "LibDeflate")
+E.Libs.Deflate.compressLevel = { level = 5 }
 E:AddLib("OpenRaid", "LibOpenRaid-1.0")
 E:AddLib("ObjectiveProgressWT", "LibObjectiveProgress-WT")
 E:AddLib("RangeCheck", "LibRangeCheck-3.0")
@@ -200,6 +202,4 @@ do
 	end
 end
 
-function W:OnInitialize()
-	W:Initialize()
-end
+EP:HookInitialize(W, W.Initialize)

@@ -9,8 +9,6 @@ local next = next
 local strfind = strfind
 local unpack = unpack
 
-local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-
 -- Modified from ElvUI WorldMap skin
 local function ReskinTab(tab)
 	tab:CreateBackdrop()
@@ -230,31 +228,41 @@ function S:WorldQuestTab()
 
 		return self.hooks[_G.WQT_GameTooltip].AddLine(tt, text, ...)
 	end, true)
+
+	local skinFuncs = {
+		WQT_SettingCategoryTemplate = ReskinSettingsCategory,
+		WQT_SettingSubCategoryTemplate = ReskinSettingsCategory,
+		WQT_SettingCheckboxTemplate = ReskinSettingsCheckbox,
+		WQT_SettingSliderTemplate = ReskinSettingsSlider,
+		WQT_SettingColorTemplate = ReskinSettingsColor,
+		WQT_SettingDropDownTemplate = ReskinSettingsDropDown,
+		WQT_SettingButtonTemplate = ReskinSettingsButton,
+		WQT_SettingConfirmButtonTemplate = ReskinSettingsButton,
+		WQT_SettingTextInputTemplate = ReskinSettingsTextInput,
+	}
+
+	if _G.WQT_SettingsFrame then
+		_G.WQT_SettingsFrame.ScrollBox:RegisterCallback(
+			ScrollBoxListMixin.Event.OnInitializedFrame,
+			function(_, frame, elementData)
+				local func = skinFuncs[elementData and elementData.template]
+				if func and not frame.__windSkin then
+					func(frame)
+					frame.__windSkin = true
+				end
+			end
+		)
+	end
+
+	local borderContainer = _G.WQT_ListContainer and _G.WQT_ListContainer.BorderContainer
+	if borderContainer and borderContainer.QuestScrollBox then
+		borderContainer.QuestScrollBox:RegisterCallback(ScrollBoxListMixin.Event.OnInitializedFrame, function(_, frame)
+			if not frame.__windSkin then
+				ReskinListButton(frame)
+				frame.__windSkin = true
+			end
+		end)
+	end
 end
 
 S:AddCallbackForAddon("WorldQuestTab")
-
-local isLoaded, isFinished = C_AddOns_IsAddOnLoaded("WorldQuestTab")
-if isLoaded and isFinished then
-	local function wrap(func)
-		return function(...)
-			local args = { ... }
-			F.TaskManager:AfterLogin(function()
-				if not E.private.WT.skins.enable or not E.private.WT.skins.addons.worldQuestTab then
-					return
-				end
-				func(unpack(args))
-			end)
-		end
-	end
-
-	S:TryPostHook("WQT_SettingsCategoryMixin", "Init", wrap(ReskinSettingsCategory))
-	S:TryPostHook("WQT_SettingsCheckboxMixin", "Init", wrap(ReskinSettingsCheckbox))
-	S:TryPostHook("WQT_SettingsSliderMixin", "Init", wrap(ReskinSettingsSlider))
-	S:TryPostHook("WQT_SettingsColorMixin", "Init", wrap(ReskinSettingsColor))
-	S:TryPostHook("WQT_SettingsDropDownMixin", "Init", wrap(ReskinSettingsDropDown))
-	S:TryPostHook("WQT_SettingsButtonMixin", "Init", wrap(ReskinSettingsButton))
-	S:TryPostHook("WQT_SettingsConfirmButtonMixin", "Init", wrap(ReskinSettingsButton))
-	S:TryPostHook("WQT_SettingsTextInputMixin", "Init", wrap(ReskinSettingsTextInput))
-	S:TryPostHook("WQT_ListButtonMixin", "Update", wrap(ReskinListButton))
-end

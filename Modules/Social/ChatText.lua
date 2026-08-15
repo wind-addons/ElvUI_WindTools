@@ -67,6 +67,7 @@ local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitIsUnit = UnitIsUnit
 local UnitName = UnitName
 
+local CanChatGroupPerformExpressionExpansion = ChatFrameUtil.CanChatGroupPerformExpressionExpansion
 local ProcessMessageEventFilters = ChatFrameUtil.ProcessMessageEventFilters
 
 local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID

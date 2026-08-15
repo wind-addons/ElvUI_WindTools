@@ -36,7 +36,6 @@ local wipe = wipe
 local Ambiguate = Ambiguate
 local BNGetNumFriendInvites = BNGetNumFriendInvites
 local BNGetNumFriends = BNGetNumFriends
-local ChatEditSetLastTellTarget = ChatFrameUtil.SetLastTellTarget
 local FlashClientIcon = FlashClientIcon
 local GMChatFrame_IsGM = GMChatFrame_IsGM
 local GetAchievementLink = GetAchievementLink
@@ -61,14 +60,17 @@ local IsInRaid = IsInRaid
 local PlaySoundFile = PlaySoundFile
 local RemoveExtraSpaces = RemoveExtraSpaces
 local RemoveNewlines = RemoveNewlines
-local ResolvePrefixedChannelName = ChatFrameUtil.ResolvePrefixedChannelName
 local UnitExists = UnitExists
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitIsUnit = UnitIsUnit
 local UnitName = UnitName
 
 local CanChatGroupPerformExpressionExpansion = ChatFrameUtil.CanChatGroupPerformExpressionExpansion
+local ChatEditSetLastTellTarget = ChatFrameUtil.SetLastTellTarget
+local FormatDiscordMessage = ChatFrameUtil.FormatDiscordMessage
+local HandleCautionaryChatMessage = ChatFrameUtil.HandleCautionaryChatMessage
 local ProcessMessageEventFilters = ChatFrameUtil.ProcessMessageEventFilters
+local ResolvePrefixedChannelName = ChatFrameUtil.ResolvePrefixedChannelName
 
 local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo

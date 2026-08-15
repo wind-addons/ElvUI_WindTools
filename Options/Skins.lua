@@ -2125,8 +2125,19 @@ options.damageMeter = {
 				return not E.private.WT.skins.damageMeter.enable
 			end,
 			args = {
-				windowBackdrop = {
+				appearance = {
 					order = 1,
+					type = "select",
+					name = L["Appearance"],
+					desc = L["Match the window backdrop to an ElvUI chat panel and use its chat tab styling for the header."],
+					values = {
+						default = L["Default"],
+						chatLeft = L["Left Chat"],
+						chatRight = L["Right Chat"],
+					},
+				},
+				windowBackdrop = {
+					order = 2,
 					type = "select",
 					name = L["Window Backdrop"],
 					values = {
@@ -2136,7 +2147,7 @@ options.damageMeter = {
 					},
 				},
 				headerPart = {
-					order = 2,
+					order = 3,
 					type = "select",
 					name = L["Header"],
 					get = function()
@@ -2153,7 +2164,7 @@ options.damageMeter = {
 					},
 				},
 				headerBackdrop = {
-					order = 3,
+					order = 4,
 					type = "select",
 					name = L["Header Backdrop"],
 					get = function()
@@ -2170,7 +2181,7 @@ options.damageMeter = {
 					},
 				},
 				scrollBar = {
-					order = 4,
+					order = 5,
 					type = "select",
 					name = L["Scrollbar"],
 					values = {
@@ -2180,7 +2191,7 @@ options.damageMeter = {
 					},
 				},
 				fadeTime = {
-					order = 5,
+					order = 6,
 					type = "range",
 					name = L["Fade Time"],
 					min = 0,

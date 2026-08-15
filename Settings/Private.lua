@@ -637,6 +637,7 @@ V.skins = {
 	},
 	damageMeter = {
 		enable = true,
+		appearance = "default", ---@type "default"|"chatLeft"|"chatRight"
 		windowBackdrop = "always", ---@type "always"|"mouseover"|"hide"
 		headerPart = "always", ---@type "always"|"mouseover"
 		headerBackdrop = "hide", ---@type "always"|"hide"

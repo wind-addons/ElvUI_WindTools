@@ -1,6 +1,8 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 local LSM = E.Libs.LSM
+local CH = E:GetModule("Chat")
+local LO = E:GetModule("Layout")
 
 local _G = _G
 local next = next
@@ -143,14 +145,138 @@ function S:DamageMeter_GetHeaderBackdrop(sessionWindow)
 	return headerBackdrop
 end
 
+function S:DamageMeter_GetWindowBackdrop(frame)
+	if not frame then
+		return nil
+	end
+
+	if frame.backdrop then
+		return frame.backdrop
+	end
+
+	local background = frame.GetBackground and frame:GetBackground()
+	return background and background.backdrop
+end
+
+function S:DamageMeter_ApplyChatBackdrop(backdrop, texturePath)
+	if not backdrop then
+		return
+	end
+
+	local panelColor = E.db.chat.panelColor
+	backdrop:SetBackdropColor(panelColor.r, panelColor.g, panelColor.b, panelColor.a)
+
+	local texture = backdrop.windDamageMeterTexture
+	if not texture then
+		texture = backdrop:CreateTexture(nil, "OVERLAY")
+		backdrop.windDamageMeterTexture = texture
+	end
+
+	texture:SetDrawLayer("OVERLAY")
+	texture:SetInside()
+	texture:SetTexture(texturePath)
+	texture:SetAlpha(E.db.general.backdropfadecolor.a or 0.5)
+	texture:SetShown(texturePath ~= nil and texturePath ~= "")
+end
+
+function S:DamageMeter_ApplyChatHeaderBackdrop(sessionWindow)
+	local headerBackdrop = self:DamageMeter_GetHeaderBackdrop(sessionWindow)
+	if not headerBackdrop then
+		return
+	end
+
+	local tabStyle = E.db.chat.panelTabTransparency and "Transparent" or nil
+	local glossTexture = not tabStyle and true or nil
+	headerBackdrop:SetTemplate(tabStyle, glossTexture)
+
+	local panelTexture = headerBackdrop.windDamageMeterTexture
+	if panelTexture then
+		panelTexture:Hide()
+	end
+end
+
+function S:DamageMeter_ApplyChatHeaderText(sessionWindow)
+	local fontDB = {
+		name = E.db.chat.tabFont,
+		size = E.db.chat.tabFontSize,
+		style = E.db.chat.tabFontOutline,
+	}
+
+	local valueColor = E.media.rgbvaluecolor
+	local typeName = sessionWindow:GetDamageMeterTypeName()
+	if typeName then
+		F.SetFontWithDB(typeName, fontDB)
+		typeName:SetTextColor(valueColor.r, valueColor.g, valueColor.b)
+	end
+
+	local sessionName = sessionWindow:GetSessionName()
+	if sessionName then
+		F.SetFontWithDB(sessionName, fontDB)
+		sessionName:SetTextColor(valueColor.r, valueColor.g, valueColor.b)
+	end
+
+	local sessionTimer = sessionWindow:GetSessionTimerFontString()
+	if sessionTimer then
+		F.SetFontWithDB(sessionTimer, fontDB)
+		sessionTimer:SetTextColor(valueColor.r, valueColor.g, valueColor.b)
+	end
+end
+
+function S:DamageMeter_ApplyChatHeaderIcons(sessionWindow)
+	local getMinimizeButton = sessionWindow.GetMinimizeButton
+	local minimizeButton = getMinimizeButton and getMinimizeButton(sessionWindow)
+	if not minimizeButton then
+		return
+	end
+
+	local valueColor = E.media.rgbvaluecolor
+	local normalTexture = minimizeButton:GetNormalTexture()
+	local pushedTexture = minimizeButton:GetPushedTexture()
+
+	if normalTexture then
+		normalTexture:SetDesaturated(true)
+		normalTexture:SetVertexColor(valueColor.r, valueColor.g, valueColor.b)
+	end
+
+	if pushedTexture then
+		pushedTexture:SetDesaturated(true)
+		pushedTexture:SetVertexColor(valueColor.r, valueColor.g, valueColor.b)
+	end
+end
+
+function S:DamageMeter_ApplyAppearance(sessionWindow)
+	local appearance = self.db.damageMeter.appearance
+	if appearance == "default" then
+		return
+	end
+
+	local texturePath = appearance == "chatRight" and E.db.chat.panelBackdropNameRight
+		or E.db.chat.panelBackdropNameLeft
+
+	self:DamageMeter_ApplyChatBackdrop(self:DamageMeter_GetWindowBackdrop(sessionWindow), texturePath)
+	self:DamageMeter_ApplyChatHeaderBackdrop(sessionWindow)
+
+	local sourceWindow = sessionWindow.SourceWindow
+	if sourceWindow then
+		self:DamageMeter_ApplyChatBackdrop(self:DamageMeter_GetWindowBackdrop(sourceWindow), texturePath)
+	end
+
+	self:DamageMeter_ApplyChatHeaderText(sessionWindow)
+	self:DamageMeter_ApplyChatHeaderIcons(sessionWindow)
+end
+
 function S:DamageMeter_RefreshBackdropMode(frame, isMouseOver)
-	local backdrop = frame and frame.backdrop
+	local backdrop = self:DamageMeter_GetWindowBackdrop(frame)
 	if not backdrop then
 		return false
 	end
 
 	local mode = self.db.damageMeter.windowBackdrop
-	local frameBackgroundAlpha = frame.GetBackgroundAlpha and (frame:GetBackgroundAlpha() or 1) or 1
+	local useBlizzardAlpha = self.db.damageMeter.appearance == "default"
+	local frameBackgroundAlpha = 1
+	if useBlizzardAlpha and frame.GetBackgroundAlpha then
+		frameBackgroundAlpha = frame:GetBackgroundAlpha() or 1
+	end
 	local alpha
 	local shown
 
@@ -200,6 +326,13 @@ function S:DamageMeter_RefreshHeaderMode(sessionWindow, isMouseOver)
 				element:EnableMouse(alpha > 0)
 			end
 		end
+	end
+
+	local minimizeButton = sessionWindow.GetMinimizeButton and sessionWindow:GetMinimizeButton()
+	if minimizeButton then
+		minimizeButton:SetShown(true)
+		self:DamageMeter_FadeAlpha(minimizeButton, alpha)
+		minimizeButton:EnableMouse(alpha > 0)
 	end
 end
 
@@ -407,7 +540,8 @@ function S:DamageMeter_ApplyConfigToSessionWindow(sessionWindow)
 		end
 	end
 
-	self:DamageMeter_ApplyWindowModes(sessionWindow, IsSessionMouseOver(sessionWindow))
+	self:DamageMeter_ApplyAppearance(sessionWindow)
+	self:DamageMeter_ApplyWindowModes(sessionWindow, IsSessionMouseOver(sessionWindow), true)
 end
 
 function S.DamageMeter_HandleSessionWindow(sessionWindow)
@@ -429,6 +563,22 @@ function S.DamageMeter_HandleSessionWindow(sessionWindow)
 	S:DamageMeter_ApplyConfigToSessionWindow(sessionWindow)
 end
 
+function S.DamageMeter_RefreshSessionWindowAppearance(sessionWindow)
+	if not sessionWindow then
+		return
+	end
+
+	S:DamageMeter_ApplyAppearance(sessionWindow)
+end
+
+function S.DamageMeter_RefreshAppearance()
+	if not _G.DamageMeter or S.db.damageMeter.appearance == "default" then
+		return
+	end
+
+	_G.DamageMeter:ForEachSessionWindow(S.DamageMeter_RefreshSessionWindowAppearance)
+end
+
 function S:DamageMeter_SetupSessionWindow()
 	_G.DamageMeter:ForEachSessionWindow(S.DamageMeter_HandleSessionWindow)
 end
@@ -443,6 +593,10 @@ function S:Blizzard_DamageMeter()
 	end
 
 	self:SecureHook(_G.DamageMeter, "SetupSessionWindow", "DamageMeter_SetupSessionWindow")
+	self:SecureHook(CH, "Panels_ColorUpdate", "DamageMeter_RefreshAppearance")
+	self:SecureHook(CH, "SetupChat", "DamageMeter_RefreshAppearance")
+	self:SecureHook(LO, "SetChatTabStyle", "DamageMeter_RefreshAppearance")
+	E.valueColorUpdateFuncs.WindToolsDamageMeter = S.DamageMeter_RefreshAppearance
 	S:DamageMeter_SetupSessionWindow()
 end
 

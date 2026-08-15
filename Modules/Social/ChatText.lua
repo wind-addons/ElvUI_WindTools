@@ -67,6 +67,8 @@ local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitIsUnit = UnitIsUnit
 local UnitName = UnitName
 
+local ProcessMessageEventFilters = ChatFrameUtil.ProcessMessageEventFilters
+
 local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
@@ -798,13 +800,15 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 		notChatHistory = true
 	end
 
-	local isProtected = E:IsSecretValue(arg2)
-
-	if _G.TextToSpeechFrame_MessageEventHandler and notChatHistory then
+	local msgNotSecret = E:NotSecretValue(arg1)
+	if _G.TextToSpeechFrame_MessageEventHandler and (notChatHistory and msgNotSecret) then
 		_G.TextToSpeechFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17)
 	end
 
-	if strsub(event, 1, 8) == 'CHAT_MSG' then
+	local nameProtected = E:IsSecretValue(arg2)
+	if event == 'CAUTIONARY_CHAT_MESSAGE' then -- hyperlinkLineID, confirmNumber
+		HandleCautionaryChatMessage(arg1, arg2)
+	elseif strsub(event, 1, 8) == 'CHAT_MSG' then
 		if arg16 then return true end -- hiding sender in letterbox: do NOT even show in chat window (only shows in cinematic frame)
 
 		local chatType = strsub(event, 10)
@@ -815,25 +819,11 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 			return
 		end
 
-		if _G.ChatFrameUtil and _G.ChatFrameUtil.ProcessMessageEventFilters then
-			local filtered, new1, new2, new3, new4, new5, new6, new7, new8, new9, new10, new11, new12, new13, new14, new15, new16, new17 = _G.ChatFrameUtil.ProcessMessageEventFilters(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17)
-			if filtered then
-				return true
-			else
-				arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17 = new1, new2, new3, new4, new5, new6, new7, new8, new9, new10, new11, new12, new13, new14, new15, new16, new17
-			end
+		local filtered, new1, new2, new3, new4, new5, new6, new7, new8, new9, new10, new11, new12, new13, new14, new15, new16, new17 = ProcessMessageEventFilters(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17)
+		if filtered then
+			return true
 		else
-			local chatFilters = _G.ChatFrame_GetMessageEventFilters(event)
-			if chatFilters then
-				for _, filterFunc in next, chatFilters do
-					local filtered, new1, new2, new3, new4, new5, new6, new7, new8, new9, new10, new11, new12, new13, new14, new15, new16, new17 = filterFunc(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17)
-					if filtered then
-						return true
-					elseif new1 then
-						arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17 = new1, new2, new3, new4, new5, new6, new7, new8, new9, new10, new11, new12, new13, new14, new15, new16, new17
-					end
-				end
-			end
+			arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17 = new1, new2, new3, new4, new5, new6, new7, new8, new9, new10, new11, new12, new13, new14, new15, new16, new17
 		end
 
 		-- fetch the name color to use
@@ -845,8 +835,8 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 
 		if chatType == 'VOICE_TEXT' and not GetCVarBool('speechToText') then
 			return
-		elseif chatType == 'COMMUNITIES_CHANNEL' or ((strsub(chatType, 1, 7) == 'CHANNEL') and (chatType ~= 'CHANNEL_LIST') and ((E:NotSecretValue(arg1) and arg1 ~= 'INVITE') or (chatType ~= 'CHANNEL_NOTICE_USER'))) then
-			if E:NotSecretValue(arg1) and arg1 == 'WRONG_PASSWORD' then
+		elseif chatType == 'COMMUNITIES_CHANNEL' or ((strsub(chatType, 1, 7) == 'CHANNEL') and (chatType ~= 'CHANNEL_LIST') and ((msgNotSecret and arg1 ~= 'INVITE') or (chatType ~= 'CHANNEL_NOTICE_USER'))) then
+			if msgNotSecret and arg1 == 'WRONG_PASSWORD' then
 				local _, popup = _G.StaticPopup_Visible('CHAT_CHANNEL_PASSWORD')
 				if popup and strupper(popup.data) == strupper(arg9) then
 					return -- Don't display invalid password messages if we're going to prompt for a password (bug 102312)
@@ -868,7 +858,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 						infoType = 'CHANNEL'..arg8
 						info = _G.ChatTypeInfo[infoType]
 
-						if chatType == 'CHANNEL_NOTICE' and E:NotSecretValue(arg1) and arg1 == 'YOU_LEFT' then
+						if chatType == 'CHANNEL_NOTICE' and msgNotSecret and arg1 == 'YOU_LEFT' then
 							frame.channelList[index] = nil
 							frame.zoneChannelList[index] = nil
 						end
@@ -906,7 +896,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 
 		if frame.privateMessageList then
 			if chatGroup == 'SYSTEM' then -- HACK to put certain system messages into dedicated whisper windows
-				local msg = E:NotSecretValue(arg1) and strlower(arg1)
+				local msg = msgNotSecret and strlower(arg1)
 				local found = false
 				if msg then
 					for playerName in pairs(frame.privateMessageList) do
@@ -966,7 +956,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 				frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)
 			end
 		elseif chatType == 'CHANNEL_NOTICE_USER' then
-			local globalstring = E:NotSecretValue(arg1) and (_G['CHAT_'..arg1..'_NOTICE_BN'] or _G['CHAT_'..arg1..'_NOTICE'])
+			local globalstring = msgNotSecret and (_G['CHAT_'..arg1..'_NOTICE_BN'] or _G['CHAT_'..arg1..'_NOTICE'])
 			if not globalstring then return end
 
 			if arg5 ~= '' then -- TWO users in this notice (E.G. x kicked y)
@@ -1004,7 +994,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 				frame:AddMessage(format(globalstring, arg8, ResolvePrefixedChannelName(arg4)), info.r, info.g, info.b, info.id, accessID, typeID, nil, nil, nil, isHistory, historyTime)
 			end
 		elseif chatType == 'BN_INLINE_TOAST_ALERT' then
-			local globalstring = E:NotSecretValue(arg1) and _G['BN_INLINE_TOAST_'..arg1]
+			local globalstring = msgNotSecret and _G['BN_INLINE_TOAST_'..arg1]
 			if not globalstring then return end
 
 			local message
@@ -1053,7 +1043,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 
 			frame:AddMessage(message, info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)
 		elseif chatType == 'BN_INLINE_TOAST_BROADCAST' then
-			if E:NotSecretValue(arg1) and arg1 ~= '' then
+			if msgNotSecret and arg1 ~= '' then
 				arg1 = RemoveNewlines(RemoveExtraSpaces(arg1))
 
 				local linkDisplayText = format(noBrackets and '%s' or '[%s]', arg2)
@@ -1061,7 +1051,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 				frame:AddMessage(format(_G.BN_INLINE_TOAST_BROADCAST, playerLink, arg1), info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)
 			end
 		elseif chatType == 'BN_INLINE_TOAST_BROADCAST_INFORM' then
-			if E:NotSecretValue(arg1) and arg1 ~= '' then
+			if msgNotSecret and arg1 ~= '' then
 				frame:AddMessage(_G.BN_INLINE_TOAST_BROADCAST_INFORM, info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)
 			end
 		else
@@ -1140,13 +1130,8 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 
 		arg1 = RemoveExtraSpaces(arg1) -- Replace all instances of 5+ spaces with only 4 spaces
 
-		-- Search for icon links and replace them with texture links.
-		-- If arg17 is true, don't convert to raid icons
-		if _G.ChatFrameUtil and _G.ChatFrameUtil.CanChatGroupPerformExpressionExpansion then
-			arg1 = CH:ChatFrame_ReplaceIconAndGroupExpressions(arg1, arg17, not _G.ChatFrameUtil.CanChatGroupPerformExpressionExpansion(chatGroup))
-		else
-			arg1 = CH:ChatFrame_ReplaceIconAndGroupExpressions(arg1, arg17, not _G.ChatFrame_CanChatGroupPerformExpressionExpansion(chatGroup))
-		end
+		-- Search for icon links and replace them with texture links. If arg17 is true, don't convert to raid icons
+		arg1 = CH:ChatFrame_ReplaceIconAndGroupExpressions(arg1, arg17, not CanChatGroupPerformExpressionExpansion(chatGroup))
 	end
 
 	-- ElvUI: Get class colored name for BattleNet friend
@@ -1195,6 +1180,10 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 
 	local isMobile = arg14 and GetMobileEmbeddedTexture(info.r, info.g, info.b)
 	local message = format('%s%s', isMobile or '', arg1)
+
+	if isFromDiscord then
+		msg = FormatDiscordMessage(discordInfo, msg)
+	end
 
 	-- Player Flags
 	local pflag = CH:GetPFlag(arg6, arg7, arg12)

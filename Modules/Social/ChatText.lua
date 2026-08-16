@@ -886,7 +886,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 			return true
 		end
 
-		if not isProtected and (chatGroup == 'WHISPER' or chatGroup == 'BN_WHISPER') then
+		if not nameProtected and (chatGroup == 'WHISPER' or chatGroup == 'BN_WHISPER') then
 			local nameLower = strlower(arg2)
 			if frame.privateMessageList and not frame.privateMessageList[nameLower] then
 				return true
@@ -1074,7 +1074,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 
 			-- beep boops
 			local historyType = notChatHistory and not CH.SoundTimer and not strfind(event, '_INFORM') and historyTypes[event]
-			local alertAllow = isProtected or arg2 ~= PLAYER_NAME
+			local alertAllow = nameProtected or arg2 ~= PLAYER_NAME
 			local alertType = (historyType ~= 'CHANNEL' and CH.db.channelAlerts[historyType]) or (historyType == 'CHANNEL' and CH.db.channelAlerts.CHANNEL[arg9])
 			if alertType and alertType ~= 'None' and alertAllow and (not CH.db.noAlertInCombat or not InCombatLockdown()) then
 				CH.SoundTimer = E:Delay(5, CH.ThrottleSound)
@@ -1090,7 +1090,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 		end
 
 		if notChatHistory and (chatType == 'WHISPER' or chatType == 'BN_WHISPER') then
-			if not isProtected then
+			if not nameProtected then
 				ChatEditSetLastTellTarget(arg2, chatType)
 			end
 

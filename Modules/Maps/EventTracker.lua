@@ -143,7 +143,7 @@ local function GetCursedSurgeEvents(args, now)
 										endTime = eventEndTime,
 										startTime = startTime,
 									}
-								}
+								end
 							end
 						end
 

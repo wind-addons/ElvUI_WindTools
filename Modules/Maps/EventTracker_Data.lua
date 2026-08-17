@@ -6,6 +6,8 @@ local _G = _G
 local floor = floor
 local format = format
 local pairs = pairs
+local strfind = strfind
+local strlower = strlower
 local tinsert = tinsert
 local type = type
 
@@ -14,10 +16,18 @@ local GetProfessionInfo = GetProfessionInfo
 local GetProfessions = GetProfessions
 local GetServerTime = GetServerTime
 
+local C_AreaPoiInfo_GetAreaPOIInfo = C_AreaPoiInfo and C_AreaPoiInfo.GetAreaPOIInfo
+local C_AreaPoiInfo_GetEventsForMap = C_AreaPoiInfo and C_AreaPoiInfo.GetEventsForMap
 local C_Map_GetMapInfo = C_Map.GetMapInfo
 local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 local C_QuestLog_IsOnQuest = C_QuestLog.IsOnQuest
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
+
+local C_EventScheduler_GetEventUiMapID = C_EventScheduler and C_EventScheduler.GetEventUiMapID
+local C_EventScheduler_GetOngoingEvents = C_EventScheduler and C_EventScheduler.GetOngoingEvents
+local C_EventScheduler_GetScheduledEvents = C_EventScheduler and C_EventScheduler.GetScheduledEvents
+local C_EventScheduler_HasData = C_EventScheduler and C_EventScheduler.HasData
+local C_EventScheduler_RequestEvents = C_EventScheduler and C_EventScheduler.RequestEvents
 
 local function GetWorldMapIDSetter(idOrFunc)
 	return function(...)
@@ -120,6 +130,106 @@ local function WeeklyName(iconID, name, position)
 	return name
 end
 
+local AbundanceMapIDs = {
+	[2395] = true, -- Eversong Woods
+	[2405] = true, -- Voidstorm
+	[2413] = true, -- Harandar
+	[2437] = true, -- Zul'Aman
+}
+
+local function ContainsText(value, text)
+	return type(value) == "string"
+		and type(text) == "string"
+		and strfind(strlower(value), strlower(text), 1, true) ~= nil
+end
+
+local function IsAbundanceEvent(eventInfo, poiInfo)
+	local abundanceName = type(L["Abundance"]) == "string" and L["Abundance"] or "Abundance"
+	return ContainsText(eventInfo and eventInfo.eventKey, "abundance")
+		or ContainsText(poiInfo and poiInfo.name, abundanceName)
+		or ContainsText(poiInfo and poiInfo.description, abundanceName)
+end
+
+local function GetEventPOIInfo(mapID, areaPoiID)
+	if not C_AreaPoiInfo_GetAreaPOIInfo or not areaPoiID then
+		return
+	end
+
+	return C_AreaPoiInfo_GetAreaPOIInfo(mapID, areaPoiID)
+		or C_AreaPoiInfo_GetAreaPOIInfo(nil, areaPoiID)
+end
+
+local function FindAbundanceMap(events, currentTime, hasSchedule)
+	local scheduledMapID
+	local hasCurrentEventFlag = false
+
+	for _, eventInfo in ipairs(events or {}) do
+		local areaPoiID = eventInfo and eventInfo.areaPoiID
+		local mapID = areaPoiID and C_EventScheduler_GetEventUiMapID and C_EventScheduler_GetEventUiMapID(areaPoiID)
+
+		if mapID and AbundanceMapIDs[mapID] then
+			local poiInfo = GetEventPOIInfo(mapID, areaPoiID)
+			if poiInfo and poiInfo.isCurrentEvent ~= nil then
+				hasCurrentEventFlag = true
+			end
+
+			local isCurrent = not hasSchedule
+				or ((not eventInfo.startTime or eventInfo.startTime <= currentTime)
+					and (not eventInfo.endTime or eventInfo.endTime > currentTime))
+			if isCurrent and IsAbundanceEvent(eventInfo, poiInfo) then
+				if poiInfo and poiInfo.isCurrentEvent then
+					return mapID
+				end
+
+				if not scheduledMapID then
+					scheduledMapID = mapID
+				end
+			end
+		end
+	end
+
+	if not hasCurrentEventFlag then
+		return scheduledMapID
+	end
+end
+
+local function GetCurrentAbundanceMapID()
+	local currentTime = GetServerTime()
+
+	if C_EventScheduler_HasData and C_EventScheduler_HasData() then
+		local mapID = FindAbundanceMap(
+			C_EventScheduler_GetScheduledEvents and C_EventScheduler_GetScheduledEvents(),
+			currentTime,
+			true
+		)
+		if mapID then
+			return mapID
+		end
+
+		mapID = FindAbundanceMap(
+			C_EventScheduler_GetOngoingEvents and C_EventScheduler_GetOngoingEvents(),
+			currentTime,
+			false
+		)
+		if mapID then
+			return mapID
+		end
+	elseif C_EventScheduler_RequestEvents then
+		C_EventScheduler_RequestEvents()
+	end
+
+	if C_AreaPoiInfo_GetEventsForMap and C_AreaPoiInfo_GetAreaPOIInfo then
+		for mapID in pairs(AbundanceMapIDs) do
+			for _, areaPoiID in ipairs(C_AreaPoiInfo_GetEventsForMap(mapID) or {}) do
+				local poiInfo = GetEventPOIInfo(mapID, areaPoiID)
+				if poiInfo and poiInfo.isCurrentEvent and IsAbundanceEvent(nil, poiInfo) then
+					return mapID
+				end
+			end
+		end
+	end
+end
+
 ---@alias EventTracker.EventData { [EventKey]: table }
 ET.EventData = {
 	-- MN
@@ -166,10 +276,6 @@ ET.EventData = {
 				[WeeklyName(7385004, L["Legend"], 2413)] = {
 					-- https://www.wowhead.com/quest=89268
 					89268, -- 失落的传说
-				},
-				[WeeklyName(7636650, L["Abundance"], 2437)] = {
-					-- https://www.wowhead.com/quest=89507/abundant-offerings
-					89507, -- 丰饶贡品
 				},
 			},
 			questProgress = function(args)
@@ -873,3 +979,20 @@ ET.EventData = {
 		},
 	},
 }
+
+local WeeklyMNQuestIDs = ET.EventData.WeeklyMN.args.questIDs
+local function GetWeeklyMNQuestIDs()
+	local questIDs = {}
+	for storylineName, storylineQuests in pairs(WeeklyMNQuestIDs) do
+		questIDs[storylineName] = storylineQuests
+	end
+
+	questIDs[WeeklyName(7636650, L["Abundance"], GetCurrentAbundanceMapID())] = {
+		-- https://www.wowhead.com/quest=89507/abundant-offerings
+		89507, -- 丰饶贡品
+	}
+
+	return questIDs
+end
+
+ET.EventData.WeeklyMN.args.questIDs = GetWeeklyMNQuestIDs

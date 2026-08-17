@@ -1572,6 +1572,7 @@ L["Stop alert when the player has not entered Dragonlands yet."] = true
 L["Stop alert when the player has not entered Midnight yet."] = true
 L["Stopwatch"] = true
 L["Stormarion Assault"] = true
+L["Cursed Surges"] = true
 L["String"] = true
 L["Stunned"] = true
 L["Style"] = true

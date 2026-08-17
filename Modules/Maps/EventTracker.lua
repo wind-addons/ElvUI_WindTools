@@ -19,9 +19,22 @@ local unpack = unpack
 local CreateFrame = CreateFrame
 local EventRegistry = EventRegistry
 local GetServerTime = GetServerTime
+local UiMapPoint_CreateFromCoordinates = UiMapPoint.CreateFromCoordinates
 
+local C_AreaPoiInfo_GetAreaPOIInfo = C_AreaPoiInfo and C_AreaPoiInfo.GetAreaPOIInfo
+local C_Map_CanSetUserWaypointOnMap = C_Map.CanSetUserWaypointOnMap
+local C_Map_SetUserWaypoint = C_Map.SetUserWaypoint
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
+local C_EventScheduler_GetOngoingEvents = C_EventScheduler and C_EventScheduler.GetOngoingEvents
+local C_EventScheduler_GetScheduledEvents = C_EventScheduler and C_EventScheduler.GetScheduledEvents
+local C_EventScheduler_GetEventZoneName = C_EventScheduler and C_EventScheduler.GetEventZoneName
+local C_EventScheduler_HasData = C_EventScheduler and C_EventScheduler.HasData
+local C_EventScheduler_RequestEvents = C_EventScheduler and C_EventScheduler.RequestEvents
+local C_SuperTrack_SetSuperTrackedUserWaypoint = C_SuperTrack.SetSuperTrackedUserWaypoint
 local C_Timer_NewTicker = C_Timer.NewTicker
+
+local pcall = pcall
+local tonumber = tonumber
 
 local LeftButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:230:307|t"
 
@@ -43,6 +56,213 @@ local function ReskinStatusBar(bar)
 	bar:CreateBackdrop("Transparent")
 	bar:SetStatusBarTexture(E.media.normTex)
 	E:RegisterStatusBar(bar)
+end
+
+local function SafeNumber(value)
+	local success, number = pcall(tonumber, value)
+	return success and number or nil
+end
+
+local function GetCursedSurgePOIInfo(areaPoiID)
+	if not C_AreaPoiInfo_GetAreaPOIInfo then
+		return
+	end
+
+	local success, poiInfo = pcall(C_AreaPoiInfo_GetAreaPOIInfo, nil, areaPoiID)
+	if success and type(poiInfo) == "table" then
+		return poiInfo
+	end
+
+	success, poiInfo = pcall(C_AreaPoiInfo_GetAreaPOIInfo, 2512, areaPoiID)
+	if success and type(poiInfo) == "table" then
+		return poiInfo
+	end
+end
+
+local function GetCursedSurgeName(_, eventInfo)
+	local areaPoiID = eventInfo and eventInfo.areaPoiID
+	local poiInfo = areaPoiID and GetCursedSurgePOIInfo(areaPoiID)
+	if poiInfo then
+		local success, poiName = pcall(function()
+			return poiInfo.name
+		end)
+		if success and poiName then
+			return poiName
+		end
+	end
+
+	if C_EventScheduler_GetEventZoneName then
+		local success, zoneName = pcall(C_EventScheduler_GetEventZoneName, areaPoiID)
+		if success and zoneName then
+			return zoneName
+		end
+	end
+
+	return L["Cursed Surges"]
+end
+
+local function GetCursedSurgePosition(args, eventInfo)
+	local areaPoiID = eventInfo and eventInfo.areaPoiID
+	local poiInfo = areaPoiID and GetCursedSurgePOIInfo(areaPoiID)
+	local position = poiInfo and poiInfo.position
+	if type(position) == "table" then
+		local x = SafeNumber(position.x)
+		local y = SafeNumber(position.y)
+		if x and y then
+			return { x, y }
+		end
+	end
+
+	return args.eventCoordinates and args.eventCoordinates[areaPoiID]
+end
+
+local function GetCursedSurgeEvents(args, now)
+	local activeEvent
+	local nextEvent
+
+	if C_EventScheduler_GetScheduledEvents then
+		local success, scheduledEvents = pcall(C_EventScheduler_GetScheduledEvents)
+		if success and type(scheduledEvents) == "table" then
+			for _, eventInfo in ipairs(scheduledEvents) do
+				local areaPoiID = eventInfo and eventInfo.areaPoiID
+				if areaPoiID and args.eventAreaPoiIDs[areaPoiID] then
+					local startTime = SafeNumber(eventInfo.startTime)
+					local endTime = SafeNumber(eventInfo.endTime)
+					if startTime then
+						if startTime <= now and endTime then
+							local eventEndTime = endTime
+							local durationEndTime = startTime + args.duration
+							if eventEndTime > durationEndTime then
+								eventEndTime = durationEndTime
+							end
+
+							if now < eventEndTime then
+								if not activeEvent or startTime > activeEvent.startTime then
+									activeEvent = {
+										areaPoiID = areaPoiID,
+										endTime = eventEndTime,
+										startTime = startTime,
+									}
+								}
+							end
+						end
+
+						if startTime > now and not nextEvent then
+							nextEvent = {
+								areaPoiID = areaPoiID,
+								startTime = startTime,
+							}
+						end
+					end
+				end
+			end
+		end
+	end
+
+	if not activeEvent and C_EventScheduler_GetOngoingEvents then
+		local success, ongoingEvents = pcall(C_EventScheduler_GetOngoingEvents)
+		if success and type(ongoingEvents) == "table" then
+			for _, eventInfo in ipairs(ongoingEvents) do
+				local areaPoiID = eventInfo and eventInfo.areaPoiID
+				if areaPoiID and args.eventAreaPoiIDs[areaPoiID] then
+					activeEvent = {
+						areaPoiID = areaPoiID,
+						endTime = now + args.duration,
+						startTime = now,
+					}
+					break
+				end
+			end
+		end
+	end
+
+	if activeEvent then
+		activeEvent.position = GetCursedSurgePosition(args, activeEvent)
+	end
+	if nextEvent then
+		nextEvent.position = GetCursedSurgePosition(args, nextEvent)
+	end
+
+	return activeEvent, nextEvent
+end
+
+function ET:SetCursedSurgeWaypoint(args)
+	local eventInfo = args.currentEvent or args.nextEvent
+	local position = eventInfo and (eventInfo.position or args.eventCoordinates[eventInfo.areaPoiID])
+
+	if not position or not _G.WorldMapFrame or not _G.WorldMapFrame:IsShown() then
+		return
+	end
+
+	_G.WorldMapFrame:SetMapID(2512)
+	if C_Map_CanSetUserWaypointOnMap(2512) then
+		C_Map_SetUserWaypoint(UiMapPoint_CreateFromCoordinates(2512, position[1], position[2]))
+		E:Delay(0.1, C_SuperTrack_SetSuperTrackedUserWaypoint, true)
+	end
+end
+
+local function UpdateScheduledLoopTimer(self)
+	local args = self.args
+	local now = GetServerTime()
+
+	if C_EventScheduler_HasData then
+		local success, hasData = pcall(C_EventScheduler_HasData)
+		if success and not hasData then
+			if C_EventScheduler_RequestEvents
+				and (not args.schedulerRequestTime or now - args.schedulerRequestTime >= 5)
+			then
+				args.schedulerRequestTime = now
+				pcall(C_EventScheduler_RequestEvents)
+			end
+			self.isRunning = false
+			self.isCompleted = false
+			self.timeLeft = 0
+			self.timeOver = 0
+			self.nextEventIndex = nil
+			self.nextEventTimestamp = nil
+			args.currentLocation = nil
+			args.nextLocation = nil
+			args.currentEvent = nil
+			args.nextEvent = nil
+			return
+		end
+	end
+
+	local activeEvent, nextEvent = GetCursedSurgeEvents(args, now)
+	if activeEvent then
+		self.isRunning = true
+		self.isCompleted = false
+		self.timeLeft = activeEvent.endTime - now
+		self.timeOver = args.duration - self.timeLeft
+		self.nextEventIndex = format("%s:%s", activeEvent.areaPoiID, activeEvent.startTime)
+		self.nextEventTimestamp = nextEvent and nextEvent.startTime
+		args.currentLocation = GetCursedSurgeName(args, activeEvent)
+		args.nextLocation = nextEvent and GetCursedSurgeName(args, nextEvent)
+		args.currentEvent = activeEvent
+		args.nextEvent = nextEvent
+	elseif nextEvent then
+		self.isRunning = false
+		self.isCompleted = false
+		self.timeLeft = nextEvent.startTime - now
+		self.timeOver = 0
+		self.nextEventIndex = format("%s:%s", nextEvent.areaPoiID, nextEvent.startTime)
+		self.nextEventTimestamp = nextEvent.startTime
+		args.currentLocation = nil
+		args.nextLocation = GetCursedSurgeName(args, nextEvent)
+		args.currentEvent = nil
+		args.nextEvent = nextEvent
+	else
+		self.isRunning = false
+		self.isCompleted = false
+		self.timeLeft = 0
+		self.timeOver = 0
+		self.nextEventIndex = nil
+		self.nextEventTimestamp = nil
+		args.currentLocation = nil
+		args.nextLocation = nil
+		args.currentEvent = nil
+		args.nextEvent = nil
+	end
 end
 
 local FunctionFactory = {
@@ -303,6 +523,11 @@ local FunctionFactory = {
 		ticker = {
 			interval = 0.3,
 			dateUpdater = function(self)
+				if self.args.scheduler then
+					UpdateScheduledLoopTimer(self)
+					return
+				end
+
 				local completed = 0
 				if self.args.questIDs and (type(self.args.questIDs) == "table") then
 					-- lower than 0 means all quests need to be completed
@@ -374,6 +599,10 @@ local FunctionFactory = {
 			end,
 			alert = function(self)
 				if not ET.playerEnteredWorld then
+					return
+				end
+
+				if self.args.scheduler and not self.nextEventIndex then
 					return
 				end
 

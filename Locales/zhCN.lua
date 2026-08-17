@@ -1572,6 +1572,7 @@ L["Stop alert when the player has not entered Dragonlands yet."] = "当玩家尚
 L["Stop alert when the player has not entered Midnight yet."] = "当玩家尚未进入至暗之夜时停止提示."
 L["Stopwatch"] = "秒表"
 L["Stormarion Assault"] = "斯托玛兰突袭战"
+L["Cursed Surges"] = "诅咒狂涌"
 L["String"] = "字符串"
 L["Stunned"] = "眩晕"
 L["Style"] = "风格"

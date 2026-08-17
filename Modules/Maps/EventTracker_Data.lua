@@ -74,6 +74,7 @@ ET.ColorPalette = {
 ---|"WeeklyMN"
 ---|"ProfessionsWeeklyMN"
 ---|"StormarionAssault"
+---|"CursedSurges"
 ---|"WeeklyTWW"
 ---|"EcologicalSuccession"
 ---|"Nightfall"
@@ -95,6 +96,7 @@ ET.EventList = {
 	"WeeklyMN",
 	"ProfessionsWeeklyMN",
 	"StormarionAssault",
+	"CursedSurges",
 	-- TWW
 	"WeeklyTWW",
 	"EcologicalSuccession",
@@ -371,6 +373,43 @@ ET.EventData = {
 			end,
 			startTimestamp = 1772728200,
 			onClick = GetWorldMapIDSetter(2405),
+			onClickHelpText = L["Click to show location"],
+		},
+	},
+	CursedSurges = {
+		dbKey = "cursedSurges",
+		args = {
+			icon = [[Interface\Icons\Spell_Nature_CorrosiveBreath]],
+			type = "loopTimer",
+			scheduler = true,
+			eventAreaPoiIDs = {
+				[8936] = true,
+				[8937] = true,
+				[8938] = true,
+				[8939] = true,
+				[8940] = true,
+			},
+			eventCoordinates = {
+				[8936] = { 0.264, 0.649 },
+				[8937] = { 0.671, 0.775 },
+				[8938] = { 0.457, 0.296 },
+				[8939] = { 0.705, 0.327 },
+				[8940] = { 0.467, 0.628 },
+			},
+			duration = 5 * 60,
+			interval = 45 * 60,
+			eventName = L["Cursed Surges"],
+			label = L["Cursed Surges"],
+			location = C_Map_GetMapInfo(2512).name,
+			flash = true,
+			runningBarColor = ET.ColorPalette.purple,
+			runningText = L["In Progress"],
+			runningTextUpdater = function(args)
+				return args.currentLocation or args.runningText
+			end,
+			onClick = function(args)
+				ET:SetCursedSurgeWaypoint(args)
+			end,
 			onClickHelpText = L["Click to show location"],
 		},
 	},

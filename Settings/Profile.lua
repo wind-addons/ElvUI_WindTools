@@ -630,6 +630,14 @@ P.maps = {
 			stopAlertIfCompleted = true,
 			stopAlertIfPlayerNotEnteredMidnight = true,
 		},
+		cursedSurges = {
+			enable = true,
+			desaturate = false,
+			alert = true,
+			sound = true,
+			soundFile = "OnePlus Surprise",
+			second = 300,
+		},
 		weeklyTWW = {
 			enable = false,
 			desaturate = true,

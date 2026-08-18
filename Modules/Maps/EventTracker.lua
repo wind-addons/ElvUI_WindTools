@@ -23,6 +23,7 @@ local UiMapPoint_CreateFromCoordinates = UiMapPoint.CreateFromCoordinates
 
 local C_AreaPoiInfo_GetAreaPOIInfo = C_AreaPoiInfo and C_AreaPoiInfo.GetAreaPOIInfo
 local C_Map_CanSetUserWaypointOnMap = C_Map.CanSetUserWaypointOnMap
+local C_Map_OpenWorldMap = C_Map.OpenWorldMap
 local C_Map_SetUserWaypoint = C_Map.SetUserWaypoint
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local C_EventScheduler_GetOngoingEvents = C_EventScheduler and C_EventScheduler.GetOngoingEvents
@@ -103,16 +104,9 @@ end
 
 local function GetCursedSurgePosition(args, eventInfo)
 	local areaPoiID = eventInfo and eventInfo.areaPoiID
-	local poiInfo = areaPoiID and GetCursedSurgePOIInfo(areaPoiID)
-	local position = poiInfo and poiInfo.position
-	if type(position) == "table" then
-		local x = SafeNumber(position.x)
-		local y = SafeNumber(position.y)
-		if x and y then
-			return { x, y }
-		end
-	end
-
+	-- Cursed Surges use fixed locations on Coiled Isle. The live POI position
+	-- is not reliable for upcoming events, so keep the static coordinates as
+	-- the source of truth for waypoints.
 	return args.eventCoordinates and args.eventCoordinates[areaPoiID]
 end
 
@@ -190,11 +184,16 @@ function ET:SetCursedSurgeWaypoint(args)
 	local eventInfo = args.currentEvent or args.nextEvent
 	local position = eventInfo and (eventInfo.position or args.eventCoordinates[eventInfo.areaPoiID])
 
-	if not position or not _G.WorldMapFrame or not _G.WorldMapFrame:IsShown() then
+	if not position then
 		return
 	end
 
-	_G.WorldMapFrame:SetMapID(2512)
+	if C_Map_OpenWorldMap then
+		C_Map_OpenWorldMap(2512)
+	elseif _G.WorldMapFrame and _G.WorldMapFrame.SetMapID then
+		_G.WorldMapFrame:SetMapID(2512)
+	end
+
 	if C_Map_CanSetUserWaypointOnMap(2512) then
 		C_Map_SetUserWaypoint(UiMapPoint_CreateFromCoordinates(2512, position[1], position[2]))
 		E:Delay(0.1, C_SuperTrack_SetSuperTrackedUserWaypoint, true)

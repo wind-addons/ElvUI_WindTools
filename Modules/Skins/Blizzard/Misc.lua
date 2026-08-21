@@ -12,7 +12,7 @@ local function createShadow(frame)
 end
 
 function S:Blizzard_DeathRecap()
-	self:CreateBackdropShadow(_G.DeathRecapFrame)
+	self:CreateShadow(_G.DeathRecapFrame)
 end
 
 function S:SkinSkipButton(frame)

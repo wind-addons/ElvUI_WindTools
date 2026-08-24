@@ -4,18 +4,23 @@ W.Changelog[421] = {
 	RELEASE_DATE = "2026/08/24",
 	IMPORTANT = {
 		["zhCN"] = {
+			"最低支持的 ElvUI 版本提升到 15.25.",
 			"配置导入导出已改用暴雪内置编码. 旧版 WindTools 导出的字符串将无法导入, 请更新后重新导出.",
 		},
 		["zhTW"] = {
+			"最低支援的 ElvUI 版本提升到 15.25.",
 			"設定匯入匯出已改用暴雪內建編碼. 舊版 WindTools 匯出的字串將無法匯入, 請更新後重新匯出.",
 		},
 		["enUS"] = {
+			"Minimum supported ElvUI version raised to 15.25.",
 			"Profile import/export now uses Blizzard's built-in encoding. Strings exported from older WindTools versions can no longer be imported; please re-export after updating.",
 		},
 		["koKR"] = {
+			"최소 지원 ElvUI 버전이 15.25로 상향되었습니다.",
 			"프로필 가져오기/내보내기가 이제 블리자드 내장 인코딩을 사용합니다. 이전 버전 WindTools에서 내보낸 문자열은 가져올 수 없으니, 업데이트 후 다시 내보내세요.",
 		},
 		["ruRU"] = {
+			"Минимальная поддерживаемая версия ElvUI повышена до 15.25.",
 			"Импорт/экспорт профилей теперь использует встроенное кодирование Blizzard. Строки, экспортированные из старых версий WindTools, больше нельзя импортировать — экспортируйте заново после обновления.",
 		},
 	},

@@ -483,14 +483,20 @@ function LL:UpdatePartyKeystoneFrame()
 		local data = KI:UnitData(unit)
 		local mapData = data and data.challengeMapID and mythicPlusMapData[data.challengeMapID]
 		if mapData then
+			local unitName = UnitName(unit)
+			local classFile = UnitClassBase(unit)
+			local playerName = (E:NotSecretValue(unitName) and unitName) or ""
+			if E:NotSecretValue(classFile) and classFile and playerName ~= "" then
+				playerName = C.StringWithClassColor(playerName, classFile)
+			end
 			tinsert(cache, {
 				level = data.level,
 				name = mapData.abbr,
-				player = C.StringWithClassColor(UnitName(unit), UnitClassBase(unit)),
+				player = playerName,
 				icon = mapData.tex,
 			})
 
-			tinsert(frame.partyMessages, format("%s: %s (+%d)", UnitName(unit), mapData.name, data.level))
+			tinsert(frame.partyMessages, format("%s: %s (+%d)", playerName ~= "" and unitName or "?", mapData.name, data.level))
 		end
 	end
 
@@ -1511,7 +1517,7 @@ function LL:GetPartyRoles()
 
 	if IsInGroup() then
 		local playerRole = UnitGroupRolesAssigned("player")
-		if partyMember[playerRole] then
+		if E:NotSecretValue(playerRole) and partyMember[playerRole] then
 			partyMember[playerRole] = partyMember[playerRole] + 1
 		end
 
@@ -1519,7 +1525,7 @@ function LL:GetPartyRoles()
 		if numMembers >= 2 then
 			for i = 1, numMembers - 1 do
 				local role = UnitGroupRolesAssigned("party" .. i)
-				if partyMember[role] then
+				if E:NotSecretValue(role) and partyMember[role] then
 					partyMember[role] = partyMember[role] + 1
 				end
 			end

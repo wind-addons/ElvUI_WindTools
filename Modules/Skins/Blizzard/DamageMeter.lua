@@ -15,7 +15,57 @@ local headerElements = {
 	"DamageMeterTypeDropdown",
 	"SessionDropdown",
 	"SettingsDropdown",
+	"MinimizeButton",
 }
+
+local function GetSessionHeader(sessionWindow)
+	if not sessionWindow then
+		return nil
+	end
+
+	if sessionWindow.GetHeader then
+		return sessionWindow:GetHeader()
+	end
+
+	return sessionWindow.Header
+end
+
+local function GetSessionBackground(sessionWindow)
+	if not sessionWindow then
+		return nil
+	end
+
+	if sessionWindow.GetBackground then
+		return sessionWindow:GetBackground()
+	end
+
+	local minimizeContainer = sessionWindow.MinimizeContainer
+	return minimizeContainer and minimizeContainer.Background
+end
+
+local function GetSessionSourceWindow(sessionWindow)
+	if not sessionWindow then
+		return nil
+	end
+
+	if sessionWindow.GetSourceWindow then
+		return sessionWindow:GetSourceWindow()
+	end
+
+	return nil
+end
+
+local function GetSourceWindowBackground(sourceWindow)
+	if not sourceWindow then
+		return nil
+	end
+
+	if sourceWindow.GetBackground then
+		return sourceWindow:GetBackground()
+	end
+
+	return sourceWindow.Background
+end
 
 local headerBackdropFrames = {}
 local hookedScrollBars = {}
@@ -119,7 +169,7 @@ function S:DamageMeter_GetHeaderBackdrop(sessionWindow)
 		return headerBackdrop
 	end
 
-	local header = sessionWindow.Header
+	local header = GetSessionHeader(sessionWindow)
 	if not header then
 		return nil
 	end
@@ -143,14 +193,15 @@ function S:DamageMeter_GetHeaderBackdrop(sessionWindow)
 	return headerBackdrop
 end
 
-function S:DamageMeter_RefreshBackdropMode(frame, isMouseOver)
-	local backdrop = frame and frame.backdrop
+function S:DamageMeter_RefreshBackdropMode(sessionWindow, isMouseOver)
+	local background = GetSessionBackground(sessionWindow)
+	local backdrop = background and background.backdrop
 	if not backdrop then
 		return false
 	end
 
 	local mode = self.db.damageMeter.windowBackdrop
-	local frameBackgroundAlpha = frame.GetBackgroundAlpha and (frame:GetBackgroundAlpha() or 1) or 1
+	local frameBackgroundAlpha = sessionWindow.GetBackgroundAlpha and (sessionWindow:GetBackgroundAlpha() or 1) or 1
 	local alpha
 	local shown
 
@@ -396,7 +447,7 @@ function S:DamageMeter_ApplyConfigToSessionWindow(sessionWindow)
 		self:DamageMeter_ApplyEntryStyle(localPlayerEntry)
 	end
 
-	local sourceWindow = sessionWindow.SourceWindow
+	local sourceWindow = GetSessionSourceWindow(sessionWindow)
 	if sourceWindow then
 		if not self:IsHooked(sourceWindow, "Refresh") then
 			self:SecureHook(sourceWindow, "Refresh", "DamageMeter_SourceWindowRefresh")
@@ -407,7 +458,15 @@ function S:DamageMeter_ApplyConfigToSessionWindow(sessionWindow)
 		end
 	end
 
+	if sessionWindow.SetMinimized and not self:IsHooked(sessionWindow, "SetMinimized") then
+		self:SecureHook(sessionWindow, "SetMinimized", "DamageMeter_OnSetMinimized")
+	end
+
 	self:DamageMeter_ApplyWindowModes(sessionWindow, IsSessionMouseOver(sessionWindow))
+end
+
+function S:DamageMeter_OnSetMinimized(sessionWindow)
+	self:DamageMeter_ApplyWindowModes(sessionWindow, nil, true)
 end
 
 function S.DamageMeter_HandleSessionWindow(sessionWindow)
@@ -416,11 +475,14 @@ function S.DamageMeter_HandleSessionWindow(sessionWindow)
 	end
 
 	if not skinnedSessionWindows[sessionWindow] then
-		S:CreateBackdropShadow(sessionWindow)
+		local background = GetSessionBackground(sessionWindow)
+		if background then
+			S:CreateBackdropShadow(background)
+		end
 
-		local sourceWindow = sessionWindow.SourceWindow
-		if sourceWindow then
-			S:CreateBackdropShadow(sourceWindow)
+		local sourceBackground = GetSourceWindowBackground(GetSessionSourceWindow(sessionWindow))
+		if sourceBackground then
+			S:CreateBackdropShadow(sourceBackground)
 		end
 
 		skinnedSessionWindows[sessionWindow] = true

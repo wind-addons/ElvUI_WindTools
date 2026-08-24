@@ -4,14 +4,23 @@ local M = W.Modules.Misc ---@class Misc
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
-local select = select
 
 local CreateFrame = CreateFrame
+
+local C_UnitAuras_GetPlayerAuraBySpellID = C_UnitAuras.GetPlayerAuraBySpellID
+
+local PHASE_DIVING_AURA_SPELL_ID = 1214374
 
 local tooltipTitle = "Exit Phase Diving"
 async.WithSpellID(1250255, function(spell)
 	tooltipTitle = F.GetWindStyleText(spell:GetSpellName())
 end)
+
+-- E:GetAuraByID is valid but walks C_UnitAuras.GetAuraDataByIndex, which Lua-errors while auras are secret.
+local function playerHasPhaseDivingAura()
+	local aura = C_UnitAuras_GetPlayerAuraBySpellID(PHASE_DIVING_AURA_SPELL_ID)
+	return E:NotSecretValue(aura) and aura
+end
 
 local function visuallyHide(button)
 	button.backdrop:SetAlpha(0)
@@ -26,7 +35,7 @@ local function visuallyShow(button)
 end
 
 local function updateVisual(button)
-	if E:GetAuraByID("player", 1214374, "HELPFUL") then
+	if playerHasPhaseDivingAura() then
 		visuallyShow(button)
 	else
 		visuallyHide(button)
@@ -48,7 +57,7 @@ local function createButton()
 	local button = CreateFrame("Button", "WTExitPhaseDivingButton", E.UIParent, "SecureActionButtonTemplate")
 
 	button:SetAttribute("type*", "macro")
-	button:SetAttribute("macrotext1", "/cancelaura 1214374\n/run _G.GameTooltip:Hide()")
+	button:SetAttribute("macrotext1", "/cancelaura " .. PHASE_DIVING_AURA_SPELL_ID .. "\n/run _G.GameTooltip:Hide()")
 	button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
 	button:Point("TOP", 0, -90)
 
@@ -68,7 +77,7 @@ local function createButton()
 	button.Highlight:Hide()
 
 	button:SetScript("OnEnter", function()
-		if E:GetAuraByID("player", 1214374, "HELPFUL") then
+		if playerHasPhaseDivingAura() then
 			button.Highlight:Show()
 			_G.GameTooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, -5)
 			_G.GameTooltip:SetText(tooltipTitle, 1, 1, 1)
@@ -96,11 +105,9 @@ local function createButton()
 	)
 
 	button:RegisterEvent("UNIT_AURA")
-	button:SetScript("OnEvent", function(self, event, ...)
-		if event == "UNIT_AURA" then
-			if select(1, ...) == "player" then
-				updateVisual(self)
-			end
+	button:SetScript("OnEvent", function(self, event, unit)
+		if event == "UNIT_AURA" and E:NotSecretValue(unit) and unit == "player" then
+			updateVisual(self)
 		end
 	end)
 

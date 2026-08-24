@@ -11,16 +11,6 @@ function S:NP_StylePlate(_, plate)
 	self:CreateShadow(plate.Castbar.Button)
 end
 
-function S:NP_Construct_AuraIcon(_, button)
-	if button.__windSkin then
-		return
-	end
-
-	self:CreateLowerShadow(button)
-	self:BindShadowColorWithBorder(button)
-	button.__windSkin = true
-end
-
 function S:ElvUI_UnitFrames()
 	if not E.private.nameplates.enable then
 		return
@@ -31,7 +21,6 @@ function S:ElvUI_UnitFrames()
 	end
 
 	self:SecureHook(NP, "StylePlate", "NP_StylePlate")
-	self:SecureHook(NP, "Construct_AuraIcon", "NP_Construct_AuraIcon")
 end
 
 S:AddCallback("ElvUI_UnitFrames")

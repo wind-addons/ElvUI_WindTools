@@ -8,6 +8,7 @@ local next = next
 local CreateFrame = CreateFrame
 local DoesAncestryIncludeAny = DoesAncestryIncludeAny
 local GetMouseFoci = GetMouseFoci
+local hooksecurefunc = hooksecurefunc
 local RunNextFrame = RunNextFrame
 
 local headerElements = {
@@ -69,7 +70,6 @@ end
 
 local headerBackdropFrames = {}
 local hookedScrollBars = {}
-local hookedSessionWindows = {}
 local scrollBarAlphaApplyingStates = {}
 local scrollBarBaseAlphas = {}
 local scrollBarHiddenByMode = {}
@@ -415,19 +415,28 @@ function S.DamageMeter_OnSessionWindowLeave(sessionWindow)
 	end)
 end
 
-function S:DamageMeter_HookSessionWindowInteractions(sessionWindow)
-	if not sessionWindow or hookedSessionWindows[sessionWindow] then
+function S.DamageMeter_OnSetOnUpdateReason(sessionWindow, reason, enabled)
+	if reason == "MouseOver" and not enabled then
+		S.DamageMeter_OnSessionWindowLeave(sessionWindow)
+	end
+end
+
+function S:DamageMeter_HookSessionWindowMixin()
+	if self.damageMeterSessionWindowMixinHooked then
 		return
 	end
 
-	sessionWindow:HookScript("OnEnter", function()
-		S.DamageMeter_OnSessionWindowEnter(sessionWindow)
-	end)
-	sessionWindow:HookScript("OnLeave", function()
-		S.DamageMeter_OnSessionWindowLeave(sessionWindow)
-	end)
+	local mixin = _G.DamageMeterSessionWindowMixin
+	if not mixin or not mixin.OnEnter then
+		return
+	end
 
-	hookedSessionWindows[sessionWindow] = true
+	hooksecurefunc(mixin, "OnEnter", S.DamageMeter_OnSessionWindowEnter)
+	if mixin.SetOnUpdateReason then
+		hooksecurefunc(mixin, "SetOnUpdateReason", S.DamageMeter_OnSetOnUpdateReason)
+	end
+
+	self.damageMeterSessionWindowMixinHooked = true
 end
 
 function S:DamageMeter_ApplyConfigToSessionWindow(sessionWindow)
@@ -435,7 +444,7 @@ function S:DamageMeter_ApplyConfigToSessionWindow(sessionWindow)
 		return
 	end
 
-	self:DamageMeter_HookSessionWindowInteractions(sessionWindow)
+	self:DamageMeter_HookSessionWindowMixin()
 	self:DamageMeter_HookScrollBox(sessionWindow)
 
 	if sessionWindow.ForEachEntryFrame then
@@ -504,6 +513,7 @@ function S:Blizzard_DamageMeter()
 		return
 	end
 
+	self:DamageMeter_HookSessionWindowMixin()
 	self:SecureHook(_G.DamageMeter, "SetupSessionWindow", "DamageMeter_SetupSessionWindow")
 	S:DamageMeter_SetupSessionWindow()
 end

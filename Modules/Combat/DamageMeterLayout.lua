@@ -5,7 +5,6 @@ local C = W.Utilities.Color
 
 local _G = _G
 local format = format
-local next = next
 local pairs = pairs
 local select = select
 local tinsert = tinsert
@@ -24,61 +23,13 @@ local C_ChallengeMode_IsChallengeModeActive = C_ChallengeMode.IsChallengeModeAct
 local ELVUI_SKIN_VISUAL_LEFT_INSET, ELVUI_SKIN_VISUAL_RIGHT_INSET = 0, 0
 local OFFSCREEN_ANCHOR_X, OFFSCREEN_ANCHOR_Y = 100000, -100000
 
-function DL:GetOrCreateSessionWindow(windowIndex)
+function DL:GetSessionWindow(windowIndex)
 	local damageMeter = _G.DamageMeter
-	if not damageMeter or not windowIndex then
+	if not damageMeter or not windowIndex or not damageMeter.GetSessionWindow then
 		return nil
 	end
 
-	local sessionWindow = damageMeter.GetSessionWindow and damageMeter:GetSessionWindow(windowIndex)
-	if sessionWindow then
-		return sessionWindow
-	end
-
-	local windowDataList = damageMeter.GetWindowDataList and damageMeter:GetWindowDataList()
-	if not windowDataList then
-		return nil
-	end
-
-	self.isApplyingLayout = true
-	if not windowDataList[windowIndex] then
-		if damageMeter.CreateWindowData then
-			damageMeter:CreateWindowData(windowIndex)
-		end
-	elseif damageMeter.SetupSessionWindow then
-		damageMeter:SetupSessionWindow(windowIndex, windowDataList[windowIndex])
-	end
-	self.isApplyingLayout = nil
-
-	return damageMeter.GetSessionWindow and damageMeter:GetSessionWindow(windowIndex)
-end
-
-function DL:ShowDamageMeterParent()
-	local damageMeter = _G.DamageMeter
-	if not damageMeter then
-		return
-	end
-
-	if self.parentShownOverride == nil then
-		self.parentShownOverride = damageMeter:IsShown()
-	end
-
-	if not damageMeter:IsShown() then
-		damageMeter:Show()
-	end
-end
-
-function DL:RestoreDamageMeterParent()
-	if self.parentShownOverride == nil then
-		return
-	end
-
-	local damageMeter = _G.DamageMeter
-	if damageMeter and not self.parentShownOverride then
-		damageMeter:Hide()
-	end
-
-	self.parentShownOverride = nil
+	return damageMeter:GetSessionWindow(windowIndex)
 end
 
 function DL:StoreOriginalState(windowIndex, sessionWindow)
@@ -90,6 +41,8 @@ function DL:StoreOriginalState(windowIndex, sessionWindow)
 	state.clampedToScreen = sessionWindow:IsClampedToScreen()
 	state.minimized = sessionWindow.IsMinimized and sessionWindow:IsMinimized() or false
 	state.parent = sessionWindow:GetParent()
+	state.frameStrata = sessionWindow:GetFrameStrata()
+	state.frameLevel = sessionWindow:GetFrameLevel()
 	for i = 1, sessionWindow:GetNumPoints() do
 		local point, relativeTo, relativePoint, xOffset, yOffset = sessionWindow:GetPoint(i)
 		if not relativeTo then
@@ -109,6 +62,14 @@ function DL:RestoreOriginalState(windowIndex, sessionWindow)
 
 	if state.parent then
 		sessionWindow:SetParent(state.parent)
+	end
+
+	if state.frameStrata then
+		sessionWindow:SetFrameStrata(state.frameStrata)
+	end
+
+	if state.frameLevel then
+		sessionWindow:SetFrameLevel(state.frameLevel)
 	end
 
 	sessionWindow:ClearAllPoints()
@@ -133,30 +94,36 @@ function DL:RestoreOriginalState(windowIndex, sessionWindow)
 end
 
 function DL:MoveWindowOffscreen(sessionWindow)
-	if not sessionWindow then
+	if not sessionWindow or not sessionWindow:IsShown() then
 		return
 	end
 
 	sessionWindow:ClearAllPoints()
 	sessionWindow:Point("TOPLEFT", _G.UIParent, "TOPLEFT", OFFSCREEN_ANCHOR_X, OFFSCREEN_ANCHOR_Y)
-	if not sessionWindow:IsShown() then
-		sessionWindow:Show()
+end
+
+function DL:AnchorSessionWindow(sessionWindow, windowIndex)
+	if not sessionWindow then
+		return
+	end
+
+	sessionWindow:SetParent(_G.UIParent)
+
+	if self.container then
+		sessionWindow:SetFrameStrata(self.container:GetFrameStrata())
+		sessionWindow:SetFrameLevel(20 + (windowIndex or 0))
 	end
 end
 
 function DL:TakeoverSessionWindow(windowIndex)
-	local sessionWindow = self:GetOrCreateSessionWindow(windowIndex)
+	local sessionWindow = self:GetSessionWindow(windowIndex)
 	if not sessionWindow then
 		return nil
 	end
 
 	self:StoreOriginalState(windowIndex, sessionWindow)
 	sessionWindow:SetClampedToScreen(false)
-
-	if self.container then
-		sessionWindow:SetParent(self.container)
-		sessionWindow:SetFrameLevel(20 + windowIndex)
-	end
+	self:AnchorSessionWindow(sessionWindow, windowIndex)
 
 	local damageMeter = _G.DamageMeter
 	if sessionWindow.IsMinimized and sessionWindow:IsMinimized() and damageMeter and damageMeter.SetSessionWindowMinimized then
@@ -191,7 +158,6 @@ function DL:ReleaseAllMeters()
 	end
 
 	wipe(self.managedMeters)
-	self:RestoreDamageMeterParent()
 end
 
 function DL:UpdateContainerStyle()
@@ -238,7 +204,7 @@ function DL:GetLayoutAssignments(layout)
 			and windowIndex <= _G.DamageMeter:GetMaxSessionWindowCount()
 			and not usedWindows[windowIndex]
 		then
-			local sessionWindow = self:GetOrCreateSessionWindow(windowIndex)
+			local sessionWindow = self:GetSessionWindow(windowIndex)
 			if sessionWindow then
 				local hidden = meter and meter.hidden == true
 				usedWindows[windowIndex] = true
@@ -325,10 +291,6 @@ function DL:UpdateLayoutDirect(layoutIndex)
 	local assignments, visibleAssignments = self:GetLayoutAssignments(activeLayout)
 	local activeWindows = {}
 
-	if #assignments > 0 then
-		self:ShowDamageMeterParent()
-	end
-
 	for i = 1, #assignments do
 		local assignment = assignments[i]
 		activeWindows[assignment.windowIndex] = true
@@ -343,10 +305,6 @@ function DL:UpdateLayoutDirect(layoutIndex)
 		if not activeWindows[windowIndex] then
 			self:ReleaseSessionWindow(windowIndex)
 		end
-	end
-
-	if not next(self.managedMeters) then
-		self:RestoreDamageMeterParent()
 	end
 
 	for i = 1, #assignments do
@@ -392,14 +350,10 @@ function DL:UpdateLayoutDirect(layoutIndex)
 			end
 
 			sessionWindow:ClearAllPoints()
-			sessionWindow:SetParent(self.container)
-			sessionWindow:SetFrameLevel(20 + assignment.windowIndex)
+			self:AnchorSessionWindow(sessionWindow, assignment.windowIndex)
 			sessionWindow:Point("TOPLEFT", self.container, "TOPLEFT", frameStartX, frameStartY)
 			sessionWindow:Size(frameWidth, frameHeight)
 			sessionWindow:SetAlpha(1)
-			if not sessionWindow:IsShown() then
-				sessionWindow:Show()
-			end
 
 			usedVisual = usedVisual + visual
 		end
@@ -408,10 +362,6 @@ function DL:UpdateLayoutDirect(layoutIndex)
 	if not self.container:IsShown() then
 		self.container:SetAlpha(1)
 		self.container:Show()
-	end
-
-	if self.isPreviewing then
-		self:SetSessionWindowsEditing(true)
 	end
 end
 
@@ -502,14 +452,6 @@ function DL:AutoSwitch(force)
 	end
 end
 
-function DL:SetSessionWindowsEditing(isEditing)
-	for _, sessionWindow in pairs(self.managedMeters) do
-		if sessionWindow.SetIsEditing then
-			sessionWindow:SetIsEditing(isEditing == true)
-		end
-	end
-end
-
 function DL:Preview(layoutIndex)
 	if not self.db or not self.db.enable then
 		return
@@ -529,7 +471,6 @@ function DL:StopPreview()
 		return
 	end
 
-	self:SetSessionWindowsEditing(false)
 	self.isPreviewing = false
 	self.previewLayoutIndex = nil
 
@@ -543,9 +484,6 @@ end
 function DL:HookDamageMeter()
 	if not self:IsHooked(_G.DamageMeter, "SetupSessionWindow") then
 		self:SecureHook(_G.DamageMeter, "SetupSessionWindow", function()
-			if self.isApplyingLayout then
-				return
-			end
 			F.TaskManager:OutOfCombat(self.UpdateLayout, self)
 		end)
 	end

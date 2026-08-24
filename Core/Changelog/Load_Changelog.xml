@@ -19,5 +19,6 @@
 	<Script file='Previous\v4\4.17.lua' />
 	<Script file='Previous\v4\4.18.lua' />
 	<Script file='Previous\v4\4.19.lua' />
-	<Script file='4.20.lua' />
+	<Script file='Previous\v4\4.20.lua' />
+	<Script file='4.21.lua' />
 </Ui>

@@ -33,7 +33,6 @@ local wipe = wipe
 
 local AbbreviateNumbers = AbbreviateNumbers
 local CreateFrame = CreateFrame
-local GetInspectSpecialization = GetInspectSpecialization
 local GetInventoryItemLink = GetInventoryItemLink
 local GetServerExpansionLevel = GetServerExpansionLevel
 local GetSpecializationInfoByID = GetSpecializationInfoByID
@@ -55,6 +54,7 @@ local C_Item_GetItemNumSockets = C_Item.GetItemNumSockets
 local C_Item_GetItemQualityColor = C_Item.GetItemQualityColor
 local C_Item_GetItemStats = C_Item.GetItemStats
 local C_Item_IsCorruptedItem = C_Item.IsCorruptedItem
+local C_SpecializationInfo_GetInspectSpecialization = C_SpecializationInfo.GetInspectSpecialization
 local C_SpecializationInfo_GetSpecialization = C_SpecializationInfo.GetSpecialization
 local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo
 local C_TooltipInfo_GetHyperlink = C_TooltipInfo.GetHyperlink
@@ -653,7 +653,12 @@ local function GetUnitSpecializationInfo(unit)
 		return { icon = icon, name = name }
 	end
 
-	local _, name, _, icon = GetSpecializationInfoByID(GetInspectSpecialization(unit))
+	local specID = C_SpecializationInfo_GetInspectSpecialization(unit)
+	if E:IsSecretValue(specID) or not specID or specID == 0 then
+		return
+	end
+
+	local _, name, _, icon = GetSpecializationInfoByID(specID)
 	return { icon = icon, name = name }
 end
 
@@ -948,6 +953,12 @@ function I:ShowPanel(unit, parent, ilevel)
 	frame.unit = unit
 
 	local _, class = UnitClass(unit)
+	if E:IsSecretValue(class) or not class then
+		if parent and parent.WTInspect then
+			parent.WTInspect:Hide()
+		end
+		return
+	end
 	local classColor = E:ClassColor(class, true) --[[@as ClassColor]]
 
 	frame.PortraitFrame:SetLevel(UnitLevel(unit))
@@ -1217,7 +1228,11 @@ function I:UpdateStatsComparePanel(frame, inspectedUnit, inspectedItemLevel)
 
 	local inspectedName = UnitName(inspectedUnit)
 	local playerName = UnitName("player")
-	local inspectedClassColor = E:ClassColor(select(2, UnitClass(inspectedUnit)), true)
+	local inspectedClassFile = select(2, UnitClass(inspectedUnit))
+	local inspectedClassColor = E:ClassColor(E.myclass, true)
+	if E:NotSecretValue(inspectedClassFile) and inspectedClassFile then
+		inspectedClassColor = E:ClassColor(inspectedClassFile, true) or inspectedClassColor
+	end
 	local playerClassColor = E:ClassColor(E.myclass, true)
 
 	local maxWidths = { label = 0, inspected = 0, player = 0 }

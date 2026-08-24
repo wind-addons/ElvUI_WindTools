@@ -225,7 +225,10 @@ function Tags:Initialize()
 	for _, style in pairs(F.GetClassIconStyleList()) do
 		E:AddTag("classicon-" .. style, "UNIT_NAME_UPDATE", function(unit)
 			local englishClass = select(2, UnitClass(unit))
-			return englishClass and F.GetClassIconStringWithStyle(englishClass, style) or ""
+			if E:IsSecretValue(englishClass) or not englishClass then
+				return ""
+			end
+			return F.GetClassIconStringWithStyle(englishClass, style) or ""
 		end)
 
 		for i = 1, GetNumClasses() do

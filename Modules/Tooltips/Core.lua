@@ -147,7 +147,10 @@ function T:InspectInfo(tt, data, triedTimes)
 	if self.profiledb.elvUITweaks.forceItemLevel and not isInspecting then
 		if not isShiftKeyDown and itemLevelAvailable and not tt.ItemLevelShown then
 			local _, class = UnitClass(unit)
-			local color = class and E:ClassColor(class) or RAID_CLASS_COLORS_PRIEST
+			local color = RAID_CLASS_COLORS_PRIEST
+			if E:NotSecretValue(class) and class then
+				color = E:ClassColor(class) or RAID_CLASS_COLORS_PRIEST
+			end
 			ET:AddInspectInfo(tt, unit, 0, color.r, color.g, color.b)
 		end
 	end

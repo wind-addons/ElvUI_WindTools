@@ -224,10 +224,15 @@ function Tags:Initialize()
 	-- Class Icons
 	for _, style in pairs(F.GetClassIconStyleList()) do
 		E:AddTag("classicon-" .. style, "UNIT_NAME_UPDATE", function(unit)
+			if E:IsSecretUnit(unit) then
+				return ""
+			end
+
 			local englishClass = select(2, UnitClass(unit))
 			if E:IsSecretValue(englishClass) or not englishClass then
 				return ""
 			end
+
 			return F.GetClassIconStringWithStyle(englishClass, style) or ""
 		end)
 

@@ -468,7 +468,11 @@ end
 ---@param style ClassIconStyle The icon style from GetClassIconStyleList()
 ---@return string|nil iconPath The full texture path, or nil if invalid parameters
 function F.GetClassIconWithStyle(class, style)
-	if not class or not tContains(_G.CLASS_SORT_ORDER, strupper(class)) then
+	if E:IsSecretValue(class) or not class then
+		return
+	end
+
+	if not tContains(_G.CLASS_SORT_ORDER, strupper(class)) then
 		return
 	end
 

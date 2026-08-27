@@ -17,6 +17,7 @@ ignore:
   - Core/Changelog/Previous/v2/*
   - Core/Changelog/Previous/v3/*
   - README*.md
+  - Scripts
   - Title.svg
   - generate_changelog.py
   - screenshot.png

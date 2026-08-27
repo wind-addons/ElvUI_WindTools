@@ -725,35 +725,38 @@ function MB:UpdateLayout()
 
 		if self.db.orientation == "NOANCHOR" then
 			local original = frame.original
-			F.CallMethod(frame, "SetParent", original.Parent)
-			if original.DragStart then
-				F.CallMethod(frame, "SetScript", "OnDragStart", original.DragStart)
-			end
-			if original.DragEnd then
-				F.CallMethod(frame, "SetScript", "OnDragStop", original.DragEnd)
-			end
+			if original then
+				F.CallMethod(frame, "SetParent", original.Parent)
+				if original.DragStart then
+					F.CallMethod(frame, "SetScript", "OnDragStart", original.DragStart)
+				end
+				if original.DragEnd then
+					F.CallMethod(frame, "SetScript", "OnDragStop", original.DragEnd)
+				end
 
-			F.CallMethod(frame, "SetSize", original.Width, original.Height)
+				F.CallMethod(frame, "SetSize", original.Width, original.Height)
 
-			if original.Point ~= nil then
-				F.CallMethod(
-					frame,
-					"SetPoint",
-					frame,
-					original.Point,
-					original.relativeTo,
-					original.relativePoint,
-					original.xOfs,
-					original.yOfs
-				)
+				if original.Point ~= nil then
+					F.CallMethod(
+						frame,
+						"SetPoint",
+						original.Point,
+						original.relativeTo,
+						original.relativePoint,
+						original.xOfs,
+						original.yOfs
+					)
+				else
+					F.CallMethod(frame, "SetPoint", "CENTER", _G.Minimap, "CENTER", -80, -34)
+				end
+
+				F.CallMethod(frame, "SetFrameStrata", original.FrameStrata)
+				F.CallMethod(frame, "SetFrameLevel", original.FrameLevel)
+				F.CallMethod(frame, "SetMovable", true)
+				F.CallMethod(frame, "SetScale", original.Scale)
 			else
 				F.CallMethod(frame, "SetPoint", "CENTER", _G.Minimap, "CENTER", -80, -34)
 			end
-
-			F.CallMethod(frame, "SetFrameStrata", original.FrameStrata)
-			F.CallMethod(frame, "SetFrameLevel", original.FrameLevel)
-			F.CallMethod(frame, "SetMovable", true)
-			F.CallMethod(frame, "SetScale", original.Scale)
 		else
 			buttonX = i % buttonsPerRow
 			buttonY = floor(i / buttonsPerRow) + 1

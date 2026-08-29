@@ -412,6 +412,14 @@ local function ReskinPetListButton(frame)
 	end)
 end
 
+local function RepositionTypeBarTabText(text, point, relativeTo, relativePoint, xOffset, yOffset, forced)
+	if not text or forced then
+		return
+	end
+
+	F.CallMethod(text, "SetPoint", "CENTER", text:GetParent(), "CENTER", 0, 2, true)
+end
+
 local function ReskinPetsPanel(frame)
 	if not frame then
 		return
@@ -468,10 +476,8 @@ local function ReskinPetsPanel(frame)
 			tab:Height(25)
 			S:Proxy("HandleTab", tab)
 			F.InternalizeMethod(tab.Text, "SetPoint")
-			hooksecurefunc(tab.Text, "SetPoint", function(t)
-				F.Move(t, 0, 2)
-			end)
-			F.Move(tab.Text, 0, 2)
+			hooksecurefunc(tab.Text, "SetPoint", RepositionTypeBarTabText)
+			RepositionTypeBarTabText(tab.Text)
 			F.Move(tab, 0, 1)
 		end
 	end
@@ -559,7 +565,7 @@ local function ReskinPanelTabs(frame)
 		S:Proxy("HandleTab", tab)
 		S:ReskinTab(tab)
 		F.InternalizeMethod(tab.Text, "SetPoint", true)
-		F.CallMethod(tab.Text, "SetPoint", "CENTER", 0, 0)
+		F.CallMethod(tab.Text, "SetPoint", "CENTER", tab, "CENTER", 0, 0, true)
 	end
 
 	F.InternalizeMethod(frame, "SetPoint")

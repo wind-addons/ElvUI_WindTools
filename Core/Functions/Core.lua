@@ -61,8 +61,8 @@ local function applyFontPath(text, fontPath, fontSize, fontStyle)
 	if not fontStyle then
 		fontStyle = E.db.general.fontStyle or "NONE"
 	end
-	if not fontSize then
-		fontSize = E.db.general.fontSize
+	if type(fontSize) ~= "number" or fontSize <= 0 then
+		fontSize = E.db.general.fontSize or 12
 	end
 	if fontStyle == "NONE" then
 		fontStyle = ""
@@ -169,6 +169,9 @@ function F.SetFont(text, font, size, style)
 	end
 
 	local fontSize = size or fontHeight
+	if type(fontSize) ~= "number" or fontSize <= 0 then
+		fontSize = E.db.general.fontSize or 12
+	end
 	local fontStyle = style or "OUTLINE"
 
 	if font == nil then

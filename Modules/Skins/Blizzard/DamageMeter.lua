@@ -5,9 +5,9 @@ local LSM = E.Libs.LSM
 local _G = _G
 
 local CreateFrame = CreateFrame
-local DoesAncestryIncludeAny = DoesAncestryIncludeAny
 local GetMouseFoci = GetMouseFoci
 local hooksecurefunc = hooksecurefunc
+local issecretvalue = issecretvalue
 local RunNextFrame = RunNextFrame
 
 -- FontStrings only. ElvUI never SetAlpha/HookScript/SetShown the dropdown buttons;
@@ -111,6 +111,41 @@ local visibilityWatcher
 local windowLeavePendingStates = {}
 local windowMouseOverStates = {}
 
+local function DoesAccessibleAncestryInclude(ancestry, frame)
+	local currentFrame = frame
+	while currentFrame do
+		if issecretvalue(currentFrame) then
+			return false
+		end
+
+		if not currentFrame.CanBeAccessedInContext or not currentFrame:CanBeAccessedInContext() then
+			return false
+		end
+
+		if currentFrame == ancestry then
+			return true
+		end
+
+		currentFrame = currentFrame:GetParent()
+	end
+
+	return false
+end
+
+local function DoesAccessibleAncestryIncludeAny(ancestry, frames)
+	if not ancestry or not frames then
+		return false
+	end
+
+	for i = 1, #frames do
+		if DoesAccessibleAncestryInclude(ancestry, frames[i]) then
+			return true
+		end
+	end
+
+	return false
+end
+
 local function IsSessionMouseOver(sessionWindow)
 	if not sessionWindow then
 		return false
@@ -129,17 +164,17 @@ local function IsSessionMouseOver(sessionWindow)
 		return false
 	end
 
-	if DoesAncestryIncludeAny(sessionWindow, mouseFoci) then
+	if DoesAccessibleAncestryIncludeAny(sessionWindow, mouseFoci) then
 		return true
 	end
 
 	local resizeButton = sessionWindow.GetResizeButton and sessionWindow:GetResizeButton()
-	if resizeButton and DoesAncestryIncludeAny(resizeButton, mouseFoci) then
+	if resizeButton and DoesAccessibleAncestryIncludeAny(resizeButton, mouseFoci) then
 		return true
 	end
 
 	local scrollBar = sessionWindow.GetScrollBar and sessionWindow:GetScrollBar()
-	if scrollBar and DoesAncestryIncludeAny(scrollBar, mouseFoci) then
+	if scrollBar and DoesAccessibleAncestryIncludeAny(scrollBar, mouseFoci) then
 		return true
 	end
 
@@ -372,7 +407,13 @@ function S:DamageMeter_AnchorTypeDropdown(sessionWindow, showSessionTimer)
 	if showSessionTimer then
 		local sessionTimer = sessionWindow.GetSessionTimerFontString and sessionWindow:GetSessionTimerFontString()
 		if sessionTimer then
-			typeDropdown:Point("TOPLEFT", sessionTimer, "TOPRIGHT", ELVUI_TYPE_DROPDOWN_TIMER_X, ELVUI_TYPE_DROPDOWN_TIMER_Y)
+			typeDropdown:Point(
+				"TOPLEFT",
+				sessionTimer,
+				"TOPRIGHT",
+				ELVUI_TYPE_DROPDOWN_TIMER_X,
+				ELVUI_TYPE_DROPDOWN_TIMER_Y
+			)
 		end
 		return
 	end

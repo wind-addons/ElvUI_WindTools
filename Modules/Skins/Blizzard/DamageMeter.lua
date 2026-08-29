@@ -13,7 +13,6 @@ local RunNextFrame = RunNextFrame
 -- FontStrings only. ElvUI never SetAlpha/HookScript/SetShown the dropdown buttons;
 -- doing that blocks SessionDropdown OnMouseDown_Intrinsic (see DropdownButton.lua).
 local headerVisualGetters = {
-	{ getter = "GetSessionTimerFontString", key = "SessionTimer" },
 	{ getter = "GetDamageMeterTypeName", key = "TypeName" },
 	{ getter = "GetSessionName", key = "SessionName" },
 }
@@ -352,6 +351,108 @@ function S:DamageMeter_FadeHeaderButtonVisuals(button, widgetAlpha)
 	end
 end
 
+-- ElvUI HandleSessionTimer: TOPLEFT header 3, -9
+-- ElvUI HandleTypeDropdown: TOPLEFT SessionTimer TOPRIGHT 0, 4
+local ELVUI_SESSION_TIMER_HEADER_X, ELVUI_SESSION_TIMER_HEADER_Y = 3, -9
+local ELVUI_TYPE_DROPDOWN_TIMER_X, ELVUI_TYPE_DROPDOWN_TIMER_Y = 0, 4
+
+-- Blizzard MinimizeButton: TOPRIGHT Header -3, -5
+-- Blizzard SettingsDropdown: RIGHT MinimizeButton LEFT -2, -2
+-- ElvUI HandleSettingsDropdown: NudgePoint(2, 1)
+local BLIZZARD_MINIMIZE_HEADER_X, BLIZZARD_MINIMIZE_HEADER_Y = -3, -5
+local BLIZZARD_SETTINGS_MINIMIZE_X, BLIZZARD_SETTINGS_MINIMIZE_Y = -2, -2
+local ELVUI_SETTINGS_NUDGE_X, ELVUI_SETTINGS_NUDGE_Y = 2, 1
+
+function S:DamageMeter_AnchorTypeDropdown(sessionWindow, showSessionTimer)
+	local typeDropdown = sessionWindow.GetDamageMeterTypeDropdown and sessionWindow:GetDamageMeterTypeDropdown()
+	if not typeDropdown then
+		return
+	end
+
+	if showSessionTimer then
+		local sessionTimer = sessionWindow.GetSessionTimerFontString and sessionWindow:GetSessionTimerFontString()
+		if sessionTimer then
+			typeDropdown:Point("TOPLEFT", sessionTimer, "TOPRIGHT", ELVUI_TYPE_DROPDOWN_TIMER_X, ELVUI_TYPE_DROPDOWN_TIMER_Y)
+		end
+		return
+	end
+
+	local header = GetSessionHeader(sessionWindow)
+	if header then
+		typeDropdown:Point(
+			"TOPLEFT",
+			header,
+			ELVUI_SESSION_TIMER_HEADER_X + ELVUI_TYPE_DROPDOWN_TIMER_X,
+			ELVUI_SESSION_TIMER_HEADER_Y + ELVUI_TYPE_DROPDOWN_TIMER_Y
+		)
+	end
+end
+
+function S:DamageMeter_RefreshSessionTimer(sessionWindow, widgetAlpha)
+	local sessionTimer = sessionWindow.GetSessionTimerFontString and sessionWindow:GetSessionTimerFontString()
+	if not sessionTimer then
+		return
+	end
+
+	local showSessionTimer = self.db.damageMeter.sessionTimer ~= false
+	if showSessionTimer then
+		sessionTimer:Show()
+		self:DamageMeter_FadeAlpha(sessionTimer, widgetAlpha)
+	else
+		sessionTimer:Hide()
+	end
+
+	self:DamageMeter_AnchorTypeDropdown(sessionWindow, showSessionTimer)
+end
+
+function S:DamageMeter_AnchorSettingsDropdown(sessionWindow, attachToMinimizeButton)
+	local settingsDropdown = sessionWindow.GetSettingsDropdown and sessionWindow:GetSettingsDropdown()
+	if not settingsDropdown then
+		return
+	end
+
+	-- SessionDropdown stays on SettingsDropdown LEFT (Blizzard XML + ElvUI NudgePoint).
+	if attachToMinimizeButton then
+		local minimizeButton = sessionWindow.GetMinimizeButton and sessionWindow:GetMinimizeButton()
+		if minimizeButton then
+			settingsDropdown:ClearAllPoints()
+			settingsDropdown:Point(
+				"RIGHT",
+				minimizeButton,
+				"LEFT",
+				BLIZZARD_SETTINGS_MINIMIZE_X + ELVUI_SETTINGS_NUDGE_X,
+				BLIZZARD_SETTINGS_MINIMIZE_Y + ELVUI_SETTINGS_NUDGE_Y
+			)
+		end
+		return
+	end
+
+	local header = GetSessionHeader(sessionWindow)
+	if header then
+		settingsDropdown:ClearAllPoints()
+		settingsDropdown:Point("TOPRIGHT", header, BLIZZARD_MINIMIZE_HEADER_X, BLIZZARD_MINIMIZE_HEADER_Y)
+	end
+end
+
+function S:DamageMeter_RefreshMinimizeButton(sessionWindow, widgetAlpha)
+	local minimizeButton = sessionWindow.GetMinimizeButton and sessionWindow:GetMinimizeButton()
+	if not minimizeButton then
+		return
+	end
+
+	local showMinimizeButton = self.db.damageMeter.minimizeButton ~= false
+	local isMinimized = sessionWindow.IsMinimized and sessionWindow:IsMinimized()
+	local attachToMinimizeButton = showMinimizeButton or isMinimized
+	if attachToMinimizeButton then
+		minimizeButton:Show()
+		self:DamageMeter_FadeHeaderButtonVisuals(minimizeButton, widgetAlpha)
+	else
+		minimizeButton:Hide()
+	end
+
+	self:DamageMeter_AnchorSettingsDropdown(sessionWindow, attachToMinimizeButton)
+end
+
 function S:DamageMeter_RefreshHeaderMode(sessionWindow, isMouseOver)
 	if not sessionWindow then
 		return
@@ -366,6 +467,8 @@ function S:DamageMeter_RefreshHeaderMode(sessionWindow, isMouseOver)
 	if header then
 		self:DamageMeter_FadeAlpha(header, headerBackdropAlpha)
 	end
+
+	self:DamageMeter_RefreshSessionTimer(sessionWindow, widgetAlpha)
 
 	for i = 1, #headerVisualGetters do
 		local element = GetHeaderWidget(sessionWindow, headerVisualGetters[i])
@@ -384,9 +487,7 @@ function S:DamageMeter_RefreshHeaderMode(sessionWindow, isMouseOver)
 		self:DamageMeter_FadeHeaderButtonVisuals(sessionWindow:GetSettingsDropdown(), widgetAlpha)
 	end
 
-	if sessionWindow.GetMinimizeButton then
-		self:DamageMeter_FadeHeaderButtonVisuals(sessionWindow:GetMinimizeButton(), widgetAlpha)
-	end
+	self:DamageMeter_RefreshMinimizeButton(sessionWindow, widgetAlpha)
 end
 
 function S:DamageMeter_RefreshScrollBarMode(frame)

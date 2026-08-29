@@ -2169,8 +2169,18 @@ options.damageMeter = {
 						hide = L["Hide"],
 					},
 				},
-				scrollBar = {
+				sessionTimer = {
 					order = 4,
+					type = "toggle",
+					name = L["Combat Time"],
+				},
+				minimizeButton = {
+					order = 5,
+					type = "toggle",
+					name = L["Collapse Button"],
+				},
+				scrollBar = {
+					order = 6,
 					type = "select",
 					name = L["Scrollbar"],
 					values = {
@@ -2180,7 +2190,7 @@ options.damageMeter = {
 					},
 				},
 				fadeTime = {
-					order = 5,
+					order = 7,
 					type = "range",
 					name = L["Fade Time"],
 					min = 0,

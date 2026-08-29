@@ -2118,7 +2118,7 @@ options.damageMeter = {
 			end,
 			set = function(info, value)
 				E.private.WT.skins.damageMeter[info[#info]] = value
-				E:StaticPopup_Show("PRIVATE_RL")
+				S:DamageMeter_RefreshAllSessionWindows()
 			end,
 			inline = true,
 			disabled = function()
@@ -2145,7 +2145,7 @@ options.damageMeter = {
 					end,
 					set = function(_, value)
 						E.private.WT.skins.damageMeter.headerPart = value == "always" and "always" or "mouseover"
-						E:StaticPopup_Show("PRIVATE_RL")
+						S:DamageMeter_RefreshAllSessionWindows()
 					end,
 					values = {
 						always = L["Always"],
@@ -2162,7 +2162,7 @@ options.damageMeter = {
 					end,
 					set = function(_, value)
 						E.private.WT.skins.damageMeter.headerBackdrop = value == "hide" and "hide" or "always"
-						E:StaticPopup_Show("PRIVATE_RL")
+						S:DamageMeter_RefreshAllSessionWindows()
 					end,
 					values = {
 						always = L["Always"],

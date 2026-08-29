@@ -79,10 +79,33 @@ local function HandleHeaders(frame)
 end
 
 local function HandleTab(tab)
+	if not tab or tab.__windMiniTab then
+		return
+	end
+
 	S:Proxy("HandleTab", tab)
-	tab.Text:ClearAllPoints()
-	F.InternalizeMethod(tab.Text, "SetPoint", true)
-	F.CallMethod(tab.Text, "SetPoint", "CENTER", tab, "CENTER", 0, 0)
+
+	if tab.TabTextures then
+		for _, texture in ipairs(tab.TabTextures) do
+			texture:SetAlpha(0)
+		end
+	end
+
+	local originalText = tab.Text or (tab.GetFontString and tab:GetFontString())
+	if originalText then
+		originalText:SetAlpha(0)
+	end
+
+	local label = tab:CreateFontString(nil, "OVERLAY")
+	label:SetAllPoints(tab)
+	label:SetJustifyH("CENTER")
+	label:SetFontObject(_G.GameFontNormalSmall)
+	F.SetFont(label, nil, E.db.general.fontSize or 12)
+	label:SetText(tab:GetText() or "")
+
+	tab:Height(22)
+	tab:Width(label:GetStringWidth() + 30)
+	tab.__windMiniTab = true
 end
 
 local function buyIconName(frame)

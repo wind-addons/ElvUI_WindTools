@@ -5,7 +5,7 @@ local UF = E:GetModule("UnitFrames")
 local CreateFrame = CreateFrame
 
 function S:ElvUI_UnitFrames_SkinCastBar(_, frame)
-	if not frame.Castbar then
+	if not frame or not frame.Castbar or not frame.Castbar.backdrop or not frame.db or not frame.db.castbar then
 		return
 	end
 
@@ -62,7 +62,9 @@ function S:ElvUI_CastBars()
 		return
 	end
 
-	self:SecureHook(UF, "Configure_Castbar", "ElvUI_UnitFrames_SkinCastBar")
+	if not self:IsHooked(UF, "Configure_Castbar") then
+		self:SecureHook(UF, "Configure_Castbar", "ElvUI_UnitFrames_SkinCastBar")
+	end
 end
 
 S:AddCallback("ElvUI_CastBars")

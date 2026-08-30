@@ -11,7 +11,7 @@ function S:NP_StylePlate(_, plate)
 	self:CreateShadow(plate.Castbar.Button)
 end
 
-function S:ElvUI_UnitFrames()
+function S:ElvUI_Nameplates()
 	if not E.private.nameplates.enable then
 		return
 	end
@@ -23,4 +23,4 @@ function S:ElvUI_UnitFrames()
 	self:SecureHook(NP, "StylePlate", "NP_StylePlate")
 end
 
-S:AddCallback("ElvUI_UnitFrames")
+S:AddCallback("ElvUI_Nameplates")

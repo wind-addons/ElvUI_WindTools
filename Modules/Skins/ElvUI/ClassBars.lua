@@ -2,15 +2,19 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 local UF = E:GetModule("UnitFrames")
 
-local function reskinClassBar(_, frame)
-	local classBar = frame[frame.ClassBar]
+function S:ElvUI_UnitFrames_SkinClassBar(_, frame)
+	if not frame then
+		return
+	end
+
+	local classBar = frame.ClassBar and frame[frame.ClassBar]
 	if classBar then
-		S:CreateBackdropShadow(classBar)
+		self:CreateBackdropShadow(classBar)
 	end
 
 	local additionalPowerBar = frame.AdditionalPower
 	if additionalPowerBar then
-		S:CreateBackdropShadow(additionalPowerBar)
+		self:CreateBackdropShadow(additionalPowerBar)
 	end
 end
 
@@ -23,7 +27,9 @@ function S:ElvUI_ClassBars()
 		return
 	end
 
-	self:SecureHook(UF, "Configure_ClassBar", reskinClassBar)
+	if not self:IsHooked(UF, "Configure_ClassBar") then
+		self:SecureHook(UF, "Configure_ClassBar", "ElvUI_UnitFrames_SkinClassBar")
+	end
 end
 
 S:AddCallback("ElvUI_ClassBars")

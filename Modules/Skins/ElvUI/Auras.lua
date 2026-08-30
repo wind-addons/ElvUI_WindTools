@@ -14,12 +14,17 @@ local function ShouldSkinAuraContainer(container)
 		return false
 	end
 
-	local skins = E.private.WT.skins
-	if not skins.enable or not skins.elvui.enable then
+	local privateWT = E.private and E.private.WT
+	local skins = privateWT and privateWT.skins
+	if not skins or not skins.enable then
 		return false
 	end
 
 	local elvuiSkins = skins.elvui
+	if not elvuiSkins or not elvuiSkins.enable then
+		return false
+	end
+
 	if container.isTopAura then
 		return elvuiSkins.auras
 	end
@@ -53,7 +58,8 @@ local function BindAuraButtonShadowColor(button)
 	end)
 end
 
-function S:ElvUI_Auras_SkinAuraButton(_, button)
+function S:ElvUI_Auras_SkinAuraButton(_, container, button)
+	button = button or container
 	if not button or button.__windSkin then
 		return
 	end
@@ -62,12 +68,12 @@ function S:ElvUI_Auras_SkinAuraButton(_, button)
 		return
 	end
 
-	local container = button.container or button:GetParent()
+	container = (button ~= container and container) or button.container or button:GetParent()
 	if not ShouldSkinAuraContainer(container) then
 		return
 	end
 
-	self:CreateLowerShadow(button)
+	self:CreateShadow(button)
 	BindAuraButtonShadowColor(button)
 	button.__windSkin = true
 end
@@ -78,7 +84,7 @@ local function SkinAuraButtonsOnContainer(container)
 	end
 
 	for button in next, container.buttons do
-		S:ElvUI_Auras_SkinAuraButton(nil, button)
+		S:ElvUI_Auras_SkinAuraButton(nil, container, button)
 	end
 end
 
@@ -128,6 +134,12 @@ function S:ElvUI_Auras_SkinExistingButtons()
 	end
 end
 
+function S:ElvUI_Auras_Hook()
+	if not self:IsHooked(E, "Auras_UpdateButton") then
+		self:SecureHook(E, "Auras_UpdateButton", "ElvUI_Auras_SkinAuraButton")
+	end
+end
+
 function S:ElvUI_Auras()
 	if not E.private.WT.skins.elvui.enable then
 		return
@@ -138,17 +150,8 @@ function S:ElvUI_Auras()
 		return
 	end
 
-	if not self:IsHooked(E, "Auras_CreateButton") then
-		self:SecureHook(E, "Auras_CreateButton", "ElvUI_Auras_SkinAuraButton")
-	end
-
+	self:ElvUI_Auras_Hook()
 	self:ElvUI_Auras_SkinExistingButtons()
-end
-
--- Hook at file load so PLAYER_LOGIN oUF Factory (player/target auras) is covered.
--- Nameplates spawn later, which is why they already worked from the callback-only hook.
-if E.Auras_CreateButton then
-	S:SecureHook(E, "Auras_CreateButton", "ElvUI_Auras_SkinAuraButton")
 end
 
 S:AddCallback("ElvUI_Auras")

@@ -43,7 +43,7 @@ function A:SetTexture_HealComm(module, obj, texture)
 			overlay:SetVertTile(true)
 			obj.damageAbsorb.__shieldOverlay = overlay
 		end
-	elseif obj.damageAbsorb.__shieldOverlay then
+	elseif obj.damageAbsorb and obj.damageAbsorb.__shieldOverlay then
 		obj.damageAbsorb.__shieldOverlay:Hide()
 	end
 
@@ -99,6 +99,7 @@ function A:Initialize()
 	self:RawHook(UF, "SetTexture_HealComm")
 
 	self.initialized = true
+	UF:Update_AllFrames()
 end
 
 function A:ProfileUpdate()

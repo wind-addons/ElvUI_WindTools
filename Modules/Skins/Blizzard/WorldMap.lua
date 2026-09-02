@@ -67,7 +67,7 @@ function S:WorldMapFrame()
 	if questsTab then
 		questsTab:ClearAllPoints()
 		SetPoint(questsTab, "TOPLEFT", QuestMapFrame, "TOPRIGHT", 13, 24)
-		questsTab.SetPoint = function(tab, _, _, POINT, x, y)
+		questsTab.SetPoint = function(tab, _, POINT, x, y)
 			if x == 1 and y == 0 and POINT == "TOPLEFT" then
 				SetPoint(tab, "TOPLEFT", QuestMapFrame, "TOPRIGHT", 2, 0)
 			end

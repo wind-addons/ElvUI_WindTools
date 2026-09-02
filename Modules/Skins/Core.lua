@@ -123,9 +123,20 @@ function S:CreateShadow(frame, size, r, g, b, force)
 		return
 	end
 
+	if not F.CanAccessWidget(frame) then
+		return
+	end
+
 	if frame:GetObjectType() == "Texture" then
 		local parent = frame:GetParent()
-		if not parent or parent:GetObjectType() ~= "Frame" then
+		if not parent then
+			F.Developer.ThrowError("CreateShadow: Invalid parent frame of frame:", frame:GetDebugName())
+			return
+		end
+		if not F.CanAccessWidget(parent) then
+			return
+		end
+		if parent:GetObjectType() ~= "Frame" then
 			F.Developer.ThrowError("CreateShadow: Invalid parent frame of frame:", frame:GetDebugName())
 			return
 		end

@@ -637,6 +637,26 @@ function F.IsAlmost(a, b, allowance)
 	return abs(a - b) < allowance
 end
 
+---Returns whether tainted addon code may call widget APIs on this object.
+---IsForbidden is not enough: CustomAuraButton uses DenyTaintedAccessWhenAurasAreSecret.
+---@param widget any
+---@return boolean
+function F.CanAccessWidget(widget)
+	if not widget or E:IsSecretValue(widget) then
+		return false
+	end
+
+	if widget.IsForbidden and widget:IsForbidden() then
+		return false
+	end
+
+	if widget.CanBeAccessedInContext and not widget:CanBeAccessedInContext() then
+		return false
+	end
+
+	return true
+end
+
 ---Internalizes a method by creating a backup copy with a double underscore prefix.
 ---This function is commonly used to preserve original method implementations before
 ---overriding them with custom behavior. The original method is stored as "__methodName"

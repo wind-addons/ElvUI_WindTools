@@ -45,6 +45,10 @@ local function BindAuraButtonShadowColor(button)
 		return
 	end
 
+	if not F.CanAccessWidget(borderTexture) then
+		return
+	end
+
 	hooksecurefunc(borderTexture, "SetVertexColor", function(_, r, g, b)
 		if E:IsSecretValue(r) or E:IsSecretValue(g) or E:IsSecretValue(b) or not r or not g or not b then
 			return
@@ -64,7 +68,7 @@ function S:ElvUI_Auras_SkinAuraButton(_, container, button)
 		return
 	end
 
-	if button.IsForbidden and button:IsForbidden() then
+	if not F.CanAccessWidget(button) then
 		return
 	end
 

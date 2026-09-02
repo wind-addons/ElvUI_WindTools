@@ -30,6 +30,7 @@ local CreateDataProvider = CreateDataProvider
 local CreateFrame = CreateFrame
 local CreateFramePool = CreateFramePool
 local CreateScrollBoxListLinearView = CreateScrollBoxListLinearView
+local hooksecurefunc = hooksecurefunc
 local GameTooltip = _G.GameTooltip
 local GetAchievementCriteriaInfo = GetAchievementCriteriaInfo
 local GetAchievementInfo = GetAchievementInfo
@@ -748,7 +749,7 @@ function AT:Construct()
 	local MainFrame = CreateFrame("Frame", "WTAchievementTracker", E.UIParent, "BackdropTemplate")
 	MainFrame:Size(self.db.width, self.db.height)
 	MainFrame:SetTemplate("Transparent")
-	MainFrame:SetShown(self.db.enabled and self.db.show)
+	MainFrame:Hide()
 	S:CreateShadow(MainFrame)
 	self.MainFrame = MainFrame
 	MainFrame.States = self.states
@@ -1054,13 +1055,13 @@ function AT:Construct()
 	ProgressBarProgressText:SetTextColor(C.ExtractRGBAFromTemplate("neutral-50"))
 	ProgressBarProgressText:Point("CENTER", ProgressBar, "CENTER", 0, -1)
 	ProgressBar.ProgressText = ProgressBarProgressText
-	self:Hook(ProgressFrame, "Show", function()
+	self:SecureHook(ProgressFrame, "Show", function()
 		SearchBox:ClearFocus()
 		SearchBox:Hide()
 		ControlFrame1:Hide()
 		ControlFrame2:Hide()
 		ScrollFrame:Hide()
-	end, true)
+	end)
 	self:SecureHook(ProgressFrame, "Hide", function()
 		SearchBox:Show()
 		ControlFrame1:Show()
@@ -1132,7 +1133,6 @@ end
 ---@param addonName string
 function AT:ADDON_LOADED(_, addonName)
 	if addonName == "Blizzard_AchievementUI" then
-		self:UnregisterEvent("ADDON_LOADED")
 		self:UpdatePosition()
 	end
 end
@@ -1148,17 +1148,23 @@ function AT:UpdatePosition()
 	self.MainFrame.positionUpdated = true
 	MF:InternalHandle(self.MainFrame, _G.AchievementFrame)
 
-	self.ToggleButton = CreateFrame("Button", nil, _G.AchievementFrame, "UIPanelButtonTemplate")
-	self.ToggleButton:Point("BOTTOMRIGHT", _G.AchievementFrame, "BOTTOMRIGHT", -4, 4)
-	self.ToggleButton:SetText(F.GetWindStyleText(L["Achievement Tracker"]))
-	F.SetFont(self.ToggleButton.Text, E.db.general.font, 10)
-	local buttonWidth = 20 + max(40, F.GetAdaptiveTextWidth(E.media.normFont, 10, "OUTLINE", L["Achievement Tracker"]))
-	self.ToggleButton:Size(buttonWidth, 18)
-	self.ToggleButton:SetScript("OnClick", function()
-		self.db.show = not self.MainFrame:IsShown()
-		self.MainFrame:SetShown(self.db.show)
-	end)
-	S:Proxy("HandleButton", self.ToggleButton)
+	if not self.ToggleButton then
+		self.ToggleButton = CreateFrame("Button", nil, _G.AchievementFrame, "UIPanelButtonTemplate")
+		self.ToggleButton:Point("BOTTOMRIGHT", _G.AchievementFrame, "BOTTOMRIGHT", -4, 4)
+		self.ToggleButton:SetText(F.GetWindStyleText(L["Achievement Tracker"]))
+		F.SetFont(self.ToggleButton.Text, E.db.general.font, 10)
+		local buttonWidth = 20 + max(40, F.GetAdaptiveTextWidth(E.media.normFont, 10, "OUTLINE", L["Achievement Tracker"]))
+		self.ToggleButton:Size(buttonWidth, 18)
+		self.ToggleButton:SetScript("OnClick", function()
+			self.db.show = not self.MainFrame:IsShown()
+			self.MainFrame:SetShown(self.db.show)
+		end)
+		S:Proxy("HandleButton", self.ToggleButton)
+	end
+
+	self.ToggleButton:Show()
+	self.MainFrame:SetShown(self.db.show)
+	self:UnregisterEvent("ADDON_LOADED")
 	return true
 end
 
@@ -1173,7 +1179,6 @@ function AT:Initialize()
 		self:Disable()
 		if self.initialized then
 			self.MainFrame:Hide()
-			self.ToggleButton:Hide()
 			if self.ToggleButton then
 				self.ToggleButton:Hide()
 			end
@@ -1184,6 +1189,9 @@ function AT:Initialize()
 
 	if not self.initialized then
 		self:Construct()
+		hooksecurefunc("AchievementFrame_LoadUI", function()
+			self:UpdatePosition()
+		end)
 		if not self:UpdatePosition() then
 			self:RegisterEvent("ADDON_LOADED")
 		end
@@ -1193,10 +1201,12 @@ function AT:Initialize()
 	end
 
 	self:Enable()
-	if self.ToggleButton then
+	if self.MainFrame.positionUpdated then
 		self.ToggleButton:Show()
+		self.MainFrame:SetShown(self.db.show)
+	else
+		self.MainFrame:Hide()
 	end
-	self.MainFrame:SetShown(self.db.show)
 	self.MainFrame:Size(self.db.width, self.db.height)
 
 	F.TaskManager:AfterLogin(function()

@@ -44,9 +44,10 @@ function ID:UpdateFrame()
 end
 
 function ID:GetTextForDifficulty(difficulty, useDefault)
-	local db = useDefault and V.maps.instanceDifficulty.difficulty.customStrings or self.db.difficulty.customStrings
+	local defaultStrings = V.maps.instanceDifficulty.difficulty.customStrings
+	local db = useDefault and defaultStrings or self.db.difficulty.customStrings
+	-- Difficulty DB2 12.1.0.69587 — https://wago.tools/db2/Difficulty?sort%5BID%5D=asc
 	local text = {
-		-- https://wago.tools/db2/Difficulty?page=2&sort%5BID%5D=asc
 		[-1] = db["PvP"],
 		[1] = db["5-player Normal"],
 		[2] = db["5-player Heroic"],
@@ -95,11 +96,27 @@ function ID:GetTextForDifficulty(difficulty, useDefault)
 		[208] = db["Delves"],
 		[216] = db["Quest"],
 		[220] = db["Story"],
+		[230] = db["Heroic"],
 		[232] = db["Event Scenario"],
+		[233] = db["Mythic Flexible Raid"],
 		[236] = db["Lorewalking"],
+		[241] = db["Lorewalking"],
+		[245] = db["Decor Duel"],
+		[247] = db["Decor Duel"],
+		[248] = db["Event Scenario"],
+		[250] = db["World Raid"],
+		[251] = db["Decor Duel"],
+		[253] = db["Decor Duel"],
+		[254] = db["Naigtal"],
+		[257] = db["Timewalking Raid"],
 	}
 
-	return text[difficulty]
+	local result = text[difficulty]
+	if not result and not useDefault then
+		return self:GetTextForDifficulty(difficulty, true)
+	end
+
+	return result
 end
 
 function ID:ConstructFrame()

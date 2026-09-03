@@ -22,6 +22,7 @@ local C_Map_GetMapInfo = C_Map.GetMapInfo
 local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 local C_QuestLog_IsOnQuest = C_QuestLog.IsOnQuest
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
+local C_QuestLog_GetQuestObjectives = C_QuestLog.GetQuestObjectives
 
 local C_EventScheduler_GetEventUiMapID = C_EventScheduler and C_EventScheduler.GetEventUiMapID
 local C_EventScheduler_GetOngoingEvents = C_EventScheduler and C_EventScheduler.GetOngoingEvents
@@ -153,12 +154,11 @@ local function IsAbundanceEvent(eventInfo, poiInfo)
 end
 
 local function GetEventPOIInfo(mapID, areaPoiID)
-	if not C_AreaPoiInfo_GetAreaPOIInfo or not areaPoiID then
+	if not areaPoiID then
 		return
 	end
 
-	return C_AreaPoiInfo_GetAreaPOIInfo(mapID, areaPoiID)
-		or C_AreaPoiInfo_GetAreaPOIInfo(nil, areaPoiID)
+	return C_AreaPoiInfo_GetAreaPOIInfo(mapID, areaPoiID) or C_AreaPoiInfo_GetAreaPOIInfo(nil, areaPoiID)
 end
 
 local function FindAbundanceMap(events, currentTime, hasSchedule)
@@ -167,7 +167,7 @@ local function FindAbundanceMap(events, currentTime, hasSchedule)
 
 	for _, eventInfo in ipairs(events or {}) do
 		local areaPoiID = eventInfo and eventInfo.areaPoiID
-		local mapID = areaPoiID and C_EventScheduler_GetEventUiMapID and C_EventScheduler_GetEventUiMapID(areaPoiID)
+		local mapID = areaPoiID and C_EventScheduler_GetEventUiMapID(areaPoiID)
 
 		if mapID and AbundanceMapIDs[mapID] then
 			local poiInfo = GetEventPOIInfo(mapID, areaPoiID)
@@ -176,8 +176,10 @@ local function FindAbundanceMap(events, currentTime, hasSchedule)
 			end
 
 			local isCurrent = not hasSchedule
-				or ((not eventInfo.startTime or eventInfo.startTime <= currentTime)
-					and (not eventInfo.endTime or eventInfo.endTime > currentTime))
+				or (
+					(not eventInfo.startTime or eventInfo.startTime <= currentTime)
+					and (not eventInfo.endTime or eventInfo.endTime > currentTime)
+				)
 			if isCurrent and IsAbundanceEvent(eventInfo, poiInfo) then
 				if poiInfo and poiInfo.isCurrentEvent then
 					return mapID
@@ -198,35 +200,25 @@ end
 local function GetCurrentAbundanceMapID()
 	local currentTime = GetServerTime()
 
-	if C_EventScheduler_HasData and C_EventScheduler_HasData() then
-		local mapID = FindAbundanceMap(
-			C_EventScheduler_GetScheduledEvents and C_EventScheduler_GetScheduledEvents(),
-			currentTime,
-			true
-		)
+	if C_EventScheduler_HasData() then
+		local mapID = FindAbundanceMap(C_EventScheduler_GetScheduledEvents(), currentTime, true)
 		if mapID then
 			return mapID
 		end
 
-		mapID = FindAbundanceMap(
-			C_EventScheduler_GetOngoingEvents and C_EventScheduler_GetOngoingEvents(),
-			currentTime,
-			false
-		)
+		mapID = FindAbundanceMap(C_EventScheduler_GetOngoingEvents(), currentTime, false)
 		if mapID then
 			return mapID
 		end
-	elseif C_EventScheduler_RequestEvents then
+	else
 		C_EventScheduler_RequestEvents()
 	end
 
-	if C_AreaPoiInfo_GetEventsForMap and C_AreaPoiInfo_GetAreaPOIInfo then
-		for mapID in pairs(AbundanceMapIDs) do
-			for _, areaPoiID in ipairs(C_AreaPoiInfo_GetEventsForMap(mapID) or {}) do
-				local poiInfo = GetEventPOIInfo(mapID, areaPoiID)
-				if poiInfo and poiInfo.isCurrentEvent and IsAbundanceEvent(nil, poiInfo) then
-					return mapID
-				end
+	for mapID in pairs(AbundanceMapIDs) do
+		for _, areaPoiID in ipairs(C_AreaPoiInfo_GetEventsForMap(mapID) or {}) do
+			local poiInfo = GetEventPOIInfo(mapID, areaPoiID)
+			if poiInfo and poiInfo.isCurrentEvent and IsAbundanceEvent(nil, poiInfo) then
+				return mapID
 			end
 		end
 	end
@@ -251,11 +243,20 @@ ET.EventData = {
 					93891, -- 至暗之夜：哈籁尼尔的传说
 					93892, -- 至暗之夜：斯托玛兰突袭战
 					93909, -- 至暗之夜：地下堡
-					93910, -- 至暗之夜：狩猎
 					93911, -- 至暗之夜：地下城
 					93912, -- 至暗之夜：团队副本
 					93913, -- 至暗之夜：世界首领
 					94457, -- 至暗之夜：战场
+					95842, -- 至暗之夜：虚空侵袭
+					95843, -- 至暗之夜：仪式场地
+					96727, -- 至暗之夜：异界决战
+					98232, -- 至暗之夜：阿塔乌特克地窟
+				},
+				[WeeklyName(7578704, L["Prey Hunt"], 2393)] = {
+					-- https://www.wowhead.com/quest=94446/a-nightmarish-task
+					94446, -- 夜魇任务
+					-- https://www.wowhead.com/quest=93910/midnight-prey
+					93910, -- 至暗之夜：狩猎
 				},
 				[WeeklyName(5554512, L["Dungeon"], 2393)] = {
 					-- https://www.wowhead.com/npc=256210/halduron-brightwing
@@ -279,16 +280,87 @@ ET.EventData = {
 					-- https://www.wowhead.com/quest=89268
 					89268, -- 失落的传说
 				},
+				[WeeklyName(236681, "Silvermoon Court", 2395)] = {
+					-- https://www.wowhead.com/quest=89289/favor-of-the-court
+					89289, -- 宫廷宠爱
+				},
+				[WeeklyName(7431083, "Zul'jarra's Forces", 2512)] = {
+					-- https://www.wowhead.com/quest=96995/turn-back-the-surge
+					96995, -- 击退狂潮
+					-- https://www.wowhead.com/quest=95520/purging-the-vaults
+					95520, -- 净化宝库
+				},
+				[WeeklyName(236681, "Slayer's Duellum", 2444)] = {
+					-- https://www.wowhead.com/quest=89354/preparing-for-battle
+					89354, -- 备战
+				},
 			},
 			questProgress = function(args)
 				local questIDs = type(args.questIDs) == "function" and args:questIDs() or args.questIDs
 				local progress = {}
 
+				local function GetQuestObjectivesCompletion(questID)
+					local objectives = C_QuestLog_GetQuestObjectives(questID)
+					if not objectives or type(objectives) ~= "table" then
+						return nil
+					end
+
+					local anyObjectiveHasSignal = false
+					local allObjectivesComplete = true
+
+					for _, objective in ipairs(objectives) do
+						local objectiveFinished = objective and objective.finished
+						if objectiveFinished ~= nil then
+							anyObjectiveHasSignal = true
+							if not objectiveFinished then
+								allObjectivesComplete = false
+							end
+						end
+
+						-- Some quests expose (fulfilled/required) inside objective.text.
+						-- Prefer that when available, since it matches cases like weekly counters.
+						if objective and objective.text then
+							local numFulfilled, numRequired = select(3, strfind(objective.text, "(%d+)/(%d+)")) -- captures 1,2; 3 is nil
+							-- The pattern captures two numbers only; guard to keep compatibility.
+							if numFulfilled and numRequired then
+								anyObjectiveHasSignal = true
+								numFulfilled = tonumber(numFulfilled)
+								numRequired = tonumber(numRequired)
+								if numRequired and numFulfilled and numFulfilled < numRequired then
+									allObjectivesComplete = false
+								end
+							end
+						end
+					end
+
+					if not anyObjectiveHasSignal then
+						return nil
+					end
+
+					return allObjectivesComplete
+				end
+
 				for storylineName, storylineQuests in pairs(questIDs) do
 					local weeklyQuestID, status
-					for _, questID in pairs(storylineQuests) do
+					for _, questID in ipairs(storylineQuests) do
+						local objectivesCompletion = GetQuestObjectivesCompletion(questID)
+						if objectivesCompletion ~= nil then
+							if objectivesCompletion then
+								status = "completed"
+								weeklyQuestID = questID
+								break
+							end
+
+							if C_QuestLog_IsOnQuest(questID) then
+								status = "inProgress"
+								weeklyQuestID = questID
+								break
+							end
+						end
+
 						if C_QuestLog_IsQuestFlaggedCompleted(questID) then
 							status = "completed"
+							weeklyQuestID = questID
 							break
 						end
 

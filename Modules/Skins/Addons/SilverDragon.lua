@@ -44,6 +44,9 @@ local function StyleSilverDragonLootWindow(_, frame)
 	end
 
 	if frame.__windSkin then
+		if not frame.embedded then
+			frame:SetTemplate("Transparent")
+		end
 		return
 	end
 
@@ -328,19 +331,32 @@ local function ConfigureSilverDragonPopup(popup, config, module)
 	end
 end
 
+local function StyleSilverDragonGameTooltip(tooltip)
+	if not tooltip or tooltip.__windSkin then
+		return
+	end
+
+	TT:SetStyle(tooltip)
+	if tooltip.shoppingTooltips then
+		for _, shoppingTooltip in pairs(tooltip.shoppingTooltips) do
+			TT:SetStyle(shoppingTooltip)
+		end
+	end
+
+	tooltip.__windSkin = true
+end
+
 local function SetupSilverDragonOverlay(silverDragon)
 	local module = silverDragon:GetModule("Overlay", true)
 	if not module or not module.ShowTooltip then
 		return
 	end
 
-	if module.tooltip then
-		TT:SetStyle(module.tooltip)
-		if module.tooltip.shoppingTooltips then
-			for _, tooltip in pairs(module.tooltip.shoppingTooltips) do
-				TT:SetStyle(tooltip)
-			end
-		end
+	StyleSilverDragonGameTooltip(module.tooltip)
+
+	local ns = silverDragon.NAMESPACE
+	if ns and ns.Tooltip and ns.Tooltip.Get then
+		StyleSilverDragonGameTooltip(ns.Tooltip.Get("Loot"))
 	end
 end
 

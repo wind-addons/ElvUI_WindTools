@@ -45,18 +45,34 @@ local function StyleTooltipWidgetContainer(tt)
 	end
 end
 
+local function getCachedTexture(tt, index)
+	local cache = tt.__windTexture
+	if not cache then
+		cache = {}
+		tt.__windTexture = cache
+	end
+
+	local texture = cache[index]
+	if not texture then
+		texture = _G[tt:GetName() .. "Texture" .. index]
+		cache[index] = texture
+	end
+
+	return texture
+end
+
 function S:StyleIconsInTooltip(tt)
 	if tt:IsForbidden() or not tt.NumLines or not E.db.general.cropIcon then
 		return
 	end
 
 	for i = 2, tt:NumLines() do
-		styleIconsInLine(_G[tt:GetName() .. "TextLeft" .. i])
-		styleIconsInLine(_G[tt:GetName() .. "TextRight" .. i])
+		styleIconsInLine(tt:GetLeftLine(i))
+		styleIconsInLine(tt:GetRightLine(i))
 	end
 
 	for i = 1, 30 do
-		local texture = _G[tt:GetName() .. "Texture" .. i] ---@type Texture?
+		local texture = getCachedTexture(tt, i) ---@type Texture?
 		if texture and texture:IsShown() then
 			self:TryCropTexture(texture)
 		else

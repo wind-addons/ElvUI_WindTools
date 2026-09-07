@@ -94,6 +94,46 @@ local function applyPoints(object, points)
 	end
 end
 
+local function getExistingSpark(frame)
+	return frame:Get("bigwigs:windtools:spark") or frame.windSpark
+end
+
+local function createSpark(frame)
+	local spark = pool:Get("spark")
+	frame:Set("bigwigs:windtools:spark", spark)
+	frame.windSpark = spark
+	return spark
+end
+
+local function getSpark(frame)
+	local spark = getExistingSpark(frame)
+	if not spark then
+		spark = createSpark(frame)
+	else
+		frame:Set("bigwigs:windtools:spark", spark)
+		frame.windSpark = spark
+	end
+
+	spark:SetParent(frame.candyBarBar)
+	spark:ClearAllPoints()
+	spark:Point("CENTER", frame.candyBarBar:GetStatusBarTexture(), "RIGHT", 0, 0)
+	spark:SetBlendMode("ADD")
+
+	return spark
+end
+
+local function releaseSpark(frame)
+	local spark = getExistingSpark(frame)
+	if not spark then
+		return
+	end
+
+	spark:Hide()
+	pool:Release(spark)
+	frame:Set("bigwigs:windtools:spark", nil)
+	frame.windSpark = nil
+end
+
 local function modifyStyle(frame)
 	local emphasized = frame:Get("bigwigs:emphasized")
 
@@ -122,11 +162,19 @@ local function modifyStyle(frame)
 		end
 	end
 
-	local spark = frame:Get("bigwigs:windtools:spark")
+	if db.spark then
+		local spark = getSpark(frame)
+		spark:Show()
 
-	local barHeight = frame.candyBarBar:GetHeight()
-	if E:NotSecretValue(barHeight) then
-		spark:Size(4, barHeight * 2)
+		local barHeight = frame.candyBarBar:GetHeight()
+		if E:NotSecretValue(barHeight) then
+			spark:Size(4, barHeight * 2)
+		end
+	else
+		local spark = getExistingSpark(frame)
+		if spark then
+			spark:Hide()
+		end
 	end
 end
 
@@ -143,14 +191,6 @@ local function applyStyle(frame)
 	local height = frame:GetHeight()
 	frame:Height(height * 0.618)
 	frame:Set("bigwigs:windtools:originalheight", height)
-
-	local spark = pool:Get("spark")
-	spark:SetParent(frame.candyBarBar)
-	spark:ClearAllPoints()
-	spark:Point("CENTER", frame.candyBarBar:GetStatusBarTexture(), "RIGHT", 0, 0)
-	spark:SetBlendMode("ADD")
-	spark:Show()
-	frame:Set("bigwigs:windtools:spark", spark)
 
 	modifyStyle(frame)
 
@@ -249,12 +289,7 @@ local function barStopped(frame)
 		frame:Set("bigwigs:windtools:barbackdrop", nil)
 	end
 
-	local spark = frame:Get("bigwigs:windtools:spark")
-	if spark then
-		spark:Hide()
-		pool:Release(spark)
-		frame:Set("bigwigs:windtools:spark", nil)
-	end
+	releaseSpark(frame)
 
 	local barColor = frame:Get("bigwigs:windtools:barcolor")
 	if barColor then
@@ -320,17 +355,19 @@ function S:BigWigs_QueueTimer()
 
 				statusBarTexture:SetTexture(E.media.normTex)
 
-				if db.spark then
-					frame.spark = frame:CreateTexture(nil, "ARTWORK", nil, 1)
-					frame.spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
-					frame.spark:SetBlendMode("ADD")
-					frame.spark:Size(4, frame:GetHeight())
-				end
-
 				frame:Size(parent:GetWidth(), 10)
 				frame:ClearAllPoints()
 				frame:Point("TOPLEFT", parent, "BOTTOMLEFT", 1, -5)
 				frame:Point("TOPRIGHT", parent, "BOTTOMRIGHT", -1, -5)
+
+				if db.spark then
+					frame.spark = frame:CreateTexture(nil, "ARTWORK", nil, 1)
+					frame.spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
+					frame.spark:SetBlendMode("ADD")
+					frame.spark:Point("CENTER", statusBarTexture, "RIGHT", 0, 0)
+					frame.spark:Size(4, frame:GetHeight())
+				end
+
 				frame.text.SetFormattedText = function(textFrame, _, time)
 					textFrame:SetText(format("%d", time))
 				end

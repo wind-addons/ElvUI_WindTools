@@ -1106,15 +1106,6 @@ options.autoCollapse = {
 			type = "toggle",
 			name = L["Enable"],
 		},
-		ignoreManualToggle = {
-			order = 3,
-			type = "toggle",
-			name = L["Ignore Manual Toggle"],
-			desc = L["When enabled, manual expand or collapse actions will be ignored. The state will always follow the priority rules below."],
-			disabled = function()
-				return not E.db.WT.quest.autoCollapse.enable
-			end,
-		},
 		priority1 = {
 			order = 11,
 			type = "group",

@@ -1,12 +1,15 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local AC = W:NewModule("AutoCollapse", "AceHook-3.0", "AceEvent-3.0") ---@class AutoCollapse: AceModule, AceHook-3.0, AceEvent-3.0
+local AC = W:NewModule("AutoCollapse", "AceEvent-3.0") ---@class AutoCollapse: AceModule, AceEvent-3.0
 local BL = E:GetModule("Blizzard")
 
 local _G = _G
 local ipairs = ipairs
 
+local hooksecurefunc = hooksecurefunc
 local IsInInstance = IsInInstance
 local IsResting = IsResting
+local UnitAffectingCombat = UnitAffectingCombat
+local UnitInVehicle = UnitInVehicle
 
 local instanceTypeKeyMap = {
 	none = "outOfInstance",
@@ -19,18 +22,21 @@ local instanceTypeKeyMap = {
 	interior = "interior",
 }
 
-function AC:UpdateState(event)
+local visualCollapsed = false
+
+---Re-evaluate from current conditions (priority 1 > 2 > 3 > 4).
+function AC:UpdateState()
 	if not self.db or not self.db.enable then
 		self.state = "none"
 		return
 	end
 
-	if event == "PLAYER_REGEN_DISABLED" and self.db.combat ~= "none" then
+	if UnitAffectingCombat("player") and self.db.combat ~= "none" then
 		self.state = self.db.combat
 		return
 	end
 
-	if event == "UNIT_ENTERED_VEHICLE" and self.db.vehicle ~= "none" then
+	if UnitInVehicle("player") and self.db.vehicle ~= "none" then
 		self.state = self.db.vehicle
 		return
 	end
@@ -43,15 +49,73 @@ function AC:UpdateState(event)
 	local _, instanceType = IsInInstance()
 	local key = instanceTypeKeyMap[instanceType]
 	if key and self.db[key] and self.db[key] ~= "none" then
-		self.state = self.db[key] --[[@as "none" | "collapse" | "expand"]]
+		self.state = self.db[key] --[[@as "none" | "collapse" | "expand" | "hide"]]
 		return
 	end
 
 	self.state = self.db.default
 end
 
+---@param tracker Frame
+local function ApplyVisualCollapse(tracker)
+	if not visualCollapsed then
+		return
+	end
+
+	local modules = tracker.modules
+	if modules then
+		for index = 1, #modules do
+			modules[index]:Hide()
+		end
+	end
+
+	local header = tracker.Header
+	if header then
+		header:SetCollapsed(true)
+	end
+
+	local nineSlice = tracker.NineSlice
+	if nineSlice and header then
+		nineSlice:SetPoint("BOTTOM", header, "BOTTOM", 0, -(tracker.bottomModulePadding or 10))
+		nineSlice:Show()
+	end
+
+	tracker:Show()
+end
+
+---@param tracker Frame
+local function ClearVisualCollapse(tracker)
+	visualCollapsed = false
+
+	local modules = tracker.modules
+	local lastModule ---@type Frame?
+	if modules then
+		for index = 1, #modules do
+			local module = modules[index]
+			if module.GetContentsHeight and module:GetContentsHeight() > 0 then
+				module:Show()
+				lastModule = module
+			end
+		end
+	end
+
+	local header = tracker.Header
+	if header then
+		header:SetCollapsed(false)
+	end
+
+	local nineSlice = tracker.NineSlice
+	if nineSlice and lastModule then
+		nineSlice:SetPoint("BOTTOM", lastModule, "BOTTOM", 0, -(tracker.bottomModulePadding or 10))
+		nineSlice:Show()
+	end
+end
+
+---@param tracker Frame
+---@param state "none" | "collapse" | "expand" | "hide"
 local function ApplyCollapseState(tracker, state)
 	if state == "hide" then
+		visualCollapsed = false
 		if not BL:ObjectiveTracker_IsCollapsed(tracker) then
 			BL:ObjectiveTracker_Collapse(tracker)
 		end
@@ -62,9 +126,14 @@ local function ApplyCollapseState(tracker, state)
 		BL:ObjectiveTracker_Expand(tracker)
 	end
 
-	local isCollapsed = tracker:IsCollapsed()
-	if state == "collapse" and not isCollapsed or state == "expand" and isCollapsed then
-		tracker:SetCollapsed(not isCollapsed)
+	if state == "collapse" then
+		visualCollapsed = true
+		ApplyVisualCollapse(tracker)
+		return
+	end
+
+	if state == "expand" then
+		ClearVisualCollapse(tracker)
 	end
 end
 
@@ -81,27 +150,11 @@ function AC:Apply(event, arg1)
 		return
 	end
 
-	self:UpdateState(event)
+	self:UpdateState()
 
 	if self.state ~= "none" then
 		ApplyCollapseState(tracker, self.state)
 	end
-end
-
-function AC:ObjectiveTrackerFrame_SetCollapsed(frame)
-	if not self.db or not self.db.enable or self.state == "none" then
-		return
-	end
-
-	local header = frame.Header
-	local isUserAction = header and header.MinimizeButton and header.MinimizeButton:IsMouseOver()
-
-	if not self.db.ignoreManualToggle and isUserAction then
-		self.state = "none"
-		return
-	end
-
-	ApplyCollapseState(frame, self.state)
 end
 
 local events = {
@@ -116,9 +169,18 @@ local events = {
 function AC:ProfileUpdate()
 	self.db = E.db.WT.quest.autoCollapse
 
+	local tracker = _G.ObjectiveTrackerFrame
+	if tracker and not self.updateHooked then
+		hooksecurefunc(tracker, "Update", ApplyVisualCollapse)
+		self.updateHooked = true
+	end
+
 	if not self.db.enable then
 		self:UnregisterAllEvents()
 		self.eventRegistered = false
+		if tracker and visualCollapsed then
+			ClearVisualCollapse(tracker)
+		end
 		return
 	end
 
@@ -127,13 +189,6 @@ function AC:ProfileUpdate()
 			self:RegisterEvent(event, "Apply")
 		end
 		self.eventRegistered = true
-	end
-
-	local tracker = _G.ObjectiveTrackerFrame
-	if tracker then
-		if not self:IsHooked(tracker, "SetCollapsed") then
-			self:SecureHook(tracker, "SetCollapsed", "ObjectiveTrackerFrame_SetCollapsed")
-		end
 	end
 
 	self:Apply()

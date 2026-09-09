@@ -30,6 +30,7 @@
 	<Script file='SilverDragon.lua' />
 	<Script file='SimpleAddonManager.lua' />
 	<Script file='Simulationcraft.lua' />
+	<Script file='TalentLoadoutManager.lua' />
 	<Script file='TalentLoadoutsEx.lua' />
 	<Script file='TomCats.lua' />
 	<Script file='TomTom.lua' />

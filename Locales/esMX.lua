@@ -1601,6 +1601,7 @@ L["Table is up! Grab your food and water!"] = true
 L["Tag"] = "Etiqueta"
 L["Tags"] = "Etiquetas"
 L["Taiwan"] = "Taiwán"
+L["Talent Loadout Manager"] = true
 L["Talent Loadouts Ex"] = "Cargas de talento Ex"
 L["Talents"] = "Talentos"
 L["Talking Head"] = "Cabeza hablante"

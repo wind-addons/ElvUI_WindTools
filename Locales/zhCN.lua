@@ -1602,6 +1602,7 @@ L["Table is up! Grab your food and water!"] = "开桌子了! 快来领餐包喽!
 L["Tag"] = "标签"
 L["Tags"] = "标签"
 L["Taiwan"] = "中国台湾"
+L["Talent Loadout Manager"] = true
 L["Talent Loadouts Ex"] = true
 L["Talents"] = "天赋"
 L["Talking Head"] = "特写"

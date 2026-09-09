@@ -1601,6 +1601,7 @@ L["Table is up! Grab your food and water!"] = "식탁이 준비되었습니다! 
 L["Tag"] = "태그"
 L["Tags"] = "태그"
 L["Taiwan"] = "대만"
+L["Talent Loadout Manager"] = true
 L["Talent Loadouts Ex"] = true
 L["Talents"] = "전문화"
 L["Talking Head"] = "말머리"

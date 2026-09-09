@@ -2802,6 +2802,12 @@ options.addons = {
 			addonName = "Simulationcraft",
 			addonskinsKey = "Simulationcraft",
 		},
+		talentLoadoutManager = {
+			order = 10,
+			type = "toggle",
+			name = L["Talent Loadout Manager"],
+			addonName = "TalentLoadoutManager",
+		},
 		talentLoadoutsEx = {
 			order = 10,
 			type = "toggle",

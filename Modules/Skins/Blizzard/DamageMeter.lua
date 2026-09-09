@@ -10,6 +10,8 @@ local hooksecurefunc = hooksecurefunc
 local issecretvalue = issecretvalue
 local RunNextFrame = RunNextFrame
 
+local Enum_OnUpdateMode_RunAlways = Enum.OnUpdateMode.RunAlways
+
 -- FontStrings only. ElvUI never SetAlpha/HookScript/SetShown the dropdown buttons;
 -- doing that blocks SessionDropdown OnMouseDown_Intrinsic (see DropdownButton.lua).
 local headerVisualGetters = {
@@ -209,6 +211,7 @@ local function StartVisibilityTracking(sessionWindow)
 			end
 		end
 	end)
+	visibilityWatcher:SetOnUpdateMode(Enum_OnUpdateMode_RunAlways)
 end
 
 function S:DamageMeter_GetWindowBackdropTargetAlpha(sessionWindow, isMouseOver)

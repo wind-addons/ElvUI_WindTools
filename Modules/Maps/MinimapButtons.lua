@@ -35,6 +35,8 @@ local UnregisterStateDriver = UnregisterStateDriver
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 
+local Enum_OnUpdateMode_Disabled = Enum.OnUpdateMode.Disabled
+
 local BuildinIgnoreSettings = {
 	full = {
 		"AsphyxiaUIMinimapHelpButton",
@@ -362,6 +364,7 @@ function MB:SkinButton(button, force)
 		button.icon:Show()
 		button.icon.Hide = E.noop
 		button.icon2:Kill()
+		button.timer:SetOnUpdateMode(Enum_OnUpdateMode_Disabled)
 		button.timer:SetScript("OnUpdate", nil)
 		F.InternalizeMethod(button.timer, "SetScript", true)
 	elseif name == "MRPMinimapButton" then

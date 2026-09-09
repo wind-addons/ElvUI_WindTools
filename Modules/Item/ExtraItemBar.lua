@@ -42,6 +42,9 @@ local C_QuestLog_GetQuestIDForLogIndex = C_QuestLog.GetQuestIDForLogIndex
 local C_Timer_NewTicker = C_Timer.NewTicker
 local C_TradeSkillUI_GetItemReagentQualityInfo = C_TradeSkillUI.GetItemReagentQualityInfo
 
+local Enum_OnUpdateMode_Disabled = Enum.OnUpdateMode.Disabled
+local Enum_OnUpdateMode_RunWhenVisible = Enum.OnUpdateMode.RunWhenVisible
+
 local questItemList = {}
 local function UpdateQuestItemList()
 	wipe(questItemList)
@@ -280,6 +283,7 @@ function EB:SetUpButton(button, itemData, slotID, waitGroup)
 		end
 	end
 	button:SetScript("OnUpdate", OnUpdateFunction)
+	button:SetOnUpdateMode(OnUpdateFunction and Enum_OnUpdateMode_RunWhenVisible or Enum_OnUpdateMode_Disabled)
 
 	-- Tooltips
 	button:SetScript("OnEnter", function(_)
@@ -626,6 +630,7 @@ function EB:UpdateBar(id)
 	if buttonID <= 12 then
 		for hideButtonID = buttonID, 12 do
 			bar.buttons[hideButtonID]:Hide()
+			bar.buttons[hideButtonID]:SetOnUpdateMode(Enum_OnUpdateMode_Disabled)
 		end
 	end
 

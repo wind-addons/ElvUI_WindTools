@@ -8,6 +8,9 @@ local UnitName = UnitName
 local UnitIsConnected = UnitIsConnected
 local UnitIsUnit = UnitIsUnit
 
+local Enum_OnUpdateMode_Disabled = Enum.OnUpdateMode.Disabled
+local Enum_OnUpdateMode_RunWhenVisible = Enum.OnUpdateMode.RunWhenVisible
+
 local displayString = ""
 local int = 1
 local curMinRange, curMaxRange
@@ -52,8 +55,10 @@ local function OnEvent(self, event)
 	int = 0
 	if updateTargetRange then
 		forceUpdate = true
+		self:SetOnUpdateMode(Enum_OnUpdateMode_RunWhenVisible)
 	else
 		self.text:SetText("")
+		self:SetOnUpdateMode(Enum_OnUpdateMode_Disabled)
 	end
 end
 

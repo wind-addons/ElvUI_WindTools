@@ -16,19 +16,18 @@ local GetProfessionInfo = GetProfessionInfo
 local GetProfessions = GetProfessions
 local GetServerTime = GetServerTime
 
-local C_AreaPoiInfo_GetAreaPOIInfo = C_AreaPoiInfo and C_AreaPoiInfo.GetAreaPOIInfo
-local C_AreaPoiInfo_GetEventsForMap = C_AreaPoiInfo and C_AreaPoiInfo.GetEventsForMap
+local C_AreaPoiInfo_GetEventsForMap = C_AreaPoiInfo.GetEventsForMap
 local C_Map_GetMapInfo = C_Map.GetMapInfo
 local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 local C_QuestLog_IsOnQuest = C_QuestLog.IsOnQuest
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local C_QuestLog_GetQuestObjectives = C_QuestLog.GetQuestObjectives
 
-local C_EventScheduler_GetEventUiMapID = C_EventScheduler and C_EventScheduler.GetEventUiMapID
-local C_EventScheduler_GetOngoingEvents = C_EventScheduler and C_EventScheduler.GetOngoingEvents
-local C_EventScheduler_GetScheduledEvents = C_EventScheduler and C_EventScheduler.GetScheduledEvents
-local C_EventScheduler_HasData = C_EventScheduler and C_EventScheduler.HasData
-local C_EventScheduler_RequestEvents = C_EventScheduler and C_EventScheduler.RequestEvents
+local C_EventScheduler_GetEventUiMapID = C_EventScheduler.GetEventUiMapID
+local C_EventScheduler_GetOngoingEvents = C_EventScheduler.GetOngoingEvents
+local C_EventScheduler_GetScheduledEvents = C_EventScheduler.GetScheduledEvents
+local C_EventScheduler_HasData = C_EventScheduler.HasData
+local C_EventScheduler_RequestEvents = C_EventScheduler.RequestEvents
 
 local function GetWorldMapIDSetter(idOrFunc)
 	return function(...)
@@ -154,11 +153,7 @@ local function IsAbundanceEvent(eventInfo, poiInfo)
 end
 
 local function GetEventPOIInfo(mapID, areaPoiID)
-	if not areaPoiID then
-		return
-	end
-
-	return C_AreaPoiInfo_GetAreaPOIInfo(mapID, areaPoiID) or C_AreaPoiInfo_GetAreaPOIInfo(nil, areaPoiID)
+	return ET:GetAreaPOIInfo(areaPoiID, mapID)
 end
 
 local function FindAbundanceMap(events, currentTime, hasSchedule)
@@ -199,8 +194,20 @@ end
 
 local function GetCurrentAbundanceMapID()
 	local currentTime = GetServerTime()
+	local scheduledEvents = ET.scheduledEventsCache
+	local ongoingEvents = ET.ongoingEventsCache
 
-	if C_EventScheduler_HasData() then
+	if scheduledEvents or ongoingEvents then
+		local mapID = FindAbundanceMap(scheduledEvents, currentTime, true)
+		if mapID then
+			return mapID
+		end
+
+		mapID = FindAbundanceMap(ongoingEvents, currentTime, false)
+		if mapID then
+			return mapID
+		end
+	elseif C_EventScheduler_HasData() then
 		local mapID = FindAbundanceMap(C_EventScheduler_GetScheduledEvents(), currentTime, true)
 		if mapID then
 			return mapID
@@ -1092,17 +1099,32 @@ ET.EventData = {
 }
 
 local WeeklyMNQuestIDs = ET.EventData.WeeklyMN.args.questIDs
+local cachedWeeklyMNQuestIDs
+local cachedWeeklyMNGeneration
+local cachedWeeklyMNAbundanceMapID
 local function GetWeeklyMNQuestIDs()
+	local abundanceMapID = GetCurrentAbundanceMapID()
+	if
+		cachedWeeklyMNQuestIDs
+		and cachedWeeklyMNGeneration == ET.schedulerGeneration
+		and cachedWeeklyMNAbundanceMapID == abundanceMapID
+	then
+		return cachedWeeklyMNQuestIDs
+	end
+
 	local questIDs = {}
 	for storylineName, storylineQuests in pairs(WeeklyMNQuestIDs) do
 		questIDs[storylineName] = storylineQuests
 	end
 
-	questIDs[WeeklyName(7636650, L["Abundance"], GetCurrentAbundanceMapID())] = {
+	questIDs[WeeklyName(7636650, L["Abundance"], abundanceMapID)] = {
 		-- https://www.wowhead.com/quest=89507/abundant-offerings
 		89507, -- 丰饶贡品
 	}
 
+	cachedWeeklyMNQuestIDs = questIDs
+	cachedWeeklyMNGeneration = ET.schedulerGeneration
+	cachedWeeklyMNAbundanceMapID = abundanceMapID
 	return questIDs
 end
 

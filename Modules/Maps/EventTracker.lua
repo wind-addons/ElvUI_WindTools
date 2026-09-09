@@ -12,32 +12,52 @@ local format = format
 local ipairs = ipairs
 local next = next
 local pairs = pairs
-local tinsert = tinsert
 local type = type
 local unpack = unpack
+local wipe = wipe
 
 local CreateFrame = CreateFrame
 local EventRegistry = EventRegistry
 local GetServerTime = GetServerTime
 local UiMapPoint_CreateFromCoordinates = UiMapPoint.CreateFromCoordinates
 
-local C_AreaPoiInfo_GetAreaPOIInfo = C_AreaPoiInfo and C_AreaPoiInfo.GetAreaPOIInfo
+local C_AreaPoiInfo_GetAreaPOIInfo = C_AreaPoiInfo.GetAreaPOIInfo
 local C_Map_CanSetUserWaypointOnMap = C_Map.CanSetUserWaypointOnMap
 local C_Map_OpenWorldMap = C_Map.OpenWorldMap
 local C_Map_SetUserWaypoint = C_Map.SetUserWaypoint
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
-local C_EventScheduler_GetOngoingEvents = C_EventScheduler and C_EventScheduler.GetOngoingEvents
-local C_EventScheduler_GetScheduledEvents = C_EventScheduler and C_EventScheduler.GetScheduledEvents
-local C_EventScheduler_GetEventZoneName = C_EventScheduler and C_EventScheduler.GetEventZoneName
-local C_EventScheduler_HasData = C_EventScheduler and C_EventScheduler.HasData
-local C_EventScheduler_RequestEvents = C_EventScheduler and C_EventScheduler.RequestEvents
+local C_EventScheduler_GetOngoingEvents = C_EventScheduler.GetOngoingEvents
+local C_EventScheduler_GetScheduledEvents = C_EventScheduler.GetScheduledEvents
+local C_EventScheduler_GetEventUiMapID = C_EventScheduler.GetEventUiMapID
+local C_EventScheduler_GetEventZoneName = C_EventScheduler.GetEventZoneName
+local C_EventScheduler_HasData = C_EventScheduler.HasData
+local C_EventScheduler_RequestEvents = C_EventScheduler.RequestEvents
 local C_SuperTrack_SetSuperTrackedUserWaypoint = C_SuperTrack.SetSuperTrackedUserWaypoint
 local C_Timer_NewTicker = C_Timer.NewTicker
 
-local pcall = pcall
-local tonumber = tonumber
-
 local LeftButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:230:307|t"
+local CURSED_SURGE_MAP_ID = 2512
+local cursedSurgeActiveEvent = {}
+local cursedSurgeNextEvent = {}
+local cursedSurgeNameCache = {}
+
+ET.schedulerGeneration = 0
+ET.scheduledEventsCache = nil
+ET.ongoingEventsCache = nil
+
+function ET:RefreshSchedulerCache()
+	if not C_EventScheduler_HasData() then
+		self.scheduledEventsCache = nil
+		self.ongoingEventsCache = nil
+		C_EventScheduler_RequestEvents()
+		return false
+	end
+
+	self.scheduledEventsCache = C_EventScheduler_GetScheduledEvents()
+	self.ongoingEventsCache = C_EventScheduler_GetOngoingEvents()
+	self.schedulerGeneration = self.schedulerGeneration + 1
+	return true
+end
 
 local function SecondToTime(second)
 	local hour = floor(second / 3600)
@@ -59,47 +79,34 @@ local function ReskinStatusBar(bar)
 	E:RegisterStatusBar(bar)
 end
 
-local function SafeNumber(value)
-	local success, number = pcall(tonumber, value)
-	return success and number or nil
-end
-
-local function GetCursedSurgePOIInfo(areaPoiID)
-	if not C_AreaPoiInfo_GetAreaPOIInfo then
+---Resolve Area POI info. Scheduler POIs use a nil map ID first (WoWUI EventScheduler).
+---@param areaPoiID number
+---@param uiMapID? number
+---@return table?
+function ET:GetAreaPOIInfo(areaPoiID, uiMapID)
+	if not areaPoiID then
 		return
 	end
 
-	local success, poiInfo = pcall(C_AreaPoiInfo_GetAreaPOIInfo, nil, areaPoiID)
-	if success and type(poiInfo) == "table" then
-		return poiInfo
-	end
-
-	success, poiInfo = pcall(C_AreaPoiInfo_GetAreaPOIInfo, 2512, areaPoiID)
-	if success and type(poiInfo) == "table" then
-		return poiInfo
-	end
+	return C_AreaPoiInfo_GetAreaPOIInfo(uiMapID, areaPoiID)
+		or (uiMapID and C_AreaPoiInfo_GetAreaPOIInfo(nil, areaPoiID))
 end
 
 local function GetCursedSurgeName(_, eventInfo)
 	local areaPoiID = eventInfo and eventInfo.areaPoiID
-	local poiInfo = areaPoiID and GetCursedSurgePOIInfo(areaPoiID)
-	if poiInfo then
-		local success, poiName = pcall(function()
-			return poiInfo.name
-		end)
-		if success and poiName then
-			return poiName
-		end
+	if not areaPoiID then
+		return L["Cursed Surges"]
 	end
 
-	if C_EventScheduler_GetEventZoneName then
-		local success, zoneName = pcall(C_EventScheduler_GetEventZoneName, areaPoiID)
-		if success and zoneName then
-			return zoneName
-		end
+	local cachedName = cursedSurgeNameCache[areaPoiID]
+	if cachedName then
+		return cachedName
 	end
 
-	return L["Cursed Surges"]
+	local poiInfo = ET:GetAreaPOIInfo(areaPoiID)
+	local eventName = (poiInfo and poiInfo.name) or C_EventScheduler_GetEventZoneName(areaPoiID) or L["Cursed Surges"]
+	cursedSurgeNameCache[areaPoiID] = eventName
+	return eventName
 end
 
 local function GetCursedSurgePosition(args, eventInfo)
@@ -110,74 +117,63 @@ local function GetCursedSurgePosition(args, eventInfo)
 	return args.eventCoordinates and args.eventCoordinates[areaPoiID]
 end
 
+local function FillCursedSurgeEvent(eventTable, areaPoiID, startTime, endTime, args)
+	eventTable.areaPoiID = areaPoiID
+	eventTable.startTime = startTime
+	eventTable.endTime = endTime
+	eventTable.position = GetCursedSurgePosition(args, eventTable)
+	return eventTable
+end
+
 local function GetCursedSurgeEvents(args, now)
-	local activeEvent
-	local nextEvent
+	local hasActiveEvent = false
+	local hasNextEvent = false
 
-	if C_EventScheduler_GetScheduledEvents then
-		local success, scheduledEvents = pcall(C_EventScheduler_GetScheduledEvents)
-		if success and type(scheduledEvents) == "table" then
-			for _, eventInfo in ipairs(scheduledEvents) do
-				local areaPoiID = eventInfo and eventInfo.areaPoiID
-				if areaPoiID and args.eventAreaPoiIDs[areaPoiID] then
-					local startTime = SafeNumber(eventInfo.startTime)
-					local endTime = SafeNumber(eventInfo.endTime)
-					if startTime then
-						if startTime <= now and endTime then
-							local eventEndTime = endTime
-							local durationEndTime = startTime + args.duration
-							if eventEndTime > durationEndTime then
-								eventEndTime = durationEndTime
-							end
+	local scheduledEvents = ET.scheduledEventsCache
+	if type(scheduledEvents) == "table" then
+		for _, eventInfo in ipairs(scheduledEvents) do
+			local areaPoiID = eventInfo and eventInfo.areaPoiID
+			local startTime = eventInfo and eventInfo.startTime
+			local endTime = eventInfo and eventInfo.endTime
+			if areaPoiID and args.eventAreaPoiIDs[areaPoiID] and startTime then
+				if startTime <= now and endTime then
+					local eventEndTime = endTime
+					local durationEndTime = startTime + args.duration
+					if eventEndTime > durationEndTime then
+						eventEndTime = durationEndTime
+					end
 
-							if now < eventEndTime then
-								if not activeEvent or startTime > activeEvent.startTime then
-									activeEvent = {
-										areaPoiID = areaPoiID,
-										endTime = eventEndTime,
-										startTime = startTime,
-									}
-								end
-							end
-						end
-
-						if startTime > now and not nextEvent then
-							nextEvent = {
-								areaPoiID = areaPoiID,
-								startTime = startTime,
-							}
+					if now < eventEndTime then
+						if not hasActiveEvent or startTime > cursedSurgeActiveEvent.startTime then
+							FillCursedSurgeEvent(cursedSurgeActiveEvent, areaPoiID, startTime, eventEndTime, args)
+							hasActiveEvent = true
 						end
 					end
+				end
+
+				if startTime > now and not hasNextEvent then
+					FillCursedSurgeEvent(cursedSurgeNextEvent, areaPoiID, startTime, nil, args)
+					hasNextEvent = true
 				end
 			end
 		end
 	end
 
-	if not activeEvent and C_EventScheduler_GetOngoingEvents then
-		local success, ongoingEvents = pcall(C_EventScheduler_GetOngoingEvents)
-		if success and type(ongoingEvents) == "table" then
+	if not hasActiveEvent then
+		local ongoingEvents = ET.ongoingEventsCache
+		if type(ongoingEvents) == "table" then
 			for _, eventInfo in ipairs(ongoingEvents) do
 				local areaPoiID = eventInfo and eventInfo.areaPoiID
 				if areaPoiID and args.eventAreaPoiIDs[areaPoiID] then
-					activeEvent = {
-						areaPoiID = areaPoiID,
-						endTime = now + args.duration,
-						startTime = now,
-					}
+					FillCursedSurgeEvent(cursedSurgeActiveEvent, areaPoiID, now, now + args.duration, args)
+					hasActiveEvent = true
 					break
 				end
 			end
 		end
 	end
 
-	if activeEvent then
-		activeEvent.position = GetCursedSurgePosition(args, activeEvent)
-	end
-	if nextEvent then
-		nextEvent.position = GetCursedSurgePosition(args, nextEvent)
-	end
-
-	return activeEvent, nextEvent
+	return hasActiveEvent and cursedSurgeActiveEvent or nil, hasNextEvent and cursedSurgeNextEvent or nil
 end
 
 function ET:SetCursedSurgeWaypoint(args)
@@ -188,41 +184,41 @@ function ET:SetCursedSurgeWaypoint(args)
 		return
 	end
 
-	if C_Map_OpenWorldMap then
-		C_Map_OpenWorldMap(2512)
-	elseif _G.WorldMapFrame and _G.WorldMapFrame.SetMapID then
-		_G.WorldMapFrame:SetMapID(2512)
+	local mapID = eventInfo.areaPoiID and C_EventScheduler_GetEventUiMapID(eventInfo.areaPoiID) or CURSED_SURGE_MAP_ID
+	if not mapID then
+		mapID = CURSED_SURGE_MAP_ID
 	end
 
-	if C_Map_CanSetUserWaypointOnMap(2512) then
-		C_Map_SetUserWaypoint(UiMapPoint_CreateFromCoordinates(2512, position[1], position[2]))
+	C_Map_OpenWorldMap(mapID)
+
+	if C_Map_CanSetUserWaypointOnMap(mapID) then
+		C_Map_SetUserWaypoint(UiMapPoint_CreateFromCoordinates(mapID, position[1], position[2]))
 		E:Delay(0.1, C_SuperTrack_SetSuperTrackedUserWaypoint, true)
 	end
+end
+
+local function ClearScheduledLoopState(self)
+	self.isRunning = false
+	self.isCompleted = false
+	self.timeLeft = 0
+	self.timeOver = 0
+	self.nextEventIndex = nil
+	self.nextEventTimestamp = nil
+	self.cachedEventPoiID = nil
+	self.cachedEventStartTime = nil
+	self.args.currentLocation = nil
+	self.args.nextLocation = nil
+	self.args.currentEvent = nil
+	self.args.nextEvent = nil
 end
 
 local function UpdateScheduledLoopTimer(self)
 	local args = self.args
 	local now = GetServerTime()
 
-	if C_EventScheduler_HasData then
-		local success, hasData = pcall(C_EventScheduler_HasData)
-		if success and not hasData then
-			if C_EventScheduler_RequestEvents
-				and (not args.schedulerRequestTime or now - args.schedulerRequestTime >= 5)
-			then
-				args.schedulerRequestTime = now
-				pcall(C_EventScheduler_RequestEvents)
-			end
-			self.isRunning = false
-			self.isCompleted = false
-			self.timeLeft = 0
-			self.timeOver = 0
-			self.nextEventIndex = nil
-			self.nextEventTimestamp = nil
-			args.currentLocation = nil
-			args.nextLocation = nil
-			args.currentEvent = nil
-			args.nextEvent = nil
+	if not ET.scheduledEventsCache and not ET.ongoingEventsCache then
+		if not ET:RefreshSchedulerCache() then
+			ClearScheduledLoopState(self)
 			return
 		end
 	end
@@ -233,34 +229,174 @@ local function UpdateScheduledLoopTimer(self)
 		self.isCompleted = false
 		self.timeLeft = activeEvent.endTime - now
 		self.timeOver = args.duration - self.timeLeft
-		self.nextEventIndex = format("%s:%s", activeEvent.areaPoiID, activeEvent.startTime)
 		self.nextEventTimestamp = nextEvent and nextEvent.startTime
-		args.currentLocation = GetCursedSurgeName(args, activeEvent)
-		args.nextLocation = nextEvent and GetCursedSurgeName(args, nextEvent)
 		args.currentEvent = activeEvent
 		args.nextEvent = nextEvent
+		if self.cachedEventPoiID ~= activeEvent.areaPoiID or self.cachedEventStartTime ~= activeEvent.startTime then
+			self.cachedEventPoiID = activeEvent.areaPoiID
+			self.cachedEventStartTime = activeEvent.startTime
+			self.nextEventIndex = format("%s:%s", activeEvent.areaPoiID, activeEvent.startTime)
+			args.currentLocation = GetCursedSurgeName(args, activeEvent)
+			args.nextLocation = nextEvent and GetCursedSurgeName(args, nextEvent)
+		end
 	elseif nextEvent then
 		self.isRunning = false
 		self.isCompleted = false
 		self.timeLeft = nextEvent.startTime - now
 		self.timeOver = 0
-		self.nextEventIndex = format("%s:%s", nextEvent.areaPoiID, nextEvent.startTime)
 		self.nextEventTimestamp = nextEvent.startTime
-		args.currentLocation = nil
-		args.nextLocation = GetCursedSurgeName(args, nextEvent)
 		args.currentEvent = nil
 		args.nextEvent = nextEvent
+		if self.cachedEventPoiID ~= nextEvent.areaPoiID or self.cachedEventStartTime ~= nextEvent.startTime then
+			self.cachedEventPoiID = nextEvent.areaPoiID
+			self.cachedEventStartTime = nextEvent.startTime
+			self.nextEventIndex = format("%s:%s", nextEvent.areaPoiID, nextEvent.startTime)
+			args.currentLocation = nil
+			args.nextLocation = GetCursedSurgeName(args, nextEvent)
+		end
 	else
-		self.isRunning = false
-		self.isCompleted = false
-		self.timeLeft = 0
-		self.timeOver = 0
-		self.nextEventIndex = nil
-		self.nextEventTimestamp = nil
-		args.currentLocation = nil
-		args.nextLocation = nil
-		args.currentEvent = nil
-		args.nextEvent = nil
+		ClearScheduledLoopState(self)
+	end
+end
+
+local function IsQuestIDCompleted(questID)
+	if type(questID) == "table" then
+		for _, id in ipairs(questID) do
+			if C_QuestLog_IsQuestFlaggedCompleted(id) then
+				return true
+			end
+		end
+		return false
+	end
+
+	return C_QuestLog_IsQuestFlaggedCompleted(questID)
+end
+
+local function AreAllQuestProgressCompleted(questProgress)
+	if not questProgress then
+		return false
+	end
+
+	for _, data in ipairs(questProgress) do
+		if not data.questID or not IsQuestIDCompleted(data.questID) then
+			return false
+		end
+	end
+
+	return true
+end
+
+local function AreAllStorylinesCompleted(questIDs)
+	local completedStorylines, totalStorylines = 0, 0
+
+	for _, storylineQuests in pairs(questIDs) do
+		totalStorylines = totalStorylines + 1
+		for _, questID in pairs(storylineQuests) do
+			if C_QuestLog_IsQuestFlaggedCompleted(questID) then
+				completedStorylines = completedStorylines + 1
+				break
+			end
+		end
+	end
+
+	return completedStorylines == totalStorylines
+end
+
+local function CountCompletedQuestIDs(questIDs)
+	local completed = 0
+	for _, questID in pairs(questIDs) do
+		if C_QuestLog_IsQuestFlaggedCompleted(questID) then
+			completed = completed + 1
+		end
+	end
+	return completed
+end
+
+local function ResolveQuestProgress(args)
+	local questProgress = args.questProgress
+	if type(questProgress) == "function" then
+		questProgress = questProgress(args)
+	end
+	return questProgress
+end
+
+local function AddLocationTooltipLines(args)
+	for _, locationContext in ipairs({
+		{ L["Location"], args.location },
+		{ L["Current Location"], args.currentLocation },
+		{ L["Next Location"], args.nextLocation },
+	}) do
+		local left, right = unpack(locationContext)
+		if right then
+			right = type(right) == "function" and right(args) or right
+			_G.GameTooltip:AddDoubleLine(left, right, 1, 1, 1)
+		end
+	end
+end
+
+local function AddQuestProgressTooltipLines(questProgress, useRightText)
+	if not questProgress then
+		return
+	end
+
+	_G.GameTooltip:AddLine(" ")
+	_G.GameTooltip:AddLine(L["Quest Progress"])
+	for _, data in ipairs(questProgress) do
+		if useRightText or data.questID then
+			local isCompleted = data.isCompleted
+			if not isCompleted and data.questID then
+				isCompleted = IsQuestIDCompleted(data.questID)
+			end
+
+			local color = isCompleted and "green-500" or "rose-500"
+			local leftText = type(data.label) == "function" and data:label() or data.label
+			local rightText = useRightText
+					and (data.rightText or C.StringByTemplate(
+						isCompleted and L["Completed"] or L["Not Completed"],
+						color
+					))
+				or C.StringByTemplate(isCompleted and L["Completed"] or L["Not Completed"], color)
+
+			if type(leftText) == "string" then
+				_G.GameTooltip:AddDoubleLine(leftText, rightText, 1, 1, 1)
+			end
+		end
+	end
+end
+
+local function AddWeeklyRewardTooltipLine(isCompleted)
+	if isCompleted then
+		_G.GameTooltip:AddDoubleLine(L["Weekly Reward"], C.StringByTemplate(L["Completed"], "green-500"), 1, 1, 1)
+	else
+		_G.GameTooltip:AddDoubleLine(L["Weekly Reward"], C.StringByTemplate(L["Not Completed"], "rose-500"), 1, 1, 1)
+	end
+end
+
+local function AddClickHelpTooltipLine(helpText)
+	if helpText then
+		_G.GameTooltip:AddLine(" ")
+		_G.GameTooltip:AddLine(LeftButtonIcon .. " " .. helpText, 1, 1, 1)
+	end
+end
+
+local function IsTrackerAlertEnabled(frame)
+	return frame:IsShown()
+		and ET.db
+		and ET.db.enable
+		and frame.dbKey
+		and ET.db[frame.dbKey]
+		and ET.db[frame.dbKey].enable
+end
+
+local function PruneAlertCache(alertCache, currentEventIndex)
+	if not alertCache then
+		return
+	end
+
+	local alreadyAlerted = currentEventIndex and alertCache[currentEventIndex]
+	wipe(alertCache)
+	if alreadyAlerted then
+		alertCache[currentEventIndex] = true
 	end
 end
 
@@ -301,34 +437,7 @@ local FunctionFactory = {
 			interval = 2,
 			dateUpdater = function(self)
 				if self.args.questProgress and not self.args.questIDs then
-					local questProgress = self.args.questProgress
-					if type(questProgress) == "function" then
-						questProgress = questProgress(self.args)
-					end
-
-					if questProgress then
-						local allCompleted = true
-						for _, data in ipairs(questProgress) do
-							local isCompleted = false
-							if data.questID then
-								if type(data.questID) == "table" then
-									for _, qid in ipairs(data.questID) do
-										if C_QuestLog_IsQuestFlaggedCompleted(qid) then
-											isCompleted = true
-											break
-										end
-									end
-								else
-									isCompleted = C_QuestLog_IsQuestFlaggedCompleted(data.questID)
-								end
-							end
-							if not isCompleted then
-								allCompleted = false
-								break
-							end
-						end
-						self.isCompleted = allCompleted
-					end
+					self.isCompleted = AreAllQuestProgressCompleted(ResolveQuestProgress(self.args))
 					return
 				end
 
@@ -342,41 +451,17 @@ local FunctionFactory = {
 					return
 				end
 
-				if type(questIDs) == "table" and type(next(questIDs)) ~= "number" then
-					local completedStorylines, totalStorylines = 0, 0
-
-					for _, storylineQuests in pairs(questIDs) do
-						totalStorylines = totalStorylines + 1
-						local storylineCompleted = false
-
-						for _, questID in pairs(storylineQuests) do
-							if C_QuestLog_IsQuestFlaggedCompleted(questID) then
-								storylineCompleted = true
-								break
-							end
-						end
-
-						if storylineCompleted then
-							completedStorylines = completedStorylines + 1
-						end
-					end
-
-					self.isCompleted = (completedStorylines == totalStorylines)
+				if type(next(questIDs)) ~= "number" then
+					self.isCompleted = AreAllStorylinesCompleted(questIDs)
 					return
 				end
 
-				local completed = 0
+				local completed = CountCompletedQuestIDs(questIDs)
 				if self.args.checkAllCompleted then
-					completed = 1 - #questIDs
+					completed = completed - #questIDs + 1
 				end
 
-				for _, questID in pairs(questIDs) do
-					if C_QuestLog_IsQuestFlaggedCompleted(questID) then
-						completed = completed + 1
-					end
-				end
-
-				self.isCompleted = (completed > 0)
+				self.isCompleted = completed > 0
 			end,
 			uiUpdater = function(self)
 				self.icon:SetDesaturated(self.args.desaturate and self.isCompleted)
@@ -393,77 +478,17 @@ local FunctionFactory = {
 				_G.GameTooltip:SetText(F.GetIconString(self.args.icon, 16, 16) .. " " .. self.args.eventName, 1, 1, 1)
 
 				_G.GameTooltip:AddLine(" ")
-
-				-- Location, Current Location, Next Location
-				for _, locationContext in ipairs({
-					{ L["Location"], self.args.location },
-					{ L["Current Location"], self.args.currentLocation },
-					{ L["Next Location"], self.args.nextLocation },
-				}) do
-					local left, right = unpack(locationContext)
-					if right then
-						right = type(right) == "function" and right(self.args) or right
-						_G.GameTooltip:AddDoubleLine(left, right, 1, 1, 1)
-					end
-				end
+				AddLocationTooltipLines(self.args)
 
 				if self.args.questProgress then
-					local questProgress = self.args.questProgress
-					if type(questProgress) == "function" then
-						questProgress = questProgress(self.args)
-					end
-
-					_G.GameTooltip:AddLine(" ")
-					_G.GameTooltip:AddLine(L["Quest Progress"])
-					for _, data in ipairs(questProgress) do
-						local isCompleted = data.isCompleted
-						if not isCompleted and data.questID then
-							if type(data.questID) == "table" then
-								for _, qid in ipairs(data.questID) do
-									if C_QuestLog_IsQuestFlaggedCompleted(qid) then
-										isCompleted = true
-										break
-									end
-								end
-							else
-								isCompleted = C_QuestLog_IsQuestFlaggedCompleted(data.questID)
-							end
-						end
-						local color = isCompleted and "green-500" or "rose-500"
-						local textL = type(data.label) == "function" and data:label() or data.label
-						local textR = data.rightText
-							or C.StringByTemplate(isCompleted and L["Completed"] or L["Not Completed"], color)
-						if type(textL) == "string" then
-							_G.GameTooltip:AddDoubleLine(textL, textR, 1, 1, 1)
-						end
-					end
+					AddQuestProgressTooltipLines(ResolveQuestProgress(self.args), true)
 				end
 
 				if self.args.hasWeeklyReward then
-					if self.isCompleted then
-						_G.GameTooltip:AddDoubleLine(
-							L["Weekly Reward"],
-							C.StringByTemplate(L["Completed"], "green-500"),
-							1,
-							1,
-							1
-						)
-					else
-						_G.GameTooltip:AddDoubleLine(
-							L["Weekly Reward"],
-							C.StringByTemplate(L["Not Completed"], "rose-500"),
-							1,
-							1,
-							1
-						)
-					end
+					AddWeeklyRewardTooltipLine(self.isCompleted)
 				end
 
-				if self.args.onClickHelpText then
-					_G.GameTooltip:AddLine(" ")
-					_G.GameTooltip:AddLine(LeftButtonIcon .. " " .. self.args.onClickHelpText, 1, 1, 1)
-				end
-
+				AddClickHelpTooltipLine(self.args.onClickHelpText)
 				_G.GameTooltip:Show()
 			end,
 			onLeave = function()
@@ -528,19 +553,13 @@ local FunctionFactory = {
 				end
 
 				local completed = 0
-				if self.args.questIDs and (type(self.args.questIDs) == "table") then
-					-- lower than 0 means all quests need to be completed
+				if self.args.questIDs and type(self.args.questIDs) == "table" then
+					completed = CountCompletedQuestIDs(self.args.questIDs)
 					if self.args.checkAllCompleted then
-						completed = 1 - #self.args.questIDs
-					end
-
-					for _, questID in pairs(self.args.questIDs) do
-						if C_QuestLog_IsQuestFlaggedCompleted(questID) then
-							completed = completed + 1
-						end
+						completed = completed - #self.args.questIDs + 1
 					end
 				end
-				self.isCompleted = (completed > 0)
+				self.isCompleted = completed > 0
 
 				local timeSinceStart = GetServerTime() - self.args.startTimestamp
 				self.timeOver = timeSinceStart % self.args.interval
@@ -559,7 +578,6 @@ local FunctionFactory = {
 				self.icon:SetDesaturated(self.args.desaturate and self.isCompleted)
 
 				if self.isRunning then
-					-- event ending tracking timer
 					self.timerText:SetText(C.StringByTemplate(SecondToTime(self.timeLeft), "green-500"))
 					self.statusBar:SetMinMaxValues(0, self.args.duration)
 					self.statusBar:SetValue(self.timeOver)
@@ -574,11 +592,11 @@ local FunctionFactory = {
 						self.runningTip:SetText(self.args:runningTextUpdater())
 					end
 					self.runningTip:Show()
-					if self.args.flash then
+					if self.args.flash and not self.runningTipFlashing then
 						E:Flash(self.runningTip, 1, true)
+						self.runningTipFlashing = true
 					end
 				else
-					-- normal tracking timer
 					self.timerText:SetText(SecondToTime(self.timeLeft))
 					self.statusBar:SetMinMaxValues(0, self.args.interval)
 					self.statusBar:SetValue(self.timeLeft)
@@ -590,14 +608,15 @@ local FunctionFactory = {
 						C.CreateColorFromTemplate(palette[2])
 					)
 
-					if self.args.flash then
+					if self.args.flash and self.runningTipFlashing then
 						E:StopFlash(self.runningTip)
+						self.runningTipFlashing = false
 					end
 					self.runningTip:Hide()
 				end
 			end,
 			alert = function(self)
-				if not ET.playerEnteredWorld then
+				if not ET.playerEnteredWorld or not IsTrackerAlertEnabled(self) then
 					return
 				end
 
@@ -605,11 +624,16 @@ local FunctionFactory = {
 					return
 				end
 
-				if not self.args["alertCache"] then
-					self.args["alertCache"] = {}
+				if not self.args.alertCache then
+					self.args.alertCache = {}
 				end
 
-				if self.args["alertCache"][self.nextEventIndex] then
+				if self.alertCacheEventIndex ~= self.nextEventIndex then
+					PruneAlertCache(self.args.alertCache, self.nextEventIndex)
+					self.alertCacheEventIndex = self.nextEventIndex
+				end
+
+				if self.args.alertCache[self.nextEventIndex] then
 					return
 				end
 
@@ -626,7 +650,7 @@ local FunctionFactory = {
 				end
 
 				if self.timeLeft <= self.args.alertSecond then
-					self.args["alertCache"][self.nextEventIndex] = true
+					self.args.alertCache[self.nextEventIndex] = true
 					local eventIconString = F.GetIconString(self.args.icon, 16, 16)
 					local eventName = C.StringByTemplate(self.args.eventName, "yellow-500")
 					local remainTime = C.StringByTemplate(SecondToTime(self.timeLeft), "emerald-500")
@@ -645,19 +669,7 @@ local FunctionFactory = {
 				_G.GameTooltip:SetText(F.GetIconString(self.args.icon, 16, 16) .. " " .. self.args.eventName, 1, 1, 1)
 
 				_G.GameTooltip:AddLine(" ")
-
-				-- Location, Current Location, Next Location
-				for _, locationContext in ipairs({
-					{ L["Location"], self.args.location },
-					{ L["Current Location"], self.args.currentLocation },
-					{ L["Next Location"], self.args.nextLocation },
-				}) do
-					local left, right = unpack(locationContext)
-					if right then
-						right = type(right) == "function" and right(self.args) or right
-						_G.GameTooltip:AddDoubleLine(left, right, 1, 1, 1)
-					end
-				end
+				AddLocationTooltipLines(self.args)
 
 				_G.GameTooltip:AddLine(" ")
 				_G.GameTooltip:AddDoubleLine(L["Interval"], SecondToTime(self.args.interval), 1, 1, 1)
@@ -686,66 +698,14 @@ local FunctionFactory = {
 				end
 
 				if self.args.questProgress then
-					local questProgress = self.args.questProgress
-					if type(questProgress) == "function" then
-						questProgress = questProgress(self.args)
-					end
-
-					_G.GameTooltip:AddLine(" ")
-					_G.GameTooltip:AddLine(L["Quest Progress"])
-					for _, data in ipairs(questProgress) do
-						if data.questID then
-							local isCompleted = false
-							if type(data.questID) == "table" then
-								for _, qid in ipairs(data.questID) do
-									if C_QuestLog_IsQuestFlaggedCompleted(qid) then
-										isCompleted = true
-										break
-									end
-								end
-							else
-								isCompleted = C_QuestLog_IsQuestFlaggedCompleted(data.questID)
-							end
-							local color = isCompleted and "green-500" or "rose-500"
-							local label = type(data.label) == "function" and data:label() or data.label
-							if type(label) == "string" then
-								_G.GameTooltip:AddDoubleLine(
-									label,
-									C.StringByTemplate(isCompleted and L["Completed"] or L["Not Completed"], color),
-									1,
-									1,
-									1
-								)
-							end
-						end
-					end
+					AddQuestProgressTooltipLines(ResolveQuestProgress(self.args), false)
 				end
 
 				if self.args.hasWeeklyReward then
-					if self.isCompleted then
-						_G.GameTooltip:AddDoubleLine(
-							L["Weekly Reward"],
-							C.StringByTemplate(L["Completed"], "green-500"),
-							1,
-							1,
-							1
-						)
-					else
-						_G.GameTooltip:AddDoubleLine(
-							L["Weekly Reward"],
-							C.StringByTemplate(L["Not Completed"], "rose-500"),
-							1,
-							1,
-							1
-						)
-					end
+					AddWeeklyRewardTooltipLine(self.isCompleted)
 				end
 
-				if self.args.onClickHelpText then
-					_G.GameTooltip:AddLine(" ")
-					_G.GameTooltip:AddLine(LeftButtonIcon .. " " .. self.args.onClickHelpText, 1, 1, 1)
-				end
-
+				AddClickHelpTooltipLine(self.args.onClickHelpText)
 				_G.GameTooltip:Show()
 			end,
 			onLeave = function()
@@ -759,18 +719,54 @@ local Trackers = {
 	pool = {},
 }
 
+function Trackers:CancelTicker(frame)
+	if frame and frame.tickerInstance then
+		frame.tickerInstance:Cancel()
+		frame.tickerInstance = nil
+	end
+end
+
+function Trackers:CancelAllTickers()
+	for _, frame in pairs(self.pool) do
+		self:CancelTicker(frame)
+		if frame.args and frame.args.alertCache then
+			wipe(frame.args.alertCache)
+		end
+	end
+end
+
+function Trackers:StartTicker(frame)
+	if not frame or not frame.tickFunc or not frame.tickerInterval or frame.tickerInstance then
+		return
+	end
+
+	frame.tickerInstance = C_Timer_NewTicker(frame.tickerInterval, frame.tickFunc)
+end
+
+function Trackers:RefreshSchedulerTrackers()
+	for _, frame in pairs(self.pool) do
+		if frame.args and frame.args.scheduler and frame.tickFunc and frame:IsShown() then
+			frame.tickFunc()
+		end
+	end
+end
+
 --- Get or create a tracker frame
 ---@param event EventKey The key of the event defined in EventData
 ---@return Frame The tracker frame
 function Trackers:Acquire(event)
-	if self.pool[event] then
-		self.pool[event]:Show()
-		return self.pool[event]
+	local frame = self.pool[event]
+	if frame then
+		frame:Show()
+		if not frame.tickerInstance then
+			self:StartTicker(frame)
+		end
+		return frame
 	end
 
 	local data = ET.EventData[event]
 
-	local frame = CreateFrame("Frame", "WTEventTracker" .. event, ET.frame)
+	frame = CreateFrame("Frame", "WTEventTracker" .. event, ET.frame)
 	frame:Size(220, 30)
 
 	frame.dbKey = data.dbKey
@@ -791,20 +787,20 @@ function Trackers:Acquire(event)
 		end
 
 		if functions.ticker then
+			frame.tickerInterval = functions.ticker.interval
 			frame.tickFunc = function()
+				if not (ET and ET.db and ET.db.enable) then
+					return
+				end
 				functions.ticker.dateUpdater(frame)
-				functions.ticker.alert(frame)
+				if IsTrackerAlertEnabled(frame) then
+					functions.ticker.alert(frame)
+				end
 				if _G.WorldMapFrame:IsShown() and frame:IsShown() then
 					functions.ticker.uiUpdater(frame)
 				end
 			end
-
-			frame.tickerInstance = C_Timer_NewTicker(functions.ticker.interval, function()
-				if not (ET and ET.db and ET.db.enable) then
-					return
-				end
-				frame.tickFunc()
-			end)
+			self:StartTicker(frame)
 		end
 
 		if functions.tooltip then
@@ -818,12 +814,6 @@ function Trackers:Acquire(event)
 		end
 	end
 
-	if data.args.events then
-		for _, e in ipairs(data.args.events) do
-			ET:AddEventHandler(e[1], e[2])
-		end
-	end
-
 	self.pool[event] = frame
 
 	return frame
@@ -832,36 +822,16 @@ end
 ---Disable a tracker frame
 ---@param event EventKey The key of the event defined in EventData
 function Trackers:Disable(event)
-	if self.pool[event] then
-		self.pool[event]:Hide()
-	end
-end
-
-ET.EventHandlers = {
-	["PLAYER_ENTERING_WORLD"] = {
-		function()
-			E:Delay(10, function()
-				ET.playerEnteredWorld = true
-			end)
-		end,
-	},
-}
-
-function ET:HandlerEvent(event, ...)
-	if self.EventHandlers[event] then
-		for _, handler in ipairs(self.EventHandlers[event]) do
-			---@diagnostic disable-next-line: redundant-parameter -- Prepared for future events
-			handler(...)
-		end
-	end
-end
-
-function ET:AddEventHandler(event, handler)
-	if not self.EventHandlers[event] then
-		self.EventHandlers[event] = {}
+	local frame = self.pool[event]
+	if not frame then
+		return
 	end
 
-	tinsert(self.EventHandlers[event], handler)
+	self:CancelTicker(frame)
+	if frame.args and frame.args.alertCache then
+		wipe(frame.args.alertCache)
+	end
+	frame:Hide()
 end
 
 function ET:SetFont(target, size)
@@ -895,30 +865,30 @@ function ET:ConstructFrame()
 	self.frame = frame
 end
 
-function ET:GetPlayerDB(key)
-	local globalDB = E.global.WT.maps.eventTracker
+function ET:PLAYER_ENTERING_WORLD()
+	E:Delay(10, function()
+		ET.playerEnteredWorld = true
+	end)
+end
 
-	if not globalDB then
+function ET:EVENT_SCHEDULER_UPDATE()
+	if not self:RefreshSchedulerCache() then
 		return
 	end
 
-	if not globalDB[E.myrealm] then
-		globalDB[E.myrealm] = {}
-	end
+	Trackers:RefreshSchedulerTrackers()
+end
 
-	if not globalDB[E.myrealm][E.myname] then
-		globalDB[E.myrealm][E.myname] = {}
-	end
-
-	if not globalDB[E.myrealm][E.myname][key] then
-		globalDB[E.myrealm][E.myname][key] = {}
-	end
-
-	return globalDB[E.myrealm][E.myname][key]
+function ET:OnWorldMapSizeChanged()
+	E:Delay(0.1, self.UpdateTrackers, self)
 end
 
 function ET:UpdateTrackers()
 	self:ConstructFrame()
+	if not self.frame then
+		return
+	end
+
 	self.frame:ClearAllPoints()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.worldmap) then
 		self.frame:Point("TOPLEFT", _G.WorldMapFrame, "BOTTOMLEFT", -2, -self.db.style.backdropYOffset)
@@ -973,7 +943,8 @@ function ET:UpdateTrackers()
 				tracker.args.stopAlertIfCompleted = self.db[data.dbKey].stopAlertIfCompleted
 				tracker.args.stopAlertIfPlayerNotEnteredDragonlands =
 					self.db[data.dbKey].stopAlertIfPlayerNotEnteredDragonlands
-				tracker.args.disableAlertAfterHours = self.db[data.dbKey].disableAlertAfterHours
+				tracker.args.stopAlertIfPlayerNotEnteredMidnight =
+					self.db[data.dbKey].stopAlertIfPlayerNotEnteredMidnight
 			else
 				tracker.args.alertSecond = nil
 				tracker.args.stopAlertIfCompleted = nil
@@ -1001,7 +972,9 @@ function ET:UpdateTrackers()
 
 			col = col + 1
 
-			tracker.tickFunc()
+			if tracker.tickFunc then
+				tracker.tickFunc()
+			end
 		end
 	end
 
@@ -1010,6 +983,31 @@ function ET:UpdateTrackers()
 			+ self.db.style.trackerHeight * row
 			+ self.db.style.trackerVerticalSpacing * (row - 1)
 	)
+end
+
+function ET:TearDown()
+	Trackers:CancelAllTickers()
+
+	if self.frame then
+		self.frame:Hide()
+	end
+
+	if not self.initialized then
+		return
+	end
+
+	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+	self:UnregisterEvent("EVENT_SCHEDULER_UPDATE")
+	EventRegistry:UnregisterCallback("WorldMapOnShow", self)
+	EventRegistry:UnregisterCallback("WorldMapMinimized", self)
+	EventRegistry:UnregisterCallback("WorldMapMaximized", self)
+
+	if _G.QuestMapFrame then
+		self:Unhook(_G.QuestMapFrame, "Show")
+		self:Unhook(_G.QuestMapFrame, "Hide")
+	end
+
+	self.initialized = false
 end
 
 function ET:Initialize()
@@ -1021,13 +1019,13 @@ function ET:Initialize()
 
 	self:UpdateTrackers()
 
-	for event in pairs(self.EventHandlers) do
-		self:RegisterEvent(event, "HandlerEvent")
-	end
+	self:RegisterEvent("PLAYER_ENTERING_WORLD")
+	self:RegisterEvent("EVENT_SCHEDULER_UPDATE")
+	self:RefreshSchedulerCache()
 
 	EventRegistry:RegisterCallback("WorldMapOnShow", self.UpdateTrackers, self)
-	EventRegistry:RegisterCallback("WorldMapMinimized", E.Delay, E, 0.1, self.UpdateTrackers, self)
-	EventRegistry:RegisterCallback("WorldMapMaximized", E.Delay, E, 0.1, self.UpdateTrackers, self)
+	EventRegistry:RegisterCallback("WorldMapMinimized", self.OnWorldMapSizeChanged, self)
+	EventRegistry:RegisterCallback("WorldMapMaximized", self.OnWorldMapSizeChanged, self)
 	self:SecureHook(_G.QuestMapFrame, "Show", "UpdateTrackers")
 	self:SecureHook(_G.QuestMapFrame, "Hide", "UpdateTrackers")
 
@@ -1035,10 +1033,21 @@ function ET:Initialize()
 end
 
 function ET:ProfileUpdate()
-	self:Initialize()
+	self.db = E.db.WT.maps.eventTracker
+
+	if not self.db or not self.db.enable then
+		self:TearDown()
+		return
+	end
+
+	if not self.initialized then
+		self:Initialize()
+	else
+		self:UpdateTrackers()
+	end
 
 	if self.frame then
-		self.frame:SetShown(self.db.enable)
+		self.frame:SetShown(true)
 	end
 end
 

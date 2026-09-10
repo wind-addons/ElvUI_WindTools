@@ -856,20 +856,25 @@ function MB:SkinMinimapButtons()
 end
 
 function MB:UpdateMouseOverConfig()
+	local bar = self.bar
+	if not bar then
+		return
+	end
+
 	if self.db.mouseOver then
-		self.bar:SetScript("OnEnter", function(bar)
-			E:UIFrameFadeIn(bar, (1 - bar:GetAlpha()) * 0.382, bar:GetAlpha(), 1)
+		bar:SetScript("OnEnter", function(frame)
+			E:UIFrameFadeIn(frame, (1 - frame:GetAlpha()) * 0.382, frame:GetAlpha(), 1)
 		end)
 
-		self.bar:SetScript("OnLeave", function(bar)
-			E:UIFrameFadeOut(bar, bar:GetAlpha() * 0.382, bar:GetAlpha(), 0)
+		bar:SetScript("OnLeave", function(frame)
+			E:UIFrameFadeOut(frame, frame:GetAlpha() * 0.382, frame:GetAlpha(), 0)
 		end)
 
-		self.bar:SetAlpha(0)
+		bar:SetAlpha(0)
 	else
-		self.bar:SetScript("OnEnter", nil)
-		self.bar:SetScript("OnLeave", nil)
-		self.bar:SetAlpha(1)
+		bar:SetScript("OnEnter", nil)
+		bar:SetScript("OnLeave", nil)
+		bar:SetAlpha(1)
 	end
 end
 

@@ -17,6 +17,7 @@ local unpack = unpack
 local xpcall = xpcall
 
 local InCombatLockdown = InCombatLockdown
+local C_Secrets_ShouldAurasBeSecret = C_Secrets.ShouldAurasBeSecret
 
 local C_PartyInfo_InviteUnit = C_PartyInfo.InviteUnit
 local C_UI_Reload = C_UI.Reload
@@ -231,5 +232,16 @@ function W:GameFixing()
 		_G.BonusObjectivePinMixin.SetPassThroughButtons = nop
 		_G.WorldQuestPinMixin.SetPassThroughButtons = nop
 		_G.FlightPointPinMixin.SetPassThroughButtons = nop
+	end
+
+	if E.global.WT.core.fixMawBuffs then
+		local originalShouldShowMawBuffs = _G.ShouldShowMawBuffs
+		_G.ShouldShowMawBuffs = function()
+			if C_Secrets_ShouldAurasBeSecret() then
+				return false
+			end
+
+			return originalShouldShowMawBuffs()
+		end
 	end
 end

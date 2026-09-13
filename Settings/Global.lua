@@ -7,6 +7,7 @@ G.core = {
 	changlogPopup = false,
 	elvUIVersionPopup = true,
 	cvarAlert = false,
+	fixMawBuffs = true,
 	fixSetPassThroughButtons = false,
 	loginMessage = true,
 	autoCopyPrivateProfile = {

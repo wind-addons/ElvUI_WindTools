@@ -102,6 +102,20 @@ options.gameFix = {
 			end,
 			width = 2,
 		},
+		fixMawBuffs = {
+			order = 3,
+			type = "toggle",
+			name = L["Fix MawBuffs"],
+			desc = L["Skip Blizzard Maw buff checks while auras are secret so tainted Objective Tracker updates do not error."],
+			get = function(info)
+				return E.global.WT.core.fixMawBuffs
+			end,
+			set = function(info, value)
+				E.global.WT.core.fixMawBuffs = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+			width = 2,
+		},
 	},
 }
 

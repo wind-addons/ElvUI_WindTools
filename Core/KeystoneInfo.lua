@@ -15,6 +15,7 @@ local GetInstanceInfo = GetInstanceInfo
 local GetUnitName = GetUnitName
 local IsInGroup = IsInGroup
 local UnitIsPlayer = UnitIsPlayer
+local UnitName = UnitName
 
 local C_Container_GetContainerItemID = C_Container.GetContainerItemID
 local C_Container_GetContainerItemLink = C_Container.GetContainerItemLink
@@ -133,6 +134,14 @@ end)
 ---@return KeystoneInfoData?
 function KI:UnitData(unit)
 	if E:IsSecretValue(unit) or not unit or not UnitIsPlayer(unit) then
+		return
+	end
+
+	-- A secret unit name or realm makes GetUnitName(unit, true) error on its server
+	-- comparison inside Blizzard's UnitFrame.lua, both at the call below and inside
+	-- LibOpenRaid's GetKeystoneInfo. Skip the keystone line in that case.
+	local unitName, unitRealm = UnitName(unit)
+	if E:IsSecretValue(unitName) or E:IsSecretValue(unitRealm) then
 		return
 	end
 

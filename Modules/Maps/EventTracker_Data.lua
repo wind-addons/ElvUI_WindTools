@@ -476,7 +476,7 @@ ET.EventData = {
 				[8940] = { 0.467, 0.628 },
 			},
 			duration = 5 * 60,
-			interval = 45 * 60,
+			interval = 30 * 60,
 			eventName = L["Cursed Surges"],
 			label = L["Cursed Surges"],
 			location = C_Map_GetMapInfo(2512).name,

@@ -127,7 +127,7 @@ function W:Initialize()
 	self:SecureHook(E, "UpdateAll", "UpdateModules")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 	-- Init Modules
-	self:RegisterEvent("PLAYER_LOGIN")
+	self:InitializeModules()
 end
 
 function W:AutoCopyPrivateProfile()

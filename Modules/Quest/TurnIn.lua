@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local TI = W:NewModule("TurnIn", "NumyAceEvent-3.0") ---@class TurnIn: AceModule, NumyAceEvent-3.0
+local TI = W:NewModule("TurnIn", "AceEvent-3.0") ---@class TurnIn: AceModule, AceEvent-3.0
 
 local _G = _G
 local format = format

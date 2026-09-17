@@ -16,8 +16,8 @@ local tContains = tContains
 
 local C_AddOns_GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 
----@class WindTools : AceAddon, AceConsole-3.0, NumyAceEvent-3.0, AceTimer-3.0, AceHook-3.0
-local W = AceAddon:NewAddon(addonName, "AceConsole-3.0", "NumyAceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
+---@class WindTools : AceAddon, AceConsole-3.0, AceEvent-3.0, AceTimer-3.0, AceHook-3.0
+local W = AceAddon:NewAddon(addonName, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 
 V.WT = {} ---@class ProfileDB
 P.WT = {} ---@class PrivateDB
@@ -75,17 +75,17 @@ end
 
 -- Pre-register some WindTools modules
 W.Modules = {
-	---@class Misc : AceModule, AceHook-3.0, NumyAceEvent-3.0
-	Misc = W:NewModule("Misc", "AceHook-3.0", "NumyAceEvent-3.0"),
-	---@class Skins : AceModule, AceHook-3.0, NumyAceEvent-3.0, AceTimer-3.0
-	Skins = W:NewModule("Skins", "AceHook-3.0", "NumyAceEvent-3.0", "AceTimer-3.0"),
-	---@class Tooltips : AceModule, AceHook-3.0, NumyAceEvent-3.0
-	Tooltips = W:NewModule("Tooltips", "AceHook-3.0", "NumyAceEvent-3.0"),
-	---@class MoveFrames : AceModule, AceHook-3.0, NumyAceEvent-3.0
-	MoveFrames = W:NewModule("MoveFrames", "NumyAceEvent-3.0", "AceHook-3.0"),
+	---@class Misc : AceModule, AceHook-3.0, AceEvent-3.0
+	Misc = W:NewModule("Misc", "AceHook-3.0", "AceEvent-3.0"),
+	---@class Skins : AceModule, AceHook-3.0, AceEvent-3.0, AceTimer-3.0
+	Skins = W:NewModule("Skins", "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0"),
+	---@class Tooltips : AceModule, AceHook-3.0, AceEvent-3.0
+	Tooltips = W:NewModule("Tooltips", "AceHook-3.0", "AceEvent-3.0"),
+	---@class MoveFrames : AceModule, AceHook-3.0, AceEvent-3.0
+	MoveFrames = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0"),
 }
 
-W:NewModule("QuestProgress", "NumyAceEvent-3.0")
+W:NewModule("QuestProgress", "AceEvent-3.0")
 
 -- Utilities namespace
 W.Utilities = {}
@@ -126,7 +126,8 @@ function W:Initialize()
 
 	self:SecureHook(E, "UpdateAll", "UpdateModules")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
-	self:InitializeModules()
+	-- Init Modules
+	self:RegisterEvent("PLAYER_LOGIN")
 end
 
 function W:AutoCopyPrivateProfile()

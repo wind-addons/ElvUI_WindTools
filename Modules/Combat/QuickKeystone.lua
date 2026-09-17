@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local QK = W:NewModule("QuickKeystone", "AceHook-3.0", "NumyAceEvent-3.0")
+local QK = W:NewModule("QuickKeystone", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
 

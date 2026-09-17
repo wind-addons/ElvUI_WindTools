@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local MB = W:NewModule("MinimapButtons", "NumyAceEvent-3.0", "AceHook-3.0") ---@class MinimapButtons : AceModule, NumyAceEvent-3.0, AceHook-3.0
+local MB = W:NewModule("MinimapButtons", "AceEvent-3.0", "AceHook-3.0") ---@class MinimapButtons : AceModule, AceEvent-3.0, AceHook-3.0
 local S = W.Modules.Skins ---@type Skins
 local EM = E:GetModule("Minimap")
 local C = W.Utilities.Color

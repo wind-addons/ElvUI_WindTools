@@ -1,6 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-local GB = W:NewModule("GameBar", "NumyAceEvent-3.0", "AceHook-3.0")
+local GB = W:NewModule("GameBar", "AceEvent-3.0", "AceHook-3.0")
 local DT = E:GetModule("DataTexts")
 local async = W.Utilities.Async
 local C = W.Utilities.Color

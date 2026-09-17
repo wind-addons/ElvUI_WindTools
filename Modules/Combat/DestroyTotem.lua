@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local DT = W:NewModule("DestroyTotem", "NumyAceEvent-3.0")
+local DT = W:NewModule("DestroyTotem", "AceEvent-3.0")
 
 local format = format
 

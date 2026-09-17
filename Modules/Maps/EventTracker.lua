@@ -2,7 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames ---@type MoveFrames
 local C = W.Utilities.Color
-local ET = W:NewModule("EventTracker", "NumyAceEvent-3.0", "AceHook-3.0") ---@class EventTracker : AceModule, NumyAceEvent-3.0, AceHook-3.0
+local ET = W:NewModule("EventTracker", "AceEvent-3.0", "AceHook-3.0") ---@class EventTracker : AceModule, AceEvent-3.0, AceHook-3.0
 
 local _G = _G
 local ceil = ceil

@@ -2,7 +2,7 @@ local W ---@class WindTools
 local F, E ---@type Functions, ElvUI
 W, F, E = unpack((select(2, ...)))
 
-local KI = W:NewModule("KeystoneInfo", "NumyAceEvent-3.0") ---@class KeystoneInfo : AceModule, NumyAceEvent-3.0
+local KI = W:NewModule("KeystoneInfo", "AceEvent-3.0") ---@class KeystoneInfo : AceModule, AceEvent-3.0
 local OR = E.Libs.OpenRaid
 local KS = E.Libs.Keystone
 

@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local AS = W:NewModule("AchievementScreenshot", "NumyAceEvent-3.0", "AceHook-3.0") ---@class AchievementScreenshot : AceModule, NumyAceEvent-3.0, AceHook-3.0
+local AS = W:NewModule("AchievementScreenshot", "AceEvent-3.0", "AceHook-3.0") ---@class AchievementScreenshot : AceModule, AceEvent-3.0, AceHook-3.0
 local CA = W:GetModule("CombatAlert") ---@class CombatAlert
 
 local _G = _G

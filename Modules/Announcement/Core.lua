@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local A = W:NewModule("Announcement", "NumyAceEvent-3.0") ---@class Announcement : AceModule, NumyAceEvent-3.0
+local A = W:NewModule("Announcement", "AceEvent-3.0") ---@class Announcement : AceModule, AceEvent-3.0
 local ChatThrottleLib = _G.ChatThrottleLib
 
 local _G = _G

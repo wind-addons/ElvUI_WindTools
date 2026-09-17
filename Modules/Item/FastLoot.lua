@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local FL = W:NewModule("FastLoot", "NumyAceEvent-3.0")
+local FL = W:NewModule("FastLoot", "AceEvent-3.0")
 
 local GetNumLootItems = GetNumLootItems
 local GetTime = GetTime

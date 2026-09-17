@@ -8,5 +8,4 @@
     <Script file="LibObjectiveProgressWT\ProgressWeightData.lua"/>
     <Script file="LibRangeCheck-3.0\LibRangeCheck-3.0.lua"/>
     <Include file="LibOpenRaid\lib.xml"/>
-    <Include file="NumyAceEvent-3.0\NumyAceEvent-3.0.xml"/>
 </Ui>

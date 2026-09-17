@@ -165,17 +165,17 @@ end
 
 -- WindTools module initialization
 function W:InitializeModules()
-	if self.modulesInitialized then
-		return
-	end
-	self.modulesInitialized = true
-
 	for _, moduleName in pairs(W.RegisteredModules) do
 		local module = self:GetModule(moduleName)
 		if module.Initialize then
 			xpcall(module.Initialize, F.Developer.LogDebug, module)
 		end
 	end
+end
+
+-- Put the registration from the modules to the login event
+function W:PLAYER_LOGIN()
+	self:InitializeModules()
 end
 
 -- WindTools module update after profile switch

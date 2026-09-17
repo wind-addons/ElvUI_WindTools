@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local AK = W:NewModule("AlreadyKnown", "NumyAceEvent-3.0", "AceHook-3.0") ---@class AlreadyKnown : AceModule, NumyAceEvent-3.0, AceHook-3.0
+local AK = W:NewModule("AlreadyKnown", "AceEvent-3.0", "AceHook-3.0") ---@class AlreadyKnown : AceModule, AceEvent-3.0, AceHook-3.0
 
 -- Some check logic references code from Legion Remix Helper & AlreadyKnown
 

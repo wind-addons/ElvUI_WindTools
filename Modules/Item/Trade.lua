@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local T = W:NewModule("Trade", "NumyAceEvent-3.0")
+local T = W:NewModule("Trade", "AceEvent-3.0")
 
 local _G = _G
 local GetUnitName = GetUnitName

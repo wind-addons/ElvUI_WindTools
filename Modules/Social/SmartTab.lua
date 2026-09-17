@@ -1,6 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local CB = W:GetModule("ChatBar") ---@class ChatBar
-local ST = W:NewModule("SmartTab", "AceHook-3.0", "NumyAceEvent-3.0")
+local ST = W:NewModule("SmartTab", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
 local ipairs = ipairs

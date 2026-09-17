@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local RM = W:NewModule("RaidMarkers", "AceEvent-3.0")
+local RM = W:NewModule("RaidMarkers", "NumyAceEvent-3.0")
 local S = W.Modules.Skins ---@type Skins
 local C = W.Utilities.Color
 

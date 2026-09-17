@@ -1,6 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local C = W.Utilities.Color
-local ST = W:NewModule("SuperTracker", "AceEvent-3.0", "AceHook-3.0")
+local ST = W:NewModule("SuperTracker", "NumyAceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
 

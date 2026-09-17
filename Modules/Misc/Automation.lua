@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local AM = W:NewModule("Automation", "AceEvent-3.0")
+local AM = W:NewModule("Automation", "NumyAceEvent-3.0")
 
 local _G = _G
 local securecall = securecall

@@ -1,6 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-local SB = W:NewModule("SwitchButtons", "AceHook-3.0", "AceEvent-3.0")
+local SB = W:NewModule("SwitchButtons", "AceHook-3.0", "NumyAceEvent-3.0")
 local C = W.Utilities.Color
 
 local _G = _G

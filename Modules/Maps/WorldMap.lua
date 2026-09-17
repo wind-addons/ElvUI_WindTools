@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local WM = W:NewModule("WorldMap", "AceEvent-3.0", "AceHook-3.0")
+local WM = W:NewModule("WorldMap", "NumyAceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
 local ceil = ceil

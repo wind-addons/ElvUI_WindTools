@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local OT = W:NewModule("ObjectiveTracker", "AceHook-3.0", "AceEvent-3.0") ---@class ObjectiveTracker : AceModule, AceHook-3.0, AceEvent-3.0
+local OT = W:NewModule("ObjectiveTracker", "AceHook-3.0", "NumyAceEvent-3.0") ---@class ObjectiveTracker : AceModule, AceHook-3.0, NumyAceEvent-3.0
 local C = W.Utilities.Color
 local S = W.Modules.Skins
 local LSM = E.Libs.LSM

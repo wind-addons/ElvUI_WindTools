@@ -3,11 +3,21 @@ local W = unpack((select(2, ...))) ---@type WindTools
 W.Changelog[422] = {
 	RELEASE_DATE = "TBD",
 	IMPORTANT = {
-		["zhCN"] = {},
-		["zhTW"] = {},
-		["enUS"] = {},
-		["koKR"] = {},
-		["ruRU"] = {},
+		["zhCN"] = {
+			"事件分发已改用 NumyAceEvent-3.0, CPU 性能分析会将用量归属到 WindTools, 而不再归属到最先加载 AceEvent 的插件.",
+		},
+		["zhTW"] = {
+			"事件分發已改用 NumyAceEvent-3.0, CPU 效能分析會將用量歸屬到 WindTools, 而不再歸屬到最先載入 AceEvent 的插件.",
+		},
+		["enUS"] = {
+			"Event handling now uses NumyAceEvent-3.0 so CPU profiling attributes usage to WindTools instead of the first addon that loaded AceEvent.",
+		},
+		["koKR"] = {
+			"이벤트 처리가 이제 NumyAceEvent-3.0을 사용하므로 CPU 프로파일링 사용량이 AceEvent를 먼저 로드한 애드온이 아니라 WindTools에 귀속됩니다.",
+		},
+		["ruRU"] = {
+			"Обработка событий теперь использует NumyAceEvent-3.0, поэтому профилирование CPU относит нагрузку к WindTools, а не к аддону, который первым загрузил AceEvent.",
+		},
 	},
 	NEW = {
 		["zhCN"] = {

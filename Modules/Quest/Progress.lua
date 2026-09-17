@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local QP = W:GetModule("QuestProgress") ---@class QuestProgress : AceModule, AceEvent-3.0
+local QP = W:GetModule("QuestProgress") ---@class QuestProgress : AceModule, NumyAceEvent-3.0
 local A = W:GetModule("Announcement") ---@class Announcement
 local C = W.Utilities.Color
 local cache = W.Utilities.Cache

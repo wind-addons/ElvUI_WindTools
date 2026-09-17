@@ -2,7 +2,7 @@ local W ---@type WindTools
 local F ---@class Functions
 W, F = unpack((select(2, ...)))
 
-local module = W:NewModule("TaskManager", "AceEvent-3.0")
+local module = W:NewModule("TaskManager", "NumyAceEvent-3.0")
 
 local tinsert = tinsert
 local type = type

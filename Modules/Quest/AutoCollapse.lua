@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local AC = W:NewModule("AutoCollapse", "AceEvent-3.0") ---@class AutoCollapse: AceModule, AceEvent-3.0
+local AC = W:NewModule("AutoCollapse", "NumyAceEvent-3.0") ---@class AutoCollapse: AceModule, NumyAceEvent-3.0
 local BL = E:GetModule("Blizzard")
 
 local _G = _G

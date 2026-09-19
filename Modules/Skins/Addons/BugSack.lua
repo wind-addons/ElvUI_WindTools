@@ -8,68 +8,87 @@ local hooksecurefunc = hooksecurefunc
 local SettingsPanel = SettingsPanel
 
 function S:BugSack_OpenSack()
-	if _G.BugSackFrame.__windSkin then
+	local bugSackFrame = _G.BugSackFrame
+	if not bugSackFrame or bugSackFrame.__windSkin then
 		return
 	end
 
-	local bugSackFrame = _G.BugSackFrame
-
-	bugSackFrame:StripTextures()
-	bugSackFrame:SetTemplate("Transparent")
+	self:Proxy("HandlePortraitFrame", bugSackFrame)
 	self:CreateShadow(bugSackFrame)
 
-	for _, child in pairs({ bugSackFrame:GetChildren() }) do
-		local numRegions = child:GetNumRegions()
-
-		if numRegions == 1 then
-			local text = child:GetRegions()
-			if text and text:GetObjectType() == "FontString" then
-				F.SetFont(text)
-			end
-		elseif numRegions == 4 then
-			self:Proxy("HandleCloseButton", child)
-		end
-	end
-
-	self:Proxy("HandleScrollBar", _G.BugSackScrollScrollBar)
-
-	for _, region in pairs({ _G.BugSackScrollText:GetRegions() }) do
+	local titleContainer = bugSackFrame.TitleContainer or bugSackFrame
+	for _, region in pairs({ titleContainer:GetRegions() }) do
 		if region and region:GetObjectType() == "FontString" then
 			F.SetFont(region)
 		end
 	end
 
-	if _G.BugSackNextButton and _G.BugSackPrevButton and _G.BugSackSendButton then
-		local width, height = _G.BugSackSendButton:GetSize()
-		_G.BugSackSendButton:Size(width - 8, height)
-		_G.BugSackSendButton:ClearAllPoints()
-		_G.BugSackSendButton:Point("LEFT", _G.BugSackPrevButton, "RIGHT", 4, 0)
-		_G.BugSackSendButton:Point("RIGHT", _G.BugSackNextButton, "LEFT", -4, 0)
-
-		self:Proxy("HandleButton", _G.BugSackNextButton)
-		self:Proxy("HandleButton", _G.BugSackPrevButton)
-		self:Proxy("HandleButton", _G.BugSackSendButton)
+	local textArea = _G.BugSackScrollText
+	local scrollFrame = textArea and textArea:GetParent()
+	local scrollBar = scrollFrame and scrollFrame.ScrollBar
+	if scrollBar then
+		self:Proxy("HandleTrimScrollBar", scrollBar)
 	end
 
-	local tabs = {
-		_G.BugSackTabAll,
-		_G.BugSackTabLast,
-		_G.BugSackTabSession,
-	}
+	if textArea then
+		for _, region in pairs({ textArea:GetRegions() }) do
+			if region and region:GetObjectType() == "FontString" then
+				F.SetFont(region)
+			end
+		end
+	end
 
-	for _, tab in pairs(tabs) do
-		self:Proxy("HandleTab", tab)
-		self:CreateBackdropShadow(tab)
+	local prevButton = _G.BugSackPrevButton
+	local nextButton = _G.BugSackNextButton
+	local sendButton = _G.BugSackSendButton
 
-		local point, relativeTo, relativePoint, xOffset, yOffset = tab:GetPoint(1)
+	for _, button in pairs({ prevButton, nextButton, sendButton }) do
+		if button then
+			self:Proxy("HandleButton", button, nil, nil, nil, true)
+			button:Height(24)
+		end
+	end
 
-		tab:ClearAllPoints()
+	if prevButton then
+		prevButton:ClearAllPoints()
+		prevButton:Point("BOTTOMLEFT", bugSackFrame, "BOTTOMLEFT", 12, 6)
+	end
 
-		if yOffset ~= 0 then
-			yOffset = -2
+	if nextButton then
+		nextButton:ClearAllPoints()
+		nextButton:Point("BOTTOMRIGHT", bugSackFrame, "BOTTOMRIGHT", -12, 6)
+	end
+
+	if sendButton then
+		sendButton:ClearAllPoints()
+		sendButton:Point("LEFT", prevButton, "RIGHT", 1, 0)
+		sendButton:Point("RIGHT", nextButton, "LEFT", -1, 0)
+	end
+
+	local allTab = _G.BugSackTabAll
+	local lastTab = _G.BugSackTabLast
+	local sessionTab = _G.BugSackTabSession
+
+	for _, tab in pairs({ allTab, lastTab, sessionTab }) do
+		if tab then
+			self:Proxy("HandleTab", tab)
+			self:CreateBackdropShadow(tab)
+		end
+	end
+
+	if sessionTab then
+		sessionTab:ClearAllPoints()
+		sessionTab:Point("CENTER", bugSackFrame, "BOTTOM", 0, -16)
+
+		if allTab then
+			allTab:ClearAllPoints()
+			allTab:Point("LEFT", sessionTab, "RIGHT", -4, 0)
 		end
 
-		tab:Point(point, relativeTo, relativePoint, xOffset, yOffset)
+		if lastTab then
+			lastTab:ClearAllPoints()
+			lastTab:Point("RIGHT", sessionTab, "LEFT", 4, 0)
+		end
 	end
 
 	bugSackFrame.__windSkin = true

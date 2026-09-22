@@ -1109,7 +1109,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 end
 -- [[/elvui-sync:ChatFrame_MessageEventHandler]]
 
--- [[elvui-sync:MessageFormatter sha256:c72acb3e3908]]
+-- [[elvui-sync:MessageFormatter sha256:b723ad6e0ea6]]
 function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, channelLength, coloredName, historySavedName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, isHistory, historyTime, historyName, historyBTag)
 	local noBrackets = CT.db.removeBrackets
 
@@ -1146,6 +1146,10 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 		nameWithRealm = data.nameWithRealm
 	end
 
+	-- Channel lines such as local defense "under attack" have no sender. A player link
+	-- with an empty name is broken by HandleShortChannels stripping CHANNEL:.
+	local senderMissing = E:NotSecretValue(arg2) and arg2 == ''
+
 	local playerLink
 	local playerLinkDisplayText = coloredName
 	local relevantDefaultLanguage = frame.defaultLanguage
@@ -1161,7 +1165,9 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 
 	local discordInfo, isFromDiscord = CH:GetDiscordInfo(arg18)
 	local playerName = (nameWithRealm ~= arg2 and nameWithRealm) or arg2
-	if chatType == 'COMMUNITIES_CHANNEL' then -- isCommunityType
+	if senderMissing then
+		playerLink = nil
+	elseif chatType == 'COMMUNITIES_CHANNEL' then -- isCommunityType
 		local messageInfo, clubId, streamId = C_Club_GetInfoFromLastCommunityChatLine()
 		if messageInfo and E:NotSecretValue(arg13) then
 			if arg13 and arg13 ~= 0 then -- isBattleNetCommunity: arg13 is bnetIDAccount
@@ -1229,13 +1235,13 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 	end
 
 	local header, body = _G['CHAT_'..chatType..'_GET']
-	local sender = (not bossMonster and playerLink) or arg2
+	local sender = (not bossMonster and not senderMissing and playerLink) or arg2
 	local specialType = bossMonster or (chatType == 'PET_BATTLE_INFO' or chatType == 'PET_BATTLE_COMBAT_LOG')
 	if usingDifferentLanguage then
 		body = format(header..(noBrackets and '%s %s' or '[%s] %s'), pflag..sender, arg3, msg) -- arg3 is language
 	elseif chatType == 'GUILD_ITEM_LOOTED' then
 		body = not msgProtected and gsub(msg, '$s', sender, 1) or msg
-	elseif chatType == 'GUILD_DISCORD' and isFromDiscord then
+	elseif chatType == 'GUILD_DISCORD' and isFromDiscord and playerLink then
 		body = format(header..msg, pflag..' '..playerLink)
 	elseif chatType == 'TEXT_EMOTE' then
 		local classLink = realm and playerLink and not msgProtected and (info.colorNameByClass and gsub(playerLink, '(|h|c.-)|r|h$','%1-'..realm..'|r|h') or gsub(playerLink, '(|h.-)|h$','%1-'..realm..'|h'))

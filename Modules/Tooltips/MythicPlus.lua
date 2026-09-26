@@ -10,10 +10,10 @@ local pairs = pairs
 
 local UnitGUID = UnitGUID
 
-local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
-local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor =
-	C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
-local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
+local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode and C_ChallengeMode.GetDungeonScoreRarityColor
+local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor = C_ChallengeMode
+	and C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
+local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo and C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 
 local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 

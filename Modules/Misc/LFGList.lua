@@ -3,6 +3,15 @@ local KI = W:GetModule("KeystoneInfo")
 local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames ---@type MoveFrames
 local LL = W:NewModule("LFGList", "AceHook-3.0", "AceEvent-3.0") ---@class LFGList : AceModule, AceHook-3.0, AceEvent-3.0
+
+if E.Forever then
+	function LL:Initialize() end
+	function LL:UpdatePartyKeystoneFrame() end
+	function LL:UpdateRightPanel() end
+	W:RegisterModule(LL:GetName())
+	return
+end
+
 local LFGPI = W.Utilities.LFGPlayerInfo
 local C = W.Utilities.Color
 local LSM = E.Libs.LSM

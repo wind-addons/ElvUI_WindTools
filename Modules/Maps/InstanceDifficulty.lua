@@ -13,13 +13,16 @@ local GetInstanceInfo = GetInstanceInfo
 local IsInInstance = IsInInstance
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-local C_ChallengeMode_GetActiveKeystoneInfo = C_ChallengeMode.GetActiveKeystoneInfo
+local C_ChallengeMode_GetActiveKeystoneInfo = C_ChallengeMode and C_ChallengeMode.GetActiveKeystoneInfo
 
 function ID:UpdateFrame()
 	local inInstance, instanceType = IsInInstance()
 	local difficulty = select(3, GetInstanceInfo())
 	local numplayers = select(9, GetInstanceInfo())
-	local mplusdiff = select(1, C_ChallengeMode_GetActiveKeystoneInfo()) or ""
+	local mplusdiff = ""
+	if C_ChallengeMode_GetActiveKeystoneInfo then
+		mplusdiff = select(1, C_ChallengeMode_GetActiveKeystoneInfo()) or ""
+	end
 
 	if difficulty == 0 then
 		self.frame.text:SetText("")

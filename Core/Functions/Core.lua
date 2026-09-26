@@ -329,19 +329,19 @@ function F.GetWindStyleText(text)
 	return E:TextGradient(text, 0.32941, 0.52157, 0.93333, 0.29020, 0.70980, 0.89412, 0.25882, 0.84314, 0.86667)
 end
 
----Check if value is NaN (Not a Number)
+---Check if value is NaN (Not a Number).
 ---@param val any The value to check
 ---@return boolean isNaN True if value is NaN
 function F.IsNaN(val)
-	return tostring(val) == tostring(0 / 0)
+	return type(val) == "number" and math.isnan(val)
 end
 
----Return value or default if value is nil or NaN
+---Return value or default if value is nil, NaN, or infinite
 ---@param val any The value to check
 ---@param default any The default value to return if val is invalid
 ---@return any result The original value or default
 function F.Or(val, default)
-	if not val or F.IsNaN(val) then
+	if type(val) ~= "number" or not math.isfinite(val) then
 		return default
 	end
 	return val

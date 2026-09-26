@@ -44,4 +44,6 @@ function S:LookingForGroupFrames()
 	F.InternalizeMethod(_G.LFGListFrame.SearchPanel.FilterButton, "SetWidth", true)
 end
 
-S:AddCallback("LookingForGroupFrames")
+if not E.Forever then
+	S:AddCallback("LookingForGroupFrames")
+end

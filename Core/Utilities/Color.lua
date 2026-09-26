@@ -674,7 +674,7 @@ end
 ---Create class colored string
 ---@param text string The text to colorize
 ---@param classFile ClassFile? The English class name (e.g., "WARRIOR", "MAGE")
----@return string? coloredText The class colored string or nil if parameters are invalid
+---@return string? coloredText The class colored string, the original text when that class has no color, or nil if parameters are invalid
 function W.Utilities.Color.StringWithClassColor(text, classFile)
 	if not text or type(text) ~= "string" then
 		F.Developer.LogDebug("Color.StringWithClassColor: text parameter invalid")
@@ -689,7 +689,7 @@ function W.Utilities.Color.StringWithClassColor(text, classFile)
 	local color = E:ClassColor(classFile, true)
 	if not color then
 		F.Developer.LogDebug("Color.StringWithClassColor: invalid class " .. tostring(classFile))
-		return
+		return text
 	end
 
 	return W.Utilities.Color.StringWithRGB(text, color.r, color.g, color.b)

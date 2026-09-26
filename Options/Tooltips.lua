@@ -6,8 +6,12 @@ local LFGPI = W.Utilities.LFGPlayerInfo
 local format = format
 local ipairs = ipairs
 local pairs = pairs
+local select = select
 local strsplit = strsplit
 local tonumber = tonumber
+
+local GetClassInfo = GetClassInfo
+local GetNumClasses = GetNumClasses
 
 local cache = {
 	groupInfo = {},
@@ -246,6 +250,9 @@ options.elvUITweaks = {
 			type = "group",
 			name = L["Better Mythic+ Info"],
 			inline = true,
+			hidden = function()
+				return E.Forever
+			end,
 			args = {
 				enable = {
 					order = 1,
@@ -499,6 +506,9 @@ options.progression = {
 			type = "group",
 			name = L["Mythic Plus"],
 			inline = true,
+			hidden = function()
+				return E.Forever
+			end,
 			get = function(info)
 				return E.private.WT.tooltips.progression.mythicPlus[info[#info]]
 			end,
@@ -550,6 +560,7 @@ options.progression = {
 	},
 }
 
+if not E.Forever then
 do
 	for _, config in ipairs({
 		{
@@ -586,11 +597,15 @@ do
 		end
 	end
 end
+end
 
 options.keystone = {
 	order = 5,
 	type = "group",
 	name = L["Keystone"],
+	hidden = function()
+		return E.Forever
+	end,
 	get = function(info)
 		return E.db.WT.tooltips[info[#info - 1]][info[#info]]
 	end,
@@ -725,12 +740,21 @@ options.groupInfo = {
 			values = function()
 				local result = {}
 				for _, style in pairs(F.GetClassIconStyleList()) do
-					local monkIcon = F.GetClassIconStringWithStyle("MONK", style)
-					local druidIcon = F.GetClassIconStringWithStyle("DRUID", style)
-					local evokerIcon = F.GetClassIconStringWithStyle("EVOKER", style)
-
-					if monkIcon and druidIcon and evokerIcon then
-						result[style] = format("%s %s %s", monkIcon, druidIcon, evokerIcon)
+					local preview = ""
+					local shown = 0
+					for classIndex = 1, GetNumClasses() do
+						local classFile = select(2, GetClassInfo(classIndex))
+						local icon = classFile and F.GetClassIconStringWithStyle(classFile, style)
+						if icon then
+							preview = preview == "" and icon or preview .. " " .. icon
+							shown = shown + 1
+							if shown == 3 then
+								break
+							end
+						end
+					end
+					if preview ~= "" then
+						result[style] = preview
 					end
 				end
 				return result

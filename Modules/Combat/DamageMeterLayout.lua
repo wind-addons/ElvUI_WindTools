@@ -17,7 +17,7 @@ local GetInstanceInfo = GetInstanceInfo
 local UnitAffectingCombat = UnitAffectingCombat
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-local C_ChallengeMode_IsChallengeModeActive = C_ChallengeMode.IsChallengeModeActive
+local C_ChallengeMode_IsChallengeModeActive = C_ChallengeMode and C_ChallengeMode.IsChallengeModeActive
 
 -- ElvUI header is inset 6 / 12; background backdrop is nudged 4 / 10.
 local ELVUI_SKIN_VISUAL_LEFT_INSET, ELVUI_SKIN_VISUAL_RIGHT_INSET = 0, 0
@@ -437,7 +437,7 @@ function DL:AutoSwitch(force)
 		local instanceType, difficulty = select(2, GetInstanceInfo())
 		local isInDelve = difficulty == 208
 		local isInCombat = UnitAffectingCombat("player")
-		local isInChallengeMode = C_ChallengeMode_IsChallengeModeActive()
+		local isInChallengeMode = C_ChallengeMode_IsChallengeModeActive and C_ChallengeMode_IsChallengeModeActive()
 
 		targetLayout = instanceType == "raid" and rules.raid
 			or isInDelve and rules.delve

@@ -161,7 +161,7 @@ local function UpdateProgression(guid, unit)
 	end
 
 	-- Mythic Plus
-	if db.mythicPlus.enable then
+	if not E.Forever and db.mythicPlus.enable then
 		cache[guid].info.mythicPlus = {}
 		local data = T:GetMythicPlusData(unit)
 		if data then
@@ -278,9 +278,11 @@ local function SetProgressionInfo(tt, guid)
 
 	-- Mythic Plus
 	local displayMythicPlus = false
-	if db.mythicPlus.showNoRecord then
+	if E.Forever then
+		displayMythicPlus = false
+	elseif db.mythicPlus.showNoRecord then
 		displayMythicPlus = true
-	else
+	elseif cache[guid].info.mythicPlus then
 		for name, _ in pairs(cache[guid].info.mythicPlus) do
 			if db.mythicPlus[name] then
 				displayMythicPlus = true
@@ -289,7 +291,7 @@ local function SetProgressionInfo(tt, guid)
 		end
 	end
 
-	if db.mythicPlus.enable and cache[guid].info.mythicPlus and displayMythicPlus then
+	if not E.Forever and db.mythicPlus.enable and cache[guid].info.mythicPlus and displayMythicPlus then
 		local highestScoreDungeonID = cache[guid].info.mythicPlus.highestScoreDungeonID
 
 		tt:AddLine(" ")

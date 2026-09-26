@@ -20,9 +20,9 @@ local UnitName = UnitName
 local C_Container_GetContainerItemID = C_Container.GetContainerItemID
 local C_Container_GetContainerItemLink = C_Container.GetContainerItemLink
 local C_Container_GetContainerNumSlots = C_Container.GetContainerNumSlots
-local C_Item_IsItemKeystoneByID = C_Item.IsItemKeystoneByID
-local C_MythicPlus_GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID
-local C_MythicPlus_GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
+local C_Item_IsItemKeystoneByID = C_Item and C_Item.IsItemKeystoneByID
+local C_MythicPlus_GetOwnedKeystoneChallengeMapID = C_MythicPlus and C_MythicPlus.GetOwnedKeystoneChallengeMapID
+local C_MythicPlus_GetOwnedKeystoneLevel = C_MythicPlus and C_MythicPlus.GetOwnedKeystoneLevel
 
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS
@@ -122,6 +122,7 @@ function KI.RequestData()
 	end
 end
 
+if not E.Forever and KS and OR then
 KS.Register(KI, function(keyLevel, keyChallengeMapID, playerRating, sender)
 	KI.LibKeystoneInfo[sender] = {
 		level = keyLevel,
@@ -165,3 +166,4 @@ KI:RegisterEvent("ITEM_CHANGED", "DelayedCheckPlayerKeystone")
 KI:RegisterEvent("ITEM_PUSH", "DelayedCheckPlayerKeystone")
 
 F.TaskManager:AfterLogin(KI.RequestAndCheckPlayerKeystone, KI, true)
+end

@@ -24,17 +24,31 @@ local function GenerateDayContextMenu(owner, rootDescription)
 		_G.ToggleCharacter("PaperDollFrame")
 	end)
 	rootDescription:CreateButton(_G.SPELLBOOK, function()
-		_G.PlayerSpellsUtil.ToggleSpellBookFrame()
+		if _G.PlayerSpellsUtil then
+			_G.PlayerSpellsUtil.ToggleSpellBookFrame()
+		else
+			_G.ToggleSpellBook(_G.BOOKTYPE_SPELL)
+		end
 	end)
 	rootDescription:CreateButton(_G.TALENTS_BUTTON, function()
-		_G.PlayerSpellsUtil.ToggleClassTalentFrame()
+		if _G.PlayerSpellsUtil then
+			_G.PlayerSpellsUtil.ToggleClassTalentFrame()
+		else
+			_G.ToggleTalentFrame()
+		end
 	end)
 	rootDescription:CreateButton(_G.QUESTLOG_BUTTON, function()
 		_G.ToggleQuestLog()
 	end)
-	rootDescription:CreateButton(_G.ACHIEVEMENT_BUTTON, function()
-		_G.ToggleAchievementFrame()
-	end)
+	if E.Forever then
+		rootDescription:CreateButton(_G.LEGACY_BUTTON, function()
+			_G.ToggleLegacySystemUI()
+		end)
+	else
+		rootDescription:CreateButton(_G.ACHIEVEMENT_BUTTON, function()
+			_G.ToggleAchievementFrame()
+		end)
+	end
 	rootDescription:CreateButton(_G.MOUNTS, function()
 		_G.ToggleCollectionsJournal(1)
 	end)
@@ -60,18 +74,24 @@ local function GenerateDayContextMenu(owner, rootDescription)
 	rootDescription:CreateButton(
 		_G.COMPACT_UNIT_FRAME_PROFILE_AUTOACTIVATEPVE .. " / " .. _G.COMPACT_UNIT_FRAME_PROFILE_AUTOACTIVATEPVP,
 		function()
-			_G.PVEFrame_ToggleFrame()
+			if E.Forever then
+				_G.ToggleGroupFinderFrame()
+			else
+				_G.PVEFrame_ToggleFrame()
+			end
 		end
 	)
 	rootDescription:CreateButton(_G.RAID, function()
 		_G.ToggleFriendsFrame(3)
 	end)
-	rootDescription:CreateButton(_G.ENCOUNTER_JOURNAL, function()
-		_G.ToggleEncounterJournal()
-	end)
-	rootDescription:CreateButton(_G.HOUSING_MICRO_BUTTON, function()
-		_G.HousingFramesUtil.ToggleHousingDashboard()
-	end)
+	if not E.Forever then
+		rootDescription:CreateButton(_G.ENCOUNTER_JOURNAL, function()
+			_G.ToggleEncounterJournal()
+		end)
+		rootDescription:CreateButton(_G.HOUSING_MICRO_BUTTON, function()
+			_G.HousingFramesUtil.ToggleHousingDashboard()
+		end)
+	end
 	rootDescription:CreateButton(_G.HELP_BUTTON, function()
 		_G.ToggleHelpFrame()
 	end)

@@ -361,6 +361,9 @@ options.reset = {
 					order = 3,
 					type = "execute",
 					name = L["Quick Keystone"],
+					hidden = function()
+						return E.Forever
+					end,
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Quick Keystone"], nil, function()
 							E.db.WT.combat.quickKeystone = P.combat.quickKeystone
@@ -548,6 +551,9 @@ options.reset = {
 					order = 7,
 					type = "execute",
 					name = L["Event Tracker"],
+					hidden = function()
+						return E.Forever
+					end,
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Event Tracker"], nil, function()
 							E.db.WT.maps.eventTracker = P.maps.eventTracker
@@ -616,6 +622,9 @@ options.reset = {
 					order = 6,
 					type = "execute",
 					name = L["Prey Hunt"],
+					hidden = function()
+						return E.Forever
+					end,
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Prey Hunt"], nil, function()
 							E.db.WT.quest.preyHunt = P.quest.preyHunt
@@ -626,6 +635,9 @@ options.reset = {
 					order = 7,
 					type = "execute",
 					name = L["Achievement Screenshot"],
+					hidden = function()
+						return E.Forever
+					end,
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Achievement Screenshot"], nil, function()
 							E.db.WT.quest.achievementScreenshot = P.quest.achievementScreenshot
@@ -636,6 +648,9 @@ options.reset = {
 					order = 8,
 					type = "execute",
 					name = L["Achievement Tracker"],
+					hidden = function()
+						return E.Forever
+					end,
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Achievement Tracker"], nil, function()
 							E.db.WT.quest.achievementTracker = P.quest.achievementTracker
@@ -767,6 +782,9 @@ options.reset = {
 					order = 4,
 					type = "execute",
 					name = L["Keystone"],
+					hidden = function()
+						return E.Forever
+					end,
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Keystone"], nil, function()
 							E.db.WT.tooltips.keystone = P.tooltips.keystone
@@ -1042,6 +1060,9 @@ options.reset = {
 					order = 6,
 					type = "execute",
 					name = L["LFG List"],
+					hidden = function()
+						return E.Forever
+					end,
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["LFG List"], nil, function()
 							E.private.WT.misc.lfgList = V.misc.lfgList
@@ -1083,6 +1104,9 @@ options.reset = {
 					order = 10,
 					type = "execute",
 					name = L["Exit Phase Diving"],
+					hidden = function()
+						return E.Forever
+					end,
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Exit Phase Diving"], nil, function()
 							E.db.WT.misc.exitPhaseDiving = P.misc.exitPhaseDiving

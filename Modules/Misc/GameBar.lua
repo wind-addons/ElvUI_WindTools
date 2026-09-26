@@ -31,6 +31,7 @@ local CloseMenus = CloseMenus
 local CreateFrame = CreateFrame
 local GenerateClosure = GenerateClosure
 local GetAchievementCriteriaInfo = GetAchievementCriteriaInfo
+local GetAchievementNumCriteria = GetAchievementNumCriteria
 local GetBindLocation = GetBindLocation
 local GetGameTime = GetGameTime
 local GetNumGuildMembers = GetNumGuildMembers
@@ -59,10 +60,10 @@ local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccount
 local C_CVar_GetCVar = C_CVar.GetCVar
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_CVar_SetCVar = C_CVar.SetCVar
-local C_Covenants_GetActiveCovenantID = C_Covenants.GetActiveCovenantID
+local C_Covenants_GetActiveCovenantID = C_Covenants and C_Covenants.GetActiveCovenantID
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
-local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
-local C_Housing_GetPlayerOwnedHouses = C_Housing.GetPlayerOwnedHouses
+local C_Garrison_GetCompleteMissions = C_Garrison and C_Garrison.GetCompleteMissions
+local C_Housing_GetPlayerOwnedHouses = C_Housing and C_Housing.GetPlayerOwnedHouses
 local C_Item_GetItemCooldown = C_Item.GetItemCooldown
 local C_Item_GetItemCount = C_Item.GetItemCount
 local C_SpellBook_IsSpellKnown = C_SpellBook.IsSpellKnown
@@ -72,8 +73,9 @@ local C_ToyBox_IsToyUsable = C_ToyBox.IsToyUsable
 local C_UI_Reload = C_UI.Reload
 
 local Enum_CovenantType = Enum.CovenantType
-local FollowerType_8_0 = Enum.GarrisonFollowerType.FollowerType_8_0_GarrisonFollower
-local FollowerType_9_0 = Enum.GarrisonFollowerType.FollowerType_9_0_GarrisonFollower
+local garrisonFollowerType = Enum.GarrisonFollowerType
+local FollowerType_8_0 = garrisonFollowerType and garrisonFollowerType.FollowerType_8_0_GarrisonFollower
+local FollowerType_9_0 = garrisonFollowerType and garrisonFollowerType.FollowerType_9_0_GarrisonFollower
 local RED_FONT_COLOR = RED_FONT_COLOR
 
 local NUM_PANEL_BUTTONS = 7
@@ -829,10 +831,15 @@ local ButtonTypes = {
 		icon = W.Media.Icons.barSpellBook,
 		click = {
 			LeftButton = function()
-				if not InCombatLockdown() then
+				if InCombatLockdown() then
+					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
+					return
+				end
+
+				if _G.PlayerSpellsUtil then
 					_G.PlayerSpellsUtil.ToggleSpellBookFrame()
 				else
-					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
+					_G.ToggleSpellBook(_G.BOOKTYPE_SPELL)
 				end
 			end,
 		},
@@ -845,10 +852,15 @@ local ButtonTypes = {
 		icon = W.Media.Icons.barTalents,
 		click = {
 			LeftButton = function()
-				if not InCombatLockdown() then
+				if InCombatLockdown() then
+					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
+					return
+				end
+
+				if _G.PlayerSpellsUtil then
 					_G.PlayerSpellsUtil.ToggleClassTalentFrame()
 				else
-					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
+					_G.ToggleTalentFrame()
 				end
 			end,
 		},
@@ -916,14 +928,25 @@ local ButtonTypes = {
 	},
 }
 
+if E.Forever then
+	ButtonTypes.ACHIEVEMENTS = nil
+	ButtonTypes.ENCOUNTER_JOURNAL = nil
+	ButtonTypes.HOME = nil
+	ButtonTypes.MISSION_REPORTS = nil
+	ButtonTypes.GROUP_FINDER.macro.LeftButton = "/run ToggleGroupFinderFrame()"
+end
+
 function GB:UpdateGroupFinderButton()
+	local blizzardGroupFinderMacro = E.Forever and "/run ToggleGroupFinderFrame()" or "/click LFDMicroButton"
+
 	if not C_AddOns_IsAddOnLoaded("MeetingStone") then
+		ButtonTypes.GROUP_FINDER.macro.LeftButton = blizzardGroupFinderMacro
 		return
 	end
 
 	if self.db.groupFinder.preferNetEaseMeetingStone then
 		ButtonTypes.GROUP_FINDER.macro.LeftButton = "/meetingstone"
-		ButtonTypes.GROUP_FINDER.macro.RightButton = "/click LFDMicroButton"
+		ButtonTypes.GROUP_FINDER.macro.RightButton = blizzardGroupFinderMacro
 		ButtonTypes.GROUP_FINDER.tooltips = {
 			L["Group Finder"],
 			"\n",
@@ -931,7 +954,7 @@ function GB:UpdateGroupFinderButton()
 			RIGHT_BUTTON_ICON .. " " .. L["Group Finder"],
 		}
 	else
-		ButtonTypes.GROUP_FINDER.macro.LeftButton = "/click LFDMicroButton"
+		ButtonTypes.GROUP_FINDER.macro.LeftButton = blizzardGroupFinderMacro
 		ButtonTypes.GROUP_FINDER.macro.RightButton = "/meetingstone"
 		ButtonTypes.GROUP_FINDER.tooltips = {
 			L["Group Finder"],
@@ -1335,6 +1358,11 @@ function GB:UpdateButton(button, buttonType)
 	end
 
 	local config = ButtonTypes[buttonType]
+	if not config then
+		buttonType = "NONE"
+		config = ButtonTypes.NONE
+	end
+
 	button:Size(self.db.buttonSize, self.db.buttonSize)
 	button.type = buttonType
 	button.name = config.name
@@ -1459,6 +1487,10 @@ function GB:UpdateButtons()
 end
 
 function GB:UpdateHouseAttributes(button)
+	if not C_Housing_GetPlayerOwnedHouses then
+		return
+	end
+
 	if not GB.playerHouseList or #GB.playerHouseList == 0 then
 		C_Housing_GetPlayerOwnedHouses()
 		return
@@ -1643,9 +1675,13 @@ function GB:Initialize()
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("COVENANT_CHOSEN", "UpdateHearthStoneTable")
-	self:RegisterEvent("PLAYER_HOUSE_LIST_UPDATED")
-	C_Housing_GetPlayerOwnedHouses()
+	if not E.Forever then
+		self:RegisterEvent("COVENANT_CHOSEN", "UpdateHearthStoneTable")
+		self:RegisterEvent("PLAYER_HOUSE_LIST_UPDATED")
+		if C_Housing_GetPlayerOwnedHouses then
+			C_Housing_GetPlayerOwnedHouses()
+		end
+	end
 	self:SecureHook(_G.GuildMicroButton, "UpdateNotificationIcon", "UpdateGuildButton")
 	self.initialized = true
 end
@@ -1818,18 +1854,27 @@ function GB:UpdateHearthStoneTable()
 		hearthstonesTable[itemID] = true
 	end
 
-	local covenantHearthstones = {
-		[184353] = { covenantID = Enum_CovenantType.Kyrian, achievementCriteriaNum = 1 },
-		[183716] = { covenantID = Enum_CovenantType.Venthyr, achievementCriteriaNum = 4 },
-		[180290] = { covenantID = Enum_CovenantType.NightFae, achievementCriteriaNum = 3 },
-		[182773] = { covenantID = Enum_CovenantType.Necrolord, achievementCriteriaNum = 2 },
-	}
+	if C_Covenants_GetActiveCovenantID and Enum_CovenantType then
+		local covenantHearthstones = {
+			[184353] = { covenantID = Enum_CovenantType.Kyrian, achievementCriteriaNum = 1 },
+			[183716] = { covenantID = Enum_CovenantType.Venthyr, achievementCriteriaNum = 4 },
+			[180290] = { covenantID = Enum_CovenantType.NightFae, achievementCriteriaNum = 3 },
+			[182773] = { covenantID = Enum_CovenantType.Necrolord, achievementCriteriaNum = 2 },
+		}
 
-	local activeCovenantID = C_Covenants_GetActiveCovenantID()
+		local covenantAchievementID = 15646
+		local covenantCriteriaCount = GetAchievementNumCriteria(covenantAchievementID) or 0
+		if covenantCriteriaCount > 0 then
+			local activeCovenantID = C_Covenants_GetActiveCovenantID()
 
-	for toyID, config in pairs(covenantHearthstones) do
-		local criteriaCompleted = select(3, GetAchievementCriteriaInfo(15646, config.achievementCriteriaNum))
-		hearthstonesTable[toyID] = criteriaCompleted or activeCovenantID == config.covenantID
+			for toyID, config in pairs(covenantHearthstones) do
+				local criteriaCompleted = false
+				if config.achievementCriteriaNum <= covenantCriteriaCount then
+					criteriaCompleted = select(3, GetAchievementCriteriaInfo(covenantAchievementID, config.achievementCriteriaNum))
+				end
+				hearthstonesTable[toyID] = criteriaCompleted or activeCovenantID == config.covenantID
+			end
+		end
 	end
 
 	local raceHeartstones = {

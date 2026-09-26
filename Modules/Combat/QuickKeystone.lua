@@ -49,6 +49,10 @@ function QK:UpdateHook(event, addon)
 end
 
 function QK:ProfileUpdate()
+	if E.Forever then
+		return
+	end
+
 	self.db = E.db.WT.combat.quickKeystone
 
 	if C_AddOns_IsAddOnLoaded("Blizzard_ChallengesUI") then

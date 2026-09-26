@@ -22,7 +22,7 @@ local GetTime = GetTime
 local UIErrorsFrame = _G.UIErrorsFrame
 local UnitLevel = UnitLevel
 
-local C_MythicPlus_IsMythicPlusActive = C_MythicPlus.IsMythicPlusActive
+local C_MythicPlus_IsMythicPlusActive = C_MythicPlus and C_MythicPlus.IsMythicPlusActive
 local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local C_QuestLog_GetQuestObjectives = C_QuestLog.GetQuestObjectives
@@ -336,7 +336,7 @@ function QP:ProcessScenarioUpdate()
 	if
 		not cachedScenarioStep
 		or cachedScenarioStep.title ~= currentScenarioStep.title
-		or (C_MythicPlus_IsMythicPlusActive() and self.db.disableInMythicPlus)
+		or (C_MythicPlus_IsMythicPlusActive and C_MythicPlus_IsMythicPlusActive() and self.db.disableInMythicPlus)
 	then
 		cachedScenarioStep = currentScenarioStep
 		return

@@ -76,7 +76,8 @@ end
 ---Custom logger for warning messages
 ---@param ... string Message parts
 function F.Developer.LogWarning(...)
-	if E.global.WT.developer.logLevel < 2 then
+	local developerConfig = E.global and E.global.WT and E.global.WT.developer
+	if not developerConfig or developerConfig.logLevel < 2 then
 		return
 	end
 
@@ -87,7 +88,8 @@ end
 ---Custom logger for info messages
 ---@param ... string Message parts
 function F.Developer.LogInfo(...)
-	if E.global.WT.developer.logLevel < 3 then
+	local developerConfig = E.global and E.global.WT and E.global.WT.developer
+	if not developerConfig or developerConfig.logLevel < 3 then
 		return
 	end
 
@@ -98,7 +100,8 @@ end
 ---Custom logger for debug messages
 ---@param ... string Message parts
 function F.Developer.LogDebug(...)
-	if E.global.WT.developer.logLevel < 4 then
+	local developerConfig = E.global and E.global.WT and E.global.WT.developer
+	if not developerConfig or developerConfig.logLevel < 4 then
 		return
 	end
 

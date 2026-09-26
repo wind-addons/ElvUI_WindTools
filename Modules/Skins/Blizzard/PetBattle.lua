@@ -34,4 +34,6 @@ function S:PetBattle()
 	self:CreateShadow(_G.PetBattleFrame.Enemy3)
 end
 
-S:AddCallback("PetBattle")
+if not E.Forever then
+	S:AddCallback("PetBattle")
+end

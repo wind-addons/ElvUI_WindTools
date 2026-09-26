@@ -817,6 +817,9 @@ options.keystone = {
 	order = 7,
 	type = "group",
 	name = L["Keystone"],
+	hidden = function()
+		return E.Forever
+	end,
 	get = function(info)
 		return E.db.WT.announcement[info[#info - 1]][info[#info]]
 	end,

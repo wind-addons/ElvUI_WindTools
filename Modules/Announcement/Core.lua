@@ -16,15 +16,20 @@ local IsPartyLFG = IsPartyLFG
 local UnitIsGroupAssistant = UnitIsGroupAssistant
 local UnitIsGroupLeader = UnitIsGroupLeader
 
-local C_RestrictedActions_IsAddOnRestrictionActive = C_RestrictedActions.IsAddOnRestrictionActive
+local C_RestrictedActions_IsAddOnRestrictionActive = C_RestrictedActions and C_RestrictedActions.IsAddOnRestrictionActive
 
-local Enum_AddOnRestrictionType_ChallengeMode = Enum.AddOnRestrictionType.ChallengeMode
+local addOnRestrictionType = Enum.AddOnRestrictionType
+local Enum_AddOnRestrictionType_ChallengeMode = addOnRestrictionType and addOnRestrictionType.ChallengeMode
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
 A.history = {}
 
 function A:CanSentMessage()
+	if not C_RestrictedActions_IsAddOnRestrictionActive or not Enum_AddOnRestrictionType_ChallengeMode then
+		return true
+	end
+
 	return not C_RestrictedActions_IsAddOnRestrictionActive(Enum_AddOnRestrictionType_ChallengeMode)
 end
 

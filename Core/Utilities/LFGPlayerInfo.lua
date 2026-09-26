@@ -14,6 +14,7 @@ local tonumber = tonumber
 local tostring = tostring
 
 local GetClassInfo = GetClassInfo
+local GetNumClasses = GetNumClasses
 local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
 
 local C_LFGList_GetActivityInfoTable = C_LFGList.GetActivityInfoTable
@@ -357,7 +358,7 @@ function W.Utilities.LFGPlayerInfo:Conduct(template, role, class, spec, amount)
 end
 
 ---Generate a preview of template rendering using sample data
----Uses a Monk Brewmaster as sample data for demonstration
+---Uses the first class and specialization this client actually has
 ---@param template string|nil The template string to preview
 ---@return string result The rendered preview string, empty if template is nil
 function W.Utilities.LFGPlayerInfo:ConductPreview(template)
@@ -365,9 +366,17 @@ function W.Utilities.LFGPlayerInfo:ConductPreview(template)
 		return ""
 	end
 
-	local specName = select(2, GetSpecializationInfoForClassID(10, 1)) -- Brewmaster
+	for classID = 1, GetNumClasses() do
+		local classFile = select(2, GetClassInfo(classID))
+		if classFile then
+			local _, specName = GetSpecializationInfoForClassID(classID, 1)
+			if specName then
+				return self:Conduct(template, "TANK", classFile, specName, 2)
+			end
+		end
+	end
 
-	return self:Conduct(template, "TANK", "MONK", specName, 2)
+	return ""
 end
 
 ---Get formatted party information using the provided template

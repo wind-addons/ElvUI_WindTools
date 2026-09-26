@@ -2089,6 +2089,51 @@ options.blizzard = {
 	},
 }
 
+local foreverHiddenBlizzardSkins = {
+	achievements = true,
+	adventureMap = true,
+	animaDiversion = true,
+	artifact = true,
+	azerite = true,
+	azeriteEssence = true,
+	azeriteRespec = true,
+	blackMarket = true,
+	challenges = true,
+	chromieTime = true,
+	covenantPreview = true,
+	covenantRenown = true,
+	covenantSanctum = true,
+	delves = true,
+	encounterJournal = true,
+	expansionLandingPage = true,
+	garrison = true,
+	genericTrait = true,
+	housing = true,
+	itemSocketing = true,
+	itemUpgrade = true,
+	lookingForGroup = true,
+	majorFactions = true,
+	orderHall = true,
+	perksProgram = true,
+	petBattle = true,
+	playerChoice = true,
+	professionsCustomerOrders = true,
+	remixArtifact = true,
+	scrappingMachine = true,
+	soulbinds = true,
+	talkingHead = true,
+	weeklyRewards = true,
+}
+
+if E.Forever then
+	for skinName in pairs(foreverHiddenBlizzardSkins) do
+		local skinOption = options.blizzard.args[skinName]
+		if skinOption then
+			skinOption.hidden = true
+		end
+	end
+end
+
 options.damageMeter = {
 	order = 5,
 	type = "group",

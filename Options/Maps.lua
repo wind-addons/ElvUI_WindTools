@@ -932,6 +932,9 @@ options.eventTracker = {
 	order = 6,
 	type = "group",
 	name = L["Event Tracker"],
+	hidden = function()
+		return E.Forever
+	end,
 	get = function(info)
 		return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
 	end,

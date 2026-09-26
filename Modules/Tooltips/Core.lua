@@ -223,7 +223,9 @@ function T:Initialize()
 		self:RegisterEvent(name, "Event")
 	end
 
-	self:RawHook(ET, "AddMythicInfo")
+	if not E.Forever then
+		self:RawHook(ET, "AddMythicInfo")
+	end
 	self:SecureHook(ET, "SetUnitText", "SetUnitText")
 	self:SecureHook(ET, "RemoveTrashLines", "ElvUIRemoveTrashLines")
 	self:SecureHookScript(GameTooltip, "OnTooltipCleared", "ClearInspectInfo")

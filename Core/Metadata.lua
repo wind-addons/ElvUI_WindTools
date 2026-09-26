@@ -14,9 +14,9 @@ local GetRealmID = GetRealmID
 local GetRealmName = GetRealmName
 local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
 
-local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
+local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode and C_ChallengeMode.GetMapUIInfo
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
-local C_LootJournal_GetItemSetItems = C_LootJournal.GetItemSetItems
+local C_LootJournal_GetItemSetItems = C_LootJournal and C_LootJournal.GetItemSetItems
 
 E.myClassColor = E.myClassColor or E:ClassColor(E.myclass, true)
 
@@ -244,9 +244,14 @@ W.CurrentTierSetTable = {
 ---@type table<number, true>
 W.CurrentTierSetItemIDTable = {}
 
-for id in pairs(W.CurrentTierSetTable) do
-	for _, itemInfo in pairs(C_LootJournal_GetItemSetItems(id)) do
-		W.CurrentTierSetItemIDTable[itemInfo.itemID] = true
+if C_LootJournal_GetItemSetItems then
+	for id in pairs(W.CurrentTierSetTable) do
+		local itemSetItems = C_LootJournal_GetItemSetItems(id)
+		if itemSetItems then
+			for _, itemInfo in pairs(itemSetItems) do
+				W.CurrentTierSetItemIDTable[itemInfo.itemID] = true
+			end
+		end
 	end
 end
 
@@ -1291,25 +1296,27 @@ W.RealmSlugs = {
 }
 
 function W:InitializeMetadata()
-	for id in pairs(W.MythicPlusMapData) do
-		local name, _, timeLimit, tex = C_ChallengeMode_GetMapUIInfo(id)
-		W.MythicPlusMapData[id].name = name
-		W.MythicPlusMapData[id].tex = tex
-		W.MythicPlusMapData[id].idString = tostring(id)
-		W.MythicPlusMapData[id].timeLimit = timeLimit
-		if W.MythicPlusMapData[id].timers then
-			W.MythicPlusMapData[id].timers[#W.MythicPlusMapData[id].timers] = timeLimit
-		end
+	if C_ChallengeMode_GetMapUIInfo then
+		for id in pairs(W.MythicPlusMapData) do
+			local name, _, timeLimit, tex = C_ChallengeMode_GetMapUIInfo(id)
+			W.MythicPlusMapData[id].name = name
+			W.MythicPlusMapData[id].tex = tex
+			W.MythicPlusMapData[id].idString = tostring(id)
+			W.MythicPlusMapData[id].timeLimit = timeLimit
+			if W.MythicPlusMapData[id].timers then
+				W.MythicPlusMapData[id].timers[#W.MythicPlusMapData[id].timers] = timeLimit
+			end
 
-		-- debug: print mythic+ map data
-		-- E:Delay(3, function()
-		-- 	print("MythicPlusMapData", id, name, "Tex:", F.GetTextureString(tex, 16, 16, true))
-		-- 	for i, timer in pairs(W.MythicPlusMapData[id].timers) do
-		-- 		local mm = floor(timer / 60)
-		-- 		local ss = timer % 60
-		-- 		print("  Timer", i, ":", format("%02d:%02d", mm, ss))
-		-- 	end
-		-- end)
+			-- debug: print mythic+ map data
+			-- E:Delay(3, function()
+			-- 	print("MythicPlusMapData", id, name, "Tex:", F.GetTextureString(tex, 16, 16, true))
+			-- 	for i, timer in pairs(W.MythicPlusMapData[id].timers) do
+			-- 		local mm = floor(timer / 60)
+			-- 		local ss = timer % 60
+			-- 		print("  Timer", i, ":", format("%02d:%02d", mm, ss))
+			-- 	end
+			-- end)
+		end
 	end
 
 	for _, entry in pairs(W.MythicPlusSeasonAchievementData) do

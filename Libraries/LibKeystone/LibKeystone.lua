@@ -1,5 +1,7 @@
 --@curseforge-project-slug: libkeystone@
-if WOW_PROJECT_ID ~= 1 then return end -- Retail
+local _, _, _, wowToc = GetBuildInfo()
+local isForever = wowToc >= 16000 and wowToc < 20000
+if WOW_PROJECT_ID ~= 1 or isForever then return end -- Retail, not Forever
 
 local LKS = LibStub:NewLibrary("LibKeystone", 11)
 if not LKS then return end -- No upgrade needed

@@ -2774,6 +2774,9 @@ options.preyHunt = {
 	order = 6,
 	type = "group",
 	name = L["Prey Hunt"],
+	hidden = function()
+		return E.Forever
+	end,
 	get = function(info)
 		return E.db.WT.quest.preyHunt[info[#info]]
 	end,
@@ -3086,6 +3089,9 @@ options.achievementScreenshot = {
 	order = 7,
 	type = "group",
 	name = L["Achievement Screenshot"],
+	hidden = function()
+		return E.Forever
+	end,
 	get = function(info)
 		return E.db.WT.quest.achievementScreenshot[info[#info]]
 	end,
@@ -3145,6 +3151,9 @@ options.achievementTracker = {
 	order = 8,
 	type = "group",
 	name = L["Achievement Tracker"],
+	hidden = function()
+		return E.Forever
+	end,
 	get = function(info)
 		return E.db.WT.quest.achievementTracker[info[#info]]
 	end,

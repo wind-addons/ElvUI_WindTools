@@ -4,6 +4,13 @@ local MF = W.Modules.MoveFrames ---@type MoveFrames
 local C = W.Utilities.Color
 local ET = W:NewModule("EventTracker", "AceEvent-3.0", "AceHook-3.0") ---@class EventTracker : AceModule, AceEvent-3.0, AceHook-3.0
 
+if E.Forever then
+	function ET:Initialize() end
+	function ET:ProfileUpdate() end
+	W:RegisterModule(ET:GetName())
+	return
+end
+
 local _G = _G
 local ceil = ceil
 local date = date

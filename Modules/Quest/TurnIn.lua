@@ -50,7 +50,7 @@ local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 local UnitName = UnitName
 local UnitPlayerControlled = UnitPlayerControlled
 
-local C_GossipInfo_GetActiveDelveGossip = C_GossipInfo.GetActiveDelveGossip
+local C_GossipInfo_GetActiveDelveGossip = C_GossipInfo and C_GossipInfo.GetActiveDelveGossip
 local C_GossipInfo_GetActiveQuests = C_GossipInfo.GetActiveQuests
 local C_GossipInfo_GetAvailableQuests = C_GossipInfo.GetAvailableQuests
 local C_GossipInfo_GetNumActiveQuests = C_GossipInfo.GetNumActiveQuests
@@ -429,7 +429,9 @@ function TI:GOSSIP_SHOW()
 	end
 
 	-- 2. Before accepting quests, check for skip strings in gossip options
-	local gossipOptions = C_GossipInfo_GetOptions() or { C_GossipInfo_GetActiveDelveGossip() }
+	local gossipOptions = C_GossipInfo_GetOptions()
+		or (C_GossipInfo_GetActiveDelveGossip and { C_GossipInfo_GetActiveDelveGossip() })
+		or {}
 	for _, gossipOption in ipairs(gossipOptions) do
 		if strfind(gossipOption.name, SKIP_STRING_1) or strfind(gossipOption.name, SKIP_STRING_2) then
 			return

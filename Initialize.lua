@@ -92,11 +92,13 @@ W.Utilities = {}
 
 -- Pre-register libs into ElvUI
 E:AddLib("Deflate", "LibDeflate")
-E:AddLib("OpenRaid", "LibOpenRaid-1.0")
 E:AddLib("ObjectiveProgressWT", "LibObjectiveProgress-WT")
 E:AddLib("RangeCheck", "LibRangeCheck-3.0")
-E:AddLib("Keystone", "LibKeystone")
 E:AddLib("WTItemEnchant", "LibItemEnchant-WT")
+if not E.Forever then
+	E:AddLib("OpenRaid", "LibOpenRaid-1.0")
+	E:AddLib("Keystone", "LibKeystone")
+end
 
 _G.WindTools_OnAddonCompartmentClick = function()
 	E:ToggleOptions("WindTools")

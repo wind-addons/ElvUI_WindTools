@@ -143,6 +143,9 @@ options.general = {
 			order = 13,
 			type = "toggle",
 			name = L["Reshii Wraps Upgrade"],
+			hidden = function()
+				return E.Forever
+			end,
 			desc = L["Middle click the character back slot to open the Reshii Wraps upgrade menu."],
 		},
 	},
@@ -1502,6 +1505,9 @@ options.lfgList = {
 	order = 8,
 	type = "group",
 	name = L["LFG List"],
+	hidden = function()
+		return E.Forever
+	end,
 	get = function(info)
 		return E.private.WT.misc.lfgList[info[#info]]
 	end,
@@ -2138,6 +2144,9 @@ options.exitPhaseDiving = {
 	order = 12,
 	type = "group",
 	name = L["Exit Phase Diving"],
+	hidden = function()
+		return E.Forever
+	end,
 	get = function(info)
 		return E.db.WT.misc.exitPhaseDiving[info[#info]]
 	end,

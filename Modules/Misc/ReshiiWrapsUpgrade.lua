@@ -41,6 +41,7 @@ function M:ReshiiWrapsUpgrade()
 	end)
 end
 
+if not E.Forever then
 TooltipDataProcessor_AddTooltipPostCall(Enum_TooltipDataType_Item, function(tooltip, data)
 	if tooltip:GetOwner() ~= _G.CharacterBackSlot or data.id ~= WARPS_ITEM_ID then
 		return
@@ -58,3 +59,4 @@ TooltipDataProcessor_AddTooltipPostCall(Enum_TooltipDataType_Item, function(tool
 end)
 
 M:AddCallback("ReshiiWrapsUpgrade")
+end

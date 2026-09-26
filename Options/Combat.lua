@@ -729,6 +729,9 @@ options.quickKeystone = {
 	order = 4,
 	name = L["Quick Keystone"],
 	type = "group",
+	hidden = function()
+		return E.Forever
+	end,
 	get = function(info)
 		return E.db.WT.combat.quickKeystone[info[#info]]
 	end,

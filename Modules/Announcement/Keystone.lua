@@ -6,6 +6,10 @@ local gsub = gsub
 local strlower = strlower
 
 function A:Keystone(_, _, link)
+	if E.Forever then
+		return
+	end
+
 	local db = self.db.keystone
 
 	if not db or not db.enable then
@@ -17,6 +21,10 @@ function A:Keystone(_, _, link)
 end
 
 function A:KeystoneLink(event, text)
+	if E.Forever then
+		return
+	end
+
 	local db = self.db.keystone
 
 	if not db or not db.enable or not db.command then

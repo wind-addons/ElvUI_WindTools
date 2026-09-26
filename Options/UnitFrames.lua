@@ -734,11 +734,13 @@ do
 
 	for i = 1, GetNumClasses() do
 		local classFile = select(2, GetClassInfo(i))
-		examples.color[classFile] = {
-			order = i,
-			tag = format("[classcolor:%s]", strlower(classFile)),
-			text = format(L["The color of %s"], C.StringWithClassColor(classNames[classFile], classFile)),
-		}
+		if classFile and classNames[classFile] then
+			examples.color[classFile] = {
+				order = i,
+				tag = format("[classcolor:%s]", strlower(classFile)),
+				text = format(L["The color of %s"], C.StringWithClassColor(classNames[classFile], classFile)),
+			}
+		end
 	end
 
 	for index, style in pairs(F.GetClassIconStyleList()) do
@@ -763,6 +765,7 @@ do
 
 		for i = 1, GetNumClasses() do
 			local classFile = select(2, GetClassInfo(i))
+			if classFile and classNames[classFile] then
 			examples["classIcon_" .. style][classFile .. "_ALIGN"] = {
 				order = 3 * i,
 				type = "description",
@@ -781,6 +784,7 @@ do
 				tag = "[classicon-" .. style .. ":" .. strlower(classFile) .. "]",
 				width = 1.5,
 			}
+			end
 		end
 	end
 

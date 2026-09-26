@@ -2,6 +2,11 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local C = W.Utilities.Color
 local ET = W:GetModule("EventTracker") ---@class EventTracker
 
+-- Retail event tables call C_Map.GetMapInfo for Midnight map IDs that do not exist on Forever.
+if E.Forever then
+	return
+end
+
 local _G = _G
 local floor = floor
 local format = format

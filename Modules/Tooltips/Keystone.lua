@@ -38,4 +38,6 @@ function T:AddKeystone(tt, unit)
 	tt:AddDoubleLine(L["Keystone"], right)
 end
 
-T:AddInspectInfoCallback(1, "AddKeystone", false)
+if not E.Forever then
+	T:AddInspectInfoCallback(1, "AddKeystone", false)
+end

@@ -1,5 +1,14 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local AT = W:NewModule("AchievementTracker", "AceEvent-3.0", "AceHook-3.0") ---@class AchievementTracker : AceModule, AceEvent-3.0, AceHook-3.0
+
+if E.Forever then
+	function AT:Initialize() end
+
+	AT.ProfileUpdate = AT.Initialize
+	W:RegisterModule(AT:GetName())
+	return
+end
+
 local C = W.Utilities.Color
 local async = W.Utilities.Async
 local MF = W.Modules.MoveFrames

@@ -132,5 +132,7 @@ function M:UpdateExitPhaseDivingButton()
 	end)
 end
 
-M:AddCallback("ExitPhaseDiving")
-M:AddCallbackForUpdate("UpdateExitPhaseDivingButton")
+if not E.Forever then
+	M:AddCallback("ExitPhaseDiving")
+	M:AddCallbackForUpdate("UpdateExitPhaseDivingButton")
+end

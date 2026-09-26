@@ -18,7 +18,8 @@ local CreateFrame = CreateFrame
 local GetKeysArray = GetKeysArray
 
 ---@type ObjectiveTrackerModuleTemplate[]
-local trackers = {
+local trackers = {}
+for _, tracker in pairs({
 	_G.ScenarioObjectiveTracker,
 	_G.UIWidgetObjectiveTracker,
 	_G.CampaignQuestObjectiveTracker,
@@ -30,7 +31,11 @@ local trackers = {
 	_G.BonusObjectiveTracker,
 	_G.WorldQuestObjectiveTracker,
 	_G.InitiativeTasksObjectiveTracker,
-}
+}) do
+	if tracker then
+		trackers[#trackers + 1] = tracker
+	end
+end
 
 ---@type table<string, string>
 local replaceRules = {}
@@ -494,7 +499,9 @@ function OT:Initialize()
 			self:ObjectiveTrackerModule_AddBlock(nil, block)
 		end)
 	end
-	self:SecureHook(_G.ScenarioObjectiveTracker, "UpdateCriteria", "ScenarioObjectiveTracker_UpdateCriteria")
+	if _G.ScenarioObjectiveTracker then
+		self:SecureHook(_G.ScenarioObjectiveTracker, "UpdateCriteria", "ScenarioObjectiveTracker_UpdateCriteria")
+	end
 
 	self:HandleContainerHeader(_G.ObjectiveTrackerFrame.Header)
 	self:UpdateBackdrop()

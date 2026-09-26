@@ -74,6 +74,10 @@ function AS:AddAlertFrame(_, frame)
 end
 
 function AS:Initialize()
+	if E.Forever then
+		return
+	end
+
 	self.db = E.db.WT.quest.achievementScreenshot
 
 	if self.initialized or not self.db.enable then

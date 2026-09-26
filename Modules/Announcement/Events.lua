@@ -5,10 +5,11 @@ local IsInGroup = IsInGroup
 local RunNextFrame = RunNextFrame
 local UnitName = UnitName
 
-local C_RestrictedActions_IsAddOnRestrictionActive = C_RestrictedActions.IsAddOnRestrictionActive
+local C_RestrictedActions_IsAddOnRestrictionActive = C_RestrictedActions and C_RestrictedActions.IsAddOnRestrictionActive
 
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
-local Enum_AddOnRestrictionType_ChallengeMode = Enum.AddOnRestrictionType.ChallengeMode
+local addOnRestrictionType = Enum.AddOnRestrictionType
+local Enum_AddOnRestrictionType_ChallengeMode = addOnRestrictionType and addOnRestrictionType.ChallengeMode
 
 A.EventList = {
 	"CHALLENGE_MODE_COMPLETED",
@@ -65,7 +66,11 @@ function A:CHALLENGE_MODE_COMPLETED()
 end
 
 function A:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellID)
-	if C_RestrictedActions_IsAddOnRestrictionActive(Enum_AddOnRestrictionType_ChallengeMode) then
+	if
+		C_RestrictedActions_IsAddOnRestrictionActive
+		and Enum_AddOnRestrictionType_ChallengeMode
+		and C_RestrictedActions_IsAddOnRestrictionActive(Enum_AddOnRestrictionType_ChallengeMode)
+	then
 		return
 	end
 

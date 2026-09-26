@@ -138,4 +138,6 @@ function T:GroupInfo()
 	self:SecureHook("LFGListUtil_SetSearchEntryTooltip", "AddGroupInfo")
 end
 
-T:AddCallback("GroupInfo")
+if not E.Forever then
+	T:AddCallback("GroupInfo")
+end

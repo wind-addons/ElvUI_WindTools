@@ -119,11 +119,13 @@ function Tags:AddTagInfo()
 
 	for i = 1, GetNumClasses() do
 		local classFile = select(2, GetClassInfo(i))
-		info["classcolor:" .. strlower(classFile)] = {
-			category = F.GetWindStyleText(L["Color"]),
-			description = format(L["The color of %s"], C.StringWithClassColor(classNames[classFile], classFile)),
-			order = i,
-		}
+		if classFile and classNames[classFile] then
+			info["classcolor:" .. strlower(classFile)] = {
+				category = F.GetWindStyleText(L["Color"]),
+				description = format(L["The color of %s"], C.StringWithClassColor(classNames[classFile], classFile)),
+				order = i,
+			}
+		end
 	end
 
 	for _, style in pairs(F.GetClassIconStyleList()) do
@@ -134,13 +136,15 @@ function Tags:AddTagInfo()
 
 		for i = 1, GetNumClasses() do
 			local classFile = select(2, GetClassInfo(i))
-			info["classicon-" .. style .. ":" .. strlower(classFile)] = {
-				category = F.GetWindStyleText(L["Class Icon"]) .. " - " .. style,
-				description = format(
-					L["The class icon of %s"],
-					C.StringWithClassColor(classNames[classFile], classFile)
-				),
-			}
+			if classFile and classNames[classFile] then
+				info["classicon-" .. style .. ":" .. strlower(classFile)] = {
+					category = F.GetWindStyleText(L["Class Icon"]) .. " - " .. style,
+					description = format(
+						L["The class icon of %s"],
+						C.StringWithClassColor(classNames[classFile], classFile)
+					),
+				}
+			end
 		end
 	end
 
@@ -215,10 +219,12 @@ function Tags:Initialize()
 
 	for i = 1, GetNumClasses() do
 		local upperText = select(2, GetClassInfo(i))
-		local tag = "classcolor:" .. strlower(upperText)
-		E:AddTag(tag, 1e10, function()
-			return GetClassColorString(upperText)
-		end)
+		if upperText then
+			local tag = "classcolor:" .. strlower(upperText)
+			E:AddTag(tag, 1e10, function()
+				return GetClassColorString(upperText)
+			end)
+		end
 	end
 
 	-- Class Icons

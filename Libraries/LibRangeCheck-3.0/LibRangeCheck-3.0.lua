@@ -49,8 +49,9 @@ if not lib then
 end
 
 local interfaceVersion = select(4, GetBuildInfo())
+local isForever = interfaceVersion >= 16000 and interfaceVersion < 20000
 
-local isRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+local isRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and not isForever
 local isEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 local isTBC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 local isWrath = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC

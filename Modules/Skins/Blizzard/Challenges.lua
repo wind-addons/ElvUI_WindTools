@@ -11,4 +11,6 @@ function S:Blizzard_ChallengesUI()
 	self:CreateShadow(_G.ChallengesKeystoneFrame)
 end
 
-S:AddCallbackForAddon("Blizzard_ChallengesUI")
+if not E.Forever then
+	S:AddCallbackForAddon("Blizzard_ChallengesUI")
+end

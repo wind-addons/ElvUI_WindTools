@@ -9,6 +9,7 @@ local assert = assert
 local coroutine = coroutine
 local format = format
 local getmetatable = getmetatable
+local huge = math.huge
 local min = min
 local pairs = pairs
 local pcall = pcall
@@ -333,7 +334,7 @@ end
 ---@param val any The value to check
 ---@return boolean isNaN True if value is NaN
 function F.IsNaN(val)
-	return type(val) == "number" and math.isnan(val)
+	return type(val) == "number" and val ~= val
 end
 
 ---Return value or default if value is nil, NaN, or infinite
@@ -341,7 +342,7 @@ end
 ---@param default any The default value to return if val is invalid
 ---@return any result The original value or default
 function F.Or(val, default)
-	if type(val) ~= "number" or not math.isfinite(val) then
+	if type(val) ~= "number" or val ~= val or val == huge or val == -huge then
 		return default
 	end
 	return val

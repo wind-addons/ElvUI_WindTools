@@ -9,7 +9,6 @@ local assert = assert
 local coroutine = coroutine
 local format = format
 local getmetatable = getmetatable
-local huge = math.huge
 local min = min
 local pairs = pairs
 local pcall = pcall
@@ -330,19 +329,40 @@ function F.GetWindStyleText(text)
 	return E:TextGradient(text, 0.32941, 0.52157, 0.93333, 0.29020, 0.70980, 0.89412, 0.25882, 0.84314, 0.86667)
 end
 
+local isNan = math.isnan
+local isFinite = math.isfinite
+local huge = math.huge
+
 ---Check if value is NaN (Not a Number).
+---math.isnan is not on retail yet, so fall back to the NaN self-comparison.
 ---@param val any The value to check
 ---@return boolean isNaN True if value is NaN
 function F.IsNaN(val)
-	return type(val) == "number" and val ~= val
+	if type(val) ~= "number" then
+		return false
+	end
+	if isNan then
+		return isNan(val)
+	end
+	return val ~= val
 end
 
 ---Return value or default if value is nil, NaN, or infinite
+---math.isfinite is not on retail yet, so fall back to math.huge.
 ---@param val any The value to check
 ---@param default any The default value to return if val is invalid
 ---@return any result The original value or default
 function F.Or(val, default)
-	if type(val) ~= "number" or val ~= val or val == huge or val == -huge then
+	if type(val) ~= "number" then
+		return default
+	end
+	if isFinite then
+		if not isFinite(val) then
+			return default
+		end
+		return val
+	end
+	if val ~= val or val == huge or val == -huge then
 		return default
 	end
 	return val

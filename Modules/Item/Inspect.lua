@@ -1055,7 +1055,7 @@ function I:ShowPanel(unit, parent, ilevel)
 		end
 
 		if slotInfo.index == 16 or slotInfo.index == 17 then
-			line:SetAlpha(itemInfo and itemInfo.level > 0 and 1 or 0.4)
+			line:SetAlpha(itemInfo and itemInfo.level and itemInfo.level > 0 and 1 or 0.4)
 		end
 
 		-- Icons

@@ -933,6 +933,8 @@ if E.Forever then
 	ButtonTypes.ENCOUNTER_JOURNAL = nil
 	ButtonTypes.HOME = nil
 	ButtonTypes.MISSION_REPORTS = nil
+	ButtonTypes.PET_JOURNAL = nil
+	ButtonTypes.TOY_BOX = nil
 	ButtonTypes.GROUP_FINDER.macro.LeftButton = "/run ToggleGroupFinderFrame()"
 end
 

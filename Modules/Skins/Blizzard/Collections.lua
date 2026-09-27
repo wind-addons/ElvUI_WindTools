@@ -15,7 +15,9 @@ function S:Blizzard_Collections()
 	for i = 1, 6 do
 		local tab = _G["CollectionsJournalTab" .. i]
 		if tab then
-			tab:SetPushedTextOffset(0, 0)
+			if tab.SetPushedTextOffset then
+				tab:SetPushedTextOffset(0, 0)
+			end
 			self:ReskinTab(tab)
 		end
 	end

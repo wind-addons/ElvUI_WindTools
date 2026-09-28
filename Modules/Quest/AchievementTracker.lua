@@ -48,6 +48,7 @@ local GetCategoryInfo = GetCategoryInfo
 local GetCategoryList = GetCategoryList
 local GetCategoryNumAchievements = GetCategoryNumAchievements
 local GetKeysArray = GetKeysArray
+local IsAchievementEligible = IsAchievementEligible
 local PlaySound = PlaySound
 
 local C_AchievementInfo_GetRewardItemID = C_AchievementInfo.GetRewardItemID
@@ -152,28 +153,44 @@ local function GetCachedProgressColor(percent, cache)
 	return cache[key]
 end
 
----Calculate completion percentage and get detailed info for an achievement
+---Calculate completion percentage and get detailed info for an achievement.
+---Criteria the current character cannot earn (eligible == false) are ignored.
 ---@param achievementID number
 ---@return AchievementCriteriaData
 local function GetCriteriaData(achievementID)
-	local total, completed = GetAchievementNumCriteria(achievementID), 0
-	if not total or total == 0 then
+	local numCriteria = GetAchievementNumCriteria(achievementID)
+	if not numCriteria or numCriteria == 0 then
 		return { percent = 0, total = 0, details = {}, completed = 0 }
 	end
 
 	local details = {}
-	for i = 1, total do
-		local criteriaString, _, criteriaCompleted, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, i)
-		tinsert(
-			details,
-			{ text = criteriaString, completed = criteriaCompleted, quantity = quantity, reqQuantity = reqQuantity }
-		)
-		if criteriaCompleted then
-			completed = completed + 1
+	local eligibleTotal, completedCount = 0, 0
+	for criteriaIndex = 1, numCriteria do
+		local criteriaString, _, criteriaCompleted, quantity, reqQuantity, _, _, _, _, _, eligible =
+			GetAchievementCriteriaInfo(achievementID, criteriaIndex)
+		-- Strict false so a missing eligible return still counts.
+		if eligible ~= false then
+			eligibleTotal = eligibleTotal + 1
+			tinsert(
+				details,
+				{ text = criteriaString, completed = criteriaCompleted, quantity = quantity, reqQuantity = reqQuantity }
+			)
+			if criteriaCompleted then
+				completedCount = completedCount + 1
+			end
 		end
 	end
 
-	return { percent = (completed / total) * 100, total = total, details = details, completed = completed }
+	if eligibleTotal == 0 then
+		return { percent = 0, total = 0, details = {}, completed = 0 }
+	end
+
+	return {
+		percent = (completedCount / eligibleTotal) * 100,
+		total = eligibleTotal,
+		details = details,
+		completed = completedCount,
+	}
 end
 
 local function processNextFrame(self)
@@ -219,6 +236,7 @@ function AT:ScanAchievements()
 
 	self.states.isScanning = true
 	self.states.results = {}
+	self.scanGeneration = (self.scanGeneration or 0) + 1
 
 	local categories = GetCategoryList()
 
@@ -226,6 +244,10 @@ function AT:ScanAchievements()
 	for _, categoryID in ipairs(categories) do
 		total = total + GetCategoryNumAchievements(categoryID)
 	end
+
+	local scanGeneration = self.scanGeneration
+	local queuedAchievementIDs = {}
+	local insertedByName = {}
 
 	self.scanCoroutine = coroutine.create(function()
 		local scanned = 0
@@ -242,22 +264,57 @@ function AT:ScanAchievements()
 				end
 
 				local id = select(1, GetAchievementInfo(categoryID, i))
-				if id and C_AchievementInfo_IsValidAchievement(id) and not C_AchievementInfo_IsGuildAchievement(id) then
+				if
+					id
+					and not queuedAchievementIDs[id]
+					and C_AchievementInfo_IsValidAchievement(id)
+					and not C_AchievementInfo_IsGuildAchievement(id)
+					and IsAchievementEligible(id) ~= false
+				then
+					queuedAchievementIDs[id] = true
 					async.WithAchievementID(id, function(data)
-						local _, name, _, completed, _, _, _, description, flags, icon, rewardText = unpack(data)
-						if completed then
+						if scanGeneration ~= self.scanGeneration then
 							return
+						end
+
+						local _, name, _, completed, _, _, _, description, flags, icon, rewardText, _, wasEarnedByMe =
+							unpack(data)
+						if completed or wasEarnedByMe then
+							return
+						end
+
+						local criteriaData = GetCriteriaData(id)
+						local hasOnlyIneligibleCriteria = criteriaData.total == 0 and GetAchievementNumCriteria(id) > 0
+						local allEligibleCriteriaComplete = criteriaData.total > 0
+							and criteriaData.completed >= criteriaData.total
+						if hasOnlyIneligibleCriteria or allEligibleCriteriaComplete then
+							return
+						end
+
+						local nameLower = strlower(name)
+						local existing = insertedByName[nameLower]
+						if existing then
+							if criteriaData.percent <= existing.criteriaData.percent then
+								return
+							end
+
+							for index, achievement in ipairs(self.states.results) do
+								if achievement.id == existing.id then
+									tremove(self.states.results, index)
+									break
+								end
+							end
 						end
 
 						---@type AchievementData
 						local result = {
 							id = id,
 							name = name,
-							nameLower = strlower(name), -- Cache lowercase for sorting
+							nameLower = nameLower,
 							description = description,
 							icon = icon --[[@as number]],
 							category = { id = categoryID, name = categoryName },
-							criteriaData = GetCriteriaData(id),
+							criteriaData = criteriaData,
 							flags = flags,
 							reward = {
 								itemID = C_AchievementInfo_GetRewardItemID(id),
@@ -265,6 +322,7 @@ function AT:ScanAchievements()
 							},
 						}
 
+						insertedByName[nameLower] = result
 						tinsert(self.states.results, result)
 					end)
 				end

@@ -1,5 +1,9 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallbackForAddon("Blizzard_GameMenu")
+data.toggle = "misc"
+data.private = "gameMenu"
 local C = W.Utilities.Color
 local MF = W.Modules.MoveFrames
 
@@ -36,10 +40,6 @@ local function LayoutGameMenuButtons(menu)
 end
 
 function S:Blizzard_GameMenu()
-	if not self:CheckDB("misc", "gameMenu") then
-		return
-	end
-
 	local GameMenuFrame = _G.GameMenuFrame
 
 	if not GameMenuFrame or E.OtherAddons.ConsolePort then
@@ -66,4 +66,3 @@ function S:Blizzard_GameMenu()
 	hooksecurefunc(GameMenuFrame, "InitButtons", ReskinGameMenuButtons)
 end
 
-S:AddCallbackForAddon("Blizzard_GameMenu")

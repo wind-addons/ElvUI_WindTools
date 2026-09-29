@@ -1,6 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("HandyNotes_MapNotes")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.handyNotesMapNotes
+end
+
 local _G = _G
 
 local RunNextFrame = RunNextFrame
@@ -29,14 +34,9 @@ local function ReskinChangelogFrame()
 end
 
 function S:HandyNotes_MapNotes()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.handyNotesMapNotes then
-		return
-	end
-
 	E:Delay(0.01, function()
 		-- Must after MapNotes async loading
 		RunNextFrame(ReskinChangelogFrame)
 	end)
 end
 
-S:AddCallbackForAddon("HandyNotes_MapNotes")

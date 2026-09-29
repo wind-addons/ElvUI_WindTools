@@ -1,14 +1,14 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallback("DressUpFrame")
+data.toggle = "dressingroom"
+data.private = "dressingRoom"
+
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
 function S:DressUpFrame()
-	if not self:CheckDB("dressingroom", "dressingRoom") then
-		return
-	end
-
 	self:CreateShadow(_G.DressUpFrame)
 	self:CreateShadow(_G.DressUpFrame.SetSelectionPanel)
 	self:CreateBackdropShadow(_G.DressUpFrame.CustomSetDetailsPanel)
@@ -28,4 +28,3 @@ function S:DressUpFrame()
 	end)
 end
 
-S:AddCallback("DressUpFrame")

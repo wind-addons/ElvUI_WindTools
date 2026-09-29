@@ -1,13 +1,17 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("Blizzard_CharacterCustomize")
+data.toggle = "barber"
+data.private = "barberShop"
+data = S:AddCallbackForAddon("Blizzard_BarbershopUI")
+data.toggle = "barber"
+data.private = "barberShop"
+
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
 function S:Blizzard_CharacterCustomize()
-	if not self:CheckDB("barber", "barberShop") then
-		return
-	end
 	local frame = _G.CharCustomizeFrame
 
 	self:CreateBackdropShadow(frame.SmallButtons.ResetCameraButton)
@@ -46,10 +50,6 @@ function S:Blizzard_CharacterCustomize()
 end
 
 function S:Blizzard_BarbershopUI()
-	if not self:CheckDB("barber", "barberShop") then
-		return
-	end
-
 	local frame = _G.BarberShopFrame
 
 	self:CreateBackdropShadow(frame.ResetButton)
@@ -57,5 +57,3 @@ function S:Blizzard_BarbershopUI()
 	self:CreateBackdropShadow(frame.AcceptButton)
 end
 
-S:AddCallbackForAddon("Blizzard_CharacterCustomize")
-S:AddCallbackForAddon("Blizzard_BarbershopUI")

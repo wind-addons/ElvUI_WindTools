@@ -1,6 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("AdvancedInterfaceOptions")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.advancedInterfaceOptions
+end
+
 local _G = _G
 local pairs = pairs
 
@@ -35,10 +40,6 @@ function S:AdvancedInterfaceOptions_CVarBrowser(frame)
 end
 
 function S:AdvancedInterfaceOptions()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.advancedInterfaceOptions then
-		return
-	end
-
 	local dialog = _G.LibStub("AceConfigDialog-3.0", true)
 	if not dialog then
 		return
@@ -55,4 +56,3 @@ function S:AdvancedInterfaceOptions()
 	end)
 end
 
-S:AddCallbackForAddon("AdvancedInterfaceOptions")

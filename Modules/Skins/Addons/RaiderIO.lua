@@ -1,5 +1,10 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallbackForAddon("RaiderIO")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.raiderIO
+end
 local TT = E:GetModule("Tooltip")
 
 local _G = _G
@@ -123,10 +128,6 @@ function S:RaiderIO_GuildWeeklyFrame()
 end
 
 function S:RaiderIO()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.raiderIO then
-		return
-	end
-
 	self:DisableAddOnSkin("RaiderIO")
 	self:AddCallbackForEnterWorld("RaiderIO_DelayedSkinning")
 	self:SecureHook(_G.PVEFrame, "Show", "RaiderIO_GuildWeeklyFrame")
@@ -140,4 +141,3 @@ function S:RaiderIO()
 	end
 end
 
-S:AddCallbackForAddon("RaiderIO")

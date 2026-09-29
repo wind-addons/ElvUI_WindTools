@@ -1,6 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("SimpleAddonManager")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.simpleAddonManager
+end
+
 local _G = _G
 local abs = abs
 local hooksecurefunc = hooksecurefunc
@@ -95,10 +100,6 @@ local function ReskinModules(frame)
 end
 
 function S:SimpleAddonManager()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.simpleAddonManager then
-		return
-	end
-
 	if not _G.SimpleAddonManager then
 		return
 	end
@@ -111,4 +112,3 @@ function S:SimpleAddonManager()
 	self:Proxy("HandleCloseButton", _G.SimpleAddonManager.CloseButton)
 end
 
-S:AddCallbackForAddon("SimpleAddonManager")

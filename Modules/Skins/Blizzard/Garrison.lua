@@ -1,14 +1,15 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallback("GarrisonTooltips")
+data.toggle = "garrison"
+data = S:AddCallbackForAddon("Blizzard_GarrisonUI")
+data.toggle = "garrison"
+
 local _G = _G
 local pairs = pairs
 
 function S:GarrisonTooltips()
-	if not self:CheckDB("garrison") then
-		return
-	end
-
 	local tooltips = {
 		_G.GarrisonFollowerTooltip,
 		_G.FloatingGarrisonFollowerTooltip,
@@ -29,10 +30,6 @@ function S:GarrisonTooltips()
 end
 
 function S:Blizzard_GarrisonUI()
-	if not self:CheckDB("garrison") then
-		return
-	end
-
 	local frames = {
 		_G.GarrisonCapacitiveDisplayFrame,
 		_G.GarrisonMissionFrame,
@@ -82,5 +79,3 @@ function S:Blizzard_GarrisonUI()
 	end
 end
 
-S:AddCallback("GarrisonTooltips")
-S:AddCallbackForAddon("Blizzard_GarrisonUI")

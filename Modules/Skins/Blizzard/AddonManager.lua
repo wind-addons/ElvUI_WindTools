@@ -1,6 +1,9 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallback("AddonList")
+data.toggle = "addonManager"
+
 local _G = _G
 local pairs = pairs
 
@@ -17,12 +20,7 @@ function S:Blizzard_AddonList_Update()
 end
 
 function S:AddonList()
-	if not self:CheckDB("addonManager") then
-		return
-	end
-
 	self:CreateShadow(_G.AddonList)
 	self:SecureHook("AddonList_Update", "Blizzard_AddonList_Update")
 end
 
-S:AddCallback("AddonList")

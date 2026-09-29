@@ -1,15 +1,15 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("Blizzard_Professions")
+data.toggle = "tradeskill"
+data.private = "professions"
+
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local next = next
 
 function S:Blizzard_Professions()
-	if not self:CheckDB("tradeskill", "professions") then
-		return
-	end
-
 	self:CreateShadow(_G.ProfessionsFrame)
 	self:CreateShadow(_G.ProfessionsFrame.CraftingPage.CraftingOutputLog)
 	self:CreateShadow(_G.ProfessionsFrame.OrdersPage.OrderView.CraftingOutputLog)
@@ -37,4 +37,3 @@ function S:Blizzard_Professions()
 	end)
 end
 
-S:AddCallbackForAddon("Blizzard_Professions")

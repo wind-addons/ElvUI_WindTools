@@ -1,6 +1,9 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("Blizzard_Communities")
+data.toggle = "communities"
+
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local next = next
@@ -38,10 +41,6 @@ local function HandleRewardButton(button)
 end
 
 function S:Blizzard_Communities()
-	if not self:CheckDB("communities") then
-		return
-	end
-
 	local CommunitiesFrame = _G.CommunitiesFrame
 	if not CommunitiesFrame then
 		return
@@ -87,4 +86,3 @@ function S:Blizzard_Communities()
 	end)
 end
 
-S:AddCallbackForAddon("Blizzard_Communities")

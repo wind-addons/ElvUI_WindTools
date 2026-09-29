@@ -1,17 +1,15 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("Blizzard_AzeriteUI")
+data.toggle = "azerite"
+
 local _G = _G
 
 function S:Blizzard_AzeriteUI()
-	if not self:CheckDB("azerite") then
-		return
-	end
-
 	self:CreateBackdropShadow(_G.AzeriteEmpoweredItemUI)
 	if _G.AzeriteEmpoweredItemUITitleText then
 		F.SetFont(_G.AzeriteEmpoweredItemUITitleText)
 	end
 end
 
-S:AddCallbackForAddon("Blizzard_AzeriteUI")

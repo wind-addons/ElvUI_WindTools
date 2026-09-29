@@ -1,5 +1,10 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallbackForAddon("TomCats")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.tomCats
+end
 local TT = E:GetModule("Tooltip")
 
 local _G = _G
@@ -79,10 +84,6 @@ function S:TomCats_HeaderCollapseButton_SetPushedAtlas(button, atlas)
 end
 
 function S:TomCats()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.tomCats then
-		return
-	end
-
 	TT:SetStyle(_G.TomCatsVignetteTooltip)
 	self:SecureHook(_G.TomCatsVignetteTooltip, "SetOwner", "TomCats_SkinTooltipItems")
 	if _G.TomCatsVignettesSection and _G.TomCatsVignettesSection.Header then
@@ -123,4 +124,3 @@ function S:TomCats()
 	end)
 end
 
-S:AddCallbackForAddon("TomCats")

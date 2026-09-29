@@ -1,6 +1,9 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("Blizzard_AdventureMap")
+data.toggle = "adventureMap"
+
 local _G = _G
 
 local hooksecurefunc = hooksecurefunc
@@ -8,10 +11,6 @@ local hooksecurefunc = hooksecurefunc
 local CreateFrame = CreateFrame
 
 function S:Blizzard_AdventureMap()
-	if not self:CheckDB("adventureMap") then
-		return
-	end
-
 	local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
 	local childFrame = AdventureMapQuestChoiceDialog.Details.Child
 
@@ -36,4 +35,3 @@ function S:Blizzard_AdventureMap()
 	end)
 end
 
-S:AddCallbackForAddon("Blizzard_AdventureMap")

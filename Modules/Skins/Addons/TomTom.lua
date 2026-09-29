@@ -1,6 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("TomTom")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.tomTom
+end
+
 local _G = _G
 
 local RunNextFrame = RunNextFrame
@@ -45,10 +50,6 @@ local function SkinPasteWindow(pasteWindow)
 end
 
 function S:TomTom()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.tomTom then
-		return
-	end
-
 	if not _G.TomTom then
 		return
 	end
@@ -73,4 +74,3 @@ function S:TomTom()
 	self:DisableAddOnSkin("TomTom")
 end
 
-S:AddCallbackForAddon("TomTom")

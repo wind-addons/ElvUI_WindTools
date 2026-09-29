@@ -1,6 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("MountRoutePlanner")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.mountRoutePlanner
+end
+
 local _G = _G
 local abs = abs
 local hooksecurefunc = hooksecurefunc
@@ -119,10 +124,6 @@ local function changelogFrame()
 end
 
 function S:MountRoutePlanner()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.mountRoutePlanner then
-		return
-	end
-
 	RunNextFrame(changelogFrame)
 
 	local frame = _G.MRP_Frame
@@ -173,5 +174,4 @@ end
 -- 	--TODO: Skin the options frame if needed
 -- end
 
-S:AddCallbackForAddon("MountRoutePlanner")
 -- S:ReskinSettingFrame("Mount Route Planner", "MountRoutePlannerOptions")

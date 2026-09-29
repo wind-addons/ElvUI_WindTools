@@ -3,6 +3,10 @@ local TT = E:GetModule("Tooltip")
 local DT = E:GetModule("DataTexts")
 local S = W.Modules.Skins ---@class Skins
 
+local data = S:AddCallback("TooltipFrames")
+data.toggle = "tooltip"
+data.private = "tooltips"
+
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
@@ -113,10 +117,6 @@ function S:ReskinTooltip(tt)
 end
 
 function S:TooltipFrames()
-	if not self:CheckDB("tooltip", "tooltips") then
-		return
-	end
-
 	-- Tooltip list from ElvUI
 	local tooltips = {
 		_G.ItemRefTooltip,
@@ -162,4 +162,3 @@ function S:TooltipFrames()
 	end)
 end
 
-S:AddCallback("TooltipFrames")

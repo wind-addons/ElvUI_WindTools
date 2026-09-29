@@ -1,6 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallback("ElvUI_TotemTracker")
+data.check = function()
+	return (E.private.general.totemTracker and E.private.WT.skins.elvui.totemTracker)
+end
+
 local _G = _G
 
 local MAX_TOTEMS = MAX_TOTEMS
@@ -16,10 +21,6 @@ function S:ElvUI_TotemTracker_Initialize()
 end
 
 function S:ElvUI_TotemTracker()
-	if not (E.private.general.totemTracker and E.private.WT.skins.elvui.totemTracker) then
-		return
-	end
-
 	local totemTracker = E:GetModule("TotemTracker")
 	if totemTracker.Initialized then
 		self:ElvUI_TotemTracker_Initialize()
@@ -28,4 +29,3 @@ function S:ElvUI_TotemTracker()
 	end
 end
 
-S:AddCallback("ElvUI_TotemTracker")

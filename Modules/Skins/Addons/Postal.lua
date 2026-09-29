@@ -1,5 +1,10 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallbackForAddon("Postal")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.postal
+end
 local CT = W:GetModule("Contacts")
 
 local _G = _G
@@ -149,10 +154,6 @@ local function postalForward()
 end
 
 function S:Postal()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.postal then
-		return
-	end
-
 	self:DisableAddOnSkin("Postal")
 
 	local Postal = _G.LibStub("AceAddon-3.0"):GetAddon("Postal")
@@ -191,4 +192,3 @@ function S:Postal()
 	end
 end
 
-S:AddCallbackForAddon("Postal")

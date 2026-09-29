@@ -1,14 +1,14 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("Blizzard_ExpansionLandingPage")
+data.toggle = "expansionLanding"
+data.private = "expansionLandingPage"
+
 local _G = _G
 local next = next
 
 function S:Blizzard_ExpansionLandingPage()
-	if not self:CheckDB("expansionLanding", "expansionLandingPage") then
-		return
-	end
-
 	local overlay = _G.ExpansionLandingPage.Overlay
 	if overlay then
 		local clean = E.private.skins.parchmentRemoverEnable
@@ -20,4 +20,3 @@ function S:Blizzard_ExpansionLandingPage()
 	end
 end
 
-S:AddCallbackForAddon("Blizzard_ExpansionLandingPage")

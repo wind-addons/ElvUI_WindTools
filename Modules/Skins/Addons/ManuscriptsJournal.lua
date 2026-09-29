@@ -1,6 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("ManuscriptsJournal")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.manuscriptsJournal
+end
+
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
@@ -143,10 +148,6 @@ local function reskinJournal(frame)
 end
 
 function S:ManuscriptsJournal()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.manuscriptsJournal then
-		return
-	end
-
 	local frame = _G.ManuscriptsJournal
 	if not frame or frame.__windSkin then
 		return
@@ -204,4 +205,3 @@ function S:ManuscriptsJournal()
 	end
 end
 
-S:AddCallbackForAddon("ManuscriptsJournal")

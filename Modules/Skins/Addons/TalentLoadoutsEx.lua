@@ -1,5 +1,10 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallbackForAddon("Blizzard_PlayerSpells", "TalentLoadoutsExWaitFor")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.talentLoadoutsEx
+end
 local MF = W.Modules.MoveFrames ---@type MoveFrames
 
 local _G = _G
@@ -163,10 +168,6 @@ function S:TalentLoadoutsEx()
 end
 
 function S:TalentLoadoutsExWaitFor()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.talentLoadoutsEx then
-		return
-	end
-
 	F.WaitFor(function()
 		return not not _G.TalentLoadoutExMainFrame
 	end, function()
@@ -174,4 +175,3 @@ function S:TalentLoadoutsExWaitFor()
 	end)
 end
 
-S:AddCallbackForAddon("Blizzard_PlayerSpells", "TalentLoadoutsExWaitFor")

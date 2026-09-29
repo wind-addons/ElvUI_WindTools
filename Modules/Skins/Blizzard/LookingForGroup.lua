@@ -1,14 +1,16 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+if not E.Forever then
+	local data = S:AddCallback("LookingForGroupFrames")
+	data.toggle = "lfg"
+	data.private = "lookingForGroup"
+end
+
 local _G = _G
 local pairs = pairs
 
 function S:LookingForGroupFrames()
-	if not self:CheckDB("lfg", "lookingForGroup") then
-		return
-	end
-
 	local frames = {
 		_G.PVEFrame,
 		_G.LFGDungeonReadyDialog,
@@ -44,6 +46,3 @@ function S:LookingForGroupFrames()
 	F.InternalizeMethod(_G.LFGListFrame.SearchPanel.FilterButton, "SetWidth", true)
 end
 
-if not E.Forever then
-	S:AddCallback("LookingForGroupFrames")
-end

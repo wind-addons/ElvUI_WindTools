@@ -1,5 +1,10 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallbackForAddon("Blizzard_DamageMeter")
+data.check = function()
+	return E.private.skins.blizzard.enable and E.private.skins.blizzard.damageMeter and S.db.damageMeter.enable
+end
 local LSM = E.Libs.LSM
 
 local _G = _G
@@ -884,17 +889,7 @@ function S:DamageMeter_SetupSessionWindow()
 end
 
 function S:Blizzard_DamageMeter()
-	if
-		not E.private.skins.blizzard.enable
-		or not E.private.skins.blizzard.damageMeter
-		or not self.db.damageMeter.enable
-	then
-		return
-	end
-
 	self:DamageMeter_HookSessionWindowMixin()
 	self:SecureHook(_G.DamageMeter, "SetupSessionWindow", "DamageMeter_SetupSessionWindow")
 	S:DamageMeter_SetupSessionWindow()
 end
-
-S:AddCallbackForAddon("Blizzard_DamageMeter")

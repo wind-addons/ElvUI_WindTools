@@ -1,14 +1,12 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallback("TradeFrame")
+data.toggle = "trade"
+
 local _G = _G
 
-function S:TutorialFrame()
-	if not self:CheckDB("trade") then
-		return
-	end
-
+function S:TradeFrame()
 	self:CreateShadow(_G.TradeFrame)
 end
 
-S:AddCallback("TutorialFrame")

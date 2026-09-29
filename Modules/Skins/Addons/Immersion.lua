@@ -2,6 +2,11 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local ES = E.Skins
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("Immersion")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.immersion
+end
+
 local _G = _G
 local pairs = pairs
 
@@ -93,10 +98,6 @@ do -- If there is no speech progress text in first time, the skin will not be ap
 end
 
 function S:Immersion()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.immersion then
-		return
-	end
-
 	S:DisableAddOnSkin("Immersion")
 
 	local frame = _G.ImmersionFrame
@@ -193,4 +194,3 @@ function S:Immersion()
 	self:SecureHook(frame, "Show", "Immersion_Show")
 end
 
-S:AddCallbackForAddon("Immersion")

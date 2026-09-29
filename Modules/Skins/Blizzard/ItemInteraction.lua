@@ -1,14 +1,12 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("Blizzard_ItemInteractionUI")
+data.toggle = "itemInteraction"
+
 local _G = _G
 
 function S:Blizzard_ItemInteractionUI()
-	if not self:CheckDB("itemInteraction") then
-		return
-	end
-
 	self:CreateShadow(_G.ItemInteractionFrame)
 end
 
-S:AddCallbackForAddon("Blizzard_ItemInteractionUI")

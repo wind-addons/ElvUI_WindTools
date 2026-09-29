@@ -1,5 +1,12 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallback("ElvUI_ActionBars")
+data.check = function()
+	return E.private.actionbar.enable
+		and E.private.WT.skins.elvui.enable
+		and (E.private.WT.skins.elvui.actionBarsButton or E.private.WT.skins.elvui.actionBarsBackdrop)
+end
 local AB = E.ActionBars
 
 local _G = _G
@@ -97,14 +104,6 @@ function S:ElvUI_ActionBar_LoadKeyBinder()
 end
 
 function S:ElvUI_ActionBars()
-	if not (E.private.actionbar.enable and E.private.WT.skins.elvui.enable) then
-		return
-	end
-
-	if not (E.private.WT.skins.elvui.actionBarsButton or E.private.WT.skins.elvui.actionBarsBackdrop) then
-		return
-	end
-
 	-- ElvUI action bar
 	if not E.private.actionbar.masque.actionbars then
 		for id = 1, 15 do
@@ -193,4 +192,3 @@ function S:ElvUI_ActionBars()
 	self:ElvUI_ActionBar_LoadKeyBinder()
 end
 
-S:AddCallback("ElvUI_ActionBars")

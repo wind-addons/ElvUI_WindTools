@@ -1,14 +1,14 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("Blizzard_PerksProgram")
+data.toggle = "perks"
+data.private = "perksProgram"
+
 local _G = _G
 local pairs = pairs
 
 function S:Blizzard_PerksProgram()
-	if not self:CheckDB("perks", "perksProgram") then
-		return
-	end
-
 	local frame = _G.PerksProgramFrame
 
 	local products = frame.ProductsFrame
@@ -49,4 +49,3 @@ function S:Blizzard_PerksProgram()
 	end
 end
 
-S:AddCallbackForAddon("Blizzard_PerksProgram")

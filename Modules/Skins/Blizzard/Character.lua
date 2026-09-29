@@ -1,13 +1,14 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("Blizzard_UIPanels_Game")
+data.toggle = "character"
+data = S:AddCallbackForAddon("Blizzard_TokenUI")
+data.toggle = "character"
+
 local _G = _G
 
 function S:Blizzard_UIPanels_Game()
-	if not self:CheckDB("character") then
-		return
-	end
-
 	-- Character
 	self:CreateShadow(_G.CharacterFrame)
 	self:CreateShadow(_G.GearManagerDialogPopup)
@@ -37,13 +38,7 @@ function S:Blizzard_UIPanels_Game()
 end
 
 function S:Blizzard_TokenUI()
-	if not self:CheckDB("character") then
-		return
-	end
-
 	self:CreateShadow(_G.CurrencyTransferLog)
 	self:CreateShadow(_G.CurrencyTransferMenu)
 end
 
-S:AddCallbackForAddon("Blizzard_UIPanels_Game")
-S:AddCallbackForAddon("Blizzard_TokenUI")

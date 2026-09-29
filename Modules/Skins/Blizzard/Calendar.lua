@@ -1,16 +1,15 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("Blizzard_Calendar")
+data.toggle = "calendar"
+
 local _G = _G
 local next = next
 
 local CLASS_SORT_ORDER = CLASS_SORT_ORDER
 
 function S:Blizzard_Calendar()
-	if not self:CheckDB("calendar") then
-		return
-	end
-
 	self:CreateBackdropShadow(_G.CalendarFrame)
 
 	self:CreateShadow(_G.CalendarViewRaidFrame)
@@ -37,4 +36,3 @@ function S:Blizzard_Calendar()
 	self:CreateShadow(_G.CalendarClassTotalsButton)
 end
 
-S:AddCallbackForAddon("Blizzard_Calendar")

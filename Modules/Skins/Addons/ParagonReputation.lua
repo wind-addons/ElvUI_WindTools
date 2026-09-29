@@ -1,6 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("ParagonReputation")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.paragonReputation
+end
+
 local _G = _G
 
 local pairs = pairs
@@ -48,10 +53,6 @@ local function reskinSetting(frame)
 end
 
 function S:ParagonReputation()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.paragonReputation then
-		return
-	end
-
 	if _G.ParagonReputation_Toast then
 		reskinToast(_G.ParagonReputation_Toast)
 	end
@@ -59,4 +60,3 @@ function S:ParagonReputation()
 	self:ReskinSettingFrame("Paragon Reputation", reskinSetting)
 end
 
-S:AddCallbackForAddon("ParagonReputation")

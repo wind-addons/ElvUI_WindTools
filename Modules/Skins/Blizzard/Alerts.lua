@@ -1,6 +1,10 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallback("AlertFrames")
+data.toggle = "alertframes"
+data.private = "alerts"
+
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
@@ -421,10 +425,6 @@ function S:SkinAlertRewardIcons(frame)
 end
 
 function S:AlertFrames()
-	if not self:CheckDB("alertframes", "alerts") then
-		return
-	end
-
 	-- Achievements
 	self:SecureHook(_G.AchievementAlertSystem, "setUpFunction", "SkinAchievementAlert")
 	self:SecureHook(_G.CriteriaAlertSystem, "setUpFunction", "SkinCriteriaAlert")
@@ -474,4 +474,3 @@ function S:AlertFrames()
 	self:SecureHook("StandardRewardAlertFrame_AdjustRewardAnchors", "SkinAlertRewardIcons")
 end
 
-S:AddCallback("AlertFrames")

@@ -1,5 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallback("ElvUI_Auras")
+data.check = function()
+	local elvuiSkins = E.private.WT.skins.elvui
+	return elvuiSkins.enable and (elvuiSkins.auras or elvuiSkins.unitFrames or elvuiSkins.nameplates)
+end
 local A = E:GetModule("Auras")
 local UF = E:GetModule("UnitFrames")
 
@@ -145,17 +151,7 @@ function S:ElvUI_Auras_Hook()
 end
 
 function S:ElvUI_Auras()
-	if not E.private.WT.skins.elvui.enable then
-		return
-	end
-
-	local elvuiSkins = E.private.WT.skins.elvui
-	if not (elvuiSkins.auras or elvuiSkins.unitFrames or elvuiSkins.nameplates) then
-		return
-	end
-
 	self:ElvUI_Auras_Hook()
 	self:ElvUI_Auras_SkinExistingButtons()
 end
 
-S:AddCallback("ElvUI_Auras")

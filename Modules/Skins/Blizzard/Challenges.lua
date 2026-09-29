@@ -1,16 +1,15 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+if not E.Forever then
+	local data = S:AddCallbackForAddon("Blizzard_ChallengesUI")
+	data.toggle = "lfg"
+	data.private = "challenges"
+end
+
 local _G = _G
 
 function S:Blizzard_ChallengesUI()
-	if not self:CheckDB("lfg", "challenges") then
-		return
-	end
-
 	self:CreateShadow(_G.ChallengesKeystoneFrame)
 end
 
-if not E.Forever then
-	S:AddCallbackForAddon("Blizzard_ChallengesUI")
-end

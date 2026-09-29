@@ -1,5 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallbackForAddon("BigWigs")
+data = S:AddCallbackForAddon("BigWigs_Plugins")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.bigWigs
+end
 local C = W.Utilities.Color
 local OF = W.Utilities.ObjectFinder
 
@@ -306,10 +312,6 @@ local function barStopped(frame)
 end
 
 function S:BigWigs_Plugins()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.bigWigs then
-		return
-	end
-
 	if not _G.BigWigs or not _G.BigWigsAPI then
 		return
 	end
@@ -464,7 +466,5 @@ function S:BigWigs()
 	self:ReskinCustomGameTooltips(_G.BigWigsTooltip)
 end
 
-S:AddCallbackForAddon("BigWigs")
-S:AddCallbackForAddon("BigWigs_Plugins")
 S:AddCallbackForEnterWorld("BigWigs_QueueTimer")
 S:AddCallbackForEnterWorld("BigWigs_Keystone")

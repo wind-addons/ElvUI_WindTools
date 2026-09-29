@@ -1,13 +1,13 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("Blizzard_GuildBankUI")
+data.toggle = "gbank"
+data.private = "guildBank"
+
 local _G = _G
 
 function S:Blizzard_GuildBankUI()
-	if not self:CheckDB("gbank", "guildBank") then
-		return
-	end
-
 	self:CreateShadow(_G.GuildBankFrame)
 
 	for i = 1, 4 do
@@ -22,4 +22,3 @@ function S:Blizzard_GuildBankUI()
 	end
 end
 
-S:AddCallbackForAddon("Blizzard_GuildBankUI")

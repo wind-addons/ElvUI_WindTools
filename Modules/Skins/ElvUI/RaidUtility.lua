@@ -1,18 +1,17 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallback("RaidUtility")
+data.check = function()
+	return E.private.WT.skins.elvui.enable
+		and E.private.WT.skins.elvui.raidUtility
+		and E.private.general.raidUtility
+end
+
 local _G = _G
 local pairs = pairs
 
 function S:RaidUtility()
-	if not E.private.WT.skins.elvui.enable or not E.private.WT.skins.elvui.raidUtility then
-		return
-	end
-
-	if not E.private.general.raidUtility then
-		return
-	end
-
 	local frames = {
 		_G.RaidUtilityPanel,
 		_G.RaidUtility_ShowButton,
@@ -26,4 +25,3 @@ function S:RaidUtility()
 	end
 end
 
-S:AddCallback("RaidUtility")

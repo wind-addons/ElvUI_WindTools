@@ -1,5 +1,10 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallbackForAddon("TalentLoadoutManager")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.talentLoadoutManager
+end
 local ES = E.Skins
 
 local _G = _G
@@ -163,10 +168,6 @@ local function SkinSideBarModule(module)
 end
 
 function S:TalentLoadoutManager()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.talentLoadoutManager then
-		return
-	end
-
 	local addon = _G.LibStub("AceAddon-3.0"):GetAddon("TalentLoadoutManager", true)
 	if not addon then
 		return
@@ -181,4 +182,3 @@ function S:TalentLoadoutManager()
 	end
 end
 
-S:AddCallbackForAddon("TalentLoadoutManager")

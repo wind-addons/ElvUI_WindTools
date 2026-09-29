@@ -1,5 +1,10 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallback("ElvUI_Nameplates")
+data.check = function()
+	return E.private.nameplates.enable and E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.nameplates
+end
 local NP = E:GetModule("NamePlates")
 
 function S:NP_StylePlate(_, plate)
@@ -12,15 +17,6 @@ function S:NP_StylePlate(_, plate)
 end
 
 function S:ElvUI_Nameplates()
-	if not E.private.nameplates.enable then
-		return
-	end
-
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.nameplates) then
-		return
-	end
-
 	self:SecureHook(NP, "StylePlate", "NP_StylePlate")
 end
 
-S:AddCallback("ElvUI_Nameplates")

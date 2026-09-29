@@ -1,5 +1,10 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallbackForAddon("AppearanceTooltip")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.appearanceTooltip
+end
 local TT = E:GetModule("Tooltip")
 
 local _G = _G
@@ -197,10 +202,6 @@ local function ReskinOptions()
 end
 
 function S:AppearanceTooltip()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.appearanceTooltip then
-		return
-	end
-
 	local tooltip = _G.AppearanceTooltipTooltip
 	if tooltip then
 		TT:SetStyle(tooltip)
@@ -211,4 +212,3 @@ function S:AppearanceTooltip()
 	end, ReskinOptions)
 end
 
-S:AddCallbackForAddon("AppearanceTooltip")

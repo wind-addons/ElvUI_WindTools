@@ -1,6 +1,11 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallback("ElvUI_Options")
+data.check = function()
+	return (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.option)
+end
+
 local _G = _G
 local InCombatLockdown = InCombatLockdown
 
@@ -26,10 +31,6 @@ function S:ElvUI_SkinMoverPopup()
 end
 
 function S:ElvUI_Options()
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.option) then
-		return
-	end
-
 	-- 设定
 	self:SecureHook(E, "ToggleOptions", "ElvUI_SkinOptions")
 
@@ -47,4 +48,3 @@ function S:ElvUI_Options()
 	self:CreateShadow(_G.ElvUIBindPopupWindowHeader)
 end
 
-S:AddCallback("ElvUI_Options")

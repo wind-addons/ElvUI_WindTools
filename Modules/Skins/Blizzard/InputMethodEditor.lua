@@ -1,16 +1,15 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@class Skins
 
+local data = S:AddCallback("InputMethodEditor")
+data.private = "inputMethodEditor"
+
 local _G = _G
 local pairs = pairs
 
 local Constants_ChatFrameConstants_MaxChatWindows = Constants.ChatFrameConstants.MaxChatWindows
 
 function S:InputMethodEditor()
-	if not self:CheckDB(nil, "inputMethodEditor") then
-		return
-	end
-
 	for i = 1, Constants_ChatFrameConstants_MaxChatWindows do
 		local editBox = _G["ChatFrame" .. i .. "EditBox"]
 		local langIcon = _G["ChatFrame" .. i .. "EditBoxLanguage"]
@@ -58,4 +57,3 @@ function S:InputMethodEditor()
 	end
 end
 
-S:AddCallback("InputMethodEditor")

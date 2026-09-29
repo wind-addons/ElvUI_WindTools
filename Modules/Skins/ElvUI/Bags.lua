@@ -1,5 +1,18 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallback("ElvUI_Bags")
+data.check = function()
+	return E.private.bags.enable and E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.bags
+end
+data = S:AddCallback("ElvUI_BagBar")
+data.check = function()
+	return (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.bags)
+end
+data = S:AddCallback("ElvUI_BagSell")
+data.check = function()
+	return (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.bags)
+end
 local B = E:GetModule("Bags")
 
 local pairs = pairs
@@ -30,14 +43,6 @@ local function ShowContainerHolderIcons(bagFrame)
 end
 
 function S:ElvUI_Bags()
-	if not E.private.bags.enable then
-		return
-	end
-
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.bags) then
-		return
-	end
-
 	self:CreateShadow(B.BagFrame)
 	self:CreateShadow(B.BagFrame.ContainerHolder)
 	self:CreateShadow(B.BankFrame)
@@ -49,10 +54,6 @@ function S:ElvUI_Bags()
 end
 
 function S:ElvUI_BagBar()
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.bags) then
-		return
-	end
-
 	if E.private.bags.bagBar and B.BagBar and B.BagBar.buttons then
 		for _, buttons in pairs(B.BagBar.buttons) do
 			self:CreateShadow(buttons)
@@ -61,15 +62,8 @@ function S:ElvUI_BagBar()
 end
 
 function S:ElvUI_BagSell()
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.bags) then
-		return
-	end
-
 	if B and B.SellFrame then
 		self:CreateBackdropShadow(B.SellFrame)
 	end
 end
 
-S:AddCallback("ElvUI_Bags")
-S:AddCallback("ElvUI_BagBar")
-S:AddCallback("ElvUI_BagSell")

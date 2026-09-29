@@ -1,5 +1,8 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallback("MicroButtons")
+data.private = "microButtons"
 local AB = E.ActionBars
 
 local _G = _G
@@ -20,10 +23,6 @@ local MICRO_BUTTONS = _G.MICRO_BUTTONS
 	}
 
 function S:MicroButtons()
-	if not self:CheckDB(nil, "microButtons") then
-		return
-	end
-
 	local microBar = _G.ElvUI_MicroBar
 	local elvuiButtons = AB and AB.MICRO_BUTTONS
 	if microBar and elvuiButtons then
@@ -52,4 +51,3 @@ function S:MicroButtons()
 	end
 end
 
-S:AddCallback("MicroButtons")

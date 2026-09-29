@@ -1,6 +1,9 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallback("Blizzard_ObjectiveTracker")
+data.toggle = "objectiveTracker"
+
 local _G = _G
 local pairs = pairs
 
@@ -121,10 +124,6 @@ function S:SkinTimerBar(tracker, key)
 end
 
 function S:Blizzard_ObjectiveTracker()
-	if not self:CheckDB("objectiveTracker") then
-		return
-	end
-
 	self.questItemButtons = {}
 
 	local MainHeader = _G.ObjectiveTrackerFrame.Header
@@ -143,4 +142,3 @@ function S:Blizzard_ObjectiveTracker()
 	end
 end
 
-S:AddCallback("Blizzard_ObjectiveTracker")

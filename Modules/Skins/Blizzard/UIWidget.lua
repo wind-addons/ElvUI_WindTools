@@ -1,5 +1,9 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
+
+local data = S:AddCallback("BlizzardUIWidget")
+data.toggle = "misc"
+data.private = "uiWidget"
 local ES = E.Skins
 local C = W.Utilities.Color
 
@@ -118,10 +122,6 @@ end
 
 local cachedColors = {}
 function S:BlizzardUIWidget()
-	if not self:CheckDB("misc", "uiWidget") then
-		return
-	end
-
 	-- Partitions
 	self:SecureHook(_G.UIWidgetBaseStatusBarTemplateMixin, "InitPartitions", "ReskinWidgetPartition")
 	self:SecureHook(_G.UIWidgetTemplateUnitPowerBarMixin, "InitPartitions", "ReskinWidgetPartition")
@@ -203,4 +203,3 @@ function S:BlizzardUIWidget()
 	end
 end
 
-S:AddCallback("BlizzardUIWidget")

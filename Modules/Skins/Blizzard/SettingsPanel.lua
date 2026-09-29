@@ -1,6 +1,10 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallback("SettingsPanel")
+data.toggle = "blizzardOptions"
+data.private = "settingsPanel"
+
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
@@ -21,13 +25,8 @@ local function SettingsListScrollUpdate(frame)
 end
 
 function S:SettingsPanel()
-	if not self:CheckDB("blizzardOptions", "settingsPanel") then
-		return
-	end
-
 	self:CreateBackdropShadow(_G.SettingsPanel)
 
 	hooksecurefunc(_G.SettingsPanel.Container.SettingsList.ScrollBox, "Update", SettingsListScrollUpdate)
 end
 
-S:AddCallback("SettingsPanel")

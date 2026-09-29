@@ -1,6 +1,11 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins ---@type Skins
 
+local data = S:AddCallbackForAddon("WhisperPop")
+data.check = function()
+	return E.private.WT.skins.enable and E.private.WT.skins.addons.whisperPop
+end
+
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
@@ -74,10 +79,6 @@ local function optionFrame(frame)
 end
 
 function S:WhisperPop()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.whisperPop then
-		return
-	end
-
 	self:DisableAddOnSkin("WhisperPop")
 
 	if _G.WhisperPop then
@@ -88,4 +89,3 @@ function S:WhisperPop()
 	end
 end
 
-S:AddCallbackForAddon("WhisperPop")

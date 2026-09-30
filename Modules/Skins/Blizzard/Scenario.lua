@@ -13,6 +13,8 @@ local GetInstanceInfo = GetInstanceInfo
 
 local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
 
+S:AddCallback("ScenarioStage", nil, "scenario")
+
 local function SkinMawBuffsContainer(container)
 	container:StripTextures()
 	container:GetHighlightTexture():Kill()
@@ -283,10 +285,6 @@ local function HookSpellFramePool()
 end
 
 function S:ScenarioStage()
-	if not self:CheckDB(nil, "scenario") then
-		return
-	end
-
 	local ScenarioObjectiveTracker = _G.ScenarioObjectiveTracker
 	if not ScenarioObjectiveTracker then
 		return
@@ -309,5 +307,3 @@ function S:ScenarioStage()
 		SkinMawBuffsContainer(ScenarioObjectiveTracker.MawBuffsBlock.Container)
 	end
 end
-
-S:AddCallback("ScenarioStage")

@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_IslandsQueueUI()
-	if not self:CheckDB("tooltip") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_IslandsQueueUI", nil, "tooltip")
 
+function S:Blizzard_IslandsQueueUI()
 	self:CreateShadow(_G.IslandsQueueFrameTooltip:GetParent())
 end
-
-S:AddCallbackForAddon("Blizzard_IslandsQueueUI")

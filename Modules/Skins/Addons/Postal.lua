@@ -9,6 +9,8 @@ local ipairs = ipairs
 local tinsert = tinsert
 local unpack = unpack
 
+S:AddCallbackForAddon("Postal", nil, S:CreateAddonCheck("postal"))
+
 local function reskinArrowButton(button)
 	local normalTexture = button:GetNormalTexture()
 	local pushedTexture = button:GetPushedTexture()
@@ -149,10 +151,6 @@ local function postalForward()
 end
 
 function S:Postal()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.postal then
-		return
-	end
-
 	self:DisableAddOnSkin("Postal")
 
 	local Postal = _G.LibStub("AceAddon-3.0"):GetAddon("Postal")
@@ -190,5 +188,3 @@ function S:Postal()
 		hooksecurefunc(Forward, "OnEnable", postalForward)
 	end
 end
-
-S:AddCallbackForAddon("Postal")

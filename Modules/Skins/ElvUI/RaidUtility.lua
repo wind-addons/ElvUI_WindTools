@@ -4,15 +4,15 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local pairs = pairs
 
+S:AddCallback("RaidUtility", function()
+	return E.private.WT.skins.elvui.enable
+			and E.private.WT.skins.elvui.raidUtility
+			and E.private.general.raidUtility
+			and true
+		or false
+end)
+
 function S:RaidUtility()
-	if not E.private.WT.skins.elvui.enable or not E.private.WT.skins.elvui.raidUtility then
-		return
-	end
-
-	if not E.private.general.raidUtility then
-		return
-	end
-
 	local frames = {
 		_G.RaidUtilityPanel,
 		_G.RaidUtility_ShowButton,
@@ -25,5 +25,3 @@ function S:RaidUtility()
 		self:CreateShadow(frame)
 	end
 end
-
-S:AddCallback("RaidUtility")

@@ -19,11 +19,9 @@ local MICRO_BUTTONS = _G.MICRO_BUTTONS
 		"StoreMicroButton",
 	}
 
-function S:MicroButtons()
-	if not self:CheckDB(nil, "microButtons") then
-		return
-	end
+S:AddCallback("MicroButtons", nil, "microButtons")
 
+function S:MicroButtons()
 	local microBar = _G.ElvUI_MicroBar
 	local elvuiButtons = AB and AB.MICRO_BUTTONS
 	if microBar and elvuiButtons then
@@ -51,5 +49,3 @@ function S:MicroButtons()
 		end
 	end
 end
-
-S:AddCallback("MicroButtons")

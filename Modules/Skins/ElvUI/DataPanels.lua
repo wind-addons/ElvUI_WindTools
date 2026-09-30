@@ -6,6 +6,8 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
+local data = S:AddCallback("ElvUI_DataPanels", S:CreateElvUICheck("dataPanels"))
+
 local function hookPanelSetTemplate(panel, template)
 	if not panel.shadow then
 		return
@@ -27,16 +29,12 @@ local function createPanelShadow(panel)
 	hookPanelSetTemplate(panel, panel.template)
 end
 
-function S:ElvUI_SkinDataPanel(_, name)
+function data:SkinDataPanel(name) -- self is the DataTexts module, not data
 	local panel = DT:FetchFrame(name)
 	createPanelShadow(panel)
 end
 
 function S:ElvUI_DataPanels()
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.dataPanels) then
-		return
-	end
-
 	if _G.MinimapPanel then
 		createPanelShadow(_G.MinimapPanel)
 	end
@@ -53,7 +51,5 @@ function S:ElvUI_DataPanels()
 		end
 	end
 
-	self:SecureHook(DT, "BuildPanelFrame", "ElvUI_SkinDataPanel")
+	self:SecureHook(DT, "BuildPanelFrame", data.SkinDataPanel)
 end
-
-S:AddCallback("ElvUI_DataPanels")

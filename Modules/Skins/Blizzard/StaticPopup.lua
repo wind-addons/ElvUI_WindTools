@@ -3,14 +3,10 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:StaticPopup()
-	if not self:CheckDB(nil, "staticPopup") then
-		return
-	end
+S:AddCallback("StaticPopup", nil, "staticPopup")
 
+function S:StaticPopup()
 	for i = 1, E.MAX_STATIC_POPUPS do
 		self:CreateShadow(_G["StaticPopup" .. i])
 	end
 end
-
-S:AddCallback("StaticPopup")

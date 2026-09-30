@@ -6,19 +6,21 @@ local hooksecurefunc = hooksecurefunc
 
 local CreateFrame = CreateFrame
 
-function S:OmniCD_ConfigGUI()
+local data = S:AddCallbackForAddon("OmniCD", nil, S:CreateAddonCheck("omniCD"))
+
+function data:ConfigGUI()
 	local O = _G.OmniCD[1]
 
 	hooksecurefunc(O.Libs.ACD, "Open", function(_, arg1)
 		if arg1 == O.AddOn then
 			local frame = O.Libs.ACD.OpenFrames.OmniCD.frame
 			frame:SetTemplate("Transparent")
-			self:CreateShadow(frame)
+			S:CreateShadow(frame)
 		end
 	end)
 end
 
-function S:OmniCD_Party_Icon()
+function data:Party_Icon()
 	local P = _G.OmniCD[1] and _G.OmniCD[1].Party
 	if not P or not P.CreateStatusBarFramePool then
 		return
@@ -31,7 +33,7 @@ function S:OmniCD_Party_Icon()
 		hooksecurefunc(P.IconPool, "Acquire", function(pool)
 			for icon in pool:EnumerateActive() do
 				if not icon.__wind then
-					self:CreateShadow(icon)
+					S:CreateShadow(icon)
 					icon.__wind = true
 				end
 			end
@@ -39,7 +41,7 @@ function S:OmniCD_Party_Icon()
 	end)
 end
 
-function S:OmniCD_Party_StatusBar()
+function data:Party_StatusBar()
 	local P = _G.OmniCD[1] and _G.OmniCD[1].Party
 	if not P or not P.CreateStatusBarFramePool then
 		return
@@ -62,7 +64,7 @@ function S:OmniCD_Party_StatusBar()
 		hooksecurefunc(P.StatusBarPool, "Acquire", function(pool)
 			for bar in pool:EnumerateActive() do
 				if not bar.__wind then
-					self:CreateLowerShadow(bar)
+					S:CreateLowerShadow(bar)
 
 					-- bind the visibility to the original borders
 					if bar.borderTop then
@@ -77,7 +79,7 @@ function S:OmniCD_Party_StatusBar()
 	end)
 end
 
-function S:OmniCD_Party_ExtraBar()
+function data:Party_ExtraBar()
 	local P = _G.OmniCD[1] and _G.OmniCD[1].Party
 	if not P or not P.CreateStatusBarFramePool then
 		return
@@ -93,7 +95,7 @@ function S:OmniCD_Party_ExtraBar()
 				if not bar.__wind then
 					bar.anchor:StripTextures()
 					bar.anchor:SetTemplate("Transparent")
-					self:CreateShadow(bar.anchor)
+					S:CreateShadow(bar.anchor)
 					bar.anchor:Height(bar.anchor:GetHeight() + 8)
 					F.InternalizeMethod(bar.anchor, "SetPoint")
 					hooksecurefunc(bar.anchor, "SetPoint", function()
@@ -108,23 +110,17 @@ function S:OmniCD_Party_ExtraBar()
 end
 
 function S:OmniCD()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.omniCD then
-		return
-	end
-
-	self:OmniCD_ConfigGUI()
+	data:ConfigGUI()
 
 	if E.private.WT.skins.addons.omniCDIcon then
-		self:OmniCD_Party_Icon()
+		data:Party_Icon()
 	end
 
 	if E.private.WT.skins.addons.omniCDStatusBar then
-		self:OmniCD_Party_StatusBar()
+		data:Party_StatusBar()
 	end
 
 	if E.private.WT.skins.addons.omniCDExtraBar then
-		self:OmniCD_Party_ExtraBar()
+		data:Party_ExtraBar()
 	end
 end
-
-S:AddCallbackForAddon("OmniCD")

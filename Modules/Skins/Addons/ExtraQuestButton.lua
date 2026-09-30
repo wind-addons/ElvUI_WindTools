@@ -6,11 +6,9 @@ local unpack = unpack
 
 local hooksecurefunc = hooksecurefunc
 
-function S:ExtraQuestButton()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.extraQuestButton then
-		return
-	end
+S:AddCallbackForAddon("ExtraQuestButton", nil, S:CreateAddonCheck("extraQuestButton"))
 
+function S:ExtraQuestButton()
 	local button = _G.ExtraQuestButton
 	if not button then
 		return
@@ -56,5 +54,3 @@ function S:ExtraQuestButton()
 		F.SetFont(button.HotKey)
 	end
 end
-
-S:AddCallbackForAddon("ExtraQuestButton")

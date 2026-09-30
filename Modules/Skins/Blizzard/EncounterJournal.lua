@@ -5,6 +5,8 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
+S:AddCallbackForAddon("Blizzard_EncounterJournal", nil, "encounterjournal", "encounterJournal")
+
 ---@param tab Frame
 ---@param point FramePoint
 ---@param relativeTo Region|string
@@ -39,10 +41,6 @@ local function BossesScrollUpdate(frame)
 end
 
 function S:Blizzard_EncounterJournal()
-	if not self:CheckDB("encounterjournal", "encounterJournal") then
-		return
-	end
-
 	self:CreateShadow(_G.EncounterJournal)
 
 	-- Bottom tabs
@@ -87,5 +85,3 @@ function S:Blizzard_EncounterJournal()
 		MAF.FilterList:SetTemplate("Transparent")
 	end
 end
-
-S:AddCallbackForAddon("Blizzard_EncounterJournal")

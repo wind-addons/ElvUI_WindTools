@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:TutorialFrame()
-	if not self:CheckDB("trade") then
-		return
-	end
+S:AddCallback("TutorialFrame", "trade")
 
+function S:TutorialFrame()
 	self:CreateShadow(_G.TradeFrame)
 end
-
-S:AddCallback("TutorialFrame")

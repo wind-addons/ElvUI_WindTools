@@ -8,6 +8,9 @@ local pairs = pairs
 local select = select
 local unpack = unpack
 
+local data =
+	S:AddCallbackForAddon("Blizzard_PlayerSpells", "TalentLoadoutsExWaitFor", S:CreateAddonCheck("talentLoadoutsEx"))
+
 -- Modified from NDui_Plus
 local function ReskinChildButton(self)
 	for _, child in pairs({ self:GetChildren() }) do
@@ -58,16 +61,16 @@ local function HandleIconSelectionFrameButton(button)
 	button:StyleButton(nil, true)
 end
 
-function S:TalentLoadoutsEx()
+function data:TalentLoadoutsEx()
 	local frame = _G.TalentLoadoutExMainFrame
 	frame:StripTextures()
 	frame:SetTemplate("Transparent")
 	frame:ClearAllPoints()
 	frame:Point("TOPLEFT", _G.PlayerSpellsFrame, "TOPRIGHT", 1, 0)
 	frame:Point("BOTTOMLEFT", _G.PlayerSpellsFrame, "BOTTOMRIGHT", 1, 0)
-	self:Proxy("HandleTrimScrollBar", frame.ScrollBar)
+	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
 	ReskinChildButton(frame)
-	self:CreateShadow(frame)
+	S:CreateShadow(frame)
 	F.Move(frame, 3, 0)
 	MF:InternalHandle(frame, "PlayerSpellsFrame")
 
@@ -83,7 +86,7 @@ function S:TalentLoadoutsEx()
 	if popupFrame then
 		local forEachFrame = popupFrame.IconSelector.ScrollBox.ForEachFrame
 		popupFrame.IconSelector.ScrollBox.ForEachFrame = E.noop
-		self:Proxy("HandleIconSelectionFrame", popupFrame)
+		S:Proxy("HandleIconSelectionFrame", popupFrame)
 		popupFrame.IconSelector.ScrollBox.ForEachFrame = forEachFrame
 		hooksecurefunc(popupFrame.IconSelector.ScrollBox, "Update", function(sb)
 			for i = 1, sb.ScrollTarget:GetNumChildren() do
@@ -96,7 +99,7 @@ function S:TalentLoadoutsEx()
 		if listFrame then
 			listFrame:StripTextures()
 			listFrame:SetTemplate("Transparent")
-			self:CreateShadow(listFrame)
+			S:CreateShadow(listFrame)
 			listFrame:ClearAllPoints()
 			listFrame:Point("TOPLEFT", popupFrame, "BOTTOMLEFT", 0, -4)
 			listFrame:Point("TOPRIGHT", popupFrame, "BOTTOMRIGHT", 0, -4)
@@ -106,7 +109,7 @@ function S:TalentLoadoutsEx()
 					local hl = child:GetHighlightTexture()
 					hl:SetColorTexture(1, 1, 1, 0.25)
 					hl:SetAllPoints(child.texture)
-					self:Proxy("HandleIcon", child.texture)
+					S:Proxy("HandleIcon", child.texture)
 				end
 			end
 		end
@@ -115,7 +118,7 @@ function S:TalentLoadoutsEx()
 		if textFrame then
 			textFrame:StripTextures()
 			textFrame:SetTemplate("Transparent")
-			self:CreateShadow(textFrame)
+			S:CreateShadow(textFrame)
 			textFrame:ClearAllPoints()
 			textFrame:Point("BOTTOMLEFT", popupFrame, "TOPLEFT", 0, 4)
 			textFrame:Point("BOTTOMRIGHT", popupFrame, "TOPRIGHT", 0, 4)
@@ -123,7 +126,7 @@ function S:TalentLoadoutsEx()
 
 			local editBox = textFrame.Main and textFrame.Main.EditBox
 			if editBox then
-				self:Proxy("HandleEditBox", editBox)
+				S:Proxy("HandleEditBox", editBox)
 				editBox:ClearAllPoints()
 				editBox:Point("TOPLEFT", 2, -2)
 				editBox:Point("BOTTOMRIGHT", -2, 2)
@@ -136,7 +139,7 @@ function S:TalentLoadoutsEx()
 		ReskinPopupFrame(frame.TextPopupFrame)
 		textPopup.ScrollFrame:StripTextures()
 		textPopup.ScrollFrame:SetTemplate("Transparent")
-		self:Proxy("HandleScrollBar", textPopup.ScrollFrame and textPopup.ScrollFrame.ScrollBar)
+		S:Proxy("HandleScrollBar", textPopup.ScrollFrame and textPopup.ScrollFrame.ScrollBar)
 		ReskinChildButton(textPopup)
 	end
 
@@ -144,34 +147,28 @@ function S:TalentLoadoutsEx()
 	if presetPopup then
 		ReskinPopupFrame(frame.PresetPopupFrame)
 		if presetPopup.AddonDropDownMenu then
-			self:Proxy("HandleDropDownBox", presetPopup.AddonDropDownMenu)
+			S:Proxy("HandleDropDownBox", presetPopup.AddonDropDownMenu)
 		end
 
 		local configFrame = presetPopup.AddonConfigFrame1
 		if configFrame then
-			self:Proxy("HandleDropDownBox", configFrame.ModeOptionFrame and configFrame.ModeOptionFrame.DropDownMenu)
-			self:Proxy("HandleCheckBox", configFrame.CombineOptionFrame and configFrame.CombineOptionFrame.CheckButton)
+			S:Proxy("HandleDropDownBox", configFrame.ModeOptionFrame and configFrame.ModeOptionFrame.DropDownMenu)
+			S:Proxy("HandleCheckBox", configFrame.CombineOptionFrame and configFrame.CombineOptionFrame.CheckButton)
 		end
 	end
 
 	local pvpFrame = frame.PvpFrame
 	if pvpFrame then
 		pvpFrame:StripTextures()
-		self:Proxy("HandleCheckBox", pvpFrame.CheckButton)
+		S:Proxy("HandleCheckBox", pvpFrame.CheckButton)
 		pvpFrame.CheckButton:Size(24)
 	end
 end
 
 function S:TalentLoadoutsExWaitFor()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.talentLoadoutsEx then
-		return
-	end
-
 	F.WaitFor(function()
 		return not not _G.TalentLoadoutExMainFrame
 	end, function()
-		self:TalentLoadoutsEx()
+		data:TalentLoadoutsEx()
 	end)
 end
-
-S:AddCallbackForAddon("Blizzard_PlayerSpells", "TalentLoadoutsExWaitFor")

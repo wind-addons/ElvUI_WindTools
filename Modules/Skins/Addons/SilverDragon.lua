@@ -11,6 +11,8 @@ local unpack = unpack
 
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 
+S:AddCallbackForAddon("SilverDragon", nil, S:CreateAddonCheck("silverDragon"))
+
 -- Common styling utilities
 local function StyleSilverDragonText(fontString, size, color)
 	if not fontString then
@@ -446,10 +448,6 @@ local function SetupMountCountButton(silverDragon)
 end
 
 function S:SilverDragon()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.silverDragon then
-		return
-	end
-
 	self:DisableAddOnSkin("SilverDragon")
 
 	local SilverDragon = _G.LibStub("AceAddon-3.0"):GetAddon("SilverDragon")
@@ -464,5 +462,3 @@ function S:SilverDragon()
 	SetupMountCountButton(SilverDragon)
 	StyleWorldNavFrame()
 end
-
-S:AddCallbackForAddon("SilverDragon")

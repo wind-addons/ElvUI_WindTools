@@ -6,6 +6,8 @@ local pairs = pairs
 
 local hooksecurefunc = hooksecurefunc
 
+S:AddCallbackForAddon("Collectionator", nil, S:CreateAddonCheck("collectionator"))
+
 local function ReskinWarningDialog(frame)
 	frame:StripTextures()
 	frame:SetTemplate("Transparent")
@@ -121,10 +123,6 @@ local function ReskinOption(frame)
 end
 
 function S:Collectionator()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.collectionator then
-		return
-	end
-
 	local LibAHTab = _G.LibStub("LibAHTab-1-0", true)
 	if not LibAHTab then
 		return
@@ -140,5 +138,3 @@ function S:Collectionator()
 
 	ReskinOption(_G.CollectionatorConfigBasicOptionsFrame)
 end
-
-S:AddCallbackForAddon("Collectionator")

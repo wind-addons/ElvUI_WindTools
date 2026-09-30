@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_BindingUI()
-	if not self:CheckDB("misc") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_BindingUI", nil, "misc")
 
+function S:Blizzard_BindingUI()
 	self:CreateShadow(_G.KeyBindingFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_BindingUI")

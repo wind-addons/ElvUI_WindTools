@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_CovenantRenown()
-	if not self:CheckDB("covenantRenown") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_CovenantRenown", nil, "covenantRenown")
 
+function S:Blizzard_CovenantRenown()
 	self:CreateShadow(_G.CovenantRenownFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_CovenantRenown")

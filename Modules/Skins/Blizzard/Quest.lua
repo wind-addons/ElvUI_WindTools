@@ -23,6 +23,8 @@ local MAX_OBJECTIVES = MAX_OBJECTIVES
 local DEFAULT_COLOR = GetMaterialTextColors("Default")
 local COMPLETED_COLOR = QUEST_OBJECTIVE_COMPLETED_FONT_COLOR:GetRGB()
 
+S:AddCallback("BlizzardQuestFrames", "quest")
+
 local function GetCurrentQuestID()
 	if _G.QuestInfoFrame.questLog then
 		return C_QuestLog_GetSelectedQuest()
@@ -275,10 +277,6 @@ local function QuestInfo_Display()
 end
 
 function S:BlizzardQuestFrames()
-	if not self:CheckDB("quest") then
-		return
-	end
-
 	-- Apply shadow effects to main quest frames
 	self:CreateShadow(_G.QuestFrame)
 	self:CreateShadow(_G.QuestModelScene)
@@ -446,5 +444,3 @@ function S:BlizzardQuestFrames()
 		end)
 	end
 end
-
-S:AddCallback("BlizzardQuestFrames")

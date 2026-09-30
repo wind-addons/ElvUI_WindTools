@@ -3,16 +3,12 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_ArtifactUI()
-	if not self:CheckDB("artifact") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_ArtifactUI", nil, "artifact")
 
+function S:Blizzard_ArtifactUI()
 	self:CreateBackdropShadow(_G.ArtifactFrame)
 
 	for i = 1, 2 do
 		S:ReskinTab(_G["ArtifactFrameTab" .. i])
 	end
 end
-
-S:AddCallbackForAddon("Blizzard_ArtifactUI")

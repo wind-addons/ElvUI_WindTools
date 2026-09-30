@@ -8,6 +8,8 @@ local select = select
 
 local CreateColor = CreateColor
 
+S:AddCallback("FriendsFrame", "friends")
+
 local function ReskinFriendButton(button)
 	if button.right then
 		return
@@ -109,10 +111,6 @@ local function UpdateRewards()
 end
 
 function S:FriendsFrame()
-	if not self:CheckDB("friends") then
-		return
-	end
-
 	_G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:ClearAllPoints()
 	_G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:Point("TOPLEFT", _G.FriendsFrame, "TOPRIGHT", 3, -1)
 
@@ -165,5 +163,3 @@ function S:FriendsFrame()
 	self:SecureHook(_G.RecruitAFriendRewardsFrame, "UpdateRewards", UpdateRewards)
 	UpdateRewards()
 end
-
-S:AddCallback("FriendsFrame")

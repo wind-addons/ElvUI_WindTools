@@ -3,21 +3,17 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:ElvUI_SkinStatusReport()
-	self:CreateBackdropShadow(_G.ElvUIStatusReport)
-	self:CreateBackdropShadow(_G.ElvUIStatusPlugins)
+local data = S:AddCallback("ElvUI_StatusReport", S:CreateElvUICheck("statusReport"))
+
+function data:SkinStatusReport() -- self is ElvUI (E) when hooked, not data
+	S:CreateBackdropShadow(_G.ElvUIStatusReport)
+	S:CreateBackdropShadow(_G.ElvUIStatusPlugins)
 end
 
 function S:ElvUI_StatusReport()
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.statusReport) then
-		return
-	end
-
 	if E.StatusFrame then
-		self:ElvUI_SkinStatusReport()
+		data:SkinStatusReport()
 	end
 
-	self:SecureHook(E, "CreateStatusFrame", "ElvUI_SkinStatusReport")
+	self:SecureHook(E, "CreateStatusFrame", data.SkinStatusReport)
 end
-
-S:AddCallback("ElvUI_StatusReport")

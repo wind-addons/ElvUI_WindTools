@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_Transmog()
-	if not self:CheckDB("transmogrify") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_Transmog", nil, "transmogrify")
 
+function S:Blizzard_Transmog()
 	self:CreateShadow(_G.TransmogFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_Transmog")

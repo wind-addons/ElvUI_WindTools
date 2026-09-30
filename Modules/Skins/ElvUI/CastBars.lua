@@ -4,7 +4,12 @@ local UF = E:GetModule("UnitFrames")
 
 local CreateFrame = CreateFrame
 
-function S:ElvUI_UnitFrames_SkinCastBar(_, frame)
+local data = S:AddCallback("ElvUI_CastBars", function()
+	return E.private.unitframe.enable and E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.castBars and true
+		or false
+end)
+
+function data:SkinCastBar(frame) -- self is the UnitFrames module, not data
 	if not frame or not frame.Castbar or not frame.Castbar.backdrop or not frame.db or not frame.db.castbar then
 		return
 	end
@@ -23,7 +28,7 @@ function S:ElvUI_UnitFrames_SkinCastBar(_, frame)
 	if not db.iconAttached then
 		if not windBg.mode or windBg.mode ~= "NotAttach" then
 			-- Icon shadow
-			self:CreateShadow(frame.Castbar.ButtonIcon.bg)
+			S:CreateShadow(frame.Castbar.ButtonIcon.bg)
 			if frame.Castbar.ButtonIcon.bg.shadow then
 				frame.Castbar.ButtonIcon.bg.shadow:Show()
 			end
@@ -51,20 +56,11 @@ function S:ElvUI_UnitFrames_SkinCastBar(_, frame)
 		end
 	end
 
-	self:CreateShadow(windBg)
+	S:CreateShadow(windBg)
 end
 
 function S:ElvUI_CastBars()
-	if not E.private.unitframe.enable then
-		return
-	end
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.castBars) then
-		return
-	end
-
 	if not self:IsHooked(UF, "Configure_Castbar") then
-		self:SecureHook(UF, "Configure_Castbar", "ElvUI_UnitFrames_SkinCastBar")
+		self:SecureHook(UF, "Configure_Castbar", data.SkinCastBar)
 	end
 end
-
-S:AddCallback("ElvUI_CastBars")

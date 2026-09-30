@@ -9,6 +9,8 @@ local unpack = unpack
 
 local C_Item_GetItemQualityColor = C_Item.GetItemQualityColor
 
+local data = S:AddCallbackForAddon("TomCats", nil, S:CreateAddonCheck("tomCats"))
+
 local atlasToQuality = {
 	["auctionhouse-itemicon-border-gray"] = 0,
 	["auctionhouse-itemicon-border-white"] = 1,
@@ -20,7 +22,7 @@ local atlasToQuality = {
 	["auctionhouse-itemicon-border-account"] = 8,
 }
 
-function S:TomCats_HandleTomCatsIcon(icon)
+function data:HandleTomCatsIcon(icon)
 	if not icon or not icon:IsShown() then
 		return
 	end
@@ -31,7 +33,7 @@ function S:TomCats_HandleTomCatsIcon(icon)
 			icon.Icon:RemoveMaskTexture(icon.Icon:GetMaskTexture(i))
 		end
 
-		self:Proxy("HandleIcon", icon.Icon, true)
+		S:Proxy("HandleIcon", icon.Icon, true)
 		icon.IconBorder:SetAlpha(0)
 		icon.__windSkin = true
 	end
@@ -48,47 +50,46 @@ function S:TomCats_HandleTomCatsIcon(icon)
 
 	if icon.CategoryIcon then
 		icon.CategoryIcon:SetFrameLevel(icon:GetFrameLevel() + 2)
-		self:TomCats_HandleTomCatsIcon(icon.CategoryIcon)
+		data:HandleTomCatsIcon(icon.CategoryIcon)
 	end
 end
 
-function S:TomCats_SkinTooltipItems(tt, owner)
+function data:SkinTooltipItems() -- self is TomCatsVignetteTooltip, not data
+	local tt = self
 	for _, item in pairs(tt.Loot) do
-		self:TomCats_HandleTomCatsIcon(item)
+		data:HandleTomCatsIcon(item)
 	end
 end
 
-function S:TomCats_HeaderCollapseButton_SetNormalAtlas(button, atlas)
+function data:HeaderCollapseButton_SetNormalAtlas(atlas) -- self is the vignettes section header button, not data
+	local button = self
 	if atlas == "Campaign_HeaderIcon_Closed" then
 		return button:SetNormalTexture(E.Media.Textures.PlusButton)
 	elseif atlas == "Campaign_HeaderIcon_Open" then
 		return button:SetNormalTexture(E.Media.Textures.MinusButton)
 	end
 
-	self.hooks[button].SetNormalAtlas(button, atlas)
+	S.hooks[button].SetNormalAtlas(button, atlas)
 end
 
-function S:TomCats_HeaderCollapseButton_SetPushedAtlas(button, atlas)
+function data:HeaderCollapseButton_SetPushedAtlas(atlas) -- self is the vignettes section header button, not data
+	local button = self
 	if atlas == "Campaign_HeaderIcon_ClosedPressed" then
 		return button:SetPushedTexture(E.Media.Textures.PlusButton)
 	elseif atlas == "Campaign_HeaderIcon_OpenPressed" then
 		return button:SetPushedTexture(E.Media.Textures.MinusButton)
 	end
 
-	self.hooks[button].SetPushedAtlas(button, atlas)
+	S.hooks[button].SetPushedAtlas(button, atlas)
 end
 
 function S:TomCats()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.tomCats then
-		return
-	end
-
 	TT:SetStyle(_G.TomCatsVignetteTooltip)
-	self:SecureHook(_G.TomCatsVignetteTooltip, "SetOwner", "TomCats_SkinTooltipItems")
+	self:SecureHook(_G.TomCatsVignetteTooltip, "SetOwner", data.SkinTooltipItems)
 	if _G.TomCatsVignettesSection and _G.TomCatsVignettesSection.Header then
 		local header = _G.TomCatsVignettesSection.Header
-		self:RawHook(header, "SetNormalAtlas", "TomCats_HeaderCollapseButton_SetNormalAtlas", true)
-		self:RawHook(header, "SetPushedAtlas", "TomCats_HeaderCollapseButton_SetPushedAtlas", true)
+		self:RawHook(header, "SetNormalAtlas", data.HeaderCollapseButton_SetNormalAtlas, true)
+		self:RawHook(header, "SetPushedAtlas", data.HeaderCollapseButton_SetPushedAtlas, true)
 		header:SetHighlightTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
 		F.InternalizeMethod(header, "SetHighlightTexture", true)
 		header:Size(16)
@@ -122,5 +123,3 @@ function S:TomCats()
 		end
 	end)
 end
-
-S:AddCallbackForAddon("TomCats")

@@ -5,6 +5,8 @@ local _G = _G
 
 local RunNextFrame = RunNextFrame
 
+S:AddCallbackForAddon("HandyNotes_MapNotes", nil, S:CreateAddonCheck("handyNotesMapNotes"))
+
 local function ReskinChangelogFrame()
 	if not _G.MapNotesChangelogFrame then
 		return
@@ -29,14 +31,8 @@ local function ReskinChangelogFrame()
 end
 
 function S:HandyNotes_MapNotes()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.handyNotesMapNotes then
-		return
-	end
-
 	E:Delay(0.01, function()
 		-- Must after MapNotes async loading
 		RunNextFrame(ReskinChangelogFrame)
 	end)
 end
-
-S:AddCallbackForAddon("HandyNotes_MapNotes")

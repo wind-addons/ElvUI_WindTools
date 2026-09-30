@@ -1,6 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-local ES = E:GetModule("Skins")
 local LSM = E.Libs.LSM
 local C = W.Utilities.Color
 
@@ -8,8 +7,9 @@ local _G = _G
 local ceil = ceil
 local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
-local next = next
 local pairs = pairs
+
+local data = S:AddCallbackForAddon("Blizzard_CooldownViewer", nil, "cooldownManager", "cooldownViewer")
 
 local function UpdateFrameAndStrata(frame, config)
 	frame:SetFrameStrata(S.db.cooldownViewer[config].frameStrata)
@@ -72,12 +72,15 @@ local function RemoveDebuffBorder(frame)
 	end
 end
 
-function S:CooldownManager_AcquireItemFrame(container, frame)
+function data:AcquireItemFrame(frame) -- self is the cooldown viewer container, not data
+	local container = self
 	if not container or not container.itemFramePool then
 		return
 	end
 
 	RemoveDebuffBorder(frame)
+
+	local db = S.db.cooldownViewer
 
 	if container == _G.EssentialCooldownViewer then
 		UpdateFrameAndStrata(frame, "essential")
@@ -93,7 +96,7 @@ function S:CooldownManager_AcquireItemFrame(container, frame)
 
 		local Icon = frame.Icon
 		if Icon and Icon.Icon then
-			if not Icon.Icon.__windSkin and self.db.cooldownViewer.general.iconShadow then
+			if not Icon.Icon.__windSkin and db.general.iconShadow then
 				S:CreateBackdropShadow(Icon.Icon)
 				Icon.Icon.__windSkin = true
 			end
@@ -101,10 +104,10 @@ function S:CooldownManager_AcquireItemFrame(container, frame)
 
 		local Bar = frame.Bar
 		if Bar then
-			if not Bar.__windSkin and self.db.cooldownViewer.general.barShadow then
+			if not Bar.__windSkin and db.general.barShadow then
 				for _, region in pairs({ Bar:GetRegions() }) do
 					if region:IsObjectType("Texture") and region.backdrop then
-						self:CreateBackdropShadow(region)
+						S:CreateBackdropShadow(region)
 						break
 					end
 				end
@@ -112,11 +115,11 @@ function S:CooldownManager_AcquireItemFrame(container, frame)
 			end
 
 			local statusBarTex = Bar:GetStatusBarTexture() --[[@as Texture]]
-			statusBarTex:SetTexture(LSM:Fetch("statusbar", self.db.cooldownViewer.buffBar.barTexture))
+			statusBarTex:SetTexture(LSM:Fetch("statusbar", db.buffBar.barTexture))
 			statusBarTex:SetGradient(
 				"HORIZONTAL",
-				C.CreateColorFromTable(self.db.cooldownViewer.buffBar.colorLeft),
-				C.CreateColorFromTable(self.db.cooldownViewer.buffBar.colorRight)
+				C.CreateColorFromTable(db.buffBar.colorLeft),
+				C.CreateColorFromTable(db.buffBar.colorRight)
 			)
 			statusBarTex:ClearTextureSlice()
 			statusBarTex:SetTextureSliceMode(0)
@@ -126,51 +129,64 @@ function S:CooldownManager_AcquireItemFrame(container, frame)
 	end
 end
 
-function S:CooldownManager_HandleViewer(element)
-	if not self:IsHooked(element, "OnAcquireItemFrame") then
-		self:SecureHook(element, "OnAcquireItemFrame", "CooldownManager_AcquireItemFrame")
+function data:HandleViewer(element)
+	if not S:IsHooked(element, "OnAcquireItemFrame") then
+		S:SecureHook(element, "OnAcquireItemFrame", data.AcquireItemFrame)
 	end
 
 	for frame in element.itemFramePool:EnumerateActive() do
-		self:CooldownManager_AcquireItemFrame(element, frame)
+		data.AcquireItemFrame(element, frame)
 	end
 end
 
-function S:Blizzard_CooldownViewer_Modification()
-	if not self.db.cooldownViewer.enable then
+---Entry point kept on the module for Options
+---@param element Frame The cooldown viewer container
+function S:CooldownManager_HandleViewer(element)
+	data:HandleViewer(element)
+end
+
+function data:HandleEnabledViewers()
+	local db = S.db.cooldownViewer
+	if not db.enable then
 		return
 	end
 
-	if self.db.cooldownViewer.utility.enable then
-		self:CooldownManager_HandleViewer(_G.UtilityCooldownViewer)
+	if db.utility.enable then
+		data:HandleViewer(_G.UtilityCooldownViewer)
 	end
 
-	if self.db.cooldownViewer.buffBar.enable then
-		self:CooldownManager_HandleViewer(_G.BuffBarCooldownViewer)
+	if db.buffBar.enable then
+		data:HandleViewer(_G.BuffBarCooldownViewer)
 	end
 
-	if self.db.cooldownViewer.buffIcon.enable then
-		self:CooldownManager_HandleViewer(_G.BuffIconCooldownViewer)
+	if db.buffIcon.enable then
+		data:HandleViewer(_G.BuffIconCooldownViewer)
 	end
 
-	if self.db.cooldownViewer.essential.enable then
-		self:CooldownManager_HandleViewer(_G.EssentialCooldownViewer)
+	if db.essential.enable then
+		data:HandleViewer(_G.EssentialCooldownViewer)
 	end
 end
 
 local buttonOffset = 1
-function ES:CooldownManager_PositionViewerTab(_, _, _, x, y)
+function data:PositionViewerTab(_, _, _, x, y) -- self is the tab, not data
 	if x ~= buttonOffset or y ~= -10 then
 		self:ClearAllPoints()
 		self:SetPoint("TOPLEFT", _G.CooldownViewerSettings, "TOPRIGHT", buttonOffset, -10)
 	end
 end
 
-function S:Blizzard_CooldownViewer()
-	if not self:CheckDB("cooldownManager", "cooldownViewer") then
-		return
+do
+	-- ElvUI captures `data.PositionViewerTab` with hooksecurefunc when its loader runs (after every addon file
+	-- is parsed), so replacing the exported function here lets WindTools own the tab anchor without both hooks
+	-- fighting inside `SetPoint`.
+	local elvuiData = S:GetElvUISkinData("Blizzard_CooldownViewer")
+	if elvuiData then
+		elvuiData.PositionViewerTab = data.PositionViewerTab
 	end
+end
 
+function S:Blizzard_CooldownViewer()
 	local CooldownViewerSettings = _G.CooldownViewerSettings
 	if not CooldownViewerSettings then
 		return
@@ -194,7 +210,5 @@ function S:Blizzard_CooldownViewer()
 		end
 	end
 
-	self:Blizzard_CooldownViewer_Modification()
+	data:HandleEnabledViewers()
 end
-
-S:AddCallbackForAddon("Blizzard_CooldownViewer")

@@ -6,11 +6,9 @@ local pairs = pairs
 local _G = _G
 local LibStub = _G.LibStub
 
-function S:Myslot()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.myslot then
-		return
-	end
+S:AddCallbackForAddon("Myslot", nil, S:CreateAddonCheck("myslot"))
 
+function S:Myslot()
 	local frame = LibStub("Myslot-5.0").MainFrame ---@type Frame
 	if not frame then
 		return
@@ -54,5 +52,3 @@ function S:Myslot()
 		end
 	end
 end
-
-S:AddCallbackForAddon("Myslot")

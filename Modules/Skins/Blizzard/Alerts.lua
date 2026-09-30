@@ -5,12 +5,15 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
-function S:SkinAlert(alert)
+local data = S:AddCallback("AlertFrames", "alertframes", "alerts")
+
+function data:SkinAlert() -- self is the alert frame, not data
+	local alert = self
 	if not alert or alert.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(alert)
+	S:CreateBackdropShadow(alert)
 
 	F.SetFrameFontOutline(alert)
 
@@ -21,12 +24,13 @@ function S:SkinAlert(alert)
 	alert.__windSkin = true
 end
 
-function S:SkinAchievementAlert(frame)
+function data:SkinAchievementAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	F.SetFont(frame.Unlocked)
 	F.SetFont(frame.Name, nil, "+4")
@@ -50,23 +54,25 @@ function S:SkinAchievementAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinGuildChallengeAlert(frame)
+function data:SkinGuildChallengeAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 	F.SetFrameFontOutline(frame)
 
 	frame.__windSkin = true
 end
 
-function S:SkinCriteriaAlert(frame)
+function data:SkinCriteriaAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin or not frame.hooked then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	frame:Width(frame:GetWidth() + 10)
 
@@ -85,12 +91,13 @@ function S:SkinCriteriaAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinMoneyWonAlert(frame)
+function data:SkinMoneyWonAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 	F.SetFont(frame.Label)
 	F.SetFont(frame.Amount, nil, "+1")
 
@@ -106,12 +113,13 @@ function S:SkinMoneyWonAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinNewRecipeLearnedAlert(frame)
+function data:SkinNewRecipeLearnedAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 	F.SetFont(frame.Name, nil, "+4")
 	F.SetFont(frame.Title)
 
@@ -123,12 +131,13 @@ function S:SkinNewRecipeLearnedAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinInvasionAlert(frame)
+function data:SkinInvasionAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	for _, child in pairs({ frame:GetChildren() }) do
 		if child.template and child.template == "Default" then
@@ -172,12 +181,13 @@ function S:SkinInvasionAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinWorldQuestCompleteAlert(frame)
+function data:SkinWorldQuestCompleteAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	for _, child in pairs({ frame:GetChildren() }) do
 		if child.template and child.template == "Default" then
@@ -198,12 +208,13 @@ function S:SkinWorldQuestCompleteAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinLootUpgradeAlert(frame)
+function data:SkinLootUpgradeAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	F.SetFont(frame.TitleText)
 	frame.TitleText:ClearAllPoints()
@@ -224,12 +235,13 @@ function S:SkinLootUpgradeAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinLootAlert(frame)
+function data:SkinLootAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	F.SetFont(frame.Label)
 
@@ -248,12 +260,13 @@ function S:SkinLootAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinLegendaryItemAlert(frame)
+function data:SkinLegendaryItemAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	frame.Icon:ClearAllPoints()
 	frame.Icon:Point("LEFT", frame.backdrop, "LEFT", 16, 0)
@@ -278,12 +291,13 @@ function S:SkinLegendaryItemAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinDigsiteCompleteAlert(frame)
+function data:SkinDigsiteCompleteAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	F.SetFont(frame.Title)
 	F.SetFont(frame.DigsiteType, nil, "+2")
@@ -291,12 +305,13 @@ function S:SkinDigsiteCompleteAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinRafRewardDeliveredAlert(frame)
+function data:SkinRafRewardDeliveredAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	F.SetFont(frame.Title, nil, "+1")
 	frame.Title:ClearAllPoints()
@@ -313,21 +328,24 @@ function S:SkinRafRewardDeliveredAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinHousingItemEarnedAlert(frame)
+function data:SkinHousingItemEarnedAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	frame.__windSkin = true
 end
-function S:SkinNewItemAlert(frame)
+
+function data:SkinNewItemAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	F.SetFont(frame.Label)
 	frame.Label:ClearAllPoints()
@@ -350,12 +368,13 @@ function S:SkinNewItemAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinGarrisonTalentAlert(frame)
+function data:SkinGarrisonTalentAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	F.SetFont(frame.Title, nil, "+5")
 	frame.Title:ClearAllPoints()
@@ -372,12 +391,13 @@ function S:SkinGarrisonTalentAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinGarrisonBuildingAlert(frame)
+function data:SkinGarrisonBuildingAlert() -- self is the alert frame, not data
+	local frame = self
 	if not frame or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame)
+	S:CreateBackdropShadow(frame)
 
 	frame.Icon:ClearAllPoints()
 	frame.Icon:Point("LEFT", frame.backdrop, "LEFT", 12, 0)
@@ -397,7 +417,8 @@ function S:SkinGarrisonBuildingAlert(frame)
 	frame.__windSkin = true
 end
 
-function S:SkinAlertRewardIcons(frame)
+function data:SkinAlertRewardIcons() -- self is the alert frame, not data
+	local frame = self
 	if frame.RewardFrames then
 		for i = 1, frame.numUsedRewardFrames do
 			local reward = frame.RewardFrames[i]
@@ -413,7 +434,7 @@ function S:SkinAlertRewardIcons(frame)
 				reward.texture:ClearAllPoints()
 				reward.texture:SetInside(reward, 7, 7)
 				reward.texture:CreateBackdrop()
-				self:CreateBackdropShadow(reward.texture)
+				S:CreateBackdropShadow(reward.texture)
 				reward.__windSkin = true
 			end
 		end
@@ -421,57 +442,51 @@ function S:SkinAlertRewardIcons(frame)
 end
 
 function S:AlertFrames()
-	if not self:CheckDB("alertframes", "alerts") then
-		return
-	end
-
 	-- Achievements
-	self:SecureHook(_G.AchievementAlertSystem, "setUpFunction", "SkinAchievementAlert")
-	self:SecureHook(_G.CriteriaAlertSystem, "setUpFunction", "SkinCriteriaAlert")
-	self:SecureHook(_G.MonthlyActivityAlertSystem, "setUpFunction", "SkinCriteriaAlert")
+	self:SecureHook(_G.AchievementAlertSystem, "setUpFunction", data.SkinAchievementAlert)
+	self:SecureHook(_G.CriteriaAlertSystem, "setUpFunction", data.SkinCriteriaAlert)
+	self:SecureHook(_G.MonthlyActivityAlertSystem, "setUpFunction", data.SkinCriteriaAlert)
 
 	-- Encounters
-	self:SecureHook(_G.DungeonCompletionAlertSystem, "setUpFunction", "SkinAlert")
-	self:SecureHook(_G.GuildChallengeAlertSystem, "setUpFunction", "SkinGuildChallengeAlert")
-	self:SecureHook(_G.InvasionAlertSystem, "setUpFunction", "SkinInvasionAlert")
-	self:SecureHook(_G.ScenarioAlertSystem, "setUpFunction", "SkinAlert")
-	self:SecureHook(_G.WorldQuestCompleteAlertSystem, "setUpFunction", "SkinWorldQuestCompleteAlert")
+	self:SecureHook(_G.DungeonCompletionAlertSystem, "setUpFunction", data.SkinAlert)
+	self:SecureHook(_G.GuildChallengeAlertSystem, "setUpFunction", data.SkinGuildChallengeAlert)
+	self:SecureHook(_G.InvasionAlertSystem, "setUpFunction", data.SkinInvasionAlert)
+	self:SecureHook(_G.ScenarioAlertSystem, "setUpFunction", data.SkinAlert)
+	self:SecureHook(_G.WorldQuestCompleteAlertSystem, "setUpFunction", data.SkinWorldQuestCompleteAlert)
 
 	-- Garrisons
-	self:SecureHook(_G.GarrisonFollowerAlertSystem, "setUpFunction", "SkinAlert")
-	self:SecureHook(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", "SkinAlert")
-	self:SecureHook(_G.GarrisonTalentAlertSystem, "setUpFunction", "SkinGarrisonTalentAlert")
-	self:SecureHook(_G.GarrisonBuildingAlertSystem, "setUpFunction", "SkinGarrisonBuildingAlert")
-	self:SecureHook(_G.GarrisonMissionAlertSystem, "setUpFunction", "SkinAlert")
-	self:SecureHook(_G.GarrisonShipMissionAlertSystem, "setUpFunction", "SkinAlert")
-	self:SecureHook(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", "SkinAlert")
+	self:SecureHook(_G.GarrisonFollowerAlertSystem, "setUpFunction", data.SkinAlert)
+	self:SecureHook(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", data.SkinAlert)
+	self:SecureHook(_G.GarrisonTalentAlertSystem, "setUpFunction", data.SkinGarrisonTalentAlert)
+	self:SecureHook(_G.GarrisonBuildingAlertSystem, "setUpFunction", data.SkinGarrisonBuildingAlert)
+	self:SecureHook(_G.GarrisonMissionAlertSystem, "setUpFunction", data.SkinAlert)
+	self:SecureHook(_G.GarrisonShipMissionAlertSystem, "setUpFunction", data.SkinAlert)
+	self:SecureHook(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", data.SkinAlert)
 
 	-- Loot
-	self:SecureHook(_G.LegendaryItemAlertSystem, "setUpFunction", "SkinLegendaryItemAlert")
-	self:SecureHook(_G.LootAlertSystem, "setUpFunction", "SkinLootAlert")
-	self:SecureHook(_G.LootUpgradeAlertSystem, "setUpFunction", "SkinLootUpgradeAlert")
-	self:SecureHook(_G.MoneyWonAlertSystem, "setUpFunction", "SkinMoneyWonAlert")
-	self:SecureHook(_G.HonorAwardedAlertSystem, "setUpFunction", "SkinMoneyWonAlert")
-	self:SecureHook(_G.EntitlementDeliveredAlertSystem, "setUpFunction", "SkinAlert")
-	self:SecureHook(_G.RafRewardDeliveredAlertSystem, "setUpFunction", "SkinRafRewardDeliveredAlert")
-	self:SecureHook(_G.HousingItemEarnedAlertFrameSystem, "setUpFunction", "SkinHousingItemEarnedAlert")
-	self:SecureHook(_G.InitiativeTaskCompleteAlertFrameSystem, "setUpFunction", "SkinHousingItemEarnedAlert")
+	self:SecureHook(_G.LegendaryItemAlertSystem, "setUpFunction", data.SkinLegendaryItemAlert)
+	self:SecureHook(_G.LootAlertSystem, "setUpFunction", data.SkinLootAlert)
+	self:SecureHook(_G.LootUpgradeAlertSystem, "setUpFunction", data.SkinLootUpgradeAlert)
+	self:SecureHook(_G.MoneyWonAlertSystem, "setUpFunction", data.SkinMoneyWonAlert)
+	self:SecureHook(_G.HonorAwardedAlertSystem, "setUpFunction", data.SkinMoneyWonAlert)
+	self:SecureHook(_G.EntitlementDeliveredAlertSystem, "setUpFunction", data.SkinAlert)
+	self:SecureHook(_G.RafRewardDeliveredAlertSystem, "setUpFunction", data.SkinRafRewardDeliveredAlert)
+	self:SecureHook(_G.HousingItemEarnedAlertFrameSystem, "setUpFunction", data.SkinHousingItemEarnedAlert)
+	self:SecureHook(_G.InitiativeTaskCompleteAlertFrameSystem, "setUpFunction", data.SkinHousingItemEarnedAlert)
 
 	-- Professions
-	self:SecureHook(_G.DigsiteCompleteAlertSystem, "setUpFunction", "SkinDigsiteCompleteAlert")
-	self:SecureHook(_G.NewRecipeLearnedAlertSystem, "setUpFunction", "SkinNewRecipeLearnedAlert")
-	self:SecureHook(_G.SkillLineSpecsUnlockedAlertSystem, "setUpFunction", "SkinNewRecipeLearnedAlert")
+	self:SecureHook(_G.DigsiteCompleteAlertSystem, "setUpFunction", data.SkinDigsiteCompleteAlert)
+	self:SecureHook(_G.NewRecipeLearnedAlertSystem, "setUpFunction", data.SkinNewRecipeLearnedAlert)
+	self:SecureHook(_G.SkillLineSpecsUnlockedAlertSystem, "setUpFunction", data.SkinNewRecipeLearnedAlert)
 
 	-- Pets/Mounts
-	self:SecureHook(_G.NewPetAlertSystem, "setUpFunction", "SkinNewItemAlert")
-	self:SecureHook(_G.NewMountAlertSystem, "setUpFunction", "SkinNewItemAlert")
-	self:SecureHook(_G.NewToyAlertSystem, "setUpFunction", "SkinNewItemAlert")
+	self:SecureHook(_G.NewPetAlertSystem, "setUpFunction", data.SkinNewItemAlert)
+	self:SecureHook(_G.NewMountAlertSystem, "setUpFunction", data.SkinNewItemAlert)
+	self:SecureHook(_G.NewToyAlertSystem, "setUpFunction", data.SkinNewItemAlert)
 
 	-- Cosmetics
-	self:SecureHook(_G.NewCosmeticAlertFrameSystem, "setUpFunction", "SkinNewItemAlert")
+	self:SecureHook(_G.NewCosmeticAlertFrameSystem, "setUpFunction", data.SkinNewItemAlert)
 
 	-- Reward Icons
-	self:SecureHook("StandardRewardAlertFrame_AdjustRewardAnchors", "SkinAlertRewardIcons")
+	self:SecureHook("StandardRewardAlertFrame_AdjustRewardAnchors", data.SkinAlertRewardIcons)
 end
-
-S:AddCallback("AlertFrames")

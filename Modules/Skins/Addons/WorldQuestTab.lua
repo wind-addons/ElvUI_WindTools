@@ -8,6 +8,8 @@ local hooksecurefunc = hooksecurefunc
 local strfind = strfind
 local unpack = unpack
 
+S:AddCallbackForAddon("WorldQuestTab", nil, S:CreateAddonCheck("worldQuestTab"))
+
 -- Modified from ElvUI WorldMap skin
 local function ReskinTab(tab)
 	tab:CreateBackdrop()
@@ -186,10 +188,6 @@ local function ReskinListButton(button)
 end
 
 function S:WorldQuestTab()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.worldQuestTab then
-		return
-	end
-
 	local tab = _G.WQT_QuestMapTab
 	if tab then
 		ReskinTab(tab)
@@ -257,5 +255,3 @@ function S:WorldQuestTab()
 		end)
 	end
 end
-
-S:AddCallbackForAddon("WorldQuestTab")

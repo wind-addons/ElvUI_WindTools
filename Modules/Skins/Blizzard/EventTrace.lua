@@ -3,13 +3,9 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_EventTrace()
-	if not self:CheckDB("eventLog", "eventTrace") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_EventTrace", nil, "eventLog", "eventTrace")
 
+function S:Blizzard_EventTrace()
 	self:CreateBackdropShadow(_G.EventTrace)
 	self:HandleResizeButton(_G.EventTrace.ResizeButton)
 end
-
-S:AddCallbackForAddon("Blizzard_EventTrace")

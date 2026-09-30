@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_AnimaDiversionUI()
-	if not self:CheckDB("animaDiversion") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_AnimaDiversionUI", nil, "animaDiversion")
 
+function S:Blizzard_AnimaDiversionUI()
 	self:CreateShadow(_G.AnimaDiversionFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_AnimaDiversionUI")

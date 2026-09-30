@@ -6,13 +6,18 @@ local _G = _G
 local pairs = pairs
 local hooksecurefunc = hooksecurefunc
 
-function S:ElvUI_SkinLootRollFrame(frame)
+local data = S:AddCallback("ElvUI_LootRoll", function()
+	return E.private.general.lootRoll and E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.lootRoll and true
+		or false
+end)
+
+function data:SkinLootRollFrame(frame)
 	if not frame or frame:IsForbidden() or frame.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(frame.button)
-	self:CreateBackdropShadow(frame.status)
+	S:CreateBackdropShadow(frame.button)
+	S:CreateBackdropShadow(frame.status)
 
 	F.InternalizeMethod(frame.button, "SetPoint")
 	F.Move(frame.button, -4, 0)
@@ -24,20 +29,14 @@ function S:ElvUI_SkinLootRollFrame(frame)
 end
 
 function S:ElvUI_LootRoll()
-	if not (E.private.general.lootRoll and E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.lootRoll) then
-		return
-	end
-
 	self:SecureHook(M, "LootRoll_Create", function(_, index)
-		self:ElvUI_SkinLootRollFrame(_G["ElvUI_LootRollFrame" .. index])
+		data:SkinLootRollFrame(_G["ElvUI_LootRollFrame" .. index])
 	end)
 
 	for _, bar in pairs(M.RollBars) do
-		self:ElvUI_SkinLootRollFrame(bar)
+		data:SkinLootRollFrame(bar)
 	end
 end
-
-S:AddCallback("ElvUI_LootRoll")
 
 -- debug note:
 -- itemLink = select(2, C_Item.GetItemInfo(193652))

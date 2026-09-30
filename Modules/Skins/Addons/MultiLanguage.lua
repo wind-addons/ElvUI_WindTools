@@ -8,6 +8,8 @@ local unpack = unpack
 
 local TT = E:GetModule("Tooltip")
 
+S:AddCallbackForAddon("MultiLanguage", nil, S:CreateAddonCheck("multiLanguage"))
+
 local function reskinTooltip(tt)
 	if not tt or tt.__windSkin then
 		return
@@ -114,13 +116,7 @@ local function reskinOptionFrame(frame)
 end
 
 function S:MultiLanguage()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.multiLanguage then
-		return
-	end
-
 	reskinTooltip(_G.TranslationTooltipFrame)
 	reskinQuest(_G.QuestTranslationFrame)
 	reskinOptionFrame(_G.MultiLanguageOptionsPanel)
 end
-
-S:AddCallbackForAddon("MultiLanguage")

@@ -12,6 +12,11 @@ local RunNextFrame = RunNextFrame
 
 local Enum_OnUpdateMode_RunAlways = Enum.OnUpdateMode.RunAlways
 
+local data = S:AddCallbackForAddon("Blizzard_DamageMeter", nil, function()
+	return E.private.skins.blizzard.enable and E.private.skins.blizzard.damageMeter and S.db.damageMeter.enable and true
+		or false
+end)
+
 -- FontStrings only. ElvUI never SetAlpha/HookScript/SetShown the dropdown buttons;
 -- doing that blocks SessionDropdown OnMouseDown_Intrinsic (see DropdownButton.lua).
 local headerVisualGetters = {
@@ -189,7 +194,7 @@ local function StartSessionWindowMouseOver(sessionWindow)
 	end
 
 	windowLeavePendingStates[sessionWindow] = nil
-	S:DamageMeter_ApplyWindowModes(sessionWindow, true)
+	data:ApplyWindowModes(sessionWindow, true)
 end
 
 local function StartVisibilityTracking(sessionWindow)
@@ -207,15 +212,15 @@ local function StartVisibilityTracking(sessionWindow)
 	visibilityWatcher:SetScript("OnUpdate", function()
 		for trackedWindow in pairs(trackedSessionWindows) do
 			if trackedWindow:IsShown() then
-				S:DamageMeter_ApplyWindowModes(trackedWindow, IsSessionMouseOver(trackedWindow))
+				data:ApplyWindowModes(trackedWindow, IsSessionMouseOver(trackedWindow))
 			end
 		end
 	end)
 	visibilityWatcher:SetOnUpdateMode(Enum_OnUpdateMode_RunAlways)
 end
 
-function S:DamageMeter_GetWindowBackdropTargetAlpha(sessionWindow, isMouseOver)
-	local mode = self.db.damageMeter.windowBackdrop
+function data:GetWindowBackdropTargetAlpha(sessionWindow, isMouseOver)
+	local mode = S.db.damageMeter.windowBackdrop
 	local frameBackgroundAlpha = sessionWindow.GetBackgroundAlpha and (sessionWindow:GetBackgroundAlpha() or 1) or 1
 
 	if mode == "always" then
@@ -227,12 +232,12 @@ function S:DamageMeter_GetWindowBackdropTargetAlpha(sessionWindow, isMouseOver)
 	return isMouseOver and frameBackgroundAlpha or 0
 end
 
-function S:DamageMeter_GetScrollBarTargetAlpha(scrollBar)
+function data:GetScrollBarTargetAlpha(scrollBar)
 	if not scrollBar then
 		return nil
 	end
 
-	local mode = self.db.damageMeter.scrollBar
+	local mode = S.db.damageMeter.scrollBar
 	if mode == "default" then
 		return nil
 	end
@@ -251,12 +256,12 @@ function S:DamageMeter_GetScrollBarTargetAlpha(scrollBar)
 	return isMouseOver and baseAlpha or 0
 end
 
-function S:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+function data:EnforceScrollBarAlpha(scrollBar)
 	if not scrollBar or scrollBarAlphaApplyingStates[scrollBar] then
 		return
 	end
 
-	local targetAlpha = self:DamageMeter_GetScrollBarTargetAlpha(scrollBar)
+	local targetAlpha = data:GetScrollBarTargetAlpha(scrollBar)
 	if targetAlpha == nil then
 		return
 	end
@@ -271,13 +276,13 @@ function S:DamageMeter_EnforceScrollBarAlpha(scrollBar)
 	scrollBarAlphaApplyingStates[scrollBar] = nil
 end
 
-function S:DamageMeter_ForceHideScrollBar(scrollBar)
-	self:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+function data:ForceHideScrollBar(scrollBar)
+	data:EnforceScrollBarAlpha(scrollBar)
 	scrollBar:Hide()
 	scrollBarHiddenByMode[scrollBar] = true
 end
 
-function S:DamageMeter_FadeAlpha(frame, targetAlpha)
+function data:FadeAlpha(frame, targetAlpha)
 	if not frame or not frame.SetAlpha then
 		return
 	end
@@ -289,7 +294,7 @@ function S:DamageMeter_FadeAlpha(frame, targetAlpha)
 
 	E:UIFrameFadeRemoveFrame(frame)
 
-	local fadeTime = self.db.damageMeter.fadeTime
+	local fadeTime = S.db.damageMeter.fadeTime
 	if fadeTime > 0 then
 		if targetAlpha > currentAlpha then
 			E:UIFrameFadeIn(frame, fadeTime, currentAlpha, targetAlpha)
@@ -301,7 +306,8 @@ function S:DamageMeter_FadeAlpha(frame, targetAlpha)
 	end
 end
 
-function S:DamageMeter_OnBackgroundSetAlpha(background)
+function data:OnBackgroundSetAlpha() -- self is the session window background, not data
+	local background = self
 	if backdropAlphaApplyingStates[background] then
 		return
 	end
@@ -317,7 +323,7 @@ function S:DamageMeter_OnBackgroundSetAlpha(background)
 		isMouseOver = IsSessionMouseOver(sessionWindow)
 	end
 
-	local targetAlpha = self:DamageMeter_GetWindowBackdropTargetAlpha(sessionWindow, isMouseOver)
+	local targetAlpha = data:GetWindowBackdropTargetAlpha(sessionWindow, isMouseOver)
 	if backdrop:GetAlpha() == targetAlpha then
 		return
 	end
@@ -328,7 +334,7 @@ function S:DamageMeter_OnBackgroundSetAlpha(background)
 	backdropAlphaApplyingStates[background] = nil
 end
 
-function S:DamageMeter_HookBackground(sessionWindow)
+function data:HookBackground(sessionWindow)
 	local background = GetSessionBackground(sessionWindow)
 	if not background then
 		return
@@ -336,55 +342,55 @@ function S:DamageMeter_HookBackground(sessionWindow)
 
 	backgroundSessionWindows[background] = sessionWindow
 
-	if not self:IsHooked(background, "SetAlpha") then
-		self:SecureHook(background, "SetAlpha", "DamageMeter_OnBackgroundSetAlpha")
+	if not S:IsHooked(background, "SetAlpha") then
+		S:SecureHook(background, "SetAlpha", data.OnBackgroundSetAlpha)
 	end
 end
 
-function S:DamageMeter_RefreshBackdropMode(sessionWindow, isMouseOver)
+function data:RefreshBackdropMode(sessionWindow, isMouseOver)
 	local background = GetSessionBackground(sessionWindow)
 	local backdrop = background and background.backdrop
 	if not backdrop then
 		return false
 	end
 
-	self:DamageMeter_FadeAlpha(backdrop, self:DamageMeter_GetWindowBackdropTargetAlpha(sessionWindow, isMouseOver))
+	data:FadeAlpha(backdrop, data:GetWindowBackdropTargetAlpha(sessionWindow, isMouseOver))
 
 	return true
 end
 
-function S:DamageMeter_FadeHeaderButtonVisuals(button, widgetAlpha)
+function data:FadeHeaderButtonVisuals(button, widgetAlpha)
 	if not button then
 		return
 	end
 
-	-- ElvUI replacements (DamageMeter_HandleTypeDropdown / HandleSettingsDropdown)
+	-- ElvUI replacements (data:HandleTypeDropdown / data:HandleSettingsDropdown)
 	if button.customArrow then
-		self:DamageMeter_FadeAlpha(button.customArrow, widgetAlpha)
+		data:FadeAlpha(button.customArrow, widgetAlpha)
 	end
 
 	if button.customIcon then
-		self:DamageMeter_FadeAlpha(button.customIcon, widgetAlpha)
+		data:FadeAlpha(button.customIcon, widgetAlpha)
 	end
 
 	if button.GetNormalTexture then
 		local normalTexture = button:GetNormalTexture()
 		if normalTexture then
-			self:DamageMeter_FadeAlpha(normalTexture, widgetAlpha)
+			data:FadeAlpha(normalTexture, widgetAlpha)
 		end
 	end
 
 	if button.GetPushedTexture then
 		local pushedTexture = button:GetPushedTexture()
 		if pushedTexture then
-			self:DamageMeter_FadeAlpha(pushedTexture, widgetAlpha)
+			data:FadeAlpha(pushedTexture, widgetAlpha)
 		end
 	end
 
 	if button.GetHighlightTexture then
 		local highlightTexture = button:GetHighlightTexture()
 		if highlightTexture then
-			self:DamageMeter_FadeAlpha(highlightTexture, widgetAlpha)
+			data:FadeAlpha(highlightTexture, widgetAlpha)
 		end
 	end
 end
@@ -401,7 +407,7 @@ local BLIZZARD_MINIMIZE_HEADER_X, BLIZZARD_MINIMIZE_HEADER_Y = -3, -5
 local BLIZZARD_SETTINGS_MINIMIZE_X, BLIZZARD_SETTINGS_MINIMIZE_Y = -2, -2
 local ELVUI_SETTINGS_NUDGE_X, ELVUI_SETTINGS_NUDGE_Y = 2, 1
 
-function S:DamageMeter_AnchorTypeDropdown(sessionWindow, showSessionTimer)
+function data:AnchorTypeDropdown(sessionWindow, showSessionTimer)
 	local typeDropdown = sessionWindow.GetDamageMeterTypeDropdown and sessionWindow:GetDamageMeterTypeDropdown()
 	if not typeDropdown then
 		return
@@ -432,24 +438,24 @@ function S:DamageMeter_AnchorTypeDropdown(sessionWindow, showSessionTimer)
 	end
 end
 
-function S:DamageMeter_RefreshSessionTimer(sessionWindow, widgetAlpha)
+function data:RefreshSessionTimer(sessionWindow, widgetAlpha)
 	local sessionTimer = sessionWindow.GetSessionTimerFontString and sessionWindow:GetSessionTimerFontString()
 	if not sessionTimer then
 		return
 	end
 
-	local showSessionTimer = self.db.damageMeter.sessionTimer ~= false
+	local showSessionTimer = S.db.damageMeter.sessionTimer ~= false
 	if showSessionTimer then
 		sessionTimer:Show()
-		self:DamageMeter_FadeAlpha(sessionTimer, widgetAlpha)
+		data:FadeAlpha(sessionTimer, widgetAlpha)
 	else
 		sessionTimer:Hide()
 	end
 
-	self:DamageMeter_AnchorTypeDropdown(sessionWindow, showSessionTimer)
+	data:AnchorTypeDropdown(sessionWindow, showSessionTimer)
 end
 
-function S:DamageMeter_AnchorSettingsDropdown(sessionWindow, attachToMinimizeButton)
+function data:AnchorSettingsDropdown(sessionWindow, attachToMinimizeButton)
 	local settingsDropdown = sessionWindow.GetSettingsDropdown and sessionWindow:GetSettingsDropdown()
 	if not settingsDropdown then
 		return
@@ -478,63 +484,63 @@ function S:DamageMeter_AnchorSettingsDropdown(sessionWindow, attachToMinimizeBut
 	end
 end
 
-function S:DamageMeter_RefreshMinimizeButton(sessionWindow, widgetAlpha)
+function data:RefreshMinimizeButton(sessionWindow, widgetAlpha)
 	local minimizeButton = sessionWindow.GetMinimizeButton and sessionWindow:GetMinimizeButton()
 	if not minimizeButton then
 		return
 	end
 
-	local showMinimizeButton = self.db.damageMeter.minimizeButton ~= false
+	local showMinimizeButton = S.db.damageMeter.minimizeButton ~= false
 	local isMinimized = sessionWindow.IsMinimized and sessionWindow:IsMinimized()
 	local attachToMinimizeButton = showMinimizeButton or isMinimized
 	if attachToMinimizeButton then
 		minimizeButton:Show()
-		self:DamageMeter_FadeHeaderButtonVisuals(minimizeButton, widgetAlpha)
+		data:FadeHeaderButtonVisuals(minimizeButton, widgetAlpha)
 	else
 		minimizeButton:Hide()
 	end
 
-	self:DamageMeter_AnchorSettingsDropdown(sessionWindow, attachToMinimizeButton)
+	data:AnchorSettingsDropdown(sessionWindow, attachToMinimizeButton)
 end
 
-function S:DamageMeter_RefreshHeaderMode(sessionWindow, isMouseOver)
+function data:RefreshHeaderMode(sessionWindow, isMouseOver)
 	if not sessionWindow then
 		return
 	end
 
-	local headerPartMode = self.db.damageMeter.headerPart
-	local headerBackdropMode = self.db.damageMeter.headerBackdrop
+	local headerPartMode = S.db.damageMeter.headerPart
+	local headerBackdropMode = S.db.damageMeter.headerBackdrop
 	local widgetAlpha = headerPartMode == "always" and 1 or (isMouseOver and 1 or 0)
 	local headerBackdropAlpha = headerBackdropMode == "hide" and 0 or 1
 
 	local header = GetSessionHeader(sessionWindow)
 	if header then
-		self:DamageMeter_FadeAlpha(header, headerBackdropAlpha)
+		data:FadeAlpha(header, headerBackdropAlpha)
 	end
 
-	self:DamageMeter_RefreshSessionTimer(sessionWindow, widgetAlpha)
+	data:RefreshSessionTimer(sessionWindow, widgetAlpha)
 
 	for i = 1, #headerVisualGetters do
 		local element = GetHeaderWidget(sessionWindow, headerVisualGetters[i])
 		if element and element.SetAlpha then
-			self:DamageMeter_FadeAlpha(element, widgetAlpha)
+			data:FadeAlpha(element, widgetAlpha)
 		end
 	end
 
 	-- Fade ElvUI/Blizzard textures only. Leave the DropdownButtons and MinimizeButton
 	-- at ElvUI's alpha so OnMouseDown_Intrinsic still receives the click.
 	if sessionWindow.GetDamageMeterTypeDropdown then
-		self:DamageMeter_FadeHeaderButtonVisuals(sessionWindow:GetDamageMeterTypeDropdown(), widgetAlpha)
+		data:FadeHeaderButtonVisuals(sessionWindow:GetDamageMeterTypeDropdown(), widgetAlpha)
 	end
 
 	if sessionWindow.GetSettingsDropdown then
-		self:DamageMeter_FadeHeaderButtonVisuals(sessionWindow:GetSettingsDropdown(), widgetAlpha)
+		data:FadeHeaderButtonVisuals(sessionWindow:GetSettingsDropdown(), widgetAlpha)
 	end
 
-	self:DamageMeter_RefreshMinimizeButton(sessionWindow, widgetAlpha)
+	data:RefreshMinimizeButton(sessionWindow, widgetAlpha)
 end
 
-function S:DamageMeter_RefreshScrollBarMode(frame)
+function data:RefreshScrollBarMode(frame)
 	local scrollBar = frame.GetScrollBar and frame:GetScrollBar()
 	if not scrollBar then
 		return
@@ -545,9 +551,9 @@ function S:DamageMeter_RefreshScrollBarMode(frame)
 		scrollBarBaseAlphas[scrollBar] = currentAlpha
 	end
 
-	local mode = self.db.damageMeter.scrollBar
+	local mode = S.db.damageMeter.scrollBar
 	if mode == "hide" then
-		self:DamageMeter_ForceHideScrollBar(scrollBar)
+		data:ForceHideScrollBar(scrollBar)
 		return
 	end
 
@@ -560,19 +566,20 @@ function S:DamageMeter_RefreshScrollBarMode(frame)
 		return
 	end
 
-	self:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+	data:EnforceScrollBarAlpha(scrollBar)
 end
 
-function S.DamageMeter_OnScrollBarScriptShow(scrollBar)
+function data:OnScrollBarScriptShow() -- self is the scroll bar, not data
 	if S.db.damageMeter.scrollBar == "hide" then
-		S:DamageMeter_ForceHideScrollBar(scrollBar)
+		data:ForceHideScrollBar(self)
 		return
 	end
 
-	S:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+	data:EnforceScrollBarAlpha(self)
 end
 
-function S:DamageMeter_OnScrollBarSetAlpha(scrollBar, alpha)
+function data:OnScrollBarSetAlpha(alpha) -- self is the scroll bar, not data
+	local scrollBar = self
 	if scrollBarAlphaApplyingStates[scrollBar] then
 		return
 	end
@@ -581,20 +588,20 @@ function S:DamageMeter_OnScrollBarSetAlpha(scrollBar, alpha)
 		scrollBarBaseAlphas[scrollBar] = alpha
 	end
 
-	self:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+	data:EnforceScrollBarAlpha(scrollBar)
 end
 
-function S.DamageMeter_OnScrollBarEnter(scrollBar)
-	StartSessionWindowMouseOver(scrollBarSessionWindows[scrollBar])
-	S:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+function data:OnScrollBarEnter() -- self is the scroll bar, not data
+	StartSessionWindowMouseOver(scrollBarSessionWindows[self])
+	data:EnforceScrollBarAlpha(self)
 end
 
-function S.DamageMeter_OnScrollBarLeave(scrollBar)
-	S.DamageMeter_OnSessionWindowLeave(scrollBarSessionWindows[scrollBar])
-	S:DamageMeter_EnforceScrollBarAlpha(scrollBar)
+function data:OnScrollBarLeave() -- self is the scroll bar, not data
+	data.OnSessionWindowLeave(scrollBarSessionWindows[self])
+	data:EnforceScrollBarAlpha(self)
 end
 
-function S:DamageMeter_HookScrollBar(frame)
+function data:HookScrollBar(frame)
 	local scrollBar = frame.GetScrollBar and frame:GetScrollBar()
 	if not scrollBar then
 		return
@@ -603,23 +610,23 @@ function S:DamageMeter_HookScrollBar(frame)
 	scrollBarSessionWindows[scrollBar] = frame
 
 	if not hookedScrollBars[scrollBar] then
-		scrollBar:HookScript("OnEnter", S.DamageMeter_OnScrollBarEnter)
-		scrollBar:HookScript("OnLeave", S.DamageMeter_OnScrollBarLeave)
-		scrollBar:HookScript("OnShow", S.DamageMeter_OnScrollBarScriptShow)
+		scrollBar:HookScript("OnEnter", data.OnScrollBarEnter)
+		scrollBar:HookScript("OnLeave", data.OnScrollBarLeave)
+		scrollBar:HookScript("OnShow", data.OnScrollBarScriptShow)
 		hookedScrollBars[scrollBar] = true
 	end
 
-	if not self:IsHooked(scrollBar, "SetAlpha") then
-		self:SecureHook(scrollBar, "SetAlpha", "DamageMeter_OnScrollBarSetAlpha")
+	if not S:IsHooked(scrollBar, "SetAlpha") then
+		S:SecureHook(scrollBar, "SetAlpha", data.OnScrollBarSetAlpha)
 	end
 end
 
-function S:DamageMeter_ApplyEntryStyle(entry)
+function data:ApplyEntryStyle(entry)
 	if not entry then
 		return
 	end
 
-	local barDB = self.db.damageMeter.bar
+	local barDB = S.db.damageMeter.bar
 	local statusBarTexture = entry:GetStatusBarTexture()
 	if statusBarTexture then
 		statusBarTexture:SetTexture(LSM:Fetch("statusbar", barDB.texture))
@@ -630,11 +637,11 @@ function S:DamageMeter_ApplyEntryStyle(entry)
 	F.SetFontWithDB(entry:GetValue(), barDB.font.value)
 end
 
-function S.DamageMeter_HandleEntry(entry)
-	S:DamageMeter_ApplyEntryStyle(entry)
+function data:HandleEntry() -- self is the entry, not data
+	data:ApplyEntryStyle(self)
 end
 
-function S:DamageMeter_HookHeaderWidgetMouseOver(sessionWindow, element)
+function data:HookHeaderWidgetMouseOver(sessionWindow, element)
 	if not sessionWindow or not element or element.__windDamageMeterMouseOverHooked then
 		return
 	end
@@ -649,74 +656,75 @@ function S:DamageMeter_HookHeaderWidgetMouseOver(sessionWindow, element)
 		StartSessionWindowMouseOver(sessionWindow)
 	end)
 	element:HookScript("OnLeave", function()
-		S.DamageMeter_OnSessionWindowLeave(sessionWindow)
+		data.OnSessionWindowLeave(sessionWindow)
 	end)
 end
 
-function S:DamageMeter_HookEntryMouseOver(sessionWindow, entry)
-	self:DamageMeter_HookHeaderWidgetMouseOver(sessionWindow, entry)
+function data:HookEntryMouseOver(sessionWindow, entry)
+	data:HookHeaderWidgetMouseOver(sessionWindow, entry)
 end
 
-function S:DamageMeter_HookSessionWindowMouseOver(sessionWindow)
+function data:HookSessionWindowMouseOver(sessionWindow)
 	if not sessionWindow or sessionWindow.__windDamageMeterWindowHooked then
 		return
 	end
 
-	sessionWindow:HookScript("OnEnter", S.DamageMeter_OnSessionWindowEnter)
-	sessionWindow:HookScript("OnLeave", S.DamageMeter_OnSessionWindowLeave)
+	sessionWindow:HookScript("OnEnter", data.OnSessionWindowEnter)
+	sessionWindow:HookScript("OnLeave", data.OnSessionWindowLeave)
 	StartVisibilityTracking(sessionWindow)
 
 	sessionWindow.__windDamageMeterWindowHooked = true
 end
 
-function S.DamageMeter_OnSetupEntry(sessionWindow, entry)
-	S:DamageMeter_HookEntryMouseOver(sessionWindow, entry)
+function data:OnSetupEntry(entry) -- self is the session window, not data
+	data:HookEntryMouseOver(self, entry)
 end
 
-function S:DamageMeter_ScrollBoxUpdate(scrollBox)
+function data:ScrollBoxUpdate() -- self is the scroll box, not data
+	local scrollBox = self
 	if not scrollBox or not scrollBox.ForEachFrame then
 		return
 	end
 
-	scrollBox:ForEachFrame(S.DamageMeter_HandleEntry)
+	scrollBox:ForEachFrame(data.HandleEntry)
 end
 
-function S.DamageMeter_OnScrollBoxEnter(scrollBox)
-	StartSessionWindowMouseOver(scrollBoxSessionWindows[scrollBox])
+function data:OnScrollBoxEnter() -- self is the scroll box, not data
+	StartSessionWindowMouseOver(scrollBoxSessionWindows[self])
 end
 
-function S.DamageMeter_OnScrollBoxLeave(scrollBox)
-	S.DamageMeter_OnSessionWindowLeave(scrollBoxSessionWindows[scrollBox])
+function data:OnScrollBoxLeave() -- self is the scroll box, not data
+	data.OnSessionWindowLeave(scrollBoxSessionWindows[self])
 end
 
-function S:DamageMeter_HookScrollBox(frame)
+function data:HookScrollBox(frame)
 	local scrollBox = frame.GetScrollBox and frame:GetScrollBox()
 	if scrollBox then
 		scrollBoxSessionWindows[scrollBox] = frame
 
-		if not self:IsHooked(scrollBox, "Update") then
-			self:SecureHook(scrollBox, "Update", "DamageMeter_ScrollBoxUpdate")
-			self:DamageMeter_ScrollBoxUpdate(scrollBox)
+		if not S:IsHooked(scrollBox, "Update") then
+			S:SecureHook(scrollBox, "Update", data.ScrollBoxUpdate)
+			data.ScrollBoxUpdate(scrollBox)
 		end
 
 		if not hookedScrollBoxes[scrollBox] then
-			scrollBox:HookScript("OnEnter", S.DamageMeter_OnScrollBoxEnter)
-			scrollBox:HookScript("OnLeave", S.DamageMeter_OnScrollBoxLeave)
+			scrollBox:HookScript("OnEnter", data.OnScrollBoxEnter)
+			scrollBox:HookScript("OnLeave", data.OnScrollBoxLeave)
 			hookedScrollBoxes[scrollBox] = true
 		end
 	end
 
-	self:DamageMeter_HookScrollBar(frame)
-	self:DamageMeter_RefreshScrollBarMode(frame)
+	data:HookScrollBar(frame)
+	data:RefreshScrollBarMode(frame)
 end
 
-function S:DamageMeter_SourceWindowRefresh(sourceWindow)
-	if sourceWindow and sourceWindow.ForEachEntryFrame then
-		sourceWindow:ForEachEntryFrame(S.DamageMeter_HandleEntry)
+function data:SourceWindowRefresh() -- self is the source window, not data
+	if self and self.ForEachEntryFrame then
+		self:ForEachEntryFrame(data.HandleEntry)
 	end
 end
 
-function S:DamageMeter_ApplyWindowModes(sessionWindow, isMouseOver, force)
+function data:ApplyWindowModes(sessionWindow, isMouseOver, force)
 	if not sessionWindow then
 		return
 	end
@@ -732,13 +740,13 @@ function S:DamageMeter_ApplyWindowModes(sessionWindow, isMouseOver, force)
 	windowMouseOverStates[sessionWindow] = isMouseOver
 
 	StartVisibilityTracking(sessionWindow)
-	self:DamageMeter_RefreshBackdropMode(sessionWindow, isMouseOver)
-	self:DamageMeter_RefreshHeaderMode(sessionWindow, isMouseOver)
-	self:DamageMeter_RefreshScrollBarMode(sessionWindow)
+	data:RefreshBackdropMode(sessionWindow, isMouseOver)
+	data:RefreshHeaderMode(sessionWindow, isMouseOver)
+	data:RefreshScrollBarMode(sessionWindow)
 end
 
-function S:DamageMeter_RefreshAllSessionWindows()
-	if not self.db or not self.db.damageMeter or not self.db.damageMeter.enable then
+function data:RefreshAllSessionWindows()
+	if not S.db or not S.db.damageMeter or not S.db.damageMeter.enable then
 		return
 	end
 
@@ -748,16 +756,22 @@ function S:DamageMeter_RefreshAllSessionWindows()
 	end
 
 	damageMeter:ForEachSessionWindow(function(sessionWindow)
-		S:DamageMeter_ApplyWindowModes(sessionWindow, nil, true)
+		data:ApplyWindowModes(sessionWindow, nil, true)
 	end)
 end
 
-function S.DamageMeter_OnSessionWindowEnter(sessionWindow)
-	windowLeavePendingStates[sessionWindow] = nil
-	S:DamageMeter_ApplyWindowModes(sessionWindow, true)
+---Entry point kept on the module for Options
+function S:DamageMeter_RefreshAllSessionWindows()
+	data:RefreshAllSessionWindows()
 end
 
-function S.DamageMeter_OnSessionWindowLeave(sessionWindow)
+function data:OnSessionWindowEnter() -- self is the session window, not data
+	windowLeavePendingStates[self] = nil
+	data:ApplyWindowModes(self, true)
+end
+
+function data:OnSessionWindowLeave() -- self is the session window, not data
+	local sessionWindow = self
 	if not sessionWindow or IsHeaderMenuActive(sessionWindow) then
 		return
 	end
@@ -771,13 +785,13 @@ function S.DamageMeter_OnSessionWindowLeave(sessionWindow)
 	RunNextFrame(function()
 		windowLeavePendingStates[sessionWindow] = nil
 		if sessionWindow:IsShown() then
-			S:DamageMeter_ApplyWindowModes(sessionWindow, nil, true)
+			data:ApplyWindowModes(sessionWindow, nil, true)
 		end
 	end)
 end
 
-function S:DamageMeter_HookSessionWindowMixin()
-	if self.damageMeterSessionWindowMixinHooked then
+function data:HookSessionWindowMixin()
+	if data.sessionWindowMixinHooked then
 		return
 	end
 
@@ -786,60 +800,60 @@ function S:DamageMeter_HookSessionWindowMixin()
 		return
 	end
 
-	hooksecurefunc(mixin, "OnEnter", S.DamageMeter_OnSessionWindowEnter)
+	hooksecurefunc(mixin, "OnEnter", data.OnSessionWindowEnter)
 	if mixin.SetupEntry then
-		hooksecurefunc(mixin, "SetupEntry", S.DamageMeter_OnSetupEntry)
+		hooksecurefunc(mixin, "SetupEntry", data.OnSetupEntry)
 	end
 
-	self.damageMeterSessionWindowMixinHooked = true
+	data.sessionWindowMixinHooked = true
 end
 
-function S:DamageMeter_ApplyConfigToSessionWindow(sessionWindow)
+function data:ApplyConfigToSessionWindow(sessionWindow)
 	if not sessionWindow then
 		return
 	end
 
-	self:DamageMeter_HookSessionWindowMixin()
-	self:DamageMeter_HookSessionWindowMouseOver(sessionWindow)
-	self:DamageMeter_HookBackground(sessionWindow)
-	self:DamageMeter_HookScrollBox(sessionWindow)
+	data:HookSessionWindowMixin()
+	data:HookSessionWindowMouseOver(sessionWindow)
+	data:HookBackground(sessionWindow)
+	data:HookScrollBox(sessionWindow)
 
 	if sessionWindow.ForEachEntryFrame then
 		sessionWindow:ForEachEntryFrame(function(entry)
-			S:DamageMeter_ApplyEntryStyle(entry)
-			S:DamageMeter_HookEntryMouseOver(sessionWindow, entry)
+			data:ApplyEntryStyle(entry)
+			data:HookEntryMouseOver(sessionWindow, entry)
 		end)
 	end
 
 	local localPlayerEntry = sessionWindow.GetLocalPlayerEntry and sessionWindow:GetLocalPlayerEntry()
 	if localPlayerEntry then
-		self:DamageMeter_ApplyEntryStyle(localPlayerEntry)
-		self:DamageMeter_HookEntryMouseOver(sessionWindow, localPlayerEntry)
+		data:ApplyEntryStyle(localPlayerEntry)
+		data:HookEntryMouseOver(sessionWindow, localPlayerEntry)
 	end
 
 	local sourceWindow = GetSessionSourceWindow(sessionWindow)
 	if sourceWindow then
-		if not self:IsHooked(sourceWindow, "Refresh") then
-			self:SecureHook(sourceWindow, "Refresh", "DamageMeter_SourceWindowRefresh")
+		if not S:IsHooked(sourceWindow, "Refresh") then
+			S:SecureHook(sourceWindow, "Refresh", data.SourceWindowRefresh)
 		end
 
 		if sourceWindow.ForEachEntryFrame then
-			sourceWindow:ForEachEntryFrame(S.DamageMeter_HandleEntry)
+			sourceWindow:ForEachEntryFrame(data.HandleEntry)
 		end
 	end
 
-	if sessionWindow.SetMinimized and not self:IsHooked(sessionWindow, "SetMinimized") then
-		self:SecureHook(sessionWindow, "SetMinimized", "DamageMeter_OnSetMinimized")
+	if sessionWindow.SetMinimized and not S:IsHooked(sessionWindow, "SetMinimized") then
+		S:SecureHook(sessionWindow, "SetMinimized", data.OnSetMinimized)
 	end
 
-	self:DamageMeter_ApplyWindowModes(sessionWindow, IsSessionMouseOver(sessionWindow), true)
+	data:ApplyWindowModes(sessionWindow, IsSessionMouseOver(sessionWindow), true)
 end
 
-function S:DamageMeter_OnSetMinimized(sessionWindow)
-	self:DamageMeter_ApplyWindowModes(sessionWindow, nil, true)
+function data:OnSetMinimized() -- self is the session window, not data
+	data:ApplyWindowModes(self, nil, true)
 end
 
-function S:DamageMeter_DisableShadowMouse(frame)
+function data:DisableShadowMouse(frame)
 	local backdrop = frame and frame.backdrop
 	local shadow = backdrop and backdrop.shadow
 	if not shadow then
@@ -855,7 +869,8 @@ function S:DamageMeter_DisableShadowMouse(frame)
 	end
 end
 
-function S.DamageMeter_HandleSessionWindow(sessionWindow)
+function data:HandleSessionWindow() -- self is the session window, not data
+	local sessionWindow = self
 	if not sessionWindow then
 		return
 	end
@@ -864,37 +879,27 @@ function S.DamageMeter_HandleSessionWindow(sessionWindow)
 		local background = GetSessionBackground(sessionWindow)
 		if background then
 			S:CreateBackdropShadow(background)
-			S:DamageMeter_DisableShadowMouse(background)
+			data:DisableShadowMouse(background)
 		end
 
 		local sourceBackground = GetSourceWindowBackground(GetSessionSourceWindow(sessionWindow))
 		if sourceBackground then
 			S:CreateBackdropShadow(sourceBackground)
-			S:DamageMeter_DisableShadowMouse(sourceBackground)
+			data:DisableShadowMouse(sourceBackground)
 		end
 
 		skinnedSessionWindows[sessionWindow] = true
 	end
 
-	S:DamageMeter_ApplyConfigToSessionWindow(sessionWindow)
+	data:ApplyConfigToSessionWindow(sessionWindow)
 end
 
-function S:DamageMeter_SetupSessionWindow()
-	_G.DamageMeter:ForEachSessionWindow(S.DamageMeter_HandleSessionWindow)
+function data:SetupSessionWindow() -- self is DamageMeter when hooked, not data
+	_G.DamageMeter:ForEachSessionWindow(data.HandleSessionWindow)
 end
 
 function S:Blizzard_DamageMeter()
-	if
-		not E.private.skins.blizzard.enable
-		or not E.private.skins.blizzard.damageMeter
-		or not self.db.damageMeter.enable
-	then
-		return
-	end
-
-	self:DamageMeter_HookSessionWindowMixin()
-	self:SecureHook(_G.DamageMeter, "SetupSessionWindow", "DamageMeter_SetupSessionWindow")
-	S:DamageMeter_SetupSessionWindow()
+	data:HookSessionWindowMixin()
+	self:SecureHook(_G.DamageMeter, "SetupSessionWindow", data.SetupSessionWindow)
+	data:SetupSessionWindow()
 end
-
-S:AddCallbackForAddon("Blizzard_DamageMeter")

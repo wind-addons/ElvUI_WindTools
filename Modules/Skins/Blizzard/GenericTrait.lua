@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_GenericTraitUI()
-	if not self:CheckDB("majorFactions") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_GenericTraitUI", nil, "majorFactions")
 
+function S:Blizzard_GenericTraitUI()
 	self:CreateShadow(_G.GenericTraitFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_GenericTraitUI")

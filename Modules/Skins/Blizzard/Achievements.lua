@@ -3,11 +3,9 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_AchievementUI()
-	if not self:CheckDB("achievement", "achievements") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_AchievementUI", nil, "achievement", "achievements")
 
+function S:Blizzard_AchievementUI()
 	S:CreateShadow(_G.AchievementFrame)
 	S:CreateBackdropShadow(_G.AchievementFrameComparisonHeader)
 
@@ -18,5 +16,3 @@ function S:Blizzard_AchievementUI()
 	self:CreateBackdropShadow(_G.AchievementFrame.SearchPreviewContainer)
 	self:CreateBackdropShadow(_G.AchievementFrame.SearchResults)
 end
-
-S:AddCallbackForAddon("Blizzard_AchievementUI")

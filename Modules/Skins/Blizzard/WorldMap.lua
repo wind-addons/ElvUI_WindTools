@@ -7,11 +7,9 @@ local hooksecurefunc = hooksecurefunc
 
 local SetPoint = UIParent.SetPoint
 
-function S:WorldMapFrame()
-	if not self:CheckDB("worldmap", "worldMap") then
-		return
-	end
+S:AddCallback("WorldMapFrame", "worldmap", "worldMap")
 
+function S:WorldMapFrame()
 	self:CreateBackdropShadow(_G.WorldMapFrame)
 
 	local QuestMapFrame = _G.QuestMapFrame
@@ -74,5 +72,3 @@ function S:WorldMapFrame()
 		end
 	end
 end
-
-S:AddCallback("WorldMapFrame")

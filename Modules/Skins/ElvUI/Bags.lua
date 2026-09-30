@@ -4,6 +4,12 @@ local B = E:GetModule("Bags")
 
 local pairs = pairs
 
+S:AddCallback("ElvUI_Bags", function()
+	return E.private.bags.enable and E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.bags and true or false
+end)
+S:AddCallback("ElvUI_BagBar", S:CreateElvUICheck("bags"))
+S:AddCallback("ElvUI_BagSell", S:CreateElvUICheck("bags"))
+
 local function ShowBagSlotIcon(button)
 	if not button or not button.icon then
 		return
@@ -30,14 +36,6 @@ local function ShowContainerHolderIcons(bagFrame)
 end
 
 function S:ElvUI_Bags()
-	if not E.private.bags.enable then
-		return
-	end
-
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.bags) then
-		return
-	end
-
 	self:CreateShadow(B.BagFrame)
 	self:CreateShadow(B.BagFrame.ContainerHolder)
 	self:CreateShadow(B.BankFrame)
@@ -49,10 +47,6 @@ function S:ElvUI_Bags()
 end
 
 function S:ElvUI_BagBar()
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.bags) then
-		return
-	end
-
 	if E.private.bags.bagBar and B.BagBar and B.BagBar.buttons then
 		for _, buttons in pairs(B.BagBar.buttons) do
 			self:CreateShadow(buttons)
@@ -61,15 +55,7 @@ function S:ElvUI_BagBar()
 end
 
 function S:ElvUI_BagSell()
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.bags) then
-		return
-	end
-
 	if B and B.SellFrame then
 		self:CreateBackdropShadow(B.SellFrame)
 	end
 end
-
-S:AddCallback("ElvUI_Bags")
-S:AddCallback("ElvUI_BagBar")
-S:AddCallback("ElvUI_BagSell")

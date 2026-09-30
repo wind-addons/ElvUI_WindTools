@@ -7,6 +7,8 @@ local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
 local pairs = pairs
 
+S:AddCallbackForAddon("BtWQuests", nil, S:CreateAddonCheck("btWQuests"))
+
 -- Modified from NDui_Plus
 local function HandleNavButton(btn, strip, ...)
 	S:Proxy("HandleButton", btn, strip, ...)
@@ -131,10 +133,6 @@ local function StyleSearchButton(button)
 	hl:SetInside()
 end
 function S:BtWQuests()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.btWQuests then
-		return
-	end
-
 	self:DisableAddOnSkin("BtWQuests")
 
 	local frame = _G.BtWQuestsFrame
@@ -263,5 +261,3 @@ function S:BtWQuests()
 	hooksecurefunc(_G.BtWQuestsCategoryListItemMixin, "Set", ReskinItemButton)
 	hooksecurefunc(_G.BtWQuestsChainItemMixin, "Set", ReskinItemButton)
 end
-
-S:AddCallbackForAddon("BtWQuests")

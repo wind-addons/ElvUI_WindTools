@@ -4,11 +4,10 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local pairs = pairs
 
-function S:GarrisonTooltips()
-	if not self:CheckDB("garrison") then
-		return
-	end
+S:AddCallback("GarrisonTooltips", "garrison")
+S:AddCallbackForAddon("Blizzard_GarrisonUI", nil, "garrison")
 
+function S:GarrisonTooltips()
 	local tooltips = {
 		_G.GarrisonFollowerTooltip,
 		_G.FloatingGarrisonFollowerTooltip,
@@ -29,10 +28,6 @@ function S:GarrisonTooltips()
 end
 
 function S:Blizzard_GarrisonUI()
-	if not self:CheckDB("garrison") then
-		return
-	end
-
 	local frames = {
 		_G.GarrisonCapacitiveDisplayFrame,
 		_G.GarrisonMissionFrame,
@@ -81,6 +76,3 @@ function S:Blizzard_GarrisonUI()
 		self:ReskinTab(tab)
 	end
 end
-
-S:AddCallback("GarrisonTooltips")
-S:AddCallbackForAddon("Blizzard_GarrisonUI")

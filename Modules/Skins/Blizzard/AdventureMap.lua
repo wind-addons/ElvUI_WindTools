@@ -7,11 +7,9 @@ local hooksecurefunc = hooksecurefunc
 
 local CreateFrame = CreateFrame
 
-function S:Blizzard_AdventureMap()
-	if not self:CheckDB("adventureMap") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_AdventureMap", nil, "adventureMap")
 
+function S:Blizzard_AdventureMap()
 	local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
 	local childFrame = AdventureMapQuestChoiceDialog.Details.Child
 
@@ -35,5 +33,3 @@ function S:Blizzard_AdventureMap()
 		end
 	end)
 end
-
-S:AddCallbackForAddon("Blizzard_AdventureMap")

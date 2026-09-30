@@ -6,11 +6,9 @@ local next = next
 
 local CLASS_SORT_ORDER = CLASS_SORT_ORDER
 
-function S:Blizzard_Calendar()
-	if not self:CheckDB("calendar") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_Calendar", nil, "calendar")
 
+function S:Blizzard_Calendar()
 	self:CreateBackdropShadow(_G.CalendarFrame)
 
 	self:CreateShadow(_G.CalendarViewRaidFrame)
@@ -36,5 +34,3 @@ function S:Blizzard_Calendar()
 
 	self:CreateShadow(_G.CalendarClassTotalsButton)
 end
-
-S:AddCallbackForAddon("Blizzard_Calendar")

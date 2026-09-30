@@ -9,6 +9,8 @@ local select = select
 
 local GetClassInfo = GetClassInfo
 
+S:AddCallbackForAddon("Blizzard_Communities", nil, "communities")
+
 local function UpdateClassIcon(row)
 	if not row or not row.expanded then
 		return
@@ -38,10 +40,6 @@ local function HandleRewardButton(button)
 end
 
 function S:Blizzard_Communities()
-	if not self:CheckDB("communities") then
-		return
-	end
-
 	local CommunitiesFrame = _G.CommunitiesFrame
 	if not CommunitiesFrame then
 		return
@@ -86,5 +84,3 @@ function S:Blizzard_Communities()
 		scrollBox:ForEachFrame(HandleRewardButton)
 	end)
 end
-
-S:AddCallbackForAddon("Blizzard_Communities")

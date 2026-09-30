@@ -5,6 +5,8 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
+S:AddCallbackForAddon("Plumber", nil, S:CreateAddonCheck("plumber"))
+
 local function OnScrollViewUpdateView(view)
 	for _, line in pairs({ view:GetChildren() }) do
 		if line.Icon and not line.Icon.backdrop then
@@ -33,10 +35,6 @@ local function OnDefaultFrameShow(frame)
 end
 
 function S:Plumber()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.plumber then
-		return
-	end
-
 	local PlumberExpansionLandingPage = _G.PlumberExpansionLandingPage
 
 	local LeftSection = PlumberExpansionLandingPage and PlumberExpansionLandingPage.LeftSection
@@ -69,5 +67,3 @@ function S:Plumber()
 		end
 	end
 end
-
-S:AddCallbackForAddon("Plumber")

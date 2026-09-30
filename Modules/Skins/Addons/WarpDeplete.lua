@@ -5,38 +5,30 @@ local _G = _G
 
 local pairs = pairs
 
-function S:ReskinWarpDepleteBars()
+local data = S:AddCallbackForAddon("WarpDeplete", nil, S:CreateAddonCheck("warpDeplete"))
+
+function data:ReskinBars() -- self is WarpDeplete when hooked, not data
 	for _, barFrame in pairs(_G.WarpDeplete.bars) do
 		local bar = barFrame.bar
 		if not bar.__windSkin then
 			bar:SetTemplate("Transparent")
-			self:CreateLowerShadow(bar)
+			S:CreateLowerShadow(bar)
 			bar.__windSkin = true
 		end
 	end
 
 	_G.WarpDeplete.forces.bar:SetTemplate("Transparent")
-	self:CreateShadow(_G.WarpDeplete.forces.bar)
+	S:CreateShadow(_G.WarpDeplete.forces.bar)
 end
 
 function S:WarpDeplete()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.warpDeplete then
-		return
-	end
-
 	if not _G.WarpDeplete then
 		return
 	end
 
 	if _G.WarpDeplete.bars then
-		self:ReskinWarpDepleteBars()
+		data:ReskinBars()
 	else
-		self:SecureHook(
-			_G.WarpDeplete,
-			_G.WarpDeplete.InitDisplay and "InitDisplay" or "InitRender",
-			"ReskinWarpDepleteBars"
-		)
+		self:SecureHook(_G.WarpDeplete, _G.WarpDeplete.InitDisplay and "InitDisplay" or "InitRender", data.ReskinBars)
 	end
 end
-
-S:AddCallbackForAddon("WarpDeplete")

@@ -5,15 +5,18 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local pairs = pairs
 
-function S:Immersion_ReskinTitleButton(frame)
+local data = S:AddCallbackForAddon("Immersion", nil, S:CreateAddonCheck("immersion"))
+
+function data:ReskinTitleButton() -- self is ImmersionFrame, not data
+	local frame = self
 	for _, button in pairs({ frame.TitleButtons:GetChildren() }) do
 		if button and not button.__windSkin then
-			self:Proxy("HandleButton", button, nil, nil, nil, true, "Transparent")
+			S:Proxy("HandleButton", button, nil, nil, nil, true, "Transparent")
 			button.backdrop:ClearAllPoints()
 			button.backdrop:Point("TOPLEFT", button, "TOPLEFT", 3, -3)
 			button.backdrop:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -10, 3)
-			self:CreateBackdropShadow(button)
-			self:MerathilisUISkin(button.backdrop)
+			S:CreateBackdropShadow(button)
+			S:MerathilisUISkin(button.backdrop)
 
 			button.Hilite:StripTextures()
 			button.Overlay:StripTextures()
@@ -24,23 +27,23 @@ function S:Immersion_ReskinTitleButton(frame)
 	end
 end
 
-function S:AttemptReskinButton()
-	self.reskinButtonAttemptCount = self.reskinButtonAttemptCount + 1
-	self:Immersion_ReskinTitleButton(_G.ImmersionFrame)
-	if self.reskinButtonAttemptCount == 10 then
-		self:CancelTimer(self.reskinButtonTimer)
+function data:AttemptReskinButton()
+	data.reskinButtonAttemptCount = data.reskinButtonAttemptCount + 1
+	data.ReskinTitleButton(_G.ImmersionFrame)
+	if data.reskinButtonAttemptCount == 10 then
+		S:CancelTimer(data.reskinButtonTimer)
 	end
 end
 
-function S:Immersion_Show()
-	self:Immersion_SpeechProgressText()
-	self:Immersion_ReskinTitleButton(_G.ImmersionFrame)
-	self.reskinButtonAttemptCount = 0
-	self.reskinButtonTimer = self:ScheduleRepeatingTimer("AttemptReskinButton", 0.1)
-	E:Delay(0.1, S.Immersion_ReskinItems, S)
+function data:Show() -- self is ImmersionFrame, not data
+	data:SpeechProgressText()
+	data.ReskinTitleButton(_G.ImmersionFrame)
+	data.reskinButtonAttemptCount = 0
+	data.reskinButtonTimer = S:ScheduleRepeatingTimer(data.AttemptReskinButton, 0.1, data)
+	E:Delay(0.1, data.ReskinItems, data)
 end
 
-function S:Immersion_ReskinItems()
+function data:ReskinItems()
 	for i = 1, 20 do
 		local rButton = _G["ImmersionQuestInfoItem" .. i]
 		if not rButton then
@@ -53,7 +56,7 @@ function S:Immersion_ReskinItems()
 				rButton.NameFrame:CreateBackdrop("Transparent")
 				rButton.NameFrame.backdrop:ClearAllPoints()
 				rButton.NameFrame.backdrop:SetOutside(rButton.NameFrame, -18, -15)
-				self:CreateBackdropShadow(rButton.NameFrame)
+				S:CreateBackdropShadow(rButton.NameFrame)
 			end
 			rButton.__windSkin = true
 		end
@@ -71,7 +74,7 @@ function S:Immersion_ReskinItems()
 				rButton.NameFrame:CreateBackdrop("Transparent")
 				rButton.NameFrame.backdrop:ClearAllPoints()
 				rButton.NameFrame.backdrop:SetOutside(rButton.NameFrame, -18, -15)
-				self:CreateBackdropShadow(rButton.NameFrame)
+				S:CreateBackdropShadow(rButton.NameFrame)
 			end
 			rButton.__windSkin = true
 		end
@@ -80,7 +83,7 @@ end
 
 do -- If there is no speech progress text in first time, the skin will not be apply
 	local reskin = false
-	function S:Immersion_SpeechProgressText()
+	function data:SpeechProgressText()
 		if reskin then
 			return
 		end
@@ -93,10 +96,6 @@ do -- If there is no speech progress text in first time, the skin will not be ap
 end
 
 function S:Immersion()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.immersion then
-		return
-	end
-
 	S:DisableAddOnSkin("Immersion")
 
 	local frame = _G.ImmersionFrame
@@ -189,8 +188,6 @@ function S:Immersion()
 	F.SetFont(content.RewardsFrame.SkillPointFrame.ValueText)
 
 	-- Buttons
-	self:SecureHookScript(frame, "OnEvent", "Immersion_ReskinTitleButton")
-	self:SecureHook(frame, "Show", "Immersion_Show")
+	self:SecureHookScript(frame, "OnEvent", data.ReskinTitleButton)
+	self:SecureHook(frame, "Show", data.Show)
 end
-
-S:AddCallbackForAddon("Immersion")

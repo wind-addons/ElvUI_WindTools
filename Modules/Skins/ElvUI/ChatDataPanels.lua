@@ -4,7 +4,9 @@ local LO = E:GetModule("Layout")
 
 local _G = _G
 
-function S:ElvUI_ChatPanels_ToggleShadows()
+local data = S:AddCallback("ElvUI_ChatDataPanels", S:CreateElvUICheck("chatDataPanels"))
+
+function data:ToggleShadows() -- self is the Layout module when hooked, not data
 	if not E.private.WT.skins.shadow then
 		return
 	end
@@ -25,11 +27,7 @@ function S:ElvUI_ChatPanels_ToggleShadows()
 	end
 end
 
-function S:ElvUI_ChatPanels()
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.chatDataPanels) then
-		return
-	end
-
+function S:ElvUI_ChatDataPanels()
 	self:CreateShadow(_G.LeftChatDataPanel)
 	self:CreateShadow(_G.RightChatDataPanel)
 
@@ -41,8 +39,6 @@ function S:ElvUI_ChatPanels()
 		_G.RightChatDataPanel.shadow:Point("BOTTOMRIGHT", _G.RightChatToggleButton, "BOTTOMRIGHT", 4, -4)
 	end
 
-	self:ElvUI_ChatPanels_ToggleShadows()
-	self:SecureHook(LO, "ToggleChatPanels", "ElvUI_ChatPanels_ToggleShadows")
+	data:ToggleShadows()
+	self:SecureHook(LO, "ToggleChatPanels", data.ToggleShadows)
 end
-
-S:AddCallback("ElvUI_ChatPanels")

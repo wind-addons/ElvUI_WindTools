@@ -4,6 +4,8 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
+S:AddCallback("SettingsPanel", "blizzardOptions", "settingsPanel")
+
 local function SettingsListScrollUpdateChild(child)
 	if child.__windSkin then
 		return
@@ -21,13 +23,7 @@ local function SettingsListScrollUpdate(frame)
 end
 
 function S:SettingsPanel()
-	if not self:CheckDB("blizzardOptions", "settingsPanel") then
-		return
-	end
-
 	self:CreateBackdropShadow(_G.SettingsPanel)
 
 	hooksecurefunc(_G.SettingsPanel.Container.SettingsList.ScrollBox, "Update", SettingsListScrollUpdate)
 end
-
-S:AddCallback("SettingsPanel")

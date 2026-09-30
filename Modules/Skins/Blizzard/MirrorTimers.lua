@@ -4,11 +4,9 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
-function S:MirrorTimers()
-	if not self:CheckDB("mirrorTimers") then
-		return
-	end
+S:AddCallback("MirrorTimers", "mirrorTimers")
 
+function S:MirrorTimers()
 	hooksecurefunc(_G.MirrorTimerContainer, "SetupTimer", function(container, timer)
 		local bar = container:GetAvailableTimer(timer)
 		if not bar then
@@ -18,5 +16,3 @@ function S:MirrorTimers()
 		self:CreateShadow(bar)
 	end)
 end
-
-S:AddCallback("MirrorTimers")

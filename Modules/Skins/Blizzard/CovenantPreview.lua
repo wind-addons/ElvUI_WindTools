@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_CovenantPreviewUI()
-	if not self:CheckDB("covenantPreview") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_CovenantPreviewUI", nil, "covenantPreview")
 
+function S:Blizzard_CovenantPreviewUI()
 	self:CreateShadow(_G.CovenantPreviewFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_CovenantPreviewUI")

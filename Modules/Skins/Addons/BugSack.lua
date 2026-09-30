@@ -7,14 +7,16 @@ local hooksecurefunc = hooksecurefunc
 
 local SettingsPanel = SettingsPanel
 
-function S:BugSack_OpenSack()
+local data = S:AddCallbackForAddon("BugSack", nil, S:CreateAddonCheck("bugSack"))
+
+function data:OpenSack() -- self is BugSack, not data
 	local bugSackFrame = _G.BugSackFrame
 	if not bugSackFrame or bugSackFrame.__windSkin then
 		return
 	end
 
-	self:Proxy("HandlePortraitFrame", bugSackFrame)
-	self:CreateShadow(bugSackFrame)
+	S:Proxy("HandlePortraitFrame", bugSackFrame)
+	S:CreateShadow(bugSackFrame)
 
 	local titleContainer = bugSackFrame.TitleContainer or bugSackFrame
 	for _, region in pairs({ titleContainer:GetRegions() }) do
@@ -27,7 +29,7 @@ function S:BugSack_OpenSack()
 	local scrollFrame = textArea and textArea:GetParent()
 	local scrollBar = scrollFrame and scrollFrame.ScrollBar
 	if scrollBar then
-		self:Proxy("HandleTrimScrollBar", scrollBar)
+		S:Proxy("HandleTrimScrollBar", scrollBar)
 	end
 
 	if textArea then
@@ -44,7 +46,7 @@ function S:BugSack_OpenSack()
 
 	for _, button in pairs({ prevButton, nextButton, sendButton }) do
 		if button then
-			self:Proxy("HandleButton", button, nil, nil, nil, true)
+			S:Proxy("HandleButton", button, nil, nil, nil, true)
 			button:Height(24)
 		end
 	end
@@ -71,8 +73,8 @@ function S:BugSack_OpenSack()
 
 	for _, tab in pairs({ allTab, lastTab, sessionTab }) do
 		if tab then
-			self:Proxy("HandleTab", tab)
-			self:CreateBackdropShadow(tab)
+			S:Proxy("HandleTab", tab)
+			S:CreateBackdropShadow(tab)
 		end
 	end
 
@@ -95,17 +97,13 @@ function S:BugSack_OpenSack()
 end
 
 function S:BugSack()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.bugSack then
-		return
-	end
-
 	if not _G.BugSack then
 		return
 	end
 
 	self:DisableAddOnSkin("BugSack")
 
-	self:SecureHook(_G.BugSack, "OpenSack", "BugSack_OpenSack")
+	self:SecureHook(_G.BugSack, "OpenSack", data.OpenSack)
 
 	-- Handle the special dropdown in settings
 	hooksecurefunc(SettingsPanel.Container.SettingsList.ScrollBox, "Update", function(scrollBox)
@@ -116,5 +114,3 @@ function S:BugSack()
 		end)
 	end)
 end
-
-S:AddCallbackForAddon("BugSack")

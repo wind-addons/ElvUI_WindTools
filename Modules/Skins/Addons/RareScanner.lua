@@ -10,11 +10,9 @@ local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
-function S:RareScanner()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rareScanner then
-		return
-	end
+S:AddCallbackForAddon("RareScanner", nil, S:CreateAddonCheck("rareScanner"))
 
+function S:RareScanner()
 	self:DisableAddOnSkin("RareScanner")
 
 	local scannerButton = _G["RARESCANNER_BUTTON"]
@@ -165,5 +163,3 @@ function S:RareScanner()
 		end
 	end
 end
-
-S:AddCallbackForAddon("RareScanner")

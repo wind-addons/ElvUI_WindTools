@@ -7,6 +7,13 @@ local select = select
 
 local NUM_CONTAINER_FRAMES = NUM_CONTAINER_FRAMES
 
+local function CheckBagsSkin()
+	return not E.private.bags.enable and S:CheckDB("bags") and true or false
+end
+
+S:AddCallbackForAddon("Blizzard_UIPanels_Game", "Bag", CheckBagsSkin)
+S:AddCallbackForAddon("Blizzard_UIPanels_Game", "Bank", CheckBagsSkin)
+
 local skinnedButtons = {}
 
 local function SkinItemButton(button)
@@ -64,10 +71,6 @@ local function SkinBankItemSlots(bankPanel)
 end
 
 function S:Bank()
-	if E.private.bags.enable or not self:CheckDB("bags") then
-		return
-	end
-
 	local bankFrame = _G.BankFrame
 	if not bankFrame then
 		return
@@ -123,16 +126,9 @@ local function SkinBag(bagID, bag)
 end
 
 function S:Bag()
-	if E.private.bags.enable or not self:CheckDB("bags") then
-		return
-	end
-
 	for bagID = 1, NUM_CONTAINER_FRAMES do
 		SkinBag(bagID)
 	end
 
 	SkinBag(1, _G.ContainerFrameCombinedBags)
 end
-
-S:AddCallbackForAddon("Blizzard_UIPanels_Game", "Bag")
-S:AddCallbackForAddon("Blizzard_UIPanels_Game", "Bank")

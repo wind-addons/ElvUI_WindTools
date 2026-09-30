@@ -6,6 +6,8 @@ local _G = _G
 local pairs = pairs
 local hooksecurefunc = hooksecurefunc
 
+S:AddCallbackForAddon("MurlokExport", nil, S:CreateAddonCheck("murlokExport"))
+
 ---@param button ItemButton
 local function ReskinItemButton(button)
 	if not button.icon or not button.IconBorder or not button.IconOverlay then
@@ -315,13 +317,7 @@ local function ReskinMurlokExport(frame)
 end
 
 function S:MurlokExport()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.murlokExport then
-		return
-	end
-
 	if _G.UIMurlokExport then
 		ReskinMurlokExport(_G.UIMurlokExport)
 	end
 end
-
-S:AddCallbackForAddon("MurlokExport")

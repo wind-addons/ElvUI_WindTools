@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_ScrappingMachineUI()
-	if not self:CheckDB("scrapping", "scrappingMachine") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_ScrappingMachineUI", nil, "scrapping", "scrappingMachine")
 
+function S:Blizzard_ScrappingMachineUI()
 	self:CreateShadow(_G.ScrappingMachineFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_ScrappingMachineUI")

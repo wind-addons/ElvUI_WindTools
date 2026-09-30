@@ -3,13 +3,9 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_BattlefieldMap()
-	if not self:CheckDB("bgmap", "battlefieldMap") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_BattlefieldMap", nil, "bgmap", "battlefieldMap")
 
+function S:Blizzard_BattlefieldMap()
 	self:CreateBackdropShadow(_G.BattlefieldMapFrame)
 	self:CreateBackdropShadow(_G.BattlefieldMapTab)
 end
-
-S:AddCallbackForAddon("Blizzard_BattlefieldMap")

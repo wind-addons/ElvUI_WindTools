@@ -9,6 +9,11 @@ local pairs = pairs
 
 local UNITFRAME_AURA_KEYS = { "Buffs", "Debuffs", "Auras", "AuraBars" }
 
+local data = S:AddCallback("ElvUI_Auras", function()
+	local elvuiSkins = E.private.WT.skins.elvui
+	return elvuiSkins.enable and (elvuiSkins.auras or elvuiSkins.unitFrames or elvuiSkins.nameplates) and true or false
+end)
+
 local function ShouldSkinAuraContainer(container)
 	if not container then
 		return false
@@ -62,7 +67,7 @@ local function BindAuraButtonShadowColor(button)
 	end)
 end
 
-function S:ElvUI_Auras_SkinAuraButton(_, container, button)
+function data:SkinAuraButton(container, button) -- self is ElvUI (E), not data
 	button = button or container
 	if not button or button.__windSkin then
 		return
@@ -77,7 +82,7 @@ function S:ElvUI_Auras_SkinAuraButton(_, container, button)
 		return
 	end
 
-	self:CreateShadow(button)
+	S:CreateShadow(button)
 	BindAuraButtonShadowColor(button)
 	button.__windSkin = true
 end
@@ -88,7 +93,7 @@ local function SkinAuraButtonsOnContainer(container)
 	end
 
 	for button in next, container.buttons do
-		S:ElvUI_Auras_SkinAuraButton(nil, container, button)
+		data.SkinAuraButton(E, container, button)
 	end
 end
 
@@ -102,7 +107,7 @@ local function SkinAuraButtonsOnUnitFrame(frame)
 	end
 end
 
-function S:ElvUI_Auras_SkinExistingButtons()
+function data:SkinExistingButtons()
 	if E.AuraPreviewFrames then
 		for container in next, E.AuraPreviewFrames do
 			SkinAuraButtonsOnContainer(container)
@@ -138,24 +143,13 @@ function S:ElvUI_Auras_SkinExistingButtons()
 	end
 end
 
-function S:ElvUI_Auras_Hook()
-	if not self:IsHooked(E, "Auras_UpdateButton") then
-		self:SecureHook(E, "Auras_UpdateButton", "ElvUI_Auras_SkinAuraButton")
+function data:Hook()
+	if not S:IsHooked(E, "Auras_UpdateButton") then
+		S:SecureHook(E, "Auras_UpdateButton", data.SkinAuraButton)
 	end
 end
 
 function S:ElvUI_Auras()
-	if not E.private.WT.skins.elvui.enable then
-		return
-	end
-
-	local elvuiSkins = E.private.WT.skins.elvui
-	if not (elvuiSkins.auras or elvuiSkins.unitFrames or elvuiSkins.nameplates) then
-		return
-	end
-
-	self:ElvUI_Auras_Hook()
-	self:ElvUI_Auras_SkinExistingButtons()
+	data:Hook()
+	data:SkinExistingButtons()
 end
-
-S:AddCallback("ElvUI_Auras")

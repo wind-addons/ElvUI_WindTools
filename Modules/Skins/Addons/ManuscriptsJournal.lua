@@ -12,6 +12,8 @@ local C_Item_GetItemInfo = C_Item.GetItemInfo
 
 local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 
+S:AddCallbackForAddon("ManuscriptsJournal", nil, S:CreateAddonCheck("manuscriptsJournal"))
+
 local function reskinButton(_, button)
 	if not button.IsSkinned then
 		S:Proxy("HandleItemButton", button, true)
@@ -143,10 +145,6 @@ local function reskinJournal(frame)
 end
 
 function S:ManuscriptsJournal()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.manuscriptsJournal then
-		return
-	end
-
 	local frame = _G.ManuscriptsJournal
 	if not frame or frame.__windSkin then
 		return
@@ -203,5 +201,3 @@ function S:ManuscriptsJournal()
 		end
 	end
 end
-
-S:AddCallbackForAddon("ManuscriptsJournal")

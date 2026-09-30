@@ -6,11 +6,9 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
-function S:AngryKeystones()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.angryKeystones then
-		return
-	end
+S:AddCallbackForAddon("AngryKeystones", nil, S:CreateAddonCheck("angryKeystones"))
 
+function S:AngryKeystones()
 	hooksecurefunc(_G.ScenarioObjectiveTracker.ChallengeModeBlock, "Activate", function(block)
 		if block and block.TimerFrame and not block.TimerFrame.__windSkin then
 			for _, bar in pairs({ block.TimerFrame.Bar2, block.TimerFrame.Bar3 }) do
@@ -23,5 +21,3 @@ function S:AngryKeystones()
 		end
 	end)
 end
-
-S:AddCallbackForAddon("AngryKeystones")

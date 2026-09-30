@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_ProfessionsBook()
-	if not self:CheckDB("spellbook", "professionBook") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_ProfessionsBook", nil, "spellbook", "professionBook")
 
+function S:Blizzard_ProfessionsBook()
 	self:CreateShadow(_G.ProfessionsBookFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_ProfessionsBook")

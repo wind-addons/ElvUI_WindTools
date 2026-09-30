@@ -5,6 +5,8 @@ local _G = _G
 
 local handledFrames = {}
 
+S:AddCallbackForLibrary("ElioteDropDownMenu-1.0", "ElioteDropDownMenu")
+
 function S:ElioteDropDownMenu(lib)
 	if not lib or not lib.UIDropDownMenu_CreateFrames then
 		return
@@ -33,5 +35,3 @@ function S:ElioteDropDownMenu(lib)
 		end)
 	end)
 end
-
-S:AddCallbackForLibrary("ElioteDropDownMenu-1.0", "ElioteDropDownMenu")

@@ -5,11 +5,9 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local next = next
 
-function S:Blizzard_Professions()
-	if not self:CheckDB("tradeskill", "professions") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_Professions", nil, "tradeskill", "professions")
 
+function S:Blizzard_Professions()
 	self:CreateShadow(_G.ProfessionsFrame)
 	self:CreateShadow(_G.ProfessionsFrame.CraftingPage.CraftingOutputLog)
 	self:CreateShadow(_G.ProfessionsFrame.OrdersPage.OrderView.CraftingOutputLog)
@@ -36,5 +34,3 @@ function S:Blizzard_Professions()
 		end
 	end)
 end
-
-S:AddCallbackForAddon("Blizzard_Professions")

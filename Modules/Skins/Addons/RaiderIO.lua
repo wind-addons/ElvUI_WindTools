@@ -7,6 +7,8 @@ local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local strfind = strfind
 
+local data = S:AddCallbackForAddon("RaiderIO", nil, S:CreateAddonCheck("raiderIO"))
+
 local skinned = false
 
 function S:RaiderIO_DelayedSkinning()
@@ -106,7 +108,7 @@ function S:RaiderIO_DelayedSkinning()
 	end
 end
 
-function S:RaiderIO_GuildWeeklyFrame()
+function data:GuildWeeklyFrame() -- self is PVEFrame, not data
 	E:Delay(0.15, function()
 		if _G.RaiderIO_GuildWeeklyFrame then
 			local frame = _G.RaiderIO_GuildWeeklyFrame
@@ -117,19 +119,15 @@ function S:RaiderIO_GuildWeeklyFrame()
 			F.SetFont(frame.SubTitle)
 			frame.SubTitle:SetShadowColor(0, 0, 0, 0)
 			frame.SwitchGuildBest:Size(18)
-			self:Proxy("HandleCheckBox", frame.SwitchGuildBest)
+			S:Proxy("HandleCheckBox", frame.SwitchGuildBest)
 		end
 	end)
 end
 
 function S:RaiderIO()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.raiderIO then
-		return
-	end
-
 	self:DisableAddOnSkin("RaiderIO")
 	self:AddCallbackForEnterWorld("RaiderIO_DelayedSkinning")
-	self:SecureHook(_G.PVEFrame, "Show", "RaiderIO_GuildWeeklyFrame")
+	self:SecureHook(_G.PVEFrame, "Show", data.GuildWeeklyFrame)
 
 	if _G.RaiderIO_SettingsPanel then
 		for _, child in pairs({ _G.RaiderIO_SettingsPanel:GetChildren() }) do
@@ -139,5 +137,3 @@ function S:RaiderIO()
 		end
 	end
 end
-
-S:AddCallbackForAddon("RaiderIO")

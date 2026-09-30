@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_FlightMap()
-	if not self:CheckDB("taxi", "flightMap") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_FlightMap", nil, "taxi", "flightMap")
 
+function S:Blizzard_FlightMap()
 	self:CreateShadow(_G.FlightMapFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_FlightMap")

@@ -6,11 +6,9 @@ local pairs = pairs
 
 local Constants_ChatFrameConstants_MaxChatWindows = Constants.ChatFrameConstants.MaxChatWindows
 
-function S:InputMethodEditor()
-	if not self:CheckDB(nil, "inputMethodEditor") then
-		return
-	end
+S:AddCallback("InputMethodEditor", nil, "inputMethodEditor")
 
+function S:InputMethodEditor()
 	for i = 1, Constants_ChatFrameConstants_MaxChatWindows do
 		local editBox = _G["ChatFrame" .. i .. "EditBox"]
 		local langIcon = _G["ChatFrame" .. i .. "EditBoxLanguage"]
@@ -57,5 +55,3 @@ function S:InputMethodEditor()
 		end
 	end
 end
-
-S:AddCallback("InputMethodEditor")

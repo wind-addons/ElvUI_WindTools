@@ -18,6 +18,9 @@ local unpack = unpack
 local CreateFrame = CreateFrame
 local RunNextFrame = RunNextFrame
 
+S:AddCallbackForAddon("Rematch", nil, S:CreateAddonCheck("rematch"))
+S:AddCallbackForAddon("Blizzard_Collections", "BlizzardCollections_Rematch", S:CreateAddonCheck("rematch"))
+
 local function ReskinIconButton(button)
 	if not button or button.__windSkin then
 		return
@@ -1453,10 +1456,6 @@ local function ReskinMiniLoadoutPanel(frame)
 end
 
 function S:BlizzardCollections_Rematch()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then
-		return
-	end
-
 	local Rematch = _G.Rematch
 	if not Rematch then
 		return
@@ -1509,10 +1508,6 @@ function S:BlizzardCollections_Rematch()
 end
 
 function S:Rematch()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then
-		return
-	end
-
 	local frame = _G.Rematch and _G.Rematch.frame --[[@as BackdropTemplate]]
 	if not frame then
 		return
@@ -1572,6 +1567,3 @@ function S:Rematch()
 		F.Move(frame, 1, 0)
 	end
 end
-
-S:AddCallbackForAddon("Rematch")
-S:AddCallbackForAddon("Blizzard_Collections", "BlizzardCollections_Rematch")

@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_StableUI()
-	if not self:CheckDB("stable") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_StableUI", nil, "stable")
 
+function S:Blizzard_StableUI()
 	self:CreateShadow(_G.StableFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_StableUI")

@@ -7,6 +7,8 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
+local data = S:AddCallback("TooltipFrames", "tooltip", "tooltips")
+
 local function styleIconsInLine(line, text)
 	if not line then
 		return
@@ -61,7 +63,8 @@ local function getCachedTexture(tt, index)
 	return texture
 end
 
-function S:StyleIconsInTooltip(tt)
+function data:StyleIconsInTooltip() -- self is the tooltip, not data
+	local tt = self
 	if tt:IsForbidden() or not tt.NumLines or not E.db.general.cropIcon then
 		return
 	end
@@ -74,7 +77,7 @@ function S:StyleIconsInTooltip(tt)
 	for i = 1, 30 do
 		local texture = getCachedTexture(tt, i) ---@type Texture?
 		if texture and texture:IsShown() then
-			self:TryCropTexture(texture)
+			S:TryCropTexture(texture)
 		else
 			break
 		end
@@ -82,12 +85,12 @@ function S:StyleIconsInTooltip(tt)
 end
 
 ---@param tt table GameTooltip like frame
-function S:ReskinTooltip(tt)
+function data:ReskinTooltip(tt)
 	if not tt or (tt == E.ScanTooltip or tt.IsEmbedded or not tt.NineSlice) or tt:IsForbidden() then
 		return
 	end
 
-	self:CreateShadow(tt)
+	S:CreateShadow(tt)
 
 	if tt.TopOverlay then
 		tt.TopOverlay:StripTextures()
@@ -100,23 +103,25 @@ function S:ReskinTooltip(tt)
 	local CompareHeader = tt.CompareHeader
 	if CompareHeader and not CompareHeader.__windSkin then
 		CompareHeader:SetTemplate("Transparent")
-		self:CreateShadow(CompareHeader)
+		S:CreateShadow(CompareHeader)
 		F.Move(CompareHeader, 0, 2)
 		F.SetFont(CompareHeader.Label)
 		CompareHeader.__windSkin = true
 	end
 
-	if not self:IsHooked(tt, "Show") then
+	if not S:IsHooked(tt, "Show") then
 		StyleTooltipWidgetContainer(tt)
-		self:SecureHook(tt, "Show", "StyleIconsInTooltip")
+		S:SecureHook(tt, "Show", data.StyleIconsInTooltip)
 	end
 end
 
-function S:TooltipFrames()
-	if not self:CheckDB("tooltip", "tooltips") then
-		return
-	end
+---Entry point kept on the module for other skins (CatalogShop)
+---@param tt table GameTooltip like frame
+function S:ReskinTooltip(tt)
+	data:ReskinTooltip(tt)
+end
 
+function S:TooltipFrames()
 	-- Tooltip list from ElvUI
 	local tooltips = {
 		_G.ItemRefTooltip,
@@ -141,13 +146,13 @@ function S:TooltipFrames()
 
 	for _, tt in pairs(tooltips) do
 		if tt and not tt.IsEmbedded and not tt:IsForbidden() then
-			self:ReskinTooltip(tt)
+			data:ReskinTooltip(tt)
 		end
 	end
 
 	self:SecureHook(TT, "SetStyle", function(_, tt, _, isEmbedded)
 		if not isEmbedded then
-			self:ReskinTooltip(tt)
+			data:ReskinTooltip(tt)
 		end
 	end)
 
@@ -161,5 +166,3 @@ function S:TooltipFrames()
 		end
 	end)
 end
-
-S:AddCallback("TooltipFrames")

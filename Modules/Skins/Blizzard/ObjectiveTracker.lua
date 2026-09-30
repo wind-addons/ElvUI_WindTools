@@ -4,6 +4,8 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local pairs = pairs
 
+local data = S:AddCallback("Blizzard_ObjectiveTracker", "objectiveTracker")
+
 local trackers = {
 	_G.ScenarioObjectiveTracker,
 	_G.UIWidgetObjectiveTracker,
@@ -17,7 +19,7 @@ local trackers = {
 	_G.WorldQuestObjectiveTracker,
 }
 
-function S:ReskinObjectiveTrackerHeader(header)
+function data:ReskinObjectiveTrackerHeader(header)
 	if not header or not header.Text then
 		return
 	end
@@ -55,7 +57,7 @@ local function ReskinQuestIcon(button)
 	end
 end
 
-function S:ReskinObjectiveTrackerBlockRightEdgeButton(_, block)
+function data:ReskinObjectiveTrackerBlockRightEdgeButton(block) -- self is the hooked block or the tracker module, not data
 	local frame = block.rightEdgeFrame
 	if not frame then
 		return
@@ -65,37 +67,38 @@ function S:ReskinObjectiveTrackerBlockRightEdgeButton(_, block)
 		frame:GetNormalTexture():SetAlpha(0)
 		frame:GetPushedTexture():SetAlpha(0)
 		frame:GetHighlightTexture():SetAlpha(0)
-		self:Proxy("HandleButton", frame, nil, nil, nil, true)
+		S:Proxy("HandleButton", frame, nil, nil, nil, true)
 		frame.backdrop:SetInside(frame, 4, 4)
-		self:CreateBackdropShadow(frame)
+		S:CreateBackdropShadow(frame)
 		frame.__windSkin = true
 	end
 
 	if frame.template == "QuestObjectiveItemButtonTemplate" and not frame.__windSkin then
 		ReskinQuestIcon(frame)
-		self:CreateShadow(frame)
+		S:CreateShadow(frame)
 		frame.__windSkin = true
 	end
 end
 
-function S:ReskinObjectiveTrackerBlock(_, block)
-	self:ReskinObjectiveTrackerBlockRightEdgeButton(_, block)
+function data:ReskinObjectiveTrackerBlock(block) -- self is the tracker module, not data
+	data.ReskinObjectiveTrackerBlockRightEdgeButton(self, block)
 
-	if block.AddRightEdgeFrame and not self:IsHooked(block, "AddRightEdgeFrame") then
-		self:SecureHook(block, "AddRightEdgeFrame", "ReskinObjectiveTrackerBlockRightEdgeButton")
+	if block.AddRightEdgeFrame and not S:IsHooked(block, "AddRightEdgeFrame") then
+		S:SecureHook(block, "AddRightEdgeFrame", data.ReskinObjectiveTrackerBlockRightEdgeButton)
 	end
 end
 
-function S:SkinProgressBar(tracker, key)
+function data:SkinProgressBar(key) -- self is the tracker module, not data
+	local tracker = self
 	local progressBar = tracker.usedProgressBars[key]
 	if not progressBar or not progressBar.Bar or progressBar.__windSkin then
 		return
 	end
 
-	self:CreateBackdropShadow(progressBar.Bar)
+	S:CreateBackdropShadow(progressBar.Bar)
 
 	if progressBar.Bar.Icon then
-		self:CreateBackdropShadow(progressBar.Bar.Icon)
+		S:CreateBackdropShadow(progressBar.Bar.Icon)
 	end
 
 	-- move text to center
@@ -115,32 +118,27 @@ function S:SkinProgressBar(tracker, key)
 	progressBar.__windSkin = true
 end
 
-function S:SkinTimerBar(tracker, key)
+function data:SkinTimerBar(key) -- self is the tracker module, not data
+	local tracker = self
 	local timerBar = tracker.usedTimerBars[key]
-	self:CreateBackdropShadow(timerBar and timerBar.Bar)
+	S:CreateBackdropShadow(timerBar and timerBar.Bar)
 end
 
 function S:Blizzard_ObjectiveTracker()
-	if not self:CheckDB("objectiveTracker") then
-		return
-	end
-
 	self.questItemButtons = {}
 
 	local MainHeader = _G.ObjectiveTrackerFrame.Header
-	self:ReskinObjectiveTrackerHeader(MainHeader)
+	data:ReskinObjectiveTrackerHeader(MainHeader)
 
 	for _, tracker in pairs(trackers) do
-		self:ReskinObjectiveTrackerHeader(tracker.Header)
+		data:ReskinObjectiveTrackerHeader(tracker.Header)
 
 		for _, block in pairs(tracker.usedBlocks or {}) do
-			self:ReskinObjectiveTrackerBlock(tracker, block)
+			data.ReskinObjectiveTrackerBlock(tracker, block)
 		end
 
-		self:SecureHook(tracker, "AddBlock", "ReskinObjectiveTrackerBlock")
-		self:SecureHook(tracker, "GetProgressBar", "SkinProgressBar")
-		self:SecureHook(tracker, "GetTimerBar", "SkinTimerBar")
+		self:SecureHook(tracker, "AddBlock", data.ReskinObjectiveTrackerBlock)
+		self:SecureHook(tracker, "GetProgressBar", data.SkinProgressBar)
+		self:SecureHook(tracker, "GetTimerBar", data.SkinTimerBar)
 	end
 end
-
-S:AddCallback("Blizzard_ObjectiveTracker")

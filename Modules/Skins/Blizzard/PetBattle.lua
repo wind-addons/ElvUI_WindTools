@@ -3,11 +3,11 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:PetBattle()
-	if not self:CheckDB("petbattleui", "petBattle") then
-		return
-	end
+if not E.Forever then
+	S:AddCallback("PetBattle", "petbattleui", "petBattle")
+end
 
+function S:PetBattle()
 	local f = _G.PetBattleFrame
 	local bf = f.BottomFrame
 	local actionBar = _G.ElvUIPetBattleActionBar
@@ -32,8 +32,4 @@ function S:PetBattle()
 	self:CreateShadow(_G.PetBattleFrame.Ally3)
 	self:CreateShadow(_G.PetBattleFrame.Enemy2)
 	self:CreateShadow(_G.PetBattleFrame.Enemy3)
-end
-
-if not E.Forever then
-	S:AddCallback("PetBattle")
 end

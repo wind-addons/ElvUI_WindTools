@@ -7,6 +7,16 @@ local pairs = pairs
 
 local CreateFrame = CreateFrame
 
+local function dbChecker(db)
+	return db.addons.mythicDungeonTools
+end
+
+S:AddCallbackForAddon("MythicDungeonTools", nil, S:CreateAddonCheck("mythicDungeonTools"))
+-- AceGUI widget handlers are looked up by name on the module, so they stay on S
+S:AddCallbackForAceGUIWidget("MDTPullButton", "Ace3_MDTPullButton", dbChecker)
+S:AddCallbackForAceGUIWidget("MDTNewPullButton", "Ace3_MDTNewPullButton", dbChecker)
+S:AddCallbackForAceGUIWidget("MDTSpellButton", "Ace3_MDTSpellButton", dbChecker)
+
 local function ReskinTooltip(tt)
 	if not tt then
 		return
@@ -132,10 +142,6 @@ local function ReskinMapPOI(frame)
 end
 
 function S:MythicDungeonTools()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.mythicDungeonTools then
-		return
-	end
-
 	if not _G.MDT then
 		return
 	end
@@ -248,12 +254,3 @@ function S:Ace3_MDTSpellButton(widget)
 	ReskinButtonTexture(widget.frame.highlight, 0.2)
 	widget.frame:SetTemplate()
 end
-
-local function dbChecker(db)
-	return db.addons.mythicDungeonTools
-end
-
-S:AddCallbackForAddon("MythicDungeonTools")
-S:AddCallbackForAceGUIWidget("MDTPullButton", "Ace3_MDTPullButton", dbChecker)
-S:AddCallbackForAceGUIWidget("MDTNewPullButton", "Ace3_MDTNewPullButton", dbChecker)
-S:AddCallbackForAceGUIWidget("MDTSpellButton", "Ace3_MDTSpellButton", dbChecker)

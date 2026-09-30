@@ -3,6 +3,21 @@ local S = W.Modules.Skins ---@type Skins
 
 local pairs = pairs
 
+S:AddCallbackForLibrary("AceGUI-3.0", "AceGUI")
+S:AddCallbackForLibrary("AceConfigDialog-3.0", "AceConfigDialog")
+S:AddCallbackForLibrary("AceConfigDialog-3.0-ElvUI", "AceConfigDialog")
+
+-- AceGUI widget handlers are looked up by name on the module, so they stay on S
+S:AddCallbackForAceGUIWidget("Frame", "Ace3_Frame", function(db)
+	return db.libraries.ace3 and db.shadow
+end)
+S:AddCallbackForAceGUIWidget("Window", "Ace3_Frame", function(db)
+	return db.libraries.ace3 and db.shadow
+end)
+S:AddCallbackForAceGUIWidget("Dropdown-Pullout", "Ace3_DropdownPullout", function(db)
+	return db.libraries.ace3 and (db.libraries.ace3Dropdown or db.shadow)
+end)
+
 function S:AceGUI(lib)
 	if not self:IsHooked(lib, "RegisterWidgetType") then
 		self:SecureHook(lib, "RegisterWidgetType", "HandleAceGUIWidget")
@@ -33,16 +48,3 @@ function S:Ace3_DropdownPullout(widget)
 	end
 	self:CreateShadow(widget.frame)
 end
-
-S:AddCallbackForLibrary("AceGUI-3.0", "AceGUI")
-S:AddCallbackForLibrary("AceConfigDialog-3.0", "AceConfigDialog")
-S:AddCallbackForLibrary("AceConfigDialog-3.0-ElvUI", "AceConfigDialog")
-S:AddCallbackForAceGUIWidget("Frame", "Ace3_Frame", function(db)
-	return db.libraries.ace3 and db.shadow
-end)
-S:AddCallbackForAceGUIWidget("Window", "Ace3_Frame", function(db)
-	return db.libraries.ace3 and db.shadow
-end)
-S:AddCallbackForAceGUIWidget("Dropdown-Pullout", "Ace3_DropdownPullout", function(db)
-	return db.libraries.ace3 and (db.libraries.ace3Dropdown or db.shadow)
-end)

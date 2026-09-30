@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_AzeriteEssenceUI()
-	if not self:CheckDB("azeriteEssence") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_AzeriteEssenceUI", nil, "azeriteEssence")
 
+function S:Blizzard_AzeriteEssenceUI()
 	self:CreateShadow(_G.AzeriteEssenceUI)
 end
-
-S:AddCallbackForAddon("Blizzard_AzeriteEssenceUI")

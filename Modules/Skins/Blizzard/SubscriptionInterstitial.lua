@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_SubscriptionInterstitialUI()
-	if not self:CheckDB("subscriptionInterstitial") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_SubscriptionInterstitialUI", nil, "subscriptionInterstitial")
 
+function S:Blizzard_SubscriptionInterstitialUI()
 	self:CreateShadow(_G.SubscriptionInterstitialFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_SubscriptionInterstitialUI")

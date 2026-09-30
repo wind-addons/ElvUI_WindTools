@@ -7,6 +7,8 @@ local ipairs = ipairs
 local pairs = pairs
 local sort = sort
 
+S:AddCallbackForAddon("AppearanceTooltip", nil, S:CreateAddonCheck("appearanceTooltip"))
+
 local optionCheckBoxes = {
 	"alerts",
 	"bags",
@@ -197,10 +199,6 @@ local function ReskinOptions()
 end
 
 function S:AppearanceTooltip()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.appearanceTooltip then
-		return
-	end
-
 	local tooltip = _G.AppearanceTooltipTooltip
 	if tooltip then
 		TT:SetStyle(tooltip)
@@ -210,5 +208,3 @@ function S:AppearanceTooltip()
 		return _G.AppearanceTooltipOptionsCheckdressed and _G.AppearanceTooltipOptionsmodifierDropdown
 	end, ReskinOptions)
 end
-
-S:AddCallbackForAddon("AppearanceTooltip")

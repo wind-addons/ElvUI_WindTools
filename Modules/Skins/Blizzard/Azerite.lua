@@ -3,15 +3,11 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_AzeriteUI()
-	if not self:CheckDB("azerite") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_AzeriteUI", nil, "azerite")
 
+function S:Blizzard_AzeriteUI()
 	self:CreateBackdropShadow(_G.AzeriteEmpoweredItemUI)
 	if _G.AzeriteEmpoweredItemUITitleText then
 		F.SetFont(_G.AzeriteEmpoweredItemUITitleText)
 	end
 end
-
-S:AddCallbackForAddon("Blizzard_AzeriteUI")

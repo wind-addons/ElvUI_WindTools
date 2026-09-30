@@ -9,6 +9,8 @@ local pairs = pairs
 local HybridScrollFrame_CreateButtons = HybridScrollFrame_CreateButtons
 local RunNextFrame = RunNextFrame
 
+S:AddCallbackForAddon("SimpleAddonManager", nil, S:CreateAddonCheck("simpleAddonManager"))
+
 local function ReskinScrollFrameItems(frame, template)
 	if template == "SimpleAddonManagerAddonItem" or template == "SimpleAddonManagerCategoryItem" then
 		for _, btn in pairs(frame.buttons) do
@@ -95,10 +97,6 @@ local function ReskinModules(frame)
 end
 
 function S:SimpleAddonManager()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.simpleAddonManager then
-		return
-	end
-
 	if not _G.SimpleAddonManager then
 		return
 	end
@@ -110,5 +108,3 @@ function S:SimpleAddonManager()
 	self:CreateShadow(_G.SimpleAddonManager)
 	self:Proxy("HandleCloseButton", _G.SimpleAddonManager.CloseButton)
 end
-
-S:AddCallbackForAddon("SimpleAddonManager")

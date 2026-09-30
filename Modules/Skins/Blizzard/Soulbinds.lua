@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_Soulbinds()
-	if not self:CheckDB("soulbinds") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_Soulbinds", nil, "soulbinds")
 
+function S:Blizzard_Soulbinds()
 	self:CreateShadow(_G.SoulbindViewer)
 end
-
-S:AddCallbackForAddon("Blizzard_Soulbinds")

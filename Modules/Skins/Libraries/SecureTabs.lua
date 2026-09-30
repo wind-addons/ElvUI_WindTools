@@ -3,6 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local pairs = pairs
 
+S:AddCallbackForLibrary("SecureTabs-2.0", "SecureTabs")
+
 local function reskinTab(lib, panel)
 	if lib.tabs[panel] then
 		for _, tab in pairs(lib.tabs[panel]) do
@@ -61,5 +63,3 @@ function S:SecureTabs(lib)
 		end
 	end
 end
-
-S:AddCallbackForLibrary("SecureTabs-2.0", "SecureTabs")

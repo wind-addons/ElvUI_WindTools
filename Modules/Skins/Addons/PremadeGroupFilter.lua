@@ -1,12 +1,14 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-local ES = E.Skins
 
 local _G = _G
 local pairs = pairs
 local strmatch = strmatch
 
-function S:PremadeGroupsFilter_SetPoint(frame, point, relativeFrame, relativePoint, x, y)
+local data = S:AddCallbackForAddon("PremadeGroupsFilter", nil, S:CreateAddonCheck("premadeGroupsFilter"))
+
+function data:SetPoint(point, relativeFrame, relativePoint, x, y) -- self is the PremadeGroupsFilter dialog, not data
+	local frame = self
 	if point == "TOPLEFT" and relativePoint == "TOPRIGHT" then
 		if (not x and not y) or (x == 0 and y == 0) then
 			frame:ClearAllPoints()
@@ -16,10 +18,6 @@ function S:PremadeGroupsFilter_SetPoint(frame, point, relativeFrame, relativePoi
 end
 
 function S:PremadeGroupsFilter()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.premadeGroupsFilter then
-		return
-	end
-
 	self:DisableAddOnSkin("PremadeGroupsFilter")
 
 	local frame = _G.PremadeGroupsFilterDialog
@@ -35,10 +33,10 @@ function S:PremadeGroupsFilter()
 	self:MerathilisUISkin(frame)
 
 	-- Because we added shadow, moving the frame a little bit right looks better
-	self:SecureHook(frame, "SetPoint", "PremadeGroupsFilter_SetPoint")
+	self:SecureHook(frame, "SetPoint", data.SetPoint)
 
 	for i = 1, frame:GetNumPoints() do
-		S:PremadeGroupsFilter_SetPoint(frame, frame:GetPoint())
+		data.SetPoint(frame, frame:GetPoint())
 	end
 
 	if frame.Advanced then
@@ -126,5 +124,3 @@ function S:PremadeGroupsFilter()
 		_G.UsePFGButton:Point("RIGHT", _G.LFGListFrame.SearchPanel.RefreshButton, "LEFT", -50, 0)
 	end
 end
-
-S:AddCallbackForAddon("PremadeGroupsFilter")

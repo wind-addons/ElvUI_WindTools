@@ -5,11 +5,9 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local next = next
 
-function S:Blizzard_PlayerSpells()
-	if not self:CheckDB("talent", "playerSpells") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_PlayerSpells", nil, "talent", "playerSpells")
 
+function S:Blizzard_PlayerSpells()
 	self:CreateBackdropShadow(_G.ClassTalentLoadoutCreateDialog)
 	self:CreateBackdropShadow(_G.ClassTalentLoadoutEditDialog)
 	self:CreateBackdropShadow(_G.ClassTalentLoadoutImportDialog)
@@ -39,5 +37,3 @@ function S:Blizzard_PlayerSpells()
 		end)
 	end
 end
-
-S:AddCallbackForAddon("Blizzard_PlayerSpells")

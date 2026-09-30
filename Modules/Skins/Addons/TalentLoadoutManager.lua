@@ -6,6 +6,8 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
+S:AddCallbackForAddon("TalentLoadoutManager", nil, S:CreateAddonCheck("talentLoadoutManager"))
+
 ---@param sideBar TLM_SideBar
 local function SkinSideBarFrame(sideBar)
 	if not sideBar or sideBar.__windSkin then
@@ -163,10 +165,6 @@ local function SkinSideBarModule(module)
 end
 
 function S:TalentLoadoutManager()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.talentLoadoutManager then
-		return
-	end
-
 	local addon = _G.LibStub("AceAddon-3.0"):GetAddon("TalentLoadoutManager", true)
 	if not addon then
 		return
@@ -180,5 +178,3 @@ function S:TalentLoadoutManager()
 		end
 	end
 end
-
-S:AddCallbackForAddon("TalentLoadoutManager")

@@ -3,14 +3,10 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_ChallengesUI()
-	if not self:CheckDB("lfg", "challenges") then
-		return
-	end
-
-	self:CreateShadow(_G.ChallengesKeystoneFrame)
+if not E.Forever then
+	S:AddCallbackForAddon("Blizzard_ChallengesUI", nil, "lfg", "challenges")
 end
 
-if not E.Forever then
-	S:AddCallbackForAddon("Blizzard_ChallengesUI")
+function S:Blizzard_ChallengesUI()
+	self:CreateShadow(_G.ChallengesKeystoneFrame)
 end

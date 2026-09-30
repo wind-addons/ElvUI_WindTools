@@ -17,6 +17,12 @@ local CreateFrame = CreateFrame
 
 local Enum_StatusBarInterpolation = Enum.StatusBarInterpolation
 
+S:AddCallbackForAddon("BigWigs")
+S:AddCallbackForAddon("BigWigs_Plugins", nil, S:CreateAddonCheck("bigWigs"))
+-- Enter-world callbacks are looked up by name on the module, so they stay on S
+S:AddCallbackForEnterWorld("BigWigs_QueueTimer")
+S:AddCallbackForEnterWorld("BigWigs_Keystone")
+
 local pool = {
 	spark = {},
 	backdrops = {},
@@ -306,10 +312,6 @@ local function barStopped(frame)
 end
 
 function S:BigWigs_Plugins()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.bigWigs then
-		return
-	end
-
 	if not _G.BigWigs or not _G.BigWigsAPI then
 		return
 	end
@@ -463,8 +465,3 @@ end
 function S:BigWigs()
 	self:ReskinCustomGameTooltips(_G.BigWigsTooltip)
 end
-
-S:AddCallbackForAddon("BigWigs")
-S:AddCallbackForAddon("BigWigs_Plugins")
-S:AddCallbackForEnterWorld("BigWigs_QueueTimer")
-S:AddCallbackForEnterWorld("BigWigs_Keystone")

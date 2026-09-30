@@ -3,11 +3,9 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_GuildBankUI()
-	if not self:CheckDB("gbank", "guildBank") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_GuildBankUI", nil, "gbank", "guildBank")
 
+function S:Blizzard_GuildBankUI()
 	self:CreateShadow(_G.GuildBankFrame)
 
 	for i = 1, 4 do
@@ -21,5 +19,3 @@ function S:Blizzard_GuildBankUI()
 		end
 	end
 end
-
-S:AddCallbackForAddon("Blizzard_GuildBankUI")

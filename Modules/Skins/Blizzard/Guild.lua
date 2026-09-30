@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:GuildInviteFrame()
-	if not self:CheckDB("guild") then
-		return
-	end
+S:AddCallback("GuildInviteFrame", "guild")
 
+function S:GuildInviteFrame()
 	self:CreateShadow(_G.GuildInviteFrame)
 end
-
-S:AddCallback("GuildInviteFrame")

@@ -5,6 +5,8 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
+S:AddCallbackForAddon("WhisperPop", nil, S:CreateAddonCheck("whisperPop"))
+
 local function notifyButton(button)
 	button:CreateBackdrop()
 	S:CreateBackdropShadow(button)
@@ -74,10 +76,6 @@ local function optionFrame(frame)
 end
 
 function S:WhisperPop()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.whisperPop then
-		return
-	end
-
 	self:DisableAddOnSkin("WhisperPop")
 
 	if _G.WhisperPop then
@@ -87,5 +85,3 @@ function S:WhisperPop()
 		optionFrame(_G.WhisperPop.optionFrame)
 	end
 end
-
-S:AddCallbackForAddon("WhisperPop")

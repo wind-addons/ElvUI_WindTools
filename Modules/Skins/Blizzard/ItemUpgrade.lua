@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_ItemUpgradeUI()
-	if not self:CheckDB("itemUpgrade") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_ItemUpgradeUI", nil, "itemUpgrade")
 
+function S:Blizzard_ItemUpgradeUI()
 	self:CreateBackdropShadow(_G.ItemUpgradeFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_ItemUpgradeUI")

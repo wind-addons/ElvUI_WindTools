@@ -8,6 +8,8 @@ local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local strlower = strlower
 
+local data = S:AddCallback("BlizzardUIWidget", "misc", "uiWidget")
+
 local function ReskinText(text)
 	if not text then
 		return
@@ -77,7 +79,8 @@ end
 
 do
 	local hookedWidget = {}
-	function S:ReskinWidgetPartition(widget)
+	function data:ReskinWidgetPartition() -- self is the widget, not data
+		local widget = self
 		local pool = widget.partitionPool
 		if not pool or hookedWidget[widget] then
 			return
@@ -118,13 +121,9 @@ end
 
 local cachedColors = {}
 function S:BlizzardUIWidget()
-	if not self:CheckDB("misc", "uiWidget") then
-		return
-	end
-
 	-- Partitions
-	self:SecureHook(_G.UIWidgetBaseStatusBarTemplateMixin, "InitPartitions", "ReskinWidgetPartition")
-	self:SecureHook(_G.UIWidgetTemplateUnitPowerBarMixin, "InitPartitions", "ReskinWidgetPartition")
+	self:SecureHook(_G.UIWidgetBaseStatusBarTemplateMixin, "InitPartitions", data.ReskinWidgetPartition)
+	self:SecureHook(_G.UIWidgetTemplateUnitPowerBarMixin, "InitPartitions", data.ReskinWidgetPartition)
 	self:SecureHook(_G.UIWidgetTemplateStatusBarMixin, "Setup", function(widget)
 		if widget:IsForbidden() or widget.widgetSetID and widget.widgetSetID == 283 then
 			return
@@ -171,7 +170,7 @@ function S:BlizzardUIWidget()
 		if not widget.__windSkin then
 			ReskinBar(widget.Bar)
 		end
-		self:ReskinWidgetPartition(widget)
+		data.ReskinWidgetPartition(widget)
 	end)
 
 	self:SecureHook(ES, "SkinStatusBarWidget", function(_, widget)
@@ -202,5 +201,3 @@ function S:BlizzardUIWidget()
 		hooksecurefunc(container, "ProcessWidget", ReskinUIWidgetContainer)
 	end
 end
-
-S:AddCallback("BlizzardUIWidget")

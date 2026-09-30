@@ -4,11 +4,21 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local pairs = pairs
 
-function S:Blizzard_HousingHouseFinder()
-	if not self:CheckDB("housing") then
-		return
-	end
+for _, addonName in pairs({
+	"Blizzard_HouseList",
+	"Blizzard_HousingBulletinBoard",
+	"Blizzard_HousingCornerstone",
+	"Blizzard_HousingCreateNeighborhood",
+	"Blizzard_HousingDashboard",
+	"Blizzard_HousingHouseFinder",
+	"Blizzard_HousingHouseSettings",
+	"Blizzard_HouseEditor",
+	"Blizzard_HousingModelPreview",
+}) do
+	S:AddCallbackForAddon(addonName, nil, "housing")
+end
 
+function S:Blizzard_HousingHouseFinder()
 	local FinderFrame = _G.HouseFinderFrame
 	if FinderFrame then
 		self:CreateBackdropShadow(FinderFrame)
@@ -16,10 +26,6 @@ function S:Blizzard_HousingHouseFinder()
 end
 
 function S:Blizzard_HousingDashboard()
-	if not self:CheckDB("housing") then
-		return
-	end
-
 	local DashBoardFrame = _G.HousingDashboardFrame
 	if DashBoardFrame then
 		self:CreateBackdropShadow(DashBoardFrame)
@@ -41,10 +47,6 @@ function S:Blizzard_HousingDashboard()
 end
 
 function S:Blizzard_HousingCornerstone()
-	if not self:CheckDB("housing") then
-		return
-	end
-
 	local CornerVisitorFrame = _G.HousingCornerstoneVisitorFrame
 	if CornerVisitorFrame then
 		self:CreateBackdropShadow(CornerVisitorFrame)
@@ -67,10 +69,6 @@ function S:Blizzard_HousingCornerstone()
 end
 
 function S:Blizzard_HousingBulletinBoard()
-	if not self:CheckDB("housing") then
-		return
-	end
-
 	local ChangeNameDialog = _G.NeighborhoodChangeNameDialog
 	if ChangeNameDialog then
 		self:CreateBackdropShadow(ChangeNameDialog)
@@ -78,10 +76,6 @@ function S:Blizzard_HousingBulletinBoard()
 end
 
 function S:Blizzard_HouseList()
-	if not self:CheckDB("housing") then
-		return
-	end
-
 	local ListFrame = _G.HouseListFrame
 	if ListFrame then
 		self:CreateBackdropShadow(ListFrame)
@@ -89,10 +83,6 @@ function S:Blizzard_HouseList()
 end
 
 function S:Blizzard_HousingCreateNeighborhood()
-	if not self:CheckDB("housing") then
-		return
-	end
-
 	local CreateGuildFrame = _G.HousingCreateGuildNeighborhoodFrame
 	if CreateGuildFrame then
 		self:CreateBackdropShadow(CreateGuildFrame)
@@ -100,10 +90,6 @@ function S:Blizzard_HousingCreateNeighborhood()
 end
 
 function S:Blizzard_HousingHouseSettings()
-	if not self:CheckDB("housing") then
-		return
-	end
-
 	local SettingsFrame = _G.HousingHouseSettingsFrame
 	if SettingsFrame then
 		self:CreateShadow(SettingsFrame)
@@ -116,10 +102,6 @@ function S:Blizzard_HousingHouseSettings()
 end
 
 function S:Blizzard_HouseEditor()
-	if not self:CheckDB("housing") then
-		return
-	end
-
 	local EditorFrame = _G.HouseEditorFrame
 	if not EditorFrame then
 		return
@@ -160,22 +142,8 @@ function S:Blizzard_HouseEditor()
 end
 
 function S:Blizzard_HousingModelPreview()
-	if not self:CheckDB("housing") then
-		return
-	end
-
 	local PreviewFrame = _G.HousingModelPreviewFrame
 	if PreviewFrame then
 		self:CreateShadow(PreviewFrame)
 	end
 end
-
-S:AddCallbackForAddon("Blizzard_HouseList")
-S:AddCallbackForAddon("Blizzard_HousingBulletinBoard")
-S:AddCallbackForAddon("Blizzard_HousingCornerstone")
-S:AddCallbackForAddon("Blizzard_HousingCreateNeighborhood")
-S:AddCallbackForAddon("Blizzard_HousingDashboard")
-S:AddCallbackForAddon("Blizzard_HousingHouseFinder")
-S:AddCallbackForAddon("Blizzard_HousingHouseSettings")
-S:AddCallbackForAddon("Blizzard_HouseEditor")
-S:AddCallbackForAddon("Blizzard_HousingModelPreview")

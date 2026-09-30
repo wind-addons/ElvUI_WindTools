@@ -10,6 +10,8 @@ local RunNextFrame = RunNextFrame
 
 local TEX_PREFIX = "Interface\\AddOns\\MountRoutePlanner\\Assets\\"
 
+S:AddCallbackForAddon("MountRoutePlanner", nil, S:CreateAddonCheck("mountRoutePlanner"))
+
 local function trySkin(func)
 	return function(button)
 		if button.__wind then
@@ -119,10 +121,6 @@ local function changelogFrame()
 end
 
 function S:MountRoutePlanner()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.mountRoutePlanner then
-		return
-	end
-
 	RunNextFrame(changelogFrame)
 
 	local frame = _G.MRP_Frame
@@ -173,5 +171,4 @@ end
 -- 	--TODO: Skin the options frame if needed
 -- end
 
-S:AddCallbackForAddon("MountRoutePlanner")
 -- S:ReskinSettingFrame("Mount Route Planner", "MountRoutePlannerOptions")

@@ -5,16 +5,21 @@ local TT = E:GetModule("Tooltip")
 local type = type
 local select = select
 
-function S:LibQTip_UpdateScrolling(tooltip, ...)
+local data = S:AddCallbackForLibrary("LibQTip-1.0", "LibQTip")
+S:AddCallbackForLibrary("LibQTip-1.0RS", "LibQTip")
+
+function data:UpdateScrolling(...) -- self is the LibQTip tooltip, not data
+	local tooltip = self
 	local slider = tooltip and tooltip.slider
 	if slider and not slider.__windSkin then
-		self:Proxy("HandleSliderFrame", slider)
+		S:Proxy("HandleSliderFrame", slider)
 	end
-	self.hooks[tooltip].UpdateScrolling(tooltip, ...)
+	S.hooks[tooltip].UpdateScrolling(tooltip, ...)
 end
 
-function S:LibQTip_SetCell(tooltip, ...)
-	local setCell = self.hooks[tooltip] and self.hooks[tooltip].SetCell
+function data:SetCell(...) -- self is the LibQTip tooltip, not data
+	local tooltip = self
+	local setCell = S.hooks[tooltip] and S.hooks[tooltip].SetCell
 	if not setCell then
 		return
 	end
@@ -24,7 +29,7 @@ function S:LibQTip_SetCell(tooltip, ...)
 	-- Only style if we have valid parameters and string value
 	if type(lineNum) == "number" and type(colNum) == "number" then
 		if type(value) == "string" then
-			local styledValue = self:StyleTextureString(value)
+			local styledValue = S:StyleTextureString(value)
 			if styledValue ~= value then
 				-- Replace the value in the argument list
 				return setCell(tooltip, lineNum, colNum, styledValue, select(4, ...))
@@ -35,7 +40,7 @@ function S:LibQTip_SetCell(tooltip, ...)
 				arg.AcquireCell = function(prototype, ...)
 					local cell = AcquireCell(prototype, ...)
 					if cell and cell.texture and not cell.__windSkin then
-						self:TryCropTexture(cell.texture)
+						S:TryCropTexture(cell.texture)
 						cell.__windSkin = true
 					end
 					return cell
@@ -52,7 +57,8 @@ function S:LibQTip_SetCell(tooltip, ...)
 	return setCell(tooltip, ...)
 end
 
-function S:ReskinLibQTip(lib)
+function data:ReskinLibQTip() -- self is the LibQTip library, not data
+	local lib = self
 	for _, tt in lib:IterateTooltips() do
 		F.WaitFor(function()
 			return E.private.WT and E.private.WT.skins and E.private.WT.skins.libraries
@@ -63,12 +69,12 @@ function S:ReskinLibQTip(lib)
 
 			TT:SetStyle(tt)
 
-			if tt.UpdateScrolling and not self:IsHooked(tt, "UpdateScrolling") then
-				self:RawHook(tt, "UpdateScrolling", "LibQTip_UpdateScrolling")
+			if tt.UpdateScrolling and not S:IsHooked(tt, "UpdateScrolling") then
+				S:RawHook(tt, "UpdateScrolling", data.UpdateScrolling)
 			end
 
-			if tt.SetCell and not self:IsHooked(tt, "SetCell") then
-				self:RawHook(tt, "SetCell", "LibQTip_SetCell")
+			if tt.SetCell and not S:IsHooked(tt, "SetCell") then
+				S:RawHook(tt, "SetCell", data.SetCell)
 			end
 		end)
 	end
@@ -76,9 +82,6 @@ end
 
 function S:LibQTip(lib)
 	if lib.Acquire then
-		self:SecureHook(lib, "Acquire", "ReskinLibQTip")
+		self:SecureHook(lib, "Acquire", data.ReskinLibQTip)
 	end
 end
-
-S:AddCallbackForLibrary("LibQTip-1.0", "LibQTip")
-S:AddCallbackForLibrary("LibQTip-1.0RS", "LibQTip")

@@ -6,6 +6,8 @@ local MF = W.Modules.MoveFrames
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
+S:AddCallbackForAddon("Blizzard_GameMenu", nil, "misc", "gameMenu")
+
 local function HandleGameMenuButton(button)
 	local text = button:GetFontString()
 	if not text then
@@ -36,10 +38,6 @@ local function LayoutGameMenuButtons(menu)
 end
 
 function S:Blizzard_GameMenu()
-	if not self:CheckDB("misc", "gameMenu") then
-		return
-	end
-
 	local GameMenuFrame = _G.GameMenuFrame
 
 	if not GameMenuFrame or E.OtherAddons.ConsolePort then
@@ -65,5 +63,3 @@ function S:Blizzard_GameMenu()
 	hooksecurefunc(GameMenuFrame, "Layout", LayoutGameMenuButtons)
 	hooksecurefunc(GameMenuFrame, "InitButtons", ReskinGameMenuButtons)
 end
-
-S:AddCallbackForAddon("Blizzard_GameMenu")

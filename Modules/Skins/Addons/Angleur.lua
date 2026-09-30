@@ -5,6 +5,8 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local unpack = unpack
 
+S:AddCallbackForAddon("Angleur", nil, S:CreateAddonCheck("angleur"))
+
 local function skinAngleurButton()
 	local buttonFrame = _G.Angleur_Visual ---@type Button
 	if not buttonFrame then
@@ -34,11 +36,5 @@ local function skinAngleurButton()
 end
 
 function S:Angleur()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.angleur then
-		return
-	end
-
 	skinAngleurButton()
 end
-
-S:AddCallbackForAddon("Angleur")

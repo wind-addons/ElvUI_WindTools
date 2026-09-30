@@ -3,11 +3,13 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local pairs = pairs
+
+for _, addonName in pairs({ "Blizzard_CharacterCustomize", "Blizzard_BarbershopUI" }) do
+	S:AddCallbackForAddon(addonName, nil, "barber", "barberShop")
+end
 
 function S:Blizzard_CharacterCustomize()
-	if not self:CheckDB("barber", "barberShop") then
-		return
-	end
 	local frame = _G.CharCustomizeFrame
 
 	self:CreateBackdropShadow(frame.SmallButtons.ResetCameraButton)
@@ -46,16 +48,9 @@ function S:Blizzard_CharacterCustomize()
 end
 
 function S:Blizzard_BarbershopUI()
-	if not self:CheckDB("barber", "barberShop") then
-		return
-	end
-
 	local frame = _G.BarberShopFrame
 
 	self:CreateBackdropShadow(frame.ResetButton)
 	self:CreateBackdropShadow(frame.CancelButton)
 	self:CreateBackdropShadow(frame.AcceptButton)
 end
-
-S:AddCallbackForAddon("Blizzard_CharacterCustomize")
-S:AddCallbackForAddon("Blizzard_BarbershopUI")

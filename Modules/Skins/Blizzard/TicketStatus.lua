@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_TicketStatus()
-	if not self:CheckDB("misc", "ticketStatus") then
-		return
-	end
+S:AddCallback("Blizzard_TicketStatus", "misc", "ticketStatus")
 
+function S:Blizzard_TicketStatus()
 	self:CreateShadow(_G.TicketStatusFrameButton)
 end
-
-S:AddCallback("Blizzard_TicketStatus")

@@ -5,6 +5,8 @@ local _G = _G
 
 local pairs = pairs
 
+S:AddCallbackForAddon("ParagonReputation", nil, S:CreateAddonCheck("paragonReputation"))
+
 local function reskinToast(toast)
 	toast:SetTemplate("Transparent")
 	toast:CreateShadow()
@@ -48,15 +50,9 @@ local function reskinSetting(frame)
 end
 
 function S:ParagonReputation()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.paragonReputation then
-		return
-	end
-
 	if _G.ParagonReputation_Toast then
 		reskinToast(_G.ParagonReputation_Toast)
 	end
 
 	self:ReskinSettingFrame("Paragon Reputation", reskinSetting)
 end
-
-S:AddCallbackForAddon("ParagonReputation")

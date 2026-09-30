@@ -4,11 +4,9 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
-function S:Blizzard_RemixArtifactUI()
-	if not self:CheckDB("remixArtifact") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_RemixArtifactUI", nil, "remixArtifact")
 
+function S:Blizzard_RemixArtifactUI()
 	local RemixArtifactFrame = _G.RemixArtifactFrame
 	if not RemixArtifactFrame then
 		return
@@ -56,5 +54,3 @@ function S:Blizzard_RemixArtifactUI()
 
 	self:CreateShadow(RemixArtifactFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_RemixArtifactUI")

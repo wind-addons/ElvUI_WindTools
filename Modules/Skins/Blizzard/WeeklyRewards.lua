@@ -3,16 +3,12 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_WeeklyRewards()
-	if not self:CheckDB("weeklyRewards") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_WeeklyRewards", nil, "weeklyRewards")
 
+function S:Blizzard_WeeklyRewards()
 	self:CreateShadow(_G.WeeklyRewardsFrame)
 
 	if _G.WeeklyRewardExpirationWarningDialog then
 		self:CreateShadow(_G.WeeklyRewardExpirationWarningDialog.NineSlice)
 	end
 end
-
-S:AddCallbackForAddon("Blizzard_WeeklyRewards")

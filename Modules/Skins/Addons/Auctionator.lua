@@ -11,6 +11,8 @@ local pairs = pairs
 local strfind = strfind
 local unpack = unpack
 
+S:AddCallbackForAddon("Auctionator", nil, S:CreateAddonCheck("auctionator"))
+
 -- Modified from ElvUI Auction House Skin
 local function HandleListIcon(frame)
 	if not frame.tableBuilder then
@@ -484,10 +486,6 @@ local function reskinDialogs()
 end
 
 function S:Auctionator()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.auctionator then
-		return
-	end
-
 	self:DisableAddOnSkin("Auctionator")
 
 	-- widgets
@@ -536,5 +534,3 @@ function S:Auctionator()
 	-- Dialog
 	reskinDialogs()
 end
-
-S:AddCallbackForAddon("Auctionator")

@@ -5,7 +5,9 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
-function S:HandleMerchantItem(index)
+local data = S:AddCallback("MerchantFrame", "merchant")
+
+function data:HandleMerchantItem(index)
 	for currencyIndex = 1, 3 do
 		local itemLine = _G["MerchantItem" .. index .. "AltCurrencyFrameItem" .. currencyIndex] --[[@as SmallDenominationTemplate?]]
 		if itemLine then
@@ -18,11 +20,13 @@ function S:HandleMerchantItem(index)
 	end
 end
 
-function S:MerchantFrame()
-	if not self:CheckDB("merchant") then
-		return
-	end
+---Entry point kept on the module for Modules/Item/ExtendMerchantPages.lua
+---@param index number The merchant item index
+function S:HandleMerchantItem(index)
+	data:HandleMerchantItem(index)
+end
 
+function S:MerchantFrame()
 	self:CreateShadow(_G.MerchantFrame)
 
 	for i = 1, 2 do
@@ -30,7 +34,7 @@ function S:MerchantFrame()
 	end
 
 	for i = 1, 12 do
-		self:HandleMerchantItem(i)
+		data:HandleMerchantItem(i)
 	end
 
 	for _, region in pairs({ _G.MerchantMoneyFrame.GoldButton:GetRegions() }) do
@@ -52,5 +56,3 @@ function S:MerchantFrame()
 		end
 	end)
 end
-
-S:AddCallback("MerchantFrame")

@@ -7,12 +7,20 @@ local NUM_STANCE_SLOTS = 10
 local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS or 10
 local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
 
-function S:ElvUI_ActionBar_SkinButton(button, useBackdrop)
-	self:CreateLowerShadow(button)
+local data = S:AddCallback("ElvUI_ActionBars", function()
+	return E.private.actionbar.enable
+			and E.private.WT.skins.elvui.enable
+			and (E.private.WT.skins.elvui.actionBarsButton or E.private.WT.skins.elvui.actionBarsBackdrop)
+			and true
+		or false
+end)
+
+function data:SkinButton(button, useBackdrop)
+	S:CreateLowerShadow(button)
 
 	if not button.__windSkin then
 		if button.shadow and button.shadow.__wind then
-			self:BindShadowColorWithBorder(button)
+			S:BindShadowColorWithBorder(button)
 		end
 
 		button.__windSkin = true
@@ -25,7 +33,7 @@ function S:ElvUI_ActionBar_SkinButton(button, useBackdrop)
 	end
 end
 
-function S:ElvUI_ActionBar_SkinBar(bar, type)
+function data:SkinBar(bar, type)
 	if not (E.private.WT.skins.shadow and bar and bar.backdrop) then
 		return
 	end
@@ -34,7 +42,7 @@ function S:ElvUI_ActionBar_SkinBar(bar, type)
 		bar.backdrop:SetTemplate("Transparent")
 		if bar.db.backdrop then
 			if not bar.backdrop.shadow then
-				self:CreateBackdropShadow(bar, true)
+				S:CreateBackdropShadow(bar, true)
 			end
 			bar.backdrop.shadow:Show()
 		else
@@ -48,85 +56,79 @@ function S:ElvUI_ActionBar_SkinBar(bar, type)
 		if type == "PLAYER" then
 			for i = 1, NUM_ACTIONBAR_BUTTONS do
 				local button = bar.buttons[i]
-				self:ElvUI_ActionBar_SkinButton(button, bar.db.backdrop)
+				data:SkinButton(button, bar.db.backdrop)
 			end
 		elseif type == "PET" then
 			for i = 1, NUM_PET_ACTION_SLOTS do
 				local button = _G["PetActionButton" .. i]
-				self:ElvUI_ActionBar_SkinButton(button, bar.db.backdrop)
+				data:SkinButton(button, bar.db.backdrop)
 			end
 		elseif type == "STANCE" then
 			for i = 1, NUM_STANCE_SLOTS do
 				local button = _G["ElvUI_StanceBarButton" .. i]
-				self:ElvUI_ActionBar_SkinButton(button, bar.db.backdrop)
+				data:SkinButton(button, bar.db.backdrop)
 			end
 		end
 	end
 end
 
-function S:ElvUI_ActionBar_PositionAndSizeBar(actionBarModule, barName)
+function data:PositionAndSizeBar(barName) -- self is the ActionBars module, not data
+	local actionBarModule = self
 	local bar = actionBarModule.handledBars[barName]
-	self:ElvUI_ActionBar_SkinBar(bar, "PLAYER")
+	data:SkinBar(bar, "PLAYER")
 end
 
-function S:ElvUI_ActionBar_PositionAndSizeBarPet()
-	self:ElvUI_ActionBar_SkinBar(_G.ElvUI_BarPet, "PET")
+function data:PositionAndSizeBarPet() -- self is the ActionBars module, not data
+	data:SkinBar(_G.ElvUI_BarPet, "PET")
 end
 
-function S:ElvUI_ActionBar_PositionAndSizeBarShapeShift()
-	self:ElvUI_ActionBar_SkinBar(_G.ElvUI_StanceBar, "STANCE")
+function data:PositionAndSizeBarShapeShift() -- self is the ActionBars module, not data
+	data:SkinBar(_G.ElvUI_StanceBar, "STANCE")
 end
 
-function S:SkinZoneAbilities(button)
+function data:SkinZoneAbilities() -- self is ZoneAbilityFrame, not data
+	local button = self
 	for spellButton in button.SpellButtonContainer:EnumerateActive() do
 		if spellButton and spellButton.IsSkinned then
-			self:CreateShadow(spellButton)
+			S:CreateShadow(spellButton)
 		end
 	end
 end
 
-function S:ElvUI_ActionBar_LoadKeyBinder()
+function data:LoadKeyBinder() -- self is the ActionBars module when hooked, not data
 	local frame = _G.ElvUIBindPopupWindow
 	if not frame then
-		self:SecureHook(AB, "LoadKeyBinder", "ElvUI_ActionBar_LoadKeyBinder")
+		S:SecureHook(AB, "LoadKeyBinder", data.LoadKeyBinder)
 		return
 	end
 
-	self:CreateShadow(frame)
-	self:CreateBackdropShadow(frame.header, true)
+	S:CreateShadow(frame)
+	S:CreateBackdropShadow(frame.header, true)
 end
 
 function S:ElvUI_ActionBars()
-	if not (E.private.actionbar.enable and E.private.WT.skins.elvui.enable) then
-		return
-	end
-
-	if not (E.private.WT.skins.elvui.actionBarsButton or E.private.WT.skins.elvui.actionBarsBackdrop) then
-		return
-	end
-
 	-- ElvUI action bar
 	if not E.private.actionbar.masque.actionbars then
 		for id = 1, 15 do
 			local bar = _G["ElvUI_Bar" .. id]
 			if bar then
-				self:ElvUI_ActionBar_SkinBar(bar, "PLAYER")
+				data:SkinBar(bar, "PLAYER")
 			end
 		end
 
-		self:SecureHook(AB, "PositionAndSizeBar", "ElvUI_ActionBar_PositionAndSizeBar")
+		self:SecureHook(AB, "PositionAndSizeBar", data.PositionAndSizeBar)
 	end
 
 	-- Pet bar
 	if not E.private.actionbar.masque.petBar then
-		self:ElvUI_ActionBar_SkinBar(_G.ElvUI_BarPet, "PET")
-		self:SecureHook(AB, "PositionAndSizeBarPet", "ElvUI_ActionBar_PositionAndSizeBarPet")
+		data:SkinBar(_G.ElvUI_BarPet, "PET")
+		self:SecureHook(AB, "PositionAndSizeBarPet", data.PositionAndSizeBarPet)
 	end
 
 	-- Stance bar
 	if not E.private.actionbar.masque.stanceBar then
-		self:ElvUI_ActionBar_SkinBar(_G.ElvUI_StanceBar, "STANCE")
-		self:SecureHook(AB, "PositionAndSizeBarShapeShift", "ElvUI_ActionBar_PositionAndSizeBarShapeShift")
+		data:SkinBar(_G.ElvUI_StanceBar, "STANCE")
+		self:SecureHook(AB, "PositionAndSizeBarShapeShift", data.PositionAndSizeBarShapeShift)
 	end
 
 	if not E.private.WT.skins.elvui.actionBarsButton then
@@ -134,7 +136,7 @@ function S:ElvUI_ActionBars()
 	end
 
 	-- Extra action bar
-	self:SecureHook(_G.ZoneAbilityFrame, "UpdateDisplayedZoneAbilities", "SkinZoneAbilities")
+	self:SecureHook(_G.ZoneAbilityFrame, "UpdateDisplayedZoneAbilities", data.SkinZoneAbilities)
 
 	for i = 1, _G.ExtraActionBarFrame:GetNumChildren() do
 		local button = _G["ExtraActionButton" .. i]
@@ -190,7 +192,5 @@ function S:ElvUI_ActionBars()
 	end)
 
 	-- Keybind
-	self:ElvUI_ActionBar_LoadKeyBinder()
+	data:LoadKeyBinder()
 end
-
-S:AddCallback("ElvUI_ActionBars")

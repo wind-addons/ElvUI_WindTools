@@ -3,11 +3,9 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_InspectUI()
-	if not self:CheckDB("inspect") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_InspectUI", nil, "inspect")
 
+function S:Blizzard_InspectUI()
 	self:CreateShadow(_G.InspectFrame)
 	for i = 1, 4 do
 		self:ReskinTab(_G["InspectFrameTab" .. i])
@@ -30,5 +28,3 @@ function S:Blizzard_InspectUI()
 		_G.InspectModelFrame.backdrop:Kill()
 	end)
 end
-
-S:AddCallbackForAddon("Blizzard_InspectUI")

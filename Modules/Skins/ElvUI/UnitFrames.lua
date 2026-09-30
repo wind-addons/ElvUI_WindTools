@@ -5,7 +5,15 @@ local UF = E:GetModule("UnitFrames")
 local next = next
 local pairs = pairs
 
-function S:ElvUI_UnitFrames_UpdateNameSettings(_, f)
+local data = S:AddCallback("ElvUI_UnitFrames", function()
+	return E.private.unitframe.enable
+			and E.private.WT.skins.elvui.enable
+			and E.private.WT.skins.elvui.unitFrames
+			and true
+		or false
+end)
+
+function data:UpdateNameSettings(f) -- self is the UnitFrames module, not data
 	if not E.private.WT.skins.enable or not E.private.WT.skins.shadow then
 		return
 	end
@@ -15,7 +23,7 @@ function S:ElvUI_UnitFrames_UpdateNameSettings(_, f)
 	end
 
 	if not f.Health.backdrop.shadow then
-		self:CreateBackdropShadow(f.Health, true)
+		S:CreateBackdropShadow(f.Health, true)
 		if f.Health.backdrop.shadow then
 			f.Health.backdrop.shadow:ClearAllPoints()
 			f.Health.backdrop.shadow:SetAllPoints(f.TargetGlow)
@@ -23,7 +31,7 @@ function S:ElvUI_UnitFrames_UpdateNameSettings(_, f)
 	end
 end
 
-function S:ElvUI_UnitFrames_Configure_Threat(_, f)
+function data:Configure_Threat(f) -- self is the UnitFrames module, not data
 	if
 		not E.private.WT.skins.enable
 		or not E.private.WT.skins.elvui.enable
@@ -62,7 +70,7 @@ function S:ElvUI_UnitFrames_Configure_Threat(_, f)
 	end
 end
 
-function S:ElvUI_UnitFrames_Configure_Power(_, f)
+function data:Configure_Power(f) -- self is the UnitFrames module, not data
 	if
 		not E.private.WT.skins.enable
 		or not E.private.WT.skins.elvui.enable
@@ -78,7 +86,7 @@ function S:ElvUI_UnitFrames_Configure_Power(_, f)
 	local shadow = f.Power.backdrop.shadow
 	if f.POWERBAR_DETACHED or f.USE_POWERBAR_OFFSET then
 		if not shadow then
-			self:CreateBackdropShadow(f.Power, true)
+			S:CreateBackdropShadow(f.Power, true)
 		else
 			shadow:Show()
 		end
@@ -94,20 +102,22 @@ local function ApplyExistingUnitFrameSkins(frame)
 		return
 	end
 
-	S:ElvUI_UnitFrames_UpdateNameSettings(nil, frame)
-	S:ElvUI_UnitFrames_Configure_Power(nil, frame)
-	S:ElvUI_UnitFrames_Configure_Threat(nil, frame)
+	data.UpdateNameSettings(UF, frame)
+	data.Configure_Power(UF, frame)
+	data.Configure_Threat(UF, frame)
 
-	if E.private.WT.skins.elvui.castBars and S.ElvUI_UnitFrames_SkinCastBar then
-		S:ElvUI_UnitFrames_SkinCastBar(nil, frame)
+	local castBarsData = S:GetSkinData("ElvUI_CastBars")
+	if E.private.WT.skins.elvui.castBars and castBarsData and castBarsData.SkinCastBar then
+		castBarsData.SkinCastBar(UF, frame)
 	end
 
-	if E.private.WT.skins.elvui.classBars and S.ElvUI_UnitFrames_SkinClassBar then
-		S:ElvUI_UnitFrames_SkinClassBar(nil, frame)
+	local classBarsData = S:GetSkinData("ElvUI_ClassBars")
+	if E.private.WT.skins.elvui.classBars and classBarsData and classBarsData.SkinClassBar then
+		classBarsData.SkinClassBar(UF, frame)
 	end
 end
 
-function S:ElvUI_UnitFrames_ApplyExistingFrames()
+function data:ApplyExistingFrames()
 	for _, frame in pairs(UF.units) do
 		ApplyExistingUnitFrameSkins(frame)
 	end
@@ -134,30 +144,21 @@ function S:ElvUI_UnitFrames_ApplyExistingFrames()
 	end
 end
 
-function S:ElvUI_UnitFrames_Hook()
-	if not self:IsHooked(UF, "UpdateNameSettings") then
-		self:SecureHook(UF, "UpdateNameSettings", "ElvUI_UnitFrames_UpdateNameSettings")
+function data:Hook()
+	if not S:IsHooked(UF, "UpdateNameSettings") then
+		S:SecureHook(UF, "UpdateNameSettings", data.UpdateNameSettings)
 	end
 
-	if not self:IsHooked(UF, "Configure_Threat") then
-		self:SecureHook(UF, "Configure_Threat", "ElvUI_UnitFrames_Configure_Threat")
+	if not S:IsHooked(UF, "Configure_Threat") then
+		S:SecureHook(UF, "Configure_Threat", data.Configure_Threat)
 	end
 
-	if not self:IsHooked(UF, "Configure_Power") then
-		self:SecureHook(UF, "Configure_Power", "ElvUI_UnitFrames_Configure_Power")
+	if not S:IsHooked(UF, "Configure_Power") then
+		S:SecureHook(UF, "Configure_Power", data.Configure_Power)
 	end
 end
 
 function S:ElvUI_UnitFrames()
-	if not E.private.unitframe.enable then
-		return
-	end
-	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.unitFrames) then
-		return
-	end
-
-	self:ElvUI_UnitFrames_Hook()
-	self:ElvUI_UnitFrames_ApplyExistingFrames()
+	data:Hook()
+	data:ApplyExistingFrames()
 end
-
-S:AddCallback("ElvUI_UnitFrames")

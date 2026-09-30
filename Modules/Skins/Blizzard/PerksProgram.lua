@@ -4,11 +4,9 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local pairs = pairs
 
-function S:Blizzard_PerksProgram()
-	if not self:CheckDB("perks", "perksProgram") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_PerksProgram", nil, "perks", "perksProgram")
 
+function S:Blizzard_PerksProgram()
 	local frame = _G.PerksProgramFrame
 
 	local products = frame.ProductsFrame
@@ -48,5 +46,3 @@ function S:Blizzard_PerksProgram()
 		self:CreateBackdropShadow(footer.RemoveFromCartButton)
 	end
 end
-
-S:AddCallbackForAddon("Blizzard_PerksProgram")

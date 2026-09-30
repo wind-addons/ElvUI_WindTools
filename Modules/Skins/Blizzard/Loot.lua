@@ -3,11 +3,9 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:LootFrame()
-	if not self:CheckDB("loot") then
-		return
-	end
+S:AddCallback("LootFrame", "loot")
 
+function S:LootFrame()
 	self:CreateShadow(_G.BonusRollFrame)
 	self:CreateBackdropShadow(_G.BonusRollLootWonFrame)
 	self:CreateBackdropShadow(_G.BonusRollMoneyWonFrame)
@@ -27,5 +25,3 @@ function S:LootFrame()
 		F.Move(Timer, 0, -7)
 	end
 end
-
-S:AddCallback("LootFrame")

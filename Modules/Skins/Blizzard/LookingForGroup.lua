@@ -4,11 +4,11 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local pairs = pairs
 
-function S:LookingForGroupFrames()
-	if not self:CheckDB("lfg", "lookingForGroup") then
-		return
-	end
+if not E.Forever then
+	S:AddCallback("LookingForGroupFrames", "lfg", "lookingForGroup")
+end
 
+function S:LookingForGroupFrames()
 	local frames = {
 		_G.PVEFrame,
 		_G.LFGDungeonReadyDialog,
@@ -42,8 +42,4 @@ function S:LookingForGroupFrames()
 
 	_G.LFGListFrame.SearchPanel.FilterButton:Width(93)
 	F.InternalizeMethod(_G.LFGListFrame.SearchPanel.FilterButton, "SetWidth", true)
-end
-
-if not E.Forever then
-	S:AddCallback("LookingForGroupFrames")
 end

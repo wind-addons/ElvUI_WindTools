@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:TaxiFrame()
-	if not self:CheckDB("taxi") then
-		return
-	end
+S:AddCallback("TaxiFrame", "taxi")
 
+function S:TaxiFrame()
 	self:CreateShadow(_G.TaxiFrame)
 end
-
-S:AddCallback("TaxiFrame")

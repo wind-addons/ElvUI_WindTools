@@ -4,11 +4,11 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local pairs = pairs
 
-function S:Blizzard_DelvesDifficultyPicker()
-	if not self:CheckDB("lfg", "delves") then
-		return
-	end
+for _, addonName in pairs({ "Blizzard_DelvesDifficultyPicker", "Blizzard_DelvesCompanionConfiguration" }) do
+	S:AddCallbackForAddon(addonName, nil, "lfg", "delves")
+end
 
+function S:Blizzard_DelvesDifficultyPicker()
 	local DifficultyPickerFrame = _G.DelvesDifficultyPickerFrame
 	if DifficultyPickerFrame then
 		self:CreateShadow(DifficultyPickerFrame)
@@ -16,10 +16,6 @@ function S:Blizzard_DelvesDifficultyPicker()
 end
 
 function S:Blizzard_DelvesCompanionConfiguration()
-	if not self:CheckDB("lfg", "delves") then
-		return
-	end
-
 	local CompanionConfigurationFrame = _G.DelvesCompanionConfigurationFrame
 	if CompanionConfigurationFrame then
 		self:CreateShadow(CompanionConfigurationFrame)
@@ -39,6 +35,3 @@ function S:Blizzard_DelvesCompanionConfiguration()
 		self:CreateShadow(CompanionAbilityListFrame)
 	end
 end
-
-S:AddCallbackForAddon("Blizzard_DelvesDifficultyPicker")
-S:AddCallbackForAddon("Blizzard_DelvesCompanionConfiguration")

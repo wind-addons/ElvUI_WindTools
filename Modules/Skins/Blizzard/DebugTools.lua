@@ -5,11 +5,9 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local next = next
 
-function S:Blizzard_DebugTools()
-	if not self:CheckDB("debug", "debugTools") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_DebugTools", nil, "debug", "debugTools")
 
+function S:Blizzard_DebugTools()
 	self:CreateShadow(_G.TableAttributeDisplay)
 	self:SecureHook(_G.TableInspectorMixin, "OnLoad", "CreateBackdropShadow")
 
@@ -39,5 +37,3 @@ function S:Blizzard_DebugTools()
 		end
 	end)
 end
-
-S:AddCallbackForAddon("Blizzard_DebugTools")

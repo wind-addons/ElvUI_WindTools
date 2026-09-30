@@ -6,6 +6,8 @@ local pairs = pairs
 
 local CVAR_BROWSER_CONFIG_DIALOG_KEY = "AdvancedInterfaceOptions_cVar"
 
+local data = S:AddCallbackForAddon("AdvancedInterfaceOptions", nil, S:CreateAddonCheck("advancedInterfaceOptions"))
+
 local function ReskinBrowser(frame)
 	frame:StripTextures()
 	frame:CreateBackdrop("Transparent")
@@ -16,14 +18,14 @@ local function ReskinBrowser(frame)
 end
 
 ---@param frame Frame?
-function S:AdvancedInterfaceOptions_CVarBrowser(frame)
+function data:CVarBrowser(frame)
 	if not frame or frame.__windSkin then
 		return
 	end
 
 	for _, child in pairs({ frame:GetChildren() }) do
 		if child:IsObjectType("EditBox") then
-			self:Proxy("HandleEditBox", child)
+			S:Proxy("HandleEditBox", child)
 		elseif child:IsObjectType("Frame") then
 			if child.scrollbar then
 				ReskinBrowser(child)
@@ -35,10 +37,6 @@ function S:AdvancedInterfaceOptions_CVarBrowser(frame)
 end
 
 function S:AdvancedInterfaceOptions()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.advancedInterfaceOptions then
-		return
-	end
-
 	local dialog = _G.LibStub("AceConfigDialog-3.0", true)
 	if not dialog then
 		return
@@ -51,8 +49,6 @@ function S:AdvancedInterfaceOptions()
 		frame = frame and frame[CVAR_BROWSER_CONFIG_DIALOG_KEY] and frame[CVAR_BROWSER_CONFIG_DIALOG_KEY].frame
 		return frame ~= nil
 	end, function()
-		self:AdvancedInterfaceOptions_CVarBrowser(frame)
+		data:CVarBrowser(frame)
 	end)
 end
-
-S:AddCallbackForAddon("AdvancedInterfaceOptions")

@@ -7,12 +7,15 @@ local unpack = unpack
 
 local PADDING = 4
 
-function S:LossOfControlFrame_SetUpDisplay(frame)
+local data = S:AddCallback("LossOfControlFrame", "losscontrol", "lossOfControl")
+
+function data:SetUpDisplay() -- self is the LossOfControlFrame, not data
+	local frame = self
 	if not frame then
 		return
 	end
 
-	local db = self.db.lossOfControl
+	local db = S.db.lossOfControl
 
 	frame.Icon:ClearAllPoints()
 	frame.Icon:Point(db.icon.anchor, frame, db.icon.anchor, db.icon.offsetX, db.icon.offsetY)
@@ -23,9 +26,9 @@ function S:LossOfControlFrame_SetUpDisplay(frame)
 			frame.Icon:CreateBackdrop()
 		end
 		if not frame.Icon.__windShadow then
-			self:CreateBackdropShadow(frame.Icon, true)
+			S:CreateBackdropShadow(frame.Icon, true)
 			if frame.Icon.__windShadow then
-				self:BindShadowColorWithBorder(frame.Icon.backdrop)
+				S:BindShadowColorWithBorder(frame.Icon.backdrop)
 			end
 		end
 		if frame.Icon.backdrop and frame.Icon.backdrop.shadow then
@@ -100,12 +103,14 @@ function S:LossOfControlFrame_SetUpDisplay(frame)
 	frame:Size(width, height)
 end
 
-function S:LossOfControlFrame()
-	if not self:CheckDB("losscontrol", "lossOfControl") then
-		return
-	end
+---Entry point kept on the module for Options
+---@param frame Frame The LossOfControlFrame
+function S:LossOfControlFrame_SetUpDisplay(frame)
+	data.SetUpDisplay(frame)
+end
 
-	self:SecureHook(_G.LossOfControlFrame, "SetUpDisplay", "LossOfControlFrame_SetUpDisplay")
+function S:LossOfControlFrame()
+	self:SecureHook(_G.LossOfControlFrame, "SetUpDisplay", data.SetUpDisplay)
 	self:SecureHook(_G.LossOfControlFrame.AbilityName, "Show", function(f)
 		if self.db.lossOfControl.abilityName.hide then
 			f:Hide()
@@ -117,5 +122,3 @@ function S:LossOfControlFrame()
 		end
 	end)
 end
-
-S:AddCallback("LossOfControlFrame")

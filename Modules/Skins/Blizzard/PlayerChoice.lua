@@ -8,6 +8,8 @@ local pairs = pairs
 
 local CreateFrame = CreateFrame
 
+S:AddCallbackForAddon("Blizzard_PlayerChoice", nil, "playerChoice")
+
 local function handleItemButton(item)
 	if not item then
 		return
@@ -92,11 +94,5 @@ local function SetupOptions(frame)
 end
 
 function S:Blizzard_PlayerChoice()
-	if not self:CheckDB("playerChoice") then
-		return
-	end
-
 	hooksecurefunc(_G.PlayerChoiceFrame, "SetupOptions", SetupOptions)
 end
-
-S:AddCallbackForAddon("Blizzard_PlayerChoice")

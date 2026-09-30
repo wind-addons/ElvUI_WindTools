@@ -4,6 +4,8 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
+S:AddCallbackForAddon("!!AddonProfiler", "AddonProfiler", S:CreateAddonCheck("addonProfiler"))
+
 local function ReskinColumnHeaders(display)
 	local headers = display.Headers
 	if not headers or not headers.columnHeaders then
@@ -18,10 +20,6 @@ local function ReskinColumnHeaders(display)
 end
 
 function S:AddonProfiler()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.addonProfiler then
-		return
-	end
-
 	local NAP = _G.NumyAddonProfiler
 	local display = NAP and NAP.ProfilerFrame
 	if not display then
@@ -113,5 +111,3 @@ function S:AddonProfiler()
 		self:Proxy("HandleCloseButton", display.CloseButton)
 	end
 end
-
-S:AddCallbackForAddon("!!AddonProfiler", "AddonProfiler")

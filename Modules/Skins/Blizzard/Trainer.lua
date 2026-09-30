@@ -3,12 +3,8 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-function S:Blizzard_TrainerUI()
-	if not self:CheckDB("trainer") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_TrainerUI", nil, "trainer")
 
+function S:Blizzard_TrainerUI()
 	self:CreateShadow(_G.ClassTrainerFrame)
 end
-
-S:AddCallbackForAddon("Blizzard_TrainerUI")

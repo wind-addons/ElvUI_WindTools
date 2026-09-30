@@ -8,6 +8,10 @@ local hooksecurefunc = hooksecurefunc
 local LibStub = LibStub
 local RunNextFrame = RunNextFrame
 
+-- Not a registered skin: this hooks ElvUI's shared `S:SkinLibDropDownMenu` at parse time
+local libDropDown = {}
+local skinnedPrefixes = {}
+
 local function HandleBackdrop(frame)
 	local dropdown = (frame and frame.NineSlice) or frame
 	if dropdown and not dropdown.template then
@@ -19,14 +23,14 @@ local function HandleBackdrop(frame)
 	end
 end
 
-function S:ES_SkinLibDropDownMenu(_, prefix)
-	if self[prefix .. "_UIDropDownMenuSkinned"] then
+function libDropDown:SkinLibDropDownMenu(prefix) -- self is ElvUI Skins, not libDropDown
+	if skinnedPrefixes[prefix] then
 		return
 	end
 
 	if not E.private.WT then
-		self:AddCallback("SkinLibDropDown" .. prefix, function()
-			self:ES_SkinLibDropDownMenu(nil, prefix)
+		S:AddCallback(function()
+			libDropDown.SkinLibDropDownMenu(ES, prefix)
 		end)
 		return
 	end
@@ -36,7 +40,7 @@ function S:ES_SkinLibDropDownMenu(_, prefix)
 	HandleBackdrop(_G[key .. "_DropDownList1Backdrop"])
 	HandleBackdrop(_G[key .. "_DropDownList1MenuBackdrop"])
 
-	self[prefix .. "_UIDropDownMenuSkinned"] = true
+	skinnedPrefixes[prefix] = true
 
 	local function reskin()
 		local lvls = _G[(key == "Lib" and "LIB" or key) .. "_UIDROPDOWNMENU_MAXLEVELS"] or 1
@@ -63,4 +67,4 @@ function S:ES_SkinLibDropDownMenu(_, prefix)
 	end
 end
 
-S:SecureHook(ES, "SkinLibDropDownMenu", "ES_SkinLibDropDownMenu")
+S:SecureHook(ES, "SkinLibDropDownMenu", libDropDown.SkinLibDropDownMenu)

@@ -4,11 +4,9 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local next = next
 
-function S:Blizzard_ExpansionLandingPage()
-	if not self:CheckDB("expansionLanding", "expansionLandingPage") then
-		return
-	end
+S:AddCallbackForAddon("Blizzard_ExpansionLandingPage", nil, "expansionLanding", "expansionLandingPage")
 
+function S:Blizzard_ExpansionLandingPage()
 	local overlay = _G.ExpansionLandingPage.Overlay
 	if overlay then
 		local clean = E.private.skins.parchmentRemoverEnable
@@ -19,5 +17,3 @@ function S:Blizzard_ExpansionLandingPage()
 		end
 	end
 end
-
-S:AddCallbackForAddon("Blizzard_ExpansionLandingPage")

@@ -4,7 +4,12 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local CreateFrame = CreateFrame
 
-function S:UpdateVignetting()
+local data = S:AddCallback("Vignetting", function()
+	return E.db.WT.skins.vignetting.enable and true or false
+end)
+S:AddCallbackForUpdate("UpdateVignettingConfig")
+
+function data:UpdateVignetting()
 	local frame = self.VignettingFrame
 	local level = E.db.WT.skins.vignetting.level / 100
 	if frame and level then
@@ -13,10 +18,6 @@ function S:UpdateVignetting()
 end
 
 function S:Vignetting()
-	if not E.db.WT.skins.vignetting.enable then
-		return
-	end
-
 	local frame = CreateFrame("Frame", "ShadowBackground", _G.UIParent)
 	frame:Point("TOPLEFT")
 	frame:Point("BOTTOMRIGHT")
@@ -26,24 +27,22 @@ function S:Vignetting()
 	frame.tex:SetTexture(W.Media.Textures.vignetting)
 	frame.tex:SetAllPoints(frame)
 
-	self.VignettingFrame = frame
-	self:UpdateVignetting()
+	data.VignettingFrame = frame
+	data:UpdateVignetting()
 end
 
+-- Entry point used by Options and the update callback
 function S:UpdateVignettingConfig()
 	if not E.db.WT.skins.vignetting.enable then
-		if self.VignettingFrame then
-			self.VignettingFrame:Hide()
+		if data.VignettingFrame then
+			data.VignettingFrame:Hide()
 		end
 	else
-		if not self.VignettingFrame then
+		if not data.VignettingFrame then
 			self:Vignetting()
 			return
 		end
-		self.VignettingFrame:Show()
-		self:UpdateVignetting()
+		data.VignettingFrame:Show()
+		data:UpdateVignetting()
 	end
 end
-
-S:AddCallback("Vignetting")
-S:AddCallbackForUpdate("UpdateVignettingConfig")

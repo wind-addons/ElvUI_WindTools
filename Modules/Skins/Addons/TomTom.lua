@@ -5,6 +5,8 @@ local _G = _G
 
 local RunNextFrame = RunNextFrame
 
+S:AddCallbackForAddon("TomTom", nil, S:CreateAddonCheck("tomTom"))
+
 local function SkinPasteWindow(pasteWindow)
 	if not pasteWindow or pasteWindow.__windSkin then
 		return
@@ -45,10 +47,6 @@ local function SkinPasteWindow(pasteWindow)
 end
 
 function S:TomTom()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.tomTom then
-		return
-	end
-
 	if not _G.TomTom then
 		return
 	end
@@ -72,5 +70,3 @@ function S:TomTom()
 
 	self:DisableAddOnSkin("TomTom")
 end
-
-S:AddCallbackForAddon("TomTom")

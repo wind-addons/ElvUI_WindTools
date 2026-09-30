@@ -30,13 +30,25 @@ local Settings = Settings
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
+---@class WindSkinInfo Registration record of one skin, mirrors ElvUI `S:RegisterSkin` info
+---@field addonName string The addon that triggers the skin, or "ElvUI" for initialization skins
+---@field name string? Given name, also the Skins method looked up when `func` is nil
+---@field func function? Load function
+---@field position number? Insert position in the load queue
+---@field toggle string? ElvUI blizzard skin key (`E.private.skins.blizzard[toggle]`)
+---@field private string? WindTools blizzard skin key (`E.private.WT.skins.blizzard[private]`), defaults to `toggle`
+---@field check function? Custom gate called as `check(S, data)`, replaces `toggle` / `private`
+---@field data table Per-skin helper storage returned to the skin file
+
 ---@type table<string, any> Table to store setting frames by name
 S.settingFrames = {}
 ---@type table<string, function> Table to store waiting setting frame callbacks
 S.waitSettingFrames = {}
----@type table<string, function[]> Table to store addon loading callbacks
+---@type table<string, WindSkinInfo> Table to store every skin registration by given name or addon name
+S.addonStorage = {}
+---@type table<string, WindSkinInfo[]> Table to store addon skin registrations
 S.addonsToLoad = {}
----@type function[] Table to store non-addon loading callbacks
+---@type WindSkinInfo[] Table to store non-addon skin registrations
 S.nonAddonsToLoad = {}
 ---@type table<string, function[]> Table to store library handler callbacks
 S.libraryHandlers = {}
@@ -396,50 +408,184 @@ function S:SetTransparentBackdrop(frame)
 	end
 end
 
----Add a callback function to be executed during initialization
----@param name string? The function name (if func is nil)
----@param func function? The callback function
-function S:AddCallback(name, func)
-	tinsert(self.nonAddonsToLoad, func or self[name])
+---Get the skin storage table of a WindTools skin registration
+---@param key string The given name or addon name used at registration
+---@return table? data The skin storage table
+function S:GetSkinData(key)
+	local info = self.addonStorage[key]
+	return info and info.data
+end
+
+---Get the skin storage table exported by an ElvUI skin (`E.Skins.addonStorage[key].data`)
+---@param key string The given name or addon name ElvUI used at registration
+---@return table? data The ElvUI skin storage table
+function S:GetElvUISkinData(key)
+	local info = ES.addonStorage and ES.addonStorage[key]
+	return info and info.data
+end
+
+---Create a check function for an addon skin toggle (`E.private.WT.skins.addons[key]`)
+---@param key string The WindTools addon skin key
+---@return function check
+function S:CreateAddonCheck(key)
+	return function()
+		return E.private.WT.skins.addons[key] and true or false
+	end
+end
+
+---Create a check function for an ElvUI skin toggle (`E.private.WT.skins.elvui[key]`)
+---@param key string The WindTools ElvUI skin key
+---@return function check
+function S:CreateElvUICheck(key)
+	return function()
+		return E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui[key] and true or false
+	end
+end
+
+---Run one registered skin after its gate passes
+---@param info WindSkinInfo The skin registration
+function S:LoadSkin(info)
+	local func = info.func or self[info.name] or self[info.addonName]
+	if not func then
+		self:Log("debug", format("Skin %s has no load function", info.name or info.addonName))
+		return
+	end
+
+	if info.check then
+		local ok, allow = xpcall(info.check, F.Developer.ThrowError, self, info.data)
+		if not (ok and allow) then
+			return
+		end
+	elseif info.toggle or info.private then
+		if not self:CheckDB(info.toggle, info.private) then
+			return
+		end
+	end
+
+	if not xpcall(func, F.Developer.ThrowError, self, info.data) then
+		self:Log("debug", format("Failed to run skin %s", info.name or info.addonName))
+	end
+end
+
+---Register a skin and return its storage table
+---@param addonName string The addon that triggers the skin, or "ElvUI" for initialization skins
+---@param func function? Load function, looked up from `name` or `addonName` at load time when nil
+---@param position number? Insert position in the load queue
+---@param name string? Given name, also the Skins method looked up when `func` is nil
+---@param toggle string|function? ElvUI blizzard skin key, or a check function
+---@param private string? WindTools blizzard skin key when it differs from `toggle`
+---@return table data The skin storage table
+function S:RegisterSkin(addonName, func, position, name, toggle, private)
+	local key = name or addonName
+	local data = {}
+
+	---@type WindSkinInfo
+	local info = {
+		addonName = addonName,
+		name = name,
+		func = func,
+		position = position,
+		check = type(toggle) == "function" and toggle or nil,
+		toggle = type(toggle) == "string" and toggle or nil,
+		private = private,
+		data = data,
+	}
+
+	if key and not self.addonStorage[key] then
+		self.addonStorage[key] = info
+	end
+
+	if addonName == "ElvUI" then
+		if position then
+			tinsert(self.nonAddonsToLoad, position, info)
+		else
+			tinsert(self.nonAddonsToLoad, info)
+		end
+	else
+		local addon = self.addonsToLoad[addonName]
+		if not addon then
+			self.addonsToLoad[addonName] = {}
+			addon = self.addonsToLoad[addonName]
+		end
+
+		if position then
+			tinsert(addon, position, info)
+		else
+			tinsert(addon, info)
+		end
+	end
+
+	return data
+end
+
+---Register a skin that runs during initialization
+---@param name string|function Given name (the Skins method looked up at load time), or the load function
+---@param toggle string|function? ElvUI blizzard skin key, or a check function
+---@param private string? WindTools blizzard skin key when it differs from `toggle`
+---@param position number? Insert position in the load queue
+---@return table data The skin storage table
+function S:AddCallback(name, toggle, private, position)
+	if type(name) == "function" then
+		return self:RegisterSkin("ElvUI", name, position, nil, toggle, private)
+	end
+
+	return self:RegisterSkin("ElvUI", nil, position, name, toggle, private)
+end
+
+---Register a skin that runs when an addon loads
+---@param addonName string The name of the addon
+---@param name string|function? Given name (the Skins method looked up at load time), the load function, or nil to look up `S[addonName]`
+---@param toggle string|function? ElvUI blizzard skin key, or a check function
+---@param private string? WindTools blizzard skin key when it differs from `toggle`
+---@param position number? Insert position in the load queue
+---@return table data The skin storage table
+function S:AddCallbackForAddon(addonName, name, toggle, private, position)
+	if type(name) == "function" then
+		return self:RegisterSkin(addonName, name, position, nil, toggle, private)
+	end
+
+	return self:RegisterSkin(addonName, nil, position, name, toggle, private)
+end
+
+---Build a caller that resolves a Skins method by name at call time,
+---so registrations can sit at the top of a file before the method is defined
+---@param methodName string The Skins method name
+---@return function caller Called as `caller(S, ...)`
+local function CreateMethodCaller(methodName)
+	return function(module, ...)
+		local method = module[methodName]
+		assert(type(method) == "function", format("Skins method %s does not exist", methodName))
+		return method(module, ...)
+	end
 end
 
 ---Add a callback function for AceGUI widget styling
 ---@param name string The widget name
 ---@param handler function|string? The callback function or method name
 ---@param checker function The checker for enabling the skin or not
+---@return table data The skin storage table
 function S:AddCallbackForAceGUIWidget(name, handler, checker)
 	if type(handler) == "string" then
-		handler = GenerateClosure(self[handler], self)
+		handler = GenerateClosure(CreateMethodCaller(handler), self)
 	end
 
 	assert(type(handler) == "function", "AddCallbackForAceGUIWidget: handler must be a function or method name")
 
+	local data = {}
+
 	self.aceWidgetConfigs[name] = {
 		checker = checker,
 		handler = handler,
+		data = data,
 	}
-end
 
----Add a callback function for when a specific addon is loaded
----@param addonName string The name of the addon
----@param func function|string? The callback function or method name
-function S:AddCallbackForAddon(addonName, func)
-	local addon = self.addonsToLoad[addonName]
-	if not addon then
-		self.addonsToLoad[addonName] = {}
-		addon = self.addonsToLoad[addonName]
-	end
-
-	if type(func) == "string" then
-		func = self[func]
-	end
-
-	tinsert(addon, func or self[addonName])
+	return data
 end
 
 ---Add a callback function for when a library is loaded
 ---@param name string The library name
 ---@param func function|string? The callback function or method name
+---@return table data The skin storage table
 function S:AddCallbackForLibrary(name, func)
 	local lib = self.libraryHandlers[name]
 	if not lib then
@@ -448,17 +594,22 @@ function S:AddCallbackForLibrary(name, func)
 	end
 
 	if type(func) == "string" then
-		func = self[func]
+		func = CreateMethodCaller(func)
 	end
 
-	tinsert(lib, func or self[name])
+	tinsert(lib, func or CreateMethodCaller(name))
+
+	return {}
 end
 
 ---Add a callback function for when the player enters the world
 ---@param name string? The function name (if func is nil)
 ---@param func function? The callback function
+---@return table data The skin storage table
 function S:AddCallbackForEnterWorld(name, func)
-	tinsert(self.enteredLoad, func or self[name])
+	tinsert(self.enteredLoad, func or CreateMethodCaller(name))
+
+	return {}
 end
 
 ---Event handler for PLAYER_ENTERING_WORLD
@@ -476,18 +627,31 @@ end
 ---Add a callback function for profile updates
 ---@param name string? The function name (if func is nil)
 ---@param func function? The callback function
+---@return table data The skin storage table
 function S:AddCallbackForUpdate(name, func)
-	tinsert(self.updateProfile, func or self[name])
+	tinsert(self.updateProfile, func or CreateMethodCaller(name))
+
+	return {}
 end
 
----Call all loaded addon callbacks
+---Run every profile update callback, called by `W:UpdateModules` after a profile switch.
+---Callbacks are kept (not one-shot) because profile switches happen repeatedly.
+function S:ProfileUpdate()
+	if not self.db or not self.db.enable or not E.private.skins.blizzard.enable then
+		return
+	end
+
+	for _, func in next, self.updateProfile do
+		xpcall(func, F.Developer.ThrowError, self)
+	end
+end
+
+---Run every skin registered for a loaded addon
 ---@param addonName string The name of the addon
----@param callbacks table The callback functions table
-function S:CallLoadedAddon(addonName, callbacks)
-	for _, callback in next, callbacks do
-		if not xpcall(callback, F.Developer.ThrowError, self) then
-			self:Log("debug", format("Failed to run addon %s", addonName))
-		end
+---@param infos WindSkinInfo[] The skin registrations
+function S:CallLoadedAddon(addonName, infos)
+	for _, info in next, infos do
+		self:LoadSkin(info)
 	end
 
 	self.addonsToLoad[addonName] = nil
@@ -501,9 +665,9 @@ function S:ADDON_LOADED(_, addonName)
 		return
 	end
 
-	local callbacks = self.addonsToLoad[addonName]
-	if callbacks then
-		self:CallLoadedAddon(addonName, callbacks)
+	local infos = self.addonsToLoad[addonName]
+	if infos then
+		self:CallLoadedAddon(addonName, infos)
 	end
 end
 
@@ -814,18 +978,16 @@ function S:Initialize()
 	end
 
 	-- Run Blizzard skins
-	for index, func in next, self.nonAddonsToLoad do
-		if not xpcall(func, F.Developer.ThrowError, self) then
-			self:Log("debug", "Failed to run skin function")
-		end
+	for index, info in next, self.nonAddonsToLoad do
+		self:LoadSkin(info)
 		self.nonAddonsToLoad[index] = nil
 	end
 
 	-- Run addon skins, including some lazy-loading Blizzard skins
-	for addonName, object in pairs(self.addonsToLoad) do
+	for addonName, infos in next, self.addonsToLoad do
 		local isLoaded, isFinished = C_AddOns_IsAddOnLoaded(addonName)
 		if isLoaded and isFinished then
-			self:CallLoadedAddon(addonName, object)
+			self:CallLoadedAddon(addonName, infos)
 		end
 	end
 

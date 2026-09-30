@@ -56,6 +56,10 @@ function T:ElvUIScanTooltipSetInventoryItem(tt, unit)
 end
 
 function T:TierSet(tt, _, guid)
+	if E:IsSecretValue(guid) or not guid then
+		return
+	end
+
 	-- ElvUI do not scan player itself
 	if guid == E.myguid then
 		ResetCache(nil, nil, guid)

@@ -334,6 +334,10 @@ local function SetProgressionInfo(tt, guid)
 end
 
 function T:Progression(tt, unit, guid)
+	if E:IsSecretValue(guid) or not guid then
+		return
+	end
+
 	if not E.private.WT.tooltips.progression.enable then
 		return
 	end

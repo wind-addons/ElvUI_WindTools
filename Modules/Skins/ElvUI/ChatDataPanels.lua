@@ -1,10 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallback("ElvUI_ChatDataPanels")
-data.check = function()
-	return (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.chatDataPanels)
-end
 local LO = E:GetModule("Layout")
 
 local _G = _G
@@ -30,7 +25,11 @@ function S:ElvUI_ChatPanels_ToggleShadows()
 	end
 end
 
-function S:ElvUI_ChatDataPanels()
+function S:ElvUI_ChatPanels()
+	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.chatDataPanels) then
+		return
+	end
+
 	self:CreateShadow(_G.LeftChatDataPanel)
 	self:CreateShadow(_G.RightChatDataPanel)
 
@@ -46,3 +45,4 @@ function S:ElvUI_ChatDataPanels()
 	self:SecureHook(LO, "ToggleChatPanels", "ElvUI_ChatPanels_ToggleShadows")
 end
 
+S:AddCallback("ElvUI_ChatPanels")

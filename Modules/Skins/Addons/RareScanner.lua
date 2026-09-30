@@ -1,11 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local C = W.Utilities.Color
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallbackForAddon("RareScanner")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.rareScanner
-end
 local TT = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips
 
@@ -16,6 +11,10 @@ local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
 function S:RareScanner()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rareScanner then
+		return
+	end
+
 	self:DisableAddOnSkin("RareScanner")
 
 	local scannerButton = _G["RARESCANNER_BUTTON"]
@@ -167,3 +166,4 @@ function S:RareScanner()
 	end
 end
 
+S:AddCallbackForAddon("RareScanner")

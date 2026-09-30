@@ -1,11 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("Collectionator")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.collectionator
-end
-
 local _G = _G
 local pairs = pairs
 
@@ -126,6 +121,10 @@ local function ReskinOption(frame)
 end
 
 function S:Collectionator()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.collectionator then
+		return
+	end
+
 	local LibAHTab = _G.LibStub("LibAHTab-1-0", true)
 	if not LibAHTab then
 		return
@@ -142,3 +141,4 @@ function S:Collectionator()
 	ReskinOption(_G.CollectionatorConfigBasicOptionsFrame)
 end
 
+S:AddCallbackForAddon("Collectionator")

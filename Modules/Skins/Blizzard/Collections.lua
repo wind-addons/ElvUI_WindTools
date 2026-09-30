@@ -1,12 +1,13 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("Blizzard_Collections")
-data.toggle = "collections"
-
 local _G = _G
 
 function S:Blizzard_Collections()
+	if not self:CheckDB("collections") then
+		return
+	end
+
 	self:CreateShadow(_G.CollectionsJournal)
 	self:CreateShadow(_G.WardrobeFrame)
 	self:CreateShadow(_G.WardrobeOutfitEditFrame)
@@ -22,3 +23,4 @@ function S:Blizzard_Collections()
 	end
 end
 
+S:AddCallbackForAddon("Blizzard_Collections")

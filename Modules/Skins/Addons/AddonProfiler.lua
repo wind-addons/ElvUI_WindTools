@@ -1,11 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("!!AddonProfiler", "AddonProfiler")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.addonProfiler
-end
-
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
@@ -23,6 +18,10 @@ local function ReskinColumnHeaders(display)
 end
 
 function S:AddonProfiler()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.addonProfiler then
+		return
+	end
+
 	local NAP = _G.NumyAddonProfiler
 	local display = NAP and NAP.ProfilerFrame
 	if not display then
@@ -115,3 +114,4 @@ function S:AddonProfiler()
 	end
 end
 
+S:AddCallbackForAddon("!!AddonProfiler", "AddonProfiler")

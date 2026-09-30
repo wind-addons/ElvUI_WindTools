@@ -1,11 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("MythicDungeonTools")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.mythicDungeonTools
-end
-
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
@@ -137,6 +132,10 @@ local function ReskinMapPOI(frame)
 end
 
 function S:MythicDungeonTools()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.mythicDungeonTools then
+		return
+	end
+
 	if not _G.MDT then
 		return
 	end
@@ -254,6 +253,7 @@ local function dbChecker(db)
 	return db.addons.mythicDungeonTools
 end
 
+S:AddCallbackForAddon("MythicDungeonTools")
 S:AddCallbackForAceGUIWidget("MDTPullButton", "Ace3_MDTPullButton", dbChecker)
 S:AddCallbackForAceGUIWidget("MDTNewPullButton", "Ace3_MDTNewPullButton", dbChecker)
 S:AddCallbackForAceGUIWidget("MDTSpellButton", "Ace3_MDTSpellButton", dbChecker)

@@ -1,11 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("Plumber")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.plumber
-end
-
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
@@ -38,6 +33,10 @@ local function OnDefaultFrameShow(frame)
 end
 
 function S:Plumber()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.plumber then
+		return
+	end
+
 	local PlumberExpansionLandingPage = _G.PlumberExpansionLandingPage
 
 	local LeftSection = PlumberExpansionLandingPage and PlumberExpansionLandingPage.LeftSection
@@ -71,3 +70,4 @@ function S:Plumber()
 	end
 end
 
+S:AddCallbackForAddon("Plumber")

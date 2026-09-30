@@ -1,17 +1,16 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("Myslot")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.myslot
-end
-
 local pairs = pairs
 
 local _G = _G
 local LibStub = _G.LibStub
 
 function S:Myslot()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.myslot then
+		return
+	end
+
 	local frame = LibStub("Myslot-5.0").MainFrame ---@type Frame
 	if not frame then
 		return
@@ -56,3 +55,4 @@ function S:Myslot()
 	end
 end
 
+S:AddCallbackForAddon("Myslot")

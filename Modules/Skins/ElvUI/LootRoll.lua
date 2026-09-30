@@ -2,11 +2,6 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local M = E:GetModule("Misc")
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallback("ElvUI_LootRoll")
-data.check = function()
-	return (E.private.general.lootRoll and E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.lootRoll)
-end
-
 local _G = _G
 local pairs = pairs
 local hooksecurefunc = hooksecurefunc
@@ -29,6 +24,10 @@ function S:ElvUI_SkinLootRollFrame(frame)
 end
 
 function S:ElvUI_LootRoll()
+	if not (E.private.general.lootRoll and E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.lootRoll) then
+		return
+	end
+
 	self:SecureHook(M, "LootRoll_Create", function(_, index)
 		self:ElvUI_SkinLootRollFrame(_G["ElvUI_LootRollFrame" .. index])
 	end)
@@ -37,6 +36,8 @@ function S:ElvUI_LootRoll()
 		self:ElvUI_SkinLootRollFrame(bar)
 	end
 end
+
+S:AddCallback("ElvUI_LootRoll")
 
 -- debug note:
 -- itemLink = select(2, C_Item.GetItemInfo(193652))

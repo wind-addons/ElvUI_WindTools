@@ -34,9 +34,9 @@ local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 S.settingFrames = {}
 ---@type table<string, function> Table to store waiting setting frame callbacks
 S.waitSettingFrames = {}
----@type table<string, {addonName: string, name: string?, func: function?, data: table}[]> Table to store addon skin registrations
+---@type table<string, function[]> Table to store addon loading callbacks
 S.addonsToLoad = {}
----@type {addonName: string, name: string?, func: function?, data: table}[] Table to store non-addon skin registrations
+---@type function[] Table to store non-addon loading callbacks
 S.nonAddonsToLoad = {}
 ---@type table<string, function[]> Table to store library handler callbacks
 S.libraryHandlers = {}
@@ -396,81 +396,11 @@ function S:SetTransparentBackdrop(frame)
 	end
 end
 
----Run one registered skin. `data.check` replaces the toggles. Otherwise `data.toggle` is the ElvUI blizzard key and `data.private` is the WindTools blizzard key.
----@param skin {addonName: string, name: string?, func: function?, data: table}
-local function LoadSkin(skin)
-	local data = skin.data
-	if data.check then
-		local ok, allow = xpcall(data.check, F.Developer.ThrowError, S)
-		data.allow = ok and allow
-	elseif data.toggle or data.private ~= nil then
-		local privateKey = data.private
-		if privateKey == nil then
-			privateKey = data.toggle
-		end
-		data.allow = S:CheckDB(data.toggle, privateKey)
-	else
-		data.allow = true
-	end
-
-	if not data.allow then
-		return
-	end
-
-	local func = skin.func
-	if not func and skin.name then
-		func = S[skin.name] or S[skin.addonName]
-	end
-
-	if func and not xpcall(func, F.Developer.ThrowError, S, data) then
-		S:Log("debug", format("Failed to run skin %s", skin.name or skin.addonName))
-	end
-end
-
----Register a skin and return its storage table.
----@param addonName string Addon that should trigger the skin, or "ElvUI" for initialization
----@param func function? Load function. Looked up from `name` at load time when omitted
----@param position number? Insert position
----@param name string? Given name. Also the method looked up on the Skins module when `func` is omitted
----@return table data Skin storage. Set `toggle`, `private`, or `check` before the skin loads
-function S:RegisterSkin(addonName, func, position, name)
-	local data = {}
-	local skin = { addonName = addonName, name = name, func = func, data = data }
-
-	if addonName == "ElvUI" then
-		if position then
-			tinsert(self.nonAddonsToLoad, position, skin)
-		else
-			tinsert(self.nonAddonsToLoad, skin)
-		end
-	else
-		local addon = self.addonsToLoad[addonName]
-		if not addon then
-			self.addonsToLoad[addonName] = {}
-			addon = self.addonsToLoad[addonName]
-		end
-
-		if position then
-			tinsert(addon, position, skin)
-		else
-			tinsert(addon, skin)
-		end
-	end
-
-	return data
-end
-
----Add a skin that runs during initialization. Returns the skin storage table.
----@param name string|function? Given name, or the load function
----@param func function? Load function when `name` is a string
----@param position number? Insert position
----@return table data
-function S:AddCallback(name, func, position)
-	if type(name) == "function" then
-		return self:RegisterSkin("ElvUI", name, position)
-	else
-		return self:RegisterSkin("ElvUI", func, position, name)
-	end
+---Add a callback function to be executed during initialization
+---@param name string? The function name (if func is nil)
+---@param func function? The callback function
+function S:AddCallback(name, func)
+	tinsert(self.nonAddonsToLoad, func or self[name])
 end
 
 ---Add a callback function for AceGUI widget styling
@@ -490,18 +420,21 @@ function S:AddCallbackForAceGUIWidget(name, handler, checker)
 	}
 end
 
----Add a skin that runs when an addon loads. Returns the skin storage table.
+---Add a callback function for when a specific addon is loaded
 ---@param addonName string The name of the addon
----@param name string|function? Given name, or the load function
----@param func function? Load function when `name` is a string
----@param position number? Insert position
----@return table data
-function S:AddCallbackForAddon(addonName, name, func, position)
-	if type(name) == "function" then
-		return self:RegisterSkin(addonName, name, position)
-	else
-		return self:RegisterSkin(addonName, func, position, name or addonName)
+---@param func function|string? The callback function or method name
+function S:AddCallbackForAddon(addonName, func)
+	local addon = self.addonsToLoad[addonName]
+	if not addon then
+		self.addonsToLoad[addonName] = {}
+		addon = self.addonsToLoad[addonName]
 	end
+
+	if type(func) == "string" then
+		func = self[func]
+	end
+
+	tinsert(addon, func or self[addonName])
 end
 
 ---Add a callback function for when a library is loaded
@@ -547,12 +480,14 @@ function S:AddCallbackForUpdate(name, func)
 	tinsert(self.updateProfile, func or self[name])
 end
 
----Call every skin registered for a loaded addon
+---Call all loaded addon callbacks
 ---@param addonName string The name of the addon
----@param skins {addonName: string, name: string?, func: function?, data: table}[]
-function S:CallLoadedAddon(addonName, skins)
-	for _, skin in next, skins do
-		LoadSkin(skin)
+---@param callbacks table The callback functions table
+function S:CallLoadedAddon(addonName, callbacks)
+	for _, callback in next, callbacks do
+		if not xpcall(callback, F.Developer.ThrowError, self) then
+			self:Log("debug", format("Failed to run addon %s", addonName))
+		end
 	end
 
 	self.addonsToLoad[addonName] = nil
@@ -879,13 +814,15 @@ function S:Initialize()
 	end
 
 	-- Run Blizzard skins
-	for index, skin in next, self.nonAddonsToLoad do
-		LoadSkin(skin)
+	for index, func in next, self.nonAddonsToLoad do
+		if not xpcall(func, F.Developer.ThrowError, self) then
+			self:Log("debug", "Failed to run skin function")
+		end
 		self.nonAddonsToLoad[index] = nil
 	end
 
 	-- Run addon skins, including some lazy-loading Blizzard skins
-	for addonName, object in next, self.addonsToLoad do
+	for addonName, object in pairs(self.addonsToLoad) do
 		local isLoaded, isFinished = C_AddOns_IsAddOnLoaded(addonName)
 		if isLoaded and isFinished then
 			self:CallLoadedAddon(addonName, object)

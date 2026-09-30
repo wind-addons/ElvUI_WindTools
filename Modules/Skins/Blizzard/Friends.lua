@@ -1,9 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallback("FriendsFrame")
-data.toggle = "friends"
-
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
@@ -112,6 +109,10 @@ local function UpdateRewards()
 end
 
 function S:FriendsFrame()
+	if not self:CheckDB("friends") then
+		return
+	end
+
 	_G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:ClearAllPoints()
 	_G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:Point("TOPLEFT", _G.FriendsFrame, "TOPRIGHT", 3, -1)
 
@@ -165,3 +166,4 @@ function S:FriendsFrame()
 	UpdateRewards()
 end
 
+S:AddCallback("FriendsFrame")

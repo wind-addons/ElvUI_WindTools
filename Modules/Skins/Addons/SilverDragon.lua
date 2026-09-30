@@ -1,10 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallbackForAddon("SilverDragon")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.silverDragon
-end
 local TT = E:GetModule("Tooltip")
 
 local _G = _G
@@ -451,6 +446,10 @@ local function SetupMountCountButton(silverDragon)
 end
 
 function S:SilverDragon()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.silverDragon then
+		return
+	end
+
 	self:DisableAddOnSkin("SilverDragon")
 
 	local SilverDragon = _G.LibStub("AceAddon-3.0"):GetAddon("SilverDragon")
@@ -466,3 +465,4 @@ function S:SilverDragon()
 	StyleWorldNavFrame()
 end
 
+S:AddCallbackForAddon("SilverDragon")

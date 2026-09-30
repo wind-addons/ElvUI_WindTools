@@ -1,17 +1,14 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("Blizzard_DelvesDifficultyPicker")
-data.toggle = "lfg"
-data.private = "delves"
-data = S:AddCallbackForAddon("Blizzard_DelvesCompanionConfiguration")
-data.toggle = "lfg"
-data.private = "delves"
-
 local _G = _G
 local pairs = pairs
 
 function S:Blizzard_DelvesDifficultyPicker()
+	if not self:CheckDB("lfg", "delves") then
+		return
+	end
+
 	local DifficultyPickerFrame = _G.DelvesDifficultyPickerFrame
 	if DifficultyPickerFrame then
 		self:CreateShadow(DifficultyPickerFrame)
@@ -19,6 +16,10 @@ function S:Blizzard_DelvesDifficultyPicker()
 end
 
 function S:Blizzard_DelvesCompanionConfiguration()
+	if not self:CheckDB("lfg", "delves") then
+		return
+	end
+
 	local CompanionConfigurationFrame = _G.DelvesCompanionConfigurationFrame
 	if CompanionConfigurationFrame then
 		self:CreateShadow(CompanionConfigurationFrame)
@@ -39,3 +40,5 @@ function S:Blizzard_DelvesCompanionConfiguration()
 	end
 end
 
+S:AddCallbackForAddon("Blizzard_DelvesDifficultyPicker")
+S:AddCallbackForAddon("Blizzard_DelvesCompanionConfiguration")

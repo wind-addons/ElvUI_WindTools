@@ -1,9 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallback("MerchantFrame")
-data.toggle = "merchant"
-
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
@@ -22,6 +19,10 @@ function S:HandleMerchantItem(index)
 end
 
 function S:MerchantFrame()
+	if not self:CheckDB("merchant") then
+		return
+	end
+
 	self:CreateShadow(_G.MerchantFrame)
 
 	for i = 1, 2 do
@@ -52,3 +53,4 @@ function S:MerchantFrame()
 	end)
 end
 
+S:AddCallback("MerchantFrame")

@@ -1,11 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("Simulationcraft")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.simulationcraft
-end
-
 local _G = _G
 
 function S:Simulationcraft_SkinMainFrame()
@@ -29,6 +24,10 @@ function S:Simulationcraft_SkinMainFrame()
 end
 
 function S:Simulationcraft()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.simulationcraft then
+		return
+	end
+
 	self:DisableAddOnSkin("Simulationcraft")
 
 	local addon = _G.LibStub("AceAddon-3.0"):GetAddon("Simulationcraft")
@@ -38,3 +37,4 @@ function S:Simulationcraft()
 	end
 end
 
+S:AddCallbackForAddon("Simulationcraft")

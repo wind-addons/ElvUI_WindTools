@@ -1,13 +1,14 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("Blizzard_AzeriteRespecUI")
-data.toggle = "azeriteRespec"
-
 local _G = _G
 local pairs = pairs
 
 function S:Blizzard_AzeriteRespecUI()
+	if not self:CheckDB("azeriteRespec") then
+		return
+	end
+
 	_G.AzeriteRespecFrame:SetClipsChildren(false)
 	for _, region in pairs({ _G.AzeriteRespecFrame:GetRegions() }) do
 		if region and region.GetTexture then
@@ -23,3 +24,4 @@ function S:Blizzard_AzeriteRespecUI()
 	F.SetFont(_G.AzeriteRespecFrame.TitleText)
 end
 
+S:AddCallbackForAddon("Blizzard_AzeriteRespecUI")

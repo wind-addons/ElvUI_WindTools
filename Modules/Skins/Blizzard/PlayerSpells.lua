@@ -1,15 +1,15 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("Blizzard_PlayerSpells")
-data.toggle = "talent"
-data.private = "playerSpells"
-
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local next = next
 
 function S:Blizzard_PlayerSpells()
+	if not self:CheckDB("talent", "playerSpells") then
+		return
+	end
+
 	self:CreateBackdropShadow(_G.ClassTalentLoadoutCreateDialog)
 	self:CreateBackdropShadow(_G.ClassTalentLoadoutEditDialog)
 	self:CreateBackdropShadow(_G.ClassTalentLoadoutImportDialog)
@@ -40,3 +40,4 @@ function S:Blizzard_PlayerSpells()
 	end
 end
 
+S:AddCallbackForAddon("Blizzard_PlayerSpells")

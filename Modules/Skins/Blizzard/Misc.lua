@@ -1,14 +1,8 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallback("BlizzardMiscFrames")
-data.toggle = "misc"
-data = S:AddCallbackForAddon("Blizzard_DeathRecap")
-data = S:AddCallbackForAddon("Blizzard_Menu")
 local ES = E.Skins
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
 local CreateFrame = CreateFrame
@@ -34,6 +28,10 @@ function S:SkinSkipButton(frame)
 end
 
 function S:BlizzardMiscFrames()
+	if not self:CheckDB("misc") then
+		return
+	end
+
 	self:CreateShadow(_G.AutoCompleteBox)
 
 	-- Skip Frame
@@ -119,12 +117,6 @@ function S:SkinMenu(_, manager, _, menuDescription)
 	menuDescription:AddMenuAcquiredCallback(createShadow)
 end
 
-function S:Blizzard_Menu()
-	local manager = _G.Menu.GetManager()
-	local function SkinOpenMenu(menuManager, _, menuDescription)
-		S:SkinMenu(nil, menuManager, nil, menuDescription)
-	end
-
-	hooksecurefunc(manager, "OpenMenu", SkinOpenMenu)
-	hooksecurefunc(manager, "OpenContextMenu", SkinOpenMenu)
-end
+S:SecureHook(ES, "SkinMenu")
+S:AddCallback("BlizzardMiscFrames")
+S:AddCallbackForAddon("Blizzard_DeathRecap")

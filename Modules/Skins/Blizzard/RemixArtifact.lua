@@ -1,13 +1,14 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("Blizzard_RemixArtifactUI")
-data.toggle = "remixArtifact"
-
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
 function S:Blizzard_RemixArtifactUI()
+	if not self:CheckDB("remixArtifact") then
+		return
+	end
+
 	local RemixArtifactFrame = _G.RemixArtifactFrame
 	if not RemixArtifactFrame then
 		return
@@ -56,3 +57,4 @@ function S:Blizzard_RemixArtifactUI()
 	self:CreateShadow(RemixArtifactFrame)
 end
 
+S:AddCallbackForAddon("Blizzard_RemixArtifactUI")

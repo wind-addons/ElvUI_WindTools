@@ -1,17 +1,16 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("ExtraQuestButton")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.extraQuestButton
-end
-
 local _G = _G
 local unpack = unpack
 
 local hooksecurefunc = hooksecurefunc
 
 function S:ExtraQuestButton()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.extraQuestButton then
+		return
+	end
+
 	local button = _G.ExtraQuestButton
 	if not button then
 		return
@@ -58,3 +57,4 @@ function S:ExtraQuestButton()
 	end
 end
 
+S:AddCallbackForAddon("ExtraQuestButton")

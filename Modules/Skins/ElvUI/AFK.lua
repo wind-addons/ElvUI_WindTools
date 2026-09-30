@@ -1,13 +1,12 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallback("ElvUI_AFK")
-data.check = function()
-	return (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.afk)
-end
 local AFK = E:GetModule("AFK")
 
 function S:ElvUI_AFK()
+	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.afk) then
+		return
+	end
+
 	self:CreateShadow(AFK.AFKMode.bottom, 10)
 
 	AFK.AFKMode.bottom.guild:ClearAllPoints()
@@ -17,3 +16,4 @@ function S:ElvUI_AFK()
 	AFK.AFKMode.bottom.time:Point("TOPLEFT", AFK.AFKMode.bottom.guild, "BOTTOMLEFT", 0, -11)
 end
 
+S:AddCallback("ElvUI_AFK")

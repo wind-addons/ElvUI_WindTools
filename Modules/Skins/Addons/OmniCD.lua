@@ -1,11 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("OmniCD")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.omniCD
-end
-
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
@@ -113,6 +108,10 @@ function S:OmniCD_Party_ExtraBar()
 end
 
 function S:OmniCD()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.omniCD then
+		return
+	end
+
 	self:OmniCD_ConfigGUI()
 
 	if E.private.WT.skins.addons.omniCDIcon then
@@ -128,3 +127,4 @@ function S:OmniCD()
 	end
 end
 
+S:AddCallbackForAddon("OmniCD")

@@ -1,12 +1,13 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallback("MailFrame")
-data.toggle = "mail"
-
 local _G = _G
 
 function S:MailFrame()
+	if not self:CheckDB("mail") then
+		return
+	end
+
 	self:CreateShadow(_G.MailFrame)
 	self:CreateShadow(_G.OpenMailFrame)
 
@@ -15,3 +16,4 @@ function S:MailFrame()
 	end
 end
 
+S:AddCallback("MailFrame")

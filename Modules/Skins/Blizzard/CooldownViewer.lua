@@ -1,9 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallbackForAddon("Blizzard_CooldownViewer")
-data.toggle = "cooldownManager"
-data.private = "cooldownViewer"
+local ES = E:GetModule("Skins")
 local LSM = E.Libs.LSM
 local C = W.Utilities.Color
 
@@ -162,21 +159,18 @@ function S:Blizzard_CooldownViewer_Modification()
 end
 
 local buttonOffset = 1
-
-local function SetViewerTabPoint(tab)
-	-- Frame method, not the hooked SetPoint, so ElvUI's position hook does not run again.
-	local setPoint = getmetatable(tab).__index.SetPoint
-	tab:ClearAllPoints()
-	setPoint(tab, "TOPLEFT", _G.CooldownViewerSettings, "TOPRIGHT", buttonOffset, -10)
-end
-
-local function PositionViewerTab(tab, _, _, _, x, y)
+function ES:CooldownManager_PositionViewerTab(_, _, _, x, y)
 	if x ~= buttonOffset or y ~= -10 then
-		SetViewerTabPoint(tab)
+		self:ClearAllPoints()
+		self:SetPoint("TOPLEFT", _G.CooldownViewerSettings, "TOPRIGHT", buttonOffset, -10)
 	end
 end
 
 function S:Blizzard_CooldownViewer()
+	if not self:CheckDB("cooldownManager", "cooldownViewer") then
+		return
+	end
+
 	local CooldownViewerSettings = _G.CooldownViewerSettings
 	if not CooldownViewerSettings then
 		return
@@ -193,12 +187,8 @@ function S:Blizzard_CooldownViewer()
 		if i == 1 then
 			buttonOffset = 3
 
-			if not tab.__windPositionHook then
-				hooksecurefunc(tab, "SetPoint", PositionViewerTab)
-				tab.__windPositionHook = true
-			end
-
-			SetViewerTabPoint(tab)
+			tab:ClearAllPoints()
+			tab:SetPoint("TOPLEFT", CooldownViewerSettings, "TOPRIGHT", 3, -10)
 		else
 			F.Move(tab, 0, -2)
 		end
@@ -207,3 +197,4 @@ function S:Blizzard_CooldownViewer()
 	self:Blizzard_CooldownViewer_Modification()
 end
 
+S:AddCallbackForAddon("Blizzard_CooldownViewer")

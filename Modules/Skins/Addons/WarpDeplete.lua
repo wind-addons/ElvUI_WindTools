@@ -1,11 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("WarpDeplete")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.warpDeplete
-end
-
 local _G = _G
 
 local pairs = pairs
@@ -25,6 +20,10 @@ function S:ReskinWarpDepleteBars()
 end
 
 function S:WarpDeplete()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.warpDeplete then
+		return
+	end
+
 	if not _G.WarpDeplete then
 		return
 	end
@@ -40,3 +39,4 @@ function S:WarpDeplete()
 	end
 end
 
+S:AddCallbackForAddon("WarpDeplete")

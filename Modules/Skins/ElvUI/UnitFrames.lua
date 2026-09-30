@@ -1,10 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallback("ElvUI_UnitFrames")
-data.check = function()
-	return E.private.unitframe.enable and E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.unitFrames
-end
 local UF = E:GetModule("UnitFrames")
 
 local next = next
@@ -154,7 +149,15 @@ function S:ElvUI_UnitFrames_Hook()
 end
 
 function S:ElvUI_UnitFrames()
+	if not E.private.unitframe.enable then
+		return
+	end
+	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.unitFrames) then
+		return
+	end
+
 	self:ElvUI_UnitFrames_Hook()
 	self:ElvUI_UnitFrames_ApplyExistingFrames()
 end
 
+S:AddCallback("ElvUI_UnitFrames")

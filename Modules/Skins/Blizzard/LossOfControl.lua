@@ -1,10 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallback("LossOfControlFrame")
-data.toggle = "losscontrol"
-data.private = "lossOfControl"
-
 local _G = _G
 local max = max
 local unpack = unpack
@@ -105,6 +101,10 @@ function S:LossOfControlFrame_SetUpDisplay(frame)
 end
 
 function S:LossOfControlFrame()
+	if not self:CheckDB("losscontrol", "lossOfControl") then
+		return
+	end
+
 	self:SecureHook(_G.LossOfControlFrame, "SetUpDisplay", "LossOfControlFrame_SetUpDisplay")
 	self:SecureHook(_G.LossOfControlFrame.AbilityName, "Show", function(f)
 		if self.db.lossOfControl.abilityName.hide then
@@ -118,3 +118,4 @@ function S:LossOfControlFrame()
 	end)
 end
 
+S:AddCallback("LossOfControlFrame")

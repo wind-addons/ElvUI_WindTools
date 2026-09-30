@@ -1,9 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallback("ScenarioStage")
-data.private = "scenario"
-
 local _G = _G
 
 local hooksecurefunc = hooksecurefunc
@@ -286,6 +283,10 @@ local function HookSpellFramePool()
 end
 
 function S:ScenarioStage()
+	if not self:CheckDB(nil, "scenario") then
+		return
+	end
+
 	local ScenarioObjectiveTracker = _G.ScenarioObjectiveTracker
 	if not ScenarioObjectiveTracker then
 		return
@@ -309,3 +310,4 @@ function S:ScenarioStage()
 	end
 end
 
+S:AddCallback("ScenarioStage")

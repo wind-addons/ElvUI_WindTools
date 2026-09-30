@@ -1,10 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallbackForAddon("MeetingStone")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.meetingStone
-end
 local ES = E.Skins
 local C = W.Utilities.Color
 
@@ -639,6 +634,10 @@ local function ReskinMiscellaneous()
 end
 
 function S:MeetingStone()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.meetingStone then
+		return
+	end
+
 	local LibNetEaseEnv = LibStub("NetEaseEnv-1.0")
 	local LibNetEaseGUI = LibStub("NetEaseGUI-2.0")
 	local MeetingStone = LibStub("AceAddon-3.0"):GetAddon("MeetingStone", true)
@@ -708,3 +707,4 @@ function S:MeetingStone()
 	ReskinMiscellaneous()
 end
 
+S:AddCallbackForAddon("MeetingStone")

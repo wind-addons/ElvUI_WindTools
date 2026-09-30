@@ -1,15 +1,15 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("Blizzard_DebugTools")
-data.toggle = "debug"
-data.private = "debugTools"
-
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local next = next
 
 function S:Blizzard_DebugTools()
+	if not self:CheckDB("debug", "debugTools") then
+		return
+	end
+
 	self:CreateShadow(_G.TableAttributeDisplay)
 	self:SecureHook(_G.TableInspectorMixin, "OnLoad", "CreateBackdropShadow")
 
@@ -40,3 +40,4 @@ function S:Blizzard_DebugTools()
 	end)
 end
 
+S:AddCallbackForAddon("Blizzard_DebugTools")

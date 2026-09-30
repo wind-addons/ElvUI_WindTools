@@ -1,10 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallback("ElvUI_DataBars")
-data.check = function()
-	return (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.dataBars)
-end
 local DB = E:GetModule("DataBars")
 
 local _G = _G
@@ -15,6 +10,10 @@ function S:ElvUI_SkinDataBar(_, name)
 end
 
 function S:ElvUI_DataBars()
+	if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.dataBars) then
+		return
+	end
+
 	local bars = {
 		_G.ElvUI_AzeriteBarHolder,
 		_G.ElvUI_ExperienceBarHolder,
@@ -32,3 +31,4 @@ function S:ElvUI_DataBars()
 	self:SecureHook(DB, "CreateBar", "ElvUI_SkinDataBar")
 end
 
+S:AddCallback("ElvUI_DataBars")

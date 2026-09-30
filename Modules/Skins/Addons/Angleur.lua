@@ -1,11 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("Angleur")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.angleur
-end
-
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local unpack = unpack
@@ -39,6 +34,11 @@ local function skinAngleurButton()
 end
 
 function S:Angleur()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.angleur then
+		return
+	end
+
 	skinAngleurButton()
 end
 
+S:AddCallbackForAddon("Angleur")

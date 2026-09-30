@@ -1,11 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("BugSack")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.bugSack
-end
-
 local _G = _G
 local pairs = pairs
 local hooksecurefunc = hooksecurefunc
@@ -100,6 +95,10 @@ function S:BugSack_OpenSack()
 end
 
 function S:BugSack()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.bugSack then
+		return
+	end
+
 	if not _G.BugSack then
 		return
 	end
@@ -118,3 +117,4 @@ function S:BugSack()
 	end)
 end
 
+S:AddCallbackForAddon("BugSack")

@@ -1,10 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallbackForAddon("WorldQuestTab")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.worldQuestTab
-end
 local MF = W.Modules.MoveFrames ---@type MoveFrames
 local C = W.Utilities.Color
 
@@ -191,6 +186,10 @@ local function ReskinListButton(button)
 end
 
 function S:WorldQuestTab()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.worldQuestTab then
+		return
+	end
+
 	local tab = _G.WQT_QuestMapTab
 	if tab then
 		ReskinTab(tab)
@@ -259,3 +258,4 @@ function S:WorldQuestTab()
 	end
 end
 
+S:AddCallbackForAddon("WorldQuestTab")

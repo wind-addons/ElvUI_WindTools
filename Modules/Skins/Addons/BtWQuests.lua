@@ -1,10 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallbackForAddon("BtWQuests")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.btWQuests
-end
 local TT = E:GetModule("Tooltip")
 
 local _G = _G
@@ -136,6 +131,10 @@ local function StyleSearchButton(button)
 	hl:SetInside()
 end
 function S:BtWQuests()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.btWQuests then
+		return
+	end
+
 	self:DisableAddOnSkin("BtWQuests")
 
 	local frame = _G.BtWQuestsFrame
@@ -265,3 +264,4 @@ function S:BtWQuests()
 	hooksecurefunc(_G.BtWQuestsChainItemMixin, "Set", ReskinItemButton)
 end
 
+S:AddCallbackForAddon("BtWQuests")

@@ -1,10 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallback("WorldMapFrame")
-data.toggle = "worldmap"
-data.private = "worldMap"
-
 local _G = _G
 local pairs = pairs
 local hooksecurefunc = hooksecurefunc
@@ -12,6 +8,10 @@ local hooksecurefunc = hooksecurefunc
 local SetPoint = UIParent.SetPoint
 
 function S:WorldMapFrame()
+	if not self:CheckDB("worldmap", "worldMap") then
+		return
+	end
+
 	self:CreateBackdropShadow(_G.WorldMapFrame)
 
 	local QuestMapFrame = _G.QuestMapFrame
@@ -75,3 +75,4 @@ function S:WorldMapFrame()
 	end
 end
 
+S:AddCallback("WorldMapFrame")

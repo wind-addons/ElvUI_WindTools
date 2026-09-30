@@ -1,9 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallback("BlizzardQuestFrames")
-data.toggle = "quest"
-
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
@@ -278,6 +275,10 @@ local function QuestInfo_Display()
 end
 
 function S:BlizzardQuestFrames()
+	if not self:CheckDB("quest") then
+		return
+	end
+
 	-- Apply shadow effects to main quest frames
 	self:CreateShadow(_G.QuestFrame)
 	self:CreateShadow(_G.QuestModelScene)
@@ -446,3 +447,4 @@ function S:BlizzardQuestFrames()
 	end
 end
 
+S:AddCallback("BlizzardQuestFrames")

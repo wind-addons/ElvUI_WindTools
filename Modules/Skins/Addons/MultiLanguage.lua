@@ -1,11 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
-local data = S:AddCallbackForAddon("MultiLanguage")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.multiLanguage
-end
-
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
@@ -119,8 +114,13 @@ local function reskinOptionFrame(frame)
 end
 
 function S:MultiLanguage()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.multiLanguage then
+		return
+	end
+
 	reskinTooltip(_G.TranslationTooltipFrame)
 	reskinQuest(_G.QuestTranslationFrame)
 	reskinOptionFrame(_G.MultiLanguageOptionsPanel)
 end
 
+S:AddCallbackForAddon("MultiLanguage")

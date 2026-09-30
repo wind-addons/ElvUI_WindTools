@@ -1,10 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallbackForAddon("PremadeGroupsFilter")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.premadeGroupsFilter
-end
 local ES = E.Skins
 
 local _G = _G
@@ -21,6 +16,10 @@ function S:PremadeGroupsFilter_SetPoint(frame, point, relativeFrame, relativePoi
 end
 
 function S:PremadeGroupsFilter()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.premadeGroupsFilter then
+		return
+	end
+
 	self:DisableAddOnSkin("PremadeGroupsFilter")
 
 	local frame = _G.PremadeGroupsFilterDialog
@@ -128,3 +127,4 @@ function S:PremadeGroupsFilter()
 	end
 end
 
+S:AddCallbackForAddon("PremadeGroupsFilter")

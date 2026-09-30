@@ -1,10 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallbackForAddon("MurlokExport")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.murlokExport
-end
 local C = W.Utilities.Color
 
 local _G = _G
@@ -320,8 +315,13 @@ local function ReskinMurlokExport(frame)
 end
 
 function S:MurlokExport()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.murlokExport then
+		return
+	end
+
 	if _G.UIMurlokExport then
 		ReskinMurlokExport(_G.UIMurlokExport)
 	end
 end
 
+S:AddCallbackForAddon("MurlokExport")

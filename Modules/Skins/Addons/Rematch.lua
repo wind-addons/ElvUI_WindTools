@@ -1,14 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
-
-local data = S:AddCallbackForAddon("Rematch")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.rematch
-end
-data = S:AddCallbackForAddon("Blizzard_Collections", "BlizzardCollections_Rematch")
-data.check = function()
-	return E.private.WT.skins.enable and E.private.WT.skins.addons.rematch
-end
 local MF = W.Modules.MoveFrames
 local ES = E:GetModule("Skins")
 local LSM = E.Libs.LSM
@@ -1462,6 +1453,10 @@ local function ReskinMiniLoadoutPanel(frame)
 end
 
 function S:BlizzardCollections_Rematch()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then
+		return
+	end
+
 	local Rematch = _G.Rematch
 	if not Rematch then
 		return
@@ -1514,6 +1509,10 @@ function S:BlizzardCollections_Rematch()
 end
 
 function S:Rematch()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then
+		return
+	end
+
 	local frame = _G.Rematch and _G.Rematch.frame --[[@as BackdropTemplate]]
 	if not frame then
 		return
@@ -1574,3 +1573,5 @@ function S:Rematch()
 	end
 end
 
+S:AddCallbackForAddon("Rematch")
+S:AddCallbackForAddon("Blizzard_Collections", "BlizzardCollections_Rematch")

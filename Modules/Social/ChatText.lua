@@ -407,7 +407,7 @@ end
 
 -- stylua: ignore start
 -- Based on ElvUI Chat
--- [[elvui-sync:specialChatIcons sha256:612cd7658ce5]]
+-- [[elvui-sync:specialChatIcons sha256:06159a5d9545]]
 local specialChatIcons
 do --this can save some main file locals
 	local x, y = ':16:16',':13:25'
@@ -474,12 +474,18 @@ do --this can save some main file locals
 	specialChatIcons = z
 
 	local portal = GetCVar('portal')
-	if portal == 'US' then
+	if portal == 'test' then
+		if E.Forever then
+			z['Player-4618-007349AE'] = itsSimpy
+		end
+	elseif portal == 'US' then
 		if E.Classic then
 			-- Simpy Seasonal (5813: Wild Growth)
 			z['Player-5813-0301DEC1']	= itsSimpy -- Warlock: Yubi
-			-- Simpy Era (5149: Mankrik)
+			-- Simpy Era (5149: Mankrik, 5066: Whitemane)
 			z['Player-5149-04172B76']	= itsSimpy -- Warlock: Simpy
+			z['Player-5149-04C878ED']	= itsSimpy -- Warrior: Feldia
+			z['Player-5066-0659581C']	= itsSimpy -- Priest: Cutepriest
 		elseif E.TBC then
 			-- Simpy TBC Anniversary (6064: Dreamscythe)
 			z['Player-6064-02A886D5']	= itsSimpy -- Warlock: Simpy
@@ -784,7 +790,7 @@ local function ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 end
 -- [[/elvui-sync:ChatFrame_CheckAddChannel]]
 
--- [[elvui-sync:ChatFrame_MessageEventHandler sha256:ccadf0738324]]
+-- [[elvui-sync:ChatFrame_MessageEventHandler sha256:64c2413d14e5]]
 function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, isHistory, historyTime, historyName, historyBTag)
 	-- ElvUI Chat History Note: isHistory, historyTime, historyName, and historyBTag are passed from CH:DisplayChatHistory() and need to be on the end to prevent issues in other addons that listen on ChatFrame_MessageEventHandler.
 	-- we also send isHistory and historyTime into CH:AddMessage so that we don't have to override the timestamp.
@@ -898,10 +904,10 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 				local msg = msgNotSecret and strlower(arg1)
 				local found = false
 				if msg then
-					for playerName in pairs(frame.privateMessageList) do
-						local notFound = strlower(format(_G.ERR_CHAT_PLAYER_NOT_FOUND_S, playerName))
-						local charOnline = strlower(format(_G.ERR_FRIEND_ONLINE_SS, playerName, playerName))
-						local charOffline = strlower(format(_G.ERR_FRIEND_OFFLINE_S, playerName))
+					for unitName in pairs(frame.privateMessageList) do
+						local notFound = strlower(format(_G.ERR_CHAT_PLAYER_NOT_FOUND_S, unitName))
+						local charOnline = strlower(format(_G.ERR_FRIEND_ONLINE_SS, unitName, unitName))
+						local charOffline = strlower(format(_G.ERR_FRIEND_OFFLINE_S, unitName))
 						if msg == notFound or msg == charOnline or msg == charOffline then
 							found = true
 							break
@@ -972,7 +978,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 		elseif chatType == 'CHANNEL_NOTICE' then
 			if E:IsSecretValue(arg1) then
 				return -- we cant get the globalstring because arg1 is secret
-			elseif E.Retail and arg1 == 'YOU_CHANGED' and (GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR) then
+			elseif E.Modern and arg1 == 'YOU_CHANGED' and (GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR) then
 				if frame.UpdateDefaultChatTarget then
 					frame:UpdateDefaultChatTarget()
 				else
@@ -981,7 +987,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 
 				frame.editBox:UpdateNewcomerEditBoxHint()
 			else
-				if E.Retail and arg1 == 'YOU_LEFT' then
+				if E.Modern and arg1 == 'YOU_LEFT' then
 					frame.editBox:UpdateNewcomerEditBoxHint(arg8)
 				end
 
@@ -1109,7 +1115,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 end
 -- [[/elvui-sync:ChatFrame_MessageEventHandler]]
 
--- [[elvui-sync:MessageFormatter sha256:c72acb3e3908]]
+-- [[elvui-sync:MessageFormatter sha256:af7d0d96d4a9]]
 function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, channelLength, coloredName, historySavedName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, isHistory, historyTime, historyName, historyBTag)
 	local noBrackets = CT.db.removeBrackets
 
@@ -1141,7 +1147,7 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 	-- ElvUI: data from populated guid info
 	local nameWithRealm, realm
 	local data = CH:GetPlayerInfoByGUID(arg12)
-	if data then
+	if data and not E.Forever then
 		realm = data.realm
 		nameWithRealm = data.nameWithRealm
 	end
@@ -1160,24 +1166,24 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 	end
 
 	local discordInfo, isFromDiscord = CH:GetDiscordInfo(arg18)
-	local playerName = (nameWithRealm ~= arg2 and nameWithRealm) or arg2
+	local unitName = (nameWithRealm ~= arg2 and nameWithRealm) or arg2
 	if chatType == 'COMMUNITIES_CHANNEL' then -- isCommunityType
 		local messageInfo, clubId, streamId = C_Club_GetInfoFromLastCommunityChatLine()
 		if messageInfo and E:NotSecretValue(arg13) then
 			if arg13 and arg13 ~= 0 then -- isBattleNetCommunity: arg13 is bnetIDAccount
-				playerLink = GetBNPlayerCommunityLink(playerName, playerLinkDisplayText, arg13, clubId, streamId, messageInfo.messageId.epoch, messageInfo.messageId.position)
+				playerLink = GetBNPlayerCommunityLink(unitName, playerLinkDisplayText, arg13, clubId, streamId, messageInfo.messageId.epoch, messageInfo.messageId.position)
 			else
-				playerLink = GetPlayerCommunityLink(playerName, playerLinkDisplayText, clubId, streamId, messageInfo.messageId.epoch, messageInfo.messageId.position)
+				playerLink = GetPlayerCommunityLink(unitName, playerLinkDisplayText, clubId, streamId, messageInfo.messageId.epoch, messageInfo.messageId.position)
 			end
 		else
 			playerLink = playerLinkDisplayText
 		end
 	elseif chatType == 'BN_WHISPER' or chatType == 'BN_WHISPER_INFORM' then -- arg11: lineID
-		playerLink = CH:GetBNPlayerLink(playerName, playerLinkDisplayText, arg13, arg11, chatGroup, chatTarget)
+		playerLink = CH:GetBNPlayerLink(unitName, playerLinkDisplayText, arg13, arg11, chatGroup, chatTarget)
 	elseif (chatType == 'GUILD_DISCORD' or chatType == 'GUILD') and isFromDiscord then
 		playerLink = CH:GetDiscordLink(playerLinkDisplayText, arg13, discordInfo.userID, arg11, chatGroup, chatTarget);
 	else
-		playerLink = CH:GetPlayerLink(playerName, playerLinkDisplayText, arg11, chatGroup, chatTarget)
+		playerLink = CH:GetPlayerLink(unitName, playerLinkDisplayText, arg11, chatGroup, chatTarget)
 	end
 
 	local isMobile = arg14 and GetMobileEmbeddedTexture(info.r, info.g, info.b)
@@ -1189,8 +1195,8 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 
 	-- Player Flags
 	local pflag = CH:GetPFlag(arg6, arg7, arg12)
-	if not bossMonster and (E:NotSecretValue(arg12) and E:NotSecretValue(playerName)) then
-		local chatIcon, pluginChatIcon = specialChatIcons[arg12] or specialChatIcons[playerName], CH:GetPluginIcon(arg12, playerName)
+	if not bossMonster and (E:NotSecretValue(arg12) and E:NotSecretValue(unitName)) then
+		local chatIcon, pluginChatIcon = specialChatIcons[arg12] or specialChatIcons[unitName], CH:GetPluginIcon(arg12, unitName)
 		if type(chatIcon) == 'function' then
 			local icon, prettify, var1, var2, var3 = chatIcon()
 			if prettify and chatType ~= 'GUILD_ITEM_LOOTED' and not msgProtected then
@@ -1212,7 +1218,7 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 		end
 
 		-- LFG Role Flags
-		local lfgRole = (chatType == 'PARTY_LEADER' or chatType == 'PARTY' or chatType == 'RAID' or chatType == 'RAID_LEADER' or chatType == 'INSTANCE_CHAT' or chatType == 'INSTANCE_CHAT_LEADER') and lfgRoles[playerName]
+		local lfgRole = (chatType == 'PARTY_LEADER' or chatType == 'PARTY' or chatType == 'RAID' or chatType == 'RAID_LEADER' or chatType == 'INSTANCE_CHAT' or chatType == 'INSTANCE_CHAT_LEADER') and lfgRoles[unitName]
 		if lfgRole then
 			pflag = pflag..lfgRole
 		end

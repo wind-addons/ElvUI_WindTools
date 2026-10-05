@@ -392,13 +392,14 @@ function Invoke-HandlerPatches {
     $Text = Edit-RequiredLiteral -Text $Text -Old "format('[%s] (%s%s)', arg2, clientTexture, charName)" -New "format(noBrackets and '%s (%s%s)' or '[%s] (%s%s)', arg2, clientTexture, charName)" -Name "handler-brackets-bnet-client" -ExpectedCount 1
     $Text = Edit-RequiredLiteral -Text $Text -Old "format('[%s]', arg2)" -New "format(noBrackets and '%s' or '[%s]', arg2)" -Name "handler-brackets-arg2" -ExpectedCount 3
 
-    $systemPattern = "(?m)^([ \t]*)if \(chatType == 'SYSTEM' or chatType == 'SKILL' or chatType == 'CURRENCY' or chatType == 'MONEY' or\r?\n([ \t]*)chatType == 'OPENING' or chatType == 'TRADESKILLS' or chatType == 'PET_INFO' or chatType == 'TARGETICONS' or chatType == 'BN_WHISPER_PLAYER_OFFLINE'\) then\r?\n([ \t]*)frame:AddMessage\(arg1, info\.r, info\.g, info\.b, info\.id, nil, nil, nil, nil, nil, isHistory, historyTime\)"
+    $systemPattern = "(?m)^([ \t]*)if \(chatType == 'SYSTEM' or chatType == 'SKILL' or chatType == 'CURRENCY' or chatType == 'MONEY' or\r?\n([ \t]*)chatType == 'OPENING' or chatType == 'TRADESKILLS' or chatType == 'PET_INFO' or chatType == 'TARGETICONS' or\r?\n([ \t]*)chatType == 'BN_WHISPER_PLAYER_OFFLINE' or chatType == 'COLLECTED_APPEARANCE'\) then\r?\n([ \t]*)frame:AddMessage\(arg1, info\.r, info\.g, info\.b, info\.id, nil, nil, nil, nil, nil, isHistory, historyTime\)"
     $Text = Convert-RegexBlock -Text $Text -Pattern $systemPattern -Name "handler-guild-status" -Builder {
         param($match)
         $ifIndent = $match.Groups[1].Value
         $contIndent = $match.Groups[2].Value
-        $msgIndent = $match.Groups[3].Value
-        return "${ifIndent}if (chatType == 'SYSTEM' or chatType == 'SKILL' or chatType == 'CURRENCY' or chatType == 'MONEY' or`n${contIndent}chatType == 'OPENING' or chatType == 'TRADESKILLS' or chatType == 'PET_INFO' or chatType == 'TARGETICONS' or chatType == 'BN_WHISPER_PLAYER_OFFLINE') then`n${msgIndent}if chatType ~= `"SYSTEM`" or not CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, arg1) then`n${msgIndent}frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)`n${msgIndent}end"
+        $lastIndent = $match.Groups[3].Value
+        $msgIndent = $match.Groups[4].Value
+        return "${ifIndent}if (chatType == 'SYSTEM' or chatType == 'SKILL' or chatType == 'CURRENCY' or chatType == 'MONEY' or`n${contIndent}chatType == 'OPENING' or chatType == 'TRADESKILLS' or chatType == 'PET_INFO' or chatType == 'TARGETICONS' or`n${lastIndent}chatType == 'BN_WHISPER_PLAYER_OFFLINE' or chatType == 'COLLECTED_APPEARANCE') then`n${msgIndent}if chatType ~= `"SYSTEM`" or not CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, arg1) then`n${msgIndent}frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)`n${msgIndent}end"
     }
 
     $guildPattern = "(?m)^([ \t]*)elseif strsub\(chatType,1,18\) == 'GUILD_ACHIEVEMENT' then\r?\n([ \t]*)frame:AddMessage\(format\(arg1, CH:GetPlayerLink\(arg2, format\(noBrackets and '%s' or '\[%s\]', coloredName\)\)\), info\.r, info\.g, info\.b, info\.id, nil, nil, nil, nil, nil, isHistory, historyTime\)"

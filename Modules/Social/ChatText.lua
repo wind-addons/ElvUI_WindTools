@@ -407,7 +407,7 @@ end
 
 -- stylua: ignore start
 -- Based on ElvUI Chat
--- [[elvui-sync:specialChatIcons sha256:06159a5d9545]]
+-- [[elvui-sync:specialChatIcons sha256:a69d3d2a96d2]]
 local specialChatIcons
 do --this can save some main file locals
 	local x, y = ':16:16',':13:25'
@@ -482,10 +482,11 @@ do --this can save some main file locals
 		if E.Classic then
 			-- Simpy Seasonal (5813: Wild Growth)
 			z['Player-5813-0301DEC1']	= itsSimpy -- Warlock: Yubi
-			-- Simpy Era (5149: Mankrik, 5066: Whitemane)
+			-- Simpy Era (5149: Mankrik)
 			z['Player-5149-04172B76']	= itsSimpy -- Warlock: Simpy
 			z['Player-5149-04C878ED']	= itsSimpy -- Warrior: Feldia
-			z['Player-5066-0659581C']	= itsSimpy -- Priest: Cutepriest
+			z['Player-5066-0659581C']	= itsSimpy -- [Alliance, Whitemane] Priest: Cutepriest
+			z['Player-5066-06716CCB']	= itsSimpy -- [Horde, Blaumeux] Hunter: Neah
 		elseif E.TBC then
 			-- Simpy TBC Anniversary (6064: Dreamscythe)
 			z['Player-6064-02A886D5']	= itsSimpy -- Warlock: Simpy
@@ -558,6 +559,7 @@ do --this can save some main file locals
 			z['Player-1168-0870FBCE']	= itsSimpy -- [Horde] Druid:	Imsojuicy
 			z['Player-1168-07C00783']	= itsSimpy -- [Horde] DH:		Imsopeachy
 			z['Player-1168-07B41C4C']	= itsSimpy -- [Horde] Paladin:	Imsosalty
+			z['Player-1168-0B0D8346']	= itsSimpy -- [Horde] Paladin:	Imsosour
 			z['Player-1168-0870F320']	= itsSimpy -- [Horde] Mage:		Imsospicy
 			z['Player-1168-0A395531']	= itsSimpy -- [Horde] Hunter:	Imsonutty
 			z['Player-1168-0A395540']	= itsSimpy -- [Horde] Monk:		Imsotasty
@@ -790,7 +792,7 @@ local function ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 end
 -- [[/elvui-sync:ChatFrame_CheckAddChannel]]
 
--- [[elvui-sync:ChatFrame_MessageEventHandler sha256:64c2413d14e5]]
+-- [[elvui-sync:ChatFrame_MessageEventHandler sha256:43e42e3bd274]]
 function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, isHistory, historyTime, historyName, historyBTag)
 	-- ElvUI Chat History Note: isHistory, historyTime, historyName, and historyBTag are passed from CH:DisplayChatHistory() and need to be on the end to prevent issues in other addons that listen on ChatFrame_MessageEventHandler.
 	-- we also send isHistory and historyTime into CH:AddMessage so that we don't have to override the timestamp.
@@ -875,7 +877,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 
 			if not found or not info then
 				local eventType, channelID = arg1, arg7
-				if not ChatFrame_CheckAddChannel(self, eventType, channelID) then
+				if not ChatFrame_CheckAddChannel(frame, eventType, channelID) then
 					return true
 				end
 			end
@@ -927,7 +929,8 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 		end
 
 		if (chatType == 'SYSTEM' or chatType == 'SKILL' or chatType == 'CURRENCY' or chatType == 'MONEY' or
-			chatType == 'OPENING' or chatType == 'TRADESKILLS' or chatType == 'PET_INFO' or chatType == 'TARGETICONS' or chatType == 'BN_WHISPER_PLAYER_OFFLINE') then
+			chatType == 'OPENING' or chatType == 'TRADESKILLS' or chatType == 'PET_INFO' or chatType == 'TARGETICONS' or
+			chatType == 'BN_WHISPER_PLAYER_OFFLINE' or chatType == 'COLLECTED_APPEARANCE') then
 			if chatType ~= "SYSTEM" or not CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, arg1) then
 			frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)
 			end
@@ -1115,7 +1118,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 end
 -- [[/elvui-sync:ChatFrame_MessageEventHandler]]
 
--- [[elvui-sync:MessageFormatter sha256:af7d0d96d4a9]]
+-- [[elvui-sync:MessageFormatter sha256:d3dee1d810c7]]
 function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, channelLength, coloredName, historySavedName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, isHistory, historyTime, historyName, historyBTag)
 	local noBrackets = CT.db.removeBrackets
 
@@ -1248,16 +1251,20 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 		body = (classLink and gsub(msg, arg2..'%-'..realm, pflag..classLink, 1)) or ((E:NotSecretValue(arg2) and arg2 ~= sender) and gsub(msg, arg2, sender, 1)) or msg
 	elseif specialType then -- contains special formatting
 		body = format(header..msg, pflag..sender)
-	else -- ignore special characters from players
+	elseif header then -- ignore special characters from players
 		body = format(header..'%s', pflag..sender, msg)
+	else -- new chat types might fail to here
+		body = msg
 	end
 
-	if not specialType and (channelLength > 0) then -- Add Channel
-		body = '|Hchannel:channel:'..arg8..'|h['..ResolvePrefixedChannelName(arg4)..']|h '..body
-	end
+	if header and not specialType then
+		if channelLength > 0 then -- Add Channel
+			body = '|Hchannel:channel:'..arg8..'|h['..ResolvePrefixedChannelName(arg4)..']|h '..body
+		end
 
-	if not specialType and not msgProtected and (chatType ~= 'EMOTE' and chatType ~= 'TEXT_EMOTE') and (CH.db.shortChannels or CH.db.hideChannels) then
-		body = CH:HandleShortChannels(body, CH.db.hideChannels)
+		if not msgProtected and (chatType ~= 'EMOTE' and chatType ~= 'TEXT_EMOTE') and (CH.db.shortChannels or CH.db.hideChannels) then
+			body = CH:HandleShortChannels(body, CH.db.hideChannels)
+		end
 	end
 
 	for _, filter in ipairs(CH.PluginMessageFilters) do

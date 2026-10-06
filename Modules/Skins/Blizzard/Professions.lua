@@ -8,12 +8,21 @@ local next = next
 S:AddCallbackForAddon("Blizzard_Professions", nil, "tradeskill", "professions")
 
 function S:Blizzard_Professions()
-	self:CreateShadow(_G.ProfessionsFrame)
-	self:CreateShadow(_G.ProfessionsFrame.CraftingPage.CraftingOutputLog)
-	self:CreateShadow(_G.ProfessionsFrame.OrdersPage.OrderView.CraftingOutputLog)
+	local professionsFrame = _G.ProfessionsFrame
 
-	for _, tab in next, { _G.ProfessionsFrame.TabSystem:GetChildren() } do
-		self:ReskinTab(tab)
+	self:CreateShadow(professionsFrame)
+	self:CreateShadow(professionsFrame.CraftingPage.CraftingOutputLog)
+
+	local ordersPage = professionsFrame.OrdersPage
+	if ordersPage then
+		self:CreateShadow(ordersPage.OrderView.CraftingOutputLog)
+	end
+
+	local tabSystem = professionsFrame.TabSystem
+	if tabSystem then
+		for _, tab in next, { tabSystem:GetChildren() } do
+			self:ReskinTab(tab)
+		end
 	end
 
 	local function reskinChild(child)

@@ -11,6 +11,7 @@ local format = format
 local pairs = pairs
 local select = select
 local sort = sort
+local strmatch = strmatch
 local tinsert = tinsert
 local unpack = unpack
 
@@ -22,6 +23,8 @@ local GetGuildRosterInfo = GetGuildRosterInfo
 local GetNumGuildMembers = GetNumGuildMembers
 local IsInGuild = IsInGuild
 local MenuUtil_CreateContextMenu = MenuUtil.CreateContextMenu
+local RegionalUniqueNamesEnabled = RegionalUniqueNamesEnabled
+local UnitName = UnitName
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
@@ -29,9 +32,13 @@ local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInf
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
 local C_FriendList_GetFriendInfoByIndex = C_FriendList.GetFriendInfoByIndex
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
+local C_PlayerInfo_ShouldDisplaySurname = C_PlayerInfo and C_PlayerInfo.ShouldDisplaySurname
 
+local Constants = Constants
 local LOCALIZED_CLASS_NAMES_FEMALE = LOCALIZED_CLASS_NAMES_FEMALE
 local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
+local UNKNOWNOBJECT = UNKNOWNOBJECT
+local WOW_PROJECT_ID = WOW_PROJECT_ID
 
 local currentPageIndex
 
@@ -61,6 +68,49 @@ local function GetNonLocalizedClass(className)
 			end
 		end
 	end
+end
+
+local function IsRegionalUniqueNames()
+	return RegionalUniqueNamesEnabled and RegionalUniqueNamesEnabled() or false
+end
+
+local function GetPlayerFullName()
+	local firstName, surname = UnitName("player")
+	if not firstName or firstName == UNKNOWNOBJECT then
+		return
+	end
+
+	-- The second UnitName return is the realm unless regional unique names are enabled
+	if not IsRegionalUniqueNames() or not surname or surname == "" then
+		return firstName
+	end
+
+	local NameUtil = _G.NameUtil
+	if NameUtil and NameUtil.GetFullNameWithoutRealm then
+		return NameUtil.GetFullNameWithoutRealm(firstName, surname)
+	end
+
+	return firstName
+end
+
+local function GetDisplayName(fullName)
+	if not fullName then
+		return
+	end
+
+	if
+		IsRegionalUniqueNames()
+		and C_PlayerInfo_ShouldDisplaySurname
+		and not C_PlayerInfo_ShouldDisplaySurname()
+	then
+		local separatorConstants = Constants and Constants.CharacterNameSeparatorConsts
+		local separator = separatorConstants and separatorConstants.CHARACTERNAME_SURNAME_SEPARATOR
+		if separator then
+			return strmatch(fullName, "^([^-]+)" .. separator) or fullName
+		end
+	end
+
+	return fullName
 end
 
 local function SetButtonTexture(button, texture, r, g, b)
@@ -109,7 +159,7 @@ function CT:ShowContextText(button)
 	end
 
 	MenuUtil_CreateContextMenu(button, function(ownerRegion, rootDescription)
-		rootDescription:CreateTitle(button.name)
+		rootDescription:CreateTitle(GetDisplayName(button.name))
 
 		if not button.class then -- My favorite do not have it
 			rootDescription:CreateButton(L["Remove From Favorites"], function()
@@ -293,7 +343,7 @@ function CT:ConstructNameButtons()
 				if _G.SendMailNameEditBox then
 					local playerName = button.name
 					if playerName then
-						if button.realm and button.realm ~= E.myrealm then
+						if button.realm and button.realm ~= E.myrealm and not IsRegionalUniqueNames() then
 							playerName = playerName .. "-" .. button.realm
 						end
 						_G.SendMailNameEditBox:SetText(playerName)
@@ -400,8 +450,9 @@ end
 function CT:SetButtonTooltip(button)
 	GameTooltip:ClearLines()
 	GameTooltip:SetOwner(button, "ANCHOR_BOTTOMRIGHT", 8, 20)
-	GameTooltip:SetText(button.name or "")
-	GameTooltip:AddDoubleLine(L["Name"], button.name or "", 1, 1, 1, GetClassColor(button.class))
+	local displayName = GetDisplayName(button.name) or ""
+	GameTooltip:SetText(displayName)
+	GameTooltip:AddDoubleLine(L["Name"], displayName, 1, 1, 1, GetClassColor(button.class))
 	GameTooltip:AddDoubleLine(L["Realm"], button.realm or "", 1, 1, 1, unpack(E.media.rgbvaluecolor))
 
 	if button.BNName then
@@ -454,7 +505,8 @@ function CT:UpdatePage(pageIndex)
 					button.faction = temp.faction
 					button.BNName = temp.BNName
 				end
-				button:SetText(button.class and C.StringWithClassColor(button.name, button.class) or button.name)
+				local displayName = GetDisplayName(button.name)
+				button:SetText(button.class and C.StringWithClassColor(displayName, button.class) or displayName)
 				button:Show()
 			else
 				button.dType = nil
@@ -510,17 +562,30 @@ function CT:UpdateAltsTable()
 		self.altsTable[E.myrealm][E.myfaction] = {}
 	end
 
-	if not self.altsTable[E.myrealm][E.myfaction][E.myname] then
-		self.altsTable[E.myrealm][E.myfaction][E.myname] = E.myclass
+	local characters = self.altsTable[E.myrealm][E.myfaction]
+	characters[UNKNOWNOBJECT] = nil
+
+	local playerFullName = GetPlayerFullName()
+	if not playerFullName then
+		return
+	end
+
+	if playerFullName ~= E.myname then
+		characters[E.myname] = nil
+	end
+
+	if not characters[playerFullName] then
+		characters[playerFullName] = E.myclass
 	end
 end
 
 function CT:BuildAltsData()
 	data = {}
+	local playerFullName = GetPlayerFullName()
 	for realm, factions in pairs(self.altsTable) do
 		for faction, characters in pairs(factions) do
 			for name, class in pairs(characters) do
-				if not (name == E.myname and realm == E.myrealm) then
+				if name ~= UNKNOWNOBJECT and not (name == playerFullName and realm == E.myrealm) then
 					tinsert(data, {
 						name = name,
 						realm = realm,
@@ -566,7 +631,7 @@ function CT:BuildFriendsData()
 					if
 						gameAccountInfo.clientProgram
 						and gameAccountInfo.clientProgram == "WoW"
-						and gameAccountInfo.wowProjectID == 1
+						and gameAccountInfo.wowProjectID == WOW_PROJECT_ID
 						and gameAccountInfo.factionName
 						and gameAccountInfo.factionName == E.myfaction
 						and not tempKey[gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName]
@@ -582,7 +647,7 @@ function CT:BuildFriendsData()
 				end
 			elseif
 				accountInfo.gameAccountInfo.clientProgram == "WoW"
-				and accountInfo.gameAccountInfo.wowProjectID == 1
+				and accountInfo.gameAccountInfo.wowProjectID == WOW_PROJECT_ID
 				and accountInfo.gameAccountInfo.factionName
 				and accountInfo.gameAccountInfo.factionName == E.myfaction
 				and not tempKey[accountInfo.gameAccountInfo.characterName .. "-" .. accountInfo.gameAccountInfo.realmName]
@@ -653,6 +718,8 @@ function CT:ChangeCategory(type)
 end
 
 function CT:SendMailFrame_OnShow()
+	self:UpdateAltsTable()
+
 	if self.db.forceHide then
 		self.frame:Hide()
 	else

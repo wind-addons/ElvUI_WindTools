@@ -97,7 +97,7 @@ do
 			tab.windAnimation.OnStatusChange(tab)
 		end
 
-		if not E.private.WT.skins.enable or not E.private.WT.skins.widgets.tab.enable then
+		if not WS:IsReady() or not E.private.WT.skins.enable or not E.private.WT.skins.widgets.tab.enable then
 			return ES.Ace3_TabSetSelected_(tab, selected)
 		end
 

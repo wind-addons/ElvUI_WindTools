@@ -428,6 +428,9 @@ local function GetFrame(frameOrName)
 			local path = { strsplit(".", frameOrName) }
 			for i = 1, #path do
 				frame = frame[path[i]]
+				if not frame then
+					return
+				end
 			end
 		end
 	end

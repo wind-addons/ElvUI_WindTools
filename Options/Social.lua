@@ -7,10 +7,13 @@ local _G = _G
 local format = format
 local pairs = pairs
 local print = print
+local select = select
 local tremove = tremove
 local wipe = wipe
 
 local FriendsFrame_Update = FriendsFrame_Update
+local GetClassInfo = GetClassInfo
+local GetNumClasses = GetNumClasses
 
 local customListSelected
 
@@ -1012,12 +1015,22 @@ do
 						values = function()
 							local v = {}
 							for _, style in pairs(F.GetClassIconStyleList()) do
-								local monkSample = F.GetClassIconStringWithStyle("MONK", style, 16, 16)
-								local druidSample = F.GetClassIconStringWithStyle("DRUID", style, 16, 16)
-								local paladinSample = F.GetClassIconStringWithStyle("PALADIN", style, 16, 16)
-
-								local sample = monkSample .. " " .. druidSample .. " " .. paladinSample
-								v[style] = sample
+								local sample = ""
+								local shown = 0
+								for classIndex = 1, GetNumClasses() do
+									local classFile = select(2, GetClassInfo(classIndex))
+									local icon = classFile and F.GetClassIconStringWithStyle(classFile, style, 16, 16)
+									if icon then
+										sample = sample == "" and icon or sample .. " " .. icon
+										shown = shown + 1
+										if shown == 3 then
+											break
+										end
+									end
+								end
+								if sample ~= "" then
+									v[style] = sample
+								end
 							end
 							return v
 						end,

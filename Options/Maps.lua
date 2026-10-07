@@ -970,6 +970,22 @@ options.eventTracker = {
 				ET:ProfileUpdate()
 			end,
 		},
+		hideAlertsInInstance = {
+			order = 3,
+			type = "toggle",
+			name = L["Hide Alerts in Instance"],
+			desc = L["Do not show chat messages or play alert sounds while in an instance."],
+			width = "full",
+			disabled = function()
+				return not E.db.WT.maps.eventTracker.enable
+			end,
+			get = function(info)
+				return E.db.WT.maps.eventTracker[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.maps.eventTracker[info[#info]] = value
+			end,
+		},
 		panel = {
 			order = 10,
 			type = "group",

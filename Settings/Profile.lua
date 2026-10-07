@@ -598,6 +598,7 @@ P.maps = {
 	---@class ProfileDB.maps.eventTracker
 	eventTracker = {
 		enable = true,
+		hideAlertsInInstance = false,
 		style = {
 			backdrop = true,
 			backdropYOffset = 3,

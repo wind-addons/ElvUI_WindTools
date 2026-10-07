@@ -26,6 +26,7 @@ local wipe = wipe
 local CreateFrame = CreateFrame
 local EventRegistry = EventRegistry
 local GetServerTime = GetServerTime
+local IsInInstance = IsInInstance
 local UiMapPoint_CreateFromCoordinates = UiMapPoint.CreateFromCoordinates
 
 local C_AreaPoiInfo_GetAreaPOIInfo = C_AreaPoiInfo.GetAreaPOIInfo
@@ -395,6 +396,15 @@ local function IsTrackerAlertEnabled(frame)
 		and ET.db[frame.dbKey].enable
 end
 
+local function ShouldHideAlertsInInstance()
+	if not ET.db or not ET.db.hideAlertsInInstance then
+		return false
+	end
+
+	local isInInstance = IsInInstance()
+	return isInInstance
+end
+
 local function PruneAlertCache(alertCache, currentEventIndex)
 	if not alertCache then
 		return
@@ -653,6 +663,10 @@ local FunctionFactory = {
 				end
 
 				if self.args.filter and not self.args:filter() then
+					return
+				end
+
+				if ShouldHideAlertsInInstance() then
 					return
 				end
 

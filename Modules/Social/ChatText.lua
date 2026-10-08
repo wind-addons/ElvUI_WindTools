@@ -328,17 +328,7 @@ end
 
 function CT:HandleShortChannels(msg, hide)
 	msg = gsub(msg, "|Hchannel:(.-)|h%[(.-)%]|h", hide and "" or CT.ShortChannel)
-
-	local protectedPlayerLinks = {}
-	msg = gsub(msg, "|H[BN]*player:.-|h.-|h", function(playerLink)
-		local linkIndex = #protectedPlayerLinks + 1
-		protectedPlayerLinks[linkIndex] = playerLink
-		return "\001WTPL" .. linkIndex .. "\001"
-	end)
 	msg = gsub(msg, "CHANNEL:", "")
-	msg = gsub(msg, "\001WTPL(%d+)\001", function(linkIndex)
-		return protectedPlayerLinks[tonumber(linkIndex)]
-	end)
 	msg = gsub(msg, "^(.-|h) " .. L["whispers"], "%1")
 	msg = gsub(msg, "^(.-|h) " .. L["says"], "%1")
 	msg = gsub(msg, "^(.-|h) " .. L["yells"], "%1")
@@ -1251,7 +1241,7 @@ function CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, chann
 	end
 
 	local header, body = _G['CHAT_'..chatType..'_GET']
-	local sender = (not bossMonster and not (E:NotSecretValue(arg2) and arg2 == '') and playerLink) or arg2
+	local sender = (not bossMonster and playerLink) or arg2
 	local specialType = bossMonster or (chatType == 'PET_BATTLE_INFO' or chatType == 'PET_BATTLE_COMBAT_LOG')
 	if usingDifferentLanguage then
 		body = format(header..(noBrackets and '%s %s' or '[%s] %s'), pflag..sender, arg3, msg) -- arg3 is language

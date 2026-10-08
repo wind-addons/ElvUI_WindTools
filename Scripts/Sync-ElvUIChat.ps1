@@ -423,6 +423,7 @@ function Invoke-FormatterPatches {
 
     $Text = Edit-RequiredLiteral -Text $Text -Old "format('[%s]', coloredName)" -New "format(noBrackets and '%s' or '[%s]', coloredName)" -Name "formatter-brackets-coloredName" -ExpectedCount 1
     $Text = Edit-RequiredLiteral -Text $Text -Old "format(header..'[%s] %s', pflag..sender, arg3, msg)" -New "format(header..(noBrackets and '%s %s' or '[%s] %s'), pflag..sender, arg3, msg)" -Name "formatter-brackets-language" -ExpectedCount 1
+    $Text = Edit-RequiredLiteral -Text $Text -Old "local sender = (not bossMonster and playerLink) or arg2" -New "local sender = (not bossMonster and not (E:NotSecretValue(arg2) and arg2 == '') and playerLink) or arg2" -Name "formatter-empty-sender" -ExpectedCount 1
     return $Text
 }
 

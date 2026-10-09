@@ -25,11 +25,17 @@ function data:OpenSack() -- self is BugSack, not data
 		end
 	end
 
+	-- BugSack 12.1.2 removed the BugSackScrollScrollBar global. Retail and Forever
+	-- build a MinimalScrollBar (Back/Forward); classic still uses a UIPanel slider.
 	local textArea = _G.BugSackScrollText
 	local scrollFrame = textArea and textArea:GetParent()
-	local scrollBar = scrollFrame and scrollFrame.ScrollBar
+	local scrollBar = (scrollFrame and scrollFrame.ScrollBar) or _G.BugSackScrollScrollBar
 	if scrollBar then
-		S:Proxy("HandleTrimScrollBar", scrollBar)
+		if scrollBar.Back and scrollBar.Forward then
+			S:Proxy("HandleTrimScrollBar", scrollBar)
+		else
+			S:Proxy("HandleScrollBar", scrollBar)
+		end
 	end
 
 	if textArea then

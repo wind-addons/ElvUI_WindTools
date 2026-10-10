@@ -766,36 +766,28 @@ local function FlashTabIfNotShown(frame, info, chatType, chatGroup, chatTarget)
 end
 -- [[/elvui-sync:FlashTabIfNotShown]]
 
--- [[elvui-sync:ChatFrame_CheckAddChannel sha256:24842255e143]]
-local function ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
-	-- This is called in the event that a user receives chat events for a channel that isn't enabled for any chat frames.
-	-- Minor hack, because chat channel filtering is backed by the client, but driven entirely from Lua.
-	-- This solves the issue of Guides abdicating their status, and then re-applying in the same game session, unless ChatFrame_AddChannel
-	-- is called, the channel filter will be off even though it's still enabled in the client, since abdication removes the chat channel and its config.
-	-- Only add to default (since multiple chat frames receive the event and we don't want to add to others)
+-- [[elvui-sync:ChatFrame_CheckAddChannel sha256:95b4fccbe543]]
+function CH:ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 	if chatFrame ~= _G.DEFAULT_CHAT_FRAME then
 		return false
 	end
 
-	-- Only add if the user is joining a channel
-	if eventType ~= "YOU_CHANGED" then
+	if E:IsSecretValue(eventType) or eventType ~= "YOU_CHANGED" then
 		return false
 	end
 
-	-- Only add regional channels
 	if not IsChannelRegionalForChannelID(channelID) then
 		return false
 	end
 
-	if chatFrame.AddChannel then
-		return chatFrame:AddChannel(GetChannelShortcutForChannelID(channelID)) ~= nil
-	else
-		return _G.ChatFrame_AddChannel(chatFrame, GetChannelShortcutForChannelID(channelID)) ~= nil
-	end
+	-- any return above with simply hide the message, however if it passes we actually
+	-- want to add the channel to the chat and let the message display if it was added
+	local shortcut = GetChannelShortcutForChannelID(channelID)
+	return chatFrame:AddChannel(shortcut) ~= nil
 end
 -- [[/elvui-sync:ChatFrame_CheckAddChannel]]
 
--- [[elvui-sync:ChatFrame_MessageEventHandler sha256:43e42e3bd274]]
+-- [[elvui-sync:ChatFrame_MessageEventHandler sha256:777fded92aba]]
 function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, isHistory, historyTime, historyName, historyBTag)
 	-- ElvUI Chat History Note: isHistory, historyTime, historyName, and historyBTag are passed from CH:DisplayChatHistory() and need to be on the end to prevent issues in other addons that listen on ChatFrame_MessageEventHandler.
 	-- we also send isHistory and historyTime into CH:AddMessage so that we don't have to override the timestamp.
@@ -841,7 +833,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 		coloredName = CT:HandleName(coloredName)
 
 		local channelLength = strlen(arg4)
-		local infoType = chatType
+		local chanType = chatType
 
 		if chatType == 'VOICE_TEXT' and not GetCVarBool('speechToText') then
 			return
@@ -865,8 +857,8 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 					if match then
 						found = true
 
-						infoType = 'CHANNEL'..arg8
-						info = _G.ChatTypeInfo[infoType]
+						chanType = 'CHANNEL'..arg8
+						info = _G.ChatTypeInfo[chanType]
 
 						if chatType == 'CHANNEL_NOTICE' and msgNotSecret and arg1 == 'YOU_LEFT' then
 							frame.channelList[index] = nil
@@ -878,11 +870,8 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 				end
 			end
 
-			if not found or not info then
-				local eventType, channelID = arg1, arg7
-				if not ChatFrame_CheckAddChannel(frame, eventType, channelID) then
-					return true
-				end
+			if (not found or not info) and not CH:ChatFrame_CheckAddChannel(frame, arg1, arg7) then
+				return true -- arg1, arg7 = eventType, channelID
 			end
 		end
 
@@ -1001,7 +990,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 				if not globalstring then return end
 
 				local accessID = CH:GetAccessID(chatGroup, arg8)
-				local typeID = CH:GetAccessID(infoType, arg8, arg12)
+				local typeID = CH:GetAccessID(chanType, arg8, arg12)
 				frame:AddMessage(format(globalstring, arg8, ResolvePrefixedChannelName(arg4)), info.r, info.g, info.b, info.id, accessID, typeID, nil, nil, nil, isHistory, historyTime)
 			end
 		elseif chatType == 'BN_INLINE_TOAST_ALERT' then
@@ -1089,7 +1078,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 			end
 
 			local accessID = CH:GetAccessID(chatGroup, chatTarget)
-			local typeID = CH:GetAccessID(infoType, chatTarget, arg12 or arg13)
+			local typeID = CH:GetAccessID(chanType, chatTarget, arg12 or arg13)
 			local body = isChatLineCensored and arg1 or CT:MessageFormatter(frame, info, chatType, chatGroup, chatTarget, channelLength, coloredName, historySavedName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, isHistory, historyTime, historyName, historyBTag)
 
 			frame:AddMessage(body, info.r, info.g, info.b, info.id, accessID, typeID, event, eventArgs, msgFormatter, isHistory, historyTime)

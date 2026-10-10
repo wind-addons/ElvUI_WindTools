@@ -440,7 +440,7 @@ if ($chatTextOriginal.Contains("`r`n")) {
 $extracted = [ordered]@{
     specialChatIcons              = Get-LuaDeclarationDoBlock -Source $elvuiSource -Declaration "local specialChatIcons"
     FlashTabIfNotShown            = Get-LuaFunction -Source $elvuiSource -Signature "function FlashTabIfNotShown("
-    ChatFrame_CheckAddChannel     = Get-LuaFunction -Source $elvuiSource -Signature "function ChatFrame_CheckAddChannel("
+    ChatFrame_CheckAddChannel     = Get-LuaFunction -Source $elvuiSource -Signature "function CH:ChatFrame_CheckAddChannel("
     ChatFrame_MessageEventHandler = Get-LuaFunction -Source $elvuiSource -Signature "function CH:ChatFrame_MessageEventHandler("
     MessageFormatter              = Get-LuaFunction -Source $elvuiSource -Signature "function CH:MessageFormatter("
 }

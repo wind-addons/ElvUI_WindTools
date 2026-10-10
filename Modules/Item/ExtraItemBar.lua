@@ -12,8 +12,10 @@ local pairs = pairs
 local sort = sort
 local strmatch = strmatch
 local strsplit = strsplit
+local tconcat = table.concat
 local tinsert = tinsert
 local tonumber = tonumber
+local tostring = tostring
 local unpack = unpack
 local wipe = wipe
 
@@ -31,6 +33,8 @@ local InCombatLockdown = InCombatLockdown
 local RegisterStateDriver = RegisterStateDriver
 local UnregisterStateDriver = UnregisterStateDriver
 
+local C_Container_GetContainerItemInfo = C_Container.GetContainerItemInfo
+local C_Container_GetContainerNumSlots = C_Container.GetContainerNumSlots
 local C_Item_GetItemCooldown = C_Item.GetItemCooldown
 local C_Item_GetItemCount = C_Item.GetItemCount
 local C_Item_GetItemInfoInstant = C_Item.GetItemInfoInstant
@@ -42,8 +46,10 @@ local C_QuestLog_GetQuestIDForLogIndex = C_QuestLog.GetQuestIDForLogIndex
 local C_Timer_NewTicker = C_Timer.NewTicker
 local C_TradeSkillUI_GetItemReagentQualityInfo = C_TradeSkillUI.GetItemReagentQualityInfo
 
+local Enum_BagIndex = Enum.BagIndex
 local Enum_OnUpdateMode_Disabled = Enum.OnUpdateMode.Disabled
 local Enum_OnUpdateMode_RunWhenVisible = Enum.OnUpdateMode.RunWhenVisible
+local NUM_BAG_SLOTS = NUM_BAG_SLOTS
 
 local questItemList = {}
 local function UpdateQuestItemList()
@@ -385,6 +391,17 @@ function EB:UpdateButtonSize(button, barDB)
 end
 
 function EB:PLAYER_REGEN_ENABLED()
+	local needsBagItemCounts = false
+	for i = 1, 5 do
+		if UpdateAfterCombat[i] then
+			needsBagItemCounts = true
+			break
+		end
+	end
+	if needsBagItemCounts then
+		self:UpdateBagItemCounts()
+	end
+
 	for i = 1, 5 do
 		if UpdateAfterCombat[i] then
 			self:UpdateBar(i)
@@ -489,6 +506,90 @@ function EB:CreateBar(id)
 	self.bars[id] = bar
 end
 
+local function AppendLayoutValue(layoutParts, value)
+	tinsert(layoutParts, tostring(value))
+end
+
+local function GetBarLayoutKey(barDB)
+	local layoutParts = {}
+	local qualityTier = barDB.qualityTier
+	local countFont = barDB.countFont
+	local bindFont = barDB.bindFont
+	local countColor = countFont and countFont.color
+	local bindColor = bindFont and bindFont.color
+
+	AppendLayoutValue(layoutParts, barDB.buttonWidth)
+	AppendLayoutValue(layoutParts, barDB.buttonHeight)
+	AppendLayoutValue(layoutParts, barDB.spacing)
+	AppendLayoutValue(layoutParts, barDB.anchor)
+	AppendLayoutValue(layoutParts, barDB.buttonsPerRow)
+	AppendLayoutValue(layoutParts, barDB.numButtons)
+	AppendLayoutValue(layoutParts, barDB.backdropSpacing)
+	AppendLayoutValue(layoutParts, barDB.backdrop)
+	AppendLayoutValue(layoutParts, barDB.visibility)
+	AppendLayoutValue(layoutParts, barDB.globalFade)
+	AppendLayoutValue(layoutParts, barDB.mouseOver)
+	AppendLayoutValue(layoutParts, barDB.alphaMin)
+	AppendLayoutValue(layoutParts, barDB.alphaMax)
+	AppendLayoutValue(layoutParts, qualityTier and qualityTier.size)
+	AppendLayoutValue(layoutParts, qualityTier and qualityTier.xOffset)
+	AppendLayoutValue(layoutParts, qualityTier and qualityTier.yOffset)
+	AppendLayoutValue(layoutParts, countFont and countFont.name)
+	AppendLayoutValue(layoutParts, countFont and countFont.size)
+	AppendLayoutValue(layoutParts, countFont and countFont.style)
+	AppendLayoutValue(layoutParts, countFont and countFont.xOffset)
+	AppendLayoutValue(layoutParts, countFont and countFont.yOffset)
+	AppendLayoutValue(layoutParts, countColor and countColor.r)
+	AppendLayoutValue(layoutParts, countColor and countColor.g)
+	AppendLayoutValue(layoutParts, countColor and countColor.b)
+	AppendLayoutValue(layoutParts, bindFont and bindFont.name)
+	AppendLayoutValue(layoutParts, bindFont and bindFont.size)
+	AppendLayoutValue(layoutParts, bindFont and bindFont.style)
+	AppendLayoutValue(layoutParts, bindFont and bindFont.xOffset)
+	AppendLayoutValue(layoutParts, bindFont and bindFont.yOffset)
+	AppendLayoutValue(layoutParts, bindColor and bindColor.r)
+	AppendLayoutValue(layoutParts, bindColor and bindColor.g)
+	AppendLayoutValue(layoutParts, bindColor and bindColor.b)
+
+	return tconcat(layoutParts, "|")
+end
+
+function EB:UpdateBagItemCounts()
+	if not self.bagItemCounts then
+		self.bagItemCounts = {}
+	end
+	wipe(self.bagItemCounts)
+
+	local firstBagIndex = Enum_BagIndex and Enum_BagIndex.Backpack or 0
+	local lastBagIndex = Enum_BagIndex and Enum_BagIndex.ReagentBag or NUM_BAG_SLOTS
+	for bagIndex = firstBagIndex, lastBagIndex do
+		local numSlots = C_Container_GetContainerNumSlots(bagIndex)
+		if numSlots and numSlots > 0 then
+			for slotIndex = 1, numSlots do
+				local itemInfo = C_Container_GetContainerItemInfo(bagIndex, slotIndex)
+				if itemInfo and itemInfo.itemID and itemInfo.stackCount then
+					local itemID = itemInfo.itemID
+					self.bagItemCounts[itemID] = (self.bagItemCounts[itemID] or 0) + itemInfo.stackCount
+				end
+			end
+		end
+	end
+end
+
+function EB:UpdateShownButtonCounts(bar, numShown)
+	for buttonIndex = 1, numShown do
+		local button = bar.buttons[buttonIndex]
+		if button.itemID then
+			button.countText = C_Item_GetItemCount(button.itemID, nil, true)
+			if button.countText and button.countText > 1 then
+				button.count:SetText(button.countText)
+			else
+				button.count:SetText()
+			end
+		end
+	end
+end
+
 function EB:ValidateItem(itemID)
 	if not itemID then
 		return false
@@ -502,9 +603,9 @@ function EB:ValidateItem(itemID)
 		return false
 	end
 
-	local count = C_Item_GetItemCount(itemID)
+	local count = self.bagItemCounts and self.bagItemCounts[itemID] or 0
 	local countThreshold = self.CountThreshold[itemID] or 1
-	if not count or count < countThreshold then
+	if count < countThreshold then
 		return false
 	end
 
@@ -519,12 +620,6 @@ function EB:UpdateBar(id)
 	local bar = self.bars[id]
 	local barDB = self.db["bar" .. id]
 
-	if bar.waitGroup and bar.waitGroup.ticker then
-		bar.waitGroup.ticker:Cancel()
-	end
-
-	bar.waitGroup = { count = 0 }
-
 	if InCombatLockdown() then
 		self:UpdateBarTextOnCombat(id)
 		UpdateAfterCombat[id] = true
@@ -538,27 +633,33 @@ function EB:UpdateBar(id)
 			bar.register = false
 			bar.registeredVisibility = nil
 		end
+		bar.shownSignature = nil
+		bar.layoutKey = nil
 		bar:Hide()
 		return
 	end
 
-	local buttonID = 1
+	local shownEntries = {}
+	local shownKeys = {}
 
 	local function addNormalButton(itemID)
-		if self:ValidateItem(itemID) and buttonID <= barDB.numButtons then
-			self:SetUpButton(bar.buttons[buttonID], { itemID = itemID }, nil, bar.waitGroup)
-			self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-			buttonID = buttonID + 1
+		if #shownEntries >= barDB.numButtons or not self:ValidateItem(itemID) then
+			return
 		end
+		tinsert(shownEntries, { itemID = itemID })
+		tinsert(shownKeys, format("item:%s", itemID))
 	end
 
 	local function addSlotButton(slotID)
-		local itemID = GetInventoryItemID("player", slotID)
-		if self:ValidateItem(itemID) and buttonID <= barDB.numButtons then
-			self:SetUpButton(bar.buttons[buttonID], nil, slotID, bar.waitGroup)
-			self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-			buttonID = buttonID + 1
+		if #shownEntries >= barDB.numButtons then
+			return
 		end
+		local itemID = GetInventoryItemID("player", slotID)
+		if not self:ValidateItem(itemID) then
+			return
+		end
+		tinsert(shownEntries, { slotID = slotID })
+		tinsert(shownKeys, format("slot:%s", slotID))
 	end
 
 	local function addNormalButtons(list)
@@ -568,32 +669,61 @@ function EB:UpdateBar(id)
 	end
 
 	for _, module in ipairs({ strsplit("[, ]", barDB.include) }) do
-		if buttonID <= barDB.numButtons then
-			if self.ModuleList[module] then
-				addNormalButtons(self.ModuleList[module])
-			elseif module == "QUEST" then -- Quest Items
-				for _, data in ipairs(questItemList) do
-					addNormalButton(data.itemID)
-				end
-			elseif module == "EQUIP" then -- Equipments
+		if #shownEntries >= barDB.numButtons then
+			break
+		end
+		if self.ModuleList[module] then
+			addNormalButtons(self.ModuleList[module])
+		elseif module == "QUEST" then -- Quest Items
+			for _, data in ipairs(questItemList) do
+				addNormalButton(data.itemID)
+			end
+		elseif module == "EQUIP" then -- Equipments
+			for _, slotID in pairs(equipmentList) do
+				addSlotButton(slotID)
+			end
+		elseif strmatch(module, "^SLOT:") then -- Equipments filtered by slot ID
+			local slotFilter = strmatch(module, "^SLOT:(.+)$")
+			local allowedSlots = ParseSlotFilter(slotFilter)
+			if allowedSlots then
 				for _, slotID in pairs(equipmentList) do
-					addSlotButton(slotID)
-				end
-			elseif strmatch(module, "^SLOT:") then -- Equipments filtered by slot ID
-				local slotFilter = strmatch(module, "^SLOT:(.+)$")
-				local allowedSlots = ParseSlotFilter(slotFilter)
-				if allowedSlots then
-					for _, slotID in pairs(equipmentList) do
-						if allowedSlots[slotID] then
-							addSlotButton(slotID)
-						end
+					if allowedSlots[slotID] then
+						addSlotButton(slotID)
 					end
 				end
-			elseif module == "CUSTOM" then -- Custom Items
-				addNormalButtons(self.db.customList)
 			end
+		elseif module == "CUSTOM" then -- Custom Items
+			addNormalButtons(self.db.customList)
 		end
 	end
+
+	local shownSignature = tconcat(shownKeys, ",")
+	local layoutKey = GetBarLayoutKey(barDB)
+	if shownSignature == bar.shownSignature and layoutKey == bar.layoutKey then
+		self:UpdateShownButtonCounts(bar, #shownEntries)
+		return
+	end
+
+	bar.shownSignature = shownSignature
+	bar.layoutKey = layoutKey
+
+	if bar.waitGroup and bar.waitGroup.ticker then
+		bar.waitGroup.ticker:Cancel()
+	end
+
+	bar.waitGroup = { count = 0 }
+
+	for buttonIndex, shownEntry in ipairs(shownEntries) do
+		local button = bar.buttons[buttonIndex]
+		if shownEntry.slotID then
+			self:SetUpButton(button, nil, shownEntry.slotID, bar.waitGroup)
+		else
+			self:SetUpButton(button, { itemID = shownEntry.itemID }, nil, bar.waitGroup)
+		end
+		self:UpdateButtonSize(button, barDB)
+	end
+
+	local buttonID = #shownEntries + 1
 
 	-- Resize bar
 	local numRows = ceil((buttonID - 1) / barDB.buttonsPerRow)
@@ -750,6 +880,7 @@ end
 
 function EB:UpdateBars()
 	self:UpdateState(EB.STATE.IN_DELVE)
+	self:UpdateBagItemCounts()
 	for i = 1, 5 do
 		self:UpdateBar(i)
 	end

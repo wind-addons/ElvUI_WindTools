@@ -32,57 +32,114 @@ function RM:SetHereBeDragonsPinShown(pin, isShown)
 	end
 end
 
-function RM:HereBeDragonsPinsFix()
-	if self.hereBeDragonsPinsFixed or not self.db or not self.db.fixHereBeDragons then
+function RM:HookHereBeDragonsPin(pin)
+	if pin.__windHbdHooked or not pin.IsObjectType or not pin:IsObjectType("Frame") then
 		return
 	end
 
-	local lib = _G.LibStub("HereBeDragons-Pins-2.0", true)
-	if not lib or not lib.updateFrame or not lib.activeMinimapPins then
-		return
-	end
-
-	local OnUpdate = lib.updateFrame.GetScript and lib.updateFrame:GetScript("OnUpdate")
-	if not OnUpdate then
-		return
-	end
-
-	self:SecureHookScript(lib.updateFrame, "OnUpdate", function()
-		local minimapCenterY = lib.Minimap and select(2, lib.Minimap:GetCenter())
-		if not minimapCenterY or not self.effectiveHeight then
-			return
+	self:SecureHook(pin, "SetAlpha", function(_pin, _, skipFlag)
+		if not skipFlag and _pin.__windHidden then
+			_pin:SetAlpha(0, true)
 		end
+	end)
+	self:SecureHook(pin, "Show", function(_pin)
+		if _pin.__windHidden then
+			_pin:SetAlpha(0, true)
+		end
+	end)
+	-- HereBeDragons-Pins-2.0 drawMinimapPin only calls SetPoint when the player moves, zooms, or turns.
+	self:SecureHook(pin, "SetPoint", function()
+		self.hereBeDragonsPinsMoved = true
+	end)
+	pin.__windHbdHooked = true
+end
 
-		local halfHeightLimit = self.effectiveHeight / 2 - self.db.pinHidingTolerance
-		for pin in pairs(lib.activeMinimapPins) do
-			if pin then
-				if not pin.__windHbdHooked then
-					if pin.IsObjectType and pin:IsObjectType("Frame") then
-						self:SecureHook(pin, "SetAlpha", function(_pin, _, skipFlag)
-							if not skipFlag and _pin.__windHidden then
-								_pin:SetAlpha(0, true)
-							end
-						end)
-						self:SecureHook(pin, "Show", function(_pin)
-							if _pin.__windHidden then
-								_pin:SetAlpha(0, true)
-							end
-						end)
-						pin.__windHbdHooked = true
-					end
-				end
+function RM:RefreshHereBeDragonsPins()
+	local lib = self.hereBeDragonsLib
+	if not lib or not lib.Minimap or not lib.activeMinimapPins or not self.effectiveHeight or not self.db then
+		return
+	end
 
-				if pin.__windHbdHooked then
-					local pinCenterY = select(2, pin:GetCenter())
-					if pinCenterY then
-						self:SetHereBeDragonsPinShown(pin, abs(pinCenterY - minimapCenterY) <= halfHeightLimit)
-					end
+	local minimapCenterY = select(2, lib.Minimap:GetCenter())
+	if not minimapCenterY then
+		return
+	end
+
+	local halfHeightLimit = self.effectiveHeight / 2 - self.db.pinHidingTolerance
+	local forceShown = not self.db.enable or not self.db.fixHereBeDragons
+	for pin in pairs(lib.activeMinimapPins) do
+		if pin and pin.__windHbdHooked then
+			local pinCenterY = select(2, pin:GetCenter())
+			if pinCenterY then
+				local shouldShow = forceShown or abs(pinCenterY - minimapCenterY) <= halfHeightLimit
+				if shouldShow ~= not pin.__windHidden then
+					self:SetHereBeDragonsPinShown(pin, shouldShow)
 				end
 			end
 		end
-	end)
+	end
+end
 
-	self.hereBeDragonsPinsFixed = true
+function RM:HereBeDragonsPinsFix()
+	if not self.db then
+		return
+	end
+
+	if not self.hereBeDragonsPinsFixed then
+		if not self.db.fixHereBeDragons then
+			return
+		end
+
+		local lib = _G.LibStub("HereBeDragons-Pins-2.0", true)
+		if not lib or not lib.updateFrame or not lib.activeMinimapPins or not lib.Minimap then
+			return
+		end
+
+		local OnUpdate = lib.updateFrame.GetScript and lib.updateFrame:GetScript("OnUpdate")
+		if not OnUpdate then
+			return
+		end
+
+		self.hereBeDragonsLib = lib
+		self:SecureHookScript(lib.updateFrame, "OnUpdate", function()
+			if not self.db or not self.db.enable or not self.db.fixHereBeDragons or not self.effectiveHeight then
+				self.hereBeDragonsPinsMoved = nil
+				return
+			end
+
+			local foundUnhookedPin = false
+			for pin in pairs(lib.activeMinimapPins) do
+				if pin and not pin.__windHbdHooked then
+					self:HookHereBeDragonsPin(pin)
+					if pin.__windHbdHooked then
+						foundUnhookedPin = true
+					end
+				end
+			end
+
+			if not foundUnhookedPin and not self.hereBeDragonsPinsMoved then
+				return
+			end
+
+			self.hereBeDragonsPinsMoved = nil
+			self:RefreshHereBeDragonsPins()
+		end)
+		self.hereBeDragonsPinsFixed = true
+	end
+
+	if not self.hereBeDragonsLib then
+		return
+	end
+
+	if self.db.fixHereBeDragons then
+		for pin in pairs(self.hereBeDragonsLib.activeMinimapPins) do
+			if pin then
+				self:HookHereBeDragonsPin(pin)
+			end
+		end
+	end
+
+	self:RefreshHereBeDragonsPins()
 end
 
 function RM:ChangeShape()

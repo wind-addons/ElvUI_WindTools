@@ -55,26 +55,28 @@ function RM:HereBeDragonsPinsFix()
 
 		local halfHeightLimit = self.effectiveHeight / 2 - self.db.pinHidingTolerance
 		for pin in pairs(lib.activeMinimapPins) do
-			if pin and pin.IsObjectType and pin:IsObjectType("Frame") then
-				if not self:IsHooked(pin, "SetAlpha") then
-					self:SecureHook(pin, "SetAlpha", function(_pin, _, skipFlag)
-						if not skipFlag and _pin.__windHidden then
-							_pin:SetAlpha(0, true)
-						end
-					end)
+			if pin then
+				if not pin.__windHbdHooked then
+					if pin.IsObjectType and pin:IsObjectType("Frame") then
+						self:SecureHook(pin, "SetAlpha", function(_pin, _, skipFlag)
+							if not skipFlag and _pin.__windHidden then
+								_pin:SetAlpha(0, true)
+							end
+						end)
+						self:SecureHook(pin, "Show", function(_pin)
+							if _pin.__windHidden then
+								_pin:SetAlpha(0, true)
+							end
+						end)
+						pin.__windHbdHooked = true
+					end
 				end
 
-				if not self:IsHooked(pin, "Show") then
-					self:SecureHook(pin, "Show", function()
-						if pin.__windHidden then
-							pin:SetAlpha(0, true)
-						end
-					end)
-				end
-
-				local pinCenterY = select(2, pin:GetCenter())
-				if pinCenterY then
-					self:SetHereBeDragonsPinShown(pin, abs(pinCenterY - minimapCenterY) <= halfHeightLimit)
+				if pin.__windHbdHooked then
+					local pinCenterY = select(2, pin:GetCenter())
+					if pinCenterY then
+						self:SetHereBeDragonsPinShown(pin, abs(pinCenterY - minimapCenterY) <= halfHeightLimit)
+					end
 				end
 			end
 		end

@@ -766,7 +766,7 @@ local function FlashTabIfNotShown(frame, info, chatType, chatGroup, chatTarget)
 end
 -- [[/elvui-sync:FlashTabIfNotShown]]
 
--- [[elvui-sync:ChatFrame_CheckAddChannel sha256:95b4fccbe543]]
+-- [[elvui-sync:ChatFrame_CheckAddChannel sha256:5103301ab39a]]
 function CH:ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 	if chatFrame ~= _G.DEFAULT_CHAT_FRAME then
 		return false
@@ -776,7 +776,8 @@ function CH:ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 		return false
 	end
 
-	if not IsChannelRegionalForChannelID(channelID) then
+	-- Only exists in Retail/Forever
+	if IsChannelRegionalForChannelID and not IsChannelRegionalForChannelID(channelID) then
 		return false
 	end
 

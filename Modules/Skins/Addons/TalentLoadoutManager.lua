@@ -3,7 +3,6 @@ local S = W.Modules.Skins ---@type Skins
 local ES = E.Skins
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
 S:AddCallbackForAddon("TalentLoadoutManager", nil, S:CreateAddonCheck("talentLoadoutManager"))
@@ -42,37 +41,43 @@ local function SkinSideBarFrame(sideBar)
 	sideBar.__windSkin = true
 end
 
----@param button Button
-local function SkinToggleButton(button)
+---Same condition as SideBarMixin:SetCollapsed, using SideBarMixin.Enum.AnchorLocation.
+---@param module TLM_SideBarMixin
+---@return boolean pointingRight
+local function IsToggleArrowPointingRight(module)
+	local anchor = module:GetAnchorLocation()
+	local collapsed = module:GetCollapsed()
+	local Anchor = module.Enum.AnchorLocation
+	return (not collapsed and (anchor == Anchor.LeftOuter or anchor == Anchor.RightInner))
+		or (collapsed and (anchor == Anchor.RightOuter or anchor == Anchor.LeftInner))
+end
+
+---@param module TLM_SideBarMixin
+local function UpdateToggleArrow(module)
+	local button = module.SideBar and module.SideBar.ToggleSideBarButton
+	if not button or not button.windArrow then
+		return
+	end
+
+	local rotation = IsToggleArrowPointingRight(module) and ES.ArrowRotation.right or ES.ArrowRotation.left
+	button.windArrow:SetRotation(rotation)
+end
+
+---@param module TLM_SideBarMixin
+local function SkinToggleButton(module)
+	local button = module.SideBar and module.SideBar.ToggleSideBarButton
 	if not button or button.__windSkin then
 		return
 	end
 
-	S:Proxy("HandleButton", button, nil, nil, nil, nil, nil, nil, true)
-
-	local normalTexture = button:GetNormalTexture()
-	local highlightTexture = button:GetHighlightTexture()
-	if normalTexture then
-		normalTexture:SetAlpha(0)
-	end
-	if highlightTexture then
-		highlightTexture:SetAlpha(0)
-	end
+	S:Proxy("HandleButton", button)
 
 	button.windArrow = button:CreateTexture(nil, "OVERLAY")
 	button.windArrow:SetTexture(E.Media.Textures.ArrowUp)
 	button.windArrow:Point("CENTER")
 	button.windArrow:Size(14)
 
-	if normalTexture then
-		hooksecurefunc(normalTexture, "SetTexCoord", function(_, ...)
-			if F.IsAlmost({ 0.15625, 0.5, 0.84375, 0.5, 0.15625, 0, 0.84375, 0 }, { ... }) then
-				button.windArrow:SetRotation(ES.ArrowRotation.right)
-			elseif F.IsAlmost({ 0.15625, 0, 0.84375, 0, 0.15625, 0.5, 0.84375, 0.5 }, { ... }) then
-				button.windArrow:SetRotation(ES.ArrowRotation.left)
-			end
-		end)
-	end
+	UpdateToggleArrow(module)
 
 	button.__windSkin = true
 end
@@ -88,23 +93,6 @@ local function SkinListRow(frame)
 	end
 
 	frame.__windSkin = true
-end
-
----@param scrollBox any WowScrollBoxList
-local function SkinScrollBox(scrollBox)
-	if not scrollBox or scrollBox.__windSkinHooked then
-		return
-	end
-
-	for _, frame in scrollBox:EnumerateFrames() do
-		SkinListRow(frame)
-	end
-
-	hooksecurefunc(scrollBox, "Update", function(box)
-		box:ForEachFrame(SkinListRow)
-	end)
-
-	scrollBox.__windSkinHooked = true
 end
 
 ---@param dialog TLM_SideBar
@@ -147,34 +135,47 @@ end
 
 ---@param module TLM_SideBarMixin
 local function SkinSideBarModule(module)
-	if not module then
+	if not module or not module.SideBar then
 		return
 	end
 
-	if module.SideBar then
-		SkinSideBarFrame(module.SideBar)
-		SkinToggleButton(module.SideBar.ToggleSideBarButton)
+	SkinSideBarFrame(module.SideBar)
+	SkinToggleButton(module)
+	SkinImportDialog(module.importDialog)
 
-		local scrollBox = module.SideBar.ScrollBoxContainer and module.SideBar.ScrollBoxContainer.ScrollBox
-		SkinScrollBox(scrollBox)
+	local scrollBox = module.SideBar.ScrollBoxContainer and module.SideBar.ScrollBoxContainer.ScrollBox
+	if scrollBox then
+		for _, frame in scrollBox:EnumerateFrames() do
+			SkinListRow(frame)
+		end
 	end
 
-	if module.importDialog then
-		SkinImportDialog(module.importDialog)
+	if module.__windSkinHooks then
+		return
 	end
+
+	module.__windSkinHooks = true
+	S:SecureHook(module, "SetCollapsed", UpdateToggleArrow)
+	S:SecureHook(module, "OnListElementInitialized", function(_, frame)
+		SkinListRow(frame)
+	end)
 end
 
 function S:TalentLoadoutManager()
-	local addon = _G.LibStub("AceAddon-3.0"):GetAddon("TalentLoadoutManager", true)
-	if not addon then
+	local TLM = _G.TalentLoadoutManager
+	if not TLM or not TLM.RegisterCallback or not TLM.Event or not TLM.Event.SideBarLoaded or not TLM.GetSideBar then
 		return
 	end
 
-	for _, moduleName in pairs({ "SideBar", "TTVSideBar" }) do
-		local module = addon:GetModule(moduleName, true)
-		if module then
-			SkinSideBarModule(module)
-			self:SecureHook(module, "SetupHook", SkinSideBarModule)
+	-- CallbackRegistryMixin calls func(owner, ...), and SideBarLoaded's payload is sideBarName, sideBar.
+	TLM:RegisterCallback(TLM.Event.SideBarLoaded, function(_, _, sideBar)
+		SkinSideBarModule(sideBar)
+	end, S)
+
+	-- SideBarLoaded does not replay. sideBars is filled in OnInitialize, before the frame exists.
+	if TLM.sideBars then
+		for sideBarName in pairs(TLM.sideBars) do
+			SkinSideBarModule(TLM:GetSideBar(sideBarName))
 		end
 	end
 end

@@ -68,6 +68,9 @@ W.Changelog[422] = {
 			"[聊天文字] 同步 ElvUI 聊天模块. 频道消息只有在发送者 GUID 有效时才会生成玩家链接, 已收藏外观的消息会正常格式化, 秘密名称会跳过职业和职责查询.",
 			"[装备观察] 武器栏物品等级缺失时, 装等线条不再报错.",
 			"[史诗钥石] 单位名字或服务器为秘密值时, 会跳过鼠标提示中的钥石信息.",
+			"[装备观察] 在 WoW Forever 上, 装备列表现在会向右偏移, 以免挡住角色和观察界面的侧边标签.",
+			"[游戏条] 在 WoW Forever 上, 成就按钮会打开传承界面, 鼠标提示会显示当前和最大传承点数.",
+			"[高级] [游戏修复] 现在也会在 WoW Forever 上生效. [修复 SetPassThroughButtons] 默认仍然关闭.",
 		},
 		["zhTW"] = {
 			"[美化外觀] 修復 SilverDragon 戰利品視窗與提示框在從物件池中被重複使用後, 皮膚會還原為暴雪預設外觀的問題.",
@@ -90,6 +93,9 @@ W.Changelog[422] = {
 			"[聊天文字] 同步 ElvUI 聊天模組. 頻道訊息只有在發送者 GUID 有效時才會產生玩家連結, 已收藏外觀的訊息會正常格式化, 秘密名稱會跳過職業和職責查詢.",
 			"[裝備觀察] 武器欄物品等級缺失時, 裝等線條不再報錯.",
 			"[鑰石] 單位名字或伺服器為秘密值時, 會跳過滑鼠提示中的鑰石資訊.",
+			"[裝備觀察] 在 WoW Forever 上, 裝備列表現在會向右偏移, 以免擋住角色和觀察介面的側邊標籤.",
+			"[遊戲條] 在 WoW Forever 上, 成就按鈕會打開傳承介面, 滑鼠提示會顯示目前和最大傳承點數.",
+			"[進階] [遊戲修復] 現在也會在 WoW Forever 上生效. [修正 SetPassThroughButtons] 預設仍然關閉.",
 		},
 		["enUS"] = {
 			"[Skins] Fix SilverDragon's loot window and tooltips reverting to the default Blizzard look after being reused from its object pool.",
@@ -112,6 +118,9 @@ W.Changelog[422] = {
 			"[Chat Text] Synced with ElvUI chat. Channel lines get a player link only when the sender GUID is valid, collected appearance messages are formatted, and secret names skip class and role lookups.",
 			"[Inspect] The weapon slot item level line no longer errors when item level is missing.",
 			"[Keystone] The tooltip keystone line is skipped when the unit name or realm is secret.",
+			"[Inspect] On WoW Forever, the gear panel is shifted right so it clears the character and inspect side tabs.",
+			"[Game Bar] On WoW Forever, the achievements button opens the legacy UI, and its tooltip shows current and maximum legacy points.",
+			"[Advanced] Game Fix options now apply on WoW Forever. Fix SetPassThroughButtons remains disabled by default.",
 		},
 		["koKR"] = {
 			"[스킨] SilverDragon 전리품 창과 툴팁이 오브젝트 풀에서 재사용된 후 기본 블리자드 모양으로 되돌아가던 문제를 수정했습니다.",
@@ -134,6 +143,9 @@ W.Changelog[422] = {
 			"[채팅 문자] ElvUI 채팅과 동기화했습니다. 채널 메시지는 보낸 사람 GUID가 유효할 때만 플레이어 링크를 만들고, 수집한 형상 메시지도 형식에 맞게 표시하며, 비밀 이름은 직업과 역할 조회를 건너뜁니다.",
 			"[살펴보기] 무기 칸의 아이템 레벨이 없을 때 아이템 레벨 선이 더 이상 오류를 내지 않습니다.",
 			"[쐐기돌] 유닛 이름이나 서버가 비밀 값이면 툴팁의 쐐기돌 정보를 건너뜁니다.",
+			"[살펴보기] WoW Forever에서 장비 목록이 오른쪽으로 이동하여 캐릭터와 살펴보기 창의 측면 탭을 가리지 않습니다.",
+			"[게임 바] WoW Forever에서 업적 버튼이 유산 인터페이스를 열고, 툴팁에 현재와 최대 유산 점수를 표시합니다.",
+			"[고급] 게임 수정이 이제 WoW Forever에도 적용됩니다. SetPassThroughButtons 오류 수정은 기본적으로 꺼져 있습니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Исправлена проблема, когда окно добычи и подсказки SilverDragon возвращались к стандартному виду Blizzard после повторного использования из пула объектов.",
@@ -156,6 +168,9 @@ W.Changelog[422] = {
 			"[Текст чата] Синхронизировано с чатом ElvUI. Ссылка на игрока в канале создаётся только при действительном GUID отправителя, сообщения о собранных обликах форматируются, а скрытые имена пропускают запросы класса и роли.",
 			"[Осмотр] Линия уровня предмета в слоте оружия больше не вызывает ошибку, если уровень предмета отсутствует.",
 			"[Эпохальный ключ] Строка ключа в подсказке пропускается, если имя или игровой мир юнита скрыты.",
+			"[Осмотр] В WoW Forever панель экипировки сдвинута вправо, чтобы не перекрывать боковые вкладки окна персонажа и осмотра.",
+			"[Игровая панель] В WoW Forever кнопка достижений открывает интерфейс наследия, а подсказка показывает текущие и максимальные очки наследия.",
+			"[Дополнительно] Параметры «Исправление игры» теперь действуют и в WoW Forever. «Исправление SetPassThroughButtons» по-прежнему выключено по умолчанию.",
 		},
 	},
 }

@@ -174,6 +174,37 @@ W.RaidData = {
 			{ 61477 },
 		},
 	},
+	[3214] = {
+		abbr = L["[ABBR] Sporefall"],
+		tex = 7852000,
+		achievements = {
+			{ 63233 },
+			{ 63234 },
+			{ 63235 },
+			{ 63236 },
+		},
+	},
+	[3262] = {
+		abbr = L["[ABBR] The Unbinding of Kith'ix"],
+		tex = 8280895,
+		achievements = {
+			{ 63839 },
+			{ 63840 },
+			{ 63841 },
+			{ 63842 },
+		},
+	},
+	[3277] = {
+		abbr = L["[ABBR] The Tidebound Grotto"],
+		tex = 8164250,
+		achievements = {
+			-- World difficulty, shown in the Raid Finder column
+			{ 63613 },
+			{ 63614 },
+			{ 63615 },
+			{ 63616 },
+		},
+	},
 	[3311] = {
 		abbr = L["[ABBR] The Venomous Abyss"],
 		tex = 8039391,

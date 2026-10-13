@@ -68,13 +68,15 @@ local isExpansion_Dragonflight = function()
 	end
 end
 
-local isForever = toc >= 16000 and toc < 20000
-
 --don't load if it's not retail, emergencial patch due to classic and bcc stuff not transposed yet
--- Forever shares a mainline project id but has no raid/keystone content
-if isForever or (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and not isExpansion_Dragonflight()) then
+if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and not isExpansion_Dragonflight()) then
     return
 end
+
+if gameVersion < 100000 then
+    return
+end
+
 
 local major = "LibOpenRaid-1.0"
 

@@ -88,7 +88,7 @@ function OT:CosmeticBar(header)
 		bar = header:CreateTexture()
 		local backdrop = CreateFrame("Frame", nil, header)
 		backdrop:SetFrameStrata("BACKGROUND")
-		backdrop:SetTemplate()
+		backdrop:SetTemplate(nil, nil, true) -- ignoreUpdates: keep the sweep from restoring the center
 		backdrop:SetOutside(bar, 1, 1)
 		backdrop.Center:SetAlpha(0)
 		S:CreateShadow(backdrop, 2, nil, nil, nil, true)

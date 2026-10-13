@@ -929,7 +929,28 @@ local ButtonTypes = {
 }
 
 if E.Forever then
-	ButtonTypes.ACHIEVEMENTS = nil
+	local legacyConsts = Constants and Constants.LegacyConsts
+	local getCurrentRenownLevel = C_MajorFactions and C_MajorFactions.GetCurrentRenownLevel
+	local getMaxAvailableTraitCurrency = C_Traits and C_Traits.GetMaxAvailableTraitCurrency
+
+	ButtonTypes.ACHIEVEMENTS.macro = nil
+	ButtonTypes.ACHIEVEMENTS.click = {
+		LeftButton = function()
+			_G.ToggleLegacySystemUI()
+		end,
+	}
+	ButtonTypes.ACHIEVEMENTS.tooltips = function()
+		DT.tooltip:ClearLines()
+		DT.tooltip:SetText(_G.LEGACY_BUTTON or L["Achievements"])
+		if legacyConsts and getCurrentRenownLevel and getMaxAvailableTraitCurrency then
+			local currentLegacyPoints = getCurrentRenownLevel(legacyConsts.LEGACY_REWARD_TRACK_FACTION_ID)
+			local maxLegacyPoints = getMaxAvailableTraitCurrency(legacyConsts.LEGACY_POINTS_TRAIT_CURRENCY_ID, false)
+			if currentLegacyPoints and maxLegacyPoints then
+				DT.tooltip:AddLine(format("%s / %s", currentLegacyPoints, maxLegacyPoints), 1, 1, 1)
+			end
+		end
+		DT.tooltip:Show()
+	end
 	ButtonTypes.ENCOUNTER_JOURNAL = nil
 	ButtonTypes.HOME = nil
 	ButtonTypes.MISSION_REPORTS = nil

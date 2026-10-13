@@ -776,18 +776,42 @@ function I:ShouldShowPanel(unit, parent)
 	return true
 end
 
+local function GetForeverSideTabOffset(parent)
+	local sideTabOffset = 3
+	if not E.Forever then
+		return sideTabOffset
+	end
+
+	local hostFrame
+	if parent == _G.PaperDollFrame then
+		hostFrame = _G.CharacterFrame
+	elseif parent == _G.InspectFrame then
+		hostFrame = parent
+	end
+
+	local modeTabs = hostFrame and hostFrame.ModeTabs and hostFrame.ModeTabs.Tabs
+	local firstModeTab = modeTabs and modeTabs[1]
+	local firstModeTabWidth = firstModeTab and firstModeTab:GetWidth() or 0
+	if firstModeTabWidth > 0 then
+		sideTabOffset = sideTabOffset + firstModeTabWidth + 3
+	end
+
+	return sideTabOffset
+end
+
 function I:CreatePanel(parent)
 	if parent.WTInspect then
 		return parent.WTInspect
 	end
 
 	local frame = CreateFrame("Frame", nil, parent)
+	local sideTabOffset = GetForeverSideTabOffset(parent)
 
 	-- Frame
 	frame:Width(PANEL_MIN_WIDTH)
 	frame:SetFrameLevel(0)
-	frame:Point("TOPLEFT", parent, "TOPRIGHT", 3, 0)
-	frame:Point("BOTTOMLEFT", parent, "BOTTOMRIGHT", 3, 0)
+	frame:Point("TOPLEFT", parent, "TOPRIGHT", sideTabOffset, 0)
+	frame:Point("BOTTOMLEFT", parent, "BOTTOMRIGHT", sideTabOffset, 0)
 	frame:SetTemplate("Transparent")
 	S:CreateShadowModule(frame)
 	S:MerathilisUISkin(frame)

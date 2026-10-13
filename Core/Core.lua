@@ -227,14 +227,14 @@ function W:GameFixing()
 		end)
 	end
 
-	if E.global.WT.core.fixSetPassThroughButtons and not E.Forever then
+	if E.global.WT.core.fixSetPassThroughButtons then
 		_G.QuestPinMixin.SetPassThroughButtons = nop
 		_G.BonusObjectivePinMixin.SetPassThroughButtons = nop
 		_G.WorldQuestPinMixin.SetPassThroughButtons = nop
 		_G.FlightPointPinMixin.SetPassThroughButtons = nop
 	end
 
-	if E.global.WT.core.fixMawBuffs and not E.Forever then
+	if E.global.WT.core.fixMawBuffs then
 		local originalShouldShowMawBuffs = _G.ShouldShowMawBuffs
 		_G.ShouldShowMawBuffs = function()
 			if C_Secrets_ShouldAurasBeSecret() then

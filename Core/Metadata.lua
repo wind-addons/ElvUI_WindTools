@@ -257,19 +257,19 @@ W.EquipmentSlots = {
 -- https://www.wowhead.com/item-sets/max-level:220/min-req-level:90?filter=13;12;0
 ---@type table<number, true>
 W.CurrentTierSetTable = {
-	[1978] = true,
-	[1979] = true,
-	[1980] = true,
-	[1981] = true,
-	[1982] = true,
-	[1983] = true,
-	[1984] = true,
-	[1985] = true,
-	[1986] = true,
-	[1987] = true,
-	[1988] = true,
-	[1989] = true,
-	[1990] = true,
+	[2055] = true,
+	[2056] = true,
+	[2057] = true,
+	[2058] = true,
+	[2059] = true,
+	[2060] = true,
+	[2061] = true,
+	[2062] = true,
+	[2063] = true,
+	[2064] = true,
+	[2065] = true,
+	[2066] = true,
+	[2067] = true,
 }
 
 ---@type table<number, true>

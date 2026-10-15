@@ -31,20 +31,22 @@ local function DisableMouse(region)
 	region:SetMouseMotionEnabled(false)
 end
 
-local function CreateFillTexture(parent)
+local function CreateFillTexture(parent, textureAlpha)
 	local fillTexture = parent:CreateTexture(nil, "ARTWORK", nil, -6)
 	fillTexture:SetAllPoints()
-	fillTexture:SetAtlas("RaidFrame-Dispel-Fill")
-	fillTexture:SetAlpha(FILL_ALPHA)
+	fillTexture:SetAtlas("RaidFrame-Dispel-Fill", false, nil, nil, "REPEAT", "REPEAT")
+	if textureAlpha then
+		fillTexture:SetAlpha(textureAlpha)
+	end
 	parent.fillTexture = fillTexture
 	return fillTexture
 end
 
-local function CreatePulseAnimation(region)
+local function CreatePulseAnimation(region, fromAlpha, toAlpha)
 	local pulseAnimation = region:CreateAnimationGroup()
 	local alphaAnimation = pulseAnimation:CreateAnimation("Alpha")
-	alphaAnimation:SetFromAlpha(PULSE_FROM_ALPHA)
-	alphaAnimation:SetToAlpha(PULSE_TO_ALPHA)
+	alphaAnimation:SetFromAlpha(fromAlpha or PULSE_FROM_ALPHA)
+	alphaAnimation:SetToAlpha(toAlpha or PULSE_TO_ALPHA)
 	alphaAnimation:SetDuration(PULSE_DURATION)
 	pulseAnimation:SetLooping("BOUNCE")
 	region.pulseAnimation = pulseAnimation
@@ -135,6 +137,13 @@ function DispelOverlay:PrepareBorder(border)
 		if (animatedBorder.animSpeed or 1) > 0 then
 			animatedBorder:Play()
 		end
+	end
+
+	-- Hiding the aura button hides this border. The mixin stops the march on hide,
+	-- and OnShow does not run again while auras are secret.
+	border.OnHide = function(animatedBorder)
+		animatedBorder:UnregisterEvent("UI_SCALE_CHANGED")
+		animatedBorder:UnregisterEvent("DISPLAY_SIZE_CHANGED")
 	end
 
 	border.wtPrepared = true
@@ -245,6 +254,15 @@ function DispelOverlay:CreateOverlayBorder(overlay)
 	border:SetFrameStrata("HIGH")
 	border:SetFrameLevel((overlay:GetFrameLevel() or 0) + 20)
 	overlay.border = border
+
+	local auraButton = overlay:GetParent()
+	local marchingAnim = border.MarchingAnim
+	if auraButton and marchingAnim and auraButton.AddAuraShownAnimation and not border.wtShownAnimation then
+		border:SetSpeed(BORDER_SPEED)
+		auraButton:AddAuraShownAnimation(marchingAnim)
+		border.wtShownAnimation = true
+	end
+
 	return border
 end
 
@@ -273,14 +291,15 @@ function DispelOverlay:HidePreviewBorder(frame)
 end
 
 function DispelOverlay:ResumeFlashing(overlay)
-	local pulseAnimation = overlay.pulseAnimation
+	local pulseTarget = overlay.fillFrame or overlay
+	local pulseAnimation = pulseTarget.pulseAnimation
 	if not pulseAnimation or not self.db or not self.db.enable then
 		return
 	end
 
 	if not self.db.flashing then
 		pulseAnimation:Stop()
-		overlay:SetAlpha(1)
+		pulseTarget:SetAlpha(overlay.fillFrame and FILL_ALPHA or 1)
 		return
 	end
 
@@ -294,10 +313,9 @@ function DispelOverlay:ApplyOverlayOptions(frame)
 	end
 
 	self:AnchorToBackdrop(overlay, frame)
+	self:ApplyOverlayBorder(frame)
 
 	local auraButton = overlay:GetParent()
-	self:AnchorToBackdrop(auraButton, frame)
-	self:ApplyOverlayBorder(frame)
 	if auraButton and auraButton.AddDispelTypeTexture then
 		self:RegisterDispelTextures(auraButton, overlay)
 	end
@@ -314,19 +332,29 @@ function DispelOverlay:BuildOverlay(frame, auraButton)
 
 	DisableMouse(auraButton)
 	auraButton:SetClipsChildren(false)
+	if auraButton.backdrop then
+		auraButton.backdrop:Hide()
+	end
 
 	local overlay = CreateFrame("Frame", nil, auraButton)
 	DisableMouse(overlay)
 	overlay:SetClipsChildren(false)
 	local healthLevel = frame.Health:GetFrameLevel()
 	overlay:SetFrameLevel(healthLevel + 30)
-	CreateFillTexture(overlay)
+
+	local fillFrame = CreateFrame("Frame", nil, overlay)
+	DisableMouse(fillFrame)
+	fillFrame:SetAllPoints()
+	overlay.fillFrame = fillFrame
+	CreateFillTexture(fillFrame)
+	overlay.fillTexture = fillFrame.fillTexture
+	CreatePulseAnimation(fillFrame, FILL_ALPHA * PULSE_FROM_ALPHA, FILL_ALPHA)
+	fillFrame:SetAlpha(FILL_ALPHA)
 
 	auraButton.wtDispelOverlay = overlay
 	frame.WTDispelOverlayFrame = overlay
 
 	self:CreateOverlayBorder(overlay)
-	CreatePulseAnimation(overlay)
 
 	overlay:SetScript("OnShow", function(shownOverlay)
 		DispelOverlay:ResumeFlashing(shownOverlay)
@@ -456,7 +484,7 @@ function DispelOverlay:GetTestPreview(frame)
 	preview = CreateFrame("Frame", nil, borderParent)
 	DisableMouse(preview)
 	preview:SetClipsChildren(false)
-	CreateFillTexture(preview)
+	CreateFillTexture(preview, FILL_ALPHA)
 	CreatePulseAnimation(preview)
 
 	preview:Hide()
@@ -604,9 +632,11 @@ function DispelOverlay:DisableOverlays()
 
 		local overlay = frame.WTDispelOverlayFrame
 		if overlay then
-			if overlay.pulseAnimation then
-				overlay.pulseAnimation:Stop()
+			local pulseTarget = overlay.fillFrame or overlay
+			if pulseTarget.pulseAnimation then
+				pulseTarget.pulseAnimation:Stop()
 			end
+			pulseTarget:SetAlpha(overlay.fillFrame and FILL_ALPHA or 1)
 			overlay:SetAlpha(1)
 			if overlay.border then
 				overlay.border:Hide()

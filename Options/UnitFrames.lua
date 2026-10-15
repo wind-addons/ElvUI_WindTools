@@ -4,6 +4,7 @@ local LSM = E.Libs.LSM
 local C = W.Utilities.Color
 
 local A = W:GetModule("Absorb") ---@class Absorb
+local DispelOverlay = W:GetModule("DispelOverlay") ---@class DispelOverlay
 local NC = W:GetModule("NameClip") ---@class NameClip
 local CT = W:GetModule("ChatText")
 
@@ -594,6 +595,130 @@ options.nameClip = {
 		boss = GetNameClipUnitGroup("boss", 26, L["Boss"]),
 		tank = GetNameClipUnitGroup("tank", 27, L["Tank"]),
 		assist = GetNameClipUnitGroup("assist", 28, L["Assist"]),
+	},
+}
+
+local function GetDispelOverlayUnitGroup(unitKey, order, name)
+	return {
+		order = order,
+		type = "group",
+		name = name,
+		inline = true,
+		disabled = function()
+			return not E.db.WT.unitFrames.dispelOverlay.enable
+		end,
+		get = function(info)
+			return E.db.WT.unitFrames.dispelOverlay[unitKey][info[#info]]
+		end,
+		set = function(info, value)
+			E.db.WT.unitFrames.dispelOverlay[unitKey][info[#info]] = value
+			DispelOverlay:ProfileUpdate()
+		end,
+		args = {
+			enable = {
+				order = 1,
+				type = "toggle",
+				name = L["Enable"],
+			},
+		},
+	}
+end
+
+options.dispelOverlay = {
+	order = 5,
+	type = "group",
+	name = L["Dispel Overlay"],
+	hidden = function()
+		return not E.Retail
+	end,
+	get = function(info)
+		return E.db.WT.unitFrames.dispelOverlay[info[#info]]
+	end,
+	set = function(info, value)
+		E.db.WT.unitFrames.dispelOverlay[info[#info]] = value
+		DispelOverlay:ProfileUpdate()
+	end,
+	args = {
+		desc = {
+			order = 1,
+			type = "group",
+			inline = true,
+			name = L["Description"],
+			args = {
+				feature = {
+					order = 1,
+					type = "description",
+					name = L["Highlight ElvUI party and raid frames when a unit has a dispellable debuff."],
+					fontSize = "medium",
+				},
+			},
+		},
+		enable = {
+			order = 2,
+			type = "toggle",
+			name = L["Enable"],
+			width = "full",
+		},
+		display = {
+			order = 3,
+			type = "select",
+			name = L["Filter"],
+			disabled = function()
+				return not E.db.WT.unitFrames.dispelOverlay.enable
+			end,
+			values = {
+				all = L["Show All Dispellable"],
+				mine = L["Dispellable By Me"],
+			},
+		},
+		color = {
+			order = 4,
+			type = "select",
+			name = L["Color"],
+			disabled = function()
+				return not E.db.WT.unitFrames.dispelOverlay.enable
+			end,
+			values = {
+				debuff = L["Use Debuff Color"],
+				black = L["Black"],
+			},
+		},
+		flashing = {
+			order = 5,
+			type = "toggle",
+			name = L["Flashing Animation"],
+			desc = L["Fade the color in and out. Leave this off to keep the color still."],
+			disabled = function()
+				return not E.db.WT.unitFrames.dispelOverlay.enable
+			end,
+		},
+		animatedBorder = {
+			order = 6,
+			type = "toggle",
+			name = L["Animated Border"],
+			disabled = function()
+				return not E.db.WT.unitFrames.dispelOverlay.enable
+			end,
+		},
+		testMode = {
+			order = 7,
+			type = "toggle",
+			name = L["Test Mode"],
+			desc = L["Show the dispel overlay on visible party and raid frames."],
+			disabled = function()
+				return not E.db.WT.unitFrames.dispelOverlay.enable
+			end,
+			get = function()
+				return DispelOverlay.testMode
+			end,
+			set = function(_, value)
+				DispelOverlay:SetTestMode(value)
+			end,
+		},
+		party = GetDispelOverlayUnitGroup("party", 20, L["Party"]),
+		raid1 = GetDispelOverlayUnitGroup("raid1", 21, format("%s %d", L["Raid"], 1)),
+		raid2 = GetDispelOverlayUnitGroup("raid2", 22, format("%s %d", L["Raid"], 2)),
+		raid3 = GetDispelOverlayUnitGroup("raid3", 23, format("%s %d", L["Raid"], 3)),
 	},
 }
 

@@ -1,5 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="DispelOverlay.xml"/>
 	<Script file='Absorb.lua'/>
+	<Script file='DispelOverlay.lua'/>
 	<Script file='NameClip.lua'/>
 	<Script file='QuickFocus.lua'/>
 	<Script file='RoleIcon.lua'/>

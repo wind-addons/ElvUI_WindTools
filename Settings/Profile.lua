@@ -1284,6 +1284,18 @@ P.unitFrames = {
 		blizzardOverAbsorbGlow = true,
 		blizzardAbsorbOverlay = true,
 	},
+	---@class ProfileDB.unitFrames.dispelOverlay
+	dispelOverlay = {
+		enable = false,
+		display = "all",
+		color = "debuff",
+		flashing = true,
+		animatedBorder = true,
+		party = { enable = true },
+		raid1 = { enable = true },
+		raid2 = { enable = true },
+		raid3 = { enable = true },
+	},
 }
 
 ---@class ProfileDB.misc

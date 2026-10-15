@@ -1,0 +1,20 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Frame name="WT_DispelAnimatedBorderTemplate" inherits="MarchingAntsTemplate" virtual="true">
+		<KeyValues>
+			<KeyValue key="verticalAsset" value="UI-RaidFrames-SingleAnt-Vertical" type="string"/>
+			<KeyValue key="horizontalAsset" value="UI-RaidFrames-SingleAnt-Horiz" type="string"/>
+
+			<KeyValue key="leftOffsetP1X" value="-1" type="number"/>
+			<KeyValue key="leftOffsetP2X" value="-1" type="number"/>
+
+			<KeyValue key="rightOffsetP1X" value="1" type="number"/>
+			<KeyValue key="rightOffsetP2X" value="1" type="number"/>
+
+			<KeyValue key="topOffsetP1Y" value="1" type="number"/>
+			<KeyValue key="topOffsetP2Y" value="1" type="number"/>
+
+			<KeyValue key="bottomOffsetP1Y" value="-1" type="number"/>
+			<KeyValue key="bottomOffsetP2Y" value="-1" type="number"/>
+		</KeyValues>
+	</Frame>
+</Ui>

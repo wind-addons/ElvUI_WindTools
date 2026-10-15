@@ -590,7 +590,7 @@ function EB:UpdateShownButtonCounts(bar, numShown)
 	end
 end
 
-function EB:ValidateItem(itemID)
+function EB:ValidateItem(itemID, isEquipped)
 	if not itemID then
 		return false
 	end
@@ -603,10 +603,13 @@ function EB:ValidateItem(itemID)
 		return false
 	end
 
-	local count = self.bagItemCounts and self.bagItemCounts[itemID] or 0
-	local countThreshold = self.CountThreshold[itemID] or 1
-	if count < countThreshold then
-		return false
+	-- Equipped items are not in the bags, so the bag count check does not apply to them
+	if not isEquipped then
+		local count = self.bagItemCounts and self.bagItemCounts[itemID] or 0
+		local countThreshold = self.CountThreshold[itemID] or 1
+		if count < countThreshold then
+			return false
+		end
 	end
 
 	return true
@@ -655,7 +658,7 @@ function EB:UpdateBar(id)
 			return
 		end
 		local itemID = GetInventoryItemID("player", slotID)
-		if not self:ValidateItem(itemID) then
+		if not self:ValidateItem(itemID, true) then
 			return
 		end
 		tinsert(shownEntries, { slotID = slotID })

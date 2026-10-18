@@ -27,6 +27,7 @@ local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 local C_QuestLog_IsOnQuest = C_QuestLog.IsOnQuest
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local C_QuestLog_GetQuestObjectives = C_QuestLog.GetQuestObjectives
+local C_Reputation_GetFactionDataByID = C_Reputation.GetFactionDataByID
 
 local C_EventScheduler_GetEventUiMapID = C_EventScheduler.GetEventUiMapID
 local C_EventScheduler_GetOngoingEvents = C_EventScheduler.GetOngoingEvents
@@ -135,6 +136,15 @@ local function WeeklyName(iconID, name, position)
 	end
 
 	return name
+end
+
+---Get the localized name of a faction
+---@param factionID number
+---@param fallback string
+---@return string
+local function FactionName(factionID, fallback)
+	local data = C_Reputation_GetFactionDataByID(factionID)
+	return data and data.name or fallback
 end
 
 local AbundanceMapIDs = {
@@ -292,17 +302,17 @@ ET.EventData = {
 					-- https://www.wowhead.com/quest=89268
 					89268, -- 失落的传说
 				},
-				[WeeklyName(236681, "Silvermoon Court", 2395)] = {
+				[WeeklyName(236681, FactionName(2710, "Silvermoon Court"), 2395)] = {
 					-- https://www.wowhead.com/quest=89289/favor-of-the-court
 					89289, -- 宫廷宠爱
 				},
-				[WeeklyName(7431083, "Zul'jarra's Forces", 2512)] = {
+				[WeeklyName(7431083, FactionName(2772, "Zul'jarra's Forces"), 2512)] = {
 					-- https://www.wowhead.com/quest=96995/turn-back-the-surge
 					96995, -- 击退狂潮
 					-- https://www.wowhead.com/quest=95520/purging-the-vaults
 					95520, -- 净化宝库
 				},
-				[WeeklyName(236681, "Slayer's Duellum", 2444)] = {
+				[WeeklyName(236681, FactionName(2770, "Slayer's Duellum"), 2444)] = {
 					-- https://www.wowhead.com/quest=89354/preparing-for-battle
 					89354, -- 备战
 				},

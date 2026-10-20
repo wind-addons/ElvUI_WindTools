@@ -766,7 +766,7 @@ local function FlashTabIfNotShown(frame, info, chatType, chatGroup, chatTarget)
 end
 -- [[/elvui-sync:FlashTabIfNotShown]]
 
--- [[elvui-sync:ChatFrame_CheckAddChannel sha256:5103301ab39a]]
+-- [[elvui-sync:ChatFrame_CheckAddChannel sha256:17f0ad312587]]
 function CH:ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 	if chatFrame ~= _G.DEFAULT_CHAT_FRAME then
 		return false
@@ -776,8 +776,9 @@ function CH:ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 		return false
 	end
 
-	-- Only exists in Retail/Forever
-	if IsChannelRegionalForChannelID and not IsChannelRegionalForChannelID(channelID) then
+	-- Only exists in Retail/Forever, classic/anniversary/wrath/mists don't have regional channels
+	-- and Blizzard drops the message there instead of adding the channel
+	if not IsChannelRegionalForChannelID or not IsChannelRegionalForChannelID(channelID) then
 		return false
 	end
 

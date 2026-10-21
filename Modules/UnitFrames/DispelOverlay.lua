@@ -1,4 +1,4 @@
-local W, _, E = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
+local W, F, E = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local DispelOverlay = W:NewModule("DispelOverlay", "AceHook-3.0") ---@class DispelOverlay: AceModule, AceHook-3.0
 local UF = E.UnitFrames
 
@@ -7,6 +7,7 @@ local next = next
 local type = type
 
 local CreateFrame = CreateFrame
+local InCombatLockdown = InCombatLockdown
 
 local PULSE_FROM_ALPHA = 0.5
 local PULSE_TO_ALPHA = 1
@@ -24,6 +25,7 @@ local SUPPORTED_UNITS = {
 	raid3 = true,
 }
 local BORDER_TEMPLATE = "WT_DispelAnimatedBorderTemplate"
+local MARCHING_ANIMATION_TEMPLATE = "WT_DispelMarchingAnimTemplate"
 
 local function DisableMouse(region)
 	region:EnableMouse(false)
@@ -51,6 +53,12 @@ local function CreatePulseAnimation(region, fromAlpha, toAlpha)
 	pulseAnimation:SetLooping("BOUNCE")
 	region.pulseAnimation = pulseAnimation
 	return pulseAnimation
+end
+
+local function CreateMarchingAnimation(border)
+	local marchingAnimation = border:CreateAnimationGroup(nil, MARCHING_ANIMATION_TEMPLATE)
+	border.MarchingAnim = marchingAnimation
+	return marchingAnimation
 end
 
 function DispelOverlay:CanLoad()
@@ -255,12 +263,13 @@ function DispelOverlay:CreateOverlayBorder(overlay)
 	border:SetFrameLevel((overlay:GetFrameLevel() or 0) + 20)
 	overlay.border = border
 
+	border.MarchingAnim:Stop()
+	local marchingAnimation = CreateMarchingAnimation(border)
+	border:SetSpeed(BORDER_SPEED)
+
 	local auraButton = overlay:GetParent()
-	local marchingAnim = border.MarchingAnim
-	if auraButton and marchingAnim and auraButton.AddAuraShownAnimation and not border.wtShownAnimation then
-		border:SetSpeed(BORDER_SPEED)
-		auraButton:AddAuraShownAnimation(marchingAnim)
-		border.wtShownAnimation = true
+	if auraButton and auraButton.AddAuraShownAnimation then
+		auraButton:AddAuraShownAnimation(marchingAnimation)
 	end
 
 	return border
@@ -425,6 +434,17 @@ function DispelOverlay:UpdateAuraSlot(container, frame)
 
 	if container.known[DISPEL_SLOT_KEY] then
 		container:SetAuraSlotCandidateFilters(DISPEL_SLOT_KEY, candidateFilters)
+		return
+	end
+
+	if InCombatLockdown() then
+		if not container.wtSlotQueued then
+			container.wtSlotQueued = true
+			F.TaskManager:AfterCombat(function()
+				container.wtSlotQueued = nil
+				DispelOverlay:UpdateAuraSlot(container, frame)
+			end)
+		end
 		return
 	end
 

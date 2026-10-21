@@ -1,4 +1,11 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<AnimationGroup name="WT_DispelMarchingAnimTemplate" looping="REPEAT" virtual="true">
+		<TextureCoordTranslation childKey="Top" duration="1" offsetU="-1" offsetV="0"/>
+		<TextureCoordTranslation childKey="Bottom" duration="1" offsetU="1" offsetV="0"/>
+		<TextureCoordTranslation childKey="Left" duration="1" offsetU="0" offsetV="1"/>
+		<TextureCoordTranslation childKey="Right" duration="1" offsetU="0" offsetV="-1"/>
+	</AnimationGroup>
+
 	<Frame name="WT_DispelAnimatedBorderTemplate" inherits="MarchingAntsTemplate" virtual="true">
 		<KeyValues>
 			<KeyValue key="verticalAsset" value="UI-RaidFrames-SingleAnt-Vertical" type="string"/>

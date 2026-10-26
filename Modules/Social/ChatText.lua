@@ -789,7 +789,7 @@ function CH:ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 end
 -- [[/elvui-sync:ChatFrame_CheckAddChannel]]
 
--- [[elvui-sync:ChatFrame_MessageEventHandler sha256:777fded92aba]]
+-- [[elvui-sync:ChatFrame_MessageEventHandler sha256:4f76cf6ecc63]]
 function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, isHistory, historyTime, historyName, historyBTag)
 	-- ElvUI Chat History Note: isHistory, historyTime, historyName, and historyBTag are passed from CH:DisplayChatHistory() and need to be on the end to prevent issues in other addons that listen on ChatFrame_MessageEventHandler.
 	-- we also send isHistory and historyTime into CH:AddMessage so that we don't have to override the timestamp.
@@ -976,12 +976,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 			if E:IsSecretValue(arg1) then
 				return -- we cant get the globalstring because arg1 is secret
 			elseif E.Modern and arg1 == 'YOU_CHANGED' and (GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR) then
-				if frame.UpdateDefaultChatTarget then
-					frame:UpdateDefaultChatTarget()
-				else
-					_G.ChatFrame_UpdateDefaultChatTarget(frame)
-				end
-
+				frame:UpdateDefaultChatTarget()
 				frame.editBox:UpdateNewcomerEditBoxHint()
 			else
 				if E.Modern and arg1 == 'YOU_LEFT' then

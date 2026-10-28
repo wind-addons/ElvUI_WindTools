@@ -192,6 +192,10 @@ CM.Features = {
 				end
 			end
 
+			if E:IsSecretValue(contextData.name) then
+				return true
+			end
+
 			if contextData.name == E.myname then
 				if not contextData.server or contextData.server == E.myrealm then
 					return true
@@ -248,6 +252,10 @@ CM.Features = {
 				end
 			end
 
+			if E:IsSecretValue(contextData.name) then
+				return true
+			end
+
 			if contextData.name == E.myname then
 				if not contextData.server or contextData.server == E.myrealm then
 					return true
@@ -302,6 +310,10 @@ CM.Features = {
 				if not UnitPlayerControlled("focus") then
 					return true
 				end
+			end
+
+			if E:IsSecretValue(contextData.name) then
+				return true
 			end
 
 			return false
@@ -386,6 +398,10 @@ CM.Features = {
 				if not UnitPlayerControlled("focus") then
 					return true
 				end
+			end
+
+			if E:IsSecretValue(contextData.name) then
+				return true
 			end
 
 			if contextData.name == E.myname then

@@ -94,6 +94,10 @@ function F.FontTemplate(text, font, size, style)
 	end
 
 	local justifyHBefore = text.GetJustifyH and text:GetJustifyH()
+	-- Blizzard frames (e.g. LossOfControlFrame) can return secret values here; comparing them taints
+	if E:IsSecretValue(justifyHBefore) then
+		justifyHBefore = nil
+	end
 
 	if isFontPath(font) then
 		applyFontPath(text, font, size, style)
@@ -102,8 +106,11 @@ function F.FontTemplate(text, font, size, style)
 		text:FontTemplate(font, size, style)
 	end
 
-	if text.SetJustifyH and text.GetJustifyH and justifyHBefore and justifyHBefore ~= text:GetJustifyH() then
-		text:SetJustifyH(justifyHBefore)
+	if justifyHBefore and text.SetJustifyH then
+		local justifyHAfter = text:GetJustifyH()
+		if not E:IsSecretValue(justifyHAfter) and justifyHBefore ~= justifyHAfter then
+			text:SetJustifyH(justifyHBefore)
+		end
 	end
 end
 

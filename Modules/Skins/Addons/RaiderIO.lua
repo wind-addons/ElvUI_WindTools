@@ -218,7 +218,10 @@ end
 function S:RaiderIO()
 	self:DisableAddOnSkin("RaiderIO")
 	self:AddCallbackForEnterWorld("RaiderIO_DelayedSkinning")
-	self:SecureHook(_G.PVEFrame, "Show", data.GuildWeeklyFrame)
+
+	if _G.PVEFrame then
+		self:SecureHook(_G.PVEFrame, "Show", data.GuildWeeklyFrame)
+	end
 
 	-- the talent builds frame is created on first use, skin it once its content has been set up
 	if _G.RaiderIO_TalentBuildsFrame then

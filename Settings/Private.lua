@@ -172,7 +172,7 @@ V.maps = {
 		garrisonAlertMsg = false,
 		sortingPriority = "^Expansion, _BugSack, _Saved, _Wind",
 		hiddenPatterns = "",
-		ignorePatterns = "",
+		ignorePatterns = "QuestieFrame*",
 	},
 }
 

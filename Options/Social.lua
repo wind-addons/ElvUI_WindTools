@@ -11,7 +11,6 @@ local select = select
 local tremove = tremove
 local wipe = wipe
 
-local FriendsFrame_Update = FriendsFrame_Update
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
 
@@ -1523,7 +1522,7 @@ options.friendList = {
 	end,
 	set = function(info, value)
 		E.db.WT.social.friendList[info[#info]] = value
-		FriendsFrame_Update()
+		FL:ProfileUpdate()
 	end,
 	args = {
 		desc = {
@@ -1565,7 +1564,7 @@ options.friendList = {
 			end,
 			set = function(info, value)
 				E.db.WT.social.friendList.textures[info[#info]] = value
-				FriendsFrame_Update()
+				FL:ProfileUpdate()
 			end,
 			disabled = function()
 				return not E.db.WT.social.friendList.enable
@@ -1643,7 +1642,7 @@ options.friendList = {
 					end,
 					set = function(info, value)
 						E.db.WT.social.friendList.nameFont[info[#info]] = value
-						FriendsFrame_Update()
+						FL:ProfileUpdate()
 					end,
 					args = {
 						name = {
@@ -1700,7 +1699,7 @@ options.friendList = {
 					end,
 					set = function(_, value)
 						E.db.WT.social.friendList.hideRealm = value
-						FriendsFrame_Update()
+						FL:ProfileUpdate()
 					end,
 				},
 				font = {
@@ -1712,7 +1711,7 @@ options.friendList = {
 					end,
 					set = function(info, value)
 						E.db.WT.social.friendList.infoFont[info[#info]] = value
-						FriendsFrame_Update()
+						FL:ProfileUpdate()
 					end,
 					args = {
 						name = {
@@ -1758,7 +1757,7 @@ options.friendList = {
 							end,
 							set = function(_, r, g, b)
 								E.db.WT.social.friendList.areaColor = { r = r, g = g, b = b }
-								FriendsFrame_Update()
+								FL:ProfileUpdate()
 							end,
 						},
 					},

@@ -1,18 +1,20 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
-local FL = W:NewModule("FriendList", "AceHook-3.0")
+local FL = W:NewModule("FriendList", "AceHook-3.0", "AceEvent-3.0")
 local C = W.Utilities.Color
 
 local _G = _G
 local pairs = pairs
 local select = select
 local strsplit = strsplit
+local setmetatable = setmetatable
 local strupper = strupper
+local tostring = tostring
 
 local BNConnected = BNConnected
 local FriendsFrame_Update = FriendsFrame_Update
 local GetClassInfo = GetClassInfo
 local GetQuestDifficultyColor = GetQuestDifficultyColor
-local TimerunningUtil_AddSmallIcon = TimerunningUtil.AddSmallIcon
+local TimerunningUtil_AddSmallIcon = TimerunningUtil and TimerunningUtil.AddSmallIcon
 
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_ClassColor_GetClassColor = C_ClassColor.GetClassColor
@@ -31,6 +33,8 @@ local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 local WOW_PROJECT_BURNING_CRUSADE_CLASSIC = 5
 local WOW_PROJECT_CLASSIC = 2
 local WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE
+local WOW_PROJECT_CAMELOT = WOW_PROJECT_CAMELOT or 18 -- WoW Forever
+local WOW_PROJECT_ID = WOW_PROJECT_ID
 local WOW_PROJECT_WRATH_CLASSIC = 11
 local WOW_PROJECT_CATACLYSM_CLASSIC = 14
 local WOW_PROJECT_MISTS_CLASSIC = 19
@@ -130,9 +134,15 @@ local timerunningSeasonIcon = {
 local expansionData = {
 	[WOW_PROJECT_MAINLINE] = {
 		name = "Retail",
-		suffix = nil,
-		maxLevel = W.MaxLevelForPlayerExpansion,
+		suffix = "Retail",
+		maxLevel = E.Forever and 90 or W.MaxLevelForPlayerExpansion,
 		icon = MediaPath .. "GameIcons\\WOW_Retail",
+	},
+	[WOW_PROJECT_CAMELOT] = {
+		name = "Forever",
+		suffix = "Forever",
+		maxLevel = E.Forever and W.MaxLevelForPlayerExpansion or nil,
+		icon = nil, -- no custom texture yet, keep the Blizzard title icon
 	},
 	[WOW_PROJECT_CLASSIC] = {
 		name = "Classic",
@@ -209,6 +219,66 @@ local function GetClassColor(className)
 	end
 end
 
+local function GetBNetStatus(accountInfo)
+	local gameAccountInfo = accountInfo and accountInfo.gameAccountInfo
+	if not gameAccountInfo or not gameAccountInfo.isOnline then
+		return "Offline"
+	elseif accountInfo.isAFK or gameAccountInfo.isGameAFK then
+		return "AFK"
+	elseif accountInfo.isDND or gameAccountInfo.isGameBusy then
+		return "DND"
+	end
+
+	return "Online"
+end
+
+local function GetWoWServerText(gameAccountInfo, characterName)
+	local wowID = gameAccountInfo.wowProjectID
+
+	if wowID == WOW_PROJECT_MAINLINE and (characterName or "") == "" then
+		return gameAccountInfo.richPresence -- Plunderstorm
+	elseif wowID == WOW_PROJECT_ID then
+		return gameAccountInfo.realmDisplayName or ""
+	elseif wowID and expansionData[wowID] and gameAccountInfo.richPresence then
+		-- friend is playing another version of WoW (Classic, Retail, Forever...)
+		local suffix = expansionData[wowID].suffix and " (" .. expansionData[wowID].suffix .. ")" or ""
+		local serverStrings = { strsplit(" - ", gameAccountInfo.richPresence) }
+		return (serverStrings[#serverStrings] or BNET_FRIEND_TOOLTIP_WOW_CLASSIC .. suffix) .. "*"
+	end
+
+	return gameAccountInfo.realmDisplayName or ""
+end
+
+local function BuildLocationText(area, server, areaColor, hideRealm)
+	if hideRealm then
+		server = ""
+	end
+
+	if area and area ~= "" and server and server ~= "" and server ~= E.myrealm then
+		return C.StringWithRGB(area .. " - " .. server, areaColor)
+	elseif area and area ~= "" then
+		return C.StringWithRGB(area, areaColor)
+	end
+
+	return server or ""
+end
+
+local function GetGameIconTexture(db, wowID, timerunningSeasonID, faction)
+	if db.textures.gameIcon == "PATCH" and wowID and expansionData[wowID] then
+		if wowID == WOW_PROJECT_MAINLINE and timerunningSeasonID and timerunningSeasonIcon[timerunningSeasonID] then
+			return timerunningSeasonIcon[timerunningSeasonID]
+		end
+		return expansionData[wowID].icon
+	elseif db.textures.gameIcon == "FACTION" and faction and factionIcons[faction] then
+		return factionIcons[faction]
+	end
+end
+
+local function FormatLevelText(level, format)
+	local text = format and format:format(level) or tostring(level)
+	return C.StringWithRGB(text, GetQuestDifficultyColor(level))
+end
+
 function FL:UpdateFriendButton(button)
 	if not self.db.enable then
 		if cache.name and cache.info then
@@ -226,7 +296,7 @@ function FL:UpdateFriendButton(button)
 
 	if button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
 		-- WoW friends
-		wowID = WOW_PROJECT_MAINLINE
+		wowID = WOW_PROJECT_ID
 		gameName = projectCodes["WOW"]
 		local friendInfo = C_FriendList_GetFriendInfoByIndex(button.id)
 		name, server = strsplit("-", friendInfo.name) -- server is nil if it's not a cross-realm friend
@@ -257,17 +327,7 @@ function FL:UpdateFriendButton(button)
 			local gameAccountInfo = friendAccountInfo.gameAccountInfo
 			gameName = projectCodes[strupper(gameAccountInfo.clientProgram)]
 
-			if gameAccountInfo.isOnline then
-				if friendAccountInfo.isAFK or gameAccountInfo.isGameAFK then
-					status = "AFK"
-				elseif friendAccountInfo.isDND or gameAccountInfo.isGameBusy then
-					status = "DND"
-				else
-					status = "Online"
-				end
-			else
-				status = "Offline"
-			end
+			status = GetBNetStatus(friendAccountInfo)
 
 			-- Fetch version if friend playing WoW
 			if gameName == "World of Warcraft" then
@@ -278,16 +338,7 @@ function FL:UpdateFriendButton(button)
 				class = gameAccountInfo.className or ""
 				area = gameAccountInfo.areaName or ""
 				timerunningSeasonID = gameAccountInfo.timerunningSeasonID or ""
-
-				if wowID and wowID ~= 1 and expansionData[wowID] then
-					local suffix = expansionData[wowID].suffix and " (" .. expansionData[wowID].suffix .. ")" or ""
-					local serverStrings = { strsplit(" - ", gameAccountInfo.richPresence) }
-					server = (serverStrings[#serverStrings] or BNET_FRIEND_TOOLTIP_WOW_CLASSIC .. suffix) .. "*"
-				elseif wowID and wowID == 1 and name == "" then
-					server = gameAccountInfo.richPresence -- Plunderstorm
-				else
-					server = gameAccountInfo.realmDisplayName or ""
-				end
+				server = GetWoWServerText(gameAccountInfo, name)
 			end
 		end
 	end
@@ -322,7 +373,7 @@ function FL:UpdateFriendButton(button)
 		-- name
 		local classColor = self.db.useClassColor and GetClassColor(class)
 		local nameString = name and classColor and C.StringWithRGB(name, classColor) or name
-		if timerunningSeasonID and timerunningSeasonID ~= "" and nameString ~= nil then
+		if TimerunningUtil_AddSmallIcon and timerunningSeasonID and timerunningSeasonID ~= "" and nameString ~= nil then
 			nameString = TimerunningUtil_AddSmallIcon(nameString) or nameString -- add timerunning tag
 		end
 
@@ -345,18 +396,7 @@ function FL:UpdateFriendButton(button)
 
 		-- area
 		if area then
-			if self.db.hideRealm then
-				server = ""
-			end
-
-			if area and area ~= "" and server and server ~= "" and server ~= E.myrealm then
-				buttonText = C.StringWithRGB(area .. " - " .. server, self.db.areaColor)
-			elseif area and area ~= "" then
-				buttonText = C.StringWithRGB(area, self.db.areaColor)
-			else
-				buttonText = server or ""
-			end
-
+			buttonText = BuildLocationText(area, server, self.db.areaColor, self.db.hideRealm)
 			button.info:SetText(buttonText)
 		end
 
@@ -367,23 +407,7 @@ function FL:UpdateFriendButton(button)
 
 		-- game icon
 		if self.db.textures.gameIcon ~= "BLIZZARD" then
-			local texOrAtlas
-
-			if self.db.textures.gameIcon == "PATCH" and wowID and expansionData[wowID] then
-				texOrAtlas = expansionData[wowID].icon
-				if
-					wowID == WOW_PROJECT_MAINLINE
-					and timerunningSeasonID
-					and timerunningSeasonIcon[timerunningSeasonID]
-				then
-					texOrAtlas = timerunningSeasonIcon[timerunningSeasonID]
-				end
-			end
-
-			if self.db.textures.gameIcon == "FACTION" and faction and factionIcons[faction] then
-				texOrAtlas = factionIcons[faction]
-			end
-
+			local texOrAtlas = GetGameIconTexture(self.db, wowID, timerunningSeasonID, faction)
 			if texOrAtlas then
 				button.gameIcon:SetAlpha(1)
 				button.gameIcon:SetTexture(texOrAtlas)
@@ -481,7 +505,8 @@ function FL:UpdateRecentAllyButton(button)
 
 		local level = characterData.level
 		if level then
-			if level ~= expansionData[WOW_PROJECT_MAINLINE].maxLevel or not self.db.hideMaxLevel then
+			local maxLevel = expansionData[WOW_PROJECT_ID] and expansionData[WOW_PROJECT_ID].maxLevel
+			if level ~= maxLevel or not self.db.hideMaxLevel then
 				nameString = nameString .. C.StringWithRGB(": " .. level, GetQuestDifficultyColor(level))
 			end
 		end
@@ -542,12 +567,311 @@ function FL:UpdateRecentAllyButton(button)
 	end
 end
 
+--[[
+	Social UI cards (SocialUIFrame, used by WoW Forever)
+	The Refresh* functions run before Blizzard lays out the card,
+	so the layout already uses our texts and fonts.
+]]
+
+local function GetCardAccountInfo(card)
+	local accountInfo = card.elementData and card.elementData.accountInfo
+	if accountInfo and accountInfo.gameAccountInfo then
+		return accountInfo, accountInfo.gameAccountInfo
+	end
+end
+
+local function SetStatusTexture(texture, pack, status)
+	if texture and status and pack ~= "default" and statusIcons[pack] then
+		texture:SetTexture(statusIcons[pack][status])
+	end
+end
+
+function FL:SocialCard_Track(card)
+	self.socialCards = self.socialCards or setmetatable({}, { __mode = "k" })
+	self.socialCards[card] = true
+end
+
+function FL:SocialCard_UpdatePresence(card)
+	if not self.db or not self.db.enable then
+		return
+	end
+
+	local accountInfo = GetCardAccountInfo(card)
+	if accountInfo and card.PresenceHolder then
+		SetStatusTexture(card.PresenceHolder.PresenceIcon, self.db.textures.status, GetBNetStatus(accountInfo))
+	end
+end
+
+function FL:SocialCard_UpdateGameIcon(card)
+	local holder = card.GameIconHolder
+	if not holder or not holder.Icon then
+		return
+	end
+
+	holder.Icon:SetTexCoord(0, 1, 0, 1)
+
+	if not self.db or not self.db.enable or self.db.textures.gameIcon == "BLIZZARD" or not holder:IsShown() then
+		return
+	end
+
+	local _, gameAccountInfo = GetCardAccountInfo(card)
+	if not gameAccountInfo or projectCodes[strupper(gameAccountInfo.clientProgram or "")] ~= "World of Warcraft" then
+		return
+	end
+
+	local texture = GetGameIconTexture(
+		self.db,
+		gameAccountInfo.wowProjectID,
+		gameAccountInfo.timerunningSeasonID,
+		gameAccountInfo.factionName
+	)
+
+	if texture then
+		holder.Icon:SetAlpha(1)
+		holder.Icon:SetTexture(texture)
+		holder.Icon:SetTexCoord(0.15, 0.85, 0.15, 0.85)
+	end
+end
+
+function FL:SocialCard_UpdateFriendName(card)
+	self:SocialCard_Track(card)
+
+	if not self.db or not self.db.enable then
+		return
+	end
+
+	local accountInfo, gameAccountInfo = GetCardAccountInfo(card)
+	if not accountInfo then
+		return
+	end
+
+	local note = accountInfo.note
+	if self.db.useNoteAsName and note and note ~= "" then
+		local text = note
+		if not gameAccountInfo.isOnline then
+			text = C.StringByTemplate(text, "gray-400")
+		end
+		card.FriendName:SetText(text)
+	elseif gameAccountInfo.isOnline and self.db.useClientColor then
+		local gameName = projectCodes[strupper(gameAccountInfo.clientProgram or "")]
+		local clientColor = gameName and clientData[gameName] and clientData[gameName].color
+		local accountName = _G.BNet_GetBNetAccountName and _G.BNet_GetBNetAccountName(accountInfo)
+			or accountInfo.accountName
+		if clientColor and accountName and accountName ~= "" then
+			card.FriendName:SetText(C.StringWithRGB(accountName, clientColor))
+		end
+	end
+
+	F.SetFont(card.FriendName)
+	F.SetFontWithDB(card.FriendName, self.db.nameFont)
+end
+
+function FL:SocialCard_UpdateCharacterData(card)
+	if not self.db or not self.db.enable then
+		return
+	end
+
+	local accountInfo, gameAccountInfo = GetCardAccountInfo(card)
+	if not accountInfo or not gameAccountInfo.characterName then
+		return
+	end
+
+	-- name with class color
+	if gameAccountInfo.isOnline and self.db.useClassColor then
+		local name = _G.FriendsListUtil and _G.FriendsListUtil.GetFormattedCharacterName(accountInfo)
+			or gameAccountInfo.characterName
+		local classFile = gameAccountInfo.classFilename
+		local classColor = (classFile and classFile ~= "" and C_ClassColor_GetClassColor(classFile))
+			or GetClassColor(gameAccountInfo.className)
+		if classColor and name and name ~= "" then
+			card.Name:SetText(C.StringWithRGB(name, classColor))
+		end
+	end
+
+	-- level
+	local level = gameAccountInfo.characterLevel
+	if self.db.level and level and level > 0 then
+		local wowID = gameAccountInfo.wowProjectID
+		local maxLevel = wowID and expansionData[wowID] and expansionData[wowID].maxLevel
+		if self.db.hideMaxLevel and level == maxLevel then
+			card.Level:SetText("")
+		elseif gameAccountInfo.isOnline then
+			card.Level:SetText(FormatLevelText(level, _G.SOCIAL_UI_RECENT_ALLIES_CARD_LEVEL_DISPLAY_FORMAT))
+		end
+	end
+
+	for _, key in pairs({ "Name", "Level", "Class" }) do
+		F.SetFont(card[key])
+		F.SetFontWithDB(card[key], self.db.infoFont)
+	end
+end
+
+function FL:SocialCard_UpdateLocation(card)
+	if not self.db or not self.db.enable then
+		return
+	end
+
+	local accountInfo, gameAccountInfo = GetCardAccountInfo(card)
+	if not accountInfo then
+		return
+	end
+
+	local isWoW = projectCodes[strupper(gameAccountInfo.clientProgram or "")] == "World of Warcraft"
+	if gameAccountInfo.isOnline and isWoW then
+		local area = gameAccountInfo.areaName
+		local server = GetWoWServerText(gameAccountInfo, gameAccountInfo.characterName)
+		local text = BuildLocationText(area, server, self.db.areaColor, self.db.hideRealm)
+
+		if text ~= "" then
+			local rafLinkType = accountInfo.rafLinkType
+			if rafLinkType and _G.Enum.RafLinkType and rafLinkType ~= _G.Enum.RafLinkType.None then
+				local rafFormat = rafLinkType == _G.Enum.RafLinkType.Recruit and _G.RAF_RECRUIT_FRIEND
+					or _G.RAF_RECRUITER_FRIEND
+				if rafFormat then
+					text = rafFormat:format(text)
+				end
+			end
+			card.Location:SetText(text)
+		end
+	end
+
+	F.SetFont(card.Location)
+	F.SetFontWithDB(card.Location, self.db.infoFont)
+end
+
+function FL:RecentAllyCard_UpdatePresence(card)
+	if not self.db or not self.db.enable then
+		return
+	end
+
+	local stateData = card.elementData and card.elementData.stateData
+	if not stateData or not card.PresenceHolder then
+		return
+	end
+
+	local status = "Offline"
+	if stateData.isOnline then
+		status = (stateData.isAFK and "AFK") or (stateData.isDND and "DND") or "Online"
+	end
+
+	SetStatusTexture(card.PresenceHolder.PresenceIcon, self.db.textures.status, status)
+end
+
+function FL:RecentAllyCard_UpdateCharacterData(card)
+	self:SocialCard_Track(card)
+
+	if not self.db or not self.db.enable then
+		return
+	end
+
+	local characterData = card.elementData and card.elementData.characterData
+	local stateData = card.elementData and card.elementData.stateData
+	if not characterData or not stateData then
+		return
+	end
+
+	if stateData.isOnline and self.db.useClassColor and characterData.classID then
+		local classFile = select(2, GetClassInfo(characterData.classID))
+		if classFile and characterData.name then
+			local displayName = _G.RecentAlliesUtil
+					and _G.RecentAlliesUtil.GetBestDisplayNameForCharacter
+					and _G.RecentAlliesUtil.GetBestDisplayNameForCharacter(characterData)
+				or characterData.name
+			local coloredName = C.StringWithClassColor(displayName, classFile)
+			if coloredName then
+				card.Name:SetText(coloredName)
+			end
+		end
+	end
+
+	local level = characterData.level
+	if level and level > 0 then
+		local maxLevel = expansionData[WOW_PROJECT_ID] and expansionData[WOW_PROJECT_ID].maxLevel
+		if self.db.hideMaxLevel and level == maxLevel then
+			card.Level:SetText("")
+		elseif stateData.isOnline then
+			card.Level:SetText(FormatLevelText(level, _G.SOCIAL_UI_RECENT_ALLIES_CARD_LEVEL_DISPLAY_FORMAT))
+		end
+	end
+
+	for _, key in pairs({ "Name", "Level", "Class" }) do
+		F.SetFont(card[key])
+		F.SetFontWithDB(card[key], self.db.nameFont)
+	end
+end
+
+function FL:RecentAllyCard_UpdateLocation(card)
+	if not self.db or not self.db.enable then
+		return
+	end
+
+	local characterData = card.elementData and card.elementData.characterData
+	local stateData = card.elementData and card.elementData.stateData
+	if not characterData or not stateData then
+		return
+	end
+
+	if stateData.isOnline and stateData.currentLocation then
+		local text = BuildLocationText(
+			stateData.currentLocation,
+			characterData.realmName,
+			self.db.areaColor,
+			self.db.hideRealm
+		)
+		if text ~= "" then
+			card.Location:SetText(text)
+		end
+	end
+
+	for _, key in pairs({ "Location", "MostRecentInteraction" }) do
+		F.SetFont(card[key])
+		F.SetFontWithDB(card[key], self.db.infoFont)
+	end
+end
+
+function FL:HookSocialUICards()
+	local friendCard = _G.FriendsListSocialCardMixin
+	if friendCard and not self:IsHooked(friendCard, "RefreshFriendNameDisplayText") then
+		self:SecureHook(friendCard, "InitializePresenceDisplay", "SocialCard_UpdatePresence")
+		self:SecureHook(friendCard, "InitializeGameIcon", "SocialCard_UpdateGameIcon")
+		self:SecureHook(friendCard, "RefreshFriendNameDisplayText", "SocialCard_UpdateFriendName")
+		self:SecureHook(friendCard, "RefreshFriendCharacterDataDisplayText", "SocialCard_UpdateCharacterData")
+		self:SecureHook(friendCard, "RefreshLocationDisplayText", "SocialCard_UpdateLocation")
+	end
+
+	local allyCard = _G.RecentAlliesSocialCardMixin
+	if allyCard and not self:IsHooked(allyCard, "RefreshCharacterDataDisplayText") then
+		self:SecureHook(allyCard, "InitializePresenceDisplay", "RecentAllyCard_UpdatePresence")
+		self:SecureHook(allyCard, "RefreshCharacterDataDisplayText", "RecentAllyCard_UpdateCharacterData")
+		self:SecureHook(allyCard, "RefreshLocationDisplayText", "RecentAllyCard_UpdateLocation")
+	end
+end
+
+function FL:RefreshSocialUICards()
+	if not self.socialCards then
+		return
+	end
+
+	for card in pairs(self.socialCards) do
+		if card:IsShown() and card.elementData and card.InitializeDisplay then
+			card:InitializeDisplay()
+		end
+	end
+end
+
 function FL:Initialize()
 	if not E.db.WT.social.friendList.enable then
 		return
 	end
 
 	self.db = E.db.WT.social.friendList
+
+	self:HookSocialUICards()
+	self:RegisterEvent("ADDON_LOADED", function(_, addonName)
+		if addonName == "Blizzard_FriendsFrame" or addonName == "Blizzard_RecentAllies" then
+			self:HookSocialUICards()
+		end
+	end)
 
 	self:SecureHook("FriendsFrame_UpdateFriendButton", "UpdateFriendButton")
 	if _G.RecentAlliesFrame and _G.RecentAlliesFrame.List and _G.RecentAlliesFrame.List.ScrollBox then
@@ -569,9 +893,15 @@ function FL:ProfileUpdate()
 	end
 
 	FriendsFrame_Update()
-	_G.RecentAlliesFrame.List.ScrollBox:ForEachFrame(function(button)
-		self:UpdateRecentAllyButton(button)
-	end)
+
+	local recentAllies = _G.RecentAlliesFrame
+	if recentAllies and recentAllies.List and recentAllies.List.ScrollBox then
+		recentAllies.List.ScrollBox:ForEachFrame(function(button)
+			self:UpdateRecentAllyButton(button)
+		end)
+	end
+
+	self:RefreshSocialUICards()
 end
 
 W:RegisterModule(FL:GetName())

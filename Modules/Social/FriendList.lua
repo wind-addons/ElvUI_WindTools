@@ -142,7 +142,7 @@ local expansionData = {
 		name = "Forever",
 		suffix = "Forever",
 		maxLevel = E.Forever and W.MaxLevelForPlayerExpansion or nil,
-		icon = nil, -- no custom texture yet, keep the Blizzard title icon
+		icon = MediaPath .. "GameIcons\\WOW_Forever",
 	},
 	[WOW_PROJECT_CLASSIC] = {
 		name = "Classic",

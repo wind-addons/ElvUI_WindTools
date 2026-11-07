@@ -36,8 +36,11 @@ end
 
 function S:Plumber()
 	local PlumberExpansionLandingPage = _G.PlumberExpansionLandingPage
+	if not PlumberExpansionLandingPage then
+		return
+	end
 
-	local LeftSection = PlumberExpansionLandingPage and PlumberExpansionLandingPage.LeftSection
+	local LeftSection = PlumberExpansionLandingPage.LeftSection
 	if LeftSection and LeftSection.NineSlice then
 		LeftSection.NineSlice:StripTextures()
 		LeftSection.NineSlice:CreateBackdrop("Transparent")
@@ -46,7 +49,7 @@ function S:Plumber()
 		self:Reposition(LeftSection.NineSlice.backdrop, LeftSection.NineSlice, 30, 0, 0, 0, 0)
 	end
 
-	if LeftSection.DefaultFrame then
+	if LeftSection and LeftSection.DefaultFrame then
 		LeftSection.DefaultFrame:HookScript("OnShow", OnDefaultFrameShow)
 		PlumberExpansionLandingPage:HookScript("OnShow", function()
 			OnDefaultFrameShow(LeftSection.DefaultFrame)

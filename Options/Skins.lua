@@ -2124,7 +2124,6 @@ local foreverHiddenBlizzardSkins = {
 	housing = true,
 	itemSocketing = true,
 	itemUpgrade = true,
-	lookingForGroup = true,
 	majorFactions = true,
 	orderHall = true,
 	perksProgram = true,

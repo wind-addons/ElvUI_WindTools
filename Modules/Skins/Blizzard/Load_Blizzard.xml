@@ -52,6 +52,7 @@
 	<Script file='ItemSocketing.lua' />
 	<Script file='ItemUpgrade.lua' />
 	<Script file='KeyBinding.lua' />
+	<Script file='LFGListing.lua' />
 	<Script file='LookingForGroup.lua' />
 	<Script file='Loot.lua' />
 	<Script file='LossOfControl.lua' />

@@ -81,6 +81,7 @@
 	<Script file='Stable.lua' />
 	<Script file='StaticPopup.lua' />
 	<Script file='SubscriptionInterstitial.lua' />
+	<Script file='SwingTimer.lua' />
 	<Script file='TalkingHead.lua' />
 	<Script file='Taxi.lua' />
 	<Script file='TicketStatus.lua' />

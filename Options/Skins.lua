@@ -2021,6 +2021,11 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Subscription Interstitial"],
 		},
+		swingTimer = {
+			order = 10,
+			type = "toggle",
+			name = _G.SWING_TIMER_LABEL,
+		},
 		talkingHead = {
 			order = 10,
 			type = "toggle",
@@ -2132,6 +2137,8 @@ if E.Forever then
 			skinOption.hidden = true
 		end
 	end
+elseif options.blizzard.args.swingTimer then
+	options.blizzard.args.swingTimer.hidden = true
 end
 
 options.damageMeter = {

@@ -798,6 +798,7 @@ V.skins = {
 		stable = true,
 		staticPopup = true,
 		subscriptionInterstitial = true,
+		swingTimer = true,
 		talkingHead = true,
 		taxi = true,
 		ticketStatus = true,

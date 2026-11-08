@@ -11,18 +11,23 @@ W.Changelog[425] = {
 	},
 	NEW = {
 		["zhCN"] = {
+			"[美化外观] 新增社交界面 (SocialUIFrame) 皮肤. 主框体、标签和侧边窗口会加上阴影, 战网标签、按钮和列表标题会使用 WindTools 字体样式.",
 			"[好友列表] WoW Forever 的好友和近期往来卡片现在会套用状态图标、游戏图标、客户端和职业颜色、等级、位置和字体. Forever 使用单独的游戏图标.",
 		},
 		["zhTW"] = {
+			"[美化外觀] 新增社交介面 (SocialUIFrame) 皮膚. 主框架、標籤和側邊視窗會加上陰影, 戰網標籤、按鈕和列表標題會使用 WindTools 字體樣式.",
 			"[好友名單] WoW Forever 的好友和近期盟友卡片現在會套用狀態圖示、遊戲圖示、客戶端和職業顏色、等級、位置和字體. Forever 使用單獨的遊戲圖示.",
 		},
 		["enUS"] = {
+			"[Skins] Added a skin for the Social UI (SocialUIFrame). The main frame, tabs, and side windows get shadows, and the BattleTag, buttons, and list headers use the WindTools font style.",
 			"[Friend List] WoW Forever friend and recent ally cards now use the status icons, game icons, client and class colors, level, location, and fonts. Forever has its own game icon.",
 		},
 		["koKR"] = {
+			"[스킨] 소셜 UI(SocialUIFrame) 스킨을 추가했습니다. 기본 프레임, 탭, 측면 창에 그림자가 생기고 배틀태그, 버튼, 목록 제목이 WindTools 글꼴 스타일을 사용합니다.",
 			"[친구 목록] WoW Forever의 친구와 최근 동맹 카드에 상태 아이콘, 게임 아이콘, 클라이언트와 직업 색상, 레벨, 위치, 글꼴이 적용됩니다. Forever 전용 게임 아이콘을 사용합니다.",
 		},
 		["ruRU"] = {
+			"[Скины] Добавлен скин для социального интерфейса (SocialUIFrame). Основное окно, вкладки и боковые окна получают тени, а BattleTag, кнопки и заголовки списков используют шрифт WindTools.",
 			"[Список друзей] Карточки друзей и раздела «Недавние союзники» в WoW Forever теперь используют значки статуса, значки игры, цвета клиента и класса, уровень, местоположение и шрифты. У Forever есть собственный значок игры.",
 		},
 	},

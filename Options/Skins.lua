@@ -2001,6 +2001,14 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Setting Panel"],
 		},
+		socialUI = {
+			order = 10,
+			type = "toggle",
+			name = L["Social"],
+			hidden = function()
+				return not E.Forever or not _G.SocialUIFrame
+			end,
+		},
 		soulbinds = {
 			order = 10,
 			type = "toggle",

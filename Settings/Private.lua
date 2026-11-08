@@ -794,6 +794,7 @@ V.skins = {
 		scenario = true,
 		scrappingMachine = true,
 		settingsPanel = true,
+		socialUI = true,
 		soulbinds = true,
 		stable = true,
 		staticPopup = true,

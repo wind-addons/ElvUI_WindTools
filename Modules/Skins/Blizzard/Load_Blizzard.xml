@@ -77,6 +77,7 @@
 	<Script file='Scenario.lua' />
 	<Script file='ScrappingMachine.lua' />
 	<Script file='SettingsPanel.lua' />
+	<Script file='SocialUI.lua' />
 	<Script file='Soulbinds.lua' />
 	<Script file='Stable.lua' />
 	<Script file='StaticPopup.lua' />

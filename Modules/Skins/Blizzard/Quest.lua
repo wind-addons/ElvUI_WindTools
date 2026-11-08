@@ -109,10 +109,39 @@ local function StyleRewardButton(rewardButton)
 	S:BindShadowColorWithBorder(rewardButton.Icon.backdrop)
 
 	rewardButton:CreateBackdrop("Transparent")
-	S:CreateBackdropShadow(rewardButton)
 	rewardButton.backdrop:ClearAllPoints()
 	rewardButton.backdrop:Point("TOPRIGHT", rewardButton, "TOPRIGHT", -4, 0)
 	rewardButton.backdrop:Point("BOTTOMLEFT", rewardButton.Icon.backdrop, "BOTTOMRIGHT", 2, 0)
+end
+
+---Choice rewards are placed in a two-column grid. The Blizzard highlight is 256 wide,
+---so it covers the neighboring reward. Mark the chosen icon instead.
+local function UpdateRewardChoiceSelection(selectedButton)
+	local rewardsFrame = selectedButton:GetParent()
+	local rewardButtons = rewardsFrame and rewardsFrame.RewardButtons
+	if not rewardButtons then
+		return
+	end
+
+	for _, rewardButton in pairs(rewardButtons) do
+		local iconBackdrop = rewardButton.Icon and rewardButton.Icon.backdrop
+		if iconBackdrop and rewardButton.type == "choice" and not iconBackdrop.__windChoiceBorderColor then
+			local borderRed, borderGreen, borderBlue, borderAlpha = iconBackdrop:GetBackdropBorderColor()
+			iconBackdrop.__windChoiceBorderColor = { borderRed, borderGreen, borderBlue, borderAlpha }
+		end
+	end
+
+	for _, rewardButton in pairs(rewardButtons) do
+		local iconBackdrop = rewardButton.Icon and rewardButton.Icon.backdrop
+		if iconBackdrop and rewardButton.type == "choice" then
+			if rewardButton == selectedButton then
+				iconBackdrop:SetBackdropBorderColor(1, 0.8, 0)
+			else
+				local borderColor = iconBackdrop.__windChoiceBorderColor
+				iconBackdrop:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
+			end
+		end
+	end
 end
 
 ---Applies styling to reward buttons with specific size requirements
@@ -287,8 +316,14 @@ function S:BlizzardQuestFrames()
 
 	hooksecurefunc("QuestInfo_Display", QuestInfo_Display)
 
+	-- QuestInfoItemHighlight is 256x64 and anchored to the whole reward button.
+	-- In the two-column choice layout that covers the reward beside the one you picked.
 	if _G.QuestInfoItemHighlight then
 		_G.QuestInfoItemHighlight:Kill()
+	end
+
+	if _G.QuestInfoItem_OnClick then
+		hooksecurefunc("QuestInfoItem_OnClick", UpdateRewardChoiceSelection)
 	end
 
 	if _G.QuestInfoSpellObjectiveFrame then

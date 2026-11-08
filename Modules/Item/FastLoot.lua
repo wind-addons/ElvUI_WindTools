@@ -21,20 +21,28 @@ function FL:GetFreeSlots()
 end
 
 function FL:LOOT_READY()
-	local tDelay = 0
-	if GetTime() - tDelay >= self.db.limit then
-		tDelay = GetTime()
+	local now = GetTime()
+	if now - (self.lastLootTime or 0) >= self.db.limit then
+		self.lastLootTime = now
 		if C_CVar_GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") and not IsFishingLoot() then
 			for i = GetNumLootItems(), 1, -1 do
 				if self:GetFreeSlots() > 0 then
 					LootSlot(i)
 				else
-					F.Print(L["Bags are full"])
+					if not self.bagsFullAnnounced then
+						self.bagsFullAnnounced = true
+						F.Print(L["Bags are full"])
+					end
+					break
 				end
 			end
-			tDelay = GetTime()
+			self.lastLootTime = GetTime()
 		end
 	end
+end
+
+function FL:LOOT_CLOSED()
+	self.bagsFullAnnounced = nil
 end
 
 function FL:Initialize()
@@ -44,6 +52,7 @@ function FL:Initialize()
 	self.db = E.db.WT.item.fastLoot
 
 	self:RegisterEvent("LOOT_READY")
+	self:RegisterEvent("LOOT_CLOSED")
 end
 
 function FL:ProfileUpdate()
@@ -51,8 +60,10 @@ function FL:ProfileUpdate()
 
 	if self.db.enable then
 		self:RegisterEvent("LOOT_READY")
+		self:RegisterEvent("LOOT_CLOSED")
 	else
 		self:UnregisterEvent("LOOT_READY")
+		self:UnregisterEvent("LOOT_CLOSED")
 	end
 end
 

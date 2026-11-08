@@ -3,14 +3,19 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local ipairs = ipairs
 local pairs = pairs
 local select = select
 local strmatch = strmatch
 
 local CreateFrame = CreateFrame
+local floor = floor
+local GetItemQualityByID = C_Item.GetItemQualityByID
 local GetMaterialTextColors = GetMaterialTextColors
 local GetNumQuestLeaderBoards = GetNumQuestLeaderBoards
 local GetQuestID = GetQuestID
+local GetQuestItemLink = GetQuestItemLink
+local GetQuestLogItemLink = GetQuestLogItemLink
 local GetQuestLogLeaderBoard = GetQuestLogLeaderBoard
 
 local C_QuestInfoSystem_GetQuestRewardSpells = C_QuestInfoSystem.GetQuestRewardSpells
@@ -103,44 +108,74 @@ local function StyleRewardButton(rewardButton)
 		return
 	end
 
+	if not rewardButton.__windRewardWidth then
+		rewardButton.__windRewardWidth = rewardButton:GetWidth()
+	end
+
 	rewardButton.Icon:CreateBackdrop("Transparent")
 	rewardButton.Icon:SetTexCoords()
 	S:CreateBackdropShadow(rewardButton.Icon)
 	S:BindShadowColorWithBorder(rewardButton.Icon.backdrop)
 
 	rewardButton:CreateBackdrop("Transparent")
+	S:CreateBackdropShadow(rewardButton)
 	rewardButton.backdrop:ClearAllPoints()
 	rewardButton.backdrop:Point("TOPRIGHT", rewardButton, "TOPRIGHT", -4, 0)
 	rewardButton.backdrop:Point("BOTTOMLEFT", rewardButton.Icon.backdrop, "BOTTOMRIGHT", 2, 0)
 end
 
----Choice rewards are placed in a two-column grid. The Blizzard highlight is 256 wide,
----so it covers the neighboring reward. Mark the chosen icon instead.
-local function UpdateRewardChoiceSelection(selectedButton)
-	local rewardsFrame = selectedButton:GetParent()
-	local rewardButtons = rewardsFrame and rewardsFrame.RewardButtons
+---The reward IconBorder atlas stays the white common border, so the skinned edge
+---does not follow SetItemButtonQuality. Color it from the quest item link instead.
+local function ApplyRewardIconQuality(rewardButton)
+	local iconBackdrop = rewardButton.Icon and rewardButton.Icon.backdrop
+	if not iconBackdrop or not rewardButton.type then
+		return
+	end
+
+	local questInfoFrame = _G.QuestInfoFrame
+	local getItemLink = questInfoFrame.questLog and GetQuestLogItemLink or GetQuestItemLink
+	local itemLink = getItemLink(rewardButton.type, rewardButton:GetID())
+	local quality = itemLink and GetItemQualityByID(itemLink)
+	local borderRed, borderGreen, borderBlue = E:GetItemQualityColor(quality and quality > 1 and quality)
+	iconBackdrop:SetBackdropBorderColor(borderRed, borderGreen, borderBlue)
+end
+
+---Two choice rewards sit side by side and the right one runs into the scroll frame.
+---Shrink the pair so the name plate shadow stays inside the rewards frame.
+local function FitChoiceRewardButtons(rewardsFrame)
+	local rewardButtons = rewardsFrame.RewardButtons
 	if not rewardButtons then
 		return
 	end
 
-	for _, rewardButton in pairs(rewardButtons) do
-		local iconBackdrop = rewardButton.Icon and rewardButton.Icon.backdrop
-		if iconBackdrop and rewardButton.type == "choice" and not iconBackdrop.__windChoiceBorderColor then
-			local borderRed, borderGreen, borderBlue, borderAlpha = iconBackdrop:GetBackdropBorderColor()
-			iconBackdrop.__windChoiceBorderColor = { borderRed, borderGreen, borderBlue, borderAlpha }
+	local choiceButtons = {}
+	for _, rewardButton in ipairs(rewardButtons) do
+		if rewardButton:IsShown() and rewardButton.type == "choice" then
+			choiceButtons[#choiceButtons + 1] = rewardButton
+		elseif rewardButton.__windRewardWidth then
+			rewardButton:SetWidth(rewardButton.__windRewardWidth)
 		end
 	end
 
-	for _, rewardButton in pairs(rewardButtons) do
-		local iconBackdrop = rewardButton.Icon and rewardButton.Icon.backdrop
-		if iconBackdrop and rewardButton.type == "choice" then
-			if rewardButton == selectedButton then
-				iconBackdrop:SetBackdropBorderColor(1, 0.8, 0)
-			else
-				local borderColor = iconBackdrop.__windChoiceBorderColor
-				iconBackdrop:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-			end
-		end
+	if #choiceButtons < 2 then
+		return
+	end
+
+	local rowWidth = rewardsFrame:GetWidth()
+	if not rowWidth or rowWidth <= 0 then
+		return
+	end
+
+	local shadowSize = 4 + (E.private.WT.skins.increasedSize or 0)
+	local columnGap = 4
+	local defaultWidth = choiceButtons[1].__windRewardWidth or choiceButtons[1]:GetWidth()
+	local fittedWidth = floor((rowWidth - columnGap - shadowSize - 2) / 2)
+	if fittedWidth >= defaultWidth then
+		return
+	end
+
+	for _, rewardButton in ipairs(choiceButtons) do
+		rewardButton:SetWidth(fittedWidth)
 	end
 end
 
@@ -257,6 +292,15 @@ local function QuestInfo_Display()
 
 	local questRewardsFrame = _G.QuestInfoFrame.rewardsFrame
 	if questRewardsFrame then
+		if questRewardsFrame.RewardButtons then
+			for _, rewardButton in pairs(questRewardsFrame.RewardButtons) do
+				if rewardButton:IsShown() then
+					ApplyRewardIconQuality(rewardButton)
+				end
+			end
+			FitChoiceRewardButtons(questRewardsFrame)
+		end
+
 		local isQuestLogContext = _G.QuestInfoFrame.questLog ~= nil
 		local currentQuestID = isQuestLogContext and C_QuestLog_GetSelectedQuest() or GetQuestID()
 
@@ -316,14 +360,8 @@ function S:BlizzardQuestFrames()
 
 	hooksecurefunc("QuestInfo_Display", QuestInfo_Display)
 
-	-- QuestInfoItemHighlight is 256x64 and anchored to the whole reward button.
-	-- In the two-column choice layout that covers the reward beside the one you picked.
 	if _G.QuestInfoItemHighlight then
 		_G.QuestInfoItemHighlight:Kill()
-	end
-
-	if _G.QuestInfoItem_OnClick then
-		hooksecurefunc("QuestInfoItem_OnClick", UpdateRewardChoiceSelection)
 	end
 
 	if _G.QuestInfoSpellObjectiveFrame then

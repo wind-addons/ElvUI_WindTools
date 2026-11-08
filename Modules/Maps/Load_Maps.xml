@@ -5,5 +5,7 @@
 	<Script file='MinimapButtons.lua' />
 	<Script file='RectangleMinimap.lua' />
 	<Script file='SuperTracker.lua' />
+	<Script file='WorldMapReveal_Retail.lua' />
+	<Script file='WorldMapReveal_Forever.lua' />
 	<Script file='WorldMap.lua' />
 </Ui>

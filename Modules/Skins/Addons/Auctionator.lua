@@ -347,7 +347,6 @@ local function configTab(frame)
 
 	S:Proxy("HandleEditBox", frame.ContributeLink.InputBox)
 	S:Proxy("HandleEditBox", frame.DiscordLink.InputBox)
-	S:Proxy("HandleEditBox", frame.BugReportLink.InputBox)
 end
 
 local function shoppingItem(frame)

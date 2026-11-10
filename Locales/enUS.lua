@@ -1600,6 +1600,7 @@ L["Superbloom"] = true
 L["Superbloom Emerald Dream"] = true
 L["Support TomTom-style /way command without TomTom."] = true
 L["Swap the functionality of normal click and click with modifier keys."] = true
+L["Swing Timer"] = true
 L["Switch Buttons"] = true
 L["Switch Buttons Bar"] = true
 L["System Default"] = true

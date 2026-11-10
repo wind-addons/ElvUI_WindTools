@@ -2032,7 +2032,7 @@ options.blizzard = {
 		swingTimer = {
 			order = 10,
 			type = "toggle",
-			name = _G.SWING_TIMER_LABEL,
+			name = _G.SWING_TIMER_LABEL or L["Swing Timer"],
 		},
 		talkingHead = {
 			order = 10,

@@ -628,9 +628,6 @@ options.dispelOverlay = {
 	order = 5,
 	type = "group",
 	name = L["Dispel Overlay"],
-	hidden = function()
-		return not E.Retail
-	end,
 	get = function(info)
 		return E.db.WT.unitFrames.dispelOverlay[info[#info]]
 	end,

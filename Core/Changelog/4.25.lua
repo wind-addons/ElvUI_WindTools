@@ -16,6 +16,7 @@ W.Changelog[425] = {
 			"[好友列表] WoW Forever 的好友和近期往来卡片现在会套用状态图标、游戏图标、客户端和职业颜色、等级、位置和字体. Forever 使用单独的游戏图标.",
 			"[额外物品栏] 新增 WoW Forever 物品分组: 药水、药剂、合剂、卷轴、食物、绷带和实用物品. 这些列表只在 WoW Forever 加载. 新的 Forever 配置会在物品栏上使用它们.",
 			"[物品观察] 新增 WoW Forever 附魔数据. 它只在 WoW Forever 加载. 正式服附魔数据仍由标准客户端使用.",
+			"[单位框体] 驱散覆盖现在可以在 WoW Forever 的小队和团队框体上使用.",
 		},
 		["zhTW"] = {
 			"[美化外觀] 新增 WoW Forever 隊伍搜尋器 (LFGListingFrame) 皮膚. 發佈、瀏覽和查詢框架以及側邊標籤會加上陰影, 發佈頁的文字、按鈕和活動列表會使用 WindTools 字體樣式. 使用 [尋求組隊] 開關控制.",
@@ -23,6 +24,7 @@ W.Changelog[425] = {
 			"[好友名單] WoW Forever 的好友和近期盟友卡片現在會套用狀態圖示、遊戲圖示、客戶端和職業顏色、等級、位置和字體. Forever 使用單獨的遊戲圖示.",
 			"[額外物品條] 新增 WoW Forever 物品分組: 藥水、藥劑、精煉藥劑、卷軸、食物、繃帶和實用物品. 這些列表只在 WoW Forever 載入. 新的 Forever 設定會在物品條上使用它們.",
 			"[物品觀察] 新增 WoW Forever 附魔資料. 它只在 WoW Forever 載入. 正式服附魔資料仍由標準客戶端使用.",
+			"[單位框架] 驅散覆蓋現在可以在 WoW Forever 的小隊和團隊框架上使用.",
 		},
 		["enUS"] = {
 			"[Skins] Added a skin for the WoW Forever group finder (LFGListingFrame). The listing, browse, and who frames and their side tabs get shadows, and the listing texts, buttons, and activity list use the WindTools font style. It uses the Looking For Group toggle.",
@@ -30,6 +32,7 @@ W.Changelog[425] = {
 			"[Friend List] WoW Forever friend and recent ally cards now use the status icons, game icons, client and class colors, level, location, and fonts. Forever has its own game icon.",
 			"[Extra Items Bar] Added WoW Forever item groups for potions, elixirs, flasks, scrolls, food, bandages, and utilities. These lists load only on WoW Forever. New Forever profiles use them on the item bars.",
 			"[Item Inspect] Added WoW Forever enchant data. It loads only on WoW Forever. The retail enchant data stays on the standard client.",
+			"[Unit Frames] Dispel Overlay now works on WoW Forever party and raid frames.",
 		},
 		["koKR"] = {
 			"[스킨] WoW Forever 파티 찾기(LFGListingFrame) 스킨을 추가했습니다. 등록, 찾아보기, 누구 목록 프레임과 측면 탭에 그림자가 생기고, 등록 화면의 텍스트, 버튼, 활동 목록이 WindTools 글꼴 스타일을 사용합니다. 파티 찾기 스위치로 제어합니다.",
@@ -37,6 +40,7 @@ W.Changelog[425] = {
 			"[친구 목록] WoW Forever의 친구와 최근 동맹 카드에 상태 아이콘, 게임 아이콘, 클라이언트와 직업 색상, 레벨, 위치, 글꼴이 적용됩니다. Forever 전용 게임 아이콘을 사용합니다.",
 			"[추가 아이템 바] WoW Forever용 물약, 비약, 영약, 두루마리, 음식, 붕대, 유틸리티 그룹을 추가했습니다. 이 목록은 WoW Forever에서만 불러옵니다. 새 Forever 프로필은 아이템 바에 이 그룹을 사용합니다.",
 			"[아이템 살펴보기] WoW Forever 마법부여 데이터를 추가했습니다. WoW Forever에서만 불러오며, 본섭 마법부여 데이터는 표준 클라이언트에 남습니다.",
+			"[유닛프레임] 해제 오버레이가 WoW Forever의 파티와 공격대 프레임에서도 동작합니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Добавлен скин для поиска группы в WoW Forever (LFGListingFrame). Окна создания заявки, просмотра и списка игроков, а также их боковые вкладки получают тени, а тексты, кнопки и список занятий используют шрифт WindTools. Управляется переключателем «Поиск группы».",
@@ -44,6 +48,7 @@ W.Changelog[425] = {
 			"[Список друзей] Карточки друзей и раздела «Недавние союзники» в WoW Forever теперь используют значки статуса, значки игры, цвета клиента и класса, уровень, местоположение и шрифты. У Forever есть собственный значок игры.",
 			"[Дополнительная панель предметов] Добавлены группы предметов WoW Forever: зелья, эликсиры, настои, свитки, еда, бинты и утилиты. Эти списки загружаются только в WoW Forever. Новые профили Forever используют их на панелях предметов.",
 			"[Осмотр предметов] Добавлены данные чар WoW Forever. Они загружаются только в WoW Forever. Данные чар основной версии остаются на стандартном клиенте.",
+			"[Фреймы юнитов] Наложение рассеивания теперь работает на рамках группы и рейда в WoW Forever.",
 		},
 	},
 	IMPROVEMENT = {

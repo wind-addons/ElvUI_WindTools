@@ -4,7 +4,6 @@ local UF = E.UnitFrames
 
 local hooksecurefunc = hooksecurefunc
 local next = next
-local type = type
 
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
@@ -25,7 +24,24 @@ local SUPPORTED_UNITS = {
 	raid3 = true,
 }
 local BORDER_TEMPLATE = "WT_DispelAnimatedBorderTemplate"
-local MARCHING_ANIMATION_TEMPLATE = "WT_DispelMarchingAnimTemplate"
+local RAID_FRAME_ANTS = "Interface\\Addons\\ElvUI_WindTools\\Media\\Textures\\Ants\\RaidFrameAnts"
+local framesToSetup = {}
+local setupQueued = false
+
+local function FinishQueuedFrames()
+	if next(framesToSetup) then
+		E:CoroutineUpdate(DispelOverlay.RunQueuedFrame, framesToSetup, nil, FinishQueuedFrames, 1, 0.1)
+	else
+		setupQueued = false
+	end
+end
+
+function DispelOverlay:RunQueuedFrame(frame)
+	framesToSetup[frame] = nil
+	if frame and frame.Health and DispelOverlay:IsUnitEnabled(frame.unitframeType) then
+		DispelOverlay:SetupUnitFrame(frame)
+	end
+end
 
 local function DisableMouse(region)
 	region:EnableMouse(false)
@@ -55,18 +71,9 @@ local function CreatePulseAnimation(region, fromAlpha, toAlpha)
 	return pulseAnimation
 end
 
-local function CreateMarchingAnimation(border)
-	local marchingAnimation = border:CreateAnimationGroup(nil, MARCHING_ANIMATION_TEMPLATE)
-	border.MarchingAnim = marchingAnimation
-	return marchingAnimation
-end
-
 function DispelOverlay:CanLoad()
 	local dispelStyle = Enum.CustomAuraButtonDispelTypeTextureStyle
-	return E.Retail
-		and type(MarchingAnts_CreateForTarget) == "function"
-		and dispelStyle
-		and dispelStyle.PreserveAsset ~= nil
+	return dispelStyle and dispelStyle.PreserveAsset ~= nil
 end
 
 function DispelOverlay:IsUnitEnabled(unitframeType)
@@ -157,11 +164,22 @@ function DispelOverlay:PrepareBorder(border)
 	border.wtPrepared = true
 end
 
+local function UseRaidFrameAnts(border)
+	-- SetHorizontalAsset marks the border dirty. MarkDirty calls C_Timer.After with dirtyCallback,
+	-- and that callback is nil when MarchingAnts OnLoad did not run.
+	border.horizontalAsset = RAID_FRAME_ANTS
+	border.verticalAsset = RAID_FRAME_ANTS
+	if border.SetupAssets then
+		border:SetupAssets()
+	end
+end
+
 function DispelOverlay:CreateBorder(parent, parentKey)
 	local border = MarchingAnts_CreateForTarget(parent, BORDER_TEMPLATE, 0, 0, parentKey)
 	border:SetClipsChildren(false)
 	DisableMouse(border)
 	self:PrepareBorder(border)
+	UseRaidFrameAnts(border)
 	border:SetupAssets()
 	border:SetLineThickness(BORDER_THICKNESS, BORDER_THICKNESS)
 	return border
@@ -253,25 +271,63 @@ function DispelOverlay:ShowPreviewBorder(frame, borderColor)
 	border:SetSpeed(BORDER_SPEED)
 end
 
+local function SetEdgeTexture(edgeTexture, wrapHorizontal)
+	if wrapHorizontal then
+		edgeTexture:SetTexture(RAID_FRAME_ANTS, "REPEAT", "CLAMP")
+		edgeTexture:SetHorizTile(true)
+		edgeTexture:SetVertTile(false)
+	else
+		edgeTexture:SetTexture(RAID_FRAME_ANTS, "CLAMP", "REPEAT")
+		edgeTexture:SetHorizTile(false)
+		edgeTexture:SetVertTile(true)
+	end
+end
+
 function DispelOverlay:CreateOverlayBorder(overlay)
 	if overlay.border then
 		return overlay.border
 	end
 
-	local border = self:CreateBorder(overlay, "WTDispelBorder")
+	-- MarchingAntsTemplate cannot run OnLoad on this button, so MarkDirty passes a nil callback to C_Timer.After.
+	local border = CreateFrame("Frame", nil, overlay)
+	DisableMouse(border)
+	border:SetClipsChildren(false)
+	border:SetAllPoints()
+
+	border.Top = border:CreateTexture(nil, "ARTWORK")
+	border.Bottom = border:CreateTexture(nil, "ARTWORK")
+	border.Left = border:CreateTexture(nil, "ARTWORK")
+	border.Right = border:CreateTexture(nil, "ARTWORK")
+	SetEdgeTexture(border.Top, true)
+	SetEdgeTexture(border.Bottom, true)
+	SetEdgeTexture(border.Left, false)
+	SetEdgeTexture(border.Right, false)
+
+	border.Top:SetPoint("TOPLEFT", border, "TOPLEFT", 0, 1)
+	border.Top:SetPoint("TOPRIGHT", border, "TOPRIGHT", 0, 1)
+	border.Bottom:SetPoint("BOTTOMLEFT", border, "BOTTOMLEFT", 0, -1)
+	border.Bottom:SetPoint("BOTTOMRIGHT", border, "BOTTOMRIGHT", 0, -1)
+	border.Left:SetPoint("TOPLEFT", border, "TOPLEFT", -1, 0)
+	border.Left:SetPoint("BOTTOMLEFT", border, "BOTTOMLEFT", -1, 0)
+	border.Right:SetPoint("TOPRIGHT", border, "TOPRIGHT", 1, 0)
+	border.Right:SetPoint("BOTTOMRIGHT", border, "BOTTOMRIGHT", 1, 0)
+	border.Left:SetWidth(BORDER_THICKNESS)
+	border.Right:SetWidth(BORDER_THICKNESS)
+	border.Top:SetHeight(BORDER_THICKNESS)
+	border.Bottom:SetHeight(BORDER_THICKNESS)
+
+	border.MarchingAnim = border:CreateAnimationGroup(nil, "WT_DispelMarchingAnimTemplate")
+	border.MarchingAnim:SetAnimationSpeedMultiplier(BORDER_SPEED)
+	function border:SetSpeed(animationSpeed)
+		local speed = animationSpeed or BORDER_SPEED
+		if speed > 0 then
+			self.MarchingAnim:SetAnimationSpeedMultiplier(speed)
+		end
+	end
+
 	border:SetFrameStrata("HIGH")
 	border:SetFrameLevel((overlay:GetFrameLevel() or 0) + 20)
 	overlay.border = border
-
-	border.MarchingAnim:Stop()
-	local marchingAnimation = CreateMarchingAnimation(border)
-	border:SetSpeed(BORDER_SPEED)
-
-	local auraButton = overlay:GetParent()
-	if auraButton and auraButton.AddAuraShownAnimation then
-		auraButton:AddAuraShownAnimation(marchingAnimation)
-	end
-
 	return border
 end
 
@@ -290,6 +346,9 @@ function DispelOverlay:ApplyOverlayBorder(frame)
 	border:SetAlpha(self.testMode and 0 or 1)
 	border:Show()
 	border:SetSpeed(BORDER_SPEED)
+	if border.MarchingAnim and not border.MarchingAnim:IsPlaying() then
+		border.MarchingAnim:Play()
+	end
 end
 
 function DispelOverlay:HidePreviewBorder(frame)
@@ -324,7 +383,7 @@ function DispelOverlay:ApplyOverlayOptions(frame)
 	self:AnchorToBackdrop(overlay, frame)
 	self:ApplyOverlayBorder(frame)
 
-	local auraButton = overlay:GetParent()
+	local auraButton = overlay.wtAuraButton
 	if auraButton and auraButton.AddDispelTypeTexture then
 		self:RegisterDispelTextures(auraButton, overlay)
 	end
@@ -345,9 +404,11 @@ function DispelOverlay:BuildOverlay(frame, auraButton)
 		auraButton.backdrop:Hide()
 	end
 
+	-- AddDispelTypeTexture only accepts textures owned by this aura button.
 	local overlay = CreateFrame("Frame", nil, auraButton)
 	DisableMouse(overlay)
 	overlay:SetClipsChildren(false)
+	overlay.wtAuraButton = auraButton
 	local healthLevel = frame.Health:GetFrameLevel()
 	overlay:SetFrameLevel(healthLevel + 30)
 
@@ -364,11 +425,6 @@ function DispelOverlay:BuildOverlay(frame, auraButton)
 	frame.WTDispelOverlayFrame = overlay
 
 	self:CreateOverlayBorder(overlay)
-
-	overlay:SetScript("OnShow", function(shownOverlay)
-		DispelOverlay:ResumeFlashing(shownOverlay)
-	end)
-
 	self:ApplyOverlayOptions(frame)
 	overlay:Show()
 	auraButton:Hide()
@@ -448,13 +504,20 @@ function DispelOverlay:UpdateAuraSlot(container, frame)
 		return
 	end
 
-	container:AddAuraSlot(DISPEL_SLOT_KEY, FILTER_STRING, {
-		initializeFrame = function(auraButton)
-			self:BuildOverlay(frame, auraButton)
-		end,
+	local slotOptions = {
 		candidateFilters = candidateFilters,
-	})
+	}
+	if not E.Forever then
+		slotOptions.initializeFrame = function(auraButton)
+			self:BuildOverlay(frame, auraButton)
+		end
+	end
+
+	local auraButton = container:AddAuraSlot(DISPEL_SLOT_KEY, FILTER_STRING, slotOptions)
 	container.known[DISPEL_SLOT_KEY] = true
+	if auraButton and not auraButton.wtDispelOverlay then
+		self:BuildOverlay(frame, auraButton)
+	end
 end
 
 function DispelOverlay:GetTestColor()
@@ -580,9 +643,8 @@ function DispelOverlay:ConfigureUnitFrame(_, frame)
 		return
 	end
 
-	local unitframeType = frame.unitframeType
 	local container = frame.WTDispelOverlay
-	if not self:IsUnitEnabled(unitframeType) then
+	if not self:IsUnitEnabled(frame.unitframeType) then
 		if container then
 			container.allowEnable = false
 			if frame.__unit then
@@ -594,9 +656,22 @@ function DispelOverlay:ConfigureUnitFrame(_, frame)
 		return
 	end
 
-	container = self:GetContainer(frame)
+	if not E.Forever then
+		self:SetupUnitFrame(frame)
+		return
+	end
+
+	framesToSetup[frame] = frame
+	if not setupQueued then
+		setupQueued = true
+		E:CoroutineUpdate(self.RunQueuedFrame, framesToSetup, nil, FinishQueuedFrames, 1, 0.1)
+	end
+end
+
+function DispelOverlay:SetupUnitFrame(frame)
+	local container = self:GetContainer(frame)
 	container.allowEnable = true
-	container.unitframeType = unitframeType
+	container.unitframeType = frame.unitframeType
 	self:UpdateAuraSlot(container, frame)
 	self:ApplyOverlayOptions(frame)
 

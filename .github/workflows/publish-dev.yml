@@ -18,7 +18,7 @@ jobs:
       - name: Initialize Python envoriment
         uses: actions/setup-python@v7
         with:
-          python-version: "3.x"
+          python-version: "3.15.2"
       - name: Install Python dependencies
         run: pip install git+https://github.com/SirAnthony/slpp
       - name: Run scripts to generate changelogs

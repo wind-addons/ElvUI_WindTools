@@ -16,9 +16,9 @@ jobs:
         with:
           fetch-depth: 1
       - name: Initialize Python envoriment
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
-          python-version: 3.8
+          python-version: "3.x"
       - name: Install Python dependencies
         run: pip install git+https://github.com/SirAnthony/slpp
       - name: Run scripts to generate changelogs

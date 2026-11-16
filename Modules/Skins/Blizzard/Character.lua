@@ -20,21 +20,22 @@ function S:Blizzard_UIPanels_Game()
 	-- Token
 	self:CreateShadow(_G.TokenFramePopup)
 
-	-- Remove the background
-	local modelScene = _G.CharacterModelScene
-	modelScene.BackgroundTopLeft:Hide()
-	modelScene.BackgroundTopRight:Hide()
-	modelScene.BackgroundBotLeft:Hide()
-	modelScene.BackgroundBotRight:Hide()
-	modelScene.BackgroundOverlay:Hide()
-	if modelScene.backdrop then
-		modelScene.backdrop:Kill()
-	end
+	-- Forever keeps ReputationDetailFrame on CharacterFrameRightPaneHost, and ElvUI places the model scene art.
+	if not E.Forever then
+		local modelScene = _G.CharacterModelScene
+		modelScene.BackgroundTopLeft:Hide()
+		modelScene.BackgroundTopRight:Hide()
+		modelScene.BackgroundBotLeft:Hide()
+		modelScene.BackgroundBotRight:Hide()
+		modelScene.BackgroundOverlay:Hide()
+		if modelScene.backdrop then
+			modelScene.backdrop:Kill()
+		end
 
-	-- Reputation
-	self:CreateShadow(_G.ReputationFrame.ReputationDetailFrame)
-	_G.ReputationFrame.ReputationDetailFrame:ClearAllPoints()
-	_G.ReputationFrame.ReputationDetailFrame:Point("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 3, 0)
+		self:CreateShadow(_G.ReputationFrame.ReputationDetailFrame)
+		_G.ReputationFrame.ReputationDetailFrame:ClearAllPoints()
+		_G.ReputationFrame.ReputationDetailFrame:Point("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 3, 0)
+	end
 end
 
 function S:Blizzard_TokenUI()

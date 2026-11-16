@@ -98,6 +98,13 @@ local extraItemGroupTooltip = (function()
 		desc("BIGDIG", L["Big Dig"]),
 		desc("DELVE", L["Delves"]),
 		desc("HOLIDAY", L["Holiday Reward Boxes"]),
+		desc("POTIONFOREVER", format("%s - Forever", L["Potions"])),
+		desc("ELIXIRFOREVER", format("%s - Forever", L["Elixirs"])),
+		desc("FLASKFOREVER", format("%s - Forever", L["Flasks"])),
+		desc("SCROLLFOREVER", format("%s - Forever", L["Scrolls"])),
+		desc("FOODFOREVER", format("%s - Forever", L["Food"])),
+		desc("BANDAGEFOREVER", format("%s - Forever", L["Bandages"])),
+		desc("UTILITYFOREVER", format("%s - Forever", L["Utilities"])),
 	}
 
 	return format("%s %s\n" .. strrep("\n%s", #lines - 2), unpack(lines))

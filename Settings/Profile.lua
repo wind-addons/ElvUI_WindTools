@@ -343,7 +343,8 @@ P.item = {
 					b = 1,
 				},
 			},
-			include = "POTIONGN,POTIONMN,FLASKMN,VANTUSMN,POTIONTWW,FLASKTWW,VANTUSTWW,UTILITY",
+			include = E.Forever and "POTIONFOREVER,ELIXIRFOREVER,FLASKFOREVER"
+				or "POTIONGN,POTIONMN,FLASKMN,VANTUSMN,POTIONTWW,FLASKTWW,VANTUSTWW,UTILITY",
 		},
 		bar3 = {
 			enable = true,
@@ -391,7 +392,8 @@ P.item = {
 					b = 1,
 				},
 			},
-			include = "MAGEFOOD,FOODVENDOR,FOODMN,FOODTWW,RUNEMN,RUNETWW,CUSTOM",
+			include = E.Forever and "FOODFOREVER,BANDAGEFOREVER"
+				or "MAGEFOOD,FOODVENDOR,FOODMN,FOODTWW,RUNEMN,RUNETWW,CUSTOM",
 		},
 		bar4 = {
 			enable = false,

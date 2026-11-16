@@ -700,6 +700,9 @@ L["Skip Blizzard Maw buff checks while auras are secret so tainted Objective Tra
 L["Fix the merchant frame showing when you using Trader Skill Master."] = true
 L["Flash"] = true
 L["Flasks"] = true
+L["Elixirs"] = true
+L["Scrolls"] = true
+L["Bandages"] = true
 L["Flight Map"] = true
 L["Floating Damage Text"] = true
 L["Floating Healing Text"] = true

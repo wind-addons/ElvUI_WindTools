@@ -1,45 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local EB = W:GetModule("ExtraItemsBar") ---@class ExtraItemsBar
 
-local pairs = pairs
-local select = select
-local sort = sort
-local tinsert = tinsert
-
-local GetInstanceInfo = GetInstanceInfo
-
-EB.STATE = {
-	IN_DELVE = 1,
-	QUANTUM_ITEM_ALLOWED = 2,
-}
-
-EB.StateCache = {}
-EB.StateFetcher = {
-	[EB.STATE.IN_DELVE] = function()
-		local difficulty = select(3, GetInstanceInfo())
-		if difficulty and difficulty == 208 then
-			return true
-		end
-		return false
-	end,
-	[EB.STATE.QUANTUM_ITEM_ALLOWED] = function()
-		return not E.db.WT.item.extraItemsBar.noQuantumItems
-	end,
-}
-
-function EB:UpdateState(state)
-	local fetcher = EB.StateFetcher[state]
-	EB.StateCache[state] = fetcher and fetcher()
-end
-
-function EB:GetState(state)
-	local result = EB.StateCache[state]
-	if result == nil then
-		result = true -- default to true if not cached
-	end
-	return result
-end
-
 EB.StateCheckList = {
 	-- Items that cannot be use outside delve
 	[233205] = EB.STATE.IN_DELVE, -- 迈动饮料
@@ -2472,56 +2433,40 @@ local holidayRewards = {
 	243293, -- 一包美酒节商品
 }
 
-local function CreateList(base, ...)
-	local list = {}
-	for _, key in pairs({ ... }) do
-		local items = base[key]
-		for _, item in pairs(items) do
-			list[item] = true
-		end
-	end
-	local sorted = {}
-	for item in pairs(list) do
-		tinsert(sorted, item)
-	end
-	sort(sorted)
-	return sorted
-end
-
 EB.ModuleList = {
-	["POTION"] = CreateList(potions, "general", "legacy", "sl", "df", "tww", "mn"),
-	["POTIONGN"] = CreateList(potions, "general"),
-	["POTIONLEG"] = CreateList(potions, "legacy"),
-	["POTIONSL"] = CreateList(potions, "sl"),
-	["POTIONDF"] = CreateList(potions, "df"),
-	["POTIONTWW"] = CreateList(potions, "tww"),
-	["POTIONMN"] = CreateList(potions, "mn"),
-	["FLASK"] = CreateList(flasks, "legacy", "sl", "df", "tww", "mn"),
-	["FLASKLEG"] = CreateList(flasks, "legacy"),
-	["FLASKSL"] = CreateList(flasks, "sl"),
-	["FLASKDF"] = CreateList(flasks, "df"),
-	["FLASKTWW"] = CreateList(flasks, "tww"),
-	["FLASKMN"] = CreateList(flasks, "mn"),
-	["RUNE"] = CreateList(runes, "df", "tww", "mn"),
-	["RUNETWW"] = CreateList(runes, "tww"),
-	["RUNEMN"] = CreateList(runes, "mn"),
-	["VANTUS"] = CreateList(vantus, "df", "tww", "mn"),
-	["VANTUSTWW"] = CreateList(vantus, "tww"),
-	["VANTUSMN"] = CreateList(vantus, "mn"),
-	["FOOD"] = CreateList(foods, "crafted_sl", "crafted_df", "crafted_tww", "crafted_mn"),
-	["FOODTWW"] = CreateList(foods, "crafted_tww"),
-	["FOODMN"] = CreateList(foods, "crafted_mn"),
-	["FOODVENDOR"] = CreateList(foods, "vendor"),
-	["MAGEFOOD"] = CreateList(foods, "mage"),
-	["FISHING"] = CreateList(fishings, "general", "tww", "mn"),
-	["FISHINGTWW"] = CreateList(fishings, "general", "tww"),
-	["FISHINGMN"] = CreateList(fishings, "general", "mn"),
+	["POTION"] = EB:CreateList(potions, "general", "legacy", "sl", "df", "tww", "mn"),
+	["POTIONGN"] = EB:CreateList(potions, "general"),
+	["POTIONLEG"] = EB:CreateList(potions, "legacy"),
+	["POTIONSL"] = EB:CreateList(potions, "sl"),
+	["POTIONDF"] = EB:CreateList(potions, "df"),
+	["POTIONTWW"] = EB:CreateList(potions, "tww"),
+	["POTIONMN"] = EB:CreateList(potions, "mn"),
+	["FLASK"] = EB:CreateList(flasks, "legacy", "sl", "df", "tww", "mn"),
+	["FLASKLEG"] = EB:CreateList(flasks, "legacy"),
+	["FLASKSL"] = EB:CreateList(flasks, "sl"),
+	["FLASKDF"] = EB:CreateList(flasks, "df"),
+	["FLASKTWW"] = EB:CreateList(flasks, "tww"),
+	["FLASKMN"] = EB:CreateList(flasks, "mn"),
+	["RUNE"] = EB:CreateList(runes, "df", "tww", "mn"),
+	["RUNETWW"] = EB:CreateList(runes, "tww"),
+	["RUNEMN"] = EB:CreateList(runes, "mn"),
+	["VANTUS"] = EB:CreateList(vantus, "df", "tww", "mn"),
+	["VANTUSTWW"] = EB:CreateList(vantus, "tww"),
+	["VANTUSMN"] = EB:CreateList(vantus, "mn"),
+	["FOOD"] = EB:CreateList(foods, "crafted_sl", "crafted_df", "crafted_tww", "crafted_mn"),
+	["FOODTWW"] = EB:CreateList(foods, "crafted_tww"),
+	["FOODMN"] = EB:CreateList(foods, "crafted_mn"),
+	["FOODVENDOR"] = EB:CreateList(foods, "vendor"),
+	["MAGEFOOD"] = EB:CreateList(foods, "mage"),
+	["FISHING"] = EB:CreateList(fishings, "general", "tww", "mn"),
+	["FISHINGTWW"] = EB:CreateList(fishings, "general", "tww"),
+	["FISHINGMN"] = EB:CreateList(fishings, "general", "mn"),
 	["BANNER"] = banners,
 	["UTILITY"] = utilities,
 	["OPENABLE"] = openableItems,
-	["PROF"] = CreateList(professionItems, "tww", "mn"),
-	["PROFTWW"] = CreateList(professionItems, "tww"),
-	["PROFMN"] = CreateList(professionItems, "mn"),
+	["PROF"] = EB:CreateList(professionItems, "tww", "mn"),
+	["PROFTWW"] = EB:CreateList(professionItems, "tww"),
+	["PROFMN"] = EB:CreateList(professionItems, "mn"),
 	["SEEDS"] = seeds,
 	["BIGDIG"] = bigDig,
 	["DELVE"] = delveItem,

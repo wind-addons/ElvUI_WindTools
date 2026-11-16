@@ -9,6 +9,7 @@ local ceil = ceil
 local format = format
 local ipairs = ipairs
 local pairs = pairs
+local select = select
 local sort = sort
 local strmatch = strmatch
 local strsplit = strsplit
@@ -24,6 +25,7 @@ local CreateAtlasMarkup = CreateAtlasMarkup
 local CreateFrame = CreateFrame
 local GameTooltip = _G.GameTooltip
 local GetBindingKey = GetBindingKey
+local GetInstanceInfo = GetInstanceInfo
 local GetInventoryItemCooldown = GetInventoryItemCooldown
 local GetInventoryItemID = GetInventoryItemID
 local GetQuestLogSpecialItemCooldown = GetQuestLogSpecialItemCooldown
@@ -50,6 +52,55 @@ local Enum_BagIndex = Enum.BagIndex
 local Enum_OnUpdateMode_Disabled = Enum.OnUpdateMode.Disabled
 local Enum_OnUpdateMode_RunWhenVisible = Enum.OnUpdateMode.RunWhenVisible
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS
+
+EB.STATE = {
+	IN_DELVE = 1,
+	QUANTUM_ITEM_ALLOWED = 2,
+}
+
+EB.StateCache = {}
+EB.StateFetcher = {
+	[EB.STATE.IN_DELVE] = function()
+		local difficulty = select(3, GetInstanceInfo())
+		if difficulty and difficulty == 208 then
+			return true
+		end
+		return false
+	end,
+	[EB.STATE.QUANTUM_ITEM_ALLOWED] = function()
+		return not E.db.WT.item.extraItemsBar.noQuantumItems
+	end,
+}
+
+function EB:UpdateState(state)
+	local fetcher = EB.StateFetcher[state]
+	EB.StateCache[state] = fetcher and fetcher()
+end
+
+function EB:GetState(state)
+	local result = EB.StateCache[state]
+	if result == nil then
+		result = true -- default to true if not cached
+	end
+	return result
+end
+
+function EB:CreateList(base, ...)
+	local list = {}
+	for _, key in pairs({ ... }) do
+		local items = base[key]
+		for _, item in pairs(items) do
+			list[item] = true
+		end
+	end
+
+	local sorted = {}
+	for item in pairs(list) do
+		tinsert(sorted, item)
+	end
+	sort(sorted)
+	return sorted
+end
 
 local questItemList = {}
 local function UpdateQuestItemList()

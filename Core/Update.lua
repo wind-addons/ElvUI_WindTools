@@ -436,6 +436,22 @@ function W:UpdateScripts()
 		end
 	end
 
+	if E.Forever and profileVersion < 4.26 and E.db.WT and E.db.WT.item and E.db.WT.item.extraItemsBar then
+		local bars = E.db.WT.item.extraItemsBar
+		local changed = false
+		if bars.bar2 and bars.bar2.include == "POTIONGN,POTIONMN,FLASKMN,VANTUSMN,POTIONTWW,FLASKTWW,VANTUSTWW,UTILITY" then
+			bars.bar2.include = "POTIONFOREVER,ELIXIRFOREVER,FLASKFOREVER"
+			changed = true
+		end
+		if bars.bar3 and bars.bar3.include == "MAGEFOOD,FOODVENDOR,FOODMN,FOODTWW,RUNEMN,RUNETWW,CUSTOM" then
+			bars.bar3.include = "FOODFOREVER,BANDAGEFOREVER"
+			changed = true
+		end
+		if changed then
+			UpdateMessage(L["Extra Items Bar"] .. " - " .. L["Update Database"], profileVersion)
+		end
+	end
+
 	if profileVersion < 4.18 and E.db.WT then
 		if E.db.WT and E.db.WT.unitFrames and E.db.WT.unitFrames.absorb then
 			if E.db.WT.unitFrames.absorb.texture then

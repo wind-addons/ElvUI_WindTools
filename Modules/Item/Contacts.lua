@@ -98,11 +98,7 @@ local function GetDisplayName(fullName)
 		return
 	end
 
-	if
-		IsRegionalUniqueNames()
-		and C_PlayerInfo_ShouldDisplaySurname
-		and not C_PlayerInfo_ShouldDisplaySurname()
-	then
+	if IsRegionalUniqueNames() and C_PlayerInfo_ShouldDisplaySurname and not C_PlayerInfo_ShouldDisplaySurname() then
 		local separatorConstants = Constants and Constants.CharacterNameSeparatorConsts
 		local separator = separatorConstants and separatorConstants.CHARACTERNAME_SURNAME_SEPARATOR
 		if separator then

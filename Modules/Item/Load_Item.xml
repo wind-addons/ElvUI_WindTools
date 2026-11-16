@@ -4,7 +4,8 @@
 	<Script file='DeleteItem.lua'/>
 	<Script file='ExtendMerchantPages.lua'/>
 	<Script file='ExtraItemBar.lua'/>
-	<Script file='ExtraItemBar_Data.lua'/>
+	<Script file='ExtraItemBar_Data.lua [AllowLoadGameType standard][ExcludeLoadGameType camelot, classic]'/>
+	<Script file='ExtraItemBar_Data_Forever.lua [AllowLoadGameType camelot][ExcludeLoadGameType standard, classic]'/>
 	<Script file='FastLoot.lua'/>
 	<Script file='Inspect.lua'/>
 	<Script file='ItemLevel.lua'/>

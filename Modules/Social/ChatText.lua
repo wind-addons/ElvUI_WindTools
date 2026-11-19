@@ -407,7 +407,7 @@ end
 
 -- stylua: ignore start
 -- Based on ElvUI Chat
--- [[elvui-sync:specialChatIcons sha256:d23045149388]]
+-- [[elvui-sync:specialChatIcons sha256:dc6ea0de1b4e]]
 local specialChatIcons
 do --this can save some main file locals
 	local x, y = ':16:16',':13:25'
@@ -755,6 +755,9 @@ do --this can save some main file locals
 			z['Player-6940-000CC5DB']	= Gem
 			-- Merathilis
 			z['Player-6939-00848373']	= ElvRed
+			-- Luckyone
+			z['Player-6945-0024F82A']	= ElvGreen -- [Horde] Hunter
+			z['Player-6945-0024F7B0']	= ElvGreen -- [Horde] Druid
 		end
 	end
 end

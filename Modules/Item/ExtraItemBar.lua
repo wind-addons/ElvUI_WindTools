@@ -411,7 +411,9 @@ function EB:SetUpButton(button, itemData, slotID, waitGroup)
 		local macroText
 		if button.slotID then
 			macroText = "/use " .. button.slotID
-		elseif button.itemName then
+		elseif button.itemID then
+			-- Use the itemID directly; the item name is loaded asynchronously and may not
+			-- be available yet (e.g. uncached items when entering a delve).
 			macroText = "/use item:" .. button.itemID
 			if button.itemID == 172347 then
 				macroText = macroText .. "\n/use 5"

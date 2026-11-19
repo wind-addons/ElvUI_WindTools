@@ -140,24 +140,10 @@ local function ApplyRewardIconQuality(rewardButton)
 	iconBackdrop:SetBackdropBorderColor(borderRed, borderGreen, borderBlue)
 end
 
----Two choice rewards sit side by side and the right one runs into the scroll frame.
----Shrink the pair so the name plate shadow stays inside the rewards frame.
-local function FitChoiceRewardButtons(rewardsFrame)
-	local rewardButtons = rewardsFrame.RewardButtons
-	if not rewardButtons then
-		return
-	end
-
-	local choiceButtons = {}
-	for _, rewardButton in ipairs(rewardButtons) do
-		if rewardButton:IsShown() and rewardButton.type == "choice" then
-			choiceButtons[#choiceButtons + 1] = rewardButton
-		elseif rewardButton.__windRewardWidth then
-			rewardButton:SetWidth(rewardButton.__windRewardWidth)
-		end
-	end
-
-	if #choiceButtons < 2 then
+---Two rewards of the same type sit side by side and the right one runs into the scroll frame.
+---Shrink the pair and keep the name inside the name plate.
+local function FitRewardButtonGroup(rewardsFrame, groupedButtons)
+	if #groupedButtons < 2 then
 		return
 	end
 
@@ -168,14 +154,66 @@ local function FitChoiceRewardButtons(rewardsFrame)
 
 	local shadowSize = 4 + (E.private.WT.skins.increasedSize or 0)
 	local columnGap = 4
-	local defaultWidth = choiceButtons[1].__windRewardWidth or choiceButtons[1]:GetWidth()
+	local defaultWidth = groupedButtons[1].__windRewardWidth or groupedButtons[1]:GetWidth()
 	local fittedWidth = floor((rowWidth - columnGap - shadowSize - 2) / 2)
 	if fittedWidth >= defaultWidth then
 		return
 	end
 
-	for _, rewardButton in ipairs(choiceButtons) do
+	for _, rewardButton in ipairs(groupedButtons) do
 		rewardButton:SetWidth(fittedWidth)
+
+		local rewardName = rewardButton.Name
+		local rewardIcon = rewardButton.Icon
+		if rewardName and rewardIcon then
+			if not rewardButton.__windRewardNameWidth then
+				rewardButton.__windRewardNameWidth = rewardName:GetWidth()
+			end
+
+			local nameWidth = fittedWidth - rewardIcon:GetWidth() - 20
+			if nameWidth > 8 then
+				rewardName:SetWidth(nameWidth)
+			end
+		end
+	end
+end
+
+---Choice rows and the "you will also receive" rows are separate pairs in one button list.
+local function FitRewardButtons(rewardsFrame)
+	local rewardButtons = rewardsFrame.RewardButtons
+	if not rewardButtons then
+		return
+	end
+
+	local buttonsByType = {
+		choice = {},
+		reward = {},
+	}
+
+	for _, rewardButton in ipairs(rewardButtons) do
+		local groupedButtons = buttonsByType[rewardButton.type]
+		if groupedButtons then
+			if rewardButton:IsShown() then
+				groupedButtons[#groupedButtons + 1] = rewardButton
+			elseif rewardButton.__windRewardWidth then
+				rewardButton:SetWidth(rewardButton.__windRewardWidth)
+				if rewardButton.Name and rewardButton.__windRewardNameWidth then
+					rewardButton.Name:SetWidth(rewardButton.__windRewardNameWidth)
+				end
+			end
+		end
+	end
+
+	FitRewardButtonGroup(rewardsFrame, buttonsByType.choice)
+	FitRewardButtonGroup(rewardsFrame, buttonsByType.reward)
+
+	-- Right-hand receive items stay on the previous button's right edge. ElvUI's pass can leave them on TOPLEFT.
+	local receiveButtons = buttonsByType.reward
+	for buttonIndex = 2, #receiveButtons, 2 do
+		local rewardButton = receiveButtons[buttonIndex]
+		local previousRewardButton = receiveButtons[buttonIndex - 1]
+		rewardButton:ClearAllPoints()
+		rewardButton:Point("TOPLEFT", previousRewardButton, "TOPRIGHT", 4, 0)
 	end
 end
 
@@ -298,7 +336,7 @@ local function QuestInfo_Display()
 					ApplyRewardIconQuality(rewardButton)
 				end
 			end
-			FitChoiceRewardButtons(questRewardsFrame)
+			FitRewardButtons(questRewardsFrame)
 		end
 
 		local isQuestLogContext = _G.QuestInfoFrame.questLog ~= nil

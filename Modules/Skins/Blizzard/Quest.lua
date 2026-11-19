@@ -398,8 +398,9 @@ function S:BlizzardQuestFrames()
 
 	hooksecurefunc("QuestInfo_Display", QuestInfo_Display)
 
+	-- ElvUI templates this frame, then UpdateMediaItems paints the center opaque. Blizzard only shows it for a choice click.
 	if _G.QuestInfoItemHighlight then
-		_G.QuestInfoItemHighlight:Kill()
+		_G.QuestInfoItemHighlight.customBackdropAlpha = 0
 	end
 
 	if _G.QuestInfoSpellObjectiveFrame then

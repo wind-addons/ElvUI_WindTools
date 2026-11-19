@@ -407,7 +407,7 @@ end
 
 -- stylua: ignore start
 -- Based on ElvUI Chat
--- [[elvui-sync:specialChatIcons sha256:6f0057a26316]]
+-- [[elvui-sync:specialChatIcons sha256:d23045149388]]
 local specialChatIcons
 do --this can save some main file locals
 	local x, y = ':16:16',':13:25'

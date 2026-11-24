@@ -407,7 +407,7 @@ end
 
 -- stylua: ignore start
 -- Based on ElvUI Chat
--- [[elvui-sync:specialChatIcons sha256:dc6ea0de1b4e]]
+-- [[elvui-sync:specialChatIcons sha256:59e8039b0db8]]
 local specialChatIcons
 do --this can save some main file locals
 	local x, y = ':16:16',':13:25'
@@ -474,11 +474,7 @@ do --this can save some main file locals
 	specialChatIcons = z
 
 	local portal = GetCVar('portal')
-	if portal == 'test' then
-		if E.Forever then
-			z['Player-4618-007349AE'] = itsSimpy
-		end
-	elseif portal == 'US' then
+	if portal == 'US' then
 		if E.Classic then
 			-- Simpy Seasonal (5813: Wild Growth)
 			z['Player-5813-0301DEC1']	= itsSimpy -- Warlock: Yubi
@@ -797,7 +793,7 @@ function CH:ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
 end
 -- [[/elvui-sync:ChatFrame_CheckAddChannel]]
 
--- [[elvui-sync:ChatFrame_MessageEventHandler sha256:4f76cf6ecc63]]
+-- [[elvui-sync:ChatFrame_MessageEventHandler sha256:b0b6ac4bba84]]
 function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, isHistory, historyTime, historyName, historyBTag)
 	-- ElvUI Chat History Note: isHistory, historyTime, historyName, and historyBTag are passed from CH:DisplayChatHistory() and need to be on the end to prevent issues in other addons that listen on ChatFrame_MessageEventHandler.
 	-- we also send isHistory and historyTime into CH:AddMessage so that we don't have to override the timestamp.
@@ -1075,7 +1071,7 @@ function CT:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 
 			-- beep boops
 			local historyType = notChatHistory and not CH.SoundTimer and not strfind(event, '_INFORM') and historyTypes[event]
-			local alertAllow = nameProtected or arg2 ~= PLAYER_NAME
+			local alertAllow = nameProtected or arg2 ~= E.mynameString
 			local alertType = (historyType ~= 'CHANNEL' and CH.db.channelAlerts[historyType]) or (historyType == 'CHANNEL' and CH.db.channelAlerts.CHANNEL[arg9])
 			if alertType and alertType ~= 'None' and alertAllow and (not CH.db.noAlertInCombat or not InCombatLockdown()) then
 				CH.SoundTimer = E:Delay(5, CH.ThrottleSound)

@@ -1,3 +1,4 @@
+-- luacheck: ignore 211
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, LocaleTable
 local S = W.Modules.Skins ---@type Skins
 
@@ -9,38 +10,63 @@ local ipairs = ipairs
 local next = next
 local pairs = pairs
 local strfind = strfind
-local unpack = unpack
 
 S:AddCallbackForAddon("Auctionator", nil, S:CreateAddonCheck("auctionator"))
 
--- Modified from ElvUI Auction House Skin
-local function HandleListIcon(frame)
-	if not frame.tableBuilder then
+local configFrameNames = {
+	"AuctionatorConfigAdvancedFrame",
+	"AuctionatorConfigBasicOptionsFrame",
+	"AuctionatorConfigCancellingFrame",
+	"AuctionatorConfigProfileFrame",
+	"AuctionatorConfigQuantitiesFrame",
+	"AuctionatorConfigSellingAllItemsFrame",
+	"AuctionatorConfigSellingFrame",
+	"AuctionatorConfigSellingShortcutsFrame",
+	"AuctionatorConfigShoppingAltFrame",
+	"AuctionatorConfigTooltipsFrame",
+}
+
+local dialogButtonNames = {
+	"acceptButton",
+	"altButton",
+	"cancelButton",
+	"AcceptButton",
+	"CancelButton",
+	"ContinueButton",
+	"Buy",
+	"Cancel",
+}
+
+local function skinResultRow(row)
+	for _, cell in pairs(row.cells) do
+		if cell.Icon and not cell.__windSkin then
+			S:Proxy("HandleIcon", cell.Icon)
+
+			if cell.IconBorder then
+				cell.IconBorder:Hide()
+			end
+
+			cell.__windSkin = true
+		end
+	end
+
+	if row.__windSkin then
 		return
 	end
 
-	for i = 1, 22 do
-		local row = frame.tableBuilder.rows[i]
-		if row then
-			for j = 1, 5 do
-				local cell = row.cells and row.cells[j]
-				if cell and cell.Icon then
-					if not cell.__windSkin then
-						S:Proxy("HandleIcon", cell.Icon)
-
-						if cell.IconBorder then
-							cell.IconBorder:Kill()
-						end
-
-						cell.__windSkin = true
-					end
-				end
-			end
-		end
-	end
+	row.NormalTexture:SetAlpha(0)
+	row.HighlightTexture:SetTexture(E.Media.Textures.White8x8)
+	row.HighlightTexture:SetVertexColor(1, 1, 1, 0.3)
+	row.SelectedHighlight:SetTexture(E.Media.Textures.White8x8)
+	row.SelectedHighlight:SetVertexColor(1, 1, 1, 0.4)
+	row.__windSkin = true
 end
 
 local function reskinDialog(frame)
+	if not frame or frame.__windSkin then
+		return
+	end
+
 	frame:StripTextures()
 	frame:SetTemplate("Transparent")
 	S:CreateShadow(frame)
@@ -50,18 +76,36 @@ local function reskinDialog(frame)
 		frame.editBox:SetTextInsets(0, 0, 0, 0)
 	end
 
-	for _, buttonName in pairs({ "acceptButton", "cancelButton", "AcceptButton", "CancelButton", "Buy", "Cancel" }) do
+	if frame.QuantityInput then
+		S:Proxy("HandleEditBox", frame.QuantityInput)
+		frame.QuantityInput:SetTextInsets(0, 0, 0, 0)
+	end
+
+	for _, buttonName in ipairs(dialogButtonNames) do
 		local button = frame[buttonName]
 		if button and button:IsObjectType("Button") then
 			S:Proxy("HandleButton", button)
 		end
 	end
+
+	frame.__windSkin = true
+end
+
+local function skinInset(frame)
+	if frame.__windSkin then
+		return
+	end
+
+	frame:StripTextures()
+	frame:SetTemplate("Transparent")
+	frame.__windSkin = true
 end
 
 -- Modified from ElvUI Auction House Skin
 local function HandleHeaders(frame)
-	local maxHeaders = frame.HeaderContainer:GetNumChildren()
-	for i, header in next, { frame.HeaderContainer:GetChildren() } do
+	local headerContainer = frame.HeaderContainer
+	local maxHeaders = headerContainer:GetNumChildren()
+	for index, header in next, { headerContainer:GetChildren() } do
 		if not header.__windSkin then
 			header:DisableDrawLayer("BACKGROUND")
 
@@ -73,41 +117,35 @@ local function HandleHeaders(frame)
 		end
 
 		if header.backdrop then
-			header.backdrop:Point("BOTTOMRIGHT", i < maxHeaders and -5 or 0, -2)
+			header.backdrop:Point("BOTTOMRIGHT", index < maxHeaders and -5 or 0, -2)
 		end
 	end
-
-	HandleListIcon(frame)
 end
 
 local function HandleTab(tab)
-	if not tab or tab.__windMiniTab then
+	if tab.__windMiniTab then
 		return
 	end
 
 	S:Proxy("HandleTab", tab)
 
+	-- ElvUI clears Left/Middle/Right. These templates also keep the active and highlight pieces in TabTextures.
 	if tab.TabTextures then
 		for _, texture in ipairs(tab.TabTextures) do
 			texture:SetAlpha(0)
 		end
 	end
 
-	local originalText = tab.Text or (tab.GetFontString and tab:GetFontString())
-	if originalText then
-		originalText:SetAlpha(0)
-	end
-
-	local label = tab:CreateFontString(nil, "OVERLAY")
-	label:SetAllPoints(tab)
-	label:SetJustifyH("CENTER")
-	label:SetFontObject(_G.GameFontNormalSmall)
-	F.SetFont(label, nil, E.db.general.fontSize or 12)
-	label:SetText(tab:GetText() or "")
-
-	tab:Height(22)
-	tab:Width(label:GetStringWidth() + 30)
 	tab.__windMiniTab = true
+end
+
+local function skinRefreshButton(parent)
+	for _, child in pairs({ parent:GetChildren() }) do
+		if child:IsObjectType("Button") and child.iconAtlas == "UI-RefreshButton" then
+			S:Proxy("HandleButton", child)
+			break
+		end
+	end
 end
 
 local function buyIconName(frame)
@@ -177,7 +215,13 @@ local function configCheckbox(frame)
 end
 
 local function dropDown(frame)
-	S:Proxy("HandleDropDownBox", frame.DropDown, 150)
+	local dropdown = frame.DropDown
+	if dropdown.__windSkin then
+		return
+	end
+
+	S:Proxy("HandleDropDownBox", dropdown, dropdown:GetWidth())
+	dropdown.__windSkin = true
 end
 
 local function keyBindingConfig(frame)
@@ -185,14 +229,7 @@ local function keyBindingConfig(frame)
 end
 
 local function bagUse(frame)
-	frame.View:CreateBackdrop("Transparent")
 	S:Proxy("HandleTrimScrollBar", frame.View.ScrollBar)
-
-	for _, child in pairs({ frame:GetChildren() }) do
-		if child ~= frame.View then
-			S:Proxy("HandleButton", child)
-		end
-	end
 end
 
 local function configNumericInput(frame)
@@ -227,7 +264,7 @@ local function configMinMax(frame)
 end
 
 local function filterKeySelector(frame)
-	S:Proxy("HandleDropDownBox", frame.DropDown, frame:GetWidth())
+	dropDown(frame)
 end
 
 local function undercutScan(frame)
@@ -239,42 +276,33 @@ local function undercutScan(frame)
 end
 
 local function saleItem(frame)
-	frame.Icon:StripTextures()
-
-	S:Proxy("HandleIcon", frame.Icon.Icon, true)
-	S:Proxy("HandleIconBorder", frame.Icon.IconBorder, frame.Icon.Icon.backdrop)
-
 	S:Proxy("HandleButton", frame.MaxButton)
 	frame.MaxButton:ClearAllPoints()
 	frame.MaxButton:Point("TOPLEFT", frame.Quantity, "TOPRIGHT", 0, 0)
 	S:Proxy("HandleButton", frame.PostButton)
 	S:Proxy("HandleButton", frame.SkipButton)
+	S:Proxy("HandleButton", frame.PrevButton)
 
-	for _, child in pairs({ frame:GetChildren() }) do
-		if child:IsObjectType("Button") and child.Icon then
-			S:Proxy("HandleButton", child)
-		end
-	end
+	skinRefreshButton(frame)
 end
 
 local function bottomTabButtons(frame)
-	for _, details in ipairs(_G.Auctionator.Tabs.State.knownTabs) do
-		local tabButtonFrameName = "AuctionatorTabs_" .. details.name
-		local tabButton = _G[tabButtonFrameName]
+	local auctionHouseFrame = _G.AuctionHouseFrame
+	local previousTab = auctionHouseFrame.Tabs[#auctionHouseFrame.Tabs]
 
-		if tabButton and not tabButton.__windSkin then
+	for _, tabButton in ipairs(frame.Tabs) do
+		if not tabButton.__windSkin then
 			S:Proxy("HandleTab", tabButton, nil, "Transparent")
 			S:ReskinTab(tabButton)
 			tabButton.Text:Width(tabButton:GetWidth())
-			if details.tabOrder > 1 then
-				local pointData = { tabButton:GetPoint(1) }
-				pointData[4] = -5
-				tabButton:ClearAllPoints()
-				tabButton:Point(unpack(pointData))
-			end
+
+			tabButton:ClearAllPoints()
+			tabButton:Point("TOPLEFT", previousTab, "TOPRIGHT", -5, 0)
 
 			tabButton.__windSkin = true
 		end
+
+		previousTab = tabButton
 	end
 end
 
@@ -285,11 +313,18 @@ local function sellingTabPricesContainer(frame)
 end
 
 local function resultsListing(frame)
-	frame.ScrollArea:SetTemplate("Transparent")
-	S:Proxy("HandleTrimScrollBar", frame.ScrollArea.ScrollBar)
-
+	local scrollArea = frame.ScrollArea
+	scrollArea:SetTemplate("Transparent")
+	S:Proxy("HandleTrimScrollBar", scrollArea.ScrollBar)
 	HandleHeaders(frame)
-	hooksecurefunc(frame, "UpdateTable", HandleHeaders)
+
+	local function updateResultRows()
+		HandleHeaders(frame)
+		scrollArea.ScrollBox:ForEachFrame(skinResultRow)
+	end
+
+	updateResultRows()
+	hooksecurefunc(scrollArea.ScrollBox, "Update", updateResultRows)
 end
 
 local function shoppingTabFrame(frame)
@@ -298,7 +333,7 @@ local function shoppingTabFrame(frame)
 	S:Proxy("HandleButton", frame.ExportButton)
 	S:Proxy("HandleButton", frame.ExportCSV)
 
-	frame.ShoppingResultsInset:StripTextures()
+	skinInset(frame.ShoppingResultsInset)
 end
 
 local function shoppingTabSearchOptions(frame)
@@ -309,10 +344,28 @@ local function shoppingTabSearchOptions(frame)
 	S:Proxy("HandleButton", frame.AddToListButton)
 end
 
+local function skinShoppingRow(row)
+	if row.__windSkin then
+		return
+	end
+
+	row.Highlight:SetTexture(E.Media.Textures.White8x8)
+	row.Highlight:SetVertexColor(1, 1, 1, 0.3)
+	row.Selected:SetTexture(E.Media.Textures.White8x8)
+	row.Selected:SetVertexColor(1, 1, 1, 0.4)
+	row.__windSkin = true
+end
+
+local function skinShoppingRows(scrollBox)
+	scrollBox:ForEachFrame(skinShoppingRow)
+end
+
 local function shoppingTabContainer(frame)
-	frame.Inset:StripTextures()
-	frame.Inset:SetTemplate("Transparent")
+	skinInset(frame.Inset)
 	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
+
+	skinShoppingRows(frame.ScrollBox)
+	hooksecurefunc(frame.ScrollBox, "Update", skinShoppingRows)
 end
 
 local function shoppingTabContainerTabs(frame)
@@ -321,21 +374,20 @@ local function shoppingTabContainerTabs(frame)
 end
 
 local function sellingTab(frame)
-	frame.BagInset:StripTextures()
-	frame.HistoricalPriceInset:StripTextures()
+	skinInset(frame.BagInset)
+	skinInset(frame.HistoricalPriceInset)
+
+	if frame.CurrentPricesInset then
+		skinInset(frame.CurrentPricesInset)
+	end
 end
 
 local function cancellingFrame(frame)
 	S:Proxy("HandleEditBox", frame.SearchFilter)
 
-	for _, child in pairs({ frame:GetChildren() }) do
-		if child:IsObjectType("Button") and child.Icon then
-			S:Proxy("HandleButton", child)
-		end
-	end
+	skinRefreshButton(frame)
 
-	frame.HistoricalPriceInset:StripTextures()
-	frame.HistoricalPriceInset:SetTemplate("Transparent")
+	skinInset(frame.HistoricalPriceInset)
 end
 
 local function configTab(frame)
@@ -356,11 +408,11 @@ local function shoppingItem(frame)
 
 	MF:InternalHandle(frame, nil, false)
 
-	local function reskinResetButton(f, anchor, x, y)
-		S:Proxy("HandleButton", f)
-		f:Size(20)
-		f:ClearAllPoints()
-		f:Point("LEFT", anchor, "RIGHT", x, y)
+	local function reskinResetButton(button, anchor, x, y)
+		S:Proxy("HandleButton", button)
+		button:Size(20)
+		button:ClearAllPoints()
+		button:Point("LEFT", anchor, "RIGHT", x, y)
 	end
 
 	S:Proxy("HandleEditBox", frame.SearchContainer.SearchString)
@@ -379,7 +431,6 @@ local function shoppingItem(frame)
 	S:Proxy("HandleButton", frame.Finished)
 	S:Proxy("HandleButton", frame.Cancel)
 	S:Proxy("HandleButton", frame.ResetAllButton)
-
 	S:Proxy("HandleCloseButton", frame.CloseButton)
 end
 
@@ -392,6 +443,12 @@ local function exportTextFrame(frame)
 	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
 end
 
+local function skinExportList(frame)
+	for checkBox in frame.checkBoxPool:EnumerateActive() do
+		configCheckbox(checkBox)
+	end
+end
+
 local function listExportFrame(frame)
 	frame:StripTextures()
 	frame:SetTemplate("Transparent")
@@ -402,6 +459,8 @@ local function listExportFrame(frame)
 	S:Proxy("HandleButton", frame.Export)
 	S:Proxy("HandleCloseButton", frame.CloseDialog)
 	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
+
+	hooksecurefunc(frame, "RefreshLists", skinExportList)
 end
 
 local function listImportFrame(frame)
@@ -436,19 +495,15 @@ local function craftingInfoProfessionsFrame(frame)
 end
 
 local function buyItem(frame)
+	skinInset(frame.Inset)
 	S:Proxy("HandleButton", frame.BackButton)
 	frame:StripTextures()
+	skinRefreshButton(frame)
 
-	if frame.BuyDialog then
-		reskinDialog(frame.BuyDialog)
-	end
-
-	for _, child in pairs({ frame:GetChildren() }) do
-		if child:IsObjectType("Button") and child.iconAtlas and child.iconAtlas == "UI-RefreshButton" then
-			S:Proxy("HandleButton", child)
-			break
-		end
-	end
+	reskinDialog(frame.BuyDialog)
+	reskinDialog(frame.WidePriceRangeWarningDialog)
+	reskinDialog(frame.FinalConfirmationDialog)
+	reskinDialog(frame.QuantityCheckConfirmationDialog)
 
 	local container = frame.DetailsContainer
 	if not container then
@@ -458,6 +513,77 @@ local function buyItem(frame)
 	S:Proxy("HandleButton", container.BuyButton)
 	S:Proxy("HandleEditBox", container.Quantity)
 	container.Quantity:SetTextInsets(0, 0, 0, 0)
+end
+
+local function skinConfigChild(child)
+	if child.__windConfigSkin or child.__windSkin then
+		return
+	end
+
+	child.__windConfigSkin = true
+
+	if child.CheckBox then
+		configCheckbox(child)
+	end
+
+	if child.radioButtons then
+		configRadioButtonGroup(child)
+	end
+
+	if child.MoneyInput then
+		configMoneyInput(child)
+	end
+
+	if child.InputBox then
+		configNumericInput(child)
+	end
+
+	if child.MinBox and child.MaxBox then
+		configMinMax(child)
+	end
+
+	if child.DropDown then
+		dropDown(child)
+	end
+
+	if child.Button and child.Description then
+		keyBindingConfig(child)
+	end
+
+	if child.ResetButton then
+		S:Proxy("HandleButton", child.ResetButton)
+	end
+
+	if child.ScrollBar then
+		S:Proxy("HandleTrimScrollBar", child.ScrollBar)
+		child.ScrollBar.__windSkin = true
+	end
+
+	if child:IsObjectType("Button") and not child:IsObjectType("CheckButton") and not child.__windSkin then
+		S:Proxy("HandleButton", child)
+	end
+
+	for _, nestedChild in pairs({ child:GetChildren() }) do
+		skinConfigChild(nestedChild)
+	end
+end
+
+local function skinConfigFrames()
+	for _, frameName in ipairs(configFrameNames) do
+		local frame = _G[frameName]
+		if frame and not frame.__windConfigSkin then
+			frame.__windConfigSkin = true
+
+			if frame.ScrollBar then
+				S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
+				frame.ScrollBar.__windSkin = true
+			end
+
+			for _, child in pairs({ frame:GetChildren() }) do
+				skinConfigChild(child)
+			end
+		end
+	end
 end
 
 local function reskinDialogs()
@@ -532,4 +658,5 @@ function S:Auctionator()
 
 	-- Dialog
 	reskinDialogs()
+	skinConfigFrames()
 end
